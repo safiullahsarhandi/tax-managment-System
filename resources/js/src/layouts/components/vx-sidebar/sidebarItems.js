@@ -19,17 +19,75 @@
 ==========================================================================================*/
 
 
-export default [
-  {
-    url: "/",
-    name: "Home",
-    slug: "home",
-    icon: "HomeIcon",
-  },
-  {
-    url: "/page2",
-    name: "Page 2",
-    slug: "page2",
-    icon: "FileIcon",
-  },
+export default [{
+        url: "/",
+        name: "Dashboard",
+        slug: "home",
+        icon: "HomeIcon",
+    },
+    {
+        url: "/",
+        name: "Customers",
+        slug: "customers",
+        icon: "UsersIcon",
+        submenu: [{
+            url: "/add-customer",
+            name: "Add Customer",
+            slug: "add-customer",
+            icon: "UserIcon",
+        },
+        {
+            url: "/customers",
+            name: "List Of Customers",
+            slug: "customers",
+            icon: "UsersIcon",
+        }
+        ],
+    },
+    {
+        url: "/currencies",
+        name: "Currencies",
+        slug: "currencies",
+        icon: "DollarSignIcon",
+    },
+    {
+        url: "/exchange-rates",
+        name: "Exchange Rates",
+        slug: "exchange-rates",
+        icon: "ActivityIcon",
+    },
+    {
+        url: "/tax-managment",
+        name: "Tax Managment",
+        slug: "tax-mangment",
+        icon: "FileIcon",
+    },
+    {
+        url: "/manage-team",
+        name: "Our Team",
+        slug: "our-team",
+        icon: "UsersIcon",
+        submenu: [{
+            url: "/admins",
+            name: "Admins",
+            slug: "admins",
+            icon: "UserIcon",
+        },{
+            url: "/supervisors",
+            name: "Supervisors",
+            slug: "supervisors",
+            icon: "UserIcon",
+        },{
+            url: "/officers",
+            name: "Officers",
+            slug: "officers",
+            icon: "UserIcon",
+        } ],
+    },
+    /*{
+        url: "/page2",
+        name: "Page 2",
+        slug: "page2",
+        icon: "FileIcon",
+    },*/
 ]

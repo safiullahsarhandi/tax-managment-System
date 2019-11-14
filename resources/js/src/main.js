@@ -12,8 +12,10 @@ import Vue from 'vue'
 import App from './App.vue'
 
 // Vuesax Component Framework
-import Vuesax from 'vuesax'
+import Vuesax from 'vuesax';
+import VeeValidate from 'vee-validate';
 
+Vue.use(VeeValidate);
 Vue.use(Vuesax)
 
 // Theme Configurations

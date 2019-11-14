@@ -1,13 +1,3 @@
-<!-- =========================================================================================
-    File Name: VxSidebar.vue
-    Description: Sidebar Component
-    Component Name: VxSidebar
-    ----------------------------------------------------------------------------------------
-    Item Name: Vuesax Admin - VueJS Dashboard Admin Template
-      Author: Pixinvent
-    Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
-
 
 <template>
     <div class="parentx">
