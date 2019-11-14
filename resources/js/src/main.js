@@ -15,9 +15,8 @@ import App from './App.vue'
 import Vuesax from 'vuesax';
 import VeeValidate from 'vee-validate';
 
-Vue.use(VeeValidate);
 Vue.use(Vuesax)
-
+Vue.use(VeeValidate);
 // Theme Configurations
 import '../themeConfig.js'
 
