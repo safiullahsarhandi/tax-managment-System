@@ -4,7 +4,7 @@
             <template slot="actions">
                 <vs-button type="border" @click="addOfficerModal = true" icon-pack="feather" icon="icon-plus"></vs-button>
             </template>
-            <vs-table search pagination :data="officers">
+            <vs-table search pagination max-items="6" :data="officers">
                 <template slot="thead">
                     <vs-th>#</vs-th>
                     <vs-th>Name</vs-th>
@@ -13,13 +13,13 @@
                     <vs-th>Address</vs-th>
                     <vs-th>Actions</vs-th>
                 </template>
-                <template slot-scope="{data}">
-                    <vs-tr :key="index" v-for="(tr,index) in data">
-                        <vs-td>#</vs-td>
-                        <vs-td>{{tr.first_name}} {{tr.last_name}}</vs-td>
-                        <vs-td>{{tr.phone}}</vs-td>
-                        <vs-td>{{tr.email}}</vs-td>
-                        <vs-td>{{tr.address}} {{tr.state}} {{tr.city}} {{tr.zip_code}}</vs-td>
+                <template  slot-scope="{data}">
+                    <vs-tr v-for="(tr,index) in data" :key="index">
+                        <vs-td :data="index">{{ index }}</vs-td>
+                        <vs-td :data="tr.first_name+' '+tr.last_name">{{tr.first_name}} {{tr.last_name}}</vs-td>
+                        <vs-td :data="tr.phone">{{tr.phone}}</vs-td>
+                        <vs-td :data="tr.email">{{tr.email}}</vs-td>
+                        <vs-td :data="tr.address+' '+tr.state+' '+tr.city+' '+tr.zip_code">{{tr.address}} {{tr.state}} {{tr.city}} {{tr.zip_code}}</vs-td>
                         <vs-td>
                             <vs-button type="border" @click="editOfficer(index)">Edit</vs-button>
                             <vs-button type="border">Detail</vs-button>
@@ -205,8 +205,8 @@ export default {
         },
 
         editOfficer(index){
-
             var officer = this.findOfficer(index);
+            // console.log(officer)
             // console.log(officer);
             this.edit_manager_id = officer.manager_id;
             this.edit_first_name = officer.first_name;
@@ -221,7 +221,6 @@ export default {
             this.edit_city = officer.city;
             this.editOfficerModal = true;
         },
-
         updateOfficer(e) {
 
             this.$validator.validateAll('editform').then(result => {

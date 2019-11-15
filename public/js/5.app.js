@@ -223,7 +223,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     editOfficer: function editOfficer(index) {
-      var officer = this.findOfficer(index); // console.log(officer);
+      var officer = this.findOfficer(index); // console.log(officer)
+      // console.log(officer);
 
       this.edit_manager_id = officer.manager_id;
       this.edit_first_name = officer.first_name;
@@ -312,7 +313,12 @@ var render = function() {
           _c(
             "vs-table",
             {
-              attrs: { search: "", pagination: "", data: _vm.officers },
+              attrs: {
+                search: "",
+                pagination: "",
+                "max-items": "6",
+                data: _vm.officers
+              },
               scopedSlots: _vm._u([
                 {
                   key: "default",
@@ -323,29 +329,60 @@ var render = function() {
                         "vs-tr",
                         { key: index },
                         [
-                          _c("vs-td", [_vm._v("#")]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _vm._v(
-                              _vm._s(tr.first_name) + " " + _vm._s(tr.last_name)
-                            )
+                          _c("vs-td", { attrs: { data: index } }, [
+                            _vm._v(_vm._s(index))
                           ]),
                           _vm._v(" "),
-                          _c("vs-td", [_vm._v(_vm._s(tr.phone))]),
+                          _c(
+                            "vs-td",
+                            {
+                              attrs: {
+                                data: tr.first_name + " " + tr.last_name
+                              }
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(tr.first_name) +
+                                  " " +
+                                  _vm._s(tr.last_name)
+                              )
+                            ]
+                          ),
                           _vm._v(" "),
-                          _c("vs-td", [_vm._v(_vm._s(tr.email))]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _vm._v(
-                              _vm._s(tr.address) +
-                                " " +
-                                _vm._s(tr.state) +
-                                " " +
-                                _vm._s(tr.city) +
-                                " " +
-                                _vm._s(tr.zip_code)
-                            )
+                          _c("vs-td", { attrs: { data: tr.phone } }, [
+                            _vm._v(_vm._s(tr.phone))
                           ]),
+                          _vm._v(" "),
+                          _c("vs-td", { attrs: { data: tr.email } }, [
+                            _vm._v(_vm._s(tr.email))
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            {
+                              attrs: {
+                                data:
+                                  tr.address +
+                                  " " +
+                                  tr.state +
+                                  " " +
+                                  tr.city +
+                                  " " +
+                                  tr.zip_code
+                              }
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(tr.address) +
+                                  " " +
+                                  _vm._s(tr.state) +
+                                  " " +
+                                  _vm._s(tr.city) +
+                                  " " +
+                                  _vm._s(tr.zip_code)
+                              )
+                            ]
+                          ),
                           _vm._v(" "),
                           _c(
                             "vs-td",
