@@ -13,5 +13,6 @@
 Route::group(['prefix' => ''], function () {
 	Route::get('get-officers', 'ApplicationController@get_officers');
 	Route::post('add-officer', 'ApplicationController@add_officer');
+	Route::post('update-officer', 'ApplicationController@update_officer');
 });
 Route::get('/{any}', 'ApplicationController')->where('any', '.*');

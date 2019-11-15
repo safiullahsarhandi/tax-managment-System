@@ -32,6 +32,23 @@ class ApplicationController extends Controller {
 		$officer->type = 3; // 3 means officer
 		$result = $officer->save();
 		$officers = Officer::all();
-		return response()->json(['status' => true, 'officers' => $officers]);
+		return response()->json(['status' => 'success', 'officers' => $officers], 200);
 	}
+
+	public function update_officer(Request $request) {
+		$officer = Officer::whereManagerId($request->id)->first();
+		$officer->first_name = $request->first_name;
+		$officer->last_name = $request->last_name;
+		$officer->gender = $request->gender;
+		$officer->address = $request->address;
+		$officer->city = $request->city;
+		$officer->state = $request->state;
+		$officer->zip_code = $request->zip_code;
+		$officer->phone = $request->phone;
+		$result = $officer->save();
+		$officers = Officer::all();
+		return response()->json(['status' => 'success', 'officers' => $officers], 200);
+	}
+
+
 }

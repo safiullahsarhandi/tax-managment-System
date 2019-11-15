@@ -7,6 +7,13 @@ export default{
 	addOfficer({commit},fd){
 		return axios.post('add-officer',fd).then(res=>{
 			// commit('setOfficer',res.data.officers)
+			return res;
 		});
-	}	
+	},
+	updateOfficer({commit},fd){
+		return axios.post('update-officer',fd).then(res=>{
+			// commit('setOfficer',res.data.officers)
+			return res;
+		});
+	}		
 }
