@@ -11,8 +11,14 @@
 |
  */
 Route::group(['prefix' => ''], function () {
+	// officers routes
 	Route::get('get-officers', 'ApplicationController@get_officers');
 	Route::post('add-officer', 'ApplicationController@add_officer');
 	Route::post('update-officer', 'ApplicationController@update_officer');
+
+	// supervisors routes
+	Route::get('get-supervisors', 'ApplicationController@get_supervisors');
+	Route::post('add-supervisor', 'ApplicationController@add_supervisor');
+	Route::post('update-supervisor', 'ApplicationController@update_supervisor');
 });
 Route::get('/{any}', 'ApplicationController')->where('any', '.*');

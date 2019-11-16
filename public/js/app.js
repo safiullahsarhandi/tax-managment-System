@@ -63933,7 +63933,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, _vm.size],style:([_vm.styles,{
     'width':/[px]/.test(_vm.size)?("" + _vm.size):null,
     'height':/[px]/.test(_vm.size)?("" + _vm.size):null
-  }]),attrs:{"name":"button"}},'button',_vm.$attrs,false),_vm.listeners),[(!_vm.is('line')&&!_vm.is('gradient')&&!_vm.is('relief'))?_c('span',{ref:"backgroundx",staticClass:"vs-button-backgroundx vs-button--background",style:(_vm.stylesBackGround)}):_vm._e(),(_vm.icon)?_c('vs-icon',{staticClass:"vs-button--icon ",style:({
+  }]),attrs:{"name":"button","type":_vm.$attrs.button}},'button',_vm.$attrs,false),_vm.listeners),[(!_vm.is('line')&&!_vm.is('gradient')&&!_vm.is('relief'))?_c('span',{ref:"backgroundx",staticClass:"vs-button-backgroundx vs-button--background",style:(_vm.stylesBackGround)}):_vm._e(),(_vm.icon)?_c('vs-icon',{staticClass:"vs-button--icon ",style:({
       'order':_vm.iconAfter?2:0,
       'margin-right':_vm.$slots.default&&!_vm.iconAfter?'5px':'0px',
       'margin-left':_vm.$slots.default&&_vm.iconAfter?'5px':'0px'
@@ -66026,7 +66026,7 @@ vsCheckBox_component.options.__file = "vsCheckBox.vue"
   Vue.component(vsCheckBox.name, vsCheckBox);
 });
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"aef9cfe0-vue-loader-template"}!C:/Users/DELL/AppData/Roaming/npm/node_modules/@vue/cli-service-global/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vsRadio/vsRadio.vue?vue&type=template&id=970bbb56&lang=html&
-var vsRadiovue_type_template_id_970bbb56_lang_html_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('label',{staticClass:"vs-component con-vs-radio",class:[("vs-radio-" + _vm.color)]},[_c('input',_vm._g(_vm._b({staticClass:"vs-radio--input",attrs:{"name":_vm.value,"type":"radio"},domProps:{"checked":_vm.isChecked,"value":_vm.value}},'input',_vm.$attrs,false),_vm.listeners)),_c('span',{staticClass:"vs-radio"},[_c('span',{staticClass:"vs-radio--borde",style:(_vm.styles)}),_c('span',{staticClass:"vs-radio--circle",style:(_vm.styleCircle)})]),_c('span',{staticClass:"vs-radio--label"},[_vm._t("default")],2)])}
+var vsRadiovue_type_template_id_970bbb56_lang_html_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('label',{staticClass:"vs-component con-vs-radio",class:[("vs-radio-" + _vm.color)]},[_c('input',_vm._g(_vm._b({staticClass:"vs-radio--input",attrs:{"name":_vm.$attrs.name,"type":"radio"},domProps:{"checked":_vm.isChecked,"value":_vm.value}},'input',_vm.$attrs,false),_vm.listeners)),_c('span',{staticClass:"vs-radio"},[_c('span',{staticClass:"vs-radio--borde",style:(_vm.styles)}),_c('span',{staticClass:"vs-radio--circle",style:(_vm.styleCircle)})]),_c('span',{staticClass:"vs-radio--label"},[_vm._t("default")],2)])}
 var vsRadiovue_type_template_id_970bbb56_lang_html_staticRenderFns = []
 
 
@@ -75722,7 +75722,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapActions", function() { return mapActions; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNamespacedHelpers", function() { return createNamespacedHelpers; });
 /**
- * vuex v3.1.2
+ * vuex v3.1.1
  * (c) 2019 Evan You
  * @license MIT
  */
@@ -76044,7 +76044,6 @@ var Store = function Store (options) {
   this._modulesNamespaceMap = Object.create(null);
   this._subscribers = [];
   this._watcherVM = new Vue();
-  this._makeLocalGettersCache = Object.create(null);
 
   // bind commit and dispatch to self
   var store = this;
@@ -76277,14 +76276,12 @@ function resetStoreVM (store, state, hot) {
 
   // bind store public getters
   store.getters = {};
-  // reset local getters cache
-  store._makeLocalGettersCache = Object.create(null);
   var wrappedGetters = store._wrappedGetters;
   var computed = {};
   forEachValue(wrappedGetters, function (fn, key) {
     // use computed to leverage its lazy-caching mechanism
     // direct inline function use will lead to closure preserving oldVm.
-    // using partial to return function with only arguments preserved in closure environment.
+    // using partial to return function with only arguments preserved in closure enviroment.
     computed[key] = partial(fn, store);
     Object.defineProperty(store.getters, key, {
       get: function () { return store._vm[key]; },
@@ -76328,9 +76325,6 @@ function installModule (store, rootState, path, module, hot) {
 
   // register in namespace map
   if (module.namespaced) {
-    if (store._modulesNamespaceMap[namespace] && "development" !== 'production') {
-      console.error(("[vuex] duplicate namespace " + namespace + " for the namespaced module " + (path.join('/'))));
-    }
     store._modulesNamespaceMap[namespace] = module;
   }
 
@@ -76339,13 +76333,6 @@ function installModule (store, rootState, path, module, hot) {
     var parentState = getNestedState(rootState, path.slice(0, -1));
     var moduleName = path[path.length - 1];
     store._withCommit(function () {
-      if (true) {
-        if (moduleName in parentState) {
-          console.warn(
-            ("[vuex] state field \"" + moduleName + "\" was overridden by a module with the same name at \"" + (path.join('.')) + "\"")
-          );
-        }
-      }
       Vue.set(parentState, moduleName, module.state);
     });
   }
@@ -76433,28 +76420,26 @@ function makeLocalContext (store, namespace, path) {
 }
 
 function makeLocalGetters (store, namespace) {
-  if (!store._makeLocalGettersCache[namespace]) {
-    var gettersProxy = {};
-    var splitPos = namespace.length;
-    Object.keys(store.getters).forEach(function (type) {
-      // skip if the target getter is not match this namespace
-      if (type.slice(0, splitPos) !== namespace) { return }
+  var gettersProxy = {};
 
-      // extract local getter type
-      var localType = type.slice(splitPos);
+  var splitPos = namespace.length;
+  Object.keys(store.getters).forEach(function (type) {
+    // skip if the target getter is not match this namespace
+    if (type.slice(0, splitPos) !== namespace) { return }
 
-      // Add a port to the getters proxy.
-      // Define as getter property because
-      // we do not want to evaluate the getters in this time.
-      Object.defineProperty(gettersProxy, localType, {
-        get: function () { return store.getters[type]; },
-        enumerable: true
-      });
+    // extract local getter type
+    var localType = type.slice(splitPos);
+
+    // Add a port to the getters proxy.
+    // Define as getter property because
+    // we do not want to evaluate the getters in this time.
+    Object.defineProperty(gettersProxy, localType, {
+      get: function () { return store.getters[type]; },
+      enumerable: true
     });
-    store._makeLocalGettersCache[namespace] = gettersProxy;
-  }
+  });
 
-  return store._makeLocalGettersCache[namespace]
+  return gettersProxy
 }
 
 function registerMutation (store, type, handler, local) {
@@ -76466,7 +76451,7 @@ function registerMutation (store, type, handler, local) {
 
 function registerAction (store, type, handler, local) {
   var entry = store._actions[type] || (store._actions[type] = []);
-  entry.push(function wrappedActionHandler (payload) {
+  entry.push(function wrappedActionHandler (payload, cb) {
     var res = handler.call(store, {
       dispatch: local.dispatch,
       commit: local.commit,
@@ -76474,7 +76459,7 @@ function registerAction (store, type, handler, local) {
       state: local.state,
       rootGetters: store.getters,
       rootState: store.state
-    }, payload);
+    }, payload, cb);
     if (!isPromise(res)) {
       res = Promise.resolve(res);
     }
@@ -76555,9 +76540,6 @@ function install (_Vue) {
  */
 var mapState = normalizeNamespace(function (namespace, states) {
   var res = {};
-  if ( true && !isValidMap(states)) {
-    console.error('[vuex] mapState: mapper parameter must be either an Array or an Object');
-  }
   normalizeMap(states).forEach(function (ref) {
     var key = ref.key;
     var val = ref.val;
@@ -76591,9 +76573,6 @@ var mapState = normalizeNamespace(function (namespace, states) {
  */
 var mapMutations = normalizeNamespace(function (namespace, mutations) {
   var res = {};
-  if ( true && !isValidMap(mutations)) {
-    console.error('[vuex] mapMutations: mapper parameter must be either an Array or an Object');
-  }
   normalizeMap(mutations).forEach(function (ref) {
     var key = ref.key;
     var val = ref.val;
@@ -76627,9 +76606,6 @@ var mapMutations = normalizeNamespace(function (namespace, mutations) {
  */
 var mapGetters = normalizeNamespace(function (namespace, getters) {
   var res = {};
-  if ( true && !isValidMap(getters)) {
-    console.error('[vuex] mapGetters: mapper parameter must be either an Array or an Object');
-  }
   normalizeMap(getters).forEach(function (ref) {
     var key = ref.key;
     var val = ref.val;
@@ -76660,9 +76636,6 @@ var mapGetters = normalizeNamespace(function (namespace, getters) {
  */
 var mapActions = normalizeNamespace(function (namespace, actions) {
   var res = {};
-  if ( true && !isValidMap(actions)) {
-    console.error('[vuex] mapActions: mapper parameter must be either an Array or an Object');
-  }
   normalizeMap(actions).forEach(function (ref) {
     var key = ref.key;
     var val = ref.val;
@@ -76708,21 +76681,9 @@ var createNamespacedHelpers = function (namespace) { return ({
  * @return {Object}
  */
 function normalizeMap (map) {
-  if (!isValidMap(map)) {
-    return []
-  }
   return Array.isArray(map)
     ? map.map(function (key) { return ({ key: key, val: key }); })
     : Object.keys(map).map(function (key) { return ({ key: key, val: map[key] }); })
-}
-
-/**
- * Validate whether given map is valid or not
- * @param {*} map
- * @return {Boolean}
- */
-function isValidMap (map) {
-  return Array.isArray(map) || isObject(map)
 }
 
 /**
@@ -76760,7 +76721,7 @@ function getModuleByNamespace (store, helper, namespace) {
 var index_esm = {
   Store: Store,
   install: install,
-  version: '3.1.2',
+  version: '3.1.1',
   mapState: mapState,
   mapMutations: mapMutations,
   mapGetters: mapGetters,
@@ -77819,21 +77780,19 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./App.vue */ "./resources/js/src/App.vue");
-/* harmony import */ var vuesax__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuesax */ "./node_modules/vuesax/dist/vuesax.common.js");
-/* harmony import */ var vuesax__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vuesax__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
-/* harmony import */ var _themeConfig_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../themeConfig.js */ "./resources/js/themeConfig.js");
-/* harmony import */ var _globalComponents_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./globalComponents.js */ "./resources/js/src/globalComponents.js");
-/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./router */ "./resources/js/src/router.js");
-/* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./store/store */ "./resources/js/src/store/store.js");
-/* harmony import */ var _filters_filters__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./filters/filters */ "./resources/js/src/filters/filters.js");
-/* harmony import */ var vue2_hammer__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vue2-hammer */ "./node_modules/vue2-hammer/index.min.js");
-/* harmony import */ var vue2_hammer__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(vue2_hammer__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var prismjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! prismjs */ "./node_modules/prismjs/prism.js");
-/* harmony import */ var prismjs__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(prismjs__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./App.vue */ "./resources/js/src/App.vue");
+/* harmony import */ var vuesax__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuesax */ "./node_modules/vuesax/dist/vuesax.common.js");
+/* harmony import */ var vuesax__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuesax__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+/* harmony import */ var _themeConfig_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../themeConfig.js */ "./resources/js/themeConfig.js");
+/* harmony import */ var _globalComponents_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./globalComponents.js */ "./resources/js/src/globalComponents.js");
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./router */ "./resources/js/src/router.js");
+/* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./store/store */ "./resources/js/src/store/store.js");
+/* harmony import */ var _filters_filters__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./filters/filters */ "./resources/js/src/filters/filters.js");
+/* harmony import */ var vue2_hammer__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue2-hammer */ "./node_modules/vue2-hammer/index.min.js");
+/* harmony import */ var vue2_hammer__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(vue2_hammer__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var prismjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! prismjs */ "./node_modules/prismjs/prism.js");
+/* harmony import */ var prismjs__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(prismjs__WEBPACK_IMPORTED_MODULE_9__);
 /*=========================================================================================
   File Name: main.js
   Description: main vue(js) file
@@ -77842,13 +77801,13 @@ __webpack_require__.r(__webpack_exports__);
   Author: Pixinvent
   Author URL: hhttp://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
-
+window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
  // Vuesax Component Framework
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuesax__WEBPACK_IMPORTED_MODULE_2___default.a);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vee_validate__WEBPACK_IMPORTED_MODULE_3__["default"]); // Theme Configurations
+Vue.use(vuesax__WEBPACK_IMPORTED_MODULE_1___default.a);
+Vue.use(vee_validate__WEBPACK_IMPORTED_MODULE_2__["default"]); // Theme Configurations
 
  // Globally Registered Components
 
@@ -77861,16 +77820,34 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vee_validate__WEBPACK_IMPORTED_MO
  // Vuejs - Vue wrapper for hammerjs
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue2_hammer__WEBPACK_IMPORTED_MODULE_9__["VueHammer"]); // PrismJS
+Vue.use(vue2_hammer__WEBPACK_IMPORTED_MODULE_8__["VueHammer"]); // PrismJS
 
  // import 'prismjs/themes/prism-tomorrow.css'
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.productionTip = false;
-new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
-  router: _router__WEBPACK_IMPORTED_MODULE_6__["default"],
-  store: _store_store__WEBPACK_IMPORTED_MODULE_7__["default"],
+Vue.config.productionTip = false;
+new Vue({
+  provide: function provide() {
+    return {
+      generatePassword: this.generatePassword
+    };
+  },
+  router: _router__WEBPACK_IMPORTED_MODULE_5__["default"],
+  store: _store_store__WEBPACK_IMPORTED_MODULE_6__["default"],
   render: function render(h) {
-    return h(_App_vue__WEBPACK_IMPORTED_MODULE_1__["default"]);
+    return h(_App_vue__WEBPACK_IMPORTED_MODULE_0__["default"]);
+  },
+  methods: {
+    generatePassword: function generatePassword() {
+      var length = 8,
+          charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+          retVal = "";
+
+      for (var i = 0, n = charset.length; i < length; ++i) {
+        retVal += charset.charAt(Math.floor(Math.random() * n));
+      }
+
+      return retVal;
+    }
   }
 }).$mount('#app');
 
@@ -77977,6 +77954,12 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./views/pages/Officers.vue */ "./resources/js/src/views/pages/Officers.vue"));
       }
     }, {
+      path: '/testing',
+      name: 'testing',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 15).then(__webpack_require__.bind(null, /*! ./views/pages/demo.vue */ "./resources/js/src/views/pages/demo.vue"));
+      }
+    }, {
       path: '/tax-managment',
       name: 'Tax Managment',
       component: function component() {
@@ -78043,7 +78026,7 @@ __webpack_require__.r(__webpack_exports__);
   updateOfficer: function updateOfficer(_ref3, fd) {
     var commit = _ref3.commit;
     return axios.post('update-officer', fd).then(function (res) {
-      // commit('setOfficer',res.data.officers)
+      commit('setSingleOfficer', res.data.officer);
       return res;
     });
   }
@@ -78062,7 +78045,11 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   findOfficer: function findOfficer(state) {
-    return function (index) {
+    return function (id) {
+      var index = _.findIndex(state.officers, function (o) {
+        return o.id === id;
+      });
+
       return state.officers[index];
     };
   }
@@ -78082,6 +78069,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   setOfficers: function setOfficers(state, officers) {
     state.officers = officers;
+  },
+  setSingleOfficer: function setSingleOfficer(state, officer) {
+    var index = _.findIndex(state.officers, function (o) {
+      return o.id === officer.id;
+    });
+
+    console.log(officer);
+    Vue.set(state.officers, index, officer);
   }
 });
 
@@ -78125,6 +78120,129 @@ __webpack_require__.r(__webpack_exports__);
   state: _OfficerState_js__WEBPACK_IMPORTED_MODULE_0__["default"],
   mutations: _OfficerMutations_js__WEBPACK_IMPORTED_MODULE_2__["default"],
   getters: _OfficerGetters_js__WEBPACK_IMPORTED_MODULE_3__["default"]
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Supervisors/SupervisorActions.js":
+/*!*****************************************************************!*\
+  !*** ./resources/js/src/store/Supervisors/SupervisorActions.js ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  getSupervisors: function getSupervisors(_ref) {
+    var commit = _ref.commit;
+    axios.get('get-supervisors').then(function (res) {
+      commit('setSupervisors', res.data.supervisors);
+    });
+  },
+  addSupervisor: function addSupervisor(_ref2, fd) {
+    var commit = _ref2.commit;
+    return axios.post('add-supervisor', fd).then(function (res) {
+      // commit('setSupervisor',res.data.Supervisors)
+      return res;
+    });
+  },
+  updateSupervisor: function updateSupervisor(_ref3, fd) {
+    var commit = _ref3.commit;
+    return axios.post('update-supervisor', fd).then(function (res) {
+      commit('setSingleSupervisor', res.data.supervisor);
+      return res;
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Supervisors/SupervisorGetters.js":
+/*!*****************************************************************!*\
+  !*** ./resources/js/src/store/Supervisors/SupervisorGetters.js ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  findSupervisor: function findSupervisor(state) {
+    return function (id) {
+      var index = _.findIndex(state.supervisors, function (o) {
+        return o.id === id;
+      });
+
+      return state.supervisors[index];
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Supervisors/SupervisorMutations.js":
+/*!*******************************************************************!*\
+  !*** ./resources/js/src/store/Supervisors/SupervisorMutations.js ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  setSupervisors: function setSupervisors(state, supervisors) {
+    state.supervisors = supervisors;
+  },
+  setSingleSupervisor: function setSingleSupervisor(state, supervisor) {
+    var index = _.findIndex(state.supervisors, function (o) {
+      return o.id === supervisor.id;
+    });
+
+    Vue.set(state.supervisors, index, supervisor);
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Supervisors/SupervisorState.js":
+/*!***************************************************************!*\
+  !*** ./resources/js/src/store/Supervisors/SupervisorState.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  supervisors: []
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Supervisors/Supervisors.js":
+/*!***********************************************************!*\
+  !*** ./resources/js/src/store/Supervisors/Supervisors.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SupervisorState_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SupervisorState.js */ "./resources/js/src/store/Supervisors/SupervisorState.js");
+/* harmony import */ var _SupervisorActions_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SupervisorActions.js */ "./resources/js/src/store/Supervisors/SupervisorActions.js");
+/* harmony import */ var _SupervisorMutations_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SupervisorMutations.js */ "./resources/js/src/store/Supervisors/SupervisorMutations.js");
+/* harmony import */ var _SupervisorGetters_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SupervisorGetters.js */ "./resources/js/src/store/Supervisors/SupervisorGetters.js");
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  actions: _SupervisorActions_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  state: _SupervisorState_js__WEBPACK_IMPORTED_MODULE_0__["default"],
+  mutations: _SupervisorMutations_js__WEBPACK_IMPORTED_MODULE_2__["default"],
+  getters: _SupervisorGetters_js__WEBPACK_IMPORTED_MODULE_3__["default"]
 });
 
 /***/ }),
@@ -78388,6 +78506,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mutations__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./mutations */ "./resources/js/src/store/mutations.js");
 /* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./actions */ "./resources/js/src/store/actions.js");
 /* harmony import */ var _Officers_Officers_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Officers/Officers.js */ "./resources/js/src/store/Officers/Officers.js");
+/* harmony import */ var _Supervisors_Supervisors_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Supervisors/Supervisors.js */ "./resources/js/src/store/Supervisors/Supervisors.js");
 /*=========================================================================================
   File Name: store.js
   Description: Vuex store
@@ -78403,6 +78522,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   getters: _getters__WEBPACK_IMPORTED_MODULE_3__["default"],
@@ -78410,7 +78530,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
   state: _state__WEBPACK_IMPORTED_MODULE_2__["default"],
   actions: _actions__WEBPACK_IMPORTED_MODULE_5__["default"],
   modules: {
-    officers: _Officers_Officers_js__WEBPACK_IMPORTED_MODULE_6__["default"]
+    officers: _Officers_Officers_js__WEBPACK_IMPORTED_MODULE_6__["default"],
+    supervisors: _Supervisors_Supervisors_js__WEBPACK_IMPORTED_MODULE_7__["default"]
   } // strict: process.env.NODE_ENV !== 'production'
 
 }));
@@ -78497,9 +78618,9 @@ var themeConfig = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\freelancing_projects\tax-managment-System\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! C:\xampp\htdocs\freelancing_projects\tax-managment-System\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\freelancing_projects\tax-managment-System\resources\assets\css\main.css */"./resources/assets/css/main.css");
+__webpack_require__(/*! C:\xampp2019\htdocs\tax-mangment\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\xampp2019\htdocs\tax-mangment\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! C:\xampp2019\htdocs\tax-mangment\resources\assets\css\main.css */"./resources/assets/css/main.css");
 
 
 /***/ })
