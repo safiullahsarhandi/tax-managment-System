@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Admin;
 use App\Http\Controllers\Controller;
 use App\Officer;
 use App\Supervisor;
@@ -86,6 +87,44 @@ class ApplicationController extends Controller {
 		$supervisor->phone = $request->phone;
 		$result = $supervisor->save();
 		return response()->json(['status' => 'success', 'supervisor' => $supervisor], 200);
+	}
+
+	// admins methods
+	public function get_admins(Request $request) {
+		$admins = Admin::whereType(1)->get();
+		return response()->json(compact('admins'));
+	}
+	public function add_admin(Request $request) {
+		$admin = new Admin;
+		$admin->manager_id = (String) Str::uuid();
+		$admin->first_name = $request->first_name;
+		$admin->last_name = $request->last_name;
+		$admin->gender = $request->gender;
+		$admin->email = $request->email;
+		$admin->password = bcrypt($request->password);
+		$admin->address = $request->address;
+		$admin->city = $request->city;
+		$admin->state = $request->state;
+		$admin->zip_code = $request->zip_code;
+		$admin->phone = $request->phone;
+		$admin->type = 2; // 2 means admin
+		$result = $admin->save();
+		$admins = Admin::all();
+		return response()->json(['status' => 'success', 'admins' => $admins], 200);
+	}
+
+	public function update_admin(Request $request) {
+		$admin = Admin::whereManagerId($request->id)->first();
+		$admin->first_name = $request->first_name;
+		$admin->last_name = $request->last_name;
+		$admin->gender = $request->gender;
+		$admin->address = $request->address;
+		$admin->city = $request->city;
+		$admin->state = $request->state;
+		$admin->zip_code = $request->zip_code;
+		$admin->phone = $request->phone;
+		$result = $admin->save();
+		return response()->json(['status' => 'success', 'admin' => $admin], 200);
 	}
 
 }
