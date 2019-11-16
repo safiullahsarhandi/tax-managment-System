@@ -78035,7 +78035,16 @@ __webpack_require__.r(__webpack_exports__);
   },
   addOfficer: function addOfficer(_ref2, fd) {
     var commit = _ref2.commit;
-    return axios.post('add-officer', fd).then(function (res) {// commit('setOfficer',res.data.officers)
+    return axios.post('add-officer', fd).then(function (res) {
+      // commit('setOfficer',res.data.officers)
+      return res;
+    });
+  },
+  updateOfficer: function updateOfficer(_ref3, fd) {
+    var commit = _ref3.commit;
+    return axios.post('update-officer', fd).then(function (res) {
+      // commit('setOfficer',res.data.officers)
+      return res;
     });
   }
 });
