@@ -8,7 +8,7 @@
 ==========================================================================================*/
 
 
-import Vue from 'vue'
+window.Vue = require('vue');
 import App from './App.vue'
 
 // Vuesax Component Framework
@@ -44,7 +44,23 @@ import 'prismjs'
 Vue.config.productionTip = false
 
 new Vue({
+	provide(){
+		return {
+			generatePassword : this.generatePassword,
+		}
+	},
     router,
     store,
-    render: h => h(App)
+    render: h => h(App),
+    methods: {
+    generatePassword : function() {
+    var length = 8,
+        charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+        retVal = "";
+    for (var i = 0, n = charset.length; i < length; ++i) {
+        retVal += charset.charAt(Math.floor(Math.random() * n));
+    }
+    return retVal;
+}
+    }
 }).$mount('#app')
