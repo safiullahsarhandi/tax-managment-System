@@ -207,7 +207,7 @@ export default {
             var supervisor = this.findSupervisor(id);
             // console.log(supervisor)
             // console.log(supervisor);
-            console.log(supervisor);
+            // console.log(supervisor);
             this.edit_manager_id = supervisor.manager_id;
             this.edit_first_name = supervisor.first_name;
             this.edit_last_name = supervisor.last_name;
