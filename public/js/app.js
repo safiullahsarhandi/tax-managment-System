@@ -78070,7 +78070,7 @@ __webpack_require__.r(__webpack_exports__);
   setAdmins: function setAdmins(state, admins) {
     state.admins = admins;
   },
-  setSingleAdmin: function setSingleAdmin(state, admins) {
+  setSingleAdmin: function setSingleAdmin(state, admin) {
     var index = _.findIndex(state.admins, function (o) {
       return o.id === admin.id;
     });

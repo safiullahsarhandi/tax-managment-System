@@ -107,7 +107,7 @@ class ApplicationController extends Controller {
 		$admin->state = $request->state;
 		$admin->zip_code = $request->zip_code;
 		$admin->phone = $request->phone;
-		$admin->type = 2; // 2 means admin
+		$admin->type = 1; // 2 means admin
 		$result = $admin->save();
 		$admins = Admin::all();
 		return response()->json(['status' => 'success', 'admins' => $admins], 200);

@@ -222,7 +222,7 @@ export default {
             this.edit_city = admin.city;
             this.editAdminModal = true;
         },
-        updateSupervisor(e) {
+        updateAdmin(e) {
 
             this.$validator.validateAll('editform').then(result => {
                 if (result) {

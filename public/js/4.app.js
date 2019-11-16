@@ -240,7 +240,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.edit_city = admin.city;
       this.editAdminModal = true;
     },
-    updateSupervisor: function updateSupervisor(e) {
+    updateAdmin: function updateAdmin(e) {
       var _this2 = this;
 
       this.$validator.validateAll('editform').then(function (result) {
