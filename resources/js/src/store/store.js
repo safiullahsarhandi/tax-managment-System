@@ -16,6 +16,7 @@ import getters from "./getters"
 import mutations from "./mutations"
 import actions from "./actions"
 import Officers from "./Officers/Officers.js";
+import Supervisors from "./Supervisors/Supervisors.js";
 
 Vue.use(Vuex)
 
@@ -27,6 +28,7 @@ export default new Vuex.Store({
     actions,
     modules : {
       officers : Officers,
+      supervisors : Supervisors,
     }
     // strict: process.env.NODE_ENV !== 'production'
 })

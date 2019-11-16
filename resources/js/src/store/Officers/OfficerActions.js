@@ -12,7 +12,7 @@ export default{
 	},
 	updateOfficer({commit},fd){
 		return axios.post('update-officer',fd).then(res=>{
-			// commit('setOfficer',res.data.officers)
+			commit('setSingleOfficer',res.data.officer)
 			return res;
 		});
 	}		

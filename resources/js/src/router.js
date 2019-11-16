@@ -83,6 +83,11 @@ const router = new Router({
             component: () => import('./views/pages/Officers.vue'),
           },
           {
+            path: '/testing',
+            name: 'testing',
+            component: () => import('./views/pages/demo.vue'),
+          },
+          {
             path: '/tax-managment',
             name: 'Tax Managment',
             component: () => import('./views/pages/tax-managment/TaxManagment.vue'),

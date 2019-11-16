@@ -6,7 +6,6 @@
             </template>
             <vs-table search pagination max-items="6" :data="officers">
                 <template slot="thead">
-                    <vs-th>#</vs-th>
                     <vs-th>Name</vs-th>
                     <vs-th>Phone #</vs-th>
                     <vs-th>Email</vs-th>
@@ -15,13 +14,12 @@
                 </template>
                 <template  slot-scope="{data}">
                     <vs-tr v-for="(tr,index) in data" :key="index">
-                        <vs-td :data="index">{{ index }}</vs-td>
                         <vs-td :data="tr.first_name+' '+tr.last_name">{{tr.first_name}} {{tr.last_name}}</vs-td>
                         <vs-td :data="tr.phone">{{tr.phone}}</vs-td>
                         <vs-td :data="tr.email">{{tr.email}}</vs-td>
                         <vs-td :data="tr.address+' '+tr.state+' '+tr.city+' '+tr.zip_code">{{tr.address}} {{tr.state}} {{tr.city}} {{tr.zip_code}}</vs-td>
                         <vs-td>
-                            <vs-button type="border" @click="editOfficer(index)">Edit</vs-button>
+                            <vs-button type="border" @click="editOfficer(tr.id)">Edit</vs-button>
                             <vs-button type="border">Detail</vs-button>
                         </vs-td>
                     </vs-tr>
@@ -51,7 +49,7 @@
                         <vx-input-group class="mt-2">
                             <vs-input v-validate="'required'" name="password" v-model="password" label-placeholder="Password" data-vv-scope="addform" />
                             <div class="text-danger" v-show="errors.has('password')">{{errors.first('addform.password')}}</div>
-                            <vs-button class="mt-2" button="button" type="border">Generate Password</vs-button>
+                            <vs-button @click="makePassword()" class="mt-2" button="button" type="border">Generate Password</vs-button>
                         </vx-input-group>
                     </vs-col>
                     <vs-col vs-lg="6" vs-md="12" vs-sm="12">
@@ -113,8 +111,8 @@
                     </vs-col>
                     <vs-col vs-lg="6" vs-md="12" vs-sm="12">
                         <vx-input-group class="mt-2">
-                            <vs-radio v-model="edit_gender" name="edit_gender" vs-value="male" data-vv-scope="editform">Male</vs-radio>
-                            <vs-radio v-model="edit_gender" name="edit_gender" vs-value="female" data-vv-scope="editform">Female</vs-radio>
+                            <vs-radio v-model="edit_gender" name="edit_gender" vs-value="male">Male</vs-radio>
+                            <vs-radio v-model="edit_gender" name="edit_gender" vs-value="female">Female</vs-radio>
                         </vx-input-group>
                         <vx-input-group class="mt-2">
                             <vs-input v-validate="'required'" name="address" v-model="edit_address" label-placeholder="Address" data-vv-scope="editform" />
@@ -145,6 +143,7 @@
 <script>
 import { mapState, mapActions,mapGetters } from 'vuex';
 export default {
+    inject : ['generatePassword'],
     data() {
         return {
             addOfficerModal: false,
@@ -204,8 +203,8 @@ export default {
             })
         },
 
-        editOfficer(index){
-            var officer = this.findOfficer(index);
+        editOfficer(id){
+            var officer = this.findOfficer(id);
             // console.log(officer)
             // console.log(officer);
             this.edit_manager_id = officer.manager_id;
@@ -213,6 +212,7 @@ export default {
             this.edit_last_name = officer.last_name;
             this.edit_email = officer.email;
             this.edit_gender = officer.gender;
+            // console.log(this.edit_gender)
             this.edit_zip_code = officer.zip_code;
             this.edit_address = officer.address;
             this.edit_phone = officer.phone;
@@ -231,15 +231,19 @@ export default {
                         // console.log(res.data);
                         if (res.data.status == 'success') {
                             this.edit_email = this.edit_first_name = this.edit_last_name = this.edit_zip_code = this.edit_city = this.edit_state = this.edit_address = this.edit_phone = '';
+                            this.edit_gender = 'male';
                             e.target.reset();
                             this.errors.clear();
                             this.editOfficerModal = false;
-                            this.getOfficers();
+                            // this.getOfficers();
                         }
                     })
                 }
             })
         },
+        makePassword(){
+            this.password = this.generatePassword();
+        }
     }
 }
 
