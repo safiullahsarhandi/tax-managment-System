@@ -62423,89 +62423,89 @@ Object.defineProperty(exports,"__esModule",{value:true});exports.VueHammer=undef
 
 module.exports =
 /******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
+/******/  // The module cache
+/******/  var installedModules = {};
 /******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
+/******/  // The require function
+/******/  function __webpack_require__(moduleId) {
 /******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
+/******/    // Check if module is in cache
+/******/    if(installedModules[moduleId]) {
+/******/      return installedModules[moduleId].exports;
+/******/    }
+/******/    // Create a new module (and put it into the cache)
+/******/    var module = installedModules[moduleId] = {
+/******/      i: moduleId,
+/******/      l: false,
+/******/      exports: {}
+/******/    };
 /******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/    // Execute the module function
+/******/    modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 /******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
+/******/    // Flag the module as loaded
+/******/    module.l = true;
 /******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// define __esModule on exports
-/******/ 	__webpack_require__.r = function(exports) {
-/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 		}
-/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 	};
-/******/
-/******/ 	// create a fake namespace object
-/******/ 	// mode & 1: value is a module id, require it
-/******/ 	// mode & 2: merge all properties of value into the ns
-/******/ 	// mode & 4: return value when already ns object
-/******/ 	// mode & 8|1: behave like require
-/******/ 	__webpack_require__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __webpack_require__(value);
-/******/ 		if(mode & 8) return value;
-/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/ 		var ns = Object.create(null);
-/******/ 		__webpack_require__.r(ns);
-/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/ 		return ns;
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
+/******/    // Return the exports of the module
+/******/    return module.exports;
+/******/  }
 /******/
 /******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "9bf4");
+/******/  // expose the modules object (__webpack_modules__)
+/******/  __webpack_require__.m = modules;
+/******/
+/******/  // expose the module cache
+/******/  __webpack_require__.c = installedModules;
+/******/
+/******/  // define getter function for harmony exports
+/******/  __webpack_require__.d = function(exports, name, getter) {
+/******/    if(!__webpack_require__.o(exports, name)) {
+/******/      Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/    }
+/******/  };
+/******/
+/******/  // define __esModule on exports
+/******/  __webpack_require__.r = function(exports) {
+/******/    if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/      Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/    }
+/******/    Object.defineProperty(exports, '__esModule', { value: true });
+/******/  };
+/******/
+/******/  // create a fake namespace object
+/******/  // mode & 1: value is a module id, require it
+/******/  // mode & 2: merge all properties of value into the ns
+/******/  // mode & 4: return value when already ns object
+/******/  // mode & 8|1: behave like require
+/******/  __webpack_require__.t = function(value, mode) {
+/******/    if(mode & 1) value = __webpack_require__(value);
+/******/    if(mode & 8) return value;
+/******/    if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/    var ns = Object.create(null);
+/******/    __webpack_require__.r(ns);
+/******/    Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/    if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/    return ns;
+/******/  };
+/******/
+/******/  // getDefaultExport function for compatibility with non-harmony modules
+/******/  __webpack_require__.n = function(module) {
+/******/    var getter = module && module.__esModule ?
+/******/      function getDefault() { return module['default']; } :
+/******/      function getModuleExports() { return module; };
+/******/    __webpack_require__.d(getter, 'a', getter);
+/******/    return getter;
+/******/  };
+/******/
+/******/  // Object.prototype.hasOwnProperty.call
+/******/  __webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/  // __webpack_public_path__
+/******/  __webpack_require__.p = "";
+/******/
+/******/
+/******/  // Load entry module and return exports
+/******/  return __webpack_require__(__webpack_require__.s = "9bf4");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -63933,7 +63933,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, _vm.size],style:([_vm.styles,{
     'width':/[px]/.test(_vm.size)?("" + _vm.size):null,
     'height':/[px]/.test(_vm.size)?("" + _vm.size):null
-  }]),attrs:{"name":"button"}},'button',_vm.$attrs,false),_vm.listeners),[(!_vm.is('line')&&!_vm.is('gradient')&&!_vm.is('relief'))?_c('span',{ref:"backgroundx",staticClass:"vs-button-backgroundx vs-button--background",style:(_vm.stylesBackGround)}):_vm._e(),(_vm.icon)?_c('vs-icon',{staticClass:"vs-button--icon ",style:({
+  }]),attrs:{"name":"button","type":_vm.$attrs.button}},'button',_vm.$attrs,false),_vm.listeners),[(!_vm.is('line')&&!_vm.is('gradient')&&!_vm.is('relief'))?_c('span',{ref:"backgroundx",staticClass:"vs-button-backgroundx vs-button--background",style:(_vm.stylesBackGround)}):_vm._e(),(_vm.icon)?_c('vs-icon',{staticClass:"vs-button--icon ",style:({
       'order':_vm.iconAfter?2:0,
       'margin-right':_vm.$slots.default&&!_vm.iconAfter?'5px':'0px',
       'margin-left':_vm.$slots.default&&_vm.iconAfter?'5px':'0px'
@@ -66026,7 +66026,7 @@ vsCheckBox_component.options.__file = "vsCheckBox.vue"
   Vue.component(vsCheckBox.name, vsCheckBox);
 });
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"aef9cfe0-vue-loader-template"}!C:/Users/DELL/AppData/Roaming/npm/node_modules/@vue/cli-service-global/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vsRadio/vsRadio.vue?vue&type=template&id=970bbb56&lang=html&
-var vsRadiovue_type_template_id_970bbb56_lang_html_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('label',{staticClass:"vs-component con-vs-radio",class:[("vs-radio-" + _vm.color)]},[_c('input',_vm._g(_vm._b({staticClass:"vs-radio--input",attrs:{"name":_vm.value,"type":"radio"},domProps:{"checked":_vm.isChecked,"value":_vm.value}},'input',_vm.$attrs,false),_vm.listeners)),_c('span',{staticClass:"vs-radio"},[_c('span',{staticClass:"vs-radio--borde",style:(_vm.styles)}),_c('span',{staticClass:"vs-radio--circle",style:(_vm.styleCircle)})]),_c('span',{staticClass:"vs-radio--label"},[_vm._t("default")],2)])}
+var vsRadiovue_type_template_id_970bbb56_lang_html_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('label',{staticClass:"vs-component con-vs-radio",class:[("vs-radio-" + _vm.color)]},[_c('input',_vm._g(_vm._b({staticClass:"vs-radio--input",attrs:{"name":_vm.$attrs.name,"type":"radio"},domProps:{"checked":_vm.isChecked,"value":_vm.value}},'input',_vm.$attrs,false),_vm.listeners)),_c('span',{staticClass:"vs-radio"},[_c('span',{staticClass:"vs-radio--borde",style:(_vm.styles)}),_c('span',{staticClass:"vs-radio--circle",style:(_vm.styleCircle)})]),_c('span',{staticClass:"vs-radio--label"},[_vm._t("default")],2)])}
 var vsRadiovue_type_template_id_970bbb56_lang_html_staticRenderFns = []
 
 
@@ -77942,31 +77942,31 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/',
       name: 'home',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! ./views/Home.vue */ "./resources/js/src/views/Home.vue"));
+        return __webpack_require__.e(/*! import() */ 12).then(__webpack_require__.bind(null, /*! ./views/Home.vue */ "./resources/js/src/views/Home.vue"));
       }
     }, {
       path: '/page2',
       name: 'page2',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 10).then(__webpack_require__.bind(null, /*! ./views/Page2.vue */ "./resources/js/src/views/Page2.vue"));
+        return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! ./views/Page2.vue */ "./resources/js/src/views/Page2.vue"));
       }
     }, {
       path: '/customers',
       name: 'Customers',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/Customers.vue */ "./resources/js/src/views/pages/Customers/Customers.vue"));
+        return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/Customers.vue */ "./resources/js/src/views/pages/Customers/Customers.vue"));
       }
     }, {
       path: '/add-customer',
       name: 'Add Customer',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/AddCustomer.vue */ "./resources/js/src/views/pages/Customers/AddCustomer.vue"));
+        return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/AddCustomer.vue */ "./resources/js/src/views/pages/Customers/AddCustomer.vue"));
       }
     }, {
       path: '/currencies',
       name: 'Currencies',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 12).then(__webpack_require__.bind(null, /*! ./views/pages/Currencies.vue */ "./resources/js/src/views/pages/Currencies.vue"));
+        return __webpack_require__.e(/*! import() */ 14).then(__webpack_require__.bind(null, /*! ./views/pages/Currencies.vue */ "./resources/js/src/views/pages/Currencies.vue"));
       }
     }, {
       path: '/exchange-rates',
@@ -77978,30 +77978,31 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/admins',
       name: 'Admins',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 11).then(__webpack_require__.bind(null, /*! ./views/pages/Admins.vue */ "./resources/js/src/views/pages/Admins.vue"));
+        return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./views/pages/Admins.vue */ "./resources/js/src/views/pages/Admins.vue"));
       }
     }, {
       path: '/supervisors',
       name: 'Supervisors',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./views/pages/Supervisors.vue */ "./resources/js/src/views/pages/Supervisors.vue"));
+        return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! ./views/pages/Supervisors.vue */ "./resources/js/src/views/pages/Supervisors.vue"));
       }
     }, {
       path: '/officers',
       name: 'Officers',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./views/pages/Officers.vue */ "./resources/js/src/views/pages/Officers.vue"));
+        return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! ./views/pages/Officers.vue */ "./resources/js/src/views/pages/Officers.vue"));
       }
-    }, // {
-    //   path: '/testing',
-    //   name: 'testing',
-    //   component: () => import('./views/pages/demo.vue'),
-    // },
-    {
+    }, {
+      path: '/testing',
+      name: 'testing',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! ./views/pages/demo.vue */ "./resources/js/src/views/pages/demo.vue"));
+      }
+    }, {
       path: '/tax-managment',
       name: 'Tax Managment',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 14).then(__webpack_require__.bind(null, /*! ./views/pages/tax-managment/TaxManagment.vue */ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue"));
+        return __webpack_require__.e(/*! import() */ 15).then(__webpack_require__.bind(null, /*! ./views/pages/tax-managment/TaxManagment.vue */ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue"));
       }
     }]
   }, // =============================================================================
@@ -78010,7 +78011,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   {
     path: '',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! @/layouts/full-page/FullPage.vue */ "./resources/js/src/layouts/full-page/FullPage.vue"));
+      return __webpack_require__.e(/*! import() */ 11).then(__webpack_require__.bind(null, /*! @/layouts/full-page/FullPage.vue */ "./resources/js/src/layouts/full-page/FullPage.vue"));
     },
     children: [// =============================================================================
     // PAGES
@@ -78025,7 +78026,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/pages/error-404',
       name: 'pageError404',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! @/views/pages/Error404.vue */ "./resources/js/src/views/pages/Error404.vue"));
+        return __webpack_require__.e(/*! import() */ 10).then(__webpack_require__.bind(null, /*! @/views/pages/Error404.vue */ "./resources/js/src/views/pages/Error404.vue"));
       }
     }]
   }, // Redirect to 404 page, if no match found
@@ -78035,6 +78036,129 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   }]
 });
 /* harmony default export */ __webpack_exports__["default"] = (router);
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Admins/AdminActions.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/src/store/Admins/AdminActions.js ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  getAdmins: function getAdmins(_ref) {
+    var commit = _ref.commit;
+    axios.get('get-admins').then(function (res) {
+      commit('setAdmins', res.data.admins);
+    });
+  },
+  addAdmin: function addAdmin(_ref2, fd) {
+    var commit = _ref2.commit;
+    return axios.post('add-admin', fd).then(function (res) {
+      // commit('setAdmin',res.data.Admins)
+      return res;
+    });
+  },
+  updateAdmin: function updateAdmin(_ref3, fd) {
+    var commit = _ref3.commit;
+    return axios.post('update-admin', fd).then(function (res) {
+      commit('setSingleAdmin', res.data.admin);
+      return res;
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Admins/AdminGetters.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/src/store/Admins/AdminGetters.js ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  findAdmin: function findAdmin(state) {
+    return function (id) {
+      var index = _.findIndex(state.admins, function (o) {
+        return o.id === id;
+      });
+
+      return state.admins[index];
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Admins/AdminMutations.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/src/store/Admins/AdminMutations.js ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  setAdmins: function setAdmins(state, admins) {
+    state.admins = admins;
+  },
+  setSingleAdmin: function setSingleAdmin(state, admin) {
+    var index = _.findIndex(state.admins, function (o) {
+      return o.id === admin.id;
+    });
+
+    Vue.set(state.admins, index, admin);
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Admins/AdminState.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/src/store/Admins/AdminState.js ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  admins: []
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Admins/Admins.js":
+/*!*************************************************!*\
+  !*** ./resources/js/src/store/Admins/Admins.js ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AdminState_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdminState.js */ "./resources/js/src/store/Admins/AdminState.js");
+/* harmony import */ var _AdminActions_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminActions.js */ "./resources/js/src/store/Admins/AdminActions.js");
+/* harmony import */ var _AdminMutations_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AdminMutations.js */ "./resources/js/src/store/Admins/AdminMutations.js");
+/* harmony import */ var _AdminGetters_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AdminGetters.js */ "./resources/js/src/store/Admins/AdminGetters.js");
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  actions: _AdminActions_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  state: _AdminState_js__WEBPACK_IMPORTED_MODULE_0__["default"],
+  mutations: _AdminMutations_js__WEBPACK_IMPORTED_MODULE_2__["default"],
+  getters: _AdminGetters_js__WEBPACK_IMPORTED_MODULE_3__["default"]
+});
 
 /***/ }),
 
@@ -78275,6 +78399,129 @@ __webpack_require__.r(__webpack_exports__);
   state: _OfficerState_js__WEBPACK_IMPORTED_MODULE_0__["default"],
   mutations: _OfficerMutations_js__WEBPACK_IMPORTED_MODULE_2__["default"],
   getters: _OfficerGetters_js__WEBPACK_IMPORTED_MODULE_3__["default"]
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Supervisors/SupervisorActions.js":
+/*!*****************************************************************!*\
+  !*** ./resources/js/src/store/Supervisors/SupervisorActions.js ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  getSupervisors: function getSupervisors(_ref) {
+    var commit = _ref.commit;
+    axios.get('get-supervisors').then(function (res) {
+      commit('setSupervisors', res.data.supervisors);
+    });
+  },
+  addSupervisor: function addSupervisor(_ref2, fd) {
+    var commit = _ref2.commit;
+    return axios.post('add-supervisor', fd).then(function (res) {
+      // commit('setSupervisor',res.data.Supervisors)
+      return res;
+    });
+  },
+  updateSupervisor: function updateSupervisor(_ref3, fd) {
+    var commit = _ref3.commit;
+    return axios.post('update-supervisor', fd).then(function (res) {
+      commit('setSingleSupervisor', res.data.supervisor);
+      return res;
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Supervisors/SupervisorGetters.js":
+/*!*****************************************************************!*\
+  !*** ./resources/js/src/store/Supervisors/SupervisorGetters.js ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  findSupervisor: function findSupervisor(state) {
+    return function (id) {
+      var index = _.findIndex(state.supervisors, function (o) {
+        return o.id === id;
+      });
+
+      return state.supervisors[index];
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Supervisors/SupervisorMutations.js":
+/*!*******************************************************************!*\
+  !*** ./resources/js/src/store/Supervisors/SupervisorMutations.js ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  setSupervisors: function setSupervisors(state, supervisors) {
+    state.supervisors = supervisors;
+  },
+  setSingleSupervisor: function setSingleSupervisor(state, supervisor) {
+    var index = _.findIndex(state.supervisors, function (o) {
+      return o.id === supervisor.id;
+    });
+
+    Vue.set(state.supervisors, index, supervisor);
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Supervisors/SupervisorState.js":
+/*!***************************************************************!*\
+  !*** ./resources/js/src/store/Supervisors/SupervisorState.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  supervisors: []
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Supervisors/Supervisors.js":
+/*!***********************************************************!*\
+  !*** ./resources/js/src/store/Supervisors/Supervisors.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SupervisorState_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SupervisorState.js */ "./resources/js/src/store/Supervisors/SupervisorState.js");
+/* harmony import */ var _SupervisorActions_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SupervisorActions.js */ "./resources/js/src/store/Supervisors/SupervisorActions.js");
+/* harmony import */ var _SupervisorMutations_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SupervisorMutations.js */ "./resources/js/src/store/Supervisors/SupervisorMutations.js");
+/* harmony import */ var _SupervisorGetters_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SupervisorGetters.js */ "./resources/js/src/store/Supervisors/SupervisorGetters.js");
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  actions: _SupervisorActions_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  state: _SupervisorState_js__WEBPACK_IMPORTED_MODULE_0__["default"],
+  mutations: _SupervisorMutations_js__WEBPACK_IMPORTED_MODULE_2__["default"],
+  getters: _SupervisorGetters_js__WEBPACK_IMPORTED_MODULE_3__["default"]
 });
 
 /***/ }),
@@ -78538,7 +78785,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mutations__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./mutations */ "./resources/js/src/store/mutations.js");
 /* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./actions */ "./resources/js/src/store/actions.js");
 /* harmony import */ var _Officers_Officers_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Officers/Officers.js */ "./resources/js/src/store/Officers/Officers.js");
-/* harmony import */ var _Customers_Customers_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Customers/Customers.js */ "./resources/js/src/store/Customers/Customers.js");
+/* harmony import */ var _Supervisors_Supervisors_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Supervisors/Supervisors.js */ "./resources/js/src/store/Supervisors/Supervisors.js");
+/* harmony import */ var _Customers_Customers_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Customers/Customers.js */ "./resources/js/src/store/Customers/Customers.js");
+/* harmony import */ var _Admins_Admins_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Admins/Admins.js */ "./resources/js/src/store/Admins/Admins.js");
 /*=========================================================================================
   File Name: store.js
   Description: Vuex store
@@ -78553,7 +78802,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
- // import Supervisors from "./Supervisors/Supervisors.js";
+
+
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
@@ -78564,8 +78814,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
   actions: _actions__WEBPACK_IMPORTED_MODULE_5__["default"],
   modules: {
     officers: _Officers_Officers_js__WEBPACK_IMPORTED_MODULE_6__["default"],
-    // supervisors : Supervisors,
-    customers: _Customers_Customers_js__WEBPACK_IMPORTED_MODULE_7__["default"]
+    supervisors: _Supervisors_Supervisors_js__WEBPACK_IMPORTED_MODULE_7__["default"],
+    customers: _Customers_Customers_js__WEBPACK_IMPORTED_MODULE_8__["default"],
+    admins: _Admins_Admins_js__WEBPACK_IMPORTED_MODULE_9__["default"]
   } // strict: process.env.NODE_ENV !== 'production'
 
 }));

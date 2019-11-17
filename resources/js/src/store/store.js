@@ -18,6 +18,7 @@ import actions from "./actions"
 import Officers from "./Officers/Officers.js";
 import Supervisors from "./Supervisors/Supervisors.js";
 import Customers from "./Customers/Customers.js";
+import Admins from "./Admins/Admins.js";
 
 Vue.use(Vuex)
 
@@ -30,7 +31,8 @@ export default new Vuex.Store({
     modules : {
       officers : Officers,
       supervisors : Supervisors,
-      customers : Customers
+      customers : Customers,
+      admins : Admins,
     }
     // strict: process.env.NODE_ENV !== 'production'
 })

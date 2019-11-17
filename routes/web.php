@@ -26,6 +26,9 @@ Route::group(['prefix' => ''], function () {
 	Route::get('get-customers', 'ApplicationController@get_customers');
 	Route::post('update-customer', 'ApplicationController@update_customer');
 
-
+	// admins routes
+	Route::get('get-admins', 'ApplicationController@get_admins');
+	Route::post('add-admin', 'ApplicationController@add_admin');
+	Route::post('update-admin', 'ApplicationController@update_admin');
 });
 Route::get('/{any}', 'ApplicationController')->where('any', '.*');
