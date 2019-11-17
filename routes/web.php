@@ -24,7 +24,6 @@ Route::group(['prefix' => ''], function () {
 	Route::get('get-admins', 'ApplicationController@get_admins');
 	Route::post('add-admin', 'ApplicationController@add_admin');
 	Route::post('update-admin', 'ApplicationController@update_admin');
-
 	// Customers
 	Route::post('add-customer', 'ApplicationController@add_customer');
 	Route::get('get-customers', 'ApplicationController@get_customers');
