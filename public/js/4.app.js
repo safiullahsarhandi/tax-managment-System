@@ -1,9 +1,16 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[4],{
 
+<<<<<<< HEAD
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Admins.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Admins.vue?vue&type=script&lang=js& ***!
   \**********************************************************************************************************************************************************************/
+=======
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Customers/AddCustomer.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Customers/AddCustomer.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************/
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -141,6 +148,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+<<<<<<< HEAD
 //
 //
 //
@@ -209,10 +217,59 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             // console.log(res.data);
             if (res.data.status == 'success') {
               _this.password = _this.email = _this.first_name = _this.last_name = _this.zip_code = _this.city = _this.state = _this.address = _this.phone = '';
+=======
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      customField: [],
+      name_khmer: '',
+      name_eng: '',
+      tax_id: '',
+      tin_num: '',
+      incorporation_date: '',
+      address: '',
+      street: '',
+      group: '',
+      village: '',
+      sangkat: '',
+      district: '',
+      province: '',
+      muncipality: '',
+      tel: '',
+      email: '',
+      industry: ''
+    };
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('customers/', ['customers']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('customers/', ['findCustomer'])),
+  methods: _objectSpread({
+    addMoreFeild: function addMoreFeild() {
+      this.customField.push({
+        name: 'additional_field[]',
+        value: '',
+        type: 'text'
+      });
+    }
+  }, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
+    submit: 'customers/addCustomer'
+  }), {
+    addCustomer: function addCustomer(e) {
+      var _this = this;
+
+      this.$validator.validateAll().then(function (result) {
+        if (result) {
+          var fd = new FormData(_this.$refs.addCustomer);
+
+          _this.submit(fd).then(function (res) {
+            console.log(res.data);
+
+            if (res.data.status == 'success') {
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
               e.target.reset();
 
               _this.errors.clear();
 
+<<<<<<< HEAD
               _this.addAdminModal = false;
 
               _this.getAdmins();
@@ -258,23 +315,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               _this2.errors.clear();
 
               _this2.editAdminModal = false; // this.getAdmins();
+=======
+              alert('Customer Added');
+            }
+
+            if (res.data.status == 'error') {
+              alert(res.data.msg);
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
             }
           });
         }
       });
+<<<<<<< HEAD
     },
     makePassword: function makePassword() {
       this.password = this.generatePassword();
+=======
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
     }
   })
 });
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Admins.vue?vue&type=template&id=51444659&":
 /*!**************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Admins.vue?vue&type=template&id=51444659& ***!
   \**************************************************************************************************************************************************************************************************************/
+=======
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Customers/AddCustomer.vue?vue&type=template&id=11f55c80&":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Customers/AddCustomer.vue?vue&type=template&id=11f55c80& ***!
+  \*****************************************************************************************************************************************************************************************************************************/
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -291,6 +365,7 @@ var render = function() {
     [
       _c(
         "vx-card",
+<<<<<<< HEAD
         { attrs: { title: "List of Admins" } },
         [
           _c(
@@ -445,18 +520,35 @@ var render = function() {
             "update:active": function($event) {
               _vm.addAdminModal = $event
             }
+=======
+        {
+          attrs: {
+            title: "Add Customer",
+            subtitle:
+              "Add Information Of Customer OR company which tax will be managed by system",
+            noShadow: "",
+            noRadius: ""
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
           }
         },
         [
           _c(
             "form",
             {
+<<<<<<< HEAD
               ref: "addAdminForm",
               attrs: { "data-vv-scope": "addform" },
               on: {
                 submit: function($event) {
                   $event.preventDefault()
                   return _vm.addAdmin($event)
+=======
+              ref: "addCustomer",
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.addCustomer($event)
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                 }
               }
             },
@@ -466,7 +558,14 @@ var render = function() {
                 [
                   _c(
                     "vs-col",
+<<<<<<< HEAD
                     { attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" } },
+=======
+                    {
+                      staticClass: "mb-2",
+                      attrs: { "vs-md": "12", "vs-lg": "4", "vs-sm": "12" }
+                    },
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                     [
                       _c(
                         "vx-input-group",
@@ -477,6 +576,7 @@ var render = function() {
                                 name: "validate",
                                 rawName: "v-validate",
                                 value: "required",
+<<<<<<< HEAD
                                 expression: "'required'"
                               }
                             ],
@@ -513,11 +613,57 @@ var render = function() {
                               )
                             ]
                           )
+=======
+                                expression: "`required`"
+                              }
+                            ],
+                            attrs: {
+                              name: "name_eng",
+                              "label-placeholder": "Name (English)"
+                            },
+                            model: {
+                              value: _vm.name_eng,
+                              callback: function($$v) {
+                                _vm.name_eng = $$v
+                              },
+                              expression: "name_eng"
+                            }
+                          })
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                         ],
                         1
                       ),
                       _vm._v(" "),
                       _c(
+<<<<<<< HEAD
+=======
+                        "span",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.errors.has("name_eng"),
+                              expression: "errors.has('name_eng')"
+                            }
+                          ],
+                          staticClass: "text-danger"
+                        },
+                        [_vm._v(_vm._s(_vm.errors.first("name_eng")))]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-col",
+                    {
+                      staticClass: "mb-2",
+                      attrs: { "vs-md": "12", "vs-lg": "4", "vs-sm": "12" }
+                    },
+                    [
+                      _c(
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                         "vx-input-group",
                         [
                           _c("vs-input", {
@@ -526,6 +672,7 @@ var render = function() {
                                 name: "validate",
                                 rawName: "v-validate",
                                 value: "required",
+<<<<<<< HEAD
                                 expression: "'required'"
                               }
                             ],
@@ -562,13 +709,60 @@ var render = function() {
                               )
                             ]
                           )
+=======
+                                expression: "`required`"
+                              }
+                            ],
+                            attrs: {
+                              name: "name_khmer",
+                              "label-placeholder": "Name (Khmer)"
+                            },
+                            model: {
+                              value: _vm.name_khmer,
+                              callback: function($$v) {
+                                _vm.name_khmer = $$v
+                              },
+                              expression: "name_khmer"
+                            }
+                          })
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                         ],
                         1
                       ),
                       _vm._v(" "),
                       _c(
+<<<<<<< HEAD
                         "vx-input-group",
                         { staticClass: "mt-2" },
+=======
+                        "span",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.errors.has("name_khmer"),
+                              expression: "errors.has('name_khmer')"
+                            }
+                          ],
+                          staticClass: "text-danger"
+                        },
+                        [_vm._v(_vm._s(_vm.errors.first("name_khmer")))]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-col",
+                    {
+                      staticClass: "mb-2",
+                      attrs: { "vs-md": "12", "vs-lg": "4", "vs-sm": "12" }
+                    },
+                    [
+                      _c(
+                        "vx-input-group",
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                         [
                           _c("vs-input", {
                             directives: [
@@ -576,6 +770,7 @@ var render = function() {
                                 name: "validate",
                                 rawName: "v-validate",
                                 value: "required",
+<<<<<<< HEAD
                                 expression: "'required'"
                               }
                             ],
@@ -608,13 +803,60 @@ var render = function() {
                             },
                             [_vm._v(_vm._s(_vm.errors.first("addform.phone")))]
                           )
+=======
+                                expression: "`required`"
+                              }
+                            ],
+                            attrs: {
+                              name: "tax_id",
+                              "label-placeholder": "Tax ID Card #"
+                            },
+                            model: {
+                              value: _vm.tax_id,
+                              callback: function($$v) {
+                                _vm.tax_id = $$v
+                              },
+                              expression: "tax_id"
+                            }
+                          })
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                         ],
                         1
                       ),
                       _vm._v(" "),
                       _c(
+<<<<<<< HEAD
                         "vx-input-group",
                         { staticClass: "mt-2" },
+=======
+                        "span",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.errors.has("tax_id"),
+                              expression: "errors.has('tax_id')"
+                            }
+                          ],
+                          staticClass: "text-danger"
+                        },
+                        [_vm._v(_vm._s(_vm.errors.first("tax_id")))]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-col",
+                    {
+                      staticClass: "mb-2",
+                      attrs: { "vs-md": "12", "vs-lg": "4", "vs-sm": "12" }
+                    },
+                    [
+                      _c(
+                        "vx-input-group",
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                         [
                           _c("vs-input", {
                             directives: [
@@ -622,6 +864,7 @@ var render = function() {
                                 name: "validate",
                                 rawName: "v-validate",
                                 value: "required",
+<<<<<<< HEAD
                                 expression: "'required'"
                               }
                             ],
@@ -654,13 +897,60 @@ var render = function() {
                             },
                             [_vm._v(_vm._s(_vm.errors.first("addform.email")))]
                           )
+=======
+                                expression: "`required`"
+                              }
+                            ],
+                            attrs: {
+                              name: "tin_num",
+                              "label-placeholder": "TIN #"
+                            },
+                            model: {
+                              value: _vm.tin_num,
+                              callback: function($$v) {
+                                _vm.tin_num = $$v
+                              },
+                              expression: "tin_num"
+                            }
+                          })
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                         ],
                         1
                       ),
                       _vm._v(" "),
                       _c(
+<<<<<<< HEAD
                         "vx-input-group",
                         { staticClass: "mt-2" },
+=======
+                        "span",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.errors.has("tin_num"),
+                              expression: "errors.has('tin_num')"
+                            }
+                          ],
+                          staticClass: "text-danger"
+                        },
+                        [_vm._v(_vm._s(_vm.errors.first("tin_num")))]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-col",
+                    {
+                      staticClass: "mb-2",
+                      attrs: { "vs-md": "12", "vs-lg": "4", "vs-sm": "12" }
+                    },
+                    [
+                      _c(
+                        "vx-input-group",
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                         [
                           _c("vs-input", {
                             directives: [
@@ -668,6 +958,7 @@ var render = function() {
                                 name: "validate",
                                 rawName: "v-validate",
                                 value: "required",
+<<<<<<< HEAD
                                 expression: "'required'"
                               }
                             ],
@@ -720,6 +1011,42 @@ var render = function() {
                           )
                         ],
                         1
+=======
+                                expression: "`required`"
+                              }
+                            ],
+                            attrs: {
+                              name: "incorporation_date",
+                              "label-placeholder":
+                                "Date of company incorporated"
+                            },
+                            model: {
+                              value: _vm.incorporation_date,
+                              callback: function($$v) {
+                                _vm.incorporation_date = $$v
+                              },
+                              expression: "incorporation_date"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.errors.has("incorporation_date"),
+                              expression: "errors.has('incorporation_date')"
+                            }
+                          ],
+                          staticClass: "text-danger"
+                        },
+                        [_vm._v(_vm._s(_vm.errors.first("incorporation_date")))]
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                       )
                     ],
                     1
@@ -727,6 +1054,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "vs-col",
+<<<<<<< HEAD
                     { attrs: { "vs-lg": "6", "vs-md": "12", "vs-sm": "12" } },
                     [
                       _c(
@@ -775,6 +1103,15 @@ var render = function() {
                       _c(
                         "vx-input-group",
                         { staticClass: "mt-2" },
+=======
+                    {
+                      staticClass: "mb-2",
+                      attrs: { "vs-md": "12", "vs-lg": "4", "vs-sm": "12" }
+                    },
+                    [
+                      _c(
+                        "vx-input-group",
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                         [
                           _c("vs-input", {
                             directives: [
@@ -782,13 +1119,21 @@ var render = function() {
                                 name: "validate",
                                 rawName: "v-validate",
                                 value: "required",
+<<<<<<< HEAD
                                 expression: "'required'"
+=======
+                                expression: "`required`"
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                               }
                             ],
                             attrs: {
                               name: "address",
+<<<<<<< HEAD
                               "label-placeholder": "Address",
                               "data-vv-scope": "addform"
+=======
+                              "label-placeholder": "Address"
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                             },
                             model: {
                               value: _vm.address,
@@ -797,6 +1142,7 @@ var render = function() {
                               },
                               expression: "address"
                             }
+<<<<<<< HEAD
                           }),
                           _vm._v(" "),
                           _c(
@@ -818,13 +1164,46 @@ var render = function() {
                               )
                             ]
                           )
+=======
+                          })
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                         ],
                         1
                       ),
                       _vm._v(" "),
                       _c(
+<<<<<<< HEAD
                         "vx-input-group",
                         { staticClass: "mt-2" },
+=======
+                        "span",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.errors.has("address"),
+                              expression: "errors.has('address')"
+                            }
+                          ],
+                          staticClass: "text-danger"
+                        },
+                        [_vm._v(_vm._s(_vm.errors.first("address")))]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-col",
+                    {
+                      staticClass: "mb-2",
+                      attrs: { "vs-md": "12", "vs-lg": "4", "vs-sm": "12" }
+                    },
+                    [
+                      _c(
+                        "vx-input-group",
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                         [
                           _c("vs-input", {
                             directives: [
@@ -832,6 +1211,7 @@ var render = function() {
                                 name: "validate",
                                 rawName: "v-validate",
                                 value: "required",
+<<<<<<< HEAD
                                 expression: "'required'"
                               }
                             ],
@@ -864,13 +1244,60 @@ var render = function() {
                             },
                             [_vm._v(_vm._s(_vm.errors.first("addform.state")))]
                           )
+=======
+                                expression: "`required`"
+                              }
+                            ],
+                            attrs: {
+                              name: "street",
+                              "label-placeholder": "Street"
+                            },
+                            model: {
+                              value: _vm.street,
+                              callback: function($$v) {
+                                _vm.street = $$v
+                              },
+                              expression: "street"
+                            }
+                          })
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                         ],
                         1
                       ),
                       _vm._v(" "),
                       _c(
+<<<<<<< HEAD
                         "vx-input-group",
                         { staticClass: "mt-2" },
+=======
+                        "span",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.errors.has("street"),
+                              expression: "errors.has('street')"
+                            }
+                          ],
+                          staticClass: "text-danger"
+                        },
+                        [_vm._v(_vm._s(_vm.errors.first("street")))]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-col",
+                    {
+                      staticClass: "mb-2",
+                      attrs: { "vs-md": "12", "vs-lg": "4", "vs-sm": "12" }
+                    },
+                    [
+                      _c(
+                        "vx-input-group",
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                         [
                           _c("vs-input", {
                             directives: [
@@ -878,6 +1305,7 @@ var render = function() {
                                 name: "validate",
                                 rawName: "v-validate",
                                 value: "required",
+<<<<<<< HEAD
                                 expression: "'required'"
                               }
                             ],
@@ -910,13 +1338,60 @@ var render = function() {
                             },
                             [_vm._v(_vm._s(_vm.errors.first("addform.city")))]
                           )
+=======
+                                expression: "`required`"
+                              }
+                            ],
+                            attrs: {
+                              name: "group",
+                              "label-placeholder": "Group"
+                            },
+                            model: {
+                              value: _vm.group,
+                              callback: function($$v) {
+                                _vm.group = $$v
+                              },
+                              expression: "group"
+                            }
+                          })
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                         ],
                         1
                       ),
                       _vm._v(" "),
                       _c(
+<<<<<<< HEAD
                         "vx-input-group",
                         { staticClass: "mt-2" },
+=======
+                        "span",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.errors.has("group"),
+                              expression: "errors.has('group')"
+                            }
+                          ],
+                          staticClass: "text-danger"
+                        },
+                        [_vm._v(_vm._s(_vm.errors.first("group")))]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-col",
+                    {
+                      staticClass: "mb-2",
+                      attrs: { "vs-md": "12", "vs-lg": "4", "vs-sm": "12" }
+                    },
+                    [
+                      _c(
+                        "vx-input-group",
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                         [
                           _c("vs-input", {
                             directives: [
@@ -924,6 +1399,7 @@ var render = function() {
                                 name: "validate",
                                 rawName: "v-validate",
                                 value: "required",
+<<<<<<< HEAD
                                 expression: "'required'"
                               }
                             ],
@@ -1023,10 +1499,57 @@ var render = function() {
                   _c(
                     "vs-col",
                     { attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" } },
+=======
+                                expression: "`required`"
+                              }
+                            ],
+                            attrs: {
+                              name: "village",
+                              "label-placeholder": "Village"
+                            },
+                            model: {
+                              value: _vm.village,
+                              callback: function($$v) {
+                                _vm.village = $$v
+                              },
+                              expression: "village"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.errors.has("village"),
+                              expression: "errors.has('village')"
+                            }
+                          ],
+                          staticClass: "text-danger"
+                        },
+                        [_vm._v(_vm._s(_vm.errors.first("village")))]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-col",
+                    {
+                      staticClass: "mb-2",
+                      attrs: { "vs-md": "12", "vs-lg": "4", "vs-sm": "12" }
+                    },
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                     [
                       _c(
                         "vx-input-group",
                         [
+<<<<<<< HEAD
                           _c("input", {
                             directives: [
                               {
@@ -1052,12 +1575,15 @@ var render = function() {
                             }
                           }),
                           _vm._v(" "),
+=======
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                           _c("vs-input", {
                             directives: [
                               {
                                 name: "validate",
                                 rawName: "v-validate",
                                 value: "required",
+<<<<<<< HEAD
                                 expression: "'required'"
                               }
                             ],
@@ -1090,11 +1616,57 @@ var render = function() {
                             },
                             [_vm._v(_vm._s(_vm.errors.first("first_name")))]
                           )
+=======
+                                expression: "`required`"
+                              }
+                            ],
+                            attrs: {
+                              name: "sangkat",
+                              "label-placeholder": "Sangkat"
+                            },
+                            model: {
+                              value: _vm.sangkat,
+                              callback: function($$v) {
+                                _vm.sangkat = $$v
+                              },
+                              expression: "sangkat"
+                            }
+                          })
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                         ],
                         1
                       ),
                       _vm._v(" "),
                       _c(
+<<<<<<< HEAD
+=======
+                        "span",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.errors.has("sangkat"),
+                              expression: "errors.has('sangkat')"
+                            }
+                          ],
+                          staticClass: "text-danger"
+                        },
+                        [_vm._v(_vm._s(_vm.errors.first("sangkat")))]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-col",
+                    {
+                      staticClass: "mb-2",
+                      attrs: { "vs-md": "12", "vs-lg": "4", "vs-sm": "12" }
+                    },
+                    [
+                      _c(
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                         "vx-input-group",
                         [
                           _c("vs-input", {
@@ -1103,6 +1675,7 @@ var render = function() {
                                 name: "validate",
                                 rawName: "v-validate",
                                 value: "required",
+<<<<<<< HEAD
                                 expression: "'required'"
                               }
                             ],
@@ -1135,13 +1708,60 @@ var render = function() {
                             },
                             [_vm._v(_vm._s(_vm.errors.first("last_name")))]
                           )
+=======
+                                expression: "`required`"
+                              }
+                            ],
+                            attrs: {
+                              name: "district",
+                              "label-placeholder": "District"
+                            },
+                            model: {
+                              value: _vm.district,
+                              callback: function($$v) {
+                                _vm.district = $$v
+                              },
+                              expression: "district"
+                            }
+                          })
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                         ],
                         1
                       ),
                       _vm._v(" "),
                       _c(
+<<<<<<< HEAD
                         "vx-input-group",
                         { staticClass: "mt-2" },
+=======
+                        "span",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.errors.has("district"),
+                              expression: "errors.has('district')"
+                            }
+                          ],
+                          staticClass: "text-danger"
+                        },
+                        [_vm._v(_vm._s(_vm.errors.first("district")))]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-col",
+                    {
+                      staticClass: "mb-2",
+                      attrs: { "vs-md": "12", "vs-lg": "4", "vs-sm": "12" }
+                    },
+                    [
+                      _c(
+                        "vx-input-group",
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                         [
                           _c("vs-input", {
                             directives: [
@@ -1149,6 +1769,7 @@ var render = function() {
                                 name: "validate",
                                 rawName: "v-validate",
                                 value: "required",
+<<<<<<< HEAD
                                 expression: "'required'"
                               }
                             ],
@@ -1181,13 +1802,60 @@ var render = function() {
                             },
                             [_vm._v(_vm._s(_vm.errors.first("phone")))]
                           )
+=======
+                                expression: "`required`"
+                              }
+                            ],
+                            attrs: {
+                              name: "province",
+                              "label-placeholder": "Province"
+                            },
+                            model: {
+                              value: _vm.province,
+                              callback: function($$v) {
+                                _vm.province = $$v
+                              },
+                              expression: "province"
+                            }
+                          })
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                         ],
                         1
                       ),
                       _vm._v(" "),
                       _c(
+<<<<<<< HEAD
                         "vx-input-group",
                         { staticClass: "mt-2" },
+=======
+                        "span",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.errors.has("province"),
+                              expression: "errors.has('province')"
+                            }
+                          ],
+                          staticClass: "text-danger"
+                        },
+                        [_vm._v(_vm._s(_vm.errors.first("province")))]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-col",
+                    {
+                      staticClass: "mb-2",
+                      attrs: { "vs-md": "12", "vs-lg": "4", "vs-sm": "12" }
+                    },
+                    [
+                      _c(
+                        "vx-input-group",
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                         [
                           _c("vs-input", {
                             directives: [
@@ -1195,6 +1863,7 @@ var render = function() {
                                 name: "validate",
                                 rawName: "v-validate",
                                 value: "required",
+<<<<<<< HEAD
                                 expression: "'required'"
                               }
                             ],
@@ -1231,6 +1900,41 @@ var render = function() {
                           )
                         ],
                         1
+=======
+                                expression: "`required`"
+                              }
+                            ],
+                            attrs: {
+                              name: "muncipality",
+                              "label-placeholder": "Muncipality"
+                            },
+                            model: {
+                              value: _vm.muncipality,
+                              callback: function($$v) {
+                                _vm.muncipality = $$v
+                              },
+                              expression: "muncipality"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.errors.has("muncipality"),
+                              expression: "errors.has('muncipality')"
+                            }
+                          ],
+                          staticClass: "text-danger"
+                        },
+                        [_vm._v(_vm._s(_vm.errors.first("muncipality")))]
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                       )
                     ],
                     1
@@ -1238,6 +1942,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "vs-col",
+<<<<<<< HEAD
                     { attrs: { "vs-lg": "6", "vs-md": "12", "vs-sm": "12" } },
                     [
                       _c(
@@ -1286,6 +1991,15 @@ var render = function() {
                       _c(
                         "vx-input-group",
                         { staticClass: "mt-2" },
+=======
+                    {
+                      staticClass: "mb-2",
+                      attrs: { "vs-md": "12", "vs-lg": "4", "vs-sm": "12" }
+                    },
+                    [
+                      _c(
+                        "vx-input-group",
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                         [
                           _c("vs-input", {
                             directives: [
@@ -1293,6 +2007,7 @@ var render = function() {
                                 name: "validate",
                                 rawName: "v-validate",
                                 value: "required",
+<<<<<<< HEAD
                                 expression: "'required'"
                               }
                             ],
@@ -1325,13 +2040,57 @@ var render = function() {
                             },
                             [_vm._v(_vm._s(_vm.errors.first("address")))]
                           )
+=======
+                                expression: "`required`"
+                              }
+                            ],
+                            attrs: { name: "tel", "label-placeholder": "Tel." },
+                            model: {
+                              value: _vm.tel,
+                              callback: function($$v) {
+                                _vm.tel = $$v
+                              },
+                              expression: "tel"
+                            }
+                          })
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                         ],
                         1
                       ),
                       _vm._v(" "),
                       _c(
+<<<<<<< HEAD
                         "vx-input-group",
                         { staticClass: "mt-2" },
+=======
+                        "span",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.errors.has("tel"),
+                              expression: "errors.has('tel')"
+                            }
+                          ],
+                          staticClass: "text-danger"
+                        },
+                        [_vm._v(_vm._s(_vm.errors.first("tel")))]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-col",
+                    {
+                      staticClass: "mb-2",
+                      attrs: { "vs-md": "12", "vs-lg": "4", "vs-sm": "12" }
+                    },
+                    [
+                      _c(
+                        "vx-input-group",
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                         [
                           _c("vs-input", {
                             directives: [
@@ -1339,6 +2098,7 @@ var render = function() {
                                 name: "validate",
                                 rawName: "v-validate",
                                 value: "required",
+<<<<<<< HEAD
                                 expression: "'required'"
                               }
                             ],
@@ -1371,13 +2131,61 @@ var render = function() {
                             },
                             [_vm._v(_vm._s(_vm.errors.first("state")))]
                           )
+=======
+                                expression: "`required`"
+                              }
+                            ],
+                            attrs: {
+                              name: "email",
+                              type: "email",
+                              "label-placeholder": "Email"
+                            },
+                            model: {
+                              value: _vm.email,
+                              callback: function($$v) {
+                                _vm.email = $$v
+                              },
+                              expression: "email"
+                            }
+                          })
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                         ],
                         1
                       ),
                       _vm._v(" "),
                       _c(
+<<<<<<< HEAD
                         "vx-input-group",
                         { staticClass: "mt-2" },
+=======
+                        "span",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.errors.has("email"),
+                              expression: "errors.has('email')"
+                            }
+                          ],
+                          staticClass: "text-danger"
+                        },
+                        [_vm._v(_vm._s(_vm.errors.first("email")))]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-col",
+                    {
+                      staticClass: "mb-2",
+                      attrs: { "vs-md": "12", "vs-lg": "4", "vs-sm": "12" }
+                    },
+                    [
+                      _c(
+                        "vx-input-group",
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                         [
                           _c("vs-input", {
                             directives: [
@@ -1385,6 +2193,7 @@ var render = function() {
                                 name: "validate",
                                 rawName: "v-validate",
                                 value: "required",
+<<<<<<< HEAD
                                 expression: "'required'"
                               }
                             ],
@@ -1417,11 +2226,29 @@ var render = function() {
                             },
                             [_vm._v(_vm._s(_vm.errors.first("city")))]
                           )
+=======
+                                expression: "`required`"
+                              }
+                            ],
+                            attrs: {
+                              name: "industry",
+                              "label-placeholder": "Industry / Sector"
+                            },
+                            model: {
+                              value: _vm.industry,
+                              callback: function($$v) {
+                                _vm.industry = $$v
+                              },
+                              expression: "industry"
+                            }
+                          })
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                         ],
                         1
                       ),
                       _vm._v(" "),
                       _c(
+<<<<<<< HEAD
                         "vx-input-group",
                         { staticClass: "mt-2" },
                         [
@@ -1483,6 +2310,142 @@ var render = function() {
                           attrs: { button: "submit", type: "gradient" }
                         },
                         [_vm._v("Update Admin")]
+=======
+                        "span",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.errors.has("industry"),
+                              expression: "errors.has('industry')"
+                            }
+                          ],
+                          staticClass: "text-danger"
+                        },
+                        [_vm._v(_vm._s(_vm.errors.first("industry")))]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.customField, function(field, index) {
+                    return _c(
+                      "vs-col",
+                      {
+                        key: index,
+                        staticClass: "mb-2",
+                        attrs: { "vs-md": "12", "vs-lg": "4", "vs-sm": "12" }
+                      },
+                      [
+                        _c(
+                          "vx-input-group",
+                          [
+                            _c("vs-input", {
+                              directives: [
+                                {
+                                  name: "validate",
+                                  rawName: "v-validate",
+                                  value: "required",
+                                  expression: "`required`"
+                                }
+                              ],
+                              attrs: {
+                                type: field.text,
+                                name: field.name,
+                                "label-placeholder":
+                                  "Custom Field " + (index + 1)
+                              },
+                              model: {
+                                value: field.value,
+                                callback: function($$v) {
+                                  _vm.$set(field, "value", $$v)
+                                },
+                                expression: "field.value"
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "vs-col",
+                    {
+                      staticClass: "mb-2",
+                      attrs: { "vs-md": "12", "vs-lg": "4", "vs-sm": "12" }
+                    },
+                    [
+                      _c(
+                        "vs-button",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { type: "gradient", button: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.addMoreFeild()
+                            }
+                          }
+                        },
+                        [_vm._v("Add More Custom Fields")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c(
+                "vs-row",
+                [
+                  _c(
+                    "vs-col",
+                    {
+                      staticClass: "text-center",
+                      attrs: { "vs-lg": "12", "vs-md": "12" }
+                    },
+                    [
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "text-center",
+                          attrs: { "vs-md": "12", "vs-lg": "12" }
+                        },
+                        [
+                          _c(
+                            "vs-button",
+                            {
+                              staticClass: "mt-5",
+                              attrs: { button: "submit", type: "gradient" }
+                            },
+                            [_vm._v("Save")]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "text-center",
+                          attrs: { "vs-md": "12", "vs-lg": "12" }
+                        },
+                        [
+                          _c(
+                            "vs-button",
+                            {
+                              staticClass: "mt-5",
+                              attrs: { type: "gradient", button: "button" }
+                            },
+                            [_vm._v("Upload Excel Sheet")]
+                          )
+                        ],
+                        1
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
                       )
                     ],
                     1
@@ -1506,18 +2469,31 @@ render._withStripped = true
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ "./resources/js/src/views/pages/Admins.vue":
 /*!*************************************************!*\
   !*** ./resources/js/src/views/pages/Admins.vue ***!
   \*************************************************/
+=======
+/***/ "./resources/js/src/views/pages/Customers/AddCustomer.vue":
+/*!****************************************************************!*\
+  !*** ./resources/js/src/views/pages/Customers/AddCustomer.vue ***!
+  \****************************************************************/
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+<<<<<<< HEAD
 /* harmony import */ var _Admins_vue_vue_type_template_id_51444659___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Admins.vue?vue&type=template&id=51444659& */ "./resources/js/src/views/pages/Admins.vue?vue&type=template&id=51444659&");
 /* harmony import */ var _Admins_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Admins.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/Admins.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+=======
+/* harmony import */ var _AddCustomer_vue_vue_type_template_id_11f55c80___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AddCustomer.vue?vue&type=template&id=11f55c80& */ "./resources/js/src/views/pages/Customers/AddCustomer.vue?vue&type=template&id=11f55c80&");
+/* harmony import */ var _AddCustomer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AddCustomer.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/Customers/AddCustomer.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
 
 
 
@@ -1526,9 +2502,15 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+<<<<<<< HEAD
   _Admins_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _Admins_vue_vue_type_template_id_51444659___WEBPACK_IMPORTED_MODULE_0__["render"],
   _Admins_vue_vue_type_template_id_51444659___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+=======
+  _AddCustomer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AddCustomer_vue_vue_type_template_id_11f55c80___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AddCustomer_vue_vue_type_template_id_11f55c80___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
   false,
   null,
   null,
@@ -1538,20 +2520,32 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
+<<<<<<< HEAD
 component.options.__file = "resources/js/src/views/pages/Admins.vue"
+=======
+component.options.__file = "resources/js/src/views/pages/Customers/AddCustomer.vue"
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ "./resources/js/src/views/pages/Admins.vue?vue&type=script&lang=js&":
 /*!**************************************************************************!*\
   !*** ./resources/js/src/views/pages/Admins.vue?vue&type=script&lang=js& ***!
   \**************************************************************************/
+=======
+/***/ "./resources/js/src/views/pages/Customers/AddCustomer.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/Customers/AddCustomer.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************/
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+<<<<<<< HEAD
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Admins_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Admins.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Admins.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Admins_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
@@ -1561,15 +2555,33 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************************************************************!*\
   !*** ./resources/js/src/views/pages/Admins.vue?vue&type=template&id=51444659& ***!
   \********************************************************************************/
+=======
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AddCustomer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./AddCustomer.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Customers/AddCustomer.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AddCustomer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/Customers/AddCustomer.vue?vue&type=template&id=11f55c80&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/Customers/AddCustomer.vue?vue&type=template&id=11f55c80& ***!
+  \***********************************************************************************************/
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+<<<<<<< HEAD
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Admins_vue_vue_type_template_id_51444659___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Admins.vue?vue&type=template&id=51444659& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Admins.vue?vue&type=template&id=51444659&");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Admins_vue_vue_type_template_id_51444659___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Admins_vue_vue_type_template_id_51444659___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+=======
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddCustomer_vue_vue_type_template_id_11f55c80___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./AddCustomer.vue?vue&type=template&id=11f55c80& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Customers/AddCustomer.vue?vue&type=template&id=11f55c80&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddCustomer_vue_vue_type_template_id_11f55c80___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddCustomer_vue_vue_type_template_id_11f55c80___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
 
 
 

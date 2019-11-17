@@ -63933,7 +63933,11 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, _vm.size],style:([_vm.styles,{
     'width':/[px]/.test(_vm.size)?("" + _vm.size):null,
     'height':/[px]/.test(_vm.size)?("" + _vm.size):null
+<<<<<<< HEAD
   }]),attrs:{"name":"button","type":_vm.$attrs.button}},'button',_vm.$attrs,false),_vm.listeners),[(!_vm.is('line')&&!_vm.is('gradient')&&!_vm.is('relief'))?_c('span',{ref:"backgroundx",staticClass:"vs-button-backgroundx vs-button--background",style:(_vm.stylesBackGround)}):_vm._e(),(_vm.icon)?_c('vs-icon',{staticClass:"vs-button--icon ",style:({
+=======
+  }]),attrs:{"name":"button"}},'button',_vm.$attrs,false),_vm.listeners),[(!_vm.is('line')&&!_vm.is('gradient')&&!_vm.is('relief'))?_c('span',{ref:"backgroundx",staticClass:"vs-button-backgroundx vs-button--background",style:(_vm.stylesBackGround)}):_vm._e(),(_vm.icon)?_c('vs-icon',{staticClass:"vs-button--icon ",style:({
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
       'order':_vm.iconAfter?2:0,
       'margin-right':_vm.$slots.default&&!_vm.iconAfter?'5px':'0px',
       'margin-left':_vm.$slots.default&&_vm.iconAfter?'5px':'0px'
@@ -66026,7 +66030,11 @@ vsCheckBox_component.options.__file = "vsCheckBox.vue"
   Vue.component(vsCheckBox.name, vsCheckBox);
 });
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"aef9cfe0-vue-loader-template"}!C:/Users/DELL/AppData/Roaming/npm/node_modules/@vue/cli-service-global/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vsRadio/vsRadio.vue?vue&type=template&id=970bbb56&lang=html&
+<<<<<<< HEAD
 var vsRadiovue_type_template_id_970bbb56_lang_html_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('label',{staticClass:"vs-component con-vs-radio",class:[("vs-radio-" + _vm.color)]},[_c('input',_vm._g(_vm._b({staticClass:"vs-radio--input",attrs:{"name":_vm.$attrs.name,"type":"radio"},domProps:{"checked":_vm.isChecked,"value":_vm.value}},'input',_vm.$attrs,false),_vm.listeners)),_c('span',{staticClass:"vs-radio"},[_c('span',{staticClass:"vs-radio--borde",style:(_vm.styles)}),_c('span',{staticClass:"vs-radio--circle",style:(_vm.styleCircle)})]),_c('span',{staticClass:"vs-radio--label"},[_vm._t("default")],2)])}
+=======
+var vsRadiovue_type_template_id_970bbb56_lang_html_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('label',{staticClass:"vs-component con-vs-radio",class:[("vs-radio-" + _vm.color)]},[_c('input',_vm._g(_vm._b({staticClass:"vs-radio--input",attrs:{"name":_vm.value,"type":"radio"},domProps:{"checked":_vm.isChecked,"value":_vm.value}},'input',_vm.$attrs,false),_vm.listeners)),_c('span',{staticClass:"vs-radio"},[_c('span',{staticClass:"vs-radio--borde",style:(_vm.styles)}),_c('span',{staticClass:"vs-radio--circle",style:(_vm.styleCircle)})]),_c('span',{staticClass:"vs-radio--label"},[_vm._t("default")],2)])}
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
 var vsRadiovue_type_template_id_970bbb56_lang_html_staticRenderFns = []
 
 
@@ -75722,7 +75730,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapActions", function() { return mapActions; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNamespacedHelpers", function() { return createNamespacedHelpers; });
 /**
+<<<<<<< HEAD
  * vuex v3.1.1
+=======
+ * vuex v3.1.2
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
  * (c) 2019 Evan You
  * @license MIT
  */
@@ -76044,6 +76056,10 @@ var Store = function Store (options) {
   this._modulesNamespaceMap = Object.create(null);
   this._subscribers = [];
   this._watcherVM = new Vue();
+<<<<<<< HEAD
+=======
+  this._makeLocalGettersCache = Object.create(null);
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
 
   // bind commit and dispatch to self
   var store = this;
@@ -76276,12 +76292,21 @@ function resetStoreVM (store, state, hot) {
 
   // bind store public getters
   store.getters = {};
+<<<<<<< HEAD
+=======
+  // reset local getters cache
+  store._makeLocalGettersCache = Object.create(null);
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
   var wrappedGetters = store._wrappedGetters;
   var computed = {};
   forEachValue(wrappedGetters, function (fn, key) {
     // use computed to leverage its lazy-caching mechanism
     // direct inline function use will lead to closure preserving oldVm.
+<<<<<<< HEAD
     // using partial to return function with only arguments preserved in closure enviroment.
+=======
+    // using partial to return function with only arguments preserved in closure environment.
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
     computed[key] = partial(fn, store);
     Object.defineProperty(store.getters, key, {
       get: function () { return store._vm[key]; },
@@ -76325,6 +76350,12 @@ function installModule (store, rootState, path, module, hot) {
 
   // register in namespace map
   if (module.namespaced) {
+<<<<<<< HEAD
+=======
+    if (store._modulesNamespaceMap[namespace] && "development" !== 'production') {
+      console.error(("[vuex] duplicate namespace " + namespace + " for the namespaced module " + (path.join('/'))));
+    }
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
     store._modulesNamespaceMap[namespace] = module;
   }
 
@@ -76333,6 +76364,16 @@ function installModule (store, rootState, path, module, hot) {
     var parentState = getNestedState(rootState, path.slice(0, -1));
     var moduleName = path[path.length - 1];
     store._withCommit(function () {
+<<<<<<< HEAD
+=======
+      if (true) {
+        if (moduleName in parentState) {
+          console.warn(
+            ("[vuex] state field \"" + moduleName + "\" was overridden by a module with the same name at \"" + (path.join('.')) + "\"")
+          );
+        }
+      }
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
       Vue.set(parentState, moduleName, module.state);
     });
   }
@@ -76420,6 +76461,7 @@ function makeLocalContext (store, namespace, path) {
 }
 
 function makeLocalGetters (store, namespace) {
+<<<<<<< HEAD
   var gettersProxy = {};
 
   var splitPos = namespace.length;
@@ -76440,6 +76482,30 @@ function makeLocalGetters (store, namespace) {
   });
 
   return gettersProxy
+=======
+  if (!store._makeLocalGettersCache[namespace]) {
+    var gettersProxy = {};
+    var splitPos = namespace.length;
+    Object.keys(store.getters).forEach(function (type) {
+      // skip if the target getter is not match this namespace
+      if (type.slice(0, splitPos) !== namespace) { return }
+
+      // extract local getter type
+      var localType = type.slice(splitPos);
+
+      // Add a port to the getters proxy.
+      // Define as getter property because
+      // we do not want to evaluate the getters in this time.
+      Object.defineProperty(gettersProxy, localType, {
+        get: function () { return store.getters[type]; },
+        enumerable: true
+      });
+    });
+    store._makeLocalGettersCache[namespace] = gettersProxy;
+  }
+
+  return store._makeLocalGettersCache[namespace]
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
 }
 
 function registerMutation (store, type, handler, local) {
@@ -76451,7 +76517,11 @@ function registerMutation (store, type, handler, local) {
 
 function registerAction (store, type, handler, local) {
   var entry = store._actions[type] || (store._actions[type] = []);
+<<<<<<< HEAD
   entry.push(function wrappedActionHandler (payload, cb) {
+=======
+  entry.push(function wrappedActionHandler (payload) {
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
     var res = handler.call(store, {
       dispatch: local.dispatch,
       commit: local.commit,
@@ -76459,7 +76529,11 @@ function registerAction (store, type, handler, local) {
       state: local.state,
       rootGetters: store.getters,
       rootState: store.state
+<<<<<<< HEAD
     }, payload, cb);
+=======
+    }, payload);
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
     if (!isPromise(res)) {
       res = Promise.resolve(res);
     }
@@ -76540,6 +76614,12 @@ function install (_Vue) {
  */
 var mapState = normalizeNamespace(function (namespace, states) {
   var res = {};
+<<<<<<< HEAD
+=======
+  if ( true && !isValidMap(states)) {
+    console.error('[vuex] mapState: mapper parameter must be either an Array or an Object');
+  }
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
   normalizeMap(states).forEach(function (ref) {
     var key = ref.key;
     var val = ref.val;
@@ -76573,6 +76653,12 @@ var mapState = normalizeNamespace(function (namespace, states) {
  */
 var mapMutations = normalizeNamespace(function (namespace, mutations) {
   var res = {};
+<<<<<<< HEAD
+=======
+  if ( true && !isValidMap(mutations)) {
+    console.error('[vuex] mapMutations: mapper parameter must be either an Array or an Object');
+  }
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
   normalizeMap(mutations).forEach(function (ref) {
     var key = ref.key;
     var val = ref.val;
@@ -76606,6 +76692,12 @@ var mapMutations = normalizeNamespace(function (namespace, mutations) {
  */
 var mapGetters = normalizeNamespace(function (namespace, getters) {
   var res = {};
+<<<<<<< HEAD
+=======
+  if ( true && !isValidMap(getters)) {
+    console.error('[vuex] mapGetters: mapper parameter must be either an Array or an Object');
+  }
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
   normalizeMap(getters).forEach(function (ref) {
     var key = ref.key;
     var val = ref.val;
@@ -76636,6 +76728,12 @@ var mapGetters = normalizeNamespace(function (namespace, getters) {
  */
 var mapActions = normalizeNamespace(function (namespace, actions) {
   var res = {};
+<<<<<<< HEAD
+=======
+  if ( true && !isValidMap(actions)) {
+    console.error('[vuex] mapActions: mapper parameter must be either an Array or an Object');
+  }
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
   normalizeMap(actions).forEach(function (ref) {
     var key = ref.key;
     var val = ref.val;
@@ -76681,12 +76779,30 @@ var createNamespacedHelpers = function (namespace) { return ({
  * @return {Object}
  */
 function normalizeMap (map) {
+<<<<<<< HEAD
+=======
+  if (!isValidMap(map)) {
+    return []
+  }
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
   return Array.isArray(map)
     ? map.map(function (key) { return ({ key: key, val: key }); })
     : Object.keys(map).map(function (key) { return ({ key: key, val: map[key] }); })
 }
 
 /**
+<<<<<<< HEAD
+=======
+ * Validate whether given map is valid or not
+ * @param {*} map
+ * @return {Boolean}
+ */
+function isValidMap (map) {
+  return Array.isArray(map) || isObject(map)
+}
+
+/**
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
  * Return a function expect two param contains namespace and map. it will normalize the namespace and then the param's function will handle the new namespace and the map.
  * @param {Function} fn
  * @return {Function}
@@ -76721,7 +76837,11 @@ function getModuleByNamespace (store, helper, namespace) {
 var index_esm = {
   Store: Store,
   install: install,
+<<<<<<< HEAD
   version: '3.1.1',
+=======
+  version: '3.1.2',
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
   mapState: mapState,
   mapMutations: mapMutations,
   mapGetters: mapGetters,
@@ -77903,31 +78023,51 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/',
       name: 'home',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 11).then(__webpack_require__.bind(null, /*! ./views/Home.vue */ "./resources/js/src/views/Home.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! ./views/Home.vue */ "./resources/js/src/views/Home.vue"));
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
       }
     }, {
       path: '/page2',
       name: 'page2',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 12).then(__webpack_require__.bind(null, /*! ./views/Page2.vue */ "./resources/js/src/views/Page2.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 10).then(__webpack_require__.bind(null, /*! ./views/Page2.vue */ "./resources/js/src/views/Page2.vue"));
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
       }
     }, {
       path: '/customers',
       name: 'Customers',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 14).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/Customers.vue */ "./resources/js/src/views/pages/Customers/Customers.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/Customers.vue */ "./resources/js/src/views/pages/Customers/Customers.vue"));
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
       }
     }, {
       path: '/add-customer',
       name: 'Add Customer',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/AddCustomer.vue */ "./resources/js/src/views/pages/Customers/AddCustomer.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/AddCustomer.vue */ "./resources/js/src/views/pages/Customers/AddCustomer.vue"));
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
       }
     }, {
       path: '/currencies',
       name: 'Currencies',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! ./views/pages/Currencies.vue */ "./resources/js/src/views/pages/Currencies.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 12).then(__webpack_require__.bind(null, /*! ./views/pages/Currencies.vue */ "./resources/js/src/views/pages/Currencies.vue"));
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
       }
     }, {
       path: '/exchange-rates',
@@ -77939,18 +78079,27 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/admins',
       name: 'Admins',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./views/pages/Admins.vue */ "./resources/js/src/views/pages/Admins.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 11).then(__webpack_require__.bind(null, /*! ./views/pages/Admins.vue */ "./resources/js/src/views/pages/Admins.vue"));
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
       }
     }, {
       path: '/supervisors',
       name: 'Supervisors',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! ./views/pages/Supervisors.vue */ "./resources/js/src/views/pages/Supervisors.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./views/pages/Supervisors.vue */ "./resources/js/src/views/pages/Supervisors.vue"));
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
       }
     }, {
       path: '/officers',
       name: 'Officers',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./views/pages/Officers.vue */ "./resources/js/src/views/pages/Officers.vue"));
       }
     }, {
@@ -77964,6 +78113,20 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       name: 'Tax Managment',
       component: function component() {
         return __webpack_require__.e(/*! import() */ 15).then(__webpack_require__.bind(null, /*! ./views/pages/tax-managment/TaxManagment.vue */ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./views/pages/Officers.vue */ "./resources/js/src/views/pages/Officers.vue"));
+      }
+    }, // {
+    //   path: '/testing',
+    //   name: 'testing',
+    //   component: () => import('./views/pages/demo.vue'),
+    // },
+    {
+      path: '/tax-managment',
+      name: 'Tax Managment',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 14).then(__webpack_require__.bind(null, /*! ./views/pages/tax-managment/TaxManagment.vue */ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue"));
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
       }
     }]
   }, // =============================================================================
@@ -77972,7 +78135,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   {
     path: '',
     component: function component() {
+<<<<<<< HEAD
       return __webpack_require__.e(/*! import() */ 10).then(__webpack_require__.bind(null, /*! @/layouts/full-page/FullPage.vue */ "./resources/js/src/layouts/full-page/FullPage.vue"));
+=======
+      return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! @/layouts/full-page/FullPage.vue */ "./resources/js/src/layouts/full-page/FullPage.vue"));
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
     },
     children: [// =============================================================================
     // PAGES
@@ -77987,7 +78154,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/pages/error-404',
       name: 'pageError404',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! @/views/pages/Error404.vue */ "./resources/js/src/views/pages/Error404.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! @/views/pages/Error404.vue */ "./resources/js/src/views/pages/Error404.vue"));
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
       }
     }]
   }, // Redirect to 404 page, if no match found
@@ -78000,16 +78171,24 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ "./resources/js/src/store/Admins/AdminActions.js":
 /*!*******************************************************!*\
   !*** ./resources/js/src/store/Admins/AdminActions.js ***!
   \*******************************************************/
+=======
+/***/ "./resources/js/src/store/Customers/CustomerActions.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/src/store/Customers/CustomerActions.js ***!
+  \*************************************************************/
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
+<<<<<<< HEAD
   getAdmins: function getAdmins(_ref) {
     var commit = _ref.commit;
     axios.get('get-admins').then(function (res) {
@@ -78027,6 +78206,26 @@ __webpack_require__.r(__webpack_exports__);
     var commit = _ref3.commit;
     return axios.post('update-admin', fd).then(function (res) {
       commit('setSingleAdmin', res.data.admin);
+=======
+  getCustomers: function getCustomers(_ref) {
+    var commit = _ref.commit;
+    axios.get('get-customers').then(function (res) {
+      commit('setCustomers', res.data.customers);
+    });
+  },
+  addCustomer: function addCustomer(_ref2, fd) {
+    var commit = _ref2.commit;
+    // alert('action called');
+    return axios.post('add-customer', fd).then(function (res) {
+      // commit('setOfficer',res.data.officers)
+      return res;
+    });
+  },
+  updateCustomer: function updateCustomer(_ref3, fd) {
+    var commit = _ref3.commit;
+    return axios.post('update-customer', fd).then(function (res) {
+      // commit('setSingleCustomer',res.data.customer);
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
       return res;
     });
   }
@@ -78034,16 +78233,24 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ "./resources/js/src/store/Admins/AdminGetters.js":
 /*!*******************************************************!*\
   !*** ./resources/js/src/store/Admins/AdminGetters.js ***!
   \*******************************************************/
+=======
+/***/ "./resources/js/src/store/Customers/CustomerGetters.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/src/store/Customers/CustomerGetters.js ***!
+  \*************************************************************/
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
+<<<<<<< HEAD
   findAdmin: function findAdmin(state) {
     return function (id) {
       var index = _.findIndex(state.admins, function (o) {
@@ -78051,22 +78258,39 @@ __webpack_require__.r(__webpack_exports__);
       });
 
       return state.admins[index];
+=======
+  findCustomer: function findCustomer(state) {
+    return function (id) {
+      var index = _.findIndex(state.customers, function (o) {
+        return o.id === id;
+      });
+
+      return state.customers[index];
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
     };
   }
 });
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ "./resources/js/src/store/Admins/AdminMutations.js":
 /*!*********************************************************!*\
   !*** ./resources/js/src/store/Admins/AdminMutations.js ***!
   \*********************************************************/
+=======
+/***/ "./resources/js/src/store/Customers/CustomerMutations.js":
+/*!***************************************************************!*\
+  !*** ./resources/js/src/store/Customers/CustomerMutations.js ***!
+  \***************************************************************/
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
+<<<<<<< HEAD
   setAdmins: function setAdmins(state, admins) {
     state.admins = admins;
   },
@@ -78076,49 +78300,85 @@ __webpack_require__.r(__webpack_exports__);
     });
 
     Vue.set(state.admins, index, admin);
+=======
+  setCustomers: function setCustomers(state, customers) {
+    state.customers = customers;
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
   }
 });
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ "./resources/js/src/store/Admins/AdminState.js":
 /*!*****************************************************!*\
   !*** ./resources/js/src/store/Admins/AdminState.js ***!
   \*****************************************************/
+=======
+/***/ "./resources/js/src/store/Customers/CustomerState.js":
+/*!***********************************************************!*\
+  !*** ./resources/js/src/store/Customers/CustomerState.js ***!
+  \***********************************************************/
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
+<<<<<<< HEAD
   admins: []
+=======
+  customers: []
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
 });
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ "./resources/js/src/store/Admins/Admins.js":
 /*!*************************************************!*\
   !*** ./resources/js/src/store/Admins/Admins.js ***!
   \*************************************************/
+=======
+/***/ "./resources/js/src/store/Customers/Customers.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/src/store/Customers/Customers.js ***!
+  \*******************************************************/
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+<<<<<<< HEAD
 /* harmony import */ var _AdminState_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdminState.js */ "./resources/js/src/store/Admins/AdminState.js");
 /* harmony import */ var _AdminActions_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminActions.js */ "./resources/js/src/store/Admins/AdminActions.js");
 /* harmony import */ var _AdminMutations_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AdminMutations.js */ "./resources/js/src/store/Admins/AdminMutations.js");
 /* harmony import */ var _AdminGetters_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AdminGetters.js */ "./resources/js/src/store/Admins/AdminGetters.js");
+=======
+/* harmony import */ var _CustomerState_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CustomerState.js */ "./resources/js/src/store/Customers/CustomerState.js");
+/* harmony import */ var _CustomerActions_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CustomerActions.js */ "./resources/js/src/store/Customers/CustomerActions.js");
+/* harmony import */ var _CustomerMutations_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CustomerMutations.js */ "./resources/js/src/store/Customers/CustomerMutations.js");
+/* harmony import */ var _CustomerGetters_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CustomerGetters.js */ "./resources/js/src/store/Customers/CustomerGetters.js");
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   namespaced: true,
+<<<<<<< HEAD
   actions: _AdminActions_js__WEBPACK_IMPORTED_MODULE_1__["default"],
   state: _AdminState_js__WEBPACK_IMPORTED_MODULE_0__["default"],
   mutations: _AdminMutations_js__WEBPACK_IMPORTED_MODULE_2__["default"],
   getters: _AdminGetters_js__WEBPACK_IMPORTED_MODULE_3__["default"]
+=======
+  actions: _CustomerActions_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  state: _CustomerState_js__WEBPACK_IMPORTED_MODULE_0__["default"],
+  mutations: _CustomerMutations_js__WEBPACK_IMPORTED_MODULE_2__["default"],
+  getters: _CustomerGetters_js__WEBPACK_IMPORTED_MODULE_3__["default"]
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
 });
 
 /***/ }),
@@ -78247,6 +78507,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ "./resources/js/src/store/Supervisors/SupervisorActions.js":
 /*!*****************************************************************!*\
   !*** ./resources/js/src/store/Supervisors/SupervisorActions.js ***!
@@ -78370,6 +78631,8 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+=======
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
 /***/ "./resources/js/src/store/actions.js":
 /*!*******************************************!*\
   !*** ./resources/js/src/store/actions.js ***!
@@ -78629,8 +78892,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mutations__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./mutations */ "./resources/js/src/store/mutations.js");
 /* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./actions */ "./resources/js/src/store/actions.js");
 /* harmony import */ var _Officers_Officers_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Officers/Officers.js */ "./resources/js/src/store/Officers/Officers.js");
+<<<<<<< HEAD
 /* harmony import */ var _Supervisors_Supervisors_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Supervisors/Supervisors.js */ "./resources/js/src/store/Supervisors/Supervisors.js");
 /* harmony import */ var _Admins_Admins_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Admins/Admins.js */ "./resources/js/src/store/Admins/Admins.js");
+=======
+/* harmony import */ var _Customers_Customers_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Customers/Customers.js */ "./resources/js/src/store/Customers/Customers.js");
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
 /*=========================================================================================
   File Name: store.js
   Description: Vuex store
@@ -78645,7 +78912,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+<<<<<<< HEAD
 
+=======
+ // import Supervisors from "./Supervisors/Supervisors.js";
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
@@ -78656,8 +78927,13 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
   actions: _actions__WEBPACK_IMPORTED_MODULE_5__["default"],
   modules: {
     officers: _Officers_Officers_js__WEBPACK_IMPORTED_MODULE_6__["default"],
+<<<<<<< HEAD
     supervisors: _Supervisors_Supervisors_js__WEBPACK_IMPORTED_MODULE_7__["default"],
     admins: _Admins_Admins_js__WEBPACK_IMPORTED_MODULE_8__["default"]
+=======
+    // supervisors : Supervisors,
+    customers: _Customers_Customers_js__WEBPACK_IMPORTED_MODULE_7__["default"]
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
   } // strict: process.env.NODE_ENV !== 'production'
 
 }));
@@ -78744,9 +79020,15 @@ var themeConfig = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 __webpack_require__(/*! C:\xampp2019\htdocs\tax-mangment\resources\js\app.js */"./resources/js/app.js");
 __webpack_require__(/*! C:\xampp2019\htdocs\tax-mangment\resources\sass\app.scss */"./resources/sass/app.scss");
 module.exports = __webpack_require__(/*! C:\xampp2019\htdocs\tax-mangment\resources\assets\css\main.css */"./resources/assets/css/main.css");
+=======
+__webpack_require__(/*! C:\xampp\htdocs\freelancing_projects\tax-managment-System\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\xampp\htdocs\freelancing_projects\tax-managment-System\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\freelancing_projects\tax-managment-System\resources\assets\css\main.css */"./resources/assets/css/main.css");
+>>>>>>> d34834d0b4c9904cbdb561c125d3015977f66108
 
 
 /***/ })

@@ -8,6 +8,7 @@ use App\Officer;
 use App\Supervisor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\TaxCustomers;
 
 class ApplicationController extends Controller {
 	public function __invoke() {
@@ -19,6 +20,9 @@ class ApplicationController extends Controller {
 		return response()->json(compact('officers'));
 	}
 	public function add_officer(Request $request) {
+		if($res=Officer::whereEmail($request->email)->first()){
+			return response()->json(['status' => "error", 'msg' => "email already exists"]);
+		}
 		$officer = new Officer;
 		$officer->manager_id = (String) Str::uuid();
 		$officer->first_name = $request->first_name;
@@ -87,6 +91,57 @@ class ApplicationController extends Controller {
 		$supervisor->phone = $request->phone;
 		$result = $supervisor->save();
 		return response()->json(['status' => 'success', 'supervisor' => $supervisor], 200);
+	}
+	public function add_customer(Request $request) {
+		if($res=TaxCustomers::whereEmail($request->email)->first()){
+			return response()->json(['status' => "error", 'msg' => "email already exists"]);
+		}
+		$customer = new TaxCustomers;
+		$customer->customer_id = (String) Str::uuid();
+		$customer->name_english = $request->name_eng;
+		$customer->name_khmer = $request->name_khmer;
+		$customer->tax_card_num = $request->tax_id;
+		$customer->tin_no = $request->tin_num;
+		$customer->address = $request->address;
+		$customer->street = $request->street;
+		$customer->group = $request->group;
+		$customer->sangkat = $request->sangkat;
+		$customer->district = $request->district;
+		$customer->province = $request->province;
+		$customer->muncipality = $request->muncipality;
+		$customer->telephone = $request->tel;
+		$customer->email = $request->email;
+		$customer->industry = $request->industry;
+		$customer->incorporation_date = $request->incorporation_date;
+		$customer->village = $request->village;
+		$customer->additional_fields = $request->additional_field;
+		$result = $customer->save();
+		return response()->json(['status' => 'success', 'customers' => $customer]);
+	}
+
+	public function get_customers(Request $request) {
+		$customers = TaxCustomers::all();
+		return response()->json(compact('customers'));
+	}
+
+	public function update_customer(Request $request) {
+		$customer = TaxCustomers::whereCustomerId($request->id)->first();
+		$customer->name_english = $request->name_eng;
+		$customer->name_khmer = $request->name_khmer;
+		$customer->email = $request->email;
+		$customer->telephone = $request->telephone;
+		$customer->industry = $request->industry;
+		$customer->tax_card_num = $request->tax_id;
+		$customer->tin_no = $request->tin_no;
+
+		// $customer->address = $request->address;
+		// $customer->group = $request->group;
+		// $customer->sangkat = $request->sangkat;
+		// $customer->district = $request->district;
+		// $customer->province = $request->province;
+		// $customer->muncipality = $request->muncipality;
+		$result = $customer->save();
+		return response()->json(['status' => 'success', 'customer' => $customer], 200);
 	}
 
 	// admins methods
