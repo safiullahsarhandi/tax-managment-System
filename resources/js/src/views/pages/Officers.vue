@@ -198,6 +198,9 @@ export default {
                             this.addOfficerModal = false;
                             this.getOfficers();
                         }
+                        if(res.data.status == 'error'){
+                             alert(res.data.msg);
+                        }
                     })
                 }
             })
@@ -205,14 +208,11 @@ export default {
 
         editOfficer(id){
             var officer = this.findOfficer(id);
-            // console.log(officer)
-            // console.log(officer);
             this.edit_manager_id = officer.manager_id;
             this.edit_first_name = officer.first_name;
             this.edit_last_name = officer.last_name;
             this.edit_email = officer.email;
             this.edit_gender = officer.gender;
-            // console.log(this.edit_gender)
             this.edit_zip_code = officer.zip_code;
             this.edit_address = officer.address;
             this.edit_phone = officer.phone;
