@@ -28,20 +28,20 @@
                 </template>
             </vs-table>
         </vx-card>
-
         <vs-popup :active.sync="addTaxManagmentModal" title="Add Tax Managment">
             <form ref="addTaxManagmentForm" @submit.prevent="addTaxManagment($event)" data-vv-scope="addform">
                 <vs-row>
                     <vs-col vs-lg="6" vs-md="6" vs-sm="12">
                         <vx-input-group>
+
                             <vs-input v-validate="'required'" name="title" v-model="title" label-placeholder="Title" data-vv-scope="addform" />
                             <span class="text-danger" v-show="errors.has('addform.title')">{{errors.first('addform.title')}}</span>
                         </vx-input-group>
                         <vx-input-group>
-                            <vs-input v-validate="'required'" name="description" v-model="description" label-placeholder="Description" data-vv-scope="addform" />
+                            <br>
+                            <vs-textarea v-validate="'required'" name="description" v-model="description" :counter="20" label="Description" data-vv-scope="addform" />
                             <span class="text-danger" v-show="errors.has('addform.description')">{{errors.first('addform.description')}}</span>
                         </vx-input-group>
-
                         <vx-input-group class="mt-2">
                             <vs-input v-validate="'required'" name="duration" v-model="duration" label-placeholder="Duration" data-vv-scope="addform" />
                             <span class="text-danger" v-show="errors.has('addform.duration')">{{errors.first('addform.duration')}}</span>
@@ -52,27 +52,21 @@
                             <vs-radio v-model="type" name="type" vs-value="Monthly">Monthly</vs-radio>
                             <vs-radio v-model="type" name="type" vs-value="Yearly">Yearly</vs-radio>
                         </vx-input-group>
-
                     </vs-col>
-                    
-
                     <vs-col vs-lg="6" vs-md="12" vs-sm="12">
-
-                        
                         <vx-input-group class="mt-2">
-                            <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="item,index in supervisors" /></vs-select>
-                            <vs-select class="selectExample" label="Supervisors" v-model="default_selected_supervisor" />
+                            <vs-select class="selectExample" label="Figuras" v-model="supervisor">
+                                <vs-select-item value="" text="Select Supervisor"></vs-select-item>
+                                <vs-select-item :key="index" :value="item.manager_id" :text="item.first_name+' '+item.last_name" v-for="(item,index) in supervisors" />
+                            </vs-select>
                         </vx-input-group>
-
-                        <vx-input-group class="mt-2" >
-                            <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="item,index in officers" /></vs-select>
-                            <vs-select class="selectExample" label="Officers" v-model="default_selected_officer" />
+                        <vx-input-group class="mt-2">
+                            <vs-select placeholder="Search and select" class="selectExample" label="Officers" label-placeholder="Officers" multiple v-model="officer">
+                                <vs-select-item value="" :disabled="true" text="Select Officers"></vs-select-item>
+                                <vs-select-item :key="index" :value="item.manager_id" :text="item.first_name+' '+item.last_name" v-for="(item,index) in officers" />
+                            </vs-select>
                         </vx-input-group>
-                    
-
                     </vs-col>
-
-
                     <vs-col vs-lg="12" vs-md="12" vs-sm="12">
                         <br>
                         <vs-button button="submit" class="float-right" type="gradient">Add Tax Managment</vs-button>
@@ -83,7 +77,7 @@
     </div>
 </template>
 <script>
-import { mapState, mapActions,mapGetters } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
 export default {
     data() {
         return {
@@ -93,10 +87,11 @@ export default {
             description: "",
             type: 'Monthly',
             duration: '',
-            supervisor: [],
+            supervisor: '',
             officer: [],
             default_selected_officer: "",
             default_selected_supervisor: "",
+
         };
     },
     computed: {
@@ -113,33 +108,38 @@ export default {
             getOfficers: 'officers/getOfficers',
         }),
 
-        check(){
-            console.log(this.supervisors);
-            console.log(this.officers);
+        check() {
+            this.addTaxManagmentModal = true;
+
         }
-        
+
     }
 }
 
 </script>
 <style lang="css">
 .selectExample {
-  margin: 10px;
+    margin: 10px;
 }
+
 .con-select-example {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
 .con-select .vs-select {
-  width: 100%
-}
-@media (max-width: 550px) {
-  .con-select {
-    flex-direction: column;
-  }
-  .con-select .vs-select {
     width: 100%
-  }
 }
+
+@media (max-width: 550px) {
+    .con-select {
+        flex-direction: column;
+    }
+
+    .con-select .vs-select {
+        width: 100%
+    }
+}
+
 </style>
