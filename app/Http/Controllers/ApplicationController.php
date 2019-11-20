@@ -125,6 +125,7 @@ class ApplicationController extends Controller {
 	}
 
 	public function update_customer(Request $request) {
+
 		$customer = TaxCustomers::whereCustomerId($request->id)->first();
 		$customer->name_english = $request->name_eng;
 		$customer->name_khmer = $request->name_khmer;
@@ -133,13 +134,25 @@ class ApplicationController extends Controller {
 		$customer->industry = $request->industry;
 		$customer->tax_card_num = $request->tax_id;
 		$customer->tin_no = $request->tin_no;
+		$customer->address = $request->address;
+		$customer->muncipality = $request->muncipality;
+		$customer->district = $request->district;
+		$customer->province = $request->province;
+		$customer->sangkat = $request->sangkat;
+		$customer->group = $request->group;
+		$customer->street = $request->street;
+		$customer->village = $request->village;
+		$customer->incorporation_date = $request->incorporation_date;
 
-		// $customer->address = $request->address;
-		// $customer->group = $request->group;
-		// $customer->sangkat = $request->sangkat;
-		// $customer->district = $request->district;
-		// $customer->province = $request->province;
-		// $customer->muncipality = $request->muncipality;
+		$customfields = $request->additional_field;
+		for ($i=1; $i <= count($request->additional_field); $i++) { 
+			if (($key = array_search(null, $customfields)) !== false) {
+			    unset($customfields[$key]);
+			}
+		}
+
+		$customer->additional_fields = $customfields;
+
 		$result = $customer->save();
 		return response()->json(['status' => 'success', 'customer' => $customer], 200);
 	}

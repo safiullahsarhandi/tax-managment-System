@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- <link rel="icon" href="<%= BASE_URL %>favicon.ico"> -->
 
-    <title>Vuesax - Vuejs Admin Dashboard Template</title>
+    <title>{{ config('app.name') }}</title>
     <!-- Styles -->
     <link rel="stylesheet" href="{{ url('public/css/main.css') }}">
     <link rel="stylesheet" href="{{ url('public/css/vuesax.css') }}">
