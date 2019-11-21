@@ -162,13 +162,15 @@
 		  addCustomer(e){
                   this.$validator.validateAll().then(result => {
                       if (result) {
+                        this.$vs.loading();
                           var fd = new FormData(this.$refs.addCustomer);
                           this.submit(fd).then(res => {
                               console.log(res.data);
                               if (res.data.status == 'success') {
                                   e.target.reset();
                                   this.errors.clear();
-                                  alert('Customer Added');
+                                  this.$vs.notify({title:'Success',text:'Customer Added Successfully' ,color:'success',position:'top-right'})
+                                  this.$vs.loading.close();
                               }
                               if(res.data.status == 'error'){
                                 alert(res.data.msg);

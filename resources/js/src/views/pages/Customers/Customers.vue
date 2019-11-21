@@ -14,11 +14,12 @@
                     <vs-th>TIN # </vs-th>
                     <vs-th>Email</vs-th>
                     <vs-th>Tel</vs-th>
+                    <vs-th>Status</vs-th>
                     <vs-th>Actions</vs-th>
                 </template>
                 <template slot-scope="{data}">
                     <vs-tr v-for="(tr,index) in data" :key="index">
-                        <vs-td :data="index++">{{index++}} .</vs-td>
+                        <vs-td :data="index++">{{index++}}</vs-td>
                         <vs-td :data="tr.name_english">{{tr.name_english}}</vs-td>
                         <vs-td :data="tr.name_khmer">{{tr.name_khmer}}</vs-td>
                         <vs-td :data="tr.industry">{{tr.industry}}</vs-td>
@@ -26,6 +27,8 @@
                         <vs-td :data="tr.tin_no">{{tr.tin_no}}</vs-td>
                         <vs-td :data="tr.email">{{tr.email}}</vs-td>
                         <vs-td :data="tr.telephone">{{tr.telephone}}</vs-td>
+                        <vs-td :data="tr.status"><vs-switch @click="statusUpdate(tr.customer_id)" v-model="tr.status"/></vs-td>
+                            
                         <vs-td>
                             <vs-button type="border" @click="editCustomer(tr.id)">Edit</vs-button>
                             <vs-button type="border">Detail</vs-button>
@@ -163,6 +166,7 @@ export default {
     inject : ['generatePassword'],
     data() {
         return {
+            // switch1: true,
             editCustomerModal: false,
             customer_id: '',
             name_english: '',
@@ -201,6 +205,7 @@ export default {
         updateCustomer(e) {
             this.$validator.validateAll('editform').then(result => {
                 if (result) {
+                    this.$vs.loading();
                     var fd = new FormData(this.$refs.editCustomerForm);
                     fd.append('gender', this.gender);
                     this.submit(fd).then( (res) => {
@@ -210,6 +215,8 @@ export default {
                             e.target.reset();
                             this.errors.clear();
                             this.editCustomerModal = false;
+                            this.$vs.notify({title:'Success',text:'Customer Updated Successfully',color:'success',position:'top-right'})
+                            this.$vs.loading.close();
                             // this.getCustomers();
                         }
                         if(res.data.status == 'error'){
@@ -218,6 +225,14 @@ export default {
                     })
                 }
             })
+        },
+
+        statusUpdate(id){
+            this.$vs.loading();
+            axios.post('status-update-customer',{id:id}).then(res=>{
+                this.$vs.notify({title:'Updated!...',text:res.data.msg,color:'success',position:'top-right'})
+                this.$vs.loading.close();
+            });
         },
 
         addMoreFeild () {
@@ -259,12 +274,15 @@ export default {
         updateCustomer(e) {
             this.$validator.validateAll('editform').then(result => {
                 if (result) {
+                    this.$vs.loading();
                     var fd = new FormData(this.$refs.editCustomerForm);
                     this.update(fd).then( (res) => {
                         if (res.data.status == 'success') {
                             e.target.reset();
                             this.errors.clear();
                             this.editCustomerModal = false;
+                            this.$vs.notify({title:'Success',text:'Customer Updated Successfully',color:'success',position:'top-right'})
+                            this.$vs.loading.close();
                             this.getCustomers();
                         }
                     })

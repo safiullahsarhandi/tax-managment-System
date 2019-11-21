@@ -194,5 +194,46 @@ class ApplicationController extends Controller {
 		$result = $admin->save();
 		return response()->json(['status' => 'success', 'admin' => $admin], 200);
 	}
+	public function status_update_customer(Request $request){
+		$customer = TaxCustomers::whereCustomerId($request->id)->first();
+		if($customer->status == 1){
+			$customer->status = 0;
+			$customer->save();
+			$msg = 'Disabled Successfully';
+		}else{
+			$customer->status = 1;
+			$customer->save();
+			$msg = 'Enabled Successfully';
+		}
+		return response()->json(['status' => 'success', 'msg' => $msg], 200);
+	}
+
+	public function status_update_officer(Request $request){
+		$officer = Officer::whereManagerId($request->id)->first();
+		if($officer->status == 1){
+			$officer->status = 0;
+			$officer->save();
+			$msg = 'Disabled Successfully';
+		}else{
+			$officer->status = 1;
+			$officer->save();
+			$msg = 'Enabled Successfully';
+		}
+		return response()->json(['status' => 'success', 'msg' => $msg], 200);
+	}
+
+	public function status_update_supervisor(Request $request){
+		$supervisor = Supervisor::whereManagerId($request->id)->first();
+		if($supervisor->status == 1){
+			$supervisor->status = 0;
+			$supervisor->save();
+			$msg = 'Disabled Successfully';
+		}else{
+			$supervisor->status = 1;
+			$supervisor->save();
+			$msg = 'Enabled Successfully';
+		}
+		return response()->json(['status' => 'success', 'msg' => $msg], 200);
+	}
 
 }

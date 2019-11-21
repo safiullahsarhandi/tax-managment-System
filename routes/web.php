@@ -15,11 +15,14 @@ Route::group(['prefix' => ''], function () {
 	Route::get('get-officers', 'ApplicationController@get_officers');
 	Route::post('add-officer', 'ApplicationController@add_officer');
 	Route::post('update-officer', 'ApplicationController@update_officer');
+	Route::post('status-update-officer', 'ApplicationController@status_update_officer');
 
 	// supervisors routes
 	Route::get('get-supervisors', 'ApplicationController@get_supervisors');
 	Route::post('add-supervisor', 'ApplicationController@add_supervisor');
 	Route::post('update-supervisor', 'ApplicationController@update_supervisor');
+	Route::post('status-update-supervisor', 'ApplicationController@status_update_supervisor');
+
 	// admins routes
 	Route::get('get-admins', 'ApplicationController@get_admins');
 	Route::post('add-admin', 'ApplicationController@add_admin');
@@ -28,6 +31,8 @@ Route::group(['prefix' => ''], function () {
 	Route::post('add-customer', 'ApplicationController@add_customer');
 	Route::get('get-customers', 'ApplicationController@get_customers');
 	Route::post('update-customer', 'ApplicationController@update_customer');
+	Route::post('status-update-customer', 'ApplicationController@status_update_customer');
+
 
 });
 Route::get('/{any}', 'ApplicationController')->where('any', '.*');

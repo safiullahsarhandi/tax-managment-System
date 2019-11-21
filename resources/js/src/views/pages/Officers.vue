@@ -6,18 +6,22 @@
             </template>
             <vs-table search pagination max-items="6" :data="officers">
                 <template slot="thead">
+                    <vs-th>S.No</vs-th>
                     <vs-th>Name</vs-th>
                     <vs-th>Phone #</vs-th>
                     <vs-th>Email</vs-th>
                     <vs-th>Address</vs-th>
+                    <vs-th>Status</vs-th>
                     <vs-th>Actions</vs-th>
                 </template>
                 <template  slot-scope="{data}">
                     <vs-tr v-for="(tr,index) in data" :key="index">
+                        <vs-td :data="index++">{{index++}}</vs-td>
                         <vs-td :data="tr.first_name+' '+tr.last_name">{{tr.first_name}} {{tr.last_name}}</vs-td>
                         <vs-td :data="tr.phone">{{tr.phone}}</vs-td>
                         <vs-td :data="tr.email">{{tr.email}}</vs-td>
                         <vs-td :data="tr.address+' '+tr.state+' '+tr.city+' '+tr.zip_code">{{tr.address}} {{tr.state}} {{tr.city}} {{tr.zip_code}}</vs-td>
+                        <vs-td :data="tr.status"><vs-switch @click="statusUpdate(tr.manager_id)" v-model="tr.status"/></vs-td>
                         <vs-td>
                             <vs-button type="border" @click="editOfficer(tr.id)">Edit</vs-button>
                             <vs-button type="border">Detail</vs-button>
@@ -187,6 +191,7 @@ export default {
         addOfficer(e) {
             this.$validator.validateAll('addform').then(result => {
                 if (result) {
+                    this.$vs.loading();
                     var fd = new FormData(this.$refs.addOfficerForm);
                     fd.append('gender', this.gender);
                     this.submit(fd).then( (res) => {
@@ -196,14 +201,24 @@ export default {
                             e.target.reset();
                             this.errors.clear();
                             this.addOfficerModal = false;
+                            this.$vs.notify({title:'Success',text:'Officer Added Successfully',color:'success',position:'top-right'})
+                            this.$vs.loading.close();
                             this.getOfficers();
                         }
                         if(res.data.status == 'error'){
-                             alert(res.data.msg);
+                              this.$vs.notify({title:'Error!',text:'ther was some issue, try again',color:'danger',position:'top-right'})
+                            this.$vs.loading.close();
                         }
                     })
                 }
             })
+        },
+        statusUpdate(id){
+            this.$vs.loading();
+            axios.post('status-update-officer',{id:id}).then(res=>{
+                this.$vs.notify({title:'Updated!...',text:res.data.msg,color:'success',position:'top-right'})
+                this.$vs.loading.close();
+            });
         },
 
         editOfficer(id){
@@ -225,6 +240,7 @@ export default {
 
             this.$validator.validateAll('editform').then(result => {
                 if (result) {
+                    this.$vs.loading();
                     var fd = new FormData(this.$refs.editOfficerForm);
                     fd.append('gender', this.edit_gender);
                     this.update(fd).then( (res) => {
@@ -235,6 +251,8 @@ export default {
                             e.target.reset();
                             this.errors.clear();
                             this.editOfficerModal = false;
+                            this.$vs.notify({title:'Success',text:'Officer Updated Successfully',color:'success',position:'top-right'})
+                            this.$vs.loading.close();
                             // this.getOfficers();
                         }
                     })
