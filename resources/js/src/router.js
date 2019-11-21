@@ -94,6 +94,80 @@ const router = new Router({
           },
         ],
       },
+      {
+    // =============================================================================
+    // CUSTOMER DETAIL LAYOUT ROUTES
+    // =============================================================================
+        path: '/customer-detail/:id',
+        component: () => import('./layouts/full-page/customerDetailFullPage.vue'),
+        children: [
+      // =============================================================================
+      // Theme Routes
+      // =============================================================================
+          {
+            path: '/',
+            name: 'Company Detail',
+            component: () => import('./views/pages/Customers/CustomerDetail.vue'),
+          },
+          /*{
+            path: '/add-sale',
+            name: 'Add Sale',
+            component: () => import('./views/pages/Sales/AddSale.vue'),
+          },
+          {
+            path: '/sales-list',
+            name: 'Sales List',
+            component: () => import('./views/pages/Sales/Sales.vue'),
+          },
+          {
+            path: '/add-purchase',
+            name: 'Add Purchase',
+            component: () => import('./views/pages/Purchases/AddPurchase.vue'),
+          },
+          {
+            path: '/purchases-list',
+            name: 'Purchases List',
+            component: () => import('./views/pages/Purchases/Purchases.vue'),
+          },*/
+        ],
+      },
+      {
+    // =============================================================================
+    // TAX DETAIL LAYOUT ROUTES
+    // =============================================================================
+        path: '/tax-collection/:id',
+        component: () => import('./layouts/main/TaxDetailMain.vue'),
+        children: [
+      // =============================================================================
+      // Theme Routes
+      // =============================================================================
+          {
+            path: '/',
+            name: 'Tax Detail',
+            component: () => import('./views/pages/Tax/TaxDetail.vue'),
+          },
+          {
+            path: '/add-sale',
+            name: 'Add Sale',
+            component: () => import('./views/pages/Sales/AddSale.vue'),
+          },
+          {
+            path: '/sales-list',
+            name: 'Sales List',
+            component: () => import('./views/pages/Sales/Sales.vue'),
+          },
+          {
+            path: '/add-purchase',
+            name: 'Add Purchase',
+            component: () => import('./views/pages/Purchases/AddPurchase.vue'),
+          },
+          {
+            path: '/purchases-list',
+            name: 'Purchases List',
+            component: () => import('./views/pages/Purchases/Purchases.vue'),
+          },
+        ],
+      },
     // =============================================================================
     // FULL PAGE LAYOUTS
     // =============================================================================

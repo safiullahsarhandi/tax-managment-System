@@ -177,11 +177,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   inject: ['generatePassword'],
   data: function data() {
     return {
+      // switch1: true,
       editCustomerModal: false,
       customer_id: '',
       name_english: '',
@@ -217,6 +219,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.$validator.validateAll('editform').then(function (result) {
         if (result) {
+          _this.$vs.loading();
+
           var fd = new FormData(_this.$refs.editCustomerForm);
           fd.append('gender', _this.gender);
 
@@ -228,7 +232,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               _this.errors.clear();
 
-              _this.editCustomerModal = false; // this.getCustomers();
+              _this.editCustomerModal = false;
+
+              _this.$vs.notify({
+                title: 'Success',
+                text: 'Customer Updated Successfully',
+                color: 'success',
+                position: 'top-right'
+              });
+
+              _this.$vs.loading.close(); // this.getCustomers();
+
             }
 
             if (res.data.status == 'error') {
@@ -236,6 +250,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             }
           });
         }
+      });
+    },
+    statusUpdate: function statusUpdate(id) {
+      var _this2 = this;
+
+      this.$vs.loading();
+      axios.post('status-update-customer', {
+        id: id
+      }).then(function (res) {
+        _this2.$vs.notify({
+          title: 'Updated!...',
+          text: res.data.msg,
+          color: 'success',
+          position: 'top-right'
+        });
+
+        _this2.$vs.loading.close();
       });
     },
     addMoreFeild: function addMoreFeild() {
@@ -283,21 +314,32 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.editCustomerModal = true;
     }
   }, _defineProperty(_objectSpread2, "updateCustomer", function updateCustomer(e) {
-    var _this2 = this;
+    var _this3 = this;
 
     this.$validator.validateAll('editform').then(function (result) {
       if (result) {
-        var fd = new FormData(_this2.$refs.editCustomerForm);
+        _this3.$vs.loading();
 
-        _this2.update(fd).then(function (res) {
+        var fd = new FormData(_this3.$refs.editCustomerForm);
+
+        _this3.update(fd).then(function (res) {
           if (res.data.status == 'success') {
             e.target.reset();
 
-            _this2.errors.clear();
+            _this3.errors.clear();
 
-            _this2.editCustomerModal = false;
+            _this3.editCustomerModal = false;
 
-            _this2.getCustomers();
+            _this3.$vs.notify({
+              title: 'Success',
+              text: 'Customer Updated Successfully',
+              color: 'success',
+              position: 'top-right'
+            });
+
+            _this3.$vs.loading.close();
+
+            _this3.getCustomers();
           }
         });
       }
@@ -399,10 +441,6 @@ var render = function() {
                         "vs-tr",
                         { key: index },
                         [
-                          _c("vs-td", { attrs: { data: index++ } }, [
-                            _vm._v(_vm._s(index++) + " .")
-                          ]),
-                          _vm._v(" "),
                           _c("vs-td", { attrs: { data: tr.name_english } }, [
                             _vm._v(_vm._s(tr.name_english))
                           ]),
@@ -433,23 +471,52 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "vs-td",
+                            { attrs: { data: tr.status } },
                             [
-                              _c(
-                                "vs-button",
-                                {
-                                  attrs: { type: "border" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.editCustomer(tr.id)
-                                    }
+                              _c("vs-switch", {
+                                on: {
+                                  click: function($event) {
+                                    return _vm.statusUpdate(tr.customer_id)
                                   }
                                 },
-                                [_vm._v("Edit")]
-                              ),
+                                model: {
+                                  value: tr.status,
+                                  callback: function($$v) {
+                                    _vm.$set(tr, "status", $$v)
+                                  },
+                                  expression: "tr.status"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            [
+                              _c("vs-button", {
+                                attrs: {
+                                  size: "small",
+                                  type: "border",
+                                  "icon-pack": "feather",
+                                  icon: "icon-edit"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.editCustomer(tr.id)
+                                  }
+                                }
+                              }),
                               _vm._v(" "),
-                              _c("vs-button", { attrs: { type: "border" } }, [
-                                _vm._v("Detail")
-                              ])
+                              _c("vs-button", {
+                                attrs: {
+                                  to: "customer-detail/" + tr.customer_id + "#",
+                                  size: "small",
+                                  "icon-pack": "feather",
+                                  icon: "icon-maximize-2",
+                                  type: "border"
+                                }
+                              })
                             ],
                             1
                           )
@@ -466,8 +533,6 @@ var render = function() {
                 "template",
                 { slot: "thead" },
                 [
-                  _c("vs-th", [_vm._v("S.No")]),
-                  _vm._v(" "),
                   _c("vs-th", [_vm._v("Name(English)")]),
                   _vm._v(" "),
                   _c("vs-th", [_vm._v("Name(Khmer)")]),
@@ -481,6 +546,8 @@ var render = function() {
                   _c("vs-th", [_vm._v("Email")]),
                   _vm._v(" "),
                   _c("vs-th", [_vm._v("Tel")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Status")]),
                   _vm._v(" "),
                   _c("vs-th", [_vm._v("Actions")])
                 ],
