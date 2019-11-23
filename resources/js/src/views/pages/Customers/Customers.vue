@@ -6,7 +6,6 @@
             <!-- </template> -->
             <vs-table search pagination max-items="6" :data="customers">
                 <template slot="thead">
-                    <vs-th>S.No</vs-th>
                     <vs-th>Name(English)</vs-th>
                     <vs-th>Name(Khmer)</vs-th>
                     <vs-th>Industy / Sector</vs-th>
@@ -19,7 +18,6 @@
                 </template>
                 <template slot-scope="{data}">
                     <vs-tr v-for="(tr,index) in data" :key="index">
-                        <vs-td :data="index++">{{index++}}</vs-td>
                         <vs-td :data="tr.name_english">{{tr.name_english}}</vs-td>
                         <vs-td :data="tr.name_khmer">{{tr.name_khmer}}</vs-td>
                         <vs-td :data="tr.industry">{{tr.industry}}</vs-td>
@@ -30,8 +28,8 @@
                         <vs-td :data="tr.status"><vs-switch @click="statusUpdate(tr.customer_id)" v-model="tr.status"/></vs-td>
                             
                         <vs-td>
-                            <vs-button type="border" @click="editCustomer(tr.id)">Edit</vs-button>
-                            <vs-button type="border">Detail</vs-button>
+                            <vs-button size="small" type="border" icon-pack="feather" icon="icon-edit" @click="editCustomer(tr.id)"></vs-button>
+                            <vs-button :to="'customer-detail/'+tr.customer_id+'#'" size="small" icon-pack="feather" icon="icon-maximize-2" type="border"></vs-button>
                         </vs-td>
                     </vs-tr>
                 </template>
