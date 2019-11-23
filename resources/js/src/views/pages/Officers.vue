@@ -27,7 +27,7 @@
                             <vs-button type="border">Detail</vs-button>
                         </vs-td>
                     </vs-tr>
-                </template>
+                </template> 
             </vs-table>
         </vx-card>
         <vs-popup :active.sync="addOfficerModal" title="Add New Officer">

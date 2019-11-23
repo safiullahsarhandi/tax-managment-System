@@ -27,11 +27,22 @@ Route::group(['prefix' => ''], function () {
 	Route::get('get-admins', 'ApplicationController@get_admins');
 	Route::post('add-admin', 'ApplicationController@add_admin');
 	Route::post('update-admin', 'ApplicationController@update_admin');
+	Route::post('status-update-admin', 'ApplicationController@status_update_admin');
+
 	// Customers
 	Route::post('add-customer', 'ApplicationController@add_customer');
 	Route::get('get-customers', 'ApplicationController@get_customers');
 	Route::post('update-customer', 'ApplicationController@update_customer');
 	Route::post('status-update-customer', 'ApplicationController@status_update_customer');
+
+	// Exchange Rates
+	Route::get('get-exchange-rates', 'ApplicationController@get_exchange_rates');
+	Route::post('update-exchange-rates', 'ApplicationController@update_exchange_rates');
+
+	// Currencies
+	Route::get('get-currencies', 'ApplicationController@get_currencies');
+	Route::post('status-update-currency', 'ApplicationController@status_update_currency');
+
 
 
 });

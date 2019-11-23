@@ -9,6 +9,8 @@ use App\Supervisor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\TaxCustomers;
+use App\Settings;
+use App\Currencies;
 
 class ApplicationController extends Controller {
 	public function __invoke() {
@@ -234,6 +236,57 @@ class ApplicationController extends Controller {
 			$msg = 'Enabled Successfully';
 		}
 		return response()->json(['status' => 'success', 'msg' => $msg], 200);
+	}
+		
+	public function status_update_admin(Request $request){
+
+		$admin = Admin::whereManagerId($request->id)->first();
+		if($admin->status == 1){
+			$admin->status = 0;
+			$admin->save();
+			$msg = 'Disabled Successfully';
+		}else{
+			$admin->status = 1;
+			$admin->save();
+			$msg = 'Enabled Successfully';
+		}
+		return response()->json(['status' => 'success', 'msg' => $msg], 200);
+
+	}
+
+	public function get_exchange_rates(){
+
+		$setting = Settings::all();
+		$rates = $setting;
+		return response()->json(compact('rates'));
+	}
+
+	public function update_exchange_rates(Request $request){
+		$annual_rate = Settings::where('key','annual_rate')->update(['value'=> $request->annual_rate]);
+		$average_rate = Settings::where('key','average_rate')->update(['value'=> $request->average_rate]);
+		$salary_rate = Settings::where('key','salary_rate')->update(['value'=> $request->salary_rate]);
+		return response()->json(['status' => 'success']);
+	}
+
+	public function get_currencies(){
+		$currencies = Currencies::all();
+		return response()->json(compact('currencies'));
+	}
+
+	public function status_update_currency(Request $request){
+
+		$admin = Currencies::whereId($request->id)->first();
+		if($admin->status == 1){
+			$admin->status = 0;
+			$admin->save();
+			$msg = 'Disabled';
+		}else{
+			$admin->status = 1;
+			$admin->save();
+			$msg = 'Enabled';
+		}
+		return response()->json(['status' => 'success', 'msg' => 'Currency '.$msg.' Successfully'], 200);
+
 	}
 
 }
