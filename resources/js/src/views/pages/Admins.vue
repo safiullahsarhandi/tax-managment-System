@@ -10,6 +10,7 @@
                     <vs-th>Phone #</vs-th>
                     <vs-th>Email</vs-th>
                     <vs-th>Address</vs-th>
+                    <vs-th>Status</vs-th>
                     <vs-th>Actions</vs-th>
                 </template>
                 <template  slot-scope="{data}">
@@ -18,6 +19,7 @@
                         <vs-td :data="tr.phone">{{tr.phone}}</vs-td>
                         <vs-td :data="tr.email">{{tr.email}}</vs-td>
                         <vs-td :data="tr.address+' '+tr.state+' '+tr.city+' '+tr.zip_code">{{tr.address}} {{tr.state}} {{tr.city}} {{tr.zip_code}}</vs-td>
+                        <vs-td :data="tr.status"><vs-switch @click="statusUpdate(tr.manager_id)" v-model="tr.status"/></vs-td>
                         <vs-td>
                             <vs-button type="border" @click="editAdmin(tr.id)">Edit</vs-button>
                             <vs-button type="border">Detail</vs-button>
@@ -203,6 +205,14 @@ export default {
             })
         },
 
+        statusUpdate(id){
+            this.$vs.loading();
+            axios.post('status-update-admin',{id:id}).then(res=>{
+                this.$vs.notify({title:'Updated!...',text:res.data.msg,color:'success',position:'top-right'})
+                this.$vs.loading.close();
+            });
+        },
+
         editAdmin(id){
             var admin = this.findAdmin(id);
             // console.log(admin)
@@ -226,6 +236,7 @@ export default {
 
             this.$validator.validateAll('editform').then(result => {
                 if (result) {
+                    this.$vs.loading();
                     var fd = new FormData(this.$refs.editAdminForm);
                     fd.append('gender', this.edit_gender);
                     this.update(fd).then( (res) => {
@@ -236,6 +247,8 @@ export default {
                             e.target.reset();
                             this.errors.clear();
                             this.editAdminModal = false;
+                            this.$vs.notify({title:'Updated!...',text:'Admin record updated',color:'success',position:'top-right'})
+                            this.$vs.loading.close();
                             // this.getAdmins();
                         }
                     })

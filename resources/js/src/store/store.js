@@ -19,6 +19,7 @@ import Officers from "./Officers/Officers.js";
 import Supervisors from "./Supervisors/Supervisors.js";
 import Admins from "./Admins/Admins.js";
 import Customers from "./Customers/Customers.js";
+import Exchangerates from "./ExchangeRates/Exchangerates.js";
 
 Vue.use(Vuex)
 
@@ -32,7 +33,8 @@ export default new Vuex.Store({
       officers : Officers,
       supervisors : Supervisors,
       admins : Admins,
-      customers : Customers
+      customers : Customers,
+      exchangerates: Exchangerates,
     }
     // strict: process.env.NODE_ENV !== 'production'
 })
