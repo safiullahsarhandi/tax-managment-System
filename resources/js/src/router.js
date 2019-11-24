@@ -115,9 +115,19 @@ const router = new Router({
             component: () => import('./views/pages/Customers/CustomerDetail.vue'),
           },
           {
+            path: '/add-employee',
+            name: 'Add Employee',
+            component: () => import('./views/pages/Employees/AddEmployee.vue'),
+          },
+          {
             path: '/employees-list',
             name: 'Employees List',
             component: () => import('./views/pages/Employees/Employees.vue'),
+          },
+          {
+            path: '/taxes',
+            name: 'Taxes',
+            component: () => import('./views/pages/Customers/Taxes.vue'),
           },
           /*{
             path: '/add-sale',
