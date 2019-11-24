@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Admin;
+use App\Currencies;
+use App\CustomerEmployee;
 use App\Http\Controllers\Controller;
 use App\Officer;
+use App\Settings;
 use App\Supervisor;
+use App\Tax;
+use App\TaxCustomers;
+use App\TaxOfficer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use App\TaxCustomers;
-use App\Settings;
-use App\Currencies;
 use App\Purchases;
 use App\Sales;
 
@@ -24,7 +27,7 @@ class ApplicationController extends Controller {
 		return response()->json(compact('officers'));
 	}
 	public function add_officer(Request $request) {
-		if($res=Officer::whereEmail($request->email)->first()){
+		if ($res = Officer::whereEmail($request->email)->first()) {
 			return response()->json(['status' => "error", 'msg' => "email already exists"]);
 		}
 		$officer = new Officer;
@@ -97,7 +100,7 @@ class ApplicationController extends Controller {
 		return response()->json(['status' => 'success', 'supervisor' => $supervisor], 200);
 	}
 	public function add_customer(Request $request) {
-		if($res=TaxCustomers::whereEmail($request->email)->first()){
+		if ($res = TaxCustomers::whereEmail($request->email)->first()) {
 			return response()->json(['status' => "error", 'msg' => "email already exists"]);
 		}
 		$customer = new TaxCustomers;
@@ -149,9 +152,9 @@ class ApplicationController extends Controller {
 		$customer->incorporation_date = $request->incorporation_date;
 
 		$customfields = $request->additional_field;
-		for ($i=1; $i <= count($request->additional_field); $i++) { 
+		for ($i = 1; $i <= count($request->additional_field); $i++) {
 			if (($key = array_search(null, $customfields)) !== false) {
-			    unset($customfields[$key]);
+				unset($customfields[$key]);
 			}
 		}
 
@@ -160,6 +163,75 @@ class ApplicationController extends Controller {
 		$result = $customer->save();
 		return response()->json(['status' => 'success', 'customer' => $customer], 200);
 	}
+
+	// Customer Employees method
+	public function add_employee(Request $request) {
+		if ($res = CustomerEmployee::whereNssfNum($request->nssf_num)->where('tax_customer_id', $request->tax_customer_id)->first()) {
+			return response()->json(['status' => "error", 'msg' => "Employee with this NSSF No already exists"]);
+		}
+		if ($res = CustomerEmployee::where('employee_num', '=', $request->employee_num)->where('tax_customer_id', $request->tax_customer_id)->first()) {
+			return response()->json(['status' => "error", 'msg' => "Employee with this Employee No already exists"]);
+		}
+		$employee = new CustomerEmployee;
+		$employee->employee_id = (String) Str::uuid();
+		$employee->tax_customer_id = $request->tax_customer_id;
+		$employee->nssf_num = $request->nssf_num;
+		$employee->employee_num = $request->employee_num;
+		$employee->name_english = $request->name_eng;
+		$employee->name_khmer = $request->name_khmer;
+		$employee->nationality = $request->nationality;
+		$employee->dob = $request->dob;
+		$employee->joining_date = $request->joining_date;
+		$employee->position = $request->position;
+		$employee->sex = $request->sex;
+		$employee->contract_type = $request->contract_type;
+		$employee->spouse = $request->spouse;
+		$result = $employee->save();
+		return response()->json(['status' => 'success', 'msg' => 'Employee added successfully']);
+	}
+
+	public function get_employees(Request $request) {
+		$employees = CustomerEmployee::whereTaxCustomerId($request->tax_customer_id)->get();
+		return response()->json(compact('employees'));
+	}
+	public function update_employee(Request $request) {
+		if ($res = CustomerEmployee::where('nssf_num', '=', $request->nssf_num)->where('tax_customer_id', $request->tax_customer_id)->where('employee_id', '!=', $request->employee_id)->first()) {
+			return response()->json(['status' => "error", 'msg' => "Employee with this NSSF No already exists"]);
+		}
+
+		if ($res = CustomerEmployee::where('employee_num', '=', $request->employee_num)->where('employee_id', '!=', $request->employee_id)->where('tax_customer_id', $request->tax_customer_id)->first()) {
+			return response()->json(['status' => "error", 'msg' => "Employee with this Employee No already exists"]);
+		}
+
+		$employee = CustomerEmployee::whereEmployeeId($request->employee_id)->first();
+		$employee->nssf_num = $request->nssf_num;
+		$employee->employee_num = $request->employee_num;
+		$employee->name_english = $request->name_eng;
+		$employee->name_khmer = $request->name_khmer;
+		$employee->nationality = $request->nationality;
+		$employee->dob = $request->dob;
+		$employee->joining_date = $request->joining_date;
+		$employee->position = $request->position;
+		$employee->sex = $request->sex;
+		$employee->contract_type = $request->contract_type;
+		$employee->spouse = $request->spouse;
+		$result = $employee->save();
+		return response()->json(['status' => 'success', 'msg' => 'Employee added successfully', 'employee' => $employee]);
+	}
+	public function status_update_employee(Request $request) {
+		$employee = CustomerEmployee::find($request->id);
+		if ($employee->status == 1) {
+			$employee->status = 0;
+			$employee->save();
+			$msg = 'Disabled Successfully';
+		} else {
+			$employee->status = 1;
+			$employee->save();
+			$msg = 'Enabled Successfully';
+		}
+		return response()->json(['status' => 'success', 'msg' => $msg, 'employee' => $employee], 200);
+	}
+	// Customer Employees method end
 
 	// admins methods
 	public function get_admins(Request $request) {
@@ -198,13 +270,13 @@ class ApplicationController extends Controller {
 		$result = $admin->save();
 		return response()->json(['status' => 'success', 'admin' => $admin], 200);
 	}
-	public function status_update_customer(Request $request){
+	public function status_update_customer(Request $request) {
 		$customer = TaxCustomers::whereCustomerId($request->id)->first();
-		if($customer->status == 1){
+		if ($customer->status == 1) {
 			$customer->status = 0;
 			$customer->save();
 			$msg = 'Disabled Successfully';
-		}else{
+		} else {
 			$customer->status = 1;
 			$customer->save();
 			$msg = 'Enabled Successfully';
@@ -212,13 +284,13 @@ class ApplicationController extends Controller {
 		return response()->json(['status' => 'success', 'msg' => $msg], 200);
 	}
 
-	public function status_update_officer(Request $request){
+	public function status_update_officer(Request $request) {
 		$officer = Officer::whereManagerId($request->id)->first();
-		if($officer->status == 1){
+		if ($officer->status == 1) {
 			$officer->status = 0;
 			$officer->save();
 			$msg = 'Disabled Successfully';
-		}else{
+		} else {
 			$officer->status = 1;
 			$officer->save();
 			$msg = 'Enabled Successfully';
@@ -226,28 +298,28 @@ class ApplicationController extends Controller {
 		return response()->json(['status' => 'success', 'msg' => $msg], 200);
 	}
 
-	public function status_update_supervisor(Request $request){
+	public function status_update_supervisor(Request $request) {
 		$supervisor = Supervisor::whereManagerId($request->id)->first();
-		if($supervisor->status == 1){
+		if ($supervisor->status == 1) {
 			$supervisor->status = 0;
 			$supervisor->save();
 			$msg = 'Disabled Successfully';
-		}else{
+		} else {
 			$supervisor->status = 1;
 			$supervisor->save();
 			$msg = 'Enabled Successfully';
 		}
 		return response()->json(['status' => 'success', 'msg' => $msg], 200);
 	}
-		
-	public function status_update_admin(Request $request){
+
+	public function status_update_admin(Request $request) {
 
 		$admin = Admin::whereManagerId($request->id)->first();
-		if($admin->status == 1){
+		if ($admin->status == 1) {
 			$admin->status = 0;
 			$admin->save();
 			$msg = 'Disabled Successfully';
-		}else{
+		} else {
 			$admin->status = 1;
 			$admin->save();
 			$msg = 'Enabled Successfully';
@@ -256,39 +328,68 @@ class ApplicationController extends Controller {
 
 	}
 
-	public function get_exchange_rates(){
+	public function get_exchange_rates() {
 
 		$setting = Settings::all();
 		$rates = $setting;
 		return response()->json(compact('rates'));
 	}
 
-	public function update_exchange_rates(Request $request){
-		$annual_rate = Settings::where('key','annual_rate')->update(['value'=> $request->annual_rate]);
-		$average_rate = Settings::where('key','average_rate')->update(['value'=> $request->average_rate]);
-		$salary_rate = Settings::where('key','salary_rate')->update(['value'=> $request->salary_rate]);
+	public function update_exchange_rates(Request $request) {
+		$annual_rate = Settings::where('key', 'annual_rate')->update(['value' => $request->annual_rate]);
+		$average_rate = Settings::where('key', 'average_rate')->update(['value' => $request->average_rate]);
+		$salary_rate = Settings::where('key', 'salary_rate')->update(['value' => $request->salary_rate]);
 		return response()->json(['status' => 'success']);
 	}
 
-	public function get_currencies(){
+	public function get_currencies() {
 		$currencies = Currencies::all();
 		return response()->json(compact('currencies'));
 	}
 
-	public function status_update_currency(Request $request){
+	public function status_update_currency(Request $request) {
 
 		$admin = Currencies::whereId($request->id)->first();
-		if($admin->status == 1){
+		if ($admin->status == 1) {
 			$admin->status = 0;
 			$admin->save();
 			$msg = 'Disabled';
-		}else{
+		} else {
 			$admin->status = 1;
 			$admin->save();
 			$msg = 'Enabled';
 		}
-		return response()->json(['status' => 'success', 'msg' => 'Currency '.$msg.' Successfully'], 200);
+		return response()->json(['status' => 'success', 'msg' => 'Currency ' . $msg . ' Successfully'], 200);
 
+	}
+
+	public function add_tax(Request $request) {
+		$tax = new Tax;
+		$tax->tax_id = (String) Str::uuid();
+		$tax->customer_id = $request->customer_id;
+		$tax->title = $request->title;
+		$tax->description = $request->description;
+		$tax->duration = $request->duration;
+		$tax->type = $request->type;
+		$tax->supervisor_id = $request->supervisor_id;
+		$save = $tax->save();
+		if ($save) {
+			$officers = explode(',', $request->officers);
+			foreach ($officers as $key => $officer) {
+				$taxOfficer = new TaxOfficer;
+				$taxOfficer->tax_officer_id = (String) Str::uuid();
+				$taxOfficer->tax_id = $tax->tax_id;
+				$taxOfficer->officer_id = $officer;
+				$taxOfficer->save();
+			}
+			return response()->json(['status' => 'success', 'msg' => 'Tax Created Successfully'], 200);
+		}
+
+	}
+
+	public function get_taxes(Request $request) {
+		$taxes = Tax::with('supervisor')->withCount('officers')->where('customer_id', $request->customer_id)->get();
+		return response()->json(compact('taxes'));
 	}
 
 	public function get_customer_profile(Request $request){

@@ -22,6 +22,8 @@ import Customers from "./Customers/Customers.js";
 import Exchangerates from "./ExchangeRates/Exchangerates.js";
 import Purchases from "./Purchases/Purchases.js";
 import Sales from "./Sales/Sales.js";
+import Employees from "./Employees/Employees.js";
+import Taxes from "./Taxes/Taxes.js";
 
 Vue.use(Vuex)
 
@@ -39,6 +41,8 @@ export default new Vuex.Store({
       exchangerates: Exchangerates,
       purchases: Purchases,
       sales: Sales,
+      employees : Employees,
+      taxes : Taxes,
     }
     // strict: process.env.NODE_ENV !== 'production'
 })

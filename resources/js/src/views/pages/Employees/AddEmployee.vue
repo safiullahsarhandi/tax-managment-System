@@ -1,7 +1,7 @@
 <template>
 	<div>
         <vx-card title="Add Employee" subtitle="Add Information Of Customer OR company's Employee which payrolls will be managed by system" noShadow noRadius>
-            <form ref="addEmployee" @submit.prevent="addEmployee($event)">
+            <form autocomplete="off" ref="addEmployeeForm" @submit.prevent="addEmployee($event)">
             	<vs-row>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
@@ -32,6 +32,12 @@
                         <vs-input name="nationality" v-validate="`required`" label-placeholder="Nationality" v-model="nationality" />
             			</vx-input-group>
                         <span class="text-danger" v-show="errors.has('nationality')">{{errors.first('nationality')}}</span>
+            		</vs-col>
+            		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                        <vx-input-group>
+                        <vs-input name="dob" v-validate="`required`" label-placeholder="dob" v-model="dob" />
+            			</vx-input-group>
+                        <span class="text-danger" v-show="errors.has('dob')">{{errors.first('dob')}}</span>
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
             			<vx-input-group>
@@ -91,21 +97,41 @@
 		    name_eng : '',
 		    nationality : '',
 		    joining_date : '',
+		    dob : '',
 		    position : '',
 		    sex : '',
 		    contract_type : '',
 		    spouse : '',
 		  };
 		},
-		computed: {
-		  ...mapState('employees',['employees']),
-		},
 		beforeCreate(){
-			this.tax_customer_id = this.$store.state.rootUrl.split('/')[2]
+			this.tax_customer_id = this.$store.state.rootUrl.split('/')[2];
 		},
 		methods: {
+			...mapActions({
+				create : 'employees/create',
+			}),
 		  addEmployee (e) {
-		    
+		    this.$validator.validateAll().then(result=>{
+		    	if(result){
+		    		this.$vs.loading();
+		    		let fd = new FormData(this.$refs.addEmployeeForm); 
+		    		fd.append('customer_id',this.tax_customer_id);
+		    		let data = {
+		    			fd : fd,
+		    			close : this.$vs.loading.close,
+		    			notify : this.$vs.notify,
+		    		};
+		    		self = this;
+		    		this.create(data).then(function(res){
+		    			if(res.data.status == 'success'){
+		    self.nssf_num = self.employee_num = self.name_khmer = self.name_eng = self.nationality = self.joining_date = self.position = self.sex = self.contract_type = self.spouse = '';
+		    				e.target.reset();
+		    				self.$validator.reset();
+		    			}
+		    		});
+		    	}
+		    })
 		  }
 		}
 

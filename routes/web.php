@@ -36,6 +36,18 @@ Route::group(['prefix' => ''], function () {
 	Route::post('update-customer', 'ApplicationController@update_customer');
 	Route::post('status-update-customer', 'ApplicationController@status_update_customer');
 
+	// Customers
+	Route::post('add-employee', 'ApplicationController@add_employee');
+	Route::get('get-employees', 'ApplicationController@get_employees');
+	Route::post('update-employee', 'ApplicationController@update_employee');
+	Route::post('status-update-employee', 'ApplicationController@status_update_employee');
+
+	// Customers
+	Route::post('add-tax', 'ApplicationController@add_tax');
+	Route::get('get-taxes', 'ApplicationController@get_taxes');
+	Route::post('update-tax', 'ApplicationController@update_tax');
+	Route::post('status-update-tax', 'ApplicationController@status_update_tax');
+
 	// Exchange Rates
 	Route::get('get-exchange-rates', 'ApplicationController@get_exchange_rates');
 	Route::post('update-exchange-rates', 'ApplicationController@update_exchange_rates');
@@ -44,7 +56,6 @@ Route::group(['prefix' => ''], function () {
 	Route::get('get-currencies', 'ApplicationController@get_currencies');
 	Route::post('status-update-currency', 'ApplicationController@status_update_currency');
 
-
 	// Purchases
 	Route::post('add-purchase', 'ApplicationController@add_purchase');
 	Route::get('get-purchases', 'ApplicationController@get_purchases');
@@ -52,8 +63,6 @@ Route::group(['prefix' => ''], function () {
 	// Sales
 	Route::post('add-sale', 'ApplicationController@add_sale');
 	Route::get('get-sales', 'ApplicationController@get_sales');
-
-
 
 });
 Route::get('/{any}', 'ApplicationController')->where('any', '.*');
