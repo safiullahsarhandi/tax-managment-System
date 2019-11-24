@@ -78339,6 +78339,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/src/store/ExchangeRates/Exchangerates.js":
+/*!***************************************************************!*\
+  !*** ./resources/js/src/store/ExchangeRates/Exchangerates.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'C:\\xampp2019\\htdocs\\tax-mangment\\resources\\js\\src\\store\\ExchangeRates\\Exchangerates.js'");
+
+/***/ }),
+
 /***/ "./resources/js/src/store/Officers/OfficerActions.js":
 /*!***********************************************************!*\
   !*** ./resources/js/src/store/Officers/OfficerActions.js ***!
@@ -78852,7 +78863,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Supervisors_Supervisors_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Supervisors/Supervisors.js */ "./resources/js/src/store/Supervisors/Supervisors.js");
 /* harmony import */ var _Admins_Admins_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Admins/Admins.js */ "./resources/js/src/store/Admins/Admins.js");
 /* harmony import */ var _Customers_Customers_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Customers/Customers.js */ "./resources/js/src/store/Customers/Customers.js");
-!(function webpackMissingModule() { var e = new Error("Cannot find module './ExchangeRates/Exchangerates.js'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _ExchangeRates_Exchangerates_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ExchangeRates/Exchangerates.js */ "./resources/js/src/store/ExchangeRates/Exchangerates.js");
 /*=========================================================================================
   File Name: store.js
   Description: Vuex store
@@ -78883,7 +78894,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     supervisors: _Supervisors_Supervisors_js__WEBPACK_IMPORTED_MODULE_7__["default"],
     admins: _Admins_Admins_js__WEBPACK_IMPORTED_MODULE_8__["default"],
     customers: _Customers_Customers_js__WEBPACK_IMPORTED_MODULE_9__["default"],
-    exchangerates: !(function webpackMissingModule() { var e = new Error("Cannot find module './ExchangeRates/Exchangerates.js'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())
+    exchangerates: _ExchangeRates_Exchangerates_js__WEBPACK_IMPORTED_MODULE_10__["default"]
   } // strict: process.env.NODE_ENV !== 'production'
 
 }));
