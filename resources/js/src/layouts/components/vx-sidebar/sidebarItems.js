@@ -24,12 +24,14 @@ export default [{
         name: "Dashboard",
         slug: "home",
         icon: "HomeIcon",
+        isMain : true,
     },
     {
         url: "/",
         name: "Customers",
         slug: "customers",
         icon: "UsersIcon",
+        isMain : false,
         submenu: [{
             url: "/add-customer",
             name: "Add Customer",
@@ -49,24 +51,28 @@ export default [{
         name: "Currencies",
         slug: "currencies",
         icon: "DollarSignIcon",
+        isMain : false,
     },
     {
         url: "/exchange-rates",
         name: "Exchange Rates",
         slug: "exchange-rates",
         icon: "ActivityIcon",
+        isMain : false,
     },
     {
         url: "/tax-managment",
         name: "Tax Managment",
         slug: "tax-mangment",
         icon: "FileIcon",
+        isMain : false,
     },
     {
         url: "/manage-team",
         name: "Our Team",
         slug: "our-team",
         icon: "UsersIcon",
+        isMain : false,
         submenu: [{
             url: "/admins",
             name: "Admins",

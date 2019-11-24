@@ -99,7 +99,7 @@ const router = new Router({
     // CUSTOMER DETAIL LAYOUT ROUTES
     // =============================================================================
         path: '/customer-detail/:id',
-        component: () => import('./layouts/full-page/customerDetailFullPage.vue'),
+        component: () => import('./layouts/main/customerMain.vue'),
         children: [
       // =============================================================================
       // Theme Routes
@@ -108,6 +108,11 @@ const router = new Router({
             path: '/',
             name: 'Company Detail',
             component: () => import('./views/pages/Customers/CustomerDetail.vue'),
+          },
+          {
+            path: '/employees-list',
+            name: 'Employees List',
+            component: () => import('./views/pages/Employees/Employees.vue'),
           },
           /*{
             path: '/add-sale',
