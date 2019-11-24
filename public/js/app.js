@@ -62423,7 +62423,6 @@ Object.defineProperty(exports,"__esModule",{value:true});exports.VueHammer=undef
 
 module.exports =
 /******/ (function(modules) { // webpackBootstrap
-<<<<<<< HEAD
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -62507,91 +62506,6 @@ module.exports =
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = "9bf4");
-=======
-/******/  // The module cache
-/******/  var installedModules = {};
-/******/
-/******/  // The require function
-/******/  function __webpack_require__(moduleId) {
-/******/
-/******/    // Check if module is in cache
-/******/    if(installedModules[moduleId]) {
-/******/      return installedModules[moduleId].exports;
-/******/    }
-/******/    // Create a new module (and put it into the cache)
-/******/    var module = installedModules[moduleId] = {
-/******/      i: moduleId,
-/******/      l: false,
-/******/      exports: {}
-/******/    };
-/******/
-/******/    // Execute the module function
-/******/    modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/    // Flag the module as loaded
-/******/    module.l = true;
-/******/
-/******/    // Return the exports of the module
-/******/    return module.exports;
-/******/  }
-/******/
-/******/
-/******/  // expose the modules object (__webpack_modules__)
-/******/  __webpack_require__.m = modules;
-/******/
-/******/  // expose the module cache
-/******/  __webpack_require__.c = installedModules;
-/******/
-/******/  // define getter function for harmony exports
-/******/  __webpack_require__.d = function(exports, name, getter) {
-/******/    if(!__webpack_require__.o(exports, name)) {
-/******/      Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/    }
-/******/  };
-/******/
-/******/  // define __esModule on exports
-/******/  __webpack_require__.r = function(exports) {
-/******/    if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/      Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/    }
-/******/    Object.defineProperty(exports, '__esModule', { value: true });
-/******/  };
-/******/
-/******/  // create a fake namespace object
-/******/  // mode & 1: value is a module id, require it
-/******/  // mode & 2: merge all properties of value into the ns
-/******/  // mode & 4: return value when already ns object
-/******/  // mode & 8|1: behave like require
-/******/  __webpack_require__.t = function(value, mode) {
-/******/    if(mode & 1) value = __webpack_require__(value);
-/******/    if(mode & 8) return value;
-/******/    if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/    var ns = Object.create(null);
-/******/    __webpack_require__.r(ns);
-/******/    Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/    if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/    return ns;
-/******/  };
-/******/
-/******/  // getDefaultExport function for compatibility with non-harmony modules
-/******/  __webpack_require__.n = function(module) {
-/******/    var getter = module && module.__esModule ?
-/******/      function getDefault() { return module['default']; } :
-/******/      function getModuleExports() { return module; };
-/******/    __webpack_require__.d(getter, 'a', getter);
-/******/    return getter;
-/******/  };
-/******/
-/******/  // Object.prototype.hasOwnProperty.call
-/******/  __webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/  // __webpack_public_path__
-/******/  __webpack_require__.p = "";
-/******/
-/******/
-/******/  // Load entry module and return exports
-/******/  return __webpack_require__(__webpack_require__.s = "9bf4");
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -75808,11 +75722,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapActions", function() { return mapActions; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNamespacedHelpers", function() { return createNamespacedHelpers; });
 /**
-<<<<<<< HEAD
  * vuex v3.1.1
-=======
- * vuex v3.1.2
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
  * (c) 2019 Evan You
  * @license MIT
  */
@@ -76134,10 +76044,6 @@ var Store = function Store (options) {
   this._modulesNamespaceMap = Object.create(null);
   this._subscribers = [];
   this._watcherVM = new Vue();
-<<<<<<< HEAD
-=======
-  this._makeLocalGettersCache = Object.create(null);
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
 
   // bind commit and dispatch to self
   var store = this;
@@ -76370,21 +76276,12 @@ function resetStoreVM (store, state, hot) {
 
   // bind store public getters
   store.getters = {};
-<<<<<<< HEAD
-=======
-  // reset local getters cache
-  store._makeLocalGettersCache = Object.create(null);
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
   var wrappedGetters = store._wrappedGetters;
   var computed = {};
   forEachValue(wrappedGetters, function (fn, key) {
     // use computed to leverage its lazy-caching mechanism
     // direct inline function use will lead to closure preserving oldVm.
-<<<<<<< HEAD
     // using partial to return function with only arguments preserved in closure enviroment.
-=======
-    // using partial to return function with only arguments preserved in closure environment.
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
     computed[key] = partial(fn, store);
     Object.defineProperty(store.getters, key, {
       get: function () { return store._vm[key]; },
@@ -76428,12 +76325,6 @@ function installModule (store, rootState, path, module, hot) {
 
   // register in namespace map
   if (module.namespaced) {
-<<<<<<< HEAD
-=======
-    if (store._modulesNamespaceMap[namespace] && "development" !== 'production') {
-      console.error(("[vuex] duplicate namespace " + namespace + " for the namespaced module " + (path.join('/'))));
-    }
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
     store._modulesNamespaceMap[namespace] = module;
   }
 
@@ -76442,16 +76333,6 @@ function installModule (store, rootState, path, module, hot) {
     var parentState = getNestedState(rootState, path.slice(0, -1));
     var moduleName = path[path.length - 1];
     store._withCommit(function () {
-<<<<<<< HEAD
-=======
-      if (true) {
-        if (moduleName in parentState) {
-          console.warn(
-            ("[vuex] state field \"" + moduleName + "\" was overridden by a module with the same name at \"" + (path.join('.')) + "\"")
-          );
-        }
-      }
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
       Vue.set(parentState, moduleName, module.state);
     });
   }
@@ -76539,7 +76420,6 @@ function makeLocalContext (store, namespace, path) {
 }
 
 function makeLocalGetters (store, namespace) {
-<<<<<<< HEAD
   var gettersProxy = {};
 
   var splitPos = namespace.length;
@@ -76560,30 +76440,6 @@ function makeLocalGetters (store, namespace) {
   });
 
   return gettersProxy
-=======
-  if (!store._makeLocalGettersCache[namespace]) {
-    var gettersProxy = {};
-    var splitPos = namespace.length;
-    Object.keys(store.getters).forEach(function (type) {
-      // skip if the target getter is not match this namespace
-      if (type.slice(0, splitPos) !== namespace) { return }
-
-      // extract local getter type
-      var localType = type.slice(splitPos);
-
-      // Add a port to the getters proxy.
-      // Define as getter property because
-      // we do not want to evaluate the getters in this time.
-      Object.defineProperty(gettersProxy, localType, {
-        get: function () { return store.getters[type]; },
-        enumerable: true
-      });
-    });
-    store._makeLocalGettersCache[namespace] = gettersProxy;
-  }
-
-  return store._makeLocalGettersCache[namespace]
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
 }
 
 function registerMutation (store, type, handler, local) {
@@ -76595,11 +76451,7 @@ function registerMutation (store, type, handler, local) {
 
 function registerAction (store, type, handler, local) {
   var entry = store._actions[type] || (store._actions[type] = []);
-<<<<<<< HEAD
   entry.push(function wrappedActionHandler (payload, cb) {
-=======
-  entry.push(function wrappedActionHandler (payload) {
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
     var res = handler.call(store, {
       dispatch: local.dispatch,
       commit: local.commit,
@@ -76607,11 +76459,7 @@ function registerAction (store, type, handler, local) {
       state: local.state,
       rootGetters: store.getters,
       rootState: store.state
-<<<<<<< HEAD
     }, payload, cb);
-=======
-    }, payload);
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
     if (!isPromise(res)) {
       res = Promise.resolve(res);
     }
@@ -76692,12 +76540,6 @@ function install (_Vue) {
  */
 var mapState = normalizeNamespace(function (namespace, states) {
   var res = {};
-<<<<<<< HEAD
-=======
-  if ( true && !isValidMap(states)) {
-    console.error('[vuex] mapState: mapper parameter must be either an Array or an Object');
-  }
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
   normalizeMap(states).forEach(function (ref) {
     var key = ref.key;
     var val = ref.val;
@@ -76731,12 +76573,6 @@ var mapState = normalizeNamespace(function (namespace, states) {
  */
 var mapMutations = normalizeNamespace(function (namespace, mutations) {
   var res = {};
-<<<<<<< HEAD
-=======
-  if ( true && !isValidMap(mutations)) {
-    console.error('[vuex] mapMutations: mapper parameter must be either an Array or an Object');
-  }
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
   normalizeMap(mutations).forEach(function (ref) {
     var key = ref.key;
     var val = ref.val;
@@ -76770,12 +76606,6 @@ var mapMutations = normalizeNamespace(function (namespace, mutations) {
  */
 var mapGetters = normalizeNamespace(function (namespace, getters) {
   var res = {};
-<<<<<<< HEAD
-=======
-  if ( true && !isValidMap(getters)) {
-    console.error('[vuex] mapGetters: mapper parameter must be either an Array or an Object');
-  }
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
   normalizeMap(getters).forEach(function (ref) {
     var key = ref.key;
     var val = ref.val;
@@ -76806,12 +76636,6 @@ var mapGetters = normalizeNamespace(function (namespace, getters) {
  */
 var mapActions = normalizeNamespace(function (namespace, actions) {
   var res = {};
-<<<<<<< HEAD
-=======
-  if ( true && !isValidMap(actions)) {
-    console.error('[vuex] mapActions: mapper parameter must be either an Array or an Object');
-  }
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
   normalizeMap(actions).forEach(function (ref) {
     var key = ref.key;
     var val = ref.val;
@@ -76857,30 +76681,12 @@ var createNamespacedHelpers = function (namespace) { return ({
  * @return {Object}
  */
 function normalizeMap (map) {
-<<<<<<< HEAD
-=======
-  if (!isValidMap(map)) {
-    return []
-  }
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
   return Array.isArray(map)
     ? map.map(function (key) { return ({ key: key, val: key }); })
     : Object.keys(map).map(function (key) { return ({ key: key, val: map[key] }); })
 }
 
 /**
-<<<<<<< HEAD
-=======
- * Validate whether given map is valid or not
- * @param {*} map
- * @return {Boolean}
- */
-function isValidMap (map) {
-  return Array.isArray(map) || isObject(map)
-}
-
-/**
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
  * Return a function expect two param contains namespace and map. it will normalize the namespace and then the param's function will handle the new namespace and the map.
  * @param {Function} fn
  * @return {Function}
@@ -76915,11 +76721,7 @@ function getModuleByNamespace (store, helper, namespace) {
 var index_esm = {
   Store: Store,
   install: install,
-<<<<<<< HEAD
   version: '3.1.1',
-=======
-  version: '3.1.2',
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
   mapState: mapState,
   mapMutations: mapMutations,
   mapGetters: mapGetters,
@@ -78092,11 +77894,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     // =============================================================================
     path: '',
     component: function component() {
-<<<<<<< HEAD
-      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! ./layouts/main/Main.vue */ "./resources/js/src/layouts/main/Main.vue"));
-=======
       return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0), __webpack_require__.e(7)]).then(__webpack_require__.bind(null, /*! ./layouts/main/Main.vue */ "./resources/js/src/layouts/main/Main.vue"));
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
     },
     children: [// =============================================================================
     // Theme Routes
@@ -78105,99 +77903,67 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/',
       name: 'home',
       component: function component() {
-<<<<<<< HEAD
-        return __webpack_require__.e(/*! import() */ 21).then(__webpack_require__.bind(null, /*! ./views/Home.vue */ "./resources/js/src/views/Home.vue"));
-=======
-        return __webpack_require__.e(/*! import() */ 18).then(__webpack_require__.bind(null, /*! ./views/Home.vue */ "./resources/js/src/views/Home.vue"));
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
+        return __webpack_require__.e(/*! import() */ 23).then(__webpack_require__.bind(null, /*! ./views/Home.vue */ "./resources/js/src/views/Home.vue"));
       }
     }, {
       path: '/page2',
       name: 'page2',
       component: function component() {
-<<<<<<< HEAD
-        return __webpack_require__.e(/*! import() */ 22).then(__webpack_require__.bind(null, /*! ./views/Page2.vue */ "./resources/js/src/views/Page2.vue"));
-=======
-        return __webpack_require__.e(/*! import() */ 19).then(__webpack_require__.bind(null, /*! ./views/Page2.vue */ "./resources/js/src/views/Page2.vue"));
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
+        return __webpack_require__.e(/*! import() */ 24).then(__webpack_require__.bind(null, /*! ./views/Page2.vue */ "./resources/js/src/views/Page2.vue"));
       }
     }, {
       path: '/customers',
       name: 'Customers',
       component: function component() {
-<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/Customers.vue */ "./resources/js/src/views/pages/Customers/Customers.vue"));
-=======
-        return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/Customers.vue */ "./resources/js/src/views/pages/Customers/Customers.vue"));
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
       }
     }, {
       path: '/add-customer',
       name: 'Add Customer',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 11).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/AddCustomer.vue */ "./resources/js/src/views/pages/Customers/AddCustomer.vue"));
+        return __webpack_require__.e(/*! import() */ 12).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/AddCustomer.vue */ "./resources/js/src/views/pages/Customers/AddCustomer.vue"));
       }
     }, {
       path: '/currencies',
       name: 'Currencies',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 10).then(__webpack_require__.bind(null, /*! ./views/pages/Currencies.vue */ "./resources/js/src/views/pages/Currencies.vue"));
+        return __webpack_require__.e(/*! import() */ 11).then(__webpack_require__.bind(null, /*! ./views/pages/Currencies.vue */ "./resources/js/src/views/pages/Currencies.vue"));
       }
     }, {
       path: '/exchange-rates',
       name: 'Exhange Rates',
       component: function component() {
-<<<<<<< HEAD
-        return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./views/pages/ExchangeRates.vue */ "./resources/js/src/views/pages/ExchangeRates.vue"));
-=======
         return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./views/pages/ExchangeRates.vue */ "./resources/js/src/views/pages/ExchangeRates.vue"));
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
       }
     }, {
       path: '/admins',
       name: 'Admins',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! ./views/pages/Admins.vue */ "./resources/js/src/views/pages/Admins.vue"));
+        return __webpack_require__.e(/*! import() */ 10).then(__webpack_require__.bind(null, /*! ./views/pages/Admins.vue */ "./resources/js/src/views/pages/Admins.vue"));
       }
     }, {
       path: '/supervisors',
       name: 'Supervisors',
       component: function component() {
-<<<<<<< HEAD
-        return __webpack_require__.e(/*! import() */ 16).then(__webpack_require__.bind(null, /*! ./views/pages/Supervisors.vue */ "./resources/js/src/views/pages/Supervisors.vue"));
-=======
-        return __webpack_require__.e(/*! import() */ 14).then(__webpack_require__.bind(null, /*! ./views/pages/Supervisors.vue */ "./resources/js/src/views/pages/Supervisors.vue"));
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
+        return __webpack_require__.e(/*! import() */ 18).then(__webpack_require__.bind(null, /*! ./views/pages/Supervisors.vue */ "./resources/js/src/views/pages/Supervisors.vue"));
       }
     }, {
       path: '/officers',
       name: 'Officers',
       component: function component() {
-<<<<<<< HEAD
-        return __webpack_require__.e(/*! import() */ 14).then(__webpack_require__.bind(null, /*! ./views/pages/Officers.vue */ "./resources/js/src/views/pages/Officers.vue"));
-=======
-        return __webpack_require__.e(/*! import() */ 12).then(__webpack_require__.bind(null, /*! ./views/pages/Officers.vue */ "./resources/js/src/views/pages/Officers.vue"));
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
+        return __webpack_require__.e(/*! import() */ 16).then(__webpack_require__.bind(null, /*! ./views/pages/Officers.vue */ "./resources/js/src/views/pages/Officers.vue"));
       }
     }, {
       path: '/testing',
       name: 'testing',
       component: function component() {
-<<<<<<< HEAD
-        return __webpack_require__.e(/*! import() */ 18).then(__webpack_require__.bind(null, /*! ./views/pages/demo.vue */ "./resources/js/src/views/pages/demo.vue"));
-=======
-        return __webpack_require__.e(/*! import() */ 15).then(__webpack_require__.bind(null, /*! ./views/pages/demo.vue */ "./resources/js/src/views/pages/demo.vue"));
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
+        return __webpack_require__.e(/*! import() */ 20).then(__webpack_require__.bind(null, /*! ./views/pages/demo.vue */ "./resources/js/src/views/pages/demo.vue"));
       }
     }, {
       path: '/tax-managment',
       name: 'Tax Managment',
       component: function component() {
-<<<<<<< HEAD
-        return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./views/pages/tax-managment/TaxManagment.vue */ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue"));
-=======
         return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./views/pages/tax-managment/TaxManagment.vue */ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue"));
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
       }
     }]
   }, {
@@ -78206,11 +77972,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     // =============================================================================
     path: '/customer-detail/:id',
     component: function component() {
-<<<<<<< HEAD
-      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0), __webpack_require__.e(8)]).then(__webpack_require__.bind(null, /*! ./layouts/main/customerMain.vue */ "./resources/js/src/layouts/main/customerMain.vue"));
-=======
-      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./layouts/full-page/customerDetailFullPage.vue */ "./resources/js/src/layouts/full-page/customerDetailFullPage.vue"));
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
+      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0), __webpack_require__.e(9)]).then(__webpack_require__.bind(null, /*! ./layouts/main/customerMain.vue */ "./resources/js/src/layouts/main/customerMain.vue"));
     },
     children: [// =============================================================================
     // Theme Routes
@@ -78219,29 +77981,25 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/',
       name: 'Company Detail',
       component: function component() {
-<<<<<<< HEAD
-        return __webpack_require__.e(/*! import() */ 12).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/CustomerDetail.vue */ "./resources/js/src/views/pages/Customers/CustomerDetail.vue"));
+        return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/CustomerDetail.vue */ "./resources/js/src/views/pages/Customers/CustomerDetail.vue"));
       }
     }, {
       path: '/add-employee',
       name: 'Add Employee',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! ./views/pages/Employees/AddEmployee.vue */ "./resources/js/src/views/pages/Employees/AddEmployee.vue"));
+        return __webpack_require__.e(/*! import() */ 14).then(__webpack_require__.bind(null, /*! ./views/pages/Employees/AddEmployee.vue */ "./resources/js/src/views/pages/Employees/AddEmployee.vue"));
       }
     }, {
       path: '/employees-list',
       name: 'Employees List',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! ./views/pages/Employees/Employees.vue */ "./resources/js/src/views/pages/Employees/Employees.vue"));
+        return __webpack_require__.e(/*! import() */ 15).then(__webpack_require__.bind(null, /*! ./views/pages/Employees/Employees.vue */ "./resources/js/src/views/pages/Employees/Employees.vue"));
       }
     }, {
       path: '/taxes',
       name: 'Taxes',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 26).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/Taxes.vue */ "./resources/js/src/views/pages/Customers/Taxes.vue"));
-=======
-        return __webpack_require__.e(/*! import() */ 20).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/CustomerDetail.vue */ "./resources/js/src/views/pages/Customers/CustomerDetail.vue"));
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
+        return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/Taxes.vue */ "./resources/js/src/views/pages/Customers/Taxes.vue"));
       }
     }
     /*{
@@ -78271,11 +78029,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     // =============================================================================
     path: '/tax-collection/:id',
     component: function component() {
-<<<<<<< HEAD
-      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0), __webpack_require__.e(7)]).then(__webpack_require__.bind(null, /*! ./layouts/main/TaxDetailMain.vue */ "./resources/js/src/layouts/main/TaxDetailMain.vue"));
-=======
       return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0), __webpack_require__.e(8)]).then(__webpack_require__.bind(null, /*! ./layouts/main/TaxDetailMain.vue */ "./resources/js/src/layouts/main/TaxDetailMain.vue"));
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
     },
     children: [// =============================================================================
     // Theme Routes
@@ -78284,51 +78038,31 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/',
       name: 'Tax Detail',
       component: function component() {
-<<<<<<< HEAD
-        return __webpack_require__.e(/*! import() */ 17).then(__webpack_require__.bind(null, /*! ./views/pages/Tax/TaxDetail.vue */ "./resources/js/src/views/pages/Tax/TaxDetail.vue"));
-=======
-        return __webpack_require__.e(/*! import() */ 24).then(__webpack_require__.bind(null, /*! ./views/pages/Tax/TaxDetail.vue */ "./resources/js/src/views/pages/Tax/TaxDetail.vue"));
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
+        return __webpack_require__.e(/*! import() */ 19).then(__webpack_require__.bind(null, /*! ./views/pages/Tax/TaxDetail.vue */ "./resources/js/src/views/pages/Tax/TaxDetail.vue"));
       }
     }, {
       path: '/add-sale',
       name: 'Add Sale',
       component: function component() {
-<<<<<<< HEAD
-        return __webpack_require__.e(/*! import() */ 15).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/AddSale.vue */ "./resources/js/src/views/pages/Sales/AddSale.vue"));
-=======
-        return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/AddSale.vue */ "./resources/js/src/views/pages/Sales/AddSale.vue"));
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
+        return __webpack_require__.e(/*! import() */ 17).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/AddSale.vue */ "./resources/js/src/views/pages/Sales/AddSale.vue"));
       }
     }, {
       path: '/sales-list',
       name: 'Sales List',
       component: function component() {
-<<<<<<< HEAD
-        return __webpack_require__.e(/*! import() */ 25).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/Sales.vue */ "./resources/js/src/views/pages/Sales/Sales.vue"));
-=======
-        return __webpack_require__.e(/*! import() */ 23).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/Sales.vue */ "./resources/js/src/views/pages/Sales/Sales.vue"));
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
+        return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/Sales.vue */ "./resources/js/src/views/pages/Sales/Sales.vue"));
       }
     }, {
       path: '/add-purchase',
       name: 'Add Purchase',
       component: function component() {
-<<<<<<< HEAD
-        return __webpack_require__.e(/*! import() */ 23).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/AddPurchase.vue */ "./resources/js/src/views/pages/Purchases/AddPurchase.vue"));
-=======
-        return __webpack_require__.e(/*! import() */ 21).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/AddPurchase.vue */ "./resources/js/src/views/pages/Purchases/AddPurchase.vue"));
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
+        return __webpack_require__.e(/*! import() */ 25).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/AddPurchase.vue */ "./resources/js/src/views/pages/Purchases/AddPurchase.vue"));
       }
     }, {
       path: '/purchases-list',
       name: 'Purchases List',
       component: function component() {
-<<<<<<< HEAD
-        return __webpack_require__.e(/*! import() */ 24).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/Purchases.vue */ "./resources/js/src/views/pages/Purchases/Purchases.vue"));
-=======
-        return __webpack_require__.e(/*! import() */ 22).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/Purchases.vue */ "./resources/js/src/views/pages/Purchases/Purchases.vue"));
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
+        return __webpack_require__.e(/*! import() */ 26).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/Purchases.vue */ "./resources/js/src/views/pages/Purchases/Purchases.vue"));
       }
     }]
   }, // =============================================================================
@@ -78337,11 +78071,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   {
     path: '',
     component: function component() {
-<<<<<<< HEAD
-      return __webpack_require__.e(/*! import() */ 20).then(__webpack_require__.bind(null, /*! @/layouts/full-page/FullPage.vue */ "./resources/js/src/layouts/full-page/FullPage.vue"));
-=======
-      return __webpack_require__.e(/*! import() */ 17).then(__webpack_require__.bind(null, /*! @/layouts/full-page/FullPage.vue */ "./resources/js/src/layouts/full-page/FullPage.vue"));
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
+      return __webpack_require__.e(/*! import() */ 22).then(__webpack_require__.bind(null, /*! @/layouts/full-page/FullPage.vue */ "./resources/js/src/layouts/full-page/FullPage.vue"));
     },
     children: [// =============================================================================
     // PAGES
@@ -78350,21 +78080,13 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/pages/login',
       name: 'pageLogin',
       component: function component() {
-<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! @/views/pages/Login.vue */ "./resources/js/src/views/pages/Login.vue"));
-=======
-        return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! @/views/pages/Login.vue */ "./resources/js/src/views/pages/Login.vue"));
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
       }
     }, {
       path: '/pages/error-404',
       name: 'pageError404',
       component: function component() {
-<<<<<<< HEAD
-        return __webpack_require__.e(/*! import() */ 19).then(__webpack_require__.bind(null, /*! @/views/pages/Error404.vue */ "./resources/js/src/views/pages/Error404.vue"));
-=======
-        return __webpack_require__.e(/*! import() */ 16).then(__webpack_require__.bind(null, /*! @/views/pages/Error404.vue */ "./resources/js/src/views/pages/Error404.vue"));
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
+        return __webpack_require__.e(/*! import() */ 21).then(__webpack_require__.bind(null, /*! @/views/pages/Error404.vue */ "./resources/js/src/views/pages/Error404.vue"));
       }
     }]
   }, // Redirect to 404 page, if no match found
@@ -78617,16 +78339,178 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/src/store/Employees/EmployeeActions.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/src/store/Employees/EmployeeActions.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  getEmployees: function getEmployees(_ref) {
+    var commit = _ref.commit;
+    axios.get('get-employees').then(function (res) {
+      commit('setEmployees', res.data.employees);
+    });
+  },
+  create: function create(_ref2, data) {
+    var commit = _ref2.commit;
+    // alert('action called');
+    return axios.post('add-employee', data.fd).then(function (res) {
+      // commit('setOfficer',res.data.officers)
+      if (res.data.status == 'error') {
+        data.notify({
+          color: 'danger',
+          text: res.data.msg,
+          title: 'Oops',
+          position: 'top-right'
+        });
+      } else {
+        data.notify({
+          color: 'success',
+          text: res.data.msg,
+          position: 'top-right'
+        });
+      }
+
+      setTimeout(function () {
+        data.close();
+      }, 500);
+      return res;
+    });
+  },
+  updateEmployee: function updateEmployee(_ref3, fd) {
+    var commit = _ref3.commit;
+    return axios.post('update-employee', fd).then(function (res) {
+      commit('setEmployee', res.data.employee);
+      return res;
+    });
+  },
+  statusUpdate: function statusUpdate(_ref4, data) {
+    var commit = _ref4.commit;
+    axios.post('status-update-employee', {
+      id: data.id
+    }).then(function (res) {
+      data.notify({
+        title: 'Updated!...',
+        text: res.data.msg,
+        color: 'success',
+        position: 'top-right'
+      });
+      commit('setStatus', {
+        id: data.id,
+        status: res.data.employee.status
+      });
+      data.close();
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Employees/EmployeeGetters.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/src/store/Employees/EmployeeGetters.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  findEmployee: function findEmployee(state) {
+    return function (id) {
+      var index = _.findIndex(state.employees, function (o) {
+        return o.id === id;
+      });
+
+      return state.employees[index];
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Employees/EmployeeMutations.js":
+/*!***************************************************************!*\
+  !*** ./resources/js/src/store/Employees/EmployeeMutations.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  setEmployees: function setEmployees(state, employees) {
+    state.employees = employees;
+  },
+  setEmployee: function setEmployee(state, employee) {
+    var index = _.findIndex(state.employees, function (o) {
+      return o.id === employee.id;
+    });
+
+    Vue.set(state.employees, index, employee);
+  },
+  setStatus: function setStatus(state, data) {
+    var index = _.findIndex(state.employees, function (o) {
+      return o.id === data.id;
+    });
+
+    state.employees[index].status = data.status; // Vue.set(state.employees,index,employee);
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Employees/EmployeeState.js":
+/*!***********************************************************!*\
+  !*** ./resources/js/src/store/Employees/EmployeeState.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  employees: []
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Employees/Employees.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/src/store/Employees/Employees.js ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _EmployeeState_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EmployeeState.js */ "./resources/js/src/store/Employees/EmployeeState.js");
+/* harmony import */ var _EmployeeActions_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EmployeeActions.js */ "./resources/js/src/store/Employees/EmployeeActions.js");
+/* harmony import */ var _EmployeeMutations_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./EmployeeMutations.js */ "./resources/js/src/store/Employees/EmployeeMutations.js");
+/* harmony import */ var _EmployeeGetters_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./EmployeeGetters.js */ "./resources/js/src/store/Employees/EmployeeGetters.js");
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  actions: _EmployeeActions_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  state: _EmployeeState_js__WEBPACK_IMPORTED_MODULE_0__["default"],
+  mutations: _EmployeeMutations_js__WEBPACK_IMPORTED_MODULE_2__["default"],
+  getters: _EmployeeGetters_js__WEBPACK_IMPORTED_MODULE_3__["default"]
+});
+
+/***/ }),
+
 /***/ "./resources/js/src/store/ExchangeRates/Exchangerates.js":
 /*!***************************************************************!*\
   !*** ./resources/js/src/store/ExchangeRates/Exchangerates.js ***!
   \***************************************************************/
 /*! exports provided: default */
-<<<<<<< HEAD
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'C:\\xampp2019\\htdocs\\tax-mangment\\resources\\js\\src\\store\\ExchangeRates\\Exchangerates.js'");
-=======
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -78717,7 +78601,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   exchangerates: []
 });
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
 
 /***/ }),
 
@@ -78968,6 +78851,174 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/src/store/Taxes/TaxActions.js":
+/*!****************************************************!*\
+  !*** ./resources/js/src/store/Taxes/TaxActions.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  getTaxes: function getTaxes(_ref, customer_id) {
+    var commit = _ref.commit;
+    axios.get('get-taxes', {
+      customer_id: customer_id
+    }).then(function (res) {
+      commit('setTaxes', res.data.taxes);
+    });
+  },
+  addTax: function addTax(_ref2, data) {
+    var commit = _ref2.commit;
+    // alert('action called');
+    return axios.post('add-tax', data.fd).then(function (res) {
+      if (res.data.status == 'error') {
+        data.notify({
+          color: 'danger',
+          text: res.data.msg,
+          title: 'Oops',
+          position: 'top-right'
+        });
+      } else {
+        data.notify({
+          color: 'success',
+          text: res.data.msg,
+          position: 'top-right'
+        });
+      }
+
+      setTimeout(function () {
+        data.close();
+      }, 500);
+      return res;
+    });
+  },
+  updateTax: function updateTax(_ref3, fd) {
+    var commit = _ref3.commit;
+    return axios.post('update-tax', fd).then(function (res) {
+      commit('setEmployee', res.data.employee);
+      return res;
+    });
+  },
+  statusUpdate: function statusUpdate(_ref4, data) {
+    var commit = _ref4.commit;
+    axios.post('status-update-tax', {
+      id: data.id
+    }).then(function (res) {
+      data.notify({
+        title: 'Updated!...',
+        text: res.data.msg,
+        color: 'success',
+        position: 'top-right'
+      });
+      commit('setStatus', {
+        id: data.id,
+        status: res.data.tax.status
+      });
+      data.close();
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Taxes/TaxGetters.js":
+/*!****************************************************!*\
+  !*** ./resources/js/src/store/Taxes/TaxGetters.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  findEmployee: function findEmployee(state) {
+    return function (id) {
+      var index = _.findIndex(state.employees, function (o) {
+        return o.id === id;
+      });
+
+      return state.employees[index];
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Taxes/TaxMutations.js":
+/*!******************************************************!*\
+  !*** ./resources/js/src/store/Taxes/TaxMutations.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  setTaxes: function setTaxes(state, taxes) {
+    state.taxes = taxes;
+  },
+  setTax: function setTax(state, tax) {
+    var index = _.findIndex(state.taxes, function (o) {
+      return o.id === tax.id;
+    });
+
+    Vue.set(state.taxes, index, tax);
+  },
+  setStatus: function setStatus(state, data) {
+    var index = _.findIndex(state.taxes, function (o) {
+      return o.id === data.id;
+    });
+
+    state.taxes[index].status = data.status; // Vue.set(state.taxs,index,tax);
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Taxes/TaxState.js":
+/*!**************************************************!*\
+  !*** ./resources/js/src/store/Taxes/TaxState.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  taxes: []
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Taxes/Taxes.js":
+/*!***********************************************!*\
+  !*** ./resources/js/src/store/Taxes/Taxes.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _TaxState_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TaxState.js */ "./resources/js/src/store/Taxes/TaxState.js");
+/* harmony import */ var _TaxActions_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TaxActions.js */ "./resources/js/src/store/Taxes/TaxActions.js");
+/* harmony import */ var _TaxMutations_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TaxMutations.js */ "./resources/js/src/store/Taxes/TaxMutations.js");
+/* harmony import */ var _TaxGetters_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./TaxGetters.js */ "./resources/js/src/store/Taxes/TaxGetters.js");
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  actions: _TaxActions_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  state: _TaxState_js__WEBPACK_IMPORTED_MODULE_0__["default"],
+  mutations: _TaxMutations_js__WEBPACK_IMPORTED_MODULE_2__["default"],
+  getters: _TaxGetters_js__WEBPACK_IMPORTED_MODULE_3__["default"]
+});
+
+/***/ }),
+
 /***/ "./resources/js/src/store/actions.js":
 /*!*******************************************!*\
   !*** ./resources/js/src/store/actions.js ***!
@@ -79078,12 +79129,9 @@ __webpack_require__.r(__webpack_exports__);
   Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
 var mutations = {
-<<<<<<< HEAD
   setRootUrl: function setRootUrl(state, url) {
     state.rootUrl = url;
   },
-=======
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
   // ////////////////////////////////////////////
   // SIDEBAR & UI UX
   // ////////////////////////////////////////////
@@ -79188,10 +79236,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var state = {
-<<<<<<< HEAD
   rootUrl: '/',
-=======
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
   isSidebarActive: true,
   breakpoint: null,
   sidebarWidth: "default",
@@ -79241,6 +79286,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Admins_Admins_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Admins/Admins.js */ "./resources/js/src/store/Admins/Admins.js");
 /* harmony import */ var _Customers_Customers_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Customers/Customers.js */ "./resources/js/src/store/Customers/Customers.js");
 /* harmony import */ var _ExchangeRates_Exchangerates_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ExchangeRates/Exchangerates.js */ "./resources/js/src/store/ExchangeRates/Exchangerates.js");
+/* harmony import */ var _Employees_Employees_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Employees/Employees.js */ "./resources/js/src/store/Employees/Employees.js");
+/* harmony import */ var _Taxes_Taxes_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Taxes/Taxes.js */ "./resources/js/src/store/Taxes/Taxes.js");
 /*=========================================================================================
   File Name: store.js
   Description: Vuex store
@@ -79249,6 +79296,8 @@ __webpack_require__.r(__webpack_exports__);
   Author: Pixinvent
   Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
+
+
 
 
 
@@ -79271,7 +79320,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     supervisors: _Supervisors_Supervisors_js__WEBPACK_IMPORTED_MODULE_7__["default"],
     admins: _Admins_Admins_js__WEBPACK_IMPORTED_MODULE_8__["default"],
     customers: _Customers_Customers_js__WEBPACK_IMPORTED_MODULE_9__["default"],
-    exchangerates: _ExchangeRates_Exchangerates_js__WEBPACK_IMPORTED_MODULE_10__["default"]
+    exchangerates: _ExchangeRates_Exchangerates_js__WEBPACK_IMPORTED_MODULE_10__["default"],
+    employees: _Employees_Employees_js__WEBPACK_IMPORTED_MODULE_11__["default"],
+    taxes: _Taxes_Taxes_js__WEBPACK_IMPORTED_MODULE_12__["default"]
   } // strict: process.env.NODE_ENV !== 'production'
 
 }));
@@ -79358,15 +79409,9 @@ var themeConfig = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
 __webpack_require__(/*! C:\xampp2019\htdocs\tax-mangment\resources\js\app.js */"./resources/js/app.js");
 __webpack_require__(/*! C:\xampp2019\htdocs\tax-mangment\resources\sass\app.scss */"./resources/sass/app.scss");
 module.exports = __webpack_require__(/*! C:\xampp2019\htdocs\tax-mangment\resources\assets\css\main.css */"./resources/assets/css/main.css");
-=======
-__webpack_require__(/*! C:\xampp\htdocs\freelancing_projects\tax-managment-System\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! C:\xampp\htdocs\freelancing_projects\tax-managment-System\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\freelancing_projects\tax-managment-System\resources\assets\css\main.css */"./resources/assets/css/main.css");
->>>>>>> b03bb2f6733a5648f869273f4e8ce7dbf50514a1
 
 
 /***/ })

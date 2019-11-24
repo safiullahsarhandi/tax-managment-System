@@ -488,17 +488,6 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./resources/assets/images/logo/logo.png":
-/*!***********************************************!*\
-  !*** ./resources/assets/images/logo/logo.png ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/images/logo.png?a5d6fa57427643c6ebe37859086c9a63";
-
-/***/ }),
-
 /***/ "./resources/js/src/layouts/components/vx-sidebar/sidebarItems.js":
 /*!************************************************************************!*\
   !*** ./resources/js/src/layouts/components/vx-sidebar/sidebarItems.js ***!
@@ -531,12 +520,14 @@ __webpack_require__.r(__webpack_exports__);
   url: "/",
   name: "Dashboard",
   slug: "home",
-  icon: "HomeIcon"
+  icon: "HomeIcon",
+  isMain: true
 }, {
   url: "/",
   name: "Customers",
   slug: "customers",
   icon: "UsersIcon",
+  isMain: false,
   submenu: [{
     url: "/add-customer",
     name: "Add Customer",
@@ -552,22 +543,26 @@ __webpack_require__.r(__webpack_exports__);
   url: "/currencies",
   name: "Currencies",
   slug: "currencies",
-  icon: "DollarSignIcon"
+  icon: "DollarSignIcon",
+  isMain: false
 }, {
   url: "/exchange-rates",
   name: "Exchange Rates",
   slug: "exchange-rates",
-  icon: "ActivityIcon"
+  icon: "ActivityIcon",
+  isMain: false
 }, {
   url: "/tax-managment",
   name: "Tax Managment",
   slug: "tax-mangment",
-  icon: "FileIcon"
+  icon: "FileIcon",
+  isMain: false
 }, {
   url: "/manage-team",
   name: "Our Team",
   slug: "our-team",
   icon: "UsersIcon",
+  isMain: false,
   submenu: [{
     url: "/admins",
     name: "Admins",
