@@ -160,6 +160,7 @@ export default {
         BackToTop
     },
     created() {
+        
         this.setSidebarWidth();
         if(this.navbarColor == "#fff" && this.isThemeDark) {
             this.updateNavbarColor("#10163a")

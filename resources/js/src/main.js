@@ -42,7 +42,6 @@ import 'prismjs'
 // import 'prismjs/themes/prism-tomorrow.css'
 
 Vue.config.productionTip = false
-
 new Vue({
 	provide(){
 		return {

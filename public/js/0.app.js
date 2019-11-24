@@ -2390,7 +2390,9 @@ var render = function() {
                                       index: index,
                                       to:
                                         sidebarItem.slug != "external"
-                                          ? sidebarItem.url
+                                          ? sidebarItem.isMain
+                                            ? _vm.$store.state.rootUrl
+                                            : sidebarItem.url
                                           : "",
                                       href:
                                         sidebarItem.slug == "external"
@@ -2718,6 +2720,17 @@ var staticRenderFns = []
 render._withStripped = true
 
 
+
+/***/ }),
+
+/***/ "./resources/assets/images/logo/logo.png":
+/*!***********************************************!*\
+  !*** ./resources/assets/images/logo/logo.png ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/logo.png?a5d6fa57427643c6ebe37859086c9a63";
 
 /***/ }),
 

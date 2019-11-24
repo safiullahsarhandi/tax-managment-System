@@ -25,6 +25,14 @@ export default [
         name: "Overview",
         slug: "home",
         icon: "HomeIcon",
+        isMain : true,
+    },
+    {
+        url: "/employees-list",
+        name: "Employees",
+        slug: "customer-employees",
+        icon: "UsersIcon",
+        isMain : false,
     },
     /*{
         url: "/",

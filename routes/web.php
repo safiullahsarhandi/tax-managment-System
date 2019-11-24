@@ -32,6 +32,7 @@ Route::group(['prefix' => ''], function () {
 	// Customers
 	Route::post('add-customer', 'ApplicationController@add_customer');
 	Route::get('get-customers', 'ApplicationController@get_customers');
+	Route::post('get-customer-profile', 'ApplicationController@get_customer_profile');
 	Route::post('update-customer', 'ApplicationController@update_customer');
 	Route::post('status-update-customer', 'ApplicationController@status_update_customer');
 

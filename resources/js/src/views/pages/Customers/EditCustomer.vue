@@ -1,10 +1,11 @@
 <template>
     <div>
         <vx-card title="Edit Customer" subtitle="Update Information Of Customer OR company which tax will be managed by system" noShadow noRadius>
-            <form ref="editCustomer" @submit.prevent="editCustomer($event)">
+            <form ref="editform" @submit.prevent="updateCustomer($event)">
             	<vs-row>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
             			<vx-input-group>
+                        <input type="hidden" name="id" v-model="customer_id" data-vv-scope="editform">
                         <vs-input name="name_eng" v-validate="`required`" label-placeholder="Name (English)" v-model="name_eng" />
             			</vx-input-group>
                         <span class="text-danger" v-show="errors.has('name_eng')">{{errors.first('name_eng')}}</span>
@@ -112,7 +113,7 @@
             	<vs-row>
             		<vs-col class="text-center" vs-lg='12' vs-md='12'>
             			<vs-col class="text-center" vs-md="12" vs-lg="12">
-            				<vs-button button="submit" class="mt-5" type="gradient">Save</vs-button>
+            				<vs-button button="submit" class="mt-5" type="gradient">Save changes</vs-button>
             			</vs-col>
             			<vs-col class="text-center" vs-md="12" vs-lg="12">
             			<vs-button class="mt-5" type="gradient" button="button">Upload Excel Sheet</vs-button>
@@ -148,35 +149,78 @@
 		    industry : '',
 		  };
 		},
-
-            
+         computed: {
+            ...mapGetters('customers/',['findCustomer']),
+        },
+        created() {
+            // this.getCustomers();
+            // console.log(this.$route.params.id);
+            this.editCustomer(this.$route.params.id);
+        },
 		methods: {
 		  addMoreFeild () {
 		    this.customField.push({name : 'additional_field[]',value : '',type: 'text'});
 		  },
                ...mapActions({
-                  submit: 'customers/addCustomer',
+                  update: 'customers/updateCustomer'
               }),
-		  addCustomer(e){
-                  this.$validator.validateAll().then(result => {
-                      if (result) {
-                        this.$vs.loading();
-                          var fd = new FormData(this.$refs.addCustomer);
-                          this.submit(fd).then(res => {
-                              console.log(res.data);
-                              if (res.data.status == 'success') {
-                                  e.target.reset();
-                                  this.errors.clear();
-                                  this.$vs.notify({title:'Success',text:'Customer Added Successfully' ,color:'success',position:'top-right'})
-                                  this.$vs.loading.close();
-                              }
-                              if(res.data.status == 'error'){
-                                alert(res.data.msg);
-                              }
-                          })
-                      }
-                  })
-		  }
-		}
+
+
+         editCustomer(routeId){
+            // var customer = this.findCustomer(id);
+            axios.post('get-customer-profile',{id:routeId}).then(res=>{
+                var customer = res.data.data;
+            
+                    this.customer_id = customer.customer_id;
+                    this.name_eng = customer.name_english;
+                    this.name_khmer = customer.name_khmer;
+                    this.industry = customer.industry;
+                    this.tax_id = customer.tax_card_num;
+                    this.tin_num = customer.tin_no;
+                    this.email = customer.email;
+                    this.tel = customer.telephone;
+                    this.additional_fields = customer.additional_fields;
+                    this.address = customer.address;
+                    this.district = customer.district;
+                    this.group = customer.group;
+                    this.incorporation_date = customer.incorporation_date;
+                    this.muncipality = customer.muncipality;
+                    this.province = customer.province;
+                    this.sangkat = customer.sangkat;
+                    this.street = customer.street;
+                    this.village = customer.village;
+                    self = this;
+                    self.customField = [];
+                    if(customer.additional_fields != null){
+                        if(customer.additional_fields.length > 0){
+                            customer.additional_fields.map(function(val, key) {
+                                self.customField.push({name : 'additional_field[]',value : val,type: 'text'});
+                           });
+                        }            
+                    }
+
+            });
+            
+        },
+		
+        updateCustomer(e) {
+            this.$validator.validateAll('editform').then(result => {
+                if (result) {
+                    this.$vs.loading();
+                    var fd = new FormData(this.$refs.editform);
+                    this.update(fd).then( (res) => {
+                        if (res.data.status == 'success') {
+                            e.target.reset();
+                            this.errors.clear();
+                            this.editCustomerModal = false;
+                            this.$vs.notify({title:'Success',text:'Customer Updated Successfully',color:'success',position:'top-right'})
+                            this.$vs.loading.close();
+                            this.$router.back();
+                        }
+                    })
+                }
+            })
+        },
+	  }
 	}
 </script>

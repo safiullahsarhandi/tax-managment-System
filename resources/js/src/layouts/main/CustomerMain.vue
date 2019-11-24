@@ -184,6 +184,9 @@ export default {
         TheFooter,
         BackToTop
     },
+    beforeCreate(){
+        this.$store.commit('setRootUrl',localStorage.getItem('currentDetail'))
+    },
     created() {
         this.setSidebarWidth();
         if(this.navbarColor == "#fff" && this.isThemeDark) {
@@ -191,6 +194,6 @@ export default {
         }else {
             this.updateNavbarColor(this.navbarColor)
         }
-    }
+    },
 }
 </script>

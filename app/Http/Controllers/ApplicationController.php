@@ -132,10 +132,10 @@ class ApplicationController extends Controller {
 		$customer->name_english = $request->name_eng;
 		$customer->name_khmer = $request->name_khmer;
 		$customer->email = $request->email;
-		$customer->telephone = $request->telephone;
+		$customer->telephone = $request->tel;
 		$customer->industry = $request->industry;
 		$customer->tax_card_num = $request->tax_id;
-		$customer->tin_no = $request->tin_no;
+		$customer->tin_no = $request->tin_num;
 		$customer->address = $request->address;
 		$customer->muncipality = $request->muncipality;
 		$customer->district = $request->district;
@@ -287,6 +287,12 @@ class ApplicationController extends Controller {
 		}
 		return response()->json(['status' => 'success', 'msg' => 'Currency '.$msg.' Successfully'], 200);
 
+	}
+
+	public function get_customer_profile(Request $request){
+
+		$customer = TaxCustomers::whereCustomerId($request->id)->first();
+		return response()->json(['data'=>$customer]);
 	}
 
 }

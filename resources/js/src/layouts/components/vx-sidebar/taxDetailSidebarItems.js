@@ -25,12 +25,14 @@ export default [
         name: "Overview",
         slug: "home",
         icon: "HomeIcon",
+        isMain : true,
     },
     {
         url: "/",
         name: "Sales",
         slug: "customer-sales",
         icon: "DollarSignIcon",
+        isMain : true,
         submenu: [{
             url: "/add-sale",
             name: "Add Sale",
@@ -48,6 +50,7 @@ export default [
         name: "purchases",
         slug: "customer-purchases",
         icon: "TruckIcon",
+        isMain : true,
         submenu: [{
             url: "/add-purchase",
             name: "Add purchase",
@@ -65,6 +68,7 @@ export default [
         name: "Employees",
         slug: "customer-employees",
         icon: "UsersIcon",
+        isMain : true,
         submenu: [{
             url: "/add-employee",
             name: "Add Employees",
@@ -82,6 +86,7 @@ export default [
         name: "Payrolls",
         slug: "employees-payrolls",
         icon: "ActivityIcon",
+        isMain : true,
         submenu: [{
             url: "/add-payroll",
             name: "Add Payroll",
@@ -99,6 +104,7 @@ export default [
         name: "Reports",
         slug: "reports",
         icon: "BookOpenIcon",
+        isMain : true,
     }
     /*{
         url: "/page2",

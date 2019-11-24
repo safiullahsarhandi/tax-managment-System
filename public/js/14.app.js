@@ -1,9 +1,9 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[14],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Supervisors.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Supervisors.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Officers.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Officers.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -167,8 +167,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   inject: ['generatePassword'],
   data: function data() {
     return {
-      addSupervisorModal: false,
-      editSupervisorModal: false,
+      addOfficerModal: false,
+      editOfficerModal: false,
       first_name: "",
       last_name: "",
       email: "",
@@ -192,23 +192,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       edit_manager_id: ''
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('supervisors/', ['supervisors']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('supervisors/', ['findSupervisor'])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('officers/', ['officers']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('officers/', ['findOfficer'])),
   created: function created() {
-    this.getSupervisors();
+    this.getOfficers();
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
-    getSupervisors: 'supervisors/getSupervisors',
-    submit: 'supervisors/addSupervisor',
-    update: 'supervisors/updateSupervisor'
+    getOfficers: 'officers/getOfficers',
+    submit: 'officers/addOfficer',
+    update: 'officers/updateOfficer'
   }), {
-    addSupervisor: function addSupervisor(e) {
+    addOfficer: function addOfficer(e) {
       var _this = this;
 
       this.$validator.validateAll('addform').then(function (result) {
         if (result) {
           _this.$vs.loading();
 
-          var fd = new FormData(_this.$refs.addSupervisorForm);
+          var fd = new FormData(_this.$refs.addOfficerForm);
           fd.append('gender', _this.gender);
 
           _this.submit(fd).then(function (res) {
@@ -219,18 +219,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               _this.errors.clear();
 
-              _this.addSupervisorModal = false;
+              _this.addOfficerModal = false;
 
               _this.$vs.notify({
                 title: 'Success',
-                text: 'Supervisor Added Successfully',
+                text: 'Officer Added Successfully',
                 color: 'success',
                 position: 'top-right'
               });
 
               _this.$vs.loading.close();
 
-              _this.getSupervisors();
+              _this.getOfficers();
+            }
+
+            if (res.data.status == 'error') {
+              _this.$vs.notify({
+                title: 'Error!',
+                text: 'ther was some issue, try again',
+                color: 'danger',
+                position: 'top-right'
+              });
+
+              _this.$vs.loading.close();
             }
           });
         }
@@ -240,7 +251,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this2 = this;
 
       this.$vs.loading();
-      axios.post('status-update-supervisor', {
+      axios.post('status-update-officer', {
         id: id
       }).then(function (res) {
         _this2.$vs.notify({
@@ -253,33 +264,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this2.$vs.loading.close();
       });
     },
-    editSupervisor: function editSupervisor(id) {
-      var supervisor = this.findSupervisor(id); // console.log(supervisor)
-      // console.log(supervisor);
-      // console.log(supervisor);
-
-      this.edit_manager_id = supervisor.manager_id;
-      this.edit_first_name = supervisor.first_name;
-      this.edit_last_name = supervisor.last_name;
-      this.edit_email = supervisor.email;
-      this.edit_gender = supervisor.gender; // console.log(this.edit_gender)
-
-      this.edit_zip_code = supervisor.zip_code;
-      this.edit_address = supervisor.address;
-      this.edit_phone = supervisor.phone;
-      this.edit_state = supervisor.state;
-      this.edit_zip_code = supervisor.zip_code;
-      this.edit_city = supervisor.city;
-      this.editSupervisorModal = true;
+    editOfficer: function editOfficer(id) {
+      var officer = this.findOfficer(id);
+      this.edit_manager_id = officer.manager_id;
+      this.edit_first_name = officer.first_name;
+      this.edit_last_name = officer.last_name;
+      this.edit_email = officer.email;
+      this.edit_gender = officer.gender;
+      this.edit_zip_code = officer.zip_code;
+      this.edit_address = officer.address;
+      this.edit_phone = officer.phone;
+      this.edit_state = officer.state;
+      this.edit_zip_code = officer.zip_code;
+      this.edit_city = officer.city;
+      this.editOfficerModal = true;
     },
-    updateSupervisor: function updateSupervisor(e) {
+    updateOfficer: function updateOfficer(e) {
       var _this3 = this;
 
       this.$validator.validateAll('editform').then(function (result) {
         if (result) {
           _this3.$vs.loading();
 
-          var fd = new FormData(_this3.$refs.editSupervisorForm);
+          var fd = new FormData(_this3.$refs.editOfficerForm);
           fd.append('gender', _this3.edit_gender);
 
           _this3.update(fd).then(function (res) {
@@ -291,16 +298,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               _this3.errors.clear();
 
-              _this3.editSupervisorModal = false;
+              _this3.editOfficerModal = false;
 
               _this3.$vs.notify({
                 title: 'Success',
-                text: 'Supervisor Updated Successfully',
+                text: 'Officer Updated Successfully',
                 color: 'success',
                 position: 'top-right'
               });
 
-              _this3.$vs.loading.close(); // this.getSupervisors();
+              _this3.$vs.loading.close(); // this.getOfficers();
 
             }
           });
@@ -315,10 +322,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Supervisors.vue?vue&type=template&id=33f1a2f4&":
-/*!*******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Supervisors.vue?vue&type=template&id=33f1a2f4& ***!
-  \*******************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Officers.vue?vue&type=template&id=11458d92&":
+/*!****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Officers.vue?vue&type=template&id=11458d92& ***!
+  \****************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -335,7 +342,7 @@ var render = function() {
     [
       _c(
         "vx-card",
-        { attrs: { title: "List of Supervisors" } },
+        { attrs: { title: "List of Officers" } },
         [
           _c(
             "template",
@@ -349,7 +356,7 @@ var render = function() {
                 },
                 on: {
                   click: function($event) {
-                    _vm.addSupervisorModal = true
+                    _vm.addOfficerModal = true
                   }
                 }
               })
@@ -364,7 +371,7 @@ var render = function() {
                 search: "",
                 pagination: "",
                 "max-items": "6",
-                data: _vm.supervisors
+                data: _vm.officers
               },
               scopedSlots: _vm._u([
                 {
@@ -462,7 +469,7 @@ var render = function() {
                                   attrs: { type: "border" },
                                   on: {
                                     click: function($event) {
-                                      return _vm.editSupervisor(tr.id)
+                                      return _vm.editOfficer(tr.id)
                                     }
                                   }
                                 },
@@ -514,13 +521,10 @@ var render = function() {
       _c(
         "vs-popup",
         {
-          attrs: {
-            active: _vm.addSupervisorModal,
-            title: "Add New Supervisor"
-          },
+          attrs: { active: _vm.addOfficerModal, title: "Add New Officer" },
           on: {
             "update:active": function($event) {
-              _vm.addSupervisorModal = $event
+              _vm.addOfficerModal = $event
             }
           }
         },
@@ -528,12 +532,12 @@ var render = function() {
           _c(
             "form",
             {
-              ref: "addSupervisorForm",
+              ref: "addOfficerForm",
               attrs: { "data-vv-scope": "addform" },
               on: {
                 submit: function($event) {
                   $event.preventDefault()
-                  return _vm.addSupervisor($event)
+                  return _vm.addOfficer($event)
                 }
               }
             },
@@ -1056,7 +1060,7 @@ var render = function() {
                           staticClass: "float-right",
                           attrs: { button: "submit", type: "gradient" }
                         },
-                        [_vm._v("Add Supervisor")]
+                        [_vm._v("Add Officer")]
                       )
                     ],
                     1
@@ -1073,13 +1077,10 @@ var render = function() {
       _c(
         "vs-popup",
         {
-          attrs: {
-            active: _vm.editSupervisorModal,
-            title: "Update Supervisor"
-          },
+          attrs: { active: _vm.editOfficerModal, title: "Update Officer" },
           on: {
             "update:active": function($event) {
-              _vm.editSupervisorModal = $event
+              _vm.editOfficerModal = $event
             }
           }
         },
@@ -1087,12 +1088,12 @@ var render = function() {
           _c(
             "form",
             {
-              ref: "editSupervisorForm",
+              ref: "editOfficerForm",
               attrs: { autocomplete: "off", "data-vv-scope": "editform" },
               on: {
                 submit: function($event) {
                   $event.preventDefault()
-                  return _vm.updateSupervisor($event)
+                  return _vm.updateOfficer($event)
                 }
               }
             },
@@ -1562,7 +1563,7 @@ var render = function() {
                           staticClass: "float-right",
                           attrs: { button: "submit", type: "gradient" }
                         },
-                        [_vm._v("Update Supervisor")]
+                        [_vm._v("Update Officer")]
                       )
                     ],
                     1
@@ -1586,17 +1587,17 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./resources/js/src/views/pages/Supervisors.vue":
-/*!******************************************************!*\
-  !*** ./resources/js/src/views/pages/Supervisors.vue ***!
-  \******************************************************/
+/***/ "./resources/js/src/views/pages/Officers.vue":
+/*!***************************************************!*\
+  !*** ./resources/js/src/views/pages/Officers.vue ***!
+  \***************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Supervisors_vue_vue_type_template_id_33f1a2f4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Supervisors.vue?vue&type=template&id=33f1a2f4& */ "./resources/js/src/views/pages/Supervisors.vue?vue&type=template&id=33f1a2f4&");
-/* harmony import */ var _Supervisors_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Supervisors.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/Supervisors.vue?vue&type=script&lang=js&");
+/* harmony import */ var _Officers_vue_vue_type_template_id_11458d92___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Officers.vue?vue&type=template&id=11458d92& */ "./resources/js/src/views/pages/Officers.vue?vue&type=template&id=11458d92&");
+/* harmony import */ var _Officers_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Officers.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/Officers.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -1606,9 +1607,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _Supervisors_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Supervisors_vue_vue_type_template_id_33f1a2f4___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _Supervisors_vue_vue_type_template_id_33f1a2f4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _Officers_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Officers_vue_vue_type_template_id_11458d92___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Officers_vue_vue_type_template_id_11458d92___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -1618,38 +1619,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/src/views/pages/Supervisors.vue"
+component.options.__file = "resources/js/src/views/pages/Officers.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/src/views/pages/Supervisors.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************!*\
-  !*** ./resources/js/src/views/pages/Supervisors.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************/
+/***/ "./resources/js/src/views/pages/Officers.vue?vue&type=script&lang=js&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/src/views/pages/Officers.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Supervisors_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Supervisors.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Supervisors.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Supervisors_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Officers_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Officers.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Officers.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Officers_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/src/views/pages/Supervisors.vue?vue&type=template&id=33f1a2f4&":
-/*!*************************************************************************************!*\
-  !*** ./resources/js/src/views/pages/Supervisors.vue?vue&type=template&id=33f1a2f4& ***!
-  \*************************************************************************************/
+/***/ "./resources/js/src/views/pages/Officers.vue?vue&type=template&id=11458d92&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/src/views/pages/Officers.vue?vue&type=template&id=11458d92& ***!
+  \**********************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Supervisors_vue_vue_type_template_id_33f1a2f4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Supervisors.vue?vue&type=template&id=33f1a2f4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Supervisors.vue?vue&type=template&id=33f1a2f4&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Supervisors_vue_vue_type_template_id_33f1a2f4___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Officers_vue_vue_type_template_id_11458d92___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Officers.vue?vue&type=template&id=11458d92& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Officers.vue?vue&type=template&id=11458d92&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Officers_vue_vue_type_template_id_11458d92___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Supervisors_vue_vue_type_template_id_33f1a2f4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Officers_vue_vue_type_template_id_11458d92___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

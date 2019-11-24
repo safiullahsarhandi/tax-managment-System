@@ -9,7 +9,9 @@
 
 
 const mutations = {
-
+    setRootUrl(state,url){
+        state.rootUrl = url;
+    },
     // ////////////////////////////////////////////
     // SIDEBAR & UI UX
     // ////////////////////////////////////////////
