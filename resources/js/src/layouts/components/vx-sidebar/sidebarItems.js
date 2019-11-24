@@ -47,6 +47,46 @@ export default [{
         ],
     },
     {
+        url: "/",
+        name: "Sales",
+        slug: "sales",
+        icon: "UsersIcon",
+        isMain : false,
+        submenu: [{
+            url: "/add-sales",
+            name: "Add Sales",
+            slug: "add-sales",
+            icon: "UserIcon",
+        },
+        {
+            url: "/sales",
+            name: "List Of Sales",
+            slug: "sales",
+            icon: "UsersIcon",
+        }
+        ],
+    },
+    {
+        url: "/",
+        name: "Purchases",
+        slug: "purchases",
+        icon: "UsersIcon",
+        isMain : false,
+        submenu: [{
+            url: "/add-purchase",
+            name: "Add Purchase",
+            slug: "add-purchase",
+            icon: "UserIcon",
+        }, 
+        {
+            url: "/purchases",
+            name: "List Of Purchases",
+            slug: "purchases",
+            icon: "UsersIcon",
+        }
+        ],
+    },
+    {
         url: "/currencies",
         name: "Currencies",
         slug: "currencies",

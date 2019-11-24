@@ -45,6 +45,15 @@ Route::group(['prefix' => ''], function () {
 	Route::post('status-update-currency', 'ApplicationController@status_update_currency');
 
 
+	// Purchases
+	Route::post('add-purchase', 'ApplicationController@add_purchase');
+	Route::get('get-purchases', 'ApplicationController@get_purchases');
+
+	// Sales
+	Route::post('add-sale', 'ApplicationController@add_sale');
+	Route::get('get-sales', 'ApplicationController@get_sales');
+
+
 
 });
 Route::get('/{any}', 'ApplicationController')->where('any', '.*');
