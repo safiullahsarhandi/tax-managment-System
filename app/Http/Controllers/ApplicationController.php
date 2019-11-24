@@ -364,9 +364,10 @@ class ApplicationController extends Controller {
 	}
 
 	public function add_tax(Request $request) {
+
 		$tax = new Tax;
 		$tax->tax_id = (String) Str::uuid();
-		$tax->customer_id = $request->customer_id;
+		$tax->customer_id = substr($request->customer_id, 0, -1);
 		$tax->title = $request->title;
 		$tax->description = $request->description;
 		$tax->duration = $request->duration;
