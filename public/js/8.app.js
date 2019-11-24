@@ -521,7 +521,7 @@ __webpack_require__.r(__webpack_exports__);
   name: "Sales",
   slug: "customer-sales",
   icon: "DollarSignIcon",
-  isMain: true,
+  isMain: false,
   submenu: [{
     url: "/add-sale",
     name: "Add Sale",
@@ -538,7 +538,7 @@ __webpack_require__.r(__webpack_exports__);
   name: "purchases",
   slug: "customer-purchases",
   icon: "TruckIcon",
-  isMain: true,
+  isMain: false,
   submenu: [{
     url: "/add-purchase",
     name: "Add purchase",
@@ -551,28 +551,11 @@ __webpack_require__.r(__webpack_exports__);
     icon: "UserIcon"
   }]
 }, {
-  url: "/employees",
-  name: "Employees",
-  slug: "customer-employees",
-  icon: "UsersIcon",
-  isMain: true,
-  submenu: [{
-    url: "/add-employee",
-    name: "Add Employees",
-    slug: "add-employee",
-    icon: "UserIcon"
-  }, {
-    url: "/employees-list",
-    name: "List Of Employees",
-    slug: "employees-list",
-    icon: "UserIcon"
-  }]
-}, {
   url: "/payrolls",
   name: "Payrolls",
   slug: "employees-payrolls",
   icon: "ActivityIcon",
-  isMain: true,
+  isMain: false,
   submenu: [{
     url: "/add-payroll",
     name: "Add Payroll",
@@ -589,7 +572,7 @@ __webpack_require__.r(__webpack_exports__);
   name: "Reports",
   slug: "reports",
   icon: "BookOpenIcon",
-  isMain: true
+  isMain: false
 }
 /*{
     url: "/page2",
