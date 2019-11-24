@@ -30,6 +30,7 @@
         </vx-card>
         <vs-popup :active.sync="addTaxManagmentModal" title="Add Tax Managment">
             <form ref="addTaxManagmentForm" @submit.prevent="addTaxManagment($event)" data-vv-scope="addform">
+                <input type="hidden" name="category_id" v-model="tax_customer_id">
                 <vs-row>
                     <vs-col vs-lg="6" vs-md="6" vs-sm="12">
                         <vx-input-group>
@@ -99,9 +100,9 @@ export default {
         ...mapState('officers/', ['officers']),
     },
     beforeCreate() {
-        this.tax_customer_id = this.$store.state.rootUrl.split('/')[2];
     },
     created() {
+        this.tax_customer_id = this.$store.state.rootUrl.split('/')[2];
         this.getSupervisors();
         this.getOfficers();
         this.getTaxes(this.tax_customer_id);
@@ -125,7 +126,6 @@ export default {
                     this.$vs.loading();
                     self = this;
                     let fd = new FormData(self.$refs.addTaxManagmentForm);
-                    fd.append('customer_id', this.$store.state.rootUrl.split('/')[2]);
                     fd.append('officers', self.officer)
                     fd.append('supervisor_id',self.supervisor)
                     let data = {
