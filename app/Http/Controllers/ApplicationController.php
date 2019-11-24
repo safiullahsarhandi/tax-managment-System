@@ -14,6 +14,8 @@ use App\TaxCustomers;
 use App\TaxOfficer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Purchases;
+use App\Sales;
 
 class ApplicationController extends Controller {
 	public function __invoke() {
@@ -135,10 +137,10 @@ class ApplicationController extends Controller {
 		$customer->name_english = $request->name_eng;
 		$customer->name_khmer = $request->name_khmer;
 		$customer->email = $request->email;
-		$customer->telephone = $request->telephone;
+		$customer->telephone = $request->tel;
 		$customer->industry = $request->industry;
 		$customer->tax_card_num = $request->tax_id;
-		$customer->tin_no = $request->tin_no;
+		$customer->tin_no = $request->tin_num;
 		$customer->address = $request->address;
 		$customer->muncipality = $request->muncipality;
 		$customer->district = $request->district;
@@ -362,9 +364,10 @@ class ApplicationController extends Controller {
 	}
 
 	public function add_tax(Request $request) {
+
 		$tax = new Tax;
 		$tax->tax_id = (String) Str::uuid();
-		$tax->customer_id = $request->customer_id;
+		$tax->customer_id = substr($request->customer_id, 0, -1);
 		$tax->title = $request->title;
 		$tax->description = $request->description;
 		$tax->duration = $request->duration;
@@ -388,6 +391,103 @@ class ApplicationController extends Controller {
 	public function get_taxes(Request $request) {
 		$taxes = Tax::with('supervisor')->withCount('officers')->where('customer_id', $request->customer_id)->get();
 		return response()->json(compact('taxes'));
+	}
+
+	public function get_customer_profile(Request $request){
+
+		$customer = TaxCustomers::whereCustomerId($request->id)->first();
+		return response()->json(['data'=>$customer]);
+	}
+
+	public function add_purchase(Request $request){
+
+		$purchase = new Purchases();
+
+		$purchase->purchase_id = (String) Str::uuid();
+		
+		// $purchase->tax_id = $request->
+		// $purchase->customer_id = $request->
+
+
+		$purchase->branch_name 				= $request->branch_name;
+		$purchase->tax_period 				= $request->tax_period;
+		$purchase->invoice_date 			= $request->invoice_date;
+		$purchase->invoice_num 				= $request->invoice_number;
+		$purchase->description 				= $request->good_desc;
+		$purchase->quantity 				= $request->quantity;
+		$purchase->local_purchase_tax_val 	= $request->taxable_value_local;
+		$purchase->local_purchase_vat 		= $request->vat_local;
+		$purchase->imports_taxable_val 		= $request->taxable_value_import;
+		$purchase->imports_vat 				= $request->vat_import;
+		$purchase->total_vat 				= $request->total_vat;
+		$purchase->subject 					= $request->item_subject_taxes;
+		$purchase->comments 				= $request->comments_3e_fii;
+		$purchase->top_comments 			= $request->comments_for_top;
+		$purchase->client_responses 		= $request->client_responses;
+		$purchase->non_taxable_purchases 	= $request->non_taxable_purchases;
+		$purchase->supplier 				= $request->supplier;
+		$purchase->vat_tin 					= $request->vat_tin;
+		$purchase->additional_field 		= $request->additional_field;
+		// $purchase->officer_confirmed		= $request->
+		// $purchase->supervisor_confirmed 	= $request->
+		// $purchase->management_confirmed 	= $request->
+		// $purchase->admin_id 				= $request->
+		// $purchase->tax_officer_id		= $request->
+		// $purchase->supervisor_id 		= $request->
+		$purchase->status 					= 0;
+		$purchase->save();
+	
+		return response()->json(['status' => 'success']);
+	}
+
+	public function get_purchases(){
+		$purchases = Purchases::orderBy('created_at', 'desc')->get();
+		return response()->json(compact('purchases'));
+	}
+
+	public function add_sale(Request $request){
+
+		$sale = new Sales();
+
+		$sale->sale_id = (String) Str::uuid();
+
+        
+		$sale->account_code 			= $request->account_code;
+		$sale->account_description 		= $request->account_description;
+		$sale->accounting_reference 	= $request->account_ref;
+		$sale->signature_date 			= $request->sign_date;
+		$sale->branch_name 				= $request->branch_name;
+		$sale->tax_period 				= $request->tax_period;
+		$sale->invoice_date 			= $request->invoice_date;
+		$sale->invoice_num 				= $request->invoice_number;
+		$sale->client_name 				= $request->client_name;
+		$sale->client_tin 				= $request->client_tin;
+		$sale->description 				= $request->description;
+		$sale->quantity 				= $request->quantity;
+		$sale->taxes_subject 			= $request->item_subject_taxes;
+		$sale->comments 				= $request->comments_3e_fii;
+		$sale->top_comments 			= $request->comments_for_top;
+		$sale->client_response 			= $request->client_responses;
+		$sale->additional_fields 		= $request->additional_field;
+		
+		$sale->cust_sales 				= $request->customer_non_taxable_sales;
+		$sale->cust_sales_vat 			= $request->customer_export_value;
+		
+		$sale->taxable_person_sales 	= $request->person_non_taxable_sales;
+		$sale->taxable_person_vat 		= $request->export_value;
+		
+		// $sale->vat 						= $request->person_export_value;
+		// $sale->non_taxable_sales 		= $request->total_taxable_value;
+
+		$sale->status 					= 0;
+		$sale->save();
+
+		return response()->json(['status' => 'success', 'data' => $sale]);
+	}
+
+	public function get_sales(){
+		$sales = Sales::orderBy('created_at', 'desc')->get();
+		return response()->json(compact('sales'));
 	}
 
 }

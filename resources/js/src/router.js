@@ -57,6 +57,32 @@ const router = new Router({
               name : 'Add Customer',
               component : () => import('./views/pages/Customers/AddCustomer.vue'),
             },
+            {
+              path : '/customer-update/:id',
+              name : 'Customer Update',
+              component : () => import('./views/pages/Customers/EditCustomer.vue'),
+            },
+          {
+            path: '/sales',
+            name: 'Sales',
+            component: () => import('./views/pages/Sales/Sales.vue'),
+          },
+          {
+              path : '/add-sales',
+              name : 'Add Sales',
+              component : () => import('./views/pages/Sales/AddSale.vue'),
+            },
+
+          {
+            path: '/purchases',
+            name: 'Purchases',
+            component: () => import('./views/pages/Purchases/Purchases.vue'),
+          },
+          {
+              path : '/add-purchase',
+              name : 'Add Purchase',
+              component : () => import('./views/pages/Purchases/AddPurchase.vue'),
+            },
           {
             path: '/currencies',
             name: 'Currencies',

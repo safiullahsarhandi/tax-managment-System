@@ -120,14 +120,12 @@ export default {
 
         },
         addTaxManagment(e) {
-            // console.log()
             this.$validator.validateAll().then((result) => {
                 if (result) {
                     this.$vs.loading();
                     self = this;
-                    console.log(this.tax_customer_id);
                     let fd = new FormData(self.$refs.addTaxManagmentForm);
-                    fd.append('customer_id', this.tax_customer_id);
+                    fd.append('customer_id', this.$store.state.rootUrl.split('/')[2]);
                     fd.append('officers', self.officer)
                     fd.append('supervisor_id',self.supervisor)
                     let data = {

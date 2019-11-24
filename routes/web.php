@@ -32,6 +32,7 @@ Route::group(['prefix' => ''], function () {
 	// Customers
 	Route::post('add-customer', 'ApplicationController@add_customer');
 	Route::get('get-customers', 'ApplicationController@get_customers');
+	Route::post('get-customer-profile', 'ApplicationController@get_customer_profile');
 	Route::post('update-customer', 'ApplicationController@update_customer');
 	Route::post('status-update-customer', 'ApplicationController@status_update_customer');
 
@@ -54,6 +55,14 @@ Route::group(['prefix' => ''], function () {
 	// Currencies
 	Route::get('get-currencies', 'ApplicationController@get_currencies');
 	Route::post('status-update-currency', 'ApplicationController@status_update_currency');
+
+	// Purchases
+	Route::post('add-purchase', 'ApplicationController@add_purchase');
+	Route::get('get-purchases', 'ApplicationController@get_purchases');
+
+	// Sales
+	Route::post('add-sale', 'ApplicationController@add_sale');
+	Route::get('get-sales', 'ApplicationController@get_sales');
 
 });
 Route::get('/{any}', 'ApplicationController')->where('any', '.*');
