@@ -166,6 +166,16 @@ const router = new Router({
                     name: 'Purchases List',
                     component: () => import('./views/pages/Purchases/Purchases.vue'),
                 },
+                {
+                    path: '/add-payroll',
+                    name: 'Add Payroll',
+                    component: () => import('./views/pages/Payrolls/AddPayroll.vue'),
+                },
+                {
+                    path: '/employees-payrolls',
+                    name: 'Employees Payrolls',
+                    component: () => import('./views/pages/Payrolls/Payrolls.vue'),
+                },
             ],
         },
         // =============================================================================

@@ -24,7 +24,7 @@ export default [{
         name: "Dashboard",
         slug: "home",
         icon: "HomeIcon",
-        isMain : true,
+        isMain : false,
     },
     {
         url: "/",

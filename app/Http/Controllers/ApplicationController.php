@@ -194,6 +194,10 @@ class ApplicationController extends Controller {
 		$employees = CustomerEmployee::whereTaxCustomerId($request->tax_customer_id)->get();
 		return response()->json(compact('employees'));
 	}
+	public function get_active_employees(Request $request) {
+		$employees = CustomerEmployee::whereTaxCustomerId($request->tax_customer_id)->where('status', 1)->get();
+		return response()->json(compact('employees'));
+	}
 	public function update_employee(Request $request) {
 		if ($res = CustomerEmployee::where('nssf_num', '=', $request->nssf_num)->where('tax_customer_id', $request->tax_customer_id)->where('employee_id', '!=', $request->employee_id)->first()) {
 			return response()->json(['status' => "error", 'msg' => "Employee with this NSSF No already exists"]);

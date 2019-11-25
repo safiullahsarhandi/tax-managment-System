@@ -78049,6 +78049,18 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       component: function component() {
         return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/Purchases.vue */ "./resources/js/src/views/pages/Purchases/Purchases.vue"));
       }
+    }, {
+      path: '/add-payroll',
+      name: 'Add Payroll',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 29).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/AddPayroll.vue */ "./resources/js/src/views/pages/Payrolls/AddPayroll.vue"));
+      }
+    }, {
+      path: '/employees-payrolls',
+      name: 'Employees Payrolls',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 30).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/Payrolls.vue */ "./resources/js/src/views/pages/Payrolls/Payrolls.vue"));
+      }
     }]
   }, // =============================================================================
   // FULL PAGE LAYOUTS
@@ -78340,8 +78352,16 @@ __webpack_require__.r(__webpack_exports__);
       commit('setEmployees', res.data.employees);
     });
   },
-  create: function create(_ref2, data) {
+  getActiveEmployees: function getActiveEmployees(_ref2, customer_id) {
     var commit = _ref2.commit;
+    axios.get('get-active-employees', {
+      customer_id: customer_id
+    }).then(function (res) {
+      commit('setEmployees', res.data.employees);
+    });
+  },
+  create: function create(_ref3, data) {
+    var commit = _ref3.commit;
     // alert('action called');
     return axios.post('add-employee', data.fd).then(function (res) {
       // commit('setOfficer',res.data.officers)
@@ -78366,15 +78386,15 @@ __webpack_require__.r(__webpack_exports__);
       return res;
     });
   },
-  updateEmployee: function updateEmployee(_ref3, fd) {
-    var commit = _ref3.commit;
+  updateEmployee: function updateEmployee(_ref4, fd) {
+    var commit = _ref4.commit;
     return axios.post('update-employee', fd).then(function (res) {
       commit('setEmployee', res.data.employee);
       return res;
     });
   },
-  statusUpdate: function statusUpdate(_ref4, data) {
-    var commit = _ref4.commit;
+  statusUpdate: function statusUpdate(_ref5, data) {
+    var commit = _ref5.commit;
     axios.post('status-update-employee', {
       id: data.id
     }).then(function (res) {
