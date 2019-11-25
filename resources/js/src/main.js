@@ -41,6 +41,18 @@ Vue.use(VueHammer)
 import 'prismjs'
 // import 'prismjs/themes/prism-tomorrow.css'
 
+router.beforeEach((to, from, next) => {
+    if (to.meta.requiresAuth) {
+        if (!localStorage.getItem('admin')) {
+            next({path: '/'})
+        } else {
+            next();
+        }
+    } else {
+        next();
+    }
+})
+
 Vue.config.productionTip = false
 new Vue({
 	provide(){

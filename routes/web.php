@@ -11,6 +11,8 @@
 |
  */
 Route::group(['prefix' => ''], function () {
+
+	Route::post('login', 'ApplicationController@login');
 	// officers routes
 	Route::get('get-officers', 'ApplicationController@get_officers');
 	Route::post('add-officer', 'ApplicationController@add_officer');
@@ -63,6 +65,8 @@ Route::group(['prefix' => ''], function () {
 	// Sales
 	Route::post('add-sale', 'ApplicationController@add_sale');
 	Route::get('get-sales', 'ApplicationController@get_sales');
+
+	Route::get('logout', 'ApplicationController@logout');
 
 });
 Route::get('/{any}', 'ApplicationController')->where('any', '.*');

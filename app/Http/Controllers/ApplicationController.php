@@ -16,10 +16,29 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Purchases;
 use App\Sales;
+use Illuminate\Support\Facades\Hash;
+use Session;
+
 
 class ApplicationController extends Controller {
 	public function __invoke() {
 		return view('application');
+	}
+	//login
+	public function login(Request $request) {
+		$admin = Admin::where('email', $request->email)->whereType(1)->first();
+		if ($admin) {
+			if (Hash::check($request->password, $admin->password)) {
+				$request->session()->put('admin', $admin);
+
+				$session = session('admin');
+				return response()->json(['status' => 'success', 'msg' => 'Logged in Successfully', 'session' => $session]);
+			}
+			return response()->json(['status' => 'error', 'msg' => 'Invalid Email OR Password']);
+		} else {
+			return response()->json(['status' => 'error', 'msg' => 'Invalid Email OR Password']);
+
+		}
 	}
 	// officers methods
 	public function get_officers(Request $request) {
@@ -488,6 +507,11 @@ class ApplicationController extends Controller {
 	public function get_sales(){
 		$sales = Sales::orderBy('created_at', 'desc')->get();
 		return response()->json(compact('sales'));
+	}
+
+	public function logout(Request $request) {
+		Session::forget('admin');
+		return response()->json(['status' => 'success', 'msg' => 'Logged out successfully']);
 	}
 
 }
