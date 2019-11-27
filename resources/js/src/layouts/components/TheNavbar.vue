@@ -118,8 +118,10 @@
 					<p class="font-semibold">John Doe</p>
 					<small>Available</small>
 				</div> -->
+
+                
 				<vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
-					<div class="con-img ml-3"><img src="../../../../assets/images/portrait/small/avatar-s-11.png" alt="" width="40" height="40" class="rounded-full shadow-md cursor-pointer block"></div>
+					<div class="con-img ml-3"><vs-button color="dark" type="line" icon="menu">Admin</vs-button></div>
 					<vs-dropdown-menu class="vx-navbar-dropdown">
 						<ul style="min-width: 9rem">
 							<li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white" @click="$router.push('/pages/profile')"><feather-icon icon="UserIcon" svgClasses="w-4 h-4"></feather-icon> <span class="ml-2">Profile</span></li>

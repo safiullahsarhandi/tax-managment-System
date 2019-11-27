@@ -30,7 +30,7 @@
             </vs-table>
         </vx-card>
 
-        <vs-popup :active.sync="editRatesModal" title="Update Exchange Rates">
+        <vs-popup :active.sync="editRatesModal" :title="formTitle">
             <form ref="editRatesForm" @submit.prevent="updateRates($event)" autocomplete="off" data-vv-scope="editform">
                 <vs-row>
                     <vs-col vs-lg="12" vs-md="12" vs-sm="12">
@@ -56,7 +56,7 @@
                     
                     <vs-col vs-lg="12" vs-md="12" vs-sm="12">
                         <br>
-                        <vs-button button="submit" class="float-right" type="gradient">Save changes</vs-button>
+                        <vs-button button="submit" class="float-right" type="gradient">{{ updateBtn }}</vs-button>
                     </vs-col>
                 </vs-row>
             </form>
@@ -68,6 +68,8 @@
 import { mapState, mapActions, mapGetters} from 'vuex';
 export default {
     data: () => ({
+        formTitle: 'Update Exchange Rates',
+        updateBtn:'Save changes',
         editRatesModal: false,
         salary_rate: 0,
         average_rate: 0,
@@ -87,6 +89,10 @@ export default {
         }),
 
         editRates(){
+            if(this.exchangerates[0]['value'] == 0 && this.exchangerates[1]['value'] == 0 && this.exchangerates[2]['value'] == 0){
+                this.formTitle = 'Add Exchange Rates';
+                this.updateBtn = 'Save';
+            }
             this.salary_rate = this.exchangerates[0]['value'];
             this.average_rate = this.exchangerates[1]['value'];
             this.annual_rate = this.exchangerates[2]['value'];

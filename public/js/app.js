@@ -77964,7 +77964,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/customers',
       name: 'Customers',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/Customers.vue */ "./resources/js/src/views/pages/Customers/Customers.vue"));
+        return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/Customers.vue */ "./resources/js/src/views/pages/Customers/Customers.vue"));
       },
       meta: {
         requiresAuth: true
@@ -78006,6 +78006,15 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         requiresAuth: true
       }
     }, {
+      path: '/sale-update/:id',
+      name: 'Sale Update',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 29).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/EditSale.vue */ "./resources/js/src/views/pages/Sales/EditSale.vue"));
+      },
+      meta: {
+        requiresAuth: true
+      }
+    }, {
       path: '/purchases',
       name: 'Purchases',
       component: function component() {
@@ -78024,6 +78033,15 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         requiresAuth: true
       }
     }, {
+      path: '/purchase-update/:id',
+      name: 'Purchase Update',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 30).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/EditPurchase.vue */ "./resources/js/src/views/pages/Purchases/EditPurchase.vue"));
+      },
+      meta: {
+        requiresAuth: true
+      }
+    }, {
       path: '/currencies',
       name: 'Currencies',
       component: function component() {
@@ -78036,7 +78054,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/exchange-rates',
       name: 'Exhange Rates',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! ./views/pages/ExchangeRates.vue */ "./resources/js/src/views/pages/ExchangeRates.vue"));
+        return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! ./views/pages/ExchangeRates.vue */ "./resources/js/src/views/pages/ExchangeRates.vue"));
       },
       meta: {
         requiresAuth: true
@@ -78132,7 +78150,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/taxes',
       name: 'Taxes',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/Taxes.vue */ "./resources/js/src/views/pages/Customers/Taxes.vue"));
+        return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/Taxes.vue */ "./resources/js/src/views/pages/Customers/Taxes.vue"));
       },
       meta: {
         requiresAuth: true
@@ -78237,7 +78255,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/',
       name: 'login',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! @/views/pages/Login.vue */ "./resources/js/src/views/pages/Login.vue"));
+        return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! @/views/pages/Login.vue */ "./resources/js/src/views/pages/Login.vue"));
       },
       meta: {
         requiresAuth: false
@@ -78913,13 +78931,13 @@ __webpack_require__.r(__webpack_exports__);
     return axios.post('add-purchase', fd).then(function (res) {
       return res;
     });
-  } // updateCustomer({commit},fd){
-  // 	return axios.post('update-customer',fd).then(res=>{
-  // 		// commit('setSingleCustomer',res.data.customer);
-  // 		return res;
-  // 	});
-  // }	
-
+  },
+  updatePurchase: function updatePurchase(_ref3, fd) {
+    var commit = _ref3.commit;
+    return axios.post('update-purchase', fd).then(function (res) {
+      return res;
+    });
+  }
 });
 
 /***/ }),
@@ -79055,13 +79073,13 @@ __webpack_require__.r(__webpack_exports__);
     return axios.post('add-sale', fd).then(function (res) {
       return res;
     });
-  } // updateCustomer({commit},fd){
-  // 	return axios.post('update-customer',fd).then(res=>{
-  // 		// commit('setSingleCustomer',res.data.customer);
-  // 		return res;
-  // 	});
-  // }	
-
+  },
+  updateSale: function updateSale(_ref3, fd) {
+    var commit = _ref3.commit;
+    return axios.post('update-sale', fd).then(function (res) {
+      return res;
+    });
+  }
 });
 
 /***/ }),

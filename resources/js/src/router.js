@@ -85,6 +85,14 @@ const router = new Router({
                 requiresAuth: true
               }
             },
+            {
+              path : '/sale-update/:id',
+              name : 'Sale Update',
+              component : () => import('./views/pages/Sales/EditSale.vue'),
+              meta: { 
+                requiresAuth: true
+              }
+            },
 
           {
             path: '/purchases',
@@ -102,6 +110,16 @@ const router = new Router({
                 requiresAuth: true
               }
             },
+
+            {
+              path : '/purchase-update/:id',
+              name : 'Purchase Update',
+              component : () => import('./views/pages/Purchases/EditPurchase.vue'),
+              meta: { 
+                requiresAuth: true
+              }
+            },
+
           {
             path: '/currencies',
             name: 'Currencies',

@@ -74,16 +74,16 @@
                 
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="taxable_value_local" v-validate="`required`" label-placeholder="Taxable Value" v-model="taxable_value_local" />
+                        <vs-input name="taxable_value_local" label-placeholder="Taxable Value" v-model="taxable_value_local" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('taxable_value_local')">{{errors.first('taxable_value_local')}}</span>
+                        <!-- <span class="text-danger" v-show="errors.has('taxable_value_local')">{{errors.first('taxable_value_local')}}</span> -->
                     </vs-col>
 
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="vat_local" v-validate="`required`" label-placeholder="VAT" v-model="vat_local" />
+                        <vs-input name="vat_local"  label-placeholder="VAT" v-model="vat_local" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('vat_local')">{{errors.first('vat_local')}}</span>
+                        <!-- <span class="text-danger" v-show="errors.has('vat_local')">{{errors.first('vat_local')}}</span> -->
                     </vs-col>
 
                 </vs-row>
@@ -94,16 +94,16 @@
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <!-- <label>Imports</label> -->
                         <vx-input-group>
-                        <vs-input name="taxable_value_import" v-validate="`required`" label-placeholder="Taxable Value" v-model="taxable_value_import" />
+                        <vs-input name="taxable_value_import"  label-placeholder="Taxable Value" v-model="taxable_value_import" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('taxable_value_import')">{{errors.first('taxable_value_import')}}</span>
+                        <!-- <span class="text-danger" v-show="errors.has('taxable_value_import')">{{errors.first('taxable_value_import')}}</span> -->
                     </vs-col>
 
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="vat_import" v-validate="`required`" label-placeholder="VAT" v-model="vat_import" />
+                        <vs-input name="vat_import"  label-placeholder="VAT" v-model="vat_import" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('vat_import')">{{errors.first('vat_import')}}</span>
+                        <!-- <span class="text-danger" v-show="errors.has('vat_import')">{{errors.first('vat_import')}}</span> -->
                     </vs-col>
                 </vs-row>
                 

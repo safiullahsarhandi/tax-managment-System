@@ -111,16 +111,16 @@
                 
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="person_non_taxable_sales" v-validate="`required`" label-placeholder="Non-Taxable Sales" v-model="person_non_taxable_sales" />
+                        <vs-input name="person_non_taxable_sales" label-placeholder="Non-Taxable Sales" v-model="person_non_taxable_sales" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('person_non_taxable_sales')">{{errors.first('person_non_taxable_sales')}}</span>
+                        <!-- <span class="text-danger" v-show="errors.has('person_non_taxable_sales')">{{errors.first('person_non_taxable_sales')}}</span> -->
                     </vs-col>
 
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="person_export_value" v-validate="`required`" label-placeholder="Value of Exports/ 0% VAT" v-model="person_export_value" />
+                        <vs-input name="person_export_value" label-placeholder="Value of Exports/ 0% VAT" v-model="person_export_value" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('person_export_value')">{{errors.first('person_export_value')}}</span>
+                        <!-- <span class="text-danger" v-show="errors.has('person_export_value')">{{errors.first('person_export_value')}}</span> -->
                     </vs-col>
 
                 </vs-row>
@@ -130,16 +130,16 @@
 
                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="customer_non_taxable_sales" v-validate="`required`" label-placeholder="Non-Taxable Sales" v-model="customer_non_taxable_sales" />
+                        <vs-input name="customer_non_taxable_sales" label-placeholder="Non-Taxable Sales" v-model="customer_non_taxable_sales" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('customer_non_taxable_sales')">{{errors.first('customer_non_taxable_sales')}}</span>
+                        <!-- <span class="text-danger" v-show="errors.has('customer_non_taxable_sales')">{{errors.first('customer_non_taxable_sales')}}</span> -->
                     </vs-col>
 
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="customer_export_value" v-validate="`required`" label-placeholder="Value of Exports/ 0% VAT" v-model="customer_export_value" />
+                        <vs-input name="customer_export_value"  label-placeholder="Value of Exports/ 0% VAT" v-model="customer_export_value" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('customer_export_value')">{{errors.first('customer_export_value')}}</span>
+                        <!-- <span class="text-danger" v-show="errors.has('customer_export_value')">{{errors.first('customer_export_value')}}</span> -->
                     </vs-col>
                 </vs-row>
                 

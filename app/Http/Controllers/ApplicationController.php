@@ -423,11 +423,7 @@ class ApplicationController extends Controller {
 		$purchase = new Purchases();
 
 		$purchase->purchase_id = (String) Str::uuid();
-		
-		// $purchase->tax_id = $request->
-		// $purchase->customer_id = $request->
-
-
+	
 		$purchase->branch_name 				= $request->branch_name;
 		$purchase->tax_period 				= $request->tax_period;
 		$purchase->invoice_date 			= $request->invoice_date;
@@ -446,13 +442,7 @@ class ApplicationController extends Controller {
 		$purchase->non_taxable_purchases 	= $request->non_taxable_purchases;
 		$purchase->supplier 				= $request->supplier;
 		$purchase->vat_tin 					= $request->vat_tin;
-		$purchase->additional_field 		= $request->additional_field;
-		// $purchase->officer_confirmed		= $request->
-		// $purchase->supervisor_confirmed 	= $request->
-		// $purchase->management_confirmed 	= $request->
-		// $purchase->admin_id 				= $request->
-		// $purchase->tax_officer_id		= $request->
-		// $purchase->supervisor_id 		= $request->
+		$purchase->additional_fields 		= $request->additional_field;
 		$purchase->status 					= 0;
 		$purchase->save();
 	
@@ -487,18 +477,30 @@ class ApplicationController extends Controller {
 		$sale->comments 				= $request->comments_3e_fii;
 		$sale->top_comments 			= $request->comments_for_top;
 		$sale->client_response 			= $request->client_responses;
-		$sale->additional_fields 		= $request->additional_field;
+		$sale->non_taxable_sales 		= $request->non_taxable_sales;
+		$sale->vat 						= $request->export_value;
 		
-		$sale->cust_sales 				= $request->customer_non_taxable_sales;
-		$sale->cust_sales_vat 			= $request->customer_export_value;
-		
+	if(!is_null($request->person_non_taxable_sales)){
 		$sale->taxable_person_sales 	= $request->person_non_taxable_sales;
-		$sale->taxable_person_vat 		= $request->export_value;
-		
-		// $sale->vat 						= $request->person_export_value;
-		// $sale->non_taxable_sales 		= $request->total_taxable_value;
+	}
+	
+	if(!is_null($request->person_export_value)){
+		$sale->taxable_person_vat 		= $request->person_export_value;
+	}
 
+	if(!is_null($request->customer_non_taxable_sales)){
+		$sale->cust_sales 				= $request->customer_non_taxable_sales;
+	}
+
+	if(!is_null($request->customer_export_value)){
+		$sale->cust_sales_vat 			= $request->customer_export_value;
+	}
+
+		$sale->total_taxable_value 		= $request->total_taxable_value;
+		
+		$sale->additional_fields 		= $request->additional_field;
 		$sale->status 					= 0;
+
 		$sale->save();
 
 		return response()->json(['status' => 'success', 'data' => $sale]);
@@ -509,9 +511,121 @@ class ApplicationController extends Controller {
 		return response()->json(compact('sales'));
 	}
 
+	public function update_sale(Request $request){
+
+		$sale = Sales::whereSaleId($request->id)->first();
+        
+		$sale->account_code 			= $request->account_code;
+		$sale->account_description 		= $request->account_description;
+		$sale->accounting_reference 	= $request->account_ref;
+		$sale->signature_date 			= $request->sign_date;
+		$sale->branch_name 				= $request->branch_name;
+		$sale->tax_period 				= $request->tax_period;
+		$sale->invoice_date 			= $request->invoice_date;
+		$sale->invoice_num 				= $request->invoice_number;
+		$sale->client_name 				= $request->client_name;
+		$sale->client_tin 				= $request->client_tin;
+		$sale->description 				= $request->description;
+		$sale->quantity 				= $request->quantity;
+		$sale->taxes_subject 			= $request->item_subject_taxes;
+		$sale->comments 				= $request->comments_3e_fii;
+		$sale->top_comments 			= $request->comments_for_top;
+		$sale->client_response 			= $request->client_responses;
+		$sale->non_taxable_sales 		= $request->non_taxable_sales;
+		$sale->vat 						= $request->export_value;
+		
+	if(!is_null($request->person_non_taxable_sales)){
+		$sale->taxable_person_sales 	= $request->person_non_taxable_sales;
+	}
+
+	if(!is_null($request->person_export_value)){
+		$sale->taxable_person_vat 		= $request->person_export_value;
+	}
+
+	if(!is_null($request->customer_non_taxable_sales)){
+		$sale->cust_sales 				= $request->customer_non_taxable_sales;
+	}
+
+	if(!is_null($request->customer_export_value)){
+		$sale->cust_sales_vat 			= $request->customer_export_value;
+	}
+
+		$sale->total_taxable_value 		= $request->total_taxable_value;
+
+		$customfields = $request->additional_field;
+		for ($i = 1; $i <= count($request->additional_field); $i++) {
+			if (($key = array_search(null, $customfields)) !== false) {
+				unset($customfields[$key]);
+			}
+		}
+		
+		$sale->additional_fields  = $customfields;		
+
+		$sale->save();
+
+		return response()->json(['status' => 'success', 'data' => $sale]);
+	}
+
 	public function logout(Request $request) {
 		Session::forget('admin');
 		return response()->json(['status' => 'success', 'msg' => 'Logged out successfully']);
 	}
+
+	public function get_sale(Request $request){
+		$sale = Sales::whereSaleId($request->id)->first();
+		return response()->json(compact('sale'));
+	}
+
+	public function get_purchase(Request $request){
+		$purchase = Purchases::wherePurchaseId($request->id)->first();
+		return response()->json(compact('purchase'));
+	}
+
+	public function update_purchase(Request $request){
+
+		$purchase = Purchases::wherePurchaseId($request->id)->first();
+	
+		$purchase->branch_name 				= $request->branch_name;
+		$purchase->tax_period 				= $request->tax_period;
+		$purchase->invoice_date 			= $request->invoice_date;
+		$purchase->invoice_num 				= $request->invoice_number;
+		$purchase->description 				= $request->good_desc;
+		$purchase->quantity 				= $request->quantity;
+
+	if(!is_null($request->taxable_value_local)){
+		$purchase->local_purchase_tax_val 	= $request->taxable_value_local;
+	}
+	if(!is_null($request->vat_local)){
+		$purchase->local_purchase_vat 		= $request->vat_local;
+	}
+
+	if(!is_null($request->taxable_value_import)){
+		$purchase->imports_taxable_val 		= $request->taxable_value_import;
+	}
+	if(!is_null($request->vat_import)){
+		$purchase->imports_vat 				= $request->vat_import;
+	}	
+		$purchase->total_vat 				= $request->total_vat;
+		$purchase->subject 					= $request->item_subject_taxes;
+		$purchase->comments 				= $request->comments_3e_fii;
+		$purchase->top_comments 			= $request->comments_for_top;
+		$purchase->client_responses 		= $request->client_responses;
+		$purchase->non_taxable_purchases 	= $request->non_taxable_purchases;
+		$purchase->supplier 				= $request->supplier;
+		$purchase->vat_tin 					= $request->vat_tin;
+
+		$customfields = $request->additional_field;
+		for ($i = 1; $i <= count($request->additional_field); $i++) {
+			if (($key = array_search(null, $customfields)) !== false) {
+				unset($customfields[$key]);
+			}
+		}
+		
+		$purchase->additional_fields  = $customfields;	
+		$purchase->save();
+
+		return response()->json(['status' => 'success', 'data' => $purchase]);
+	}
+	
 
 }

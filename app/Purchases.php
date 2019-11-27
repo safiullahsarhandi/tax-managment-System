@@ -9,6 +9,6 @@ class Purchases extends Model
     protected $table='customer_purchases';
 
     protected $casts = [
-    	'additional_field' => 'array',
+    	'additional_fields' => 'array',
     ];
 }
