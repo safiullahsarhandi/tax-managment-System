@@ -16,8 +16,6 @@ use App\TaxCustomers;
 use App\TaxOfficer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use App\Purchases;
-use App\Sales;
 use Illuminate\Support\Facades\Hash;
 use Session;
 
