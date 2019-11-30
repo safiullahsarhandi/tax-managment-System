@@ -8,7 +8,7 @@ class Tax extends Model {
 	protected $table = 'tax_managment';
 
 	public function supervisor() {
-		return $this->belongsTo(Supervisor::class, 'manager_id', 'supervisor_id');
+		return $this->belongsTo(Supervisor::class, 'supervisor_id', 'manager_id');
 	}
 
 	public function officers() {

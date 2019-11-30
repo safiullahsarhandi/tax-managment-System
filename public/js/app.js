@@ -62423,6 +62423,7 @@ Object.defineProperty(exports,"__esModule",{value:true});exports.VueHammer=undef
 
 module.exports =
 /******/ (function(modules) { // webpackBootstrap
+<<<<<<< HEAD
 /******/  // The module cache
 /******/  var installedModules = {};
 /******/
@@ -62506,6 +62507,91 @@ module.exports =
 /******/
 /******/  // Load entry module and return exports
 /******/  return __webpack_require__(__webpack_require__.s = "9bf4");
+=======
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "9bf4");
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -75722,7 +75808,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapActions", function() { return mapActions; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNamespacedHelpers", function() { return createNamespacedHelpers; });
 /**
+<<<<<<< HEAD
  * vuex v3.1.2
+=======
+ * vuex v3.1.1
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
  * (c) 2019 Evan You
  * @license MIT
  */
@@ -76044,7 +76134,10 @@ var Store = function Store (options) {
   this._modulesNamespaceMap = Object.create(null);
   this._subscribers = [];
   this._watcherVM = new Vue();
+<<<<<<< HEAD
   this._makeLocalGettersCache = Object.create(null);
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
 
   // bind commit and dispatch to self
   var store = this;
@@ -76277,14 +76370,21 @@ function resetStoreVM (store, state, hot) {
 
   // bind store public getters
   store.getters = {};
+<<<<<<< HEAD
   // reset local getters cache
   store._makeLocalGettersCache = Object.create(null);
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
   var wrappedGetters = store._wrappedGetters;
   var computed = {};
   forEachValue(wrappedGetters, function (fn, key) {
     // use computed to leverage its lazy-caching mechanism
     // direct inline function use will lead to closure preserving oldVm.
+<<<<<<< HEAD
     // using partial to return function with only arguments preserved in closure environment.
+=======
+    // using partial to return function with only arguments preserved in closure enviroment.
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
     computed[key] = partial(fn, store);
     Object.defineProperty(store.getters, key, {
       get: function () { return store._vm[key]; },
@@ -76328,9 +76428,12 @@ function installModule (store, rootState, path, module, hot) {
 
   // register in namespace map
   if (module.namespaced) {
+<<<<<<< HEAD
     if (store._modulesNamespaceMap[namespace] && "development" !== 'production') {
       console.error(("[vuex] duplicate namespace " + namespace + " for the namespaced module " + (path.join('/'))));
     }
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
     store._modulesNamespaceMap[namespace] = module;
   }
 
@@ -76339,6 +76442,7 @@ function installModule (store, rootState, path, module, hot) {
     var parentState = getNestedState(rootState, path.slice(0, -1));
     var moduleName = path[path.length - 1];
     store._withCommit(function () {
+<<<<<<< HEAD
       if (true) {
         if (moduleName in parentState) {
           console.warn(
@@ -76346,6 +76450,8 @@ function installModule (store, rootState, path, module, hot) {
           );
         }
       }
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
       Vue.set(parentState, moduleName, module.state);
     });
   }
@@ -76433,6 +76539,7 @@ function makeLocalContext (store, namespace, path) {
 }
 
 function makeLocalGetters (store, namespace) {
+<<<<<<< HEAD
   if (!store._makeLocalGettersCache[namespace]) {
     var gettersProxy = {};
     var splitPos = namespace.length;
@@ -76455,6 +76562,28 @@ function makeLocalGetters (store, namespace) {
   }
 
   return store._makeLocalGettersCache[namespace]
+=======
+  var gettersProxy = {};
+
+  var splitPos = namespace.length;
+  Object.keys(store.getters).forEach(function (type) {
+    // skip if the target getter is not match this namespace
+    if (type.slice(0, splitPos) !== namespace) { return }
+
+    // extract local getter type
+    var localType = type.slice(splitPos);
+
+    // Add a port to the getters proxy.
+    // Define as getter property because
+    // we do not want to evaluate the getters in this time.
+    Object.defineProperty(gettersProxy, localType, {
+      get: function () { return store.getters[type]; },
+      enumerable: true
+    });
+  });
+
+  return gettersProxy
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
 }
 
 function registerMutation (store, type, handler, local) {
@@ -76466,7 +76595,11 @@ function registerMutation (store, type, handler, local) {
 
 function registerAction (store, type, handler, local) {
   var entry = store._actions[type] || (store._actions[type] = []);
+<<<<<<< HEAD
   entry.push(function wrappedActionHandler (payload) {
+=======
+  entry.push(function wrappedActionHandler (payload, cb) {
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
     var res = handler.call(store, {
       dispatch: local.dispatch,
       commit: local.commit,
@@ -76474,7 +76607,11 @@ function registerAction (store, type, handler, local) {
       state: local.state,
       rootGetters: store.getters,
       rootState: store.state
+<<<<<<< HEAD
     }, payload);
+=======
+    }, payload, cb);
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
     if (!isPromise(res)) {
       res = Promise.resolve(res);
     }
@@ -76555,9 +76692,12 @@ function install (_Vue) {
  */
 var mapState = normalizeNamespace(function (namespace, states) {
   var res = {};
+<<<<<<< HEAD
   if ( true && !isValidMap(states)) {
     console.error('[vuex] mapState: mapper parameter must be either an Array or an Object');
   }
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
   normalizeMap(states).forEach(function (ref) {
     var key = ref.key;
     var val = ref.val;
@@ -76591,9 +76731,12 @@ var mapState = normalizeNamespace(function (namespace, states) {
  */
 var mapMutations = normalizeNamespace(function (namespace, mutations) {
   var res = {};
+<<<<<<< HEAD
   if ( true && !isValidMap(mutations)) {
     console.error('[vuex] mapMutations: mapper parameter must be either an Array or an Object');
   }
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
   normalizeMap(mutations).forEach(function (ref) {
     var key = ref.key;
     var val = ref.val;
@@ -76627,9 +76770,12 @@ var mapMutations = normalizeNamespace(function (namespace, mutations) {
  */
 var mapGetters = normalizeNamespace(function (namespace, getters) {
   var res = {};
+<<<<<<< HEAD
   if ( true && !isValidMap(getters)) {
     console.error('[vuex] mapGetters: mapper parameter must be either an Array or an Object');
   }
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
   normalizeMap(getters).forEach(function (ref) {
     var key = ref.key;
     var val = ref.val;
@@ -76660,9 +76806,12 @@ var mapGetters = normalizeNamespace(function (namespace, getters) {
  */
 var mapActions = normalizeNamespace(function (namespace, actions) {
   var res = {};
+<<<<<<< HEAD
   if ( true && !isValidMap(actions)) {
     console.error('[vuex] mapActions: mapper parameter must be either an Array or an Object');
   }
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
   normalizeMap(actions).forEach(function (ref) {
     var key = ref.key;
     var val = ref.val;
@@ -76708,15 +76857,19 @@ var createNamespacedHelpers = function (namespace) { return ({
  * @return {Object}
  */
 function normalizeMap (map) {
+<<<<<<< HEAD
   if (!isValidMap(map)) {
     return []
   }
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
   return Array.isArray(map)
     ? map.map(function (key) { return ({ key: key, val: key }); })
     : Object.keys(map).map(function (key) { return ({ key: key, val: map[key] }); })
 }
 
 /**
+<<<<<<< HEAD
  * Validate whether given map is valid or not
  * @param {*} map
  * @return {Boolean}
@@ -76726,6 +76879,8 @@ function isValidMap (map) {
 }
 
 /**
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
  * Return a function expect two param contains namespace and map. it will normalize the namespace and then the param's function will handle the new namespace and the map.
  * @param {Function} fn
  * @return {Function}
@@ -76760,7 +76915,11 @@ function getModuleByNamespace (store, helper, namespace) {
 var index_esm = {
   Store: Store,
   install: install,
+<<<<<<< HEAD
   version: '3.1.2',
+=======
+  version: '3.1.1',
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
   mapState: mapState,
   mapMutations: mapMutations,
   mapGetters: mapGetters,
@@ -77863,6 +78022,7 @@ Vue.use(vue2_hammer__WEBPACK_IMPORTED_MODULE_8__["VueHammer"]); // PrismJS
 
  // import 'prismjs/themes/prism-tomorrow.css'
 
+<<<<<<< HEAD
 _router__WEBPACK_IMPORTED_MODULE_5__["default"].beforeEach(function (to, from, next) {
   if (to.meta.requiresAuth) {
     if (!localStorage.getItem('admin')) {
@@ -77876,6 +78036,8 @@ _router__WEBPACK_IMPORTED_MODULE_5__["default"].beforeEach(function (to, from, n
     next();
   }
 });
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
 Vue.config.productionTip = false;
 new Vue({
   provide: function provide() {
@@ -77917,6 +78079,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+<<<<<<< HEAD
+=======
+/*=========================================================================================
+  File Name: router.js
+  Description: Routes for vue-router. Lazy loading is enabled.
+  Object Strucutre:
+                    path => router path
+                    name => router name
+                    component(lazy loading) => component to load
+                    meta : {
+                      rule => which user can have access (ACL)
+                      breadcrumb => Add breadcrumb to specific page
+                      pageTitle => Display title besides breadcrumb
+                    }
+  ----------------------------------------------------------------------------------------
+  Item Name: Vuesax Admin - VueJS Dashboard Admin Template
+  Author: Pixinvent
+  Author URL: http://www.themeforest.net/user/pixinvent
+==========================================================================================*/
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
@@ -77927,6 +78109,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     // =============================================================================
     // MAIN LAYOUT ROUTES
     // =============================================================================
+<<<<<<< HEAD
     path: '/home',
     component: function component() {
       return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0), __webpack_require__.e(11)]).then(__webpack_require__.bind(null, /*! ./layouts/main/Main.vue */ "./resources/js/src/layouts/main/Main.vue"));
@@ -77953,6 +78136,20 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       },
       meta: {
         requiresAuth: true
+=======
+    path: '',
+    component: function component() {
+      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0), __webpack_require__.e(11)]).then(__webpack_require__.bind(null, /*! ./layouts/main/Main.vue */ "./resources/js/src/layouts/main/Main.vue"));
+    },
+    children: [// =============================================================================
+    // Theme Routes
+    // =============================================================================
+    {
+      path: '/',
+      name: 'home',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! ./views/Home.vue */ "./resources/js/src/views/Home.vue"));
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
       }
     }, {
       path: '/page2',
@@ -77964,25 +78161,33 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/customers',
       name: 'Customers',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/Customers.vue */ "./resources/js/src/views/pages/Customers/Customers.vue"));
       },
       meta: {
         requiresAuth: true
+=======
+        return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/Customers.vue */ "./resources/js/src/views/pages/Customers/Customers.vue"));
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
       }
     }, {
       path: '/add-customer',
       name: 'Add Customer',
       component: function component() {
         return __webpack_require__.e(/*! import() */ 16).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/AddCustomer.vue */ "./resources/js/src/views/pages/Customers/AddCustomer.vue"));
+<<<<<<< HEAD
       },
       meta: {
         requiresAuth: true
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
       }
     }, {
       path: '/customer-update/:id',
       name: 'Customer Update',
       component: function component() {
         return __webpack_require__.e(/*! import() */ 18).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/EditCustomer.vue */ "./resources/js/src/views/pages/Customers/EditCustomer.vue"));
+<<<<<<< HEAD
       },
       meta: {
         requiresAuth: true
@@ -78040,69 +78245,93 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       },
       meta: {
         requiresAuth: true
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
       }
     }, {
       path: '/currencies',
       name: 'Currencies',
       component: function component() {
         return __webpack_require__.e(/*! import() */ 15).then(__webpack_require__.bind(null, /*! ./views/pages/Currencies.vue */ "./resources/js/src/views/pages/Currencies.vue"));
+<<<<<<< HEAD
       },
       meta: {
         requiresAuth: true
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
       }
     }, {
       path: '/exchange-rates',
       name: 'Exhange Rates',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! ./views/pages/ExchangeRates.vue */ "./resources/js/src/views/pages/ExchangeRates.vue"));
       },
       meta: {
         requiresAuth: true
+=======
+        return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! ./views/pages/ExchangeRates.vue */ "./resources/js/src/views/pages/ExchangeRates.vue"));
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
       }
     }, {
       path: '/admins',
       name: 'Admins',
       component: function component() {
         return __webpack_require__.e(/*! import() */ 14).then(__webpack_require__.bind(null, /*! ./views/pages/Admins.vue */ "./resources/js/src/views/pages/Admins.vue"));
+<<<<<<< HEAD
       },
       meta: {
         requiresAuth: true
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
       }
     }, {
       path: '/supervisors',
       name: 'Supervisors',
       component: function component() {
         return __webpack_require__.e(/*! import() */ 22).then(__webpack_require__.bind(null, /*! ./views/pages/Supervisors.vue */ "./resources/js/src/views/pages/Supervisors.vue"));
+<<<<<<< HEAD
       },
       meta: {
         requiresAuth: true
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
       }
     }, {
       path: '/officers',
       name: 'Officers',
       component: function component() {
         return __webpack_require__.e(/*! import() */ 21).then(__webpack_require__.bind(null, /*! ./views/pages/Officers.vue */ "./resources/js/src/views/pages/Officers.vue"));
+<<<<<<< HEAD
       },
       meta: {
         requiresAuth: true
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
       }
     }, {
       path: '/testing',
       name: 'testing',
       component: function component() {
         return __webpack_require__.e(/*! import() */ 24).then(__webpack_require__.bind(null, /*! ./views/pages/demo.vue */ "./resources/js/src/views/pages/demo.vue"));
+<<<<<<< HEAD
       },
       meta: {
         requiresAuth: true
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
       }
     }, {
       path: '/tax-managment',
       name: 'Tax Managment',
       component: function component() {
         return __webpack_require__.e(/*! import() */ 10).then(__webpack_require__.bind(null, /*! ./views/pages/tax-managment/TaxManagment.vue */ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue"));
+<<<<<<< HEAD
       },
       meta: {
         requiresAuth: true
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
       }
     }]
   }, {
@@ -78113,9 +78342,12 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     component: function component() {
       return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0), __webpack_require__.e(13)]).then(__webpack_require__.bind(null, /*! ./layouts/main/customerMain.vue */ "./resources/js/src/layouts/main/customerMain.vue"));
     },
+<<<<<<< HEAD
     meta: {
       requiresAuth: true
     },
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
     children: [// =============================================================================
     // Theme Routes
     // =============================================================================
@@ -78124,32 +78356,42 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       name: 'Company Detail',
       component: function component() {
         return __webpack_require__.e(/*! import() */ 17).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/CustomerDetail.vue */ "./resources/js/src/views/pages/Customers/CustomerDetail.vue"));
+<<<<<<< HEAD
       },
       meta: {
         requiresAuth: true
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
       }
     }, {
       path: '/add-employee',
       name: 'Add Employee',
       component: function component() {
         return __webpack_require__.e(/*! import() */ 19).then(__webpack_require__.bind(null, /*! ./views/pages/Employees/AddEmployee.vue */ "./resources/js/src/views/pages/Employees/AddEmployee.vue"));
+<<<<<<< HEAD
       },
       meta: {
         requiresAuth: true
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
       }
     }, {
       path: '/employees-list',
       name: 'Employees List',
       component: function component() {
         return __webpack_require__.e(/*! import() */ 20).then(__webpack_require__.bind(null, /*! ./views/pages/Employees/Employees.vue */ "./resources/js/src/views/pages/Employees/Employees.vue"));
+<<<<<<< HEAD
       },
       meta: {
         requiresAuth: true
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
       }
     }, {
       path: '/taxes',
       name: 'Taxes',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/Taxes.vue */ "./resources/js/src/views/pages/Customers/Taxes.vue"));
       },
       meta: {
@@ -78177,6 +78419,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       component: () => import('./views/pages/Purchases/Purchases.vue'),
     },*/
     ]
+=======
+        return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/Taxes.vue */ "./resources/js/src/views/pages/Customers/Taxes.vue"));
+      }
+    }]
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
   }, {
     // =============================================================================
     // TAX DETAIL LAYOUT ROUTES
@@ -78185,9 +78432,12 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     component: function component() {
       return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0), __webpack_require__.e(12)]).then(__webpack_require__.bind(null, /*! ./layouts/main/TaxDetailMain.vue */ "./resources/js/src/layouts/main/TaxDetailMain.vue"));
     },
+<<<<<<< HEAD
     meta: {
       requiresAuth: true
     },
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
     children: [// =============================================================================
     // Theme Routes
     // =============================================================================
@@ -78196,45 +78446,72 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       name: 'Tax Detail',
       component: function component() {
         return __webpack_require__.e(/*! import() */ 23).then(__webpack_require__.bind(null, /*! ./views/pages/Tax/TaxDetail.vue */ "./resources/js/src/views/pages/Tax/TaxDetail.vue"));
+<<<<<<< HEAD
       },
       meta: {
         requiresAuth: true
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
       }
     }, {
       path: '/add-sale',
       name: 'Add Sale',
       component: function component() {
         return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/AddSale.vue */ "./resources/js/src/views/pages/Sales/AddSale.vue"));
+<<<<<<< HEAD
       },
       meta: {
         requiresAuth: true
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
       }
     }, {
       path: '/sales-list',
       name: 'Sales List',
       component: function component() {
         return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/Sales.vue */ "./resources/js/src/views/pages/Sales/Sales.vue"));
+<<<<<<< HEAD
       },
       meta: {
         requiresAuth: true
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
       }
     }, {
       path: '/add-purchase',
       name: 'Add Purchase',
       component: function component() {
         return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/AddPurchase.vue */ "./resources/js/src/views/pages/Purchases/AddPurchase.vue"));
+<<<<<<< HEAD
       },
       meta: {
         requiresAuth: true
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
       }
     }, {
       path: '/purchases-list',
       name: 'Purchases List',
       component: function component() {
         return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/Purchases.vue */ "./resources/js/src/views/pages/Purchases/Purchases.vue"));
+<<<<<<< HEAD
       },
       meta: {
         requiresAuth: true
+=======
+      }
+    }, {
+      path: '/add-payroll',
+      name: 'Add Payroll',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 29).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/AddPayroll.vue */ "./resources/js/src/views/pages/Payrolls/AddPayroll.vue"));
+      }
+    }, {
+      path: '/employees-payrolls',
+      name: 'Employees Payrolls',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 30).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/Payrolls.vue */ "./resources/js/src/views/pages/Payrolls/Payrolls.vue"));
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
       }
     }]
   }, // =============================================================================
@@ -78245,13 +78522,17 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     component: function component() {
       return __webpack_require__.e(/*! import() */ 26).then(__webpack_require__.bind(null, /*! @/layouts/full-page/FullPage.vue */ "./resources/js/src/layouts/full-page/FullPage.vue"));
     },
+<<<<<<< HEAD
     meta: {
       requiresAuth: false
     },
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
     children: [// =============================================================================
     // PAGES
     // =============================================================================
     {
+<<<<<<< HEAD
       path: '/',
       name: 'login',
       component: function component() {
@@ -78259,15 +78540,24 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       },
       meta: {
         requiresAuth: false
+=======
+      path: '/pages/login',
+      name: 'pageLogin',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! @/views/pages/Login.vue */ "./resources/js/src/views/pages/Login.vue"));
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
       }
     }, {
       path: '/pages/error-404',
       name: 'pageError404',
       component: function component() {
         return __webpack_require__.e(/*! import() */ 25).then(__webpack_require__.bind(null, /*! @/views/pages/Error404.vue */ "./resources/js/src/views/pages/Error404.vue"));
+<<<<<<< HEAD
       },
       meta: {
         requiresAuth: false
+=======
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
       }
     }]
   }, // Redirect to 404 page, if no match found
@@ -78536,8 +78826,21 @@ __webpack_require__.r(__webpack_exports__);
       commit('setEmployees', res.data.employees);
     });
   },
+<<<<<<< HEAD
   create: function create(_ref2, data) {
     var commit = _ref2.commit;
+=======
+  getActiveEmployees: function getActiveEmployees(_ref2, customer_id) {
+    var commit = _ref2.commit;
+    axios.get('get-active-employees', {
+      customer_id: customer_id
+    }).then(function (res) {
+      commit('setEmployees', res.data.employees);
+    });
+  },
+  create: function create(_ref3, data) {
+    var commit = _ref3.commit;
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
     // alert('action called');
     return axios.post('add-employee', data.fd).then(function (res) {
       // commit('setOfficer',res.data.officers)
@@ -78562,15 +78865,25 @@ __webpack_require__.r(__webpack_exports__);
       return res;
     });
   },
+<<<<<<< HEAD
   updateEmployee: function updateEmployee(_ref3, fd) {
     var commit = _ref3.commit;
+=======
+  updateEmployee: function updateEmployee(_ref4, fd) {
+    var commit = _ref4.commit;
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
     return axios.post('update-employee', fd).then(function (res) {
       commit('setEmployee', res.data.employee);
       return res;
     });
   },
+<<<<<<< HEAD
   statusUpdate: function statusUpdate(_ref4, data) {
     var commit = _ref4.commit;
+=======
+  statusUpdate: function statusUpdate(_ref5, data) {
+    var commit = _ref5.commit;
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
     axios.post('status-update-employee', {
       id: data.id
     }).then(function (res) {
@@ -78931,6 +79244,7 @@ __webpack_require__.r(__webpack_exports__);
     return axios.post('add-purchase', fd).then(function (res) {
       return res;
     });
+<<<<<<< HEAD
   },
   updatePurchase: function updatePurchase(_ref3, fd) {
     var commit = _ref3.commit;
@@ -78938,6 +79252,15 @@ __webpack_require__.r(__webpack_exports__);
       return res;
     });
   }
+=======
+  } // updateCustomer({commit},fd){
+  // 	return axios.post('update-customer',fd).then(res=>{
+  // 		// commit('setSingleCustomer',res.data.customer);
+  // 		return res;
+  // 	});
+  // }	
+
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
 });
 
 /***/ }),
@@ -79073,6 +79396,7 @@ __webpack_require__.r(__webpack_exports__);
     return axios.post('add-sale', fd).then(function (res) {
       return res;
     });
+<<<<<<< HEAD
   },
   updateSale: function updateSale(_ref3, fd) {
     var commit = _ref3.commit;
@@ -79080,6 +79404,15 @@ __webpack_require__.r(__webpack_exports__);
       return res;
     });
   }
+=======
+  } // updateCustomer({commit},fd){
+  // 	return axios.post('update-customer',fd).then(res=>{
+  // 		// commit('setSingleCustomer',res.data.customer);
+  // 		return res;
+  // 	});
+  // }	
+
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
 });
 
 /***/ }),
@@ -79820,9 +80153,15 @@ var themeConfig = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 __webpack_require__(/*! C:\xampp\htdocs\freelancing_projects\tax-managment-System\resources\js\app.js */"./resources/js/app.js");
 __webpack_require__(/*! C:\xampp\htdocs\freelancing_projects\tax-managment-System\resources\sass\app.scss */"./resources/sass/app.scss");
 module.exports = __webpack_require__(/*! C:\xampp\htdocs\freelancing_projects\tax-managment-System\resources\assets\css\main.css */"./resources/assets/css/main.css");
+=======
+__webpack_require__(/*! C:\xampp2019\htdocs\tax-mangment\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\xampp2019\htdocs\tax-mangment\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! C:\xampp2019\htdocs\tax-mangment\resources\assets\css\main.css */"./resources/assets/css/main.css");
+>>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
 
 
 /***/ })

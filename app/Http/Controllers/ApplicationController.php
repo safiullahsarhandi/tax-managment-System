@@ -7,6 +7,8 @@ use App\Currencies;
 use App\CustomerEmployee;
 use App\Http\Controllers\Controller;
 use App\Officer;
+use App\Purchases;
+use App\Sales;
 use App\Settings;
 use App\Supervisor;
 use App\Tax;
@@ -14,11 +16,8 @@ use App\TaxCustomers;
 use App\TaxOfficer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use App\Purchases;
-use App\Sales;
 use Illuminate\Support\Facades\Hash;
 use Session;
-
 
 class ApplicationController extends Controller {
 	public function __invoke() {
@@ -213,6 +212,10 @@ class ApplicationController extends Controller {
 		$employees = CustomerEmployee::whereTaxCustomerId($request->tax_customer_id)->get();
 		return response()->json(compact('employees'));
 	}
+	public function get_active_employees(Request $request) {
+		$employees = CustomerEmployee::whereTaxCustomerId($request->tax_customer_id)->where('status', 1)->get();
+		return response()->json(compact('employees'));
+	}
 	public function update_employee(Request $request) {
 		if ($res = CustomerEmployee::where('nssf_num', '=', $request->nssf_num)->where('tax_customer_id', $request->tax_customer_id)->where('employee_id', '!=', $request->employee_id)->first()) {
 			return response()->json(['status' => "error", 'msg' => "Employee with this NSSF No already exists"]);
@@ -386,7 +389,7 @@ class ApplicationController extends Controller {
 
 		$tax = new Tax;
 		$tax->tax_id = (String) Str::uuid();
-		$tax->customer_id = substr($request->customer_id, 0, -1);
+		$tax->customer_id = $request->customer_id;
 		$tax->title = $request->title;
 		$tax->description = $request->description;
 		$tax->duration = $request->duration;
@@ -412,17 +415,18 @@ class ApplicationController extends Controller {
 		return response()->json(compact('taxes'));
 	}
 
-	public function get_customer_profile(Request $request){
+	public function get_customer_profile(Request $request) {
 
 		$customer = TaxCustomers::whereCustomerId($request->id)->first();
-		return response()->json(['data'=>$customer]);
+		return response()->json(['data' => $customer]);
 	}
 
-	public function add_purchase(Request $request){
+	public function add_purchase(Request $request) {
 
 		$purchase = new Purchases();
 
 		$purchase->purchase_id = (String) Str::uuid();
+
 	
 		$purchase->branch_name 				= $request->branch_name;
 		$purchase->tax_period 				= $request->tax_period;
@@ -444,23 +448,24 @@ class ApplicationController extends Controller {
 		$purchase->vat_tin 					= $request->vat_tin;
 		$purchase->additional_fields 		= $request->additional_field;
 		$purchase->status 					= 0;
+
 		$purchase->save();
-	
+
 		return response()->json(['status' => 'success']);
 	}
 
-	public function get_purchases(){
+	public function get_purchases() {
 		$purchases = Purchases::orderBy('created_at', 'desc')->get();
 		return response()->json(compact('purchases'));
 	}
 
-	public function add_sale(Request $request){
+	public function add_sale(Request $request) {
 
 		$sale = new Sales();
 
 		$sale->sale_id = (String) Str::uuid();
 
-        
+
 		$sale->account_code 			= $request->account_code;
 		$sale->account_description 		= $request->account_description;
 		$sale->accounting_reference 	= $request->account_ref;
@@ -501,12 +506,13 @@ class ApplicationController extends Controller {
 		$sale->additional_fields 		= $request->additional_field;
 		$sale->status 					= 0;
 
+
 		$sale->save();
 
 		return response()->json(['status' => 'success', 'data' => $sale]);
 	}
 
-	public function get_sales(){
+	public function get_sales() {
 		$sales = Sales::orderBy('created_at', 'desc')->get();
 		return response()->json(compact('sales'));
 	}

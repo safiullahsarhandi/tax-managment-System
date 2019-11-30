@@ -114,10 +114,10 @@
 
 			<!-- USER META -->
 			<div class="the-navbar__user-meta flex items-center">
-				<!-- <div class="text-right leading-tight hidden sm:block">
-					<p class="font-semibold">John Doe</p>
+				<div class="text-right leading-tight hidden sm:block">
+					<p class="font-semibold">Login User</p>
 					<small>Available</small>
-				</div> -->
+				</div>
 
                 
 				<vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
