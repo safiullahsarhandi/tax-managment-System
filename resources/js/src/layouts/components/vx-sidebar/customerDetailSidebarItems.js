@@ -21,7 +21,14 @@
 
 export default [
     {
-        url: "#",
+        url: "/customers",
+        name: "Back",
+        slug: "home",
+        icon: "ArrowLeftCircleIcon",
+        isMain : false,
+    },
+    {
+        url: "/",
         name: "Overview",
         slug: "home",
         icon: "HomeIcon",

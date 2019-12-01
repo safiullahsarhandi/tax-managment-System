@@ -130,6 +130,10 @@ class ApplicationController extends Controller {
 		$customers = TaxCustomers::all();
 		return response()->json(compact('customers'));
 	}
+	public function get_customer(Request $request) {
+		$customer = TaxCustomers::withCount('active_employees', 'taxes')->where('customer_id', $request->customer_id)->first();
+		return response()->json(compact('customer'));
+	}
 
 	public function update_customer(Request $request) {
 

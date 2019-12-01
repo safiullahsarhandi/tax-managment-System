@@ -179,6 +179,7 @@ export default {
         this.$store.commit('setRootUrl',localStorage.getItem('currentDetail'))
     },
     created() {
+        this.sidebarItems[0].url = '/customer-detail/'+localStorage.getItem('customer');
         this.setSidebarWidth();
         if(this.navbarColor == "#fff" && this.isThemeDark) {
             this.updateNavbarColor("#10163a")

@@ -105,6 +105,7 @@ const router = new Router({
             // =============================================================================
             path: '/customer-detail/:id',
             component: () => import('./layouts/main/customerMain.vue'),
+            props : true,
             children: [
                 // =============================================================================
                 // Theme Routes

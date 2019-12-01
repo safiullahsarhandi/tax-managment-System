@@ -22,6 +22,13 @@
 export default [
     {
         url: "/",
+        name: "Back",
+        slug: "home",
+        icon: "HomeIcon",
+        isMain : false,
+    },
+    {
+        url: "/",
         name: "Overview",
         slug: "home",
         icon: "HomeIcon",
