@@ -114,7 +114,7 @@
 
 			<!-- USER META -->
 			<div class="the-navbar__user-meta flex items-center">
-				<div class="text-right leading-tight hidden sm:block">
+				<div class="    text-right leading-tight hidden sm:block">
 					<p class="font-semibold">Login User</p>
 					<small>Available</small>
 				</div>

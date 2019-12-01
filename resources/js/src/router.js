@@ -159,6 +159,11 @@ const router = new Router({
                     name: 'Employees Payrolls',
                     component: () => import('./views/pages/Payrolls/Payrolls.vue'),
                 },
+                {
+                    path: '/edit-payroll/:id/:employee_id',
+                    name: 'Edit Payrolls',
+                    component: () => import('./views/pages/Payrolls/EditPayroll.vue'),
+                },
             ],
         },
         // =============================================================================
@@ -188,7 +193,6 @@ const router = new Router({
             path: '*',
             redirect: '/pages/error-404'
         }
->>>>>>> 7128045a9b7e9c0181f563475a5dc6d139795feb
     ],
 })
 

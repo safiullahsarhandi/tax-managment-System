@@ -42,6 +42,7 @@ Route::group(['prefix' => ''], function () {
 	// Customers
 	Route::post('add-employee', 'ApplicationController@add_employee');
 	Route::get('get-employees', 'ApplicationController@get_employees');
+	Route::post('get-employee', 'ApplicationController@get_employee');
 	Route::get('get-active-employees', 'ApplicationController@get_active_employees');
 	Route::post('update-employee', 'ApplicationController@update_employee');
 	Route::post('status-update-employee', 'ApplicationController@status_update_employee');
@@ -72,6 +73,9 @@ Route::group(['prefix' => ''], function () {
 	Route::post('get-single-sale', 'ApplicationController@get_sale');
 	Route::post('update-sale', 'ApplicationController@update_sale');
 
+	// Payrolls
+	Route::post('add-payroll', 'ApplicationController@add_payroll');
+	Route::post('get-payrolls', 'ApplicationController@get_payrolls');
 
 
 	Route::get('logout', 'ApplicationController@logout');

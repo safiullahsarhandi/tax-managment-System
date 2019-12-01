@@ -24,6 +24,7 @@ import Purchases from "./Purchases/Purchases.js";
 import Sales from "./Sales/Sales.js";
 import Employees from "./Employees/Employees.js";
 import Taxes from "./Taxes/Taxes.js";
+import Payrolls from "./Payrolls/Payrolls.js";
 
 Vue.use(Vuex)
 
@@ -43,6 +44,7 @@ export default new Vuex.Store({
       sales: Sales,
       employees : Employees,
       taxes : Taxes,
+      payrolls: Payrolls,
     }
     // strict: process.env.NODE_ENV !== 'production'
 })

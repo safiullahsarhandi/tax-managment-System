@@ -1,70 +1,70 @@
 <template>
 	<div>
-        <vx-card title="Add Payroll" noShadow noRadius>
-            <form autocomplete="off" ref="addPayrollForm" @submit.prevent="addPayroll($event)" >
+        <vx-card title="Edit Payroll" noShadow noRadius>
+            <form autocomplete="off" ref="editPayrollForm" @submit.prevent="EditPayroll($event)" >
             	<vs-row>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="nssf_num" v-validate="`required`" label-placeholder="NSSF NO." :disabled="true" :value="employeeVal.nssf_num" />
+                        <vs-input name="nssf_num" v-validate="`required`" label-placeholder="NSSF NO." :disabled="true" :value="data.employeeVal.nssf_num" />
             			</vx-input-group>
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="employee_num" v-validate="`required`" label-placeholder="Employee NO." :disabled="true" :value="employeeVal.employee_num" />
+                        <vs-input name="employee_num" v-validate="`required`" label-placeholder="Employee NO." :disabled="true" :value="data.employeeVal.employee_num" />
             			</vx-input-group>
                         <span class="text-danger" v-show="errors.has('employee_num')">{{errors.first('employee_num')}}</span>
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
             			<vx-input-group>
-                        <vs-input name="name_eng" v-validate="`required`" label-placeholder="Name (English)" :disabled="true" :value="employeeVal.name_english" />
+                        <vs-input name="name_eng" v-validate="`required`" label-placeholder="Name (English)" :disabled="true" :value="data.employeeVal.name_english" />
             			</vx-input-group>
                         <span class="text-danger" v-show="errors.has('name_eng')">{{errors.first('name_eng')}}</span>
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="name_khmer" v-validate="`required`" label-placeholder="Name (Khmer)" :disabled="true" :value="employeeVal.name_khmer" />
+                        <vs-input name="name_khmer" v-validate="`required`" label-placeholder="Name (Khmer)" :disabled="true" :value="data.employeeVal.name_khmer" />
             			</vx-input-group>
                         <span class="text-danger" v-show="errors.has('name_khmer')">{{errors.first('name_khmer')}}</span>
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="nationality" v-validate="`required`" label-placeholder="Nationality" :disabled="true" :value="employeeVal.nationality" />
+                        <vs-input name="nationality" v-validate="`required`" label-placeholder="Nationality" :disabled="true" :value="data.employeeVal.nationality" />
             			</vx-input-group>
                         <span class="text-danger" v-show="errors.has('nationality')">{{errors.first('nationality')}}</span>
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="dob" v-validate="`required`" label-placeholder="dob" :disabled="true" :value="employeeVal.dob" />
+                        <vs-input name="dob" v-validate="`required`" label-placeholder="dob" :disabled="true" :value="data.employeeVal.dob" />
             			</vx-input-group>
                         <span class="text-danger" v-show="errors.has('dob')">{{errors.first('dob')}}</span>
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
             			<vx-input-group>
-                        <vs-input name="joining_date" v-validate="`required`" label-placeholder="Joining Date" :disabled="true" :value="employeeVal.joining_date" />
+                        <vs-input name="joining_date" v-validate="`required`" label-placeholder="Joining Date" :disabled="true" :value="data.employeeVal.joining_date" />
             			</vx-input-group>
                         <span class="text-danger" v-show="errors.has('joining_date')">{{errors.first('joining_date')}}</span>
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
             			<vx-input-group>
-                        <vs-input name="position" v-validate="`required`" label-placeholder="Position" :disabled="true" :value="employeeVal.position" />
+                        <vs-input name="position" v-validate="`required`" label-placeholder="Position" :disabled="true" :value="data.employeeVal.position" />
             			</vx-input-group>
                         <span class="text-danger" v-show="errors.has('position')">{{errors.first('position')}}</span>
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
             			<vx-input-group>
-                        <vs-input name="sex" v-validate="`required`" label-placeholder="Sex" :disabled="true" :value="employeeVal.sex" />
+                        <vs-input name="sex" v-validate="`required`" label-placeholder="Sex" :disabled="true" :value="data.employeeVal.sex" />
             			</vx-input-group>
                         <span class="text-danger" v-show="errors.has('sex')">{{errors.first('sex')}}</span>
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
             			<vx-input-group>
-                        <vs-input name="contract_type" v-validate="`required`" label-placeholder="Contract Type" :disabled="true" :value="employeeVal.contract_type" />
+                        <vs-input name="contract_type" v-validate="`required`" label-placeholder="Contract Type" :disabled="true" :value="data.employeeVal.contract_type" />
             			</vx-input-group>
                         <span class="text-danger" v-show="errors.has('contract_type')">{{errors.first('contract_type')}}</span>
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
             			<vx-input-group>
-                        <vs-input name="spouse" v-validate="`required`" label-placeholder="spouse" :disabled="true" :value="employeeVal.spouse" />
+                        <vs-input name="spouse" v-validate="`required`" label-placeholder="spouse" :disabled="true" :value="data.employeeVal.spouse" />
             			</vx-input-group>
                         <span class="text-danger" v-show="errors.has('spouse')">{{errors.first('spouse')}}</span>
             		</vs-col>
@@ -79,53 +79,53 @@
                 <vs-row>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="basic_salary" v-validate="`required`" label-placeholder="Basic Salary" v-model="basic_salary" />
+                        <vs-input name="basic_salary" v-validate="`required`" label-placeholder="Basic Salary" v-model="data.basic_salary" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('basic_salary')">{{errors.first('basic_salary')}}</span>
                     </vs-col>
                     
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="bonus" v-validate="`required`" label-placeholder="Bonus" v-model="bonus" />
+                        <vs-input name="bonus" v-validate="`required`" label-placeholder="Bonus" v-model="data.bonus" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('bonus')">{{errors.first('bonus')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="overtime" v-validate="`required`" label-placeholder="Over Time" v-model="overtime" />
+                        <vs-input name="overtime" v-validate="`required`" label-placeholder="Over Time" v-model="data.overtime" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('overtime')">{{errors.first('overtime')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="commission" v-validate="`required`" label-placeholder="Commission" v-model="commission" />
+                        <vs-input name="commission" v-validate="`required`" label-placeholder="Commission" v-model="data.commission" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('commission')">{{errors.first('commission')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="seniority_payment" v-validate="`required`" label-placeholder="Seniority Payment" v-model="seniority_payment" />
+                        <vs-input name="seniority_payment" v-validate="`required`" label-placeholder="Seniority Payment" v-model="data.seniority_payment" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('seniority_payment')">{{errors.first('seniority_payment')}}</span>
                     </vs-col>
 
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="severance_pay" v-validate="`required`" label-placeholder="Severance Pay" v-model="severance_pay" />
+                        <vs-input name="severance_pay" v-validate="`required`" label-placeholder="Severance Pay" v-model="data.severance_pay" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('severance_pay')">{{errors.first('severance_pay')}}</span>
                     </vs-col>
 
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="maternity_leave" v-validate="`required`" label-placeholder="Maternity Leave" v-model="maternity_leave" />
+                        <vs-input name="maternity_leave" v-validate="`required`" label-placeholder="Maternity Leave" v-model="data.maternity_leave" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('maternity_leave')">{{errors.first('maternity_leave')}}</span>
                     </vs-col>
 
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="paid_annual_leave" v-validate="`required`" label-placeholder="Paid Annual Leave" v-model="paid_annual_leave" />
+                        <vs-input name="paid_annual_leave" v-validate="`required`" label-placeholder="Paid Annual Leave" v-model="data.paid_annual_leave" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('paid_annual_leave')">{{errors.first('paid_annual_leave')}}</span>
                     </vs-col>
@@ -133,42 +133,42 @@
 
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="food_allowance" v-validate="`required`" label-placeholder="Food Allowance" v-model="food_allowance" />
+                        <vs-input name="food_allowance" v-validate="`required`" label-placeholder="Food Allowance" v-model="data.food_allowance" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('food_allowance')">{{errors.first('food_allowance')}}</span>
                     </vs-col>
 
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="transport_allowance" v-validate="`required`" label-placeholder="Transport Allowance" v-model="transport_allowance" />
+                        <vs-input name="transport_allowance" v-validate="`required`" label-placeholder="Transport Allowance" v-model="data.transport_allowance" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('transport_allowance')">{{errors.first('transport_allowance')}}</span>
                     </vs-col>
 
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="other_allowance" v-validate="`required`" label-placeholder="Other Allowance" v-model="other_allowance" />
+                        <vs-input name="other_allowance" v-validate="`required`" label-placeholder="Other Allowance" v-model="data.other_allowance" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('other_allowance')">{{errors.first('other_allowance')}}</span>
                     </vs-col>
 
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="deduction_advance" v-validate="`required`" label-placeholder="Deduction Advance" v-model="deduction_advance" />
+                        <vs-input name="deduction_advance" v-validate="`required`" label-placeholder="Deduction Advance" v-model="data.deduction_advance" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('deduction_advance')">{{errors.first('deduction_advance')}}</span>
                     </vs-col>
 
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="salary_adjustment" v-validate="`required`" label-placeholder="Salary Adjustment" v-model="salary_adjustment" />
+                        <vs-input name="salary_adjustment" v-validate="`required`" label-placeholder="Salary Adjustment" v-model="data.salary_adjustment" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('salary_adjustment')">{{errors.first('salary_adjustment')}}</span>
                     </vs-col>
 
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="remark" v-validate="`required`" label-placeholder="Remarks" v-model="remark" />
+                        <vs-input name="remark" v-validate="`required`" label-placeholder="Remarks" v-model="data.remark" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('remark')">{{errors.first('remark')}}</span>
                     
@@ -200,18 +200,7 @@
 
             </form>
         </vx-card>
-        <vs-popup :active.sync="selectEmployeeModal" title="Select Employee">
-        	<vx-input-group>
-        		<vs-select   width="100%" placeholder="Search and select" class="selectExample" label="Employees" label-placeholder="Select Employee" v-model="employee">
-                    <vs-select-item value="" :disabled="true" text="Select Employee"></vs-select-item>
-                    <vs-select-item :key="index" :value="item.employee_id" :text="item.name_english" v-for="(item,index) in employees" />
-                </vs-select>
-            </vx-input-group>
-
-                <vs-button @click="getEmployee" class="mt-base float-right">
-                	Select Employee
-                </vs-button>
-        </vs-popup>
+       
     </div>
 </template>
 <script>
@@ -221,7 +210,6 @@
 		  return {
             customField:[],
 		    tax_customer_id:'',
-		    selectEmployeeModal: true,
 		    employee : '',
 		    buttonClicked : false,
 		    employeeVal : {},
@@ -239,6 +227,7 @@
             deduction_advance: '',
             salary_adjustment: '',
             remark: '',
+            data: []
 		  };
 		},
 		created(){
@@ -249,15 +238,7 @@
 		  	...mapState('employees/',['employees']),
 		  	...mapGetters('employees/',['findEmployee']),
 		},
-		watch: {
-		  selectEmployeeModal(val, oldVal){
-		  	if((this.buttonClicked == false &&  this.employee == '') || (this.buttonClicked == false &&  this.employee != '')){
-		  		this.selectEmployeeModal = true;
-		  	}else{
-             this.selectEmployeeModal = false;   
-            }
-		  }
-		},
+		
         beforeCreate(){
             this.tax_customer_id = this.$store.state.rootUrl.split('/')[2];
         },
@@ -273,22 +254,20 @@
 
 			getEmployee(){
 				if(this.employee != ''){
-                    axios.post('get-employee',{id:this.employee}).then(res=>{
-                        // var employee = this.findEmployee(this.employee);
-        				var employee = res.data.data;
-        				this.employeeVal = employee;
-                        self = this;
-                        self.customField = [];
-                        if(employee.additional_fields != null){
-                            if(employee.additional_fields.length > 0){
-                                employee.additional_fields.map(function(val, key) {
-                                    self.customField.push({name : 'additional_field[]',value : val,type: 'text'});
-                               });
-                            }            
-                        }
-                        this.buttonClicked = true;
-                        this.selectEmployeeModal = false;
-                    });
+            //         axios.post('get-employee').then(res=>{
+            //             // var employee = this.findEmployee(this.employee);
+        				// var employee = res.data.data;
+        				// this.data.employeeVal = employee;
+            //             self = this;
+            //             self.customField = [];
+            //             if(employee.additional_fields != null){
+            //                 if(employee.additional_fields.length > 0){
+            //                     employee.additional_fields.map(function(val, key) {
+            //                         self.customField.push({name : 'additional_field[]',value : val,type: 'text'});
+            //                    });
+            //                 }            
+            //             }
+            //         });
 				}
 		  },
 		  addPayroll (e) {
@@ -296,9 +275,9 @@
 		    this.$validator.validateAll().then(result=>{
 		    	if(result){
 		    		this.$vs.loading();
-		    		let fd = new FormData(this.$refs.addPayrollForm); 
-                    fd.append('employee_id',this.employee);
-		    		fd.append('tax_id',this.tax_customer_id);
+		    		let fd = new FormData(this.$refs.editPayrollForm); 
+        //             fd.append('employee_id',this.employee);
+		    		// fd.append('tax_id',this.tax_customer_id);
 		    		let data = {
 		    			fd : fd,
 		    			close : this.$vs.loading.close,
