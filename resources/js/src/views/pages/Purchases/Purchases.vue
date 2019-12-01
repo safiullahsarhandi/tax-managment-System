@@ -28,7 +28,7 @@
                         <vs-td :data="tr.total_vat">{{tr.total_vat}}</vs-td>
                             
                         <vs-td>
-                            <!-- <vs-button :to="'customer-update/'+tr.customer_id" size="small" type="border" icon-pack="feather" icon="icon-edit"></vs-button> -->
+                            <vs-button :to="'purchase-update/'+tr.purchase_id" size="small" type="border" icon-pack="feather" icon="icon-edit"></vs-button>
                             <vs-button size="small" icon-pack="feather" icon="icon-maximize-2" type="border"></vs-button>
                         </vs-td>
                     </vs-tr>

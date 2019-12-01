@@ -11,6 +11,8 @@
 |
  */
 Route::group(['prefix' => ''], function () {
+
+	Route::post('login', 'ApplicationController@login');
 	// officers routes
 	Route::get('get-officers', 'ApplicationController@get_officers');
 	Route::post('add-officer', 'ApplicationController@add_officer');
@@ -44,7 +46,7 @@ Route::group(['prefix' => ''], function () {
 	Route::post('update-employee', 'ApplicationController@update_employee');
 	Route::post('status-update-employee', 'ApplicationController@status_update_employee');
 
-	// Customers
+	// Tax
 	Route::post('add-tax', 'ApplicationController@add_tax');
 	Route::get('get-taxes', 'ApplicationController@get_taxes');
 	Route::post('update-tax', 'ApplicationController@update_tax');
@@ -61,10 +63,18 @@ Route::group(['prefix' => ''], function () {
 	// Purchases
 	Route::post('add-purchase', 'ApplicationController@add_purchase');
 	Route::get('get-purchases', 'ApplicationController@get_purchases');
+	Route::post('get-single-purchase', 'ApplicationController@get_purchase');
+	Route::post('update-purchase', 'ApplicationController@update_purchase');
 
 	// Sales
 	Route::post('add-sale', 'ApplicationController@add_sale');
 	Route::get('get-sales', 'ApplicationController@get_sales');
+	Route::post('get-single-sale', 'ApplicationController@get_sale');
+	Route::post('update-sale', 'ApplicationController@update_sale');
+
+
+
+	Route::get('logout', 'ApplicationController@logout');
 
 });
 Route::get('/{any}', 'ApplicationController')->where('any', '.*');

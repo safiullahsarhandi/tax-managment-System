@@ -58,16 +58,16 @@
 			<vs-spacer></vs-spacer>
 
             <!-- SEARCHBAR -->
-            <div class="search-full-container w-full h-full absolute left-0 rounded-lg" :class="{'flex': showFullSearch}" v-show="showFullSearch">
+            <!-- <div class="search-full-container w-full h-full absolute left-0 rounded-lg" :class="{'flex': showFullSearch}" v-show="showFullSearch">
                 <vx-auto-suggest :autoFocus="showFullSearch" :data="navbarSearchAndPinList" @selected="selected" ref="navbarSearch" @closeSearchbar="showFullSearch = false" placeholder="Search..." class="w-full" inputClassses="w-full vs-input-no-border vs-input-no-shdow-focus no-icon-border" icon="SearchIcon" background-overlay></vx-auto-suggest>
                 <div class="absolute right-0 h-full z-50">
                     <feather-icon icon="XIcon" class="px-4 cursor-pointer h-full close-search-icon" @click="showFullSearch = false"></feather-icon>
                 </div>
-            </div>
-            <feather-icon icon="SearchIcon" @click="showFullSearch = true" class="cursor-pointer navbar-fuzzy-search ml-4"></feather-icon>
+            </div> -->
+            <!-- <feather-icon icon="SearchIcon" @click="showFullSearch = true" class="cursor-pointer navbar-fuzzy-search ml-4"></feather-icon> -->
 
 			<!-- NOTIFICATIONS -->
-			<vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer ml-4">
+			<!-- <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer ml-4">
 				<feather-icon icon="BellIcon" class="cursor-pointer mt-1 sm:mr-6 mr-2" :badge="unreadNotifications.length"></feather-icon>
 				<vs-dropdown-menu class="notification-dropdown dropdown-custom vx-navbar-dropdown">
 
@@ -110,7 +110,7 @@
                         <span>View All Notifications</span>
                     </div>
 				</vs-dropdown-menu>
-			</vs-dropdown>
+			</vs-dropdown> -->
 
 			<!-- USER META -->
 			<div class="the-navbar__user-meta flex items-center">
@@ -118,8 +118,10 @@
 					<p class="font-semibold">Login User</p>
 					<small>Available</small>
 				</div>
+
+                
 				<vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
-					<div class="con-img ml-3"><img src="../../../../assets/images/portrait/small/avatar-s-11.png" alt="" width="40" height="40" class="rounded-full shadow-md cursor-pointer block"></div>
+					<div class="con-img ml-3"><vs-button color="dark" type="line" icon="menu">Admin</vs-button></div>
 					<vs-dropdown-menu class="vx-navbar-dropdown">
 						<ul style="min-width: 9rem">
 							<li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white" @click="$router.push('/pages/profile')"><feather-icon icon="UserIcon" svgClasses="w-4 h-4"></feather-icon> <span class="ml-2">Profile</span></li>
@@ -127,7 +129,7 @@
 							<li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white" @click="$router.push('/apps/todo')"><feather-icon icon="CheckSquareIcon" svgClasses="w-4 h-4"></feather-icon> <span class="ml-2">Tasks</span></li>
 							<li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white" @click="$router.push('/apps/chat')"><feather-icon icon="MessageSquareIcon" svgClasses="w-4 h-4"></feather-icon> <span class="ml-2">Chat</span></li>
 							<vs-divider class="m-1"></vs-divider>
-							<li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white" @click="$router.push('/pages/login')"><feather-icon icon="LogOutIcon" svgClasses="w-4 h-4"></feather-icon> <span class="ml-2">Logout</span></li>
+							<li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white" @click="logout()"><feather-icon icon="LogOutIcon" svgClasses="w-4 h-4"></feather-icon> <span class="ml-2">Logout</span></li>
 						</ul>
 					</vs-dropdown-menu>
 				</vs-dropdown>
@@ -217,6 +219,22 @@ export default {
         },
     },
     methods: {
+        logout(){
+            axios.get('logout').then(res=>{
+                if(res.data.status == 'success'){
+                    this.$vs.notify({
+                            position : 'center-top',
+                            color : 'success',
+                            text : res.data.msg,
+                        });
+                    localStorage.removeItem('admin');
+                    this.$router.push({
+                        name: 'login' 
+                    });
+                }
+            });
+
+        },
         showSidebar() {
             this.$store.commit('TOGGLE_IS_SIDEBAR_ACTIVE', true);
         },

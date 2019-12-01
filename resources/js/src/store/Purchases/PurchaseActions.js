@@ -11,10 +11,9 @@ export default{
 		});
 	},
 
-	// updateCustomer({commit},fd){
-	// 	return axios.post('update-customer',fd).then(res=>{
-	// 		// commit('setSingleCustomer',res.data.customer);
-	// 		return res;
-	// 	});
-	// }	
+	updatePurchase({commit},fd){
+		return axios.post('update-purchase',fd).then(res=>{
+			return res;
+		});
+	}	
 }
