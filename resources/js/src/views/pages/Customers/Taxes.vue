@@ -21,8 +21,8 @@
                         <vs-td>{{tr.officers_count}}</vs-td>
                         <vs-td>{{tr.status == 1? 'In progress':'Completed'}}</vs-td>
                         <vs-td>
-                             <vs-button size="small" type="border" icon-pack="feather" icon="icon-edit" :to="'tax-collection/'+tr.tax_id"></vs-button>
                              <vs-button size="small" type="border" icon-pack="feather" icon="icon-edit" @click="editTax(tr.id)"></vs-button>
+                             <vs-button size="small" type="border" icon-pack="feather" icon="icon-maximize-2" :to="'tax-collection/'+tr.tax_id"></vs-button>
                         </vs-td>
                     </vs-tr>
                 </template>

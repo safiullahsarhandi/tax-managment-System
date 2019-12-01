@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Session;
+use App\Payrolls;
 
 class ApplicationController extends Controller {
 	public function __invoke() {
@@ -211,6 +212,10 @@ class ApplicationController extends Controller {
 	public function get_employees(Request $request) {
 		$employees = CustomerEmployee::whereTaxCustomerId($request->tax_customer_id)->get();
 		return response()->json(compact('employees'));
+	}
+	public function get_employee(Request $request) {
+		$data = CustomerEmployee::whereEmployeeId($request->id)->first();
+		return response()->json(compact('data'));
 	}
 	public function get_active_employees(Request $request) {
 		$employees = CustomerEmployee::whereTaxCustomerId($request->tax_customer_id)->where('status', 1)->get();
@@ -630,6 +635,42 @@ class ApplicationController extends Controller {
 		$purchase->save();
 
 		return response()->json(['status' => 'success', 'data' => $purchase]);
+	}
+
+	public function add_payroll(Request $request){
+															
+
+		$pr = new Payrolls();
+		$pr->payroll_id 			= (String) Str::uuid();
+		$pr->tax_id 				= $request->tax_id;
+		$pr->employee_id 			= $request->employee_id;
+		$pr->basic_salary 			= $request->basic_salary;
+		$pr->bonus 					= $request->bonus;
+		$pr->over_time 				= $request->overtime;
+		$pr->commissions 			= $request->commission;
+		$pr->seniority_payment 		= $request->seniority_payment;
+		$pr->severance_pay 			= $request->severance_pay;
+		$pr->maternity_leave 		= $request->maternity_leave;
+		$pr->paid_annual_leave 		= $request->paid_annual_leave;
+		$pr->food_allowance 		= $request->food_allowance;
+		$pr->transport_allowance 	= $request->transport_allowance;
+		$pr->others 				= $request->other_allowance;
+		$pr->deduction_advance 		= $request->deduction_advance;
+		$pr->salary_adjusment 		= $request->salary_adjustment;
+		$pr->remark 				= $request->remark;
+		$pr->additional_fields 		= $request->additional_field;
+		$pr->save();
+
+		return response()->json(['status' => 'success', 'data' => $pr, 'msg' => 'Payroll Added Successfully']);
+	}
+
+
+	public function get_payrolls(Request $request){
+
+		$data = Payrolls::with(['employee'])->whereTaxId($request->tax_id)->get();
+
+		return response()->json(['data'=>$data]);
+
 	}
 	
 

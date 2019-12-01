@@ -78096,6 +78096,12 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       component: function component() {
         return __webpack_require__.e(/*! import() */ 23).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/Payrolls.vue */ "./resources/js/src/views/pages/Payrolls/Payrolls.vue"));
       }
+    }, {
+      path: '/edit-payroll/:id/:employee_id',
+      name: 'Edit Payrolls',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 31).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/EditPayroll.vue */ "./resources/js/src/views/pages/Payrolls/EditPayroll.vue"));
+      }
     }]
   }, // =============================================================================
   // FULL PAGE LAYOUTS
@@ -78764,6 +78770,137 @@ __webpack_require__.r(__webpack_exports__);
   state: _OfficerState_js__WEBPACK_IMPORTED_MODULE_0__["default"],
   mutations: _OfficerMutations_js__WEBPACK_IMPORTED_MODULE_2__["default"],
   getters: _OfficerGetters_js__WEBPACK_IMPORTED_MODULE_3__["default"]
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Payrolls/Payrolls.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/src/store/Payrolls/Payrolls.js ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PayrollsState_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PayrollsState.js */ "./resources/js/src/store/Payrolls/PayrollsState.js");
+/* harmony import */ var _PayrollsActions_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PayrollsActions.js */ "./resources/js/src/store/Payrolls/PayrollsActions.js");
+/* harmony import */ var _PayrollsMutations_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PayrollsMutations.js */ "./resources/js/src/store/Payrolls/PayrollsMutations.js");
+/* harmony import */ var _PayrollsGetters_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PayrollsGetters.js */ "./resources/js/src/store/Payrolls/PayrollsGetters.js");
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  actions: _PayrollsActions_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  state: _PayrollsState_js__WEBPACK_IMPORTED_MODULE_0__["default"],
+  mutations: _PayrollsMutations_js__WEBPACK_IMPORTED_MODULE_2__["default"],
+  getters: _PayrollsGetters_js__WEBPACK_IMPORTED_MODULE_3__["default"]
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Payrolls/PayrollsActions.js":
+/*!************************************************************!*\
+  !*** ./resources/js/src/store/Payrolls/PayrollsActions.js ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  getPayrolls: function getPayrolls(_ref, tax_id) {
+    var commit = _ref.commit;
+    return axios.post('get-payrolls', {
+      tax_id: tax_id
+    }).then(function (res) {
+      commit('setPayrolls', res.data.data);
+      return res;
+    });
+  },
+  create: function create(_ref2, data) {
+    var commit = _ref2.commit;
+    // alert('action called');
+    return axios.post('add-payroll', data.fd).then(function (res) {
+      // commit('setOfficer',res.data.officers)
+      if (res.data.status == 'error') {
+        data.notify({
+          color: 'danger',
+          text: res.data.msg,
+          title: 'Oops',
+          position: 'top-right'
+        });
+      } else {
+        data.notify({
+          color: 'success',
+          text: res.data.msg,
+          position: 'top-right'
+        });
+      }
+
+      setTimeout(function () {
+        data.close();
+      }, 500);
+      return res;
+    });
+  },
+  updatePayroll: function updatePayroll(_ref3, fd) {// return axios.post('update-sale',fd).then(res=>{
+    // 	return res;
+    // });
+
+    var commit = _ref3.commit;
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Payrolls/PayrollsGetters.js":
+/*!************************************************************!*\
+  !*** ./resources/js/src/store/Payrolls/PayrollsGetters.js ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({// findCustomer : state => id => {
+  // 	var index = _.findIndex(state.customers,(o)=> {return o.id === id})
+  // 	return state.customers[index];
+  // }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Payrolls/PayrollsMutations.js":
+/*!**************************************************************!*\
+  !*** ./resources/js/src/store/Payrolls/PayrollsMutations.js ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  setPayrolls: function setPayrolls(state, payrolls) {
+    state.payrolls = payrolls;
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Payrolls/PayrollsState.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/src/store/Payrolls/PayrollsState.js ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  payrolls: []
 });
 
 /***/ }),
@@ -79554,6 +79691,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Sales_Sales_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Sales/Sales.js */ "./resources/js/src/store/Sales/Sales.js");
 /* harmony import */ var _Employees_Employees_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Employees/Employees.js */ "./resources/js/src/store/Employees/Employees.js");
 /* harmony import */ var _Taxes_Taxes_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Taxes/Taxes.js */ "./resources/js/src/store/Taxes/Taxes.js");
+/* harmony import */ var _Payrolls_Payrolls_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Payrolls/Payrolls.js */ "./resources/js/src/store/Payrolls/Payrolls.js");
 /*=========================================================================================
   File Name: store.js
   Description: Vuex store
@@ -79562,6 +79700,7 @@ __webpack_require__.r(__webpack_exports__);
   Author: Pixinvent
   Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
+
 
 
 
@@ -79592,7 +79731,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     purchases: _Purchases_Purchases_js__WEBPACK_IMPORTED_MODULE_11__["default"],
     sales: _Sales_Sales_js__WEBPACK_IMPORTED_MODULE_12__["default"],
     employees: _Employees_Employees_js__WEBPACK_IMPORTED_MODULE_13__["default"],
-    taxes: _Taxes_Taxes_js__WEBPACK_IMPORTED_MODULE_14__["default"]
+    taxes: _Taxes_Taxes_js__WEBPACK_IMPORTED_MODULE_14__["default"],
+    payrolls: _Payrolls_Payrolls_js__WEBPACK_IMPORTED_MODULE_15__["default"]
   } // strict: process.env.NODE_ENV !== 'production'
 
 }));

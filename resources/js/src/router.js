@@ -158,6 +158,11 @@ const router = new Router({
                     name: 'Employees Payrolls',
                     component: () => import('./views/pages/Payrolls/Payrolls.vue'),
                 },
+                {
+                    path: '/edit-payroll/:id/:employee_id',
+                    name: 'Edit Payrolls',
+                    component: () => import('./views/pages/Payrolls/EditPayroll.vue'),
+                },
             ],
         },
         // =============================================================================
