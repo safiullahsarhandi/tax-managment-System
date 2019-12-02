@@ -676,6 +676,48 @@ class ApplicationController extends Controller {
 		return response()->json(['data'=>$data]);
 
 	}
+
+	public function get_payroll(Request $request){
+
+		$data = Payrolls::with(['employee'])->wherePayrollId($request->id)->first();
+
+		return response()->json(['data'=>$data]);
+
+	}
+
+	public function update_payroll(Request $request){
+		
+		$pr = Payrolls::wherePayrollId($request->payroll_id)->first();
+
+		$pr->basic_salary 			= $request->basic_salary;
+		$pr->bonus 					= $request->bonus;
+		$pr->over_time 				= $request->overtime;
+		$pr->commissions 			= $request->commission;
+		$pr->seniority_payment 		= $request->seniority_payment;
+		$pr->severance_pay 			= $request->severance_pay;
+		$pr->maternity_leave 		= $request->maternity_leave;
+		$pr->paid_annual_leave 		= $request->paid_annual_leave;
+		$pr->food_allowance 		= $request->food_allowance;
+		$pr->transport_allowance 	= $request->transport_allowance;
+		$pr->others 				= $request->other_allowance;
+		$pr->deduction_advance 		= $request->deduction_advance;
+		$pr->salary_adjusment 		= $request->salary_adjustment;
+		$pr->remark 				= $request->remark;
+
+		$customfields = $request->additional_field;
+		for ($i = 1; $i <= count($request->additional_field); $i++) {
+			if (($key = array_search(null, $customfields)) !== false) {
+				unset($customfields[$key]);
+			}
+		}
+		
+		$pr->additional_fields  = $customfields;	
+	
+		$pr->save();
+
+		return response()->json(['status' => 'success', 'msg' => 'Payroll Updated Successfully']);
+	
+	}
 	
 
 }

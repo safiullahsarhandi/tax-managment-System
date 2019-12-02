@@ -76,6 +76,8 @@ Route::group(['prefix' => ''], function () {
 	// Payrolls
 	Route::post('add-payroll', 'ApplicationController@add_payroll');
 	Route::post('get-payrolls', 'ApplicationController@get_payrolls');
+	Route::post('get-payroll', 'ApplicationController@get_payroll');
+	Route::post('update-payroll', 'ApplicationController@update_payroll');
 
 
 	Route::get('logout', 'ApplicationController@logout');

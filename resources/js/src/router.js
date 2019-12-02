@@ -160,7 +160,7 @@ const router = new Router({
                     component: () => import('./views/pages/Payrolls/Payrolls.vue'),
                 },
                 {
-                    path: '/edit-payroll/:id/:employee_id',
+                    path: '/edit-payroll/:id',
                     name: 'Edit Payrolls',
                     component: () => import('./views/pages/Payrolls/EditPayroll.vue'),
                 },
