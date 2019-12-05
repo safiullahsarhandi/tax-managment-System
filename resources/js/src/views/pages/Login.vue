@@ -56,7 +56,7 @@ export default {
     },
    created(){
         if(localStorage.getItem('admin')) {
-            this.$router.push('/home');
+            this.$router.push('/dashboard');
         }
    },
     methods: {
@@ -85,9 +85,9 @@ export default {
                                 'position': 'top-right',
                                 'icon': 'check_box'
                             });
-                            var adminData = JSON.stringify(res.data.session);
-                            localStorage.setItem('admin', adminData);
-                            this.$router.push('/home');
+                            var adminData = res.data.session;
+                            localStorage.setItem('admin', adminData.manager_id);
+                            this.$router.push('/dashboard');
                         }
                         this.$vs.loading.close()
                     })

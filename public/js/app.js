@@ -77024,35 +77024,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _src_main_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./src/main.js */ "./resources/js/src/main.js");
-window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/**
- * We'll load the axios HTTP library which allows us to easily issue requests
- * to our Laravel back-end. This library automatically handles sending the
- * CSRF token as a header based on the value of the "XSRF" token cookie.
- */
-
-window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-/**
- * Next we will register the CSRF Token as a common header with Axios so that
- * all outgoing HTTP requests automatically have it attached. This is just
- * a simple convenience so we don't have to attach every token manually.
- */
-
-var token = document.head.querySelector('meta[name="csrf-token"]');
-
-if (token) {
-  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-} else {
-  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
-}
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
-
 
 
 /***/ }),
@@ -77837,6 +77808,23 @@ _router__WEBPACK_IMPORTED_MODULE_5__["default"].beforeEach(function (to, from, n
     next();
   }
 });
+window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/**
+ * We'll load the axios HTTP library which allows us to easily issue requests
+ * to our Laravel back-end. This library automatically handles sending the
+ * CSRF token as a header based on the value of the "XSRF" token cookie.
+ */
+
+window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+var token = document.head.querySelector('meta[name="csrf-token"]');
+
+if (token) {
+  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+} else {
+  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+}
+
 Vue.config.productionTip = false;
 new Vue({
   provide: function provide() {
@@ -77848,6 +77836,9 @@ new Vue({
   store: _store_store__WEBPACK_IMPORTED_MODULE_6__["default"],
   render: function render(h) {
     return h(_App_vue__WEBPACK_IMPORTED_MODULE_0__["default"]);
+  },
+  created: function created() {
+    this.$store.dispatch('getLoginUser');
   },
   methods: {
     generatePassword: function generatePassword() {
@@ -77888,9 +77879,12 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     // =============================================================================
     // MAIN LAYOUT ROUTES
     // =============================================================================
-    path: '',
+    path: '/dashboard',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0), __webpack_require__.e(8)]).then(__webpack_require__.bind(null, /*! ./layouts/main/Main.vue */ "./resources/js/src/layouts/main/Main.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0), __webpack_require__.e(10)]).then(__webpack_require__.bind(null, /*! ./layouts/main/Main.vue */ "./resources/js/src/layouts/main/Main.vue"));
+    },
+    meta: {
+      requiresAuth: true
     },
     children: [// =============================================================================
     // Theme Routes
@@ -77899,73 +77893,127 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/',
       name: 'home',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 28).then(__webpack_require__.bind(null, /*! ./views/Home.vue */ "./resources/js/src/views/Home.vue"));
+        return __webpack_require__.e(/*! import() */ 32).then(__webpack_require__.bind(null, /*! ./views/Home.vue */ "./resources/js/src/views/Home.vue"));
+      },
+      meta: {
+        requiresAuth: true
       }
     }, {
       path: '/page2',
       name: 'page2',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 29).then(__webpack_require__.bind(null, /*! ./views/Page2.vue */ "./resources/js/src/views/Page2.vue"));
+        return __webpack_require__.e(/*! import() */ 33).then(__webpack_require__.bind(null, /*! ./views/Page2.vue */ "./resources/js/src/views/Page2.vue"));
+      },
+      meta: {
+        requiresAuth: true
       }
     }, {
       path: '/customers',
       name: 'Customers',
       component: function component() {
         return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/Customers.vue */ "./resources/js/src/views/pages/Customers/Customers.vue"));
+      },
+      meta: {
+        requiresAuth: true
       }
     }, {
       path: '/add-customer',
       name: 'Add Customer',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/AddCustomer.vue */ "./resources/js/src/views/pages/Customers/AddCustomer.vue"));
+        return __webpack_require__.e(/*! import() */ 15).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/AddCustomer.vue */ "./resources/js/src/views/pages/Customers/AddCustomer.vue"));
+      },
+      meta: {
+        requiresAuth: true
       }
     }, {
       path: '/customer-update/:id',
       name: 'Customer Update',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 15).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/EditCustomer.vue */ "./resources/js/src/views/pages/Customers/EditCustomer.vue"));
+        return __webpack_require__.e(/*! import() */ 17).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/EditCustomer.vue */ "./resources/js/src/views/pages/Customers/EditCustomer.vue"));
+      },
+      meta: {
+        requiresAuth: true
       }
     }, {
       path: '/currencies',
       name: 'Currencies',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 12).then(__webpack_require__.bind(null, /*! ./views/pages/Currencies.vue */ "./resources/js/src/views/pages/Currencies.vue"));
+        return __webpack_require__.e(/*! import() */ 14).then(__webpack_require__.bind(null, /*! ./views/pages/Currencies.vue */ "./resources/js/src/views/pages/Currencies.vue"));
+      },
+      meta: {
+        requiresAuth: true
       }
     }, {
       path: '/exchange-rates',
       name: 'Exhange Rates',
       component: function component() {
         return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./views/pages/ExchangeRates.vue */ "./resources/js/src/views/pages/ExchangeRates.vue"));
+      },
+      meta: {
+        requiresAuth: true
       }
     }, {
       path: '/admins',
       name: 'Admins',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 11).then(__webpack_require__.bind(null, /*! ./views/pages/Admins.vue */ "./resources/js/src/views/pages/Admins.vue"));
+        return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ./views/pages/Admins.vue */ "./resources/js/src/views/pages/Admins.vue"));
+      },
+      meta: {
+        requiresAuth: true
       }
     }, {
       path: '/supervisors',
       name: 'Supervisors',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 23).then(__webpack_require__.bind(null, /*! ./views/pages/Supervisors.vue */ "./resources/js/src/views/pages/Supervisors.vue"));
+        return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! ./views/pages/Supervisors.vue */ "./resources/js/src/views/pages/Supervisors.vue"));
+      },
+      meta: {
+        requiresAuth: true
       }
     }, {
       path: '/officers',
       name: 'Officers',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 18).then(__webpack_require__.bind(null, /*! ./views/pages/Officers.vue */ "./resources/js/src/views/pages/Officers.vue"));
+        return __webpack_require__.e(/*! import() */ 21).then(__webpack_require__.bind(null, /*! ./views/pages/Officers.vue */ "./resources/js/src/views/pages/Officers.vue"));
+      },
+      meta: {
+        requiresAuth: true
       }
     }, {
       path: '/testing',
       name: 'testing',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 25).then(__webpack_require__.bind(null, /*! ./views/pages/demo.vue */ "./resources/js/src/views/pages/demo.vue"));
+        return __webpack_require__.e(/*! import() */ 29).then(__webpack_require__.bind(null, /*! ./views/pages/demo.vue */ "./resources/js/src/views/pages/demo.vue"));
+      },
+      meta: {
+        requiresAuth: true
       }
     }, {
       path: '/tax-managment',
       name: 'Tax Managment',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! ./views/pages/tax-managment/TaxManagment.vue */ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue"));
+        return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! ./views/pages/tax-managment/TaxManagment.vue */ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue"));
+      },
+      meta: {
+        requiresAuth: true
+      }
+    }, {
+      path: '/team-members',
+      name: 'Team Members',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ./views/pages/Admins.vue */ "./resources/js/src/views/pages/Admins.vue"));
+      },
+      meta: {
+        requiresAuth: true
+      }
+    }, {
+      path: '/member-detail/:id',
+      name: 'Member Detail',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 20).then(__webpack_require__.bind(null, /*! ./views/pages/MemberDetail.vue */ "./resources/js/src/views/pages/MemberDetail.vue"));
+      },
+      meta: {
+        requiresAuth: true
       }
     }]
   }, {
@@ -77974,9 +78022,12 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     // =============================================================================
     path: '/customer-detail/:id',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0), __webpack_require__.e(10)]).then(__webpack_require__.bind(null, /*! ./layouts/main/customerMain.vue */ "./resources/js/src/layouts/main/customerMain.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0), __webpack_require__.e(12)]).then(__webpack_require__.bind(null, /*! ./layouts/main/customerMain.vue */ "./resources/js/src/layouts/main/customerMain.vue"));
     },
     props: true,
+    meta: {
+      requiresAuth: true
+    },
     children: [// =============================================================================
     // Theme Routes
     // =============================================================================
@@ -77984,25 +78035,37 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/',
       name: 'Company Detail',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 14).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/CustomerDetail.vue */ "./resources/js/src/views/pages/Customers/CustomerDetail.vue"));
+        return __webpack_require__.e(/*! import() */ 16).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/CustomerDetail.vue */ "./resources/js/src/views/pages/Customers/CustomerDetail.vue"));
+      },
+      meta: {
+        requiresAuth: true
       }
     }, {
       path: '/add-employee',
       name: 'Add Employee',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 16).then(__webpack_require__.bind(null, /*! ./views/pages/Employees/AddEmployee.vue */ "./resources/js/src/views/pages/Employees/AddEmployee.vue"));
+        return __webpack_require__.e(/*! import() */ 18).then(__webpack_require__.bind(null, /*! ./views/pages/Employees/AddEmployee.vue */ "./resources/js/src/views/pages/Employees/AddEmployee.vue"));
+      },
+      meta: {
+        requiresAuth: true
       }
     }, {
       path: '/employees-list',
       name: 'Employees List',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 17).then(__webpack_require__.bind(null, /*! ./views/pages/Employees/Employees.vue */ "./resources/js/src/views/pages/Employees/Employees.vue"));
+        return __webpack_require__.e(/*! import() */ 19).then(__webpack_require__.bind(null, /*! ./views/pages/Employees/Employees.vue */ "./resources/js/src/views/pages/Employees/Employees.vue"));
+      },
+      meta: {
+        requiresAuth: true
       }
     }, {
       path: '/taxes',
       name: 'Taxes',
       component: function component() {
         return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/Taxes.vue */ "./resources/js/src/views/pages/Customers/Taxes.vue"));
+      },
+      meta: {
+        requiresAuth: true
       }
     }]
   }, {
@@ -78011,7 +78074,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     // =============================================================================
     path: '/tax-collection/:id',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0), __webpack_require__.e(9)]).then(__webpack_require__.bind(null, /*! ./layouts/main/TaxDetailMain.vue */ "./resources/js/src/layouts/main/TaxDetailMain.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0), __webpack_require__.e(11)]).then(__webpack_require__.bind(null, /*! ./layouts/main/TaxDetailMain.vue */ "./resources/js/src/layouts/main/TaxDetailMain.vue"));
+    },
+    meta: {
+      requiresAuth: true
     },
     children: [// =============================================================================
     // Theme Routes
@@ -78020,49 +78086,73 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/',
       name: 'Tax Detail',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 24).then(__webpack_require__.bind(null, /*! ./views/pages/Tax/TaxDetail.vue */ "./resources/js/src/views/pages/Tax/TaxDetail.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(28), __webpack_require__.e(34)]).then(__webpack_require__.bind(null, /*! ./views/pages/Tax/TaxDetail.vue */ "./resources/js/src/views/pages/Tax/TaxDetail.vue"));
+      },
+      meta: {
+        requiresAuth: true
       }
     }, {
       path: '/add-sale',
       name: 'Add Sale',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 21).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/AddSale.vue */ "./resources/js/src/views/pages/Sales/AddSale.vue"));
+        return __webpack_require__.e(/*! import() */ 25).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/AddSale.vue */ "./resources/js/src/views/pages/Sales/AddSale.vue"));
+      },
+      meta: {
+        requiresAuth: true
       }
     }, {
       path: '/sales-list',
       name: 'Sales List',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 22).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/Sales.vue */ "./resources/js/src/views/pages/Sales/Sales.vue"));
+        return __webpack_require__.e(/*! import() */ 26).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/Sales.vue */ "./resources/js/src/views/pages/Sales/Sales.vue"));
+      },
+      meta: {
+        requiresAuth: true
       }
     }, {
       path: '/add-purchase',
       name: 'Add Purchase',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 20).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/AddPurchase.vue */ "./resources/js/src/views/pages/Purchases/AddPurchase.vue"));
+        return __webpack_require__.e(/*! import() */ 24).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/AddPurchase.vue */ "./resources/js/src/views/pages/Purchases/AddPurchase.vue"));
+      },
+      meta: {
+        requiresAuth: true
       }
     }, {
       path: '/purchases-list',
       name: 'Purchases List',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/Purchases.vue */ "./resources/js/src/views/pages/Purchases/Purchases.vue"));
+        return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/Purchases.vue */ "./resources/js/src/views/pages/Purchases/Purchases.vue"));
+      },
+      meta: {
+        requiresAuth: true
       }
     }, {
       path: '/add-payroll',
       name: 'Add Payroll',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 19).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/AddPayroll.vue */ "./resources/js/src/views/pages/Payrolls/AddPayroll.vue"));
+        return __webpack_require__.e(/*! import() */ 22).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/AddPayroll.vue */ "./resources/js/src/views/pages/Payrolls/AddPayroll.vue"));
+      },
+      meta: {
+        requiresAuth: true
       }
     }, {
       path: '/employees-payrolls',
       name: 'Employees Payrolls',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 30).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/Payrolls.vue */ "./resources/js/src/views/pages/Payrolls/Payrolls.vue"));
+        return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/Payrolls.vue */ "./resources/js/src/views/pages/Payrolls/Payrolls.vue"));
+      },
+      meta: {
+        requiresAuth: true
       }
     }, {
       path: '/edit-payroll/:id/:employee_id',
       name: 'Edit Payrolls',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 31).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/EditPayroll.vue */ "./resources/js/src/views/pages/Payrolls/EditPayroll.vue"));
+        return __webpack_require__.e(/*! import() */ 23).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/EditPayroll.vue */ "./resources/js/src/views/pages/Payrolls/EditPayroll.vue"));
+      },
+      meta: {
+        requiresAuth: true
       }
     }]
   }, // =============================================================================
@@ -78071,22 +78161,22 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   {
     path: '',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! @/layouts/full-page/FullPage.vue */ "./resources/js/src/layouts/full-page/FullPage.vue"));
+      return __webpack_require__.e(/*! import() */ 31).then(__webpack_require__.bind(null, /*! @/layouts/full-page/FullPage.vue */ "./resources/js/src/layouts/full-page/FullPage.vue"));
     },
     children: [// =============================================================================
     // PAGES
     // =============================================================================
     {
-      path: '/pages/login',
+      path: '/',
       name: 'pageLogin',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! @/views/pages/Login.vue */ "./resources/js/src/views/pages/Login.vue"));
+        return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! @/views/pages/Login.vue */ "./resources/js/src/views/pages/Login.vue"));
       }
     }, {
       path: '/pages/error-404',
       name: 'pageError404',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 26).then(__webpack_require__.bind(null, /*! @/views/pages/Error404.vue */ "./resources/js/src/views/pages/Error404.vue"));
+        return __webpack_require__.e(/*! import() */ 30).then(__webpack_require__.bind(null, /*! @/views/pages/Error404.vue */ "./resources/js/src/views/pages/Error404.vue"));
       }
     }]
   }, // Redirect to 404 page, if no match found
@@ -78115,15 +78205,21 @@ __webpack_require__.r(__webpack_exports__);
       commit('setAdmins', res.data.admins);
     });
   },
-  addAdmin: function addAdmin(_ref2, fd) {
+  getMemberDetail: function getMemberDetail(_ref2, id) {
     var commit = _ref2.commit;
+    axios.get('get-member-detail/' + id).then(function (res) {
+      commit('setMember', res.data.member);
+    });
+  },
+  addAdmin: function addAdmin(_ref3, fd) {
+    var commit = _ref3.commit;
     return axios.post('add-admin', fd).then(function (res) {
       // commit('setAdmin',res.data.Admins)
       return res;
     });
   },
-  updateAdmin: function updateAdmin(_ref3, fd) {
-    var commit = _ref3.commit;
+  updateAdmin: function updateAdmin(_ref4, fd) {
+    var commit = _ref4.commit;
     return axios.post('update-admin', fd).then(function (res) {
       commit('setSingleAdmin', res.data.admin);
       return res;
@@ -78175,6 +78271,9 @@ __webpack_require__.r(__webpack_exports__);
     });
 
     Vue.set(state.admins, index, admin);
+  },
+  setMember: function setMember(state, member) {
+    state.member = member;
   }
 });
 
@@ -78190,7 +78289,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  admins: []
+  admins: [],
+  member: {}
 });
 
 /***/ }),
@@ -79237,13 +79337,25 @@ __webpack_require__.r(__webpack_exports__);
   getTaxes: function getTaxes(_ref, customer_id) {
     var commit = _ref.commit;
     axios.get('get-taxes', {
-      customer_id: customer_id
+      params: {
+        customer_id: customer_id
+      }
     }).then(function (res) {
       commit('setTaxes', res.data.taxes);
     });
   },
-  addTax: function addTax(_ref2, data) {
+  getTax: function getTax(_ref2, tax_id) {
     var commit = _ref2.commit;
+    axios.get('get-tax', {
+      params: {
+        tax_id: tax_id
+      }
+    }).then(function (res) {
+      commit('setSingleTax', res.data.tax);
+    });
+  },
+  addTax: function addTax(_ref3, data) {
+    var commit = _ref3.commit;
     // alert('action called');
     return axios.post('add-tax', data.fd).then(function (res) {
       if (res.data.status == 'error') {
@@ -79267,15 +79379,15 @@ __webpack_require__.r(__webpack_exports__);
       return res;
     });
   },
-  updateTax: function updateTax(_ref3, fd) {
-    var commit = _ref3.commit;
+  updateTax: function updateTax(_ref4, fd) {
+    var commit = _ref4.commit;
     return axios.post('update-tax', fd).then(function (res) {
       commit('setEmployee', res.data.employee);
       return res;
     });
   },
-  statusUpdate: function statusUpdate(_ref4, data) {
-    var commit = _ref4.commit;
+  statusUpdate: function statusUpdate(_ref5, data) {
+    var commit = _ref5.commit;
     axios.post('status-update-tax', {
       id: data.id
     }).then(function (res) {
@@ -79314,6 +79426,9 @@ __webpack_require__.r(__webpack_exports__);
 
       return state.employees[index];
     };
+  },
+  supervisor: function supervisor(state) {
+    return state.tax.supervisor;
   }
 });
 
@@ -79331,6 +79446,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   setTaxes: function setTaxes(state, taxes) {
     state.taxes = taxes;
+  },
+  setSingleTax: function setSingleTax(state, tax) {
+    state.tax = tax;
   },
   setTax: function setTax(state, tax) {
     var index = _.findIndex(state.taxes, function (o) {
@@ -79360,7 +79478,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  taxes: []
+  taxes: [],
+  tax: {}
 });
 
 /***/ }),
@@ -79453,6 +79572,16 @@ var actions = {
   arrangeStarredPagesMore: function arrangeStarredPagesMore(_ref9, list) {
     var commit = _ref9.commit;
     commit('ARRANGE_STARRED_PAGES_MORE', list);
+  },
+  getLoginUser: function getLoginUser(_ref10) {
+    var commit = _ref10.commit;
+    axios.get('login-user', {
+      params: {
+        user: localStorage.getItem('admin')
+      }
+    }).then(function (res) {
+      commit('setLoginUser', res.data);
+    });
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (actions);
@@ -79580,6 +79709,9 @@ var mutations = {
     if (!downToUp) {
       state.starredPages.splice(10, 0, lastItemInStarredLimited);
     }
+  },
+  setLoginUser: function setLoginUser(state, data) {
+    state.AppActiveUser = data;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (mutations);
@@ -79618,13 +79750,7 @@ var state = {
   sidebarItemsMin: false,
   theme: _themeConfig_js__WEBPACK_IMPORTED_MODULE_1__["default"].theme || 'light',
   navbarSearchAndPinList: _layouts_components_navbarSearchAndPinList__WEBPACK_IMPORTED_MODULE_0__["default"],
-  AppActiveUser: {
-    id: 0,
-    name: 'John Doe',
-    about: 'Dessert chocolate cake lemon drops jujubes. Biscuit cupcake ice cream bear claw brownie brownie marshmallow.',
-    img: 'avatar-s-11.png',
-    status: 'online'
-  },
+  AppActiveUser: {},
   themePrimaryColor: _themeConfig_js__WEBPACK_IMPORTED_MODULE_1__["default"].primary,
   starredPages: _layouts_components_navbarSearchAndPinList__WEBPACK_IMPORTED_MODULE_0__["default"].data.filter(function (page) {
     return page.highlightAction;

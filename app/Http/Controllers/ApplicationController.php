@@ -7,6 +7,7 @@ use App\Currencies;
 use App\CustomerEmployee;
 use App\Http\Controllers\Controller;
 use App\Officer;
+use App\Payrolls;
 use App\Purchases;
 use App\Sales;
 use App\Settings;
@@ -15,18 +16,21 @@ use App\Tax;
 use App\TaxCustomers;
 use App\TaxOfficer;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Session;
-use App\Payrolls;
 
 class ApplicationController extends Controller {
 	public function __invoke() {
 		return view('application');
 	}
+	public function get_login_user(Request $request) {
+		return $admin = Admin::whereManagerId($request->user)->first();
+		return response()->json($admin);
+	}
 	//login
 	public function login(Request $request) {
-		$admin = Admin::where('email', $request->email)->whereType(1)->first();
+		$admin = Admin::where('email', $request->email)->first();
 		if ($admin) {
 			if (Hash::check($request->password, $admin->password)) {
 				$request->session()->put('admin', $admin);
@@ -266,8 +270,14 @@ class ApplicationController extends Controller {
 
 	// admins methods
 	public function get_admins(Request $request) {
-		$admins = Admin::whereType(1)->get();
+		$admins = Admin::all();
 		return response()->json(compact('admins'));
+	}
+	public function get_member_detail($id) {
+		$member = Admin::with('taxes.tax.supervisor')->withCount(['taxes', 'taxes as active_taxes' => function ($q) {
+			$q->where('status', 1);
+		}])->where('manager_id', $id)->first();
+		return response()->json(compact('member'));
 	}
 	public function add_admin(Request $request) {
 		$admin = new Admin;
@@ -424,6 +434,14 @@ class ApplicationController extends Controller {
 		return response()->json(compact('taxes'));
 	}
 
+	public function get_tax(Request $request) {
+		$tax = Tax::with('supervisor', 'officers')->withCount('officers', 'sales', 'purchases', 'payrolls')->where('tax_id', $request->tax_id)->first();
+		$approval_payrolls = Payrolls::where('officer_confirmed', 1)->where('supervisor_confirmed', 0)->where('tax_id', $request->tax_id)->get();
+		$approval_purchases = Purchases::where('officer_confirmed', 1)->where('supervisor_confirmed', 0)->where('tax_id', $request->tax_id)->get();
+		$approval_sales = Sales::where('officer_confirmed', 1)->where('supervisor_confirmed', 0)->where('tax_id', $request->tax_id)->get();
+		return response()->json(compact('tax', 'approval_sales', 'approval_purchases', 'approval_payrolls'));
+	}
+
 	public function get_customer_profile(Request $request) {
 
 		$customer = TaxCustomers::whereCustomerId($request->id)->first();
@@ -436,27 +454,26 @@ class ApplicationController extends Controller {
 
 		$purchase->purchase_id = (String) Str::uuid();
 
-	
-		$purchase->branch_name 				= $request->branch_name;
-		$purchase->tax_period 				= $request->tax_period;
-		$purchase->invoice_date 			= $request->invoice_date;
-		$purchase->invoice_num 				= $request->invoice_number;
-		$purchase->description 				= $request->good_desc;
-		$purchase->quantity 				= $request->quantity;
-		$purchase->local_purchase_tax_val 	= $request->taxable_value_local;
-		$purchase->local_purchase_vat 		= $request->vat_local;
-		$purchase->imports_taxable_val 		= $request->taxable_value_import;
-		$purchase->imports_vat 				= $request->vat_import;
-		$purchase->total_vat 				= $request->total_vat;
-		$purchase->subject 					= $request->item_subject_taxes;
-		$purchase->comments 				= $request->comments_3e_fii;
-		$purchase->top_comments 			= $request->comments_for_top;
-		$purchase->client_responses 		= $request->client_responses;
-		$purchase->non_taxable_purchases 	= $request->non_taxable_purchases;
-		$purchase->supplier 				= $request->supplier;
-		$purchase->vat_tin 					= $request->vat_tin;
-		$purchase->additional_fields 		= $request->additional_field;
-		$purchase->status 					= 0;
+		$purchase->branch_name = $request->branch_name;
+		$purchase->tax_period = $request->tax_period;
+		$purchase->invoice_date = $request->invoice_date;
+		$purchase->invoice_num = $request->invoice_number;
+		$purchase->description = $request->good_desc;
+		$purchase->quantity = $request->quantity;
+		$purchase->local_purchase_tax_val = $request->taxable_value_local;
+		$purchase->local_purchase_vat = $request->vat_local;
+		$purchase->imports_taxable_val = $request->taxable_value_import;
+		$purchase->imports_vat = $request->vat_import;
+		$purchase->total_vat = $request->total_vat;
+		$purchase->subject = $request->item_subject_taxes;
+		$purchase->comments = $request->comments_3e_fii;
+		$purchase->top_comments = $request->comments_for_top;
+		$purchase->client_responses = $request->client_responses;
+		$purchase->non_taxable_purchases = $request->non_taxable_purchases;
+		$purchase->supplier = $request->supplier;
+		$purchase->vat_tin = $request->vat_tin;
+		$purchase->additional_fields = $request->additional_field;
+		$purchase->status = 0;
 
 		$purchase->save();
 
@@ -474,46 +491,45 @@ class ApplicationController extends Controller {
 
 		$sale->sale_id = (String) Str::uuid();
 
+		$sale->account_code = $request->account_code;
+		$sale->account_description = $request->account_description;
+		$sale->accounting_reference = $request->account_ref;
+		$sale->signature_date = $request->sign_date;
+		$sale->branch_name = $request->branch_name;
+		$sale->tax_period = $request->tax_period;
+		$sale->invoice_date = $request->invoice_date;
+		$sale->invoice_num = $request->invoice_number;
+		$sale->client_name = $request->client_name;
+		$sale->client_tin = $request->client_tin;
+		$sale->description = $request->description;
+		$sale->quantity = $request->quantity;
+		$sale->taxes_subject = $request->item_subject_taxes;
+		$sale->comments = $request->comments_3e_fii;
+		$sale->top_comments = $request->comments_for_top;
+		$sale->client_response = $request->client_responses;
+		$sale->non_taxable_sales = $request->non_taxable_sales;
+		$sale->vat = $request->export_value;
 
-		$sale->account_code 			= $request->account_code;
-		$sale->account_description 		= $request->account_description;
-		$sale->accounting_reference 	= $request->account_ref;
-		$sale->signature_date 			= $request->sign_date;
-		$sale->branch_name 				= $request->branch_name;
-		$sale->tax_period 				= $request->tax_period;
-		$sale->invoice_date 			= $request->invoice_date;
-		$sale->invoice_num 				= $request->invoice_number;
-		$sale->client_name 				= $request->client_name;
-		$sale->client_tin 				= $request->client_tin;
-		$sale->description 				= $request->description;
-		$sale->quantity 				= $request->quantity;
-		$sale->taxes_subject 			= $request->item_subject_taxes;
-		$sale->comments 				= $request->comments_3e_fii;
-		$sale->top_comments 			= $request->comments_for_top;
-		$sale->client_response 			= $request->client_responses;
-		$sale->non_taxable_sales 		= $request->non_taxable_sales;
-		$sale->vat 						= $request->export_value;
-		
-	if(!is_null($request->person_non_taxable_sales)){
-		$sale->taxable_person_sales 	= $request->person_non_taxable_sales;
-	}
-	
-	if(!is_null($request->person_export_value)){
-		$sale->taxable_person_vat 		= $request->person_export_value;
-	}
+		if (!is_null($request->person_non_taxable_sales)) {
+			$sale->taxable_person_sales = $request->person_non_taxable_sales;
+		}
 
-	if(!is_null($request->customer_non_taxable_sales)){
-		$sale->cust_sales 				= $request->customer_non_taxable_sales;
-	}
+		if (!is_null($request->person_export_value)) {
+			$sale->taxable_person_vat = $request->person_export_value;
+		}
 
-	if(!is_null($request->customer_export_value)){
-		$sale->cust_sales_vat 			= $request->customer_export_value;
-	}
+		if (!is_null($request->customer_non_taxable_sales)) {
+			$sale->cust_sales = $request->customer_non_taxable_sales;
+		}
 
-		$sale->total_taxable_value 		= $request->total_taxable_value;
-		
-		$sale->additional_fields 		= $request->additional_field;
-		$sale->status 					= 0;
+		if (!is_null($request->customer_export_value)) {
+			$sale->cust_sales_vat = $request->customer_export_value;
+		}
+
+		$sale->total_taxable_value = $request->total_taxable_value;
+
+		$sale->additional_fields = $request->additional_field;
+		$sale->status = 0;
 
 		$sale->save();
 
@@ -525,46 +541,46 @@ class ApplicationController extends Controller {
 		return response()->json(compact('sales'));
 	}
 
-	public function update_sale(Request $request){
+	public function update_sale(Request $request) {
 
 		$sale = Sales::whereSaleId($request->id)->first();
-        
-		$sale->account_code 			= $request->account_code;
-		$sale->account_description 		= $request->account_description;
-		$sale->accounting_reference 	= $request->account_ref;
-		$sale->signature_date 			= $request->sign_date;
-		$sale->branch_name 				= $request->branch_name;
-		$sale->tax_period 				= $request->tax_period;
-		$sale->invoice_date 			= $request->invoice_date;
-		$sale->invoice_num 				= $request->invoice_number;
-		$sale->client_name 				= $request->client_name;
-		$sale->client_tin 				= $request->client_tin;
-		$sale->description 				= $request->description;
-		$sale->quantity 				= $request->quantity;
-		$sale->taxes_subject 			= $request->item_subject_taxes;
-		$sale->comments 				= $request->comments_3e_fii;
-		$sale->top_comments 			= $request->comments_for_top;
-		$sale->client_response 			= $request->client_responses;
-		$sale->non_taxable_sales 		= $request->non_taxable_sales;
-		$sale->vat 						= $request->export_value;
-		
-	if(!is_null($request->person_non_taxable_sales)){
-		$sale->taxable_person_sales 	= $request->person_non_taxable_sales;
-	}
 
-	if(!is_null($request->person_export_value)){
-		$sale->taxable_person_vat 		= $request->person_export_value;
-	}
+		$sale->account_code = $request->account_code;
+		$sale->account_description = $request->account_description;
+		$sale->accounting_reference = $request->account_ref;
+		$sale->signature_date = $request->sign_date;
+		$sale->branch_name = $request->branch_name;
+		$sale->tax_period = $request->tax_period;
+		$sale->invoice_date = $request->invoice_date;
+		$sale->invoice_num = $request->invoice_number;
+		$sale->client_name = $request->client_name;
+		$sale->client_tin = $request->client_tin;
+		$sale->description = $request->description;
+		$sale->quantity = $request->quantity;
+		$sale->taxes_subject = $request->item_subject_taxes;
+		$sale->comments = $request->comments_3e_fii;
+		$sale->top_comments = $request->comments_for_top;
+		$sale->client_response = $request->client_responses;
+		$sale->non_taxable_sales = $request->non_taxable_sales;
+		$sale->vat = $request->export_value;
 
-	if(!is_null($request->customer_non_taxable_sales)){
-		$sale->cust_sales 				= $request->customer_non_taxable_sales;
-	}
+		if (!is_null($request->person_non_taxable_sales)) {
+			$sale->taxable_person_sales = $request->person_non_taxable_sales;
+		}
 
-	if(!is_null($request->customer_export_value)){
-		$sale->cust_sales_vat 			= $request->customer_export_value;
-	}
+		if (!is_null($request->person_export_value)) {
+			$sale->taxable_person_vat = $request->person_export_value;
+		}
 
-		$sale->total_taxable_value 		= $request->total_taxable_value;
+		if (!is_null($request->customer_non_taxable_sales)) {
+			$sale->cust_sales = $request->customer_non_taxable_sales;
+		}
+
+		if (!is_null($request->customer_export_value)) {
+			$sale->cust_sales_vat = $request->customer_export_value;
+		}
+
+		$sale->total_taxable_value = $request->total_taxable_value;
 
 		$customfields = $request->additional_field;
 		for ($i = 1; $i <= count($request->additional_field); $i++) {
@@ -572,8 +588,8 @@ class ApplicationController extends Controller {
 				unset($customfields[$key]);
 			}
 		}
-		
-		$sale->additional_fields  = $customfields;		
+
+		$sale->additional_fields = $customfields;
 
 		$sale->save();
 
@@ -585,48 +601,48 @@ class ApplicationController extends Controller {
 		return response()->json(['status' => 'success', 'msg' => 'Logged out successfully']);
 	}
 
-	public function get_sale(Request $request){
+	public function get_sale(Request $request) {
 		$sale = Sales::whereSaleId($request->id)->first();
 		return response()->json(compact('sale'));
 	}
 
-	public function get_purchase(Request $request){
+	public function get_purchase(Request $request) {
 		$purchase = Purchases::wherePurchaseId($request->id)->first();
 		return response()->json(compact('purchase'));
 	}
 
-	public function update_purchase(Request $request){
+	public function update_purchase(Request $request) {
 
 		$purchase = Purchases::wherePurchaseId($request->id)->first();
-	
-		$purchase->branch_name 				= $request->branch_name;
-		$purchase->tax_period 				= $request->tax_period;
-		$purchase->invoice_date 			= $request->invoice_date;
-		$purchase->invoice_num 				= $request->invoice_number;
-		$purchase->description 				= $request->good_desc;
-		$purchase->quantity 				= $request->quantity;
 
-	if(!is_null($request->taxable_value_local)){
-		$purchase->local_purchase_tax_val 	= $request->taxable_value_local;
-	}
-	if(!is_null($request->vat_local)){
-		$purchase->local_purchase_vat 		= $request->vat_local;
-	}
+		$purchase->branch_name = $request->branch_name;
+		$purchase->tax_period = $request->tax_period;
+		$purchase->invoice_date = $request->invoice_date;
+		$purchase->invoice_num = $request->invoice_number;
+		$purchase->description = $request->good_desc;
+		$purchase->quantity = $request->quantity;
 
-	if(!is_null($request->taxable_value_import)){
-		$purchase->imports_taxable_val 		= $request->taxable_value_import;
-	}
-	if(!is_null($request->vat_import)){
-		$purchase->imports_vat 				= $request->vat_import;
-	}	
-		$purchase->total_vat 				= $request->total_vat;
-		$purchase->subject 					= $request->item_subject_taxes;
-		$purchase->comments 				= $request->comments_3e_fii;
-		$purchase->top_comments 			= $request->comments_for_top;
-		$purchase->client_responses 		= $request->client_responses;
-		$purchase->non_taxable_purchases 	= $request->non_taxable_purchases;
-		$purchase->supplier 				= $request->supplier;
-		$purchase->vat_tin 					= $request->vat_tin;
+		if (!is_null($request->taxable_value_local)) {
+			$purchase->local_purchase_tax_val = $request->taxable_value_local;
+		}
+		if (!is_null($request->vat_local)) {
+			$purchase->local_purchase_vat = $request->vat_local;
+		}
+
+		if (!is_null($request->taxable_value_import)) {
+			$purchase->imports_taxable_val = $request->taxable_value_import;
+		}
+		if (!is_null($request->vat_import)) {
+			$purchase->imports_vat = $request->vat_import;
+		}
+		$purchase->total_vat = $request->total_vat;
+		$purchase->subject = $request->item_subject_taxes;
+		$purchase->comments = $request->comments_3e_fii;
+		$purchase->top_comments = $request->comments_for_top;
+		$purchase->client_responses = $request->client_responses;
+		$purchase->non_taxable_purchases = $request->non_taxable_purchases;
+		$purchase->supplier = $request->supplier;
+		$purchase->vat_tin = $request->vat_tin;
 
 		$customfields = $request->additional_field;
 		for ($i = 1; $i <= count($request->additional_field); $i++) {
@@ -634,48 +650,45 @@ class ApplicationController extends Controller {
 				unset($customfields[$key]);
 			}
 		}
-		
-		$purchase->additional_fields  = $customfields;	
+
+		$purchase->additional_fields = $customfields;
 		$purchase->save();
 
 		return response()->json(['status' => 'success', 'data' => $purchase]);
 	}
 
-	public function add_payroll(Request $request){
-															
+	public function add_payroll(Request $request) {
 
 		$pr = new Payrolls();
-		$pr->payroll_id 			= (String) Str::uuid();
-		$pr->tax_id 				= $request->tax_id;
-		$pr->employee_id 			= $request->employee_id;
-		$pr->basic_salary 			= $request->basic_salary;
-		$pr->bonus 					= $request->bonus;
-		$pr->over_time 				= $request->overtime;
-		$pr->commissions 			= $request->commission;
-		$pr->seniority_payment 		= $request->seniority_payment;
-		$pr->severance_pay 			= $request->severance_pay;
-		$pr->maternity_leave 		= $request->maternity_leave;
-		$pr->paid_annual_leave 		= $request->paid_annual_leave;
-		$pr->food_allowance 		= $request->food_allowance;
-		$pr->transport_allowance 	= $request->transport_allowance;
-		$pr->others 				= $request->other_allowance;
-		$pr->deduction_advance 		= $request->deduction_advance;
-		$pr->salary_adjusment 		= $request->salary_adjustment;
-		$pr->remark 				= $request->remark;
-		$pr->additional_fields 		= $request->additional_field;
+		$pr->payroll_id = (String) Str::uuid();
+		$pr->tax_id = $request->tax_id;
+		$pr->employee_id = $request->employee_id;
+		$pr->basic_salary = $request->basic_salary;
+		$pr->bonus = $request->bonus;
+		$pr->over_time = $request->overtime;
+		$pr->commissions = $request->commission;
+		$pr->seniority_payment = $request->seniority_payment;
+		$pr->severance_pay = $request->severance_pay;
+		$pr->maternity_leave = $request->maternity_leave;
+		$pr->paid_annual_leave = $request->paid_annual_leave;
+		$pr->food_allowance = $request->food_allowance;
+		$pr->transport_allowance = $request->transport_allowance;
+		$pr->others = $request->other_allowance;
+		$pr->deduction_advance = $request->deduction_advance;
+		$pr->salary_adjusment = $request->salary_adjustment;
+		$pr->remark = $request->remark;
+		$pr->additional_fields = $request->additional_field;
 		$pr->save();
 
 		return response()->json(['status' => 'success', 'data' => $pr, 'msg' => 'Payroll Added Successfully']);
 	}
 
-
-	public function get_payrolls(Request $request){
+	public function get_payrolls(Request $request) {
 
 		$data = Payrolls::with(['employee'])->whereTaxId($request->tax_id)->get();
 
-		return response()->json(['data'=>$data]);
+		return response()->json(['data' => $data]);
 
 	}
-	
 
 }

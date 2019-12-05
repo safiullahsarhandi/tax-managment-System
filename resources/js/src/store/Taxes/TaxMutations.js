@@ -2,6 +2,9 @@ export default {
 	setTaxes(state,taxes){
 		state.taxes = taxes;
 	},
+	setSingleTax(state,tax){
+		state.tax = tax;
+	},
 	setTax(state,tax){
 		var index = _.findIndex(state.taxes,(o)=>{ return o.id === tax.id});
 		Vue.set(state.taxes,index,tax);

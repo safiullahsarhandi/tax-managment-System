@@ -20,7 +20,7 @@
 
 
 export default [{
-        url: "/",
+        url: "/dashboard",
         name: "Dashboard",
         slug: "home",
         icon: "HomeIcon",
@@ -68,28 +68,35 @@ export default [{
         isMain : false,
     },
     {
-        url: "/manage-team",
-        name: "Our Team",
-        slug: "our-team",
+        url: "/team-members",
+        name: "Team Members",
+        slug: "team-members",
         icon: "UsersIcon",
         isMain : false,
-        submenu: [{
-            url: "/admins",
-            name: "Admins",
-            slug: "admins",
-            icon: "UserIcon",
-        },{
-            url: "/supervisors",
-            name: "Supervisors",
-            slug: "supervisors",
-            icon: "UserIcon",
-        },{
-            url: "/officers",
-            name: "Officers",
-            slug: "officers",
-            icon: "UserIcon",
-        } ],
     },
+    // {
+    //     url: "/manage-team",
+    //     name: "Our Team",
+    //     slug: "our-team",
+    //     icon: "UsersIcon",
+    //     isMain : false,
+    //     submenu: [{
+    //         url: "/admins",
+    //         name: "Admins",
+    //         slug: "admins",
+    //         icon: "UserIcon",
+    //     },{
+    //         url: "/supervisors",
+    //         name: "Supervisors",
+    //         slug: "supervisors",
+    //         icon: "UserIcon",
+    //     },{
+    //         url: "/officers",
+    //         name: "Officers",
+    //         slug: "officers",
+    //         icon: "UserIcon",
+    //     } ],
+    // },
     /*{
         url: "/page2",
         name: "Page 2",

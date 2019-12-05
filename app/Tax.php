@@ -14,4 +14,14 @@ class Tax extends Model {
 	public function officers() {
 		return $this->hasMany(TaxOfficer::class, 'tax_id', 'tax_id');
 	}
+	public function sales() {
+		return $this->hasMany(Sales::class, 'tax_id', 'tax_id');
+	}
+
+	public function purchases() {
+		return $this->hasMany(Purchases::class, 'tax_id', 'tax_id');
+	}
+	public function payrolls() {
+		return $this->hasMany(Payrolls::class, 'tax_id', 'tax_id');
+	}
 }

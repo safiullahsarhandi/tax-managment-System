@@ -1,6 +1,9 @@
 <template>
     <div>
         <vx-card title="Add Customer" subtitle="Add Information Of Customer OR company which tax will be managed by system" noShadow noRadius>
+            <template slot="actions">
+                <vs-button class="mt-5" @click="showUploader()" type="gradient" button="button">Upload Excel Sheet</vs-button>
+            </template>
             <form ref="addCustomer" @submit.prevent="addCustomer($event)">
             	<vs-row>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
@@ -114,20 +117,22 @@
             				<vs-button button="submit" class="mt-5" type="gradient">Save</vs-button>
             			</vs-col>
             			<vs-col class="text-center" vs-md="12" vs-lg="12">
-            			<vs-button class="mt-5" type="gradient" button="button">Upload Excel Sheet</vs-button>
             		</vs-col>	
             		</vs-col>
             	</vs-row>
 
             </form>
         </vx-card>
+        <multi-uploads :active="multipleUploadPopup"></multi-uploads>
     </div>
 </template>
 <script>
+        const multiUploads =  ()=> import('@/components/MultiUploads.vue')
       import { mapState, mapActions,mapGetters } from 'vuex';
 	export default{
 		data () {
 		  return {
+            multipleUploadPopup : true,
 		    customField:[],
 		    name_khmer : '',
 		    name_eng : '',
@@ -147,7 +152,9 @@
 		    industry : '',
 		  };
 		},
-
+        components : {
+            multiUploads
+        },
             computed: {
                     ...mapState('customers/', ['customers']),
                     ...mapGetters('customers/',['findCustomer']),

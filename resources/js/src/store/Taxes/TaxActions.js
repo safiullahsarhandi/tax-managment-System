@@ -1,7 +1,12 @@
 export default{
 	getTaxes({commit},customer_id){
-		axios.get('get-taxes',{customer_id : customer_id}).then(res=>{
+		axios.get('get-taxes',{params:{customer_id : customer_id}}).then(res=>{
 			commit('setTaxes',res.data.taxes)
+		});
+	},
+	getTax({commit},tax_id){
+		axios.get('get-tax',{params:{tax_id : tax_id}}).then(res=>{
+			commit('setSingleTax',res.data.tax)
 		});
 	},
 	addTax({commit},data){
@@ -43,5 +48,5 @@ export default{
                 commit('setStatus',{id : data.id,status : res.data.tax.status});
                 data.close();
             });
-	}	
+	},
 }

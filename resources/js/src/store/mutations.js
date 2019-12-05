@@ -89,6 +89,11 @@ const mutations = {
             state.starredPages.splice(10, 0, lastItemInStarredLimited);
         }
     },
+    setLoginUser(state,data){
+
+        state.AppActiveUser  = data;
+
+    }
 }
 
 export default mutations

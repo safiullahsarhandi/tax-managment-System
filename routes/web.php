@@ -12,6 +12,7 @@
  */
 Route::group(['prefix' => ''], function () {
 
+	Route::get('login-user', 'ApplicationController@get_login_user');
 	Route::post('login', 'ApplicationController@login');
 	// officers routes
 	Route::get('get-officers', 'ApplicationController@get_officers');
@@ -27,6 +28,8 @@ Route::group(['prefix' => ''], function () {
 
 	// admins routes
 	Route::get('get-admins', 'ApplicationController@get_admins');
+	Route::get('get-member-detail/{id}', 'ApplicationController@get_member_detail');
+
 	Route::post('add-admin', 'ApplicationController@add_admin');
 	Route::post('update-admin', 'ApplicationController@update_admin');
 	Route::post('status-update-admin', 'ApplicationController@status_update_admin');
@@ -50,6 +53,7 @@ Route::group(['prefix' => ''], function () {
 	// Tax
 	Route::post('add-tax', 'ApplicationController@add_tax');
 	Route::get('get-taxes', 'ApplicationController@get_taxes');
+	Route::get('get-tax', 'ApplicationController@get_tax');
 	Route::post('update-tax', 'ApplicationController@update_tax');
 	Route::post('status-update-tax', 'ApplicationController@status_update_tax');
 
@@ -76,7 +80,6 @@ Route::group(['prefix' => ''], function () {
 	// Payrolls
 	Route::post('add-payroll', 'ApplicationController@add_payroll');
 	Route::post('get-payrolls', 'ApplicationController@get_payrolls');
-
 
 	Route::get('logout', 'ApplicationController@logout');
 
