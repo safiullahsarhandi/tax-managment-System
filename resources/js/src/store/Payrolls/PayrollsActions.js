@@ -6,6 +6,12 @@ export default{
 		});
 	},
 
+	updatePayroll({commit}, fd){
+		return axios.post('update-payroll',fd).then(res=>{
+			return res;
+		});
+	},
+
 	create({commit},data){
 		// alert('action called');
 		return axios.post('add-payroll',data.fd).then(res=>{
@@ -34,10 +40,5 @@ export default{
 		});
 	},
 
-	updatePayroll({commit},fd){
-
-		// return axios.post('update-sale',fd).then(res=>{
-		// 	return res;
-		// });
-	}	
+	
 }

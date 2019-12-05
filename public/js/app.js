@@ -78146,7 +78146,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         requiresAuth: true
       }
     }, {
-      path: '/edit-payroll/:id/:employee_id',
+      path: '/edit-payroll/:id',
       name: 'Edit Payrolls',
       component: function component() {
         return __webpack_require__.e(/*! import() */ 23).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/EditPayroll.vue */ "./resources/js/src/views/pages/Payrolls/EditPayroll.vue"));
@@ -78892,8 +78892,14 @@ __webpack_require__.r(__webpack_exports__);
       return res;
     });
   },
-  create: function create(_ref2, data) {
+  updatePayroll: function updatePayroll(_ref2, fd) {
     var commit = _ref2.commit;
+    return axios.post('update-payroll', fd).then(function (res) {
+      return res;
+    });
+  },
+  create: function create(_ref3, data) {
+    var commit = _ref3.commit;
     // alert('action called');
     return axios.post('add-payroll', data.fd).then(function (res) {
       // commit('setOfficer',res.data.officers)
@@ -78917,12 +78923,6 @@ __webpack_require__.r(__webpack_exports__);
       }, 500);
       return res;
     });
-  },
-  updatePayroll: function updatePayroll(_ref3, fd) {// return axios.post('update-sale',fd).then(res=>{
-    // 	return res;
-    // });
-
-    var commit = _ref3.commit;
   }
 });
 
