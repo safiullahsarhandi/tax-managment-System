@@ -84,8 +84,8 @@ new Vue({
     router,
     store,
     render: h => h(App),
-    created(){
-      this.$store.dispatch('getLoginUser')
+    async created(){
+      await this.$store.dispatch('getLoginUser')
     },
     methods: {
     generatePassword : function() {

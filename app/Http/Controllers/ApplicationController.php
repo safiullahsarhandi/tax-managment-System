@@ -25,11 +25,13 @@ class ApplicationController extends Controller {
 		return view('application');
 	}
 	public function get_login_user(Request $request) {
-		return $admin = Admin::whereManagerId($request->user)->first();
+		$admin = Admin::whereManagerId($request->user)->first();
+		$request->session()->put('admin', $admin);
 		return response()->json($admin);
 	}
 	//login
 	public function login(Request $request) {
+		// return bcrypt('secret');
 		$admin = Admin::where('email', $request->email)->first();
 		if ($admin) {
 			if (Hash::check($request->password, $admin->password)) {
@@ -150,7 +152,15 @@ class ApplicationController extends Controller {
 	}
 
 	public function get_customers(Request $request) {
-		$customers = TaxCustomers::all();
+		if (session('admin.type') == 'Admin') {
+
+			$customers = TaxCustomers::all();
+		} else if (session('admin.type') == 'Admin') {
+			$customers = TaxCustomers::whereRaw('customer_id IN (SELECT customer_id from tax_managment where supervisor_id = ?)', ['supervisor_id' => session('admin.manager_id')])->get();
+		} else {
+			$customers = TaxCustomers::whereRaw('customer_id IN (SELECT customer_id from tax_managment where tax_id IN (SELECT tax_id from tax_officers where officer_id = ?) )', ['officer_id' => session('admin.manager_id')])->get();
+
+		}
 		return response()->json(compact('customers'));
 	}
 	public function get_customer(Request $request) {
@@ -428,18 +438,59 @@ class ApplicationController extends Controller {
 		}
 
 	}
+	public function update_tax_team(Request $request) {
+
+		$officers = explode(',', $request->officers);
+		TaxOfficer::where('tax_id', $request->tax_id)->delete();
+		foreach ($officers as $key => $officer) {
+			$taxOfficer = new TaxOfficer;
+			$taxOfficer->tax_officer_id = (String) Str::uuid();
+			$taxOfficer->tax_id = $request->tax_id;
+			$taxOfficer->officer_id = $officer;
+			$taxOfficer->save();
+		}
+		$supervisor = Supervisor::whereRaw('manager_id = (SELECT supervisor_id from tax_managment WHERE tax_id = ?)', ['tax_id' => $request->tax_id])->first();
+		$team = TaxOfficer::with('detail')->where('tax_id', $request->tax_id)->get()->toArray();
+		$team = array_prepend($team, $supervisor);
+		if (session('admin.type') == 'Supervisor') {
+		}
+		return response()->json(compact('team'));
+
+	}
 
 	public function get_taxes(Request $request) {
-		$taxes = Tax::with('supervisor')->withCount('officers')->where('customer_id', $request->customer_id)->get();
+		if (session('admin.type') == 'Admin') {
+
+			$taxes = Tax::with('supervisor')->withCount('officers')->where('customer_id', $request->customer_id)->get();
+		} elseif (session('admin.type') == 'Supervisor') {
+
+			$taxes = Tax::with('supervisor')->withCount('officers')->where('customer_id', $request->customer_id)->where('supervisor_id', session('admin.manager_id'))->get();
+		} else {
+			$taxes = Tax::with('supervisor')->withCount('officers')->where('customer_id', $request->customer_id)->whereRaw('tax_id IN (SELECT tax_id from tax_officers where officer_id = ?)', ['officer_id' => session('admin.manager_id')])->get();
+
+		}
 		return response()->json(compact('taxes'));
 	}
 
 	public function get_tax(Request $request) {
 		$tax = Tax::with('supervisor', 'officers')->withCount('officers', 'sales', 'purchases', 'payrolls')->where('tax_id', $request->tax_id)->first();
-		$approval_payrolls = Payrolls::where('officer_confirmed', 1)->where('supervisor_confirmed', 0)->where('tax_id', $request->tax_id)->get();
-		$approval_purchases = Purchases::where('officer_confirmed', 1)->where('supervisor_confirmed', 0)->where('tax_id', $request->tax_id)->get();
-		$approval_sales = Sales::where('officer_confirmed', 1)->where('supervisor_confirmed', 0)->where('tax_id', $request->tax_id)->get();
+		if (session('admin.type') == 'Supervisor') {
+		}
+
+		$approval_payrolls = Payrolls::with('officer', 'employee')->where('officer_confirmed', 1)->where('supervisor_confirmed', 0)->where('tax_id', $request->tax_id)->count();
+		$approval_purchases = Purchases::with('officer')->where('officer_confirmed', 1)->where('supervisor_confirmed', 0)->where('tax_id', $request->tax_id)->count();
+		$approval_sales = Sales::with('officer')->where('officer_confirmed', 1)->where('supervisor_confirmed', 0)->where('tax_id', $request->tax_id)->count();
+
 		return response()->json(compact('tax', 'approval_sales', 'approval_purchases', 'approval_payrolls'));
+	}
+	public function get_tax_team(Request $request) {
+		$supervisor = Supervisor::whereRaw('manager_id = (SELECT supervisor_id from tax_managment WHERE tax_id = ?)', ['tax_id' => $request->tax_id])->first();
+		$team = TaxOfficer::with('detail')->where('tax_id', $request->tax_id)->get()->toArray();
+		$team = array_prepend($team, $supervisor);
+		if (session('admin.type') == 'Supervisor') {
+		}
+
+		return response()->json(compact('team'));
 	}
 
 	public function get_customer_profile(Request $request) {
@@ -453,7 +504,8 @@ class ApplicationController extends Controller {
 		$purchase = new Purchases();
 
 		$purchase->purchase_id = (String) Str::uuid();
-
+		$purchase->tax_id = $request->tax_id;
+		$purchase->customer_id = $request->customer_id;
 		$purchase->branch_name = $request->branch_name;
 		$purchase->tax_period = $request->tax_period;
 		$purchase->invoice_date = $request->invoice_date;
@@ -474,14 +526,19 @@ class ApplicationController extends Controller {
 		$purchase->vat_tin = $request->vat_tin;
 		$purchase->additional_fields = $request->additional_field;
 		$purchase->status = 0;
-
+		if ($request->has('supervisor_id')) {
+			$purchase->supervisor_id = $request->supervisor_id;
+			$purchase->officer_confirmed = 1;
+		} else {
+			$purchase->tax_officer_id = $request->officer_id;
+		}
 		$purchase->save();
 
 		return response()->json(['status' => 'success']);
 	}
 
-	public function get_purchases() {
-		$purchases = Purchases::orderBy('created_at', 'desc')->get();
+	public function get_purchases(Request $request) {
+		$purchases = Purchases::orderBy('created_at', 'desc')->where('tax_id', $request->tax_id)->get();
 		return response()->json(compact('purchases'));
 	}
 
@@ -490,7 +547,8 @@ class ApplicationController extends Controller {
 		$sale = new Sales();
 
 		$sale->sale_id = (String) Str::uuid();
-
+		$sale->tax_id = $request->tax_id;
+		$sale->customer_id = $request->customer_id;
 		$sale->account_code = $request->account_code;
 		$sale->account_description = $request->account_description;
 		$sale->accounting_reference = $request->account_ref;
@@ -509,6 +567,13 @@ class ApplicationController extends Controller {
 		$sale->client_response = $request->client_responses;
 		$sale->non_taxable_sales = $request->non_taxable_sales;
 		$sale->vat = $request->export_value;
+		if ($request->has('supervisor_id')) {
+			$sale->supervisor_id = $request->supervisor_id;
+			$sale->officer_confirmed = 1;
+		} else {
+			$sale->tax_officer_id = $request->officer_id;
+
+		}
 
 		if (!is_null($request->person_non_taxable_sales)) {
 			$sale->taxable_person_sales = $request->person_non_taxable_sales;
@@ -536,9 +601,22 @@ class ApplicationController extends Controller {
 		return response()->json(['status' => 'success', 'data' => $sale]);
 	}
 
-	public function get_sales() {
-		$sales = Sales::orderBy('created_at', 'desc')->get();
+	public function get_sales(Request $request) {
+		$sales = Sales::orderBy('created_at', 'desc')->where('tax_id', $request->tax_id)->get();
 		return response()->json(compact('sales'));
+	}
+	public function get_pending_sales(Request $request) {
+		$sales = Sales::with('officer')->where('officer_confirmed', 1)->where('supervisor_confirmed', 0)->where('tax_id', $request->tax_id)->get();
+		return response()->json(compact('sales'));
+	}
+
+	public function get_pending_purchases(Request $request) {
+		$purchases = Purchases::with('officer')->where('officer_confirmed', 1)->where('supervisor_confirmed', 0)->where('tax_id', $request->tax_id)->get();
+		return response()->json(compact('purchases'));
+	}
+	public function get_pending_payrolls(Request $request) {
+		$payrolls = Payrolls::with('officer', 'employee')->where('officer_confirmed', 1)->where('supervisor_confirmed', 0)->where('tax_id', $request->tax_id)->get();
+		return response()->json(compact('payrolls'));
 	}
 
 	public function update_sale(Request $request) {
@@ -678,6 +756,13 @@ class ApplicationController extends Controller {
 		$pr->salary_adjusment = $request->salary_adjustment;
 		$pr->remark = $request->remark;
 		$pr->additional_fields = $request->additional_field;
+		if ($request->has('supervisor_id')) {
+			$pr->supervisor_id = $request->supervisor_id;
+			$pr->officer_confirmed = 1;
+
+		} else {
+			$pr->tax_officer_id = $request->officer_id;
+		}
 		$pr->save();
 
 		return response()->json(['status' => 'success', 'data' => $pr, 'msg' => 'Payroll Added Successfully']);

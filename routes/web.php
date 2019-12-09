@@ -54,6 +54,9 @@ Route::group(['prefix' => ''], function () {
 	Route::post('add-tax', 'ApplicationController@add_tax');
 	Route::get('get-taxes', 'ApplicationController@get_taxes');
 	Route::get('get-tax', 'ApplicationController@get_tax');
+	Route::get('get-tax-team', 'ApplicationController@get_tax_team');
+	Route::post('update-tax-team', 'ApplicationController@update_tax_team');
+
 	Route::post('update-tax', 'ApplicationController@update_tax');
 	Route::post('status-update-tax', 'ApplicationController@status_update_tax');
 
@@ -68,18 +71,21 @@ Route::group(['prefix' => ''], function () {
 	// Purchases
 	Route::post('add-purchase', 'ApplicationController@add_purchase');
 	Route::get('get-purchases', 'ApplicationController@get_purchases');
+	Route::get('get-pending-purchases', 'ApplicationController@get_pending_purchases');
 	Route::post('get-single-purchase', 'ApplicationController@get_purchase');
 	Route::post('update-purchase', 'ApplicationController@update_purchase');
 
 	// Sales
 	Route::post('add-sale', 'ApplicationController@add_sale');
 	Route::get('get-sales', 'ApplicationController@get_sales');
+	Route::get('get-pending-sales', 'ApplicationController@get_pending_sales');
 	Route::post('get-single-sale', 'ApplicationController@get_sale');
 	Route::post('update-sale', 'ApplicationController@update_sale');
 
 	// Payrolls
 	Route::post('add-payroll', 'ApplicationController@add_payroll');
-	Route::post('get-payrolls', 'ApplicationController@get_payrolls');
+	Route::get('get-payrolls', 'ApplicationController@get_payrolls');
+	Route::get('get-pending-payrolls', 'ApplicationController@get_pending_payrolls');
 	Route::post('get-payroll', 'ApplicationController@get_payroll');
 	Route::post('update-payroll', 'ApplicationController@update_payroll');
 

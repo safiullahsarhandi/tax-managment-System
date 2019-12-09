@@ -1,6 +1,11 @@
 export default{
-	getPurchases({commit}){
-		axios.get('get-purchases').then(res=>{
+	getPurchases({commit},tax_id){
+		axios.get('get-purchases',{params : {tax_id: tax_id}}).then(res=>{
+			commit('setPurchases',res.data.purchases)
+		});
+	},
+	getPendingPurchases({commit},tax_id){
+		axios.get('get-pending-purchases',{params : {tax_id: tax_id}}).then(res=>{
 			commit('setPurchases',res.data.purchases)
 		});
 	},

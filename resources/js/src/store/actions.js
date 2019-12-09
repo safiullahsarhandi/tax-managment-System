@@ -50,11 +50,12 @@ const actions = {
     arrangeStarredPagesMore({ commit }, list) {
       commit('ARRANGE_STARRED_PAGES_MORE', list)
     },
-    getLoginUser({commit}){
-      axios.get('login-user',{params:{
+    async getLoginUser({commit}){
+      await axios.get('login-user',{params:{
         user : localStorage.getItem('admin')
       }}).then((res)=>{
         commit('setLoginUser',res.data)
+        return res;
       })
     }
 }

@@ -2,8 +2,15 @@ export default {
 	setTaxes(state,taxes){
 		state.taxes = taxes;
 	},
-	setSingleTax(state,tax){
-		state.tax = tax;
+	setSingleTax(state,data){
+		state.tax = data.tax;
+		state.purchases_approval = data.approval_purchases;
+		state.sales_approval = data.approval_sales;
+		state.payrolls_approval = data.approval_payrolls;
+	},
+	setTaxTeam(state,team){
+		state.tax_team = team;
+		// Vue.set(,'tax_team',team);
 	},
 	setTax(state,tax){
 		var index = _.findIndex(state.taxes,(o)=>{ return o.id === tax.id});

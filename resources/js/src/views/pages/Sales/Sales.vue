@@ -47,6 +47,7 @@ export default {
     inject : ['generatePassword'],
     data() {
         return {
+            tax_id : '',
             // switch1: true,
 
         };
@@ -55,7 +56,8 @@ export default {
         ...mapState('sales/', ['sales']),
     },
     created() {
-        this.getSales();
+        this.tax_id = this.$store.state.rootUrl.split('/')[2];
+        this.getSales(this.tax_id);
     },
     methods: {
         ...mapActions({

@@ -1,9 +1,6 @@
 <template>
     <div>
         <vx-card title="List of Customers">
-            <!-- <template slot="actions"> -->
-                <!-- <vs-button type="border" @click="addOfficerModal = true" icon-pack="feather" icon="icon-plus"></vs-button> -->
-            <!-- </template> -->
             <vs-table search pagination max-items="6" :data="customers">
                 <template slot="thead">
                     <vs-th>Name(English)</vs-th>

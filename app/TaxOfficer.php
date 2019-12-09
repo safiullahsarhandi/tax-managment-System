@@ -10,4 +10,7 @@ class TaxOfficer extends Model {
 	public function tax() {
 		return $this->belongsTo(Tax::class, 'tax_id', 'tax_id');
 	}
+	public function detail() {
+		return $this->belongsTo(Officer::class, 'officer_id', 'manager_id');
+	}
 }

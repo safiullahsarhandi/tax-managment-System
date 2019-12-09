@@ -116,7 +116,7 @@
 		    	if(result){
 		    		this.$vs.loading();
 		    		let fd = new FormData(this.$refs.addEmployeeForm); 
-		    		fd.append('customer_id',this.tax_customer_id);
+                        fd.append('customer_id',this.tax_customer_id);
 		    		let data = {
 		    			fd : fd,
 		    			close : this.$vs.loading.close,

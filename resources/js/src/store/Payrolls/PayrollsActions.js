@@ -1,11 +1,16 @@
 export default{
 	getPayrolls({commit}, tax_id){
-		return axios.post('get-payrolls',{tax_id:tax_id}).then(res=>{
+		return axios.get('get-payrolls',{params : {tax_id: tax_id}}).then(res=>{
 			commit('setPayrolls',res.data.data);
 			return res;
 		});
 	},
-
+	getPendingPayrolls({commit}, tax_id){
+		return axios.get('get-pending-payrolls',{params : {tax_id: tax_id}}).then(res=>{
+			commit('setPayrolls',res.data.payrolls);
+			return res;
+		});
+	},
 	updatePayroll({commit}, fd){
 		return axios.post('update-payroll',fd).then(res=>{
 			return res;

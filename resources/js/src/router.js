@@ -219,6 +219,14 @@ const router = new Router({
                     }
                 },
                 {
+                    path: '/un-reviewed-sales',
+                    name: 'Un Reviewed Sales',
+                    component: () => import('./views/pages/Sales/PendingSales.vue'),
+                    meta: {
+                        requiresAuth: true,
+                    }
+                },
+                {
                     path: '/add-purchase',
                     name: 'Add Purchase',
                     component: () => import('./views/pages/Purchases/AddPurchase.vue'),
@@ -230,6 +238,14 @@ const router = new Router({
                     path: '/purchases-list',
                     name: 'Purchases List',
                     component: () => import('./views/pages/Purchases/Purchases.vue'),
+                    meta: {
+                        requiresAuth: true,
+                    }
+                },
+                {
+                    path: '/un-reviewed-purchases',
+                    name: 'Un Reviewed Purchases',
+                    component: () => import('./views/pages/Purchases/PendingPurchases.vue'),
                     meta: {
                         requiresAuth: true,
                     }
@@ -251,9 +267,25 @@ const router = new Router({
                     }
                 },
                 {
+                    path: '/un-reviewed-payrolls',
+                    name: 'Un Reviewed Payrolls',
+                    component: () => import('./views/pages/Payrolls/PendingPayrolls.vue'),
+                    meta: {
+                        requiresAuth: true,
+                    }
+                },
+                {
                     path: '/edit-payroll/:id',
                     name: 'Edit Payrolls',
                     component: () => import('./views/pages/Payrolls/EditPayroll.vue'),
+                    meta: {
+                        requiresAuth: true,
+                    }
+                },
+                {
+                    path: '/tax-team',
+                    name: 'Tax Team',
+                    component: () => import('./views/pages/Tax/TaxTeam.vue'),
                     meta: {
                         requiresAuth: true,
                     }

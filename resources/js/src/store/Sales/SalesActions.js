@@ -1,6 +1,11 @@
 export default{
-	getSales({commit}){
-		axios.get('get-sales').then(res=>{
+	getSales({commit},tax_id){
+		axios.get('get-sales',{params : {tax_id : tax_id} }).then(res=>{
+			commit('setSales',res.data.sales)
+		});
+	},
+	getPendingSales({commit},tax_id){
+		axios.get('get-pending-sales',{params : {tax_id: tax_id}}).then(res=>{
 			commit('setSales',res.data.sales)
 		});
 	},

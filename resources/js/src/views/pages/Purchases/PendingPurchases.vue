@@ -1,45 +1,34 @@
 <template>
     <div>
-        <vx-card title="List of Purchases">
+        <vx-card title="Pending Purchases Approvals" subtitle="listed below Purchases need your approval which are created by you and your officers">
             <!-- <template slot="actions"> -->
-                <!-- <vs-button type="border" @click="addOfficerModal = true" icon-pack="feather" icon="icon-plus"></vs-button> -->
+            <!-- <vs-button type="border" @click="addOfficerModal = true" icon-pack="feather" icon="icon-plus"></vs-button> -->
             <!-- </template> -->
             <vs-table search pagination max-items="6" :data="purchases">
                 <template slot="thead">
+                    <vs-th>added by </vs-th>
                     <vs-th>Branch#/ Name</vs-th>
                     <vs-th>Tax Period</vs-th>
-                    <vs-th>Invoice No.</vs-th>
-                    <vs-th>Invoice Date</vs-th>
-                    <vs-th>Quantity</vs-th>
-                    <vs-th>Description</vs-th>
-                    <vs-th>Client Response</vs-th>
                     <vs-th>Total VAT</vs-th>
                     <vs-th>Actions</vs-th>
-                </template> 
+                </template>
                 <template slot-scope="{data}">
                     <vs-tr v-for="(tr,index) in data" :key="index">
+                        <vs-td :data="tr.officer.full_name">{{tr.officer.full_name}}</vs-td>
                         <vs-td :data="tr.branch_name">{{tr.branch_name}}</vs-td>
                         <vs-td :data="tr.tax_period">{{tr.tax_period}}</vs-td>
-                        <vs-td :data="tr.invoice_num">{{tr.invoice_num}}</vs-td>
-                        <vs-td :data="tr.invoice_date">{{tr.invoice_date}}</vs-td>
-                        <vs-td :data="tr.quantity">{{tr.quantity}}</vs-td>
-                        <vs-td :data="tr.description">{{tr.description}}</vs-td>
-                        <vs-td :data="tr.client_response">{{tr.client_response}}</vs-td>
                         <vs-td :data="tr.total_vat">{{tr.total_vat}}</vs-td>
-                            
                         <vs-td>
-                            <vs-button :to="'purchase-update/'+tr.purchase_id" size="small" type="border" icon-pack="feather" icon="icon-edit"></vs-button>
                             <vs-button size="small" icon-pack="feather" icon="icon-maximize-2" type="border"></vs-button>
                         </vs-td>
                     </vs-tr>
                 </template>
             </vs-table>
         </vx-card>
-
     </div>
 </template>
 <script>
-import { mapState, mapActions,mapGetters } from 'vuex';
+    import { mapState, mapActions,mapGetters } from 'vuex';
 export default {
     inject : ['generatePassword'],
     data() {
@@ -55,11 +44,11 @@ export default {
     created() {
 
         this.tax_id = this.$store.state.rootUrl.split('/')[2];
-        this.getPurchases(this.tax_id);
+        this.getPendingPurchases(this.tax_id);
     },
     methods: {
         ...mapActions({
-            getPurchases: 'purchases/getPurchases',
+            getPendingPurchases: 'purchases/getPendingPurchases',
             update: 'purchases/updatePurchase'
         }),
         updateCustomer(e) {
@@ -155,10 +144,9 @@ export default {
 }
 
 </script>
-
 <style type="text/css">
-    .con-vs-popup .vs-popup {
-        width: 1000px !important;
-    }
-</style>
+.con-vs-popup .vs-popup {
+    width: 1000px !important;
+}
 
+</style>

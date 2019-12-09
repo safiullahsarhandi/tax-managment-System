@@ -220,7 +220,8 @@
 		data () {
 		  return {
             customField:[],
-		    tax_customer_id:'',
+            tax_customer_id:'',
+		    tax_id:'',
 		    selectEmployeeModal: true,
 		    employee : '',
 		    buttonClicked : false,
@@ -242,7 +243,8 @@
 		  };
 		},
 		created(){
-			this.tax_customer_id = this.$store.state.rootUrl.split('/')[2];
+			this.tax_id = this.$store.state.rootUrl.split('/')[2];
+            this.tax_customer_id = localStorage.getItem('customer');
 			this.getEmployees(this.tax_customer_id);
 		},
 		computed: {
@@ -258,9 +260,6 @@
             }
 		  }
 		},
-        beforeCreate(){
-            this.tax_customer_id = this.$store.state.rootUrl.split('/')[2];
-        },
 		methods: {
 			...mapActions({
 				create : 'payrolls/create',
@@ -298,7 +297,12 @@
 		    		this.$vs.loading();
 		    		let fd = new FormData(this.$refs.addPayrollForm); 
                     fd.append('employee_id',this.employee);
-		    		fd.append('tax_id',this.tax_customer_id);
+		    		fd.append('tax_id',this.tax_id);
+                    if (this.$store.state.AppActiveUser.type == 'Supervisor') {
+                        fd.append('supervisor_id', this.$store.state.AppActiveUser.manager_id);
+                    } else {
+                        fd.append('officer_id', this.$store.state.AppActiveUser.manager_id);
+                    }
 		    		let data = {
 		    			fd : fd,
 		    			close : this.$vs.loading.close,

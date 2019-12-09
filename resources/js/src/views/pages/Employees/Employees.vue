@@ -127,10 +127,10 @@
 		  ...mapGetters('employees',['findEmployee']),
 		},	
 		beforeCreate(){
-			this.tax_customer_id = this.$store.state.rootUrl.split('/')[2];
 		},
 		created(){
-			this.getEmployees();
+            this.tax_customer_id = this.$store.state.rootUrl.split('/')[2];
+			this.getEmployees(this.tax_customer_id);
 		},
 		mounted(){
 			const  attributes = {
