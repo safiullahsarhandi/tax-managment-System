@@ -10,7 +10,8 @@
                     <vs-th>TIN # </vs-th>
                     <vs-th>Email</vs-th>
                     <vs-th>Tel</vs-th>
-                    <vs-th>Status</vs-th>
+                    <vs-th v-if="$store.getters.userType != 'Admin'">Uncompleted Taxes</vs-th>
+                    <vs-th v-if="$store.getters.userType == 'Admin'">Status</vs-th>
                     <vs-th>Actions</vs-th>
                 </template>
                 <template slot-scope="{data}">
@@ -22,10 +23,11 @@
                         <vs-td :data="tr.tin_no">{{tr.tin_no}}</vs-td>
                         <vs-td :data="tr.email">{{tr.email}}</vs-td>
                         <vs-td :data="tr.telephone">{{tr.telephone}}</vs-td>
-                        <vs-td :data="tr.status"><vs-switch @click="statusUpdate(tr.customer_id)" v-model="tr.status"/></vs-td>
+                        <vs-td v-if="$store.getters.userType != 'Admin'"  :data="0">{{0}}</vs-td>
+                        <vs-td v-if="$store.getters.userType == 'Admin'"  :data="tr.status"><vs-switch @click="statusUpdate(tr.customer_id)" v-model="tr.status"/></vs-td>
                             
                         <vs-td>
-                            <vs-button :to="'customer-update/'+tr.customer_id" size="small" type="border" icon-pack="feather" icon="icon-edit"></vs-button>
+                            <vs-button v-if="$store.getters.userType == 'Admin'" :to="'customer-update/'+tr.customer_id" size="small" type="border" icon-pack="feather" icon="icon-edit"></vs-button>
                             <vs-button :to="'customer-detail/'+tr.customer_id" size="small" icon-pack="feather" icon="icon-maximize-2" type="border"></vs-button>
                         </vs-td>
                     </vs-tr>
@@ -158,7 +160,7 @@
 <script>
 import { mapState, mapActions,mapGetters } from 'vuex';
 export default {
-    inject : ['generatePassword'],
+    inject : ['generatePassword','loginUser'],
     data() {
         return {
             // switch1: true,

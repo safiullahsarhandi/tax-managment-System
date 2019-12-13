@@ -178,8 +178,6 @@ export default {
         StatisticsCardLine,
     },
     beforeCreate() {
-        localStorage.setItem('currentDetail', this.$route.fullPath);
-        this.$store.commit('setRootUrl', this.$route.fullPath);
     },
     computed: {
         ...mapState('taxes/', ['tax', 'purchases_approval', 'payrolls_approval', 'sales_approval']),
@@ -189,6 +187,8 @@ export default {
         }
     },
     created() {
+    	localStorage.setItem('currentDetail', this.$route.fullPath);
+        this.$store.commit('setRootUrl', this.$route.fullPath);
         this.getTax(this.$route.params.id);
     },
     methods: {

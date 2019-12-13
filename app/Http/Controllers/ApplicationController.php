@@ -152,10 +152,11 @@ class ApplicationController extends Controller {
 	}
 
 	public function get_customers(Request $request) {
+
 		if (session('admin.type') == 'Admin') {
 
 			$customers = TaxCustomers::all();
-		} else if (session('admin.type') == 'Admin') {
+		} else if (session('admin.type') == 'Supervisor') {
 			$customers = TaxCustomers::whereRaw('customer_id IN (SELECT customer_id from tax_managment where supervisor_id = ?)', ['supervisor_id' => session('admin.manager_id')])->get();
 		} else {
 			$customers = TaxCustomers::whereRaw('customer_id IN (SELECT customer_id from tax_managment where tax_id IN (SELECT tax_id from tax_officers where officer_id = ?) )', ['officer_id' => session('admin.manager_id')])->get();
@@ -464,7 +465,7 @@ class ApplicationController extends Controller {
 			$taxes = Tax::with('supervisor')->withCount('officers')->where('customer_id', $request->customer_id)->get();
 		} elseif (session('admin.type') == 'Supervisor') {
 
-			$taxes = Tax::with('supervisor')->withCount('officers')->where('customer_id', $request->customer_id)->where('supervisor_id', session('admin.manager_id'))->get();
+			$taxes = Tax::with('supervisor')->withCount('officers')->where('customer_id', $request->customer_id)->where('supervisor_id', session('admin.manager_id'))->where('status', 0)->get();
 		} else {
 			$taxes = Tax::with('supervisor')->withCount('officers')->where('customer_id', $request->customer_id)->whereRaw('tax_id IN (SELECT tax_id from tax_officers where officer_id = ?)', ['officer_id' => session('admin.manager_id')])->get();
 

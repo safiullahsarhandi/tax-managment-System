@@ -2,7 +2,7 @@
     <div>
         <vx-card title="Exchange Rates">
             <template slot="actions">
-                <vs-button type="border" @click="editRates()" icon-pack="feather" icon="icon-edit"></vs-button>
+                <vs-button type="border" v-if="$store.getters.userType == 'Admin'"  @click="editRates()" icon-pack="feather" icon="icon-edit"></vs-button>
             </template>
             <vs-table :data="exchangerates">
                 <template slot="thead">
@@ -67,6 +67,7 @@
 <script>
 import { mapState, mapActions, mapGetters} from 'vuex';
 export default {
+    inject : ['loginUser'],
     data: () => ({
         formTitle: 'Update Exchange Rates',
         updateBtn:'Save changes',

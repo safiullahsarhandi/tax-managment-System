@@ -3,16 +3,25 @@
         <vx-card title="Pending Payroll Approvals" subtitle="listed below Payrolls need your approval which are created by you and your officers">
             <vs-table search pagination max-items="6" :data="payrolls">
                 <template slot="thead">
+                    <vs-th>Added By</vs-th>
                     <vs-th>Employee Name</vs-th>
                     <vs-th>Employee No.</vs-th>
                     <vs-th>NSSF No.</vs-th>
+                    <vs-th>Note</vs-th>
                     <vs-th>Actions</vs-th>
                 </template>
                 <template slot-scope="{data}">
                     <vs-tr v-for="(tr,index) in data" :key="index">
+                        <vs-td :data="tr.officer.full_name">{{tr.officer.full_name}}</vs-td>
                         <vs-td :data="tr.employee.name_english">{{tr.employee.name_english}}</vs-td>
                         <vs-td :data="tr.employee.employee_num">{{tr.employee.employee_num}}</vs-td>
                         <vs-td :data="tr.employee.nssf_num">{{tr.employee.nssf_num}}</vs-td>
+                        <vs-td>
+                                {{tr.officer_confirmation}}
+                            <!-- {{tr.officer_confirmed?!tr.supervisor_confirmed?'submitted by Officer but not Approved by supervisor':!tr.management_confirmed?'Approved By supervisor But Not Approved By Admin':"Approved By Admin":'Not submitted By Officer' }} --></vs-td>
+                        <vs-td>
+                            <vs-switch/>
+                        </vs-td>
                         <vs-td>
                             <vs-button size="small" icon-pack="feather" icon="icon-maximize-2" type="border"></vs-button>
                         </vs-td>

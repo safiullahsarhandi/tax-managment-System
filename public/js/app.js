@@ -78559,7 +78559,25 @@ _router__WEBPACK_IMPORTED_MODULE_6__["default"].beforeEach(function (to, from, n
         path: '/'
       });
     } else {
-      next();
+      if (typeof _store_store__WEBPACK_IMPORTED_MODULE_7__["default"].getters.userType == 'undefined') {
+        _store_store__WEBPACK_IMPORTED_MODULE_7__["default"].dispatch('getLoginUser').then(function (res) {
+          if (to.meta.requiresAdmin == true || _store_store__WEBPACK_IMPORTED_MODULE_7__["default"].getters.userType == 'Admin') {
+            next();
+          } else {
+            next({
+              path: '/pages/error-404'
+            });
+          }
+        });
+      } else {
+        if (to.meta.requiresAdmin == true || _store_store__WEBPACK_IMPORTED_MODULE_7__["default"].getters.userType == 'Admin') {
+          next();
+        } else {
+          next({
+            path: '/pages/error-404'
+          });
+        }
+      }
     }
   } else {
     next();
@@ -78586,7 +78604,8 @@ Vue.config.productionTip = false;
 new Vue({
   provide: function provide() {
     return {
-      generatePassword: this.generatePassword
+      generatePassword: this.generatePassword,
+      loginUser: this.loginUser
     };
   },
   router: _router__WEBPACK_IMPORTED_MODULE_6__["default"],
@@ -78619,6 +78638,11 @@ new Vue({
 
     return created;
   }(),
+  computed: {
+    loginUser: function loginUser() {
+      return this.$store.getters.userType;
+    }
+  },
   methods: {
     generatePassword: function generatePassword() {
       var length = 8,
@@ -78660,10 +78684,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     // =============================================================================
     path: '/dashboard',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0), __webpack_require__.e(14)]).then(__webpack_require__.bind(null, /*! ./layouts/main/Main.vue */ "./resources/js/src/layouts/main/Main.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(1), __webpack_require__.e(15)]).then(__webpack_require__.bind(null, /*! ./layouts/main/Main.vue */ "./resources/js/src/layouts/main/Main.vue"));
     },
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      requiresAdmin: true
     },
     children: [// =============================================================================
     // Theme Routes
@@ -78672,16 +78697,17 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/',
       name: 'home',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 37).then(__webpack_require__.bind(null, /*! ./views/Home.vue */ "./resources/js/src/views/Home.vue"));
+        return __webpack_require__.e(/*! import() */ 35).then(__webpack_require__.bind(null, /*! ./views/Home.vue */ "./resources/js/src/views/Home.vue"));
       },
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresAdmin: true
       }
     }, {
       path: '/page2',
       name: 'page2',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 38).then(__webpack_require__.bind(null, /*! ./views/Page2.vue */ "./resources/js/src/views/Page2.vue"));
+        return __webpack_require__.e(/*! import() */ 36).then(__webpack_require__.bind(null, /*! ./views/Page2.vue */ "./resources/js/src/views/Page2.vue"));
       },
       meta: {
         requiresAuth: true
@@ -78690,10 +78716,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/customers',
       name: 'Customers',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/Customers.vue */ "./resources/js/src/views/pages/Customers/Customers.vue"));
+        return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/Customers.vue */ "./resources/js/src/views/pages/Customers/Customers.vue"));
       },
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresAdmin: true
       }
     }, {
       path: '/add-customer',
@@ -78702,7 +78729,8 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         return __webpack_require__.e(/*! import() */ 19).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/AddCustomer.vue */ "./resources/js/src/views/pages/Customers/AddCustomer.vue"));
       },
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresAdmin: false
       }
     }, {
       path: '/customer-update/:id',
@@ -78711,7 +78739,8 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         return __webpack_require__.e(/*! import() */ 21).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/EditCustomer.vue */ "./resources/js/src/views/pages/Customers/EditCustomer.vue"));
       },
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresAdmin: false
       }
     }, {
       path: '/currencies',
@@ -78720,70 +78749,76 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         return __webpack_require__.e(/*! import() */ 18).then(__webpack_require__.bind(null, /*! ./views/pages/Currencies.vue */ "./resources/js/src/views/pages/Currencies.vue"));
       },
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresAdmin: true
       }
     }, {
       path: '/exchange-rates',
       name: 'Exhange Rates',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./views/pages/ExchangeRates.vue */ "./resources/js/src/views/pages/ExchangeRates.vue"));
+        return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! ./views/pages/ExchangeRates.vue */ "./resources/js/src/views/pages/ExchangeRates.vue"));
       },
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresAdmin: true
       }
-    }, {
-      path: '/admins',
-      name: 'Admins',
-      component: function component() {
-        return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ./views/pages/Admins.vue */ "./resources/js/src/views/pages/Admins.vue"));
-      },
-      meta: {
-        requiresAuth: true
-      }
-    }, {
-      path: '/supervisors',
-      name: 'Supervisors',
-      component: function component() {
-        return __webpack_require__.e(/*! import() */ 32).then(__webpack_require__.bind(null, /*! ./views/pages/Supervisors.vue */ "./resources/js/src/views/pages/Supervisors.vue"));
-      },
-      meta: {
-        requiresAuth: true
-      }
-    }, {
-      path: '/officers',
-      name: 'Officers',
-      component: function component() {
-        return __webpack_require__.e(/*! import() */ 25).then(__webpack_require__.bind(null, /*! ./views/pages/Officers.vue */ "./resources/js/src/views/pages/Officers.vue"));
-      },
-      meta: {
-        requiresAuth: true
-      }
-    }, {
+    },
+    /*{
+        path: '/admins',
+        name: 'Admins',
+        component: () => import('./views/pages/Admins.vue'),
+        meta: {
+            requiresAuth: true,
+            requiresAdmin: true,
+          }
+    },
+    {
+        path: '/supervisors',
+        name: 'Supervisors',
+        component: () => import('./views/pages/Supervisors.vue'),
+        meta: {
+            requiresAuth: true,
+            requiresAdmin: true,
+        }
+    },
+    {
+        path: '/officers',
+        name: 'Officers',
+        component: () => import('./views/pages/Officers.vue'),
+        meta: {
+            requiresAuth: true,
+            requiresAdmin: true,
+        }
+    },*/
+    {
       path: '/testing',
       name: 'testing',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 33).then(__webpack_require__.bind(null, /*! ./views/pages/demo.vue */ "./resources/js/src/views/pages/demo.vue"));
+        return __webpack_require__.e(/*! import() */ 31).then(__webpack_require__.bind(null, /*! ./views/pages/demo.vue */ "./resources/js/src/views/pages/demo.vue"));
       },
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresAdmin: true
       }
     }, {
       path: '/tax-managment',
       name: 'Tax Managment',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! ./views/pages/tax-managment/TaxManagment.vue */ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue"));
+        return __webpack_require__.e(/*! import() */ 14).then(__webpack_require__.bind(null, /*! ./views/pages/tax-managment/TaxManagment.vue */ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue"));
       },
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresAdmin: true
       }
     }, {
       path: '/team-members',
       name: 'Team Members',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ./views/pages/Admins.vue */ "./resources/js/src/views/pages/Admins.vue"));
+        return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./views/pages/Admins.vue */ "./resources/js/src/views/pages/Admins.vue"));
       },
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresAdmin: false
       }
     }, {
       path: '/member-detail/:id',
@@ -78792,7 +78827,8 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         return __webpack_require__.e(/*! import() */ 24).then(__webpack_require__.bind(null, /*! ./views/pages/MemberDetail.vue */ "./resources/js/src/views/pages/MemberDetail.vue"));
       },
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresAdmin: true
       }
     }]
   }, {
@@ -78801,11 +78837,12 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     // =============================================================================
     path: '/customer-detail/:id',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0), __webpack_require__.e(16)]).then(__webpack_require__.bind(null, /*! ./layouts/main/customerMain.vue */ "./resources/js/src/layouts/main/customerMain.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(1), __webpack_require__.e(17)]).then(__webpack_require__.bind(null, /*! ./layouts/main/customerMain.vue */ "./resources/js/src/layouts/main/customerMain.vue"));
     },
     props: true,
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      requiresAdmin: true
     },
     children: [// =============================================================================
     // Theme Routes
@@ -78817,7 +78854,8 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         return __webpack_require__.e(/*! import() */ 20).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/CustomerDetail.vue */ "./resources/js/src/views/pages/Customers/CustomerDetail.vue"));
       },
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresAdmin: true
       }
     }, {
       path: '/add-employee',
@@ -78826,7 +78864,8 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         return __webpack_require__.e(/*! import() */ 22).then(__webpack_require__.bind(null, /*! ./views/pages/Employees/AddEmployee.vue */ "./resources/js/src/views/pages/Employees/AddEmployee.vue"));
       },
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresAdmin: false
       }
     }, {
       path: '/employees-list',
@@ -78835,16 +78874,18 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         return __webpack_require__.e(/*! import() */ 23).then(__webpack_require__.bind(null, /*! ./views/pages/Employees/Employees.vue */ "./resources/js/src/views/pages/Employees/Employees.vue"));
       },
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresAdmin: false
       }
     }, {
       path: '/taxes',
       name: 'Taxes',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/Taxes.vue */ "./resources/js/src/views/pages/Customers/Taxes.vue"));
+        return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/Taxes.vue */ "./resources/js/src/views/pages/Customers/Taxes.vue"));
       },
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresAdmin: true
       }
     }]
   }, {
@@ -78853,10 +78894,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     // =============================================================================
     path: '/tax-collection/:id',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0), __webpack_require__.e(15)]).then(__webpack_require__.bind(null, /*! ./layouts/main/TaxDetailMain.vue */ "./resources/js/src/layouts/main/TaxDetailMain.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(1), __webpack_require__.e(16)]).then(__webpack_require__.bind(null, /*! ./layouts/main/TaxDetailMain.vue */ "./resources/js/src/layouts/main/TaxDetailMain.vue"));
     },
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      requiresAdmin: true
     },
     children: [// =============================================================================
     // Theme Routes
@@ -78865,109 +78907,121 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/',
       name: 'Tax Detail',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(34), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! ./views/pages/Tax/TaxDetail.vue */ "./resources/js/src/views/pages/Tax/TaxDetail.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(32), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! ./views/pages/Tax/TaxDetail.vue */ "./resources/js/src/views/pages/Tax/TaxDetail.vue"));
       },
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresAdmin: true
       }
     }, {
       path: '/add-sale',
       name: 'Add Sale',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 29).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/AddSale.vue */ "./resources/js/src/views/pages/Sales/AddSale.vue"));
+        return __webpack_require__.e(/*! import() */ 28).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/AddSale.vue */ "./resources/js/src/views/pages/Sales/AddSale.vue"));
       },
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresAdmin: true
       }
     }, {
       path: '/sales-list',
       name: 'Sales List',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 31).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/Sales.vue */ "./resources/js/src/views/pages/Sales/Sales.vue"));
+        return __webpack_require__.e(/*! import() */ 30).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/Sales.vue */ "./resources/js/src/views/pages/Sales/Sales.vue"));
       },
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresAdmin: true
       }
     }, {
       path: '/un-reviewed-sales',
       name: 'Un Reviewed Sales',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 30).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/PendingSales.vue */ "./resources/js/src/views/pages/Sales/PendingSales.vue"));
+        return __webpack_require__.e(/*! import() */ 29).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/PendingSales.vue */ "./resources/js/src/views/pages/Sales/PendingSales.vue"));
       },
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresAdmin: true
       }
     }, {
       path: '/add-purchase',
       name: 'Add Purchase',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 28).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/AddPurchase.vue */ "./resources/js/src/views/pages/Purchases/AddPurchase.vue"));
+        return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/AddPurchase.vue */ "./resources/js/src/views/pages/Purchases/AddPurchase.vue"));
       },
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresAdmin: true
       }
     }, {
       path: '/purchases-list',
       name: 'Purchases List',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 11).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/Purchases.vue */ "./resources/js/src/views/pages/Purchases/Purchases.vue"));
+        return __webpack_require__.e(/*! import() */ 12).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/Purchases.vue */ "./resources/js/src/views/pages/Purchases/Purchases.vue"));
       },
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresAdmin: true
       }
     }, {
       path: '/un-reviewed-purchases',
       name: 'Un Reviewed Purchases',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 10).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/PendingPurchases.vue */ "./resources/js/src/views/pages/Purchases/PendingPurchases.vue"));
+        return __webpack_require__.e(/*! import() */ 11).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/PendingPurchases.vue */ "./resources/js/src/views/pages/Purchases/PendingPurchases.vue"));
       },
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresAdmin: true
       }
     }, {
       path: '/add-payroll',
       name: 'Add Payroll',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 26).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/AddPayroll.vue */ "./resources/js/src/views/pages/Payrolls/AddPayroll.vue"));
+        return __webpack_require__.e(/*! import() */ 25).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/AddPayroll.vue */ "./resources/js/src/views/pages/Payrolls/AddPayroll.vue"));
       },
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresAdmin: true
       }
     }, {
       path: '/employees-payrolls',
       name: 'Employees Payrolls',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/Payrolls.vue */ "./resources/js/src/views/pages/Payrolls/Payrolls.vue"));
+        return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/Payrolls.vue */ "./resources/js/src/views/pages/Payrolls/Payrolls.vue"));
       },
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresAdmin: true
       }
     }, {
       path: '/un-reviewed-payrolls',
       name: 'Un Reviewed Payrolls',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/PendingPayrolls.vue */ "./resources/js/src/views/pages/Payrolls/PendingPayrolls.vue"));
+        return __webpack_require__.e(/*! import() */ 10).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/PendingPayrolls.vue */ "./resources/js/src/views/pages/Payrolls/PendingPayrolls.vue"));
       },
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresAdmin: true
       }
     }, {
       path: '/edit-payroll/:id',
       name: 'Edit Payrolls',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/EditPayroll.vue */ "./resources/js/src/views/pages/Payrolls/EditPayroll.vue"));
+        return __webpack_require__.e(/*! import() */ 26).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/EditPayroll.vue */ "./resources/js/src/views/pages/Payrolls/EditPayroll.vue"));
       },
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresAdmin: true
       }
     }, {
       path: '/tax-team',
       name: 'Tax Team',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 12).then(__webpack_require__.bind(null, /*! ./views/pages/Tax/TaxTeam.vue */ "./resources/js/src/views/pages/Tax/TaxTeam.vue"));
+        return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! ./views/pages/Tax/TaxTeam.vue */ "./resources/js/src/views/pages/Tax/TaxTeam.vue"));
       },
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresAdmin: true
       }
     }]
   }, // =============================================================================
@@ -78976,7 +79030,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   {
     path: '',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 36).then(__webpack_require__.bind(null, /*! @/layouts/full-page/FullPage.vue */ "./resources/js/src/layouts/full-page/FullPage.vue"));
+      return __webpack_require__.e(/*! import() */ 34).then(__webpack_require__.bind(null, /*! @/layouts/full-page/FullPage.vue */ "./resources/js/src/layouts/full-page/FullPage.vue"));
     },
     children: [// =============================================================================
     // PAGES
@@ -78985,13 +79039,16 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/',
       name: 'pageLogin',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! @/views/pages/Login.vue */ "./resources/js/src/views/pages/Login.vue"));
+        return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! @/views/pages/Login.vue */ "./resources/js/src/views/pages/Login.vue"));
+      },
+      meta: {
+        requiresAdmin: true
       }
     }, {
       path: '/pages/error-404',
       name: 'pageError404',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 35).then(__webpack_require__.bind(null, /*! @/views/pages/Error404.vue */ "./resources/js/src/views/pages/Error404.vue"));
+        return __webpack_require__.e(/*! import() */ 33).then(__webpack_require__.bind(null, /*! @/views/pages/Error404.vue */ "./resources/js/src/views/pages/Error404.vue"));
       }
     }]
   }, // Redirect to 404 page, if no match found
@@ -80769,7 +80826,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
-/* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
+var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   getters: _getters__WEBPACK_IMPORTED_MODULE_3__["default"],
   mutations: _mutations__WEBPACK_IMPORTED_MODULE_4__["default"],
   state: _state__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -80787,7 +80844,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     payrolls: _Payrolls_Payrolls_js__WEBPACK_IMPORTED_MODULE_15__["default"]
   } // strict: process.env.NODE_ENV !== 'production'
 
-}));
+});
+/* harmony default export */ __webpack_exports__["default"] = (store);
 
 /***/ }),
 

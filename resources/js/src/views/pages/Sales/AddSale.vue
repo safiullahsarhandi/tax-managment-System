@@ -1,7 +1,11 @@
 <template>
     <div>
+        <multi-uploads ref="multiUploads" action="" :active="multipleUploadPopup"></multi-uploads>
         <!-- <vx-card title="Add Customer" subtitle="Add Information Of Customer OR company which tax will be managed by system" noShadow noRadius> -->
         <vx-card title="Add Sale" noShadow noRadius>
+            <template slot="actions">
+                <vs-button @click="showUploader()" class="mt-5" type="gradient" button="button">Upload Excel Sheet</vs-button>
+            </template>
             <form ref="addForm" @submit.prevent="addForm($event)" autocomplete="off">
                 <vs-row>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
@@ -168,9 +172,6 @@
                         <vs-col class="text-center" vs-md="12" vs-lg="12">
                             <vs-button button="submit" class="mt-5" type="gradient">Save</vs-button>
                         </vs-col>
-                        <vs-col class="text-center" vs-md="12" vs-lg="12">
-                            <vs-button class="mt-5" type="gradient" button="button">Upload Excel Sheet</vs-button>
-                        </vs-col>
                     </vs-col>
                 </vs-row>
             </form>
@@ -178,10 +179,12 @@
     </div>
 </template>
 <script>
+const multiUploads = () => import('@/components/MultiUploads.vue')
 import { mapState, mapActions, mapGetters } from 'vuex';
 export default {
     data() {
         return {
+            multipleUploadPopup: false,
             customField: [],
             account_code: '',
             account_description: '',
@@ -210,11 +213,17 @@ export default {
             customer_id: '',
         };
     },
+    components: {
+        multiUploads
+    },
     created() {
         this.tax_id = this.$store.state.rootUrl.split('/')[2];
         this.customer_id = localStorage.getItem('customer');
     },
     methods: {
+        showUploader() {
+            this.$refs.multiUploads.isShown = true;
+        },
         addMoreFeild() {
             this.customField.push({ name: 'additional_field[]', value: '', type: 'text' });
         },
@@ -231,7 +240,7 @@ export default {
                     fd.append('customer_id', this.customer_id)
                     if (this.$store.state.AppActiveUser.type == 'Supervisor') {
                         fd.append('supervisor_id', this.$store.state.AppActiveUser.manager_id);
-                    }else{
+                    } else {
                         fd.append('officer_id', this.$store.state.AppActiveUser.manager_id);
                     }
                     this.submit(fd).then(res => {

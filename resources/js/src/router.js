@@ -14,6 +14,8 @@ const router = new Router({
             component: () => import('./layouts/main/Main.vue'),
             meta: {
                 requiresAuth: true,
+                requiresAdmin: true,
+
             },
             children: [
                 // =============================================================================
@@ -25,6 +27,8 @@ const router = new Router({
                     component: () => import('./views/Home.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: true,
+
                     }
                 },
                 {
@@ -41,6 +45,8 @@ const router = new Router({
                     component: () => import('./views/pages/Customers/Customers.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: true,
+
                     }
                 },
                 {
@@ -49,6 +55,8 @@ const router = new Router({
                     component: () => import('./views/pages/Customers/AddCustomer.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: false,
+
                     }
                 },
                 {
@@ -57,6 +65,8 @@ const router = new Router({
                     component: () => import('./views/pages/Customers/EditCustomer.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: false,
+
                     }
                 },
                 {
@@ -65,6 +75,8 @@ const router = new Router({
                     component: () => import('./views/pages/Currencies.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: true,
+
                     }
                 },
                 {
@@ -73,14 +85,18 @@ const router = new Router({
                     component: () => import('./views/pages/ExchangeRates.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: true,
+
                     }
                 },
-                {
+                /*{
                     path: '/admins',
                     name: 'Admins',
                     component: () => import('./views/pages/Admins.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: true,
+
                     }
                 },
                 {
@@ -89,6 +105,7 @@ const router = new Router({
                     component: () => import('./views/pages/Supervisors.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: true,
                     }
                 },
                 {
@@ -97,14 +114,16 @@ const router = new Router({
                     component: () => import('./views/pages/Officers.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: true,
                     }
-                },
+                },*/
                 {
                     path: '/testing',
                     name: 'testing',
                     component: () => import('./views/pages/demo.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: true,
                     }
                 },
                 {
@@ -113,6 +132,7 @@ const router = new Router({
                     component: () => import('./views/pages/tax-managment/TaxManagment.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: true,
                     }
                 },
                 {
@@ -121,6 +141,8 @@ const router = new Router({
                     component: () => import('./views/pages/Admins.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: false,
+                        
                     }
                 },
                 {
@@ -129,6 +151,7 @@ const router = new Router({
                     component: () => import('./views/pages/MemberDetail.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: true,
                     }
                 },
             ],
@@ -142,6 +165,7 @@ const router = new Router({
             props: true,
             meta : {
                         requiresAuth : true,
+                        requiresAdmin: true,
                     },
             children: [
                 // =============================================================================
@@ -153,6 +177,7 @@ const router = new Router({
                     component: () => import('./views/pages/Customers/CustomerDetail.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: true,
                     }
                 },
                 {
@@ -161,6 +186,7 @@ const router = new Router({
                     component: () => import('./views/pages/Employees/AddEmployee.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: false,
                     }
                 },
                 {
@@ -169,6 +195,7 @@ const router = new Router({
                     component: () => import('./views/pages/Employees/Employees.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: false,
                     }
                 },
                 {
@@ -177,6 +204,7 @@ const router = new Router({
                     component: () => import('./views/pages/Customers/Taxes.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: true,
                     }
                 },
             ],
@@ -189,6 +217,7 @@ const router = new Router({
             component: () => import('./layouts/main/TaxDetailMain.vue'),
             meta: {
                 requiresAuth: true,
+                requiresAdmin: true,
             },
             children: [
                 // =============================================================================
@@ -200,6 +229,7 @@ const router = new Router({
                     component: () => import('./views/pages/Tax/TaxDetail.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: true,
                     }
                 },
                 {
@@ -208,6 +238,7 @@ const router = new Router({
                     component: () => import('./views/pages/Sales/AddSale.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: true,
                     }
                 },
                 {
@@ -216,6 +247,7 @@ const router = new Router({
                     component: () => import('./views/pages/Sales/Sales.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: true,
                     }
                 },
                 {
@@ -224,6 +256,7 @@ const router = new Router({
                     component: () => import('./views/pages/Sales/PendingSales.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: true,
                     }
                 },
                 {
@@ -232,6 +265,7 @@ const router = new Router({
                     component: () => import('./views/pages/Purchases/AddPurchase.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: true,
                     }
                 },
                 {
@@ -240,6 +274,7 @@ const router = new Router({
                     component: () => import('./views/pages/Purchases/Purchases.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: true,
                     }
                 },
                 {
@@ -248,6 +283,7 @@ const router = new Router({
                     component: () => import('./views/pages/Purchases/PendingPurchases.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: true,
                     }
                 },
                 {
@@ -256,6 +292,7 @@ const router = new Router({
                     component: () => import('./views/pages/Payrolls/AddPayroll.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: true,
                     }
                 },
                 {
@@ -264,6 +301,7 @@ const router = new Router({
                     component: () => import('./views/pages/Payrolls/Payrolls.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: true,
                     }
                 },
                 {
@@ -272,6 +310,7 @@ const router = new Router({
                     component: () => import('./views/pages/Payrolls/PendingPayrolls.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: true,
                     }
                 },
                 {
@@ -280,6 +319,7 @@ const router = new Router({
                     component: () => import('./views/pages/Payrolls/EditPayroll.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: true,
                     }
                 },
                 {
@@ -288,6 +328,7 @@ const router = new Router({
                     component: () => import('./views/pages/Tax/TaxTeam.vue'),
                     meta: {
                         requiresAuth: true,
+                        requiresAdmin: true,
                     }
                 },
             ],
@@ -305,12 +346,16 @@ const router = new Router({
                 {
                     path: '/',
                     name: 'pageLogin',
-                    component: () => import('@/views/pages/Login.vue')
+                    component: () => import('@/views/pages/Login.vue'),
+                    meta: {
+                        requiresAdmin: true,
+                    }
                 },
                 {
                     path: '/pages/error-404',
                     name: 'pageError404',
                     component: () => import('@/views/pages/Error404.vue')
+                    
                 },
             ]
         },
