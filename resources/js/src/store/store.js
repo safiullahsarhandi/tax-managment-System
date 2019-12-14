@@ -29,7 +29,7 @@ import Payrolls from "./Payrolls/Payrolls.js";
 Vue.use(Vuex)
 
 
-export default new Vuex.Store({
+const store =  new Vuex.Store({
     getters,
     mutations,
     state,
@@ -48,3 +48,5 @@ export default new Vuex.Store({
     }
     // strict: process.env.NODE_ENV !== 'production'
 })
+
+export default store;

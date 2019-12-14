@@ -15,6 +15,7 @@ use App\Supervisor;
 use App\Tax;
 use App\TaxCustomers;
 use App\TaxOfficer;
+use Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -128,6 +129,12 @@ class ApplicationController extends Controller {
 		if ($res = TaxCustomers::whereEmail($request->email)->first()) {
 			return response()->json(['status' => "error", 'msg' => "email already exists"]);
 		}
+		if ($res = TaxCustomers::whereTaxCardNum($request->tax_card_num)->first()) {
+			return response()->json(['status' => "error", 'msg' => "Account with this tax card number already exist"]);
+		}
+		if ($res = TaxCustomers::whereTinNo($request->tin_no)->first()) {
+			return response()->json(['status' => "error", 'msg' => "Account with this tax card number already exist"]);
+		}
 		$customer = new TaxCustomers;
 		$customer->customer_id = (String) Str::uuid();
 		$customer->name_english = $request->name_eng;
@@ -151,11 +158,58 @@ class ApplicationController extends Controller {
 		return response()->json(['status' => 'success', 'customers' => $customer]);
 	}
 
+	public function add_multiple_customer(Request $request) {
+		if ($request->hasFile('file')) {
+			return Excel::load($request->file('file'), function ($reader) {
+				// Getting all results
+				$customers = $reader->get()->toArray();
+				$totalAddedCount = 0;
+				foreach ($customers as $key => $value) {
+					/*if ($res = TaxCustomers::whereEmail($request->email)->first()) {
+							return response()->json(['status' => "error", 'msg' => "email already exists"]);
+						}
+						if ($res = TaxCustomers::whereTaxCardNum($request->tax_card_num)->first()) {
+							return response()->json(['status' => "error", 'msg' => "Account with this tax card number already exist"]);
+						}
+						if ($res = TaxCustomers::whereTinNo($request->tin_no)->first()) {
+							return response()->json(['status' => "error", 'msg' => "Account with this tax card number already exist"]);
+					*/
+					$customer = new TaxCustomers;
+					$customer->customer_id = (String) Str::uuid();
+					$customer->name_english = $value['name_english'];
+					$customer->name_khmer = $value['name_khmer'];
+					$customer->tax_card_num = settype($value['tax_id_no'], 'Integer');
+					$customer->tin_no = settype($value['tin_num'], 'Integer');
+					$customer->address = $value['address'];
+					$customer->street = $value['street'];
+					$customer->group = $value['group'];
+					$customer->sangkat = $value['sangkat'];
+					$customer->district = $value['district'];
+					$customer->province = $value['province'];
+					$customer->muncipality = $value['muncipality'];
+					$customer->telephone = '+' . settype($value['tel'], 'Integer');
+					$customer->email = $value['email'];
+					$customer->industry = $value['industry'];
+					$customer->incorporation_date = $value['incorporation_date'];
+					$customer->village = $value['village'];
+					$result = $customer->save();
+					if ($result) {
+						$totalAddedCount++;
+					}
+				}
+				return response()->json(['status' => 'success', 'msg' => "$totalAddedCount new companies added."]);
+				// reader methods
+
+			});
+		}
+	}
+
 	public function get_customers(Request $request) {
+
 		if (session('admin.type') == 'Admin') {
 
 			$customers = TaxCustomers::all();
-		} else if (session('admin.type') == 'Admin') {
+		} else if (session('admin.type') == 'Supervisor') {
 			$customers = TaxCustomers::whereRaw('customer_id IN (SELECT customer_id from tax_managment where supervisor_id = ?)', ['supervisor_id' => session('admin.manager_id')])->get();
 		} else {
 			$customers = TaxCustomers::whereRaw('customer_id IN (SELECT customer_id from tax_managment where tax_id IN (SELECT tax_id from tax_officers where officer_id = ?) )', ['officer_id' => session('admin.manager_id')])->get();
@@ -464,7 +518,7 @@ class ApplicationController extends Controller {
 			$taxes = Tax::with('supervisor')->withCount('officers')->where('customer_id', $request->customer_id)->get();
 		} elseif (session('admin.type') == 'Supervisor') {
 
-			$taxes = Tax::with('supervisor')->withCount('officers')->where('customer_id', $request->customer_id)->where('supervisor_id', session('admin.manager_id'))->get();
+			$taxes = Tax::with('supervisor')->withCount('officers')->where('customer_id', $request->customer_id)->where('supervisor_id', session('admin.manager_id'))->where('status', 0)->get();
 		} else {
 			$taxes = Tax::with('supervisor')->withCount('officers')->where('customer_id', $request->customer_id)->whereRaw('tax_id IN (SELECT tax_id from tax_officers where officer_id = ?)', ['officer_id' => session('admin.manager_id')])->get();
 

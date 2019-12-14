@@ -88,6 +88,7 @@ import sidebarItems from "@/layouts/components/vx-sidebar/customerDetailSidebarI
 import BackToTop from 'vue-backtotop'
 
 export default {
+    inject : ['loginUser'],
     data() {
         return {
             navbarType: themeConfig.navbarType || 'floating',
@@ -188,6 +189,12 @@ export default {
         this.$store.commit('setRootUrl',localStorage.getItem('currentDetail'))
     },
     created() {
+         var self = this;
+        setTimeout(function(){
+            if (self.$store.getters.userType != 'Admin') {
+            self.sidebarItems.splice(3, 1);
+        }
+    })
         this.setSidebarWidth();
         if(this.navbarColor == "#fff" && this.isThemeDark) {
             this.updateNavbarColor("#10163a")

@@ -87,7 +87,8 @@ export default {
                             });
                             var adminData = res.data.session;
                             localStorage.setItem('admin', adminData.manager_id);
-                            this.$store.state.AppActiveUser = adminData;
+                            this.$store.commit('setLoginUser',adminData);
+                            this.$store.state.AppActiveUser
                             this.$router.push('/dashboard');
                         }
                         this.$vs.loading.close()

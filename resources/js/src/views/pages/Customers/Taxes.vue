@@ -2,7 +2,7 @@
     <div>
         <vx-card title="List of Taxes" subtitle="The List of Taxes contains currently assigned taxes of customer Or those which are delivered succesfully">
             <template slot="actions">
-                <vs-button type="border" @click="addTax()" icon-pack="feather" icon="icon-plus"></vs-button>
+                <vs-button type="border" v-if="$store.getters.userType == 'Admin'" @click="addTax()" icon-pack="feather" icon="icon-plus"></vs-button>
             </template>
             <vs-table search pagination :data="taxes">
                 <template slot="thead">
@@ -21,7 +21,7 @@
                         <vs-td>{{tr.officers_count}}</vs-td>
                         <vs-td>{{tr.status == 1? 'In progress':'Completed'}}</vs-td>
                         <vs-td>
-                             <vs-button size="small" type="border" icon-pack="feather" icon="icon-edit" @click="editTax(tr.id)"></vs-button>
+                             <vs-button v-if="$store.getters.userType == 'Admin'" size="small" type="border" icon-pack="feather" icon="icon-edit" @click="editTax(tr.id)"></vs-button>
                              <vs-button size="small" type="border" icon-pack="feather" icon="icon-maximize-2" :to="'tax-collection/'+tr.tax_id"></vs-button>
                         </vs-td>
                     </vs-tr>
@@ -79,6 +79,7 @@
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex';
 export default {
+    inject : ['loginUser'],
     data() {
         return {
             addTaxManagmentModal: false,

@@ -43,10 +43,31 @@ import 'prismjs'
 
 router.beforeEach((to, from, next) => {
     if (to.meta.requiresAuth) {
+
         if (!localStorage.getItem('admin')) {
             next({path: '/'})
         } else {
+          if(typeof store.getters.userType == 'undefined'){
+
+
+          store.dispatch('getLoginUser').then(res=>{
+          if(to.meta.requiresAdmin == true || store.getters.userType == 'Admin'){
             next();
+
+            }else{
+            next({path: '/pages/error-404'})
+
+            }
+          });
+          }else{
+            if(to.meta.requiresAdmin == true || store.getters.userType == 'Admin'){
+            next();
+
+            }else{
+            next({path: '/pages/error-404'})
+
+            }
+          }
         }
     } else {
         next();
@@ -79,6 +100,7 @@ new Vue({
 	provide(){
 		return {
 			generatePassword : this.generatePassword,
+      loginUser : this.loginUser,
 		}
 	},
     router,
@@ -86,6 +108,11 @@ new Vue({
     render: h => h(App),
     async created(){
       await this.$store.dispatch('getLoginUser')
+    },
+    computed : {
+      loginUser(){
+        return this.$store.getters.userType;
+      }
     },
     methods: {
     generatePassword : function() {
