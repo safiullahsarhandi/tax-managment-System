@@ -15,6 +15,7 @@ use App\Supervisor;
 use App\Tax;
 use App\TaxCustomers;
 use App\TaxOfficer;
+use Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -128,6 +129,12 @@ class ApplicationController extends Controller {
 		if ($res = TaxCustomers::whereEmail($request->email)->first()) {
 			return response()->json(['status' => "error", 'msg' => "email already exists"]);
 		}
+		if ($res = TaxCustomers::whereTaxCardNum($request->tax_card_num)->first()) {
+			return response()->json(['status' => "error", 'msg' => "Account with this tax card number already exist"]);
+		}
+		if ($res = TaxCustomers::whereTinNo($request->tin_no)->first()) {
+			return response()->json(['status' => "error", 'msg' => "Account with this tax card number already exist"]);
+		}
 		$customer = new TaxCustomers;
 		$customer->customer_id = (String) Str::uuid();
 		$customer->name_english = $request->name_eng;
@@ -149,6 +156,52 @@ class ApplicationController extends Controller {
 		$customer->additional_fields = $request->additional_field;
 		$result = $customer->save();
 		return response()->json(['status' => 'success', 'customers' => $customer]);
+	}
+
+	public function add_multiple_customer(Request $request) {
+		if ($request->hasFile('file')) {
+			return Excel::load($request->file('file'), function ($reader) {
+				// Getting all results
+				$customers = $reader->get()->toArray();
+				$totalAddedCount = 0;
+				foreach ($customers as $key => $value) {
+					/*if ($res = TaxCustomers::whereEmail($request->email)->first()) {
+							return response()->json(['status' => "error", 'msg' => "email already exists"]);
+						}
+						if ($res = TaxCustomers::whereTaxCardNum($request->tax_card_num)->first()) {
+							return response()->json(['status' => "error", 'msg' => "Account with this tax card number already exist"]);
+						}
+						if ($res = TaxCustomers::whereTinNo($request->tin_no)->first()) {
+							return response()->json(['status' => "error", 'msg' => "Account with this tax card number already exist"]);
+					*/
+					$customer = new TaxCustomers;
+					$customer->customer_id = (String) Str::uuid();
+					$customer->name_english = $value['name_english'];
+					$customer->name_khmer = $value['name_khmer'];
+					$customer->tax_card_num = settype($value['tax_id_no'], 'Integer');
+					$customer->tin_no = settype($value['tin_num'], 'Integer');
+					$customer->address = $value['address'];
+					$customer->street = $value['street'];
+					$customer->group = $value['group'];
+					$customer->sangkat = $value['sangkat'];
+					$customer->district = $value['district'];
+					$customer->province = $value['province'];
+					$customer->muncipality = $value['muncipality'];
+					$customer->telephone = '+' . settype($value['tel'], 'Integer');
+					$customer->email = $value['email'];
+					$customer->industry = $value['industry'];
+					$customer->incorporation_date = $value['incorporation_date'];
+					$customer->village = $value['village'];
+					$result = $customer->save();
+					if ($result) {
+						$totalAddedCount++;
+					}
+				}
+				return response()->json(['status' => 'success', 'msg' => "$totalAddedCount new companies added."]);
+				// reader methods
+
+			});
+		}
 	}
 
 	public function get_customers(Request $request) {

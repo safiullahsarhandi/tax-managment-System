@@ -173,9 +173,18 @@ export default {
         var self = this;
         setTimeout(function() {
         if (self.$store.getters.userType != 'Admin') {
-            // self.sidebarItems[1].submenu.splice(0, 1);
-            _.each(self.sidebarItems[1].submenu,(o)=>{ console.log(o)})
+            _.each(self.sidebarItems[1].submenu,(o,i)=>{ 
+                if(!_.isUndefined(o) && o.slug == 'add-customer'){
+                    // delete o;
+                    // _.remove(o)
+                    self.sidebarItems[1].submenu.splice(0, 1);
+
+                    // o.splice(i,1);
+                }
+                // console.log()
+            })
             self.sidebarItems.splice(5, 1);
+            
         }
         }, 1);
         

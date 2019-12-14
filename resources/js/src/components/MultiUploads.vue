@@ -2,10 +2,10 @@
     <vs-popup :title="title" :active.sync="isShown">
         <vs-row>
             <vs-col class="uploader-column">
-                <vs-upload text="Drag/Drop OR select csv file" @on-success="successFunc" @on-error="errorFunc" @on-delete="deleteFunc" :action="action" :limit="1" :multiple="false"></vs-upload>
+                <vs-upload text="Drag/Drop OR select csv file" accept=".xlsx" :fileName="fileName" @on-success="successFunc" @on-error="errorFunc" @on-delete="deleteFunc" :action="action" :limit="1" :multiple="false"></vs-upload>
             </vs-col>
             <vs-col class="text-right">
-            	<a href="" download>View Sample</a>
+            	<a :href="sampleUrl" download>View Sample</a>
             </vs-col>
         </vs-row>
     </vs-popup>
@@ -24,6 +24,14 @@ export default {
         action: {
             type: String,
             required : true,
+        },
+        sampleUrl: {
+            type: String,
+            required : true,
+        },
+        fileName: {
+            type: String,
+            default : 'file'
         },
     },
     watch: {},

@@ -82,7 +82,7 @@
                 </vs-row>
             </form>
         </vx-card>
-        <multi-uploads action="" ref="multiUploads" :active="multipleUploadPopup"></multi-uploads>
+        <multi-uploads action="" sample-url="./public/samples/employee.xlsx" ref="multiUploads" :active="multipleUploadPopup"></multi-uploads>
     </div>
 </template>
 <script>

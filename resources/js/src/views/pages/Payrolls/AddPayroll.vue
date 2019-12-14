@@ -1,6 +1,6 @@
 <template>
     <div>
-        <multi-uploads ref="multiUploads" action="" :active="multipleUploadPopup"></multi-uploads>
+        <multi-uploads ref="multiUploads" action="" sample-url="./public/samples/payroll.xlsx" :active="multipleUploadPopup"></multi-uploads>
         <vx-card title="Add Payroll" noShadow noRadius>
             <template slot="actions">
                 <vs-button @click="showUploader()" class="mt-5" type="gradient" button="button">Upload Excel Sheet</vs-button>

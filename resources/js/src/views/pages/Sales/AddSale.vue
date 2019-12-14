@@ -1,6 +1,6 @@
 <template>
     <div>
-        <multi-uploads ref="multiUploads" action="" :active="multipleUploadPopup"></multi-uploads>
+        <multi-uploads ref="multiUploads" action="" sample-url="./public/samples/sale.xlsx" :active="multipleUploadPopup"></multi-uploads>
         <!-- <vx-card title="Add Customer" subtitle="Add Information Of Customer OR company which tax will be managed by system" noShadow noRadius> -->
         <vx-card title="Add Sale" noShadow noRadius>
             <template slot="actions">
