@@ -122,7 +122,14 @@
                 </vs-row>
             </form>
         </vx-card>
-        <multi-uploads ref="multiUploads" action="add-multiple-customer" sample-url="./public/samples/company.xlsx" :active="multipleUploadPopup"></multi-uploads>
+
+        <multi-uploads
+                    ref="multiUploads" 
+                    action="add-multiple-customer" 
+                    sample-url="./public/samples/company.xlsx" 
+                    :active="multipleUploadPopup">      
+        </multi-uploads>
+
     </div>
 </template>
 <script>
@@ -162,6 +169,9 @@ export default {
     methods: {
         showUploader() {
             this.$refs.multiUploads.isShown = true;
+        },
+        successMultipleUpload(){
+            alert('success');
         },
         addMoreFeild() {
             this.customField.push({ name: 'additional_field[]', value: '', type: 'text' });

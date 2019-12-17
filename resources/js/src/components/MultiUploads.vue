@@ -7,6 +7,7 @@
             <vs-col class="text-right">
             	<a :href="sampleUrl" download>View Sample</a>
             </vs-col>
+
         </vs-row>
     </vs-popup>
 </template>
@@ -42,10 +43,12 @@ export default {
     },
     methods: {
       deleteFunc() {
-			this.$emit('deleted');        
+			this.$emit('deleted'); 
       },
       successFunc() {
 			this.$emit('uploaded');        
+            // this.successMultipleUpload();
+            // console.log('testing');
       },
       errorFunc() {
 			this.$emit('hasError');        
@@ -57,7 +60,7 @@ export default {
 <style lang="scss">
 	.uploader-column{
 		& .con-input-upload {
-    width: 100%;
+    width: 100%; 
 }
 & .con-img-upload .img-upload {
     margin: 0;
