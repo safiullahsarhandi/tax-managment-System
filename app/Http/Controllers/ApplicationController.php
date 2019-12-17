@@ -162,6 +162,7 @@ class ApplicationController extends Controller {
 
 		if ($request->hasFile('file')) {
 
+
 				$data = Excel::load($request->file('file'), function ($reader){
 				// Getting all results
 				
@@ -882,6 +883,45 @@ class ApplicationController extends Controller {
 
 		return response()->json(['status' => 'success', 'msg' => 'Payroll Updated Successfully']);
 
+	}
+
+	public function add_multiple_employee(Request $request) {
+
+		if ($request->hasFile('file')) {
+
+
+				$data = Excel::load($request->file('file'), function ($reader){
+				// Getting all results
+				
+				$employees = $reader->get()->toArray();
+				// $totalAddedCount = 0;
+				foreach ($employees as $key => $value) {
+
+					// dd($value['nssf_no']);
+
+					$customer_id = '52c31fba-129c-457e-b14e-9787a3ced2df';
+
+					$employee = new CustomerEmployee;
+					$employee->employee_id 			= (String) Str::uuid();
+					$employee->tax_customer_id 		= $customer_id;
+					$employee->nssf_num 			= $value['nssf_no'];
+					$employee->employee_num 		= $value['employee_no'];
+					$employee->name_english 		= $value['name_english'];
+					$employee->name_khmer 			= $value['name_khmer'];
+					$employee->nationality 			= $value['nationality'];
+					$employee->dob 					= $value['dob'];
+					$employee->joining_date 		= $value['joining_date'];
+					$employee->position 			= $value['position'];
+					$employee->sex 					= $value['sex'];
+					$employee->contract_type 		= $value['contract_type'];
+					$employee->spouse 				= $value['spouse'];
+					$result 						= $employee->save();
+				}
+
+			})->get();
+				$totalAddedCount = $data->count();
+				return response()->json(['status' => 'success', 'msg' => "$totalAddedCount new Employee(s) added."]);
+		}
 	}
 
 }
