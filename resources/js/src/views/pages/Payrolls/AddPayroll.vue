@@ -1,6 +1,6 @@
 <template>
     <div>
-        <multi-uploads ref="multiUploads" action="" sample-url="./public/samples/payroll.xlsx" :active="multipleUploadPopup"></multi-uploads>
+        <multi-uploads @uploaded="successMultipleUpload" ref="multiUploads" :action="multipleRoute" sample-url="./public/samples/payroll.xlsx" :active="multipleUploadPopup"></multi-uploads>
         <vx-card title="Add Payroll" noShadow noRadius>
             <template slot="actions">
                 <vs-button @click="showUploader()" class="mt-5" type="gradient" button="button">Upload Excel Sheet</vs-button>
@@ -222,12 +222,14 @@ export default {
             deduction_advance: '',
             salary_adjustment: '',
             remark: '',
+            employee_id:''
         };
     },
     created() {
         this.tax_id = this.$store.state.rootUrl.split('/')[2];
         this.tax_customer_id = localStorage.getItem('customer');
         this.getEmployees(this.tax_customer_id);
+        
     },
 
     components: {
@@ -245,7 +247,8 @@ export default {
             } else {
                 this.selectEmployeeModal = false;
             }
-        }
+        },
+
     },
     methods: {
         ...mapActions({
@@ -258,13 +261,30 @@ export default {
         addMoreFeild() {
             this.customField.push({ name: 'additional_field[]', value: '', type: 'text' });
         },
+        successMultipleUpload(){
+            this.$vs.notify({
+                color : 'success',
+                text : 'Successfully Uploaded'
+            })
+            this.$refs.multiUploads.isShown = false
+        },
 
         getEmployee() {
             if (this.employee != '') {
                 axios.post('get-employee', { id: this.employee }).then(res => {
                     // var employee = this.findEmployee(this.employee);
                     var employee = res.data.data;
+                    
                     this.employeeVal = employee;
+                    let loginUserId;
+                    let loginUsertype;
+                    if (this.$store.state.AppActiveUser.type == 'Supervisor') {
+                        loginUsertype = 'supervisor';
+                    } else {
+                        loginUsertype = 'officer';
+                    }
+                    loginUserId = this.$store.state.AppActiveUser.manager_id;
+                    this.multipleRoute = 'add-multiple-payrolls/'+this.employee+'/'+this.tax_id+'/'+loginUsertype+'/'+loginUserId;
                     self = this;
                     self.customField = [];
                     if (employee.additional_fields != null) {

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <multi-uploads ref="multiUploads" action="" sample-url="./public/samples/purchase.xlsx" :active="multipleUploadPopup"></multi-uploads>
+        <multi-uploads @uploaded="successMultipleUpload" ref="multiUploads" :action="multipleRoute" sample-url="./public/samples/purchase.xlsx" :active="multipleUploadPopup"></multi-uploads>
         <!-- <vx-card title="Add Customer" subtitle="Add Information Of Customer OR company which tax will be managed by system" noShadow noRadius> -->
         <vx-card title="Add Purchase" noShadow noRadius>
             <template slot="actions">
@@ -178,6 +178,7 @@ export default {
             comments_for_top: '',
             tax_id: '',
             customer_id: '',
+            multipleRoute: ''
         };
     },
     components: {
@@ -186,6 +187,15 @@ export default {
     created() {
         this.tax_id = this.$store.state.rootUrl.split('/')[2];
         this.customer_id = localStorage.getItem('customer');
+        let loginUserId;
+        let loginUsertype;
+        if (this.$store.state.AppActiveUser.type == 'Supervisor') {
+            loginUsertype = 'supervisor';
+        } else {
+            loginUsertype = 'officer';
+        }
+        loginUserId = this.$store.state.AppActiveUser.manager_id;
+        this.multipleRoute = 'add-multiple-purchases/'+this.customer_id+'/'+this.tax_id+'/'+loginUsertype+'/'+loginUserId;
     },
     methods: {
         showUploader() {
@@ -193,6 +203,13 @@ export default {
         },
         addMoreFeild() {
             this.customField.push({ name: 'additional_field[]', value: '', type: 'text' });
+        },
+        successMultipleUpload(){
+            this.$refs.multiUploads.isShown = false;
+            this.$vs.notify({
+                color : 'success',
+                text : 'Successfully Uploaded'
+            })
         },
         ...mapActions({
             submit: 'purchases/addPurchase',

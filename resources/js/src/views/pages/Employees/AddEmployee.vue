@@ -82,7 +82,7 @@
                 </vs-row>
             </form>
         </vx-card>
-        <multi-uploads action="add-multiple-employees" sample-url="./public/samples/employee.xlsx" ref="multiUploads" :active="multipleUploadPopup"></multi-uploads>
+        <multi-uploads @uploaded="successMultipleUpload" :action="multipleRoute" sample-url="./public/samples/employee.xlsx" ref="multiUploads" :active="multipleUploadPopup"></multi-uploads>
     </div>
 </template>
 <script>
@@ -104,13 +104,16 @@ export default {
             sex: '',
             contract_type: '',
             spouse: '',
+            multipleRoute: ''
         };
     },
     components: {
         multiUploads
     },
-    beforeCreate() {
-        this.tax_customer_id = this.$store.state.rootUrl.split('/')[2];
+    created() {
+        let self = this;
+        self.tax_customer_id = self.$store.state.rootUrl.split('/')[2];
+        self.multipleRoute = 'add-multiple-employees/'+self.tax_customer_id;
     },
     methods: {
         ...mapActions({
@@ -118,6 +121,13 @@ export default {
         }),
         showUploader() {
             this.$refs.multiUploads.isShown = true;
+        },
+        successMultipleUpload(){
+            this.$vs.notify({
+                color : 'success',
+                text : 'Successfully Uploaded'
+            })
+            this.$refs.multiUploads.isShown = false;
         },
         addEmployee(e) {
             this.$validator.validateAll().then(result => {

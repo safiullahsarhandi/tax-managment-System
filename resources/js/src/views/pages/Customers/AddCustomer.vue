@@ -124,6 +124,7 @@
         </vx-card>
 
         <multi-uploads
+                    @uploaded="successMultipleUpload"
                     ref="multiUploads" 
                     action="add-multiple-customer" 
                     sample-url="./public/samples/company.xlsx" 
@@ -171,7 +172,11 @@ export default {
             this.$refs.multiUploads.isShown = true;
         },
         successMultipleUpload(){
-            alert('success');
+            this.$vs.notify({
+                color : 'success',
+                text : 'Successfully Uploaded'
+            })
+            this.$refs.multiUploads.isShown = false;
         },
         addMoreFeild() {
             this.customField.push({ name: 'additional_field[]', value: '', type: 'text' });

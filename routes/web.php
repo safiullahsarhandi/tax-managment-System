@@ -51,7 +51,7 @@ Route::group(['prefix' => ''], function () {
 	Route::get('get-active-employees', 'ApplicationController@get_active_employees');
 	Route::post('update-employee', 'ApplicationController@update_employee');
 	Route::post('status-update-employee', 'ApplicationController@status_update_employee'); 
-	Route::post('add-multiple-employees', 'ApplicationController@add_multiple_employee');
+	Route::post('add-multiple-employees/{id}', 'ApplicationController@add_multiple_employee');
 
 	// Tax
 	Route::post('add-tax', 'ApplicationController@add_tax');
@@ -77,6 +77,7 @@ Route::group(['prefix' => ''], function () {
 	Route::get('get-pending-purchases', 'ApplicationController@get_pending_purchases');
 	Route::post('get-single-purchase', 'ApplicationController@get_purchase');
 	Route::post('update-purchase', 'ApplicationController@update_purchase');
+	Route::post('add-multiple-purchases/{customer_id}/{tax_id}/{type}/{userLoginId}', 'ApplicationController@add_multiple_purchases');
 
 	// Sales
 	Route::post('add-sale', 'ApplicationController@add_sale');
@@ -84,6 +85,7 @@ Route::group(['prefix' => ''], function () {
 	Route::get('get-pending-sales', 'ApplicationController@get_pending_sales');
 	Route::post('get-single-sale', 'ApplicationController@get_sale');
 	Route::post('update-sale', 'ApplicationController@update_sale');
+	Route::post('add-multiple-sales/{customer_id}/{tax_id}/{type}/{userLoginId}', 'ApplicationController@add_multiple_sales');
 
 	// Payrolls
 	Route::post('add-payroll', 'ApplicationController@add_payroll');
@@ -91,6 +93,7 @@ Route::group(['prefix' => ''], function () {
 	Route::get('get-pending-payrolls', 'ApplicationController@get_pending_payrolls');
 	Route::post('get-payroll', 'ApplicationController@get_payroll');
 	Route::post('update-payroll', 'ApplicationController@update_payroll');
+	Route::post('add-multiple-payrolls/{employee_id}/{tax_id}/{type}/{userLoginId}', 'ApplicationController@add_multiple_payrolls');
 
 	Route::get('logout', 'ApplicationController@logout');
 
