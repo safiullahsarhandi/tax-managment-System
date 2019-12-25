@@ -473,6 +473,24 @@ class ApplicationController extends Controller {
 
 	public function get_exchange_rates() {
 
+		if(!$ar=Settings::where('key','annual_rate')->first()){
+			$data = new Settings();
+			$data->key = 'annual_rate';
+			$data->value = 0;
+			$data->save();
+		}
+		if(!$ar=Settings::where('key','average_rate')->first()){
+			$data = new Settings();
+			$data->key = 'average_rate';
+			$data->value = 0;
+			$data->save();
+		}
+		if(!$ar=Settings::where('key','salary_rate')->first()){
+			$data = new Settings();
+			$data->key = 'salary_rate';
+			$data->value = 0;
+			$data->save();
+		}
 		$setting = Settings::all();
 		$rates = $setting;
 		return response()->json(compact('rates'));
