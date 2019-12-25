@@ -761,7 +761,7 @@ class ApplicationController extends Controller {
 	}
 
 	public function get_sale(Request $request) {
-		$sale = Sales::whereSaleId($request->id)->first();
+		$sale = Sales::with('officer')->whereSaleId($request->id)->first();
 		return response()->json(compact('sale'));
 	}
 
@@ -1112,6 +1112,18 @@ class ApplicationController extends Controller {
 			$totalAddedCount = $data->count();
 			return response()->json(['status' => 'success', 'msg' => "$totalAddedCount new Purchase(s) added."]);
 		}
+	}
+
+	public function get_sale_comment(Request $request) {
+
+	}
+
+	public function get_purchase_comment(Request $request) {
+
+	}
+
+	public function get_payroll_comment(Request $request) {
+
 	}
 
 }

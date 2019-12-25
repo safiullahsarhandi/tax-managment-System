@@ -96,6 +96,9 @@ const mutations = {
     },
     setAverageRate(state,val){
         state.averageRate = val;
+    },
+    setComments(state,comments){
+        state.comments = comments
     }
 }
 

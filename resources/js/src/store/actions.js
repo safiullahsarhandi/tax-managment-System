@@ -63,6 +63,11 @@ const actions = {
         commit('setLoginUser',res.data)
         return res;
       })
+    },
+    getComments({commit},commentsUrl,type,object_id){
+      axios.get(commentsUrl,{ params : { type : type , object_id : object_id } }).then(res=>{
+        commit('setComments');
+      })
     }
 }
 

@@ -23,7 +23,7 @@
                         <vs-td :data="tr.quantity">{{tr.quantity}}</vs-td>
                         <vs-td>
                             <vs-button :to="'sale-update/'+tr.sale_id" size="small" type="border" icon-pack="feather" icon="icon-edit"></vs-button>
-                            <vs-button size="small" icon-pack="feather" icon="icon-maximize-2" type="border"></vs-button>
+                            <vs-button :to="'sale-detail/'+tr.sale_id" size="small" icon-pack="feather" icon="icon-maximize-2" type="border"></vs-button>
                         </vs-td>
                     </vs-tr>
                 </template>

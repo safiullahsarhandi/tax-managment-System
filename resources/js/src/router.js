@@ -251,6 +251,15 @@ const router = new Router({
                     }
                 },
                 {
+                    path: '/sale-detail/:id',
+                    name: 'Sale Detail',
+                    component: () => import('./views/pages/Sales/SaleDetail.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+                {
                     path: '/sales-list',
                     name: 'Sales List',
                     component: () => import('./views/pages/Sales/Sales.vue'),

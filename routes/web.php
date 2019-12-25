@@ -83,6 +83,11 @@ Route::group(['prefix' => ''], function () {
 	// Sales
 	Route::post('add-sale', 'ApplicationController@add_sale');
 	Route::get('get-sales', 'ApplicationController@get_sales');
+	Route::get('get-sale', 'ApplicationController@get_sale');
+	Route::get('get-sale-comment', 'ApplicationController@get_sale_comment');
+	Route::get('get-purchase-comment', 'ApplicationController@get_purchase_comment');
+	Route::get('get-payroll-comment', 'ApplicationController@get_payroll_comment');
+
 	Route::get('get-pending-sales', 'ApplicationController@get_pending_sales');
 	Route::post('get-single-sale', 'ApplicationController@get_sale');
 	Route::post('update-sale', 'ApplicationController@update_sale');

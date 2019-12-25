@@ -76471,7 +76471,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapActions", function() { return mapActions; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNamespacedHelpers", function() { return createNamespacedHelpers; });
 /**
- * vuex v3.1.1
+ * vuex v3.1.2
  * (c) 2019 Evan You
  * @license MIT
  */
@@ -76793,6 +76793,7 @@ var Store = function Store (options) {
   this._modulesNamespaceMap = Object.create(null);
   this._subscribers = [];
   this._watcherVM = new Vue();
+  this._makeLocalGettersCache = Object.create(null);
 
   // bind commit and dispatch to self
   var store = this;
@@ -77025,12 +77026,14 @@ function resetStoreVM (store, state, hot) {
 
   // bind store public getters
   store.getters = {};
+  // reset local getters cache
+  store._makeLocalGettersCache = Object.create(null);
   var wrappedGetters = store._wrappedGetters;
   var computed = {};
   forEachValue(wrappedGetters, function (fn, key) {
     // use computed to leverage its lazy-caching mechanism
     // direct inline function use will lead to closure preserving oldVm.
-    // using partial to return function with only arguments preserved in closure enviroment.
+    // using partial to return function with only arguments preserved in closure environment.
     computed[key] = partial(fn, store);
     Object.defineProperty(store.getters, key, {
       get: function () { return store._vm[key]; },
@@ -77074,6 +77077,9 @@ function installModule (store, rootState, path, module, hot) {
 
   // register in namespace map
   if (module.namespaced) {
+    if (store._modulesNamespaceMap[namespace] && "development" !== 'production') {
+      console.error(("[vuex] duplicate namespace " + namespace + " for the namespaced module " + (path.join('/'))));
+    }
     store._modulesNamespaceMap[namespace] = module;
   }
 
@@ -77082,6 +77088,13 @@ function installModule (store, rootState, path, module, hot) {
     var parentState = getNestedState(rootState, path.slice(0, -1));
     var moduleName = path[path.length - 1];
     store._withCommit(function () {
+      if (true) {
+        if (moduleName in parentState) {
+          console.warn(
+            ("[vuex] state field \"" + moduleName + "\" was overridden by a module with the same name at \"" + (path.join('.')) + "\"")
+          );
+        }
+      }
       Vue.set(parentState, moduleName, module.state);
     });
   }
@@ -77169,26 +77182,28 @@ function makeLocalContext (store, namespace, path) {
 }
 
 function makeLocalGetters (store, namespace) {
-  var gettersProxy = {};
+  if (!store._makeLocalGettersCache[namespace]) {
+    var gettersProxy = {};
+    var splitPos = namespace.length;
+    Object.keys(store.getters).forEach(function (type) {
+      // skip if the target getter is not match this namespace
+      if (type.slice(0, splitPos) !== namespace) { return }
 
-  var splitPos = namespace.length;
-  Object.keys(store.getters).forEach(function (type) {
-    // skip if the target getter is not match this namespace
-    if (type.slice(0, splitPos) !== namespace) { return }
+      // extract local getter type
+      var localType = type.slice(splitPos);
 
-    // extract local getter type
-    var localType = type.slice(splitPos);
-
-    // Add a port to the getters proxy.
-    // Define as getter property because
-    // we do not want to evaluate the getters in this time.
-    Object.defineProperty(gettersProxy, localType, {
-      get: function () { return store.getters[type]; },
-      enumerable: true
+      // Add a port to the getters proxy.
+      // Define as getter property because
+      // we do not want to evaluate the getters in this time.
+      Object.defineProperty(gettersProxy, localType, {
+        get: function () { return store.getters[type]; },
+        enumerable: true
+      });
     });
-  });
+    store._makeLocalGettersCache[namespace] = gettersProxy;
+  }
 
-  return gettersProxy
+  return store._makeLocalGettersCache[namespace]
 }
 
 function registerMutation (store, type, handler, local) {
@@ -77200,7 +77215,7 @@ function registerMutation (store, type, handler, local) {
 
 function registerAction (store, type, handler, local) {
   var entry = store._actions[type] || (store._actions[type] = []);
-  entry.push(function wrappedActionHandler (payload, cb) {
+  entry.push(function wrappedActionHandler (payload) {
     var res = handler.call(store, {
       dispatch: local.dispatch,
       commit: local.commit,
@@ -77208,7 +77223,7 @@ function registerAction (store, type, handler, local) {
       state: local.state,
       rootGetters: store.getters,
       rootState: store.state
-    }, payload, cb);
+    }, payload);
     if (!isPromise(res)) {
       res = Promise.resolve(res);
     }
@@ -77289,6 +77304,9 @@ function install (_Vue) {
  */
 var mapState = normalizeNamespace(function (namespace, states) {
   var res = {};
+  if ( true && !isValidMap(states)) {
+    console.error('[vuex] mapState: mapper parameter must be either an Array or an Object');
+  }
   normalizeMap(states).forEach(function (ref) {
     var key = ref.key;
     var val = ref.val;
@@ -77322,6 +77340,9 @@ var mapState = normalizeNamespace(function (namespace, states) {
  */
 var mapMutations = normalizeNamespace(function (namespace, mutations) {
   var res = {};
+  if ( true && !isValidMap(mutations)) {
+    console.error('[vuex] mapMutations: mapper parameter must be either an Array or an Object');
+  }
   normalizeMap(mutations).forEach(function (ref) {
     var key = ref.key;
     var val = ref.val;
@@ -77355,6 +77376,9 @@ var mapMutations = normalizeNamespace(function (namespace, mutations) {
  */
 var mapGetters = normalizeNamespace(function (namespace, getters) {
   var res = {};
+  if ( true && !isValidMap(getters)) {
+    console.error('[vuex] mapGetters: mapper parameter must be either an Array or an Object');
+  }
   normalizeMap(getters).forEach(function (ref) {
     var key = ref.key;
     var val = ref.val;
@@ -77385,6 +77409,9 @@ var mapGetters = normalizeNamespace(function (namespace, getters) {
  */
 var mapActions = normalizeNamespace(function (namespace, actions) {
   var res = {};
+  if ( true && !isValidMap(actions)) {
+    console.error('[vuex] mapActions: mapper parameter must be either an Array or an Object');
+  }
   normalizeMap(actions).forEach(function (ref) {
     var key = ref.key;
     var val = ref.val;
@@ -77430,9 +77457,21 @@ var createNamespacedHelpers = function (namespace) { return ({
  * @return {Object}
  */
 function normalizeMap (map) {
+  if (!isValidMap(map)) {
+    return []
+  }
   return Array.isArray(map)
     ? map.map(function (key) { return ({ key: key, val: key }); })
     : Object.keys(map).map(function (key) { return ({ key: key, val: map[key] }); })
+}
+
+/**
+ * Validate whether given map is valid or not
+ * @param {*} map
+ * @return {Boolean}
+ */
+function isValidMap (map) {
+  return Array.isArray(map) || isObject(map)
 }
 
 /**
@@ -77470,7 +77509,7 @@ function getModuleByNamespace (store, helper, namespace) {
 var index_esm = {
   Store: Store,
   install: install,
-  version: '3.1.1',
+  version: '3.1.2',
   mapState: mapState,
   mapMutations: mapMutations,
   mapGetters: mapGetters,
@@ -78517,10 +78556,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prismjs__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(prismjs__WEBPACK_IMPORTED_MODULE_10__);
 
 
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
 /*=========================================================================================
   File Name: main.js
   Description: main vue(js) file
@@ -78600,6 +78635,29 @@ if (token) {
   console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
+axios.interceptors.request.use(function (config) {
+  if (config.url === 'get-sale-comment') {
+    Vue.prototype.$vs.loading.close();
+  } else if (config.url === 'get-payroll-comment') {
+    Vue.prototype.$vs.loading.close();
+  } else if (config.url === 'get-purchase-comment') {
+    Vue.prototype.$vs.loading.close();
+  } else {
+    Vue.prototype.$vs.loading();
+  }
+
+  return config;
+}, function (error) {
+  return Promise.reject(error);
+});
+axios.interceptors.response.use(function (response) {
+  setTimeout(function () {
+    Vue.prototype.$vs.loading.close();
+  }, 1000);
+  return response;
+}, function (error) {
+  return Promise.reject(error);
+});
 Vue.config.productionTip = false;
 new Vue({
   provide: function provide() {
@@ -78613,31 +78671,21 @@ new Vue({
   render: function render(h) {
     return h(_App_vue__WEBPACK_IMPORTED_MODULE_1__["default"]);
   },
-  created: function () {
-    var _created = _asyncToGenerator(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.next = 2;
-              return this.$store.dispatch('getLoginUser');
+  created: function created() {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function created$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$store.dispatch('getLoginUser'));
 
-            case 2:
-            case "end":
-              return _context.stop();
-          }
+          case 2:
+          case "end":
+            return _context.stop();
         }
-      }, _callee, this);
-    }));
-
-    function created() {
-      return _created.apply(this, arguments);
-    }
-
-    return created;
-  }(),
+      }
+    }, null, this);
+  },
   computed: {
     loginUser: function loginUser() {
       return this.$store.getters.userType;
@@ -78684,7 +78732,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     // =============================================================================
     path: '/dashboard',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(1), __webpack_require__.e(15)]).then(__webpack_require__.bind(null, /*! ./layouts/main/Main.vue */ "./resources/js/src/layouts/main/Main.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(1), __webpack_require__.e(16), __webpack_require__.e(42)]).then(__webpack_require__.bind(null, /*! ./layouts/main/Main.vue */ "./resources/js/src/layouts/main/Main.vue"));
     },
     meta: {
       requiresAuth: true,
@@ -78697,7 +78745,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/',
       name: 'home',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 35).then(__webpack_require__.bind(null, /*! ./views/Home.vue */ "./resources/js/src/views/Home.vue"));
+        return __webpack_require__.e(/*! import() */ 38).then(__webpack_require__.bind(null, /*! ./views/Home.vue */ "./resources/js/src/views/Home.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -78707,7 +78755,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/page2',
       name: 'page2',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 36).then(__webpack_require__.bind(null, /*! ./views/Page2.vue */ "./resources/js/src/views/Page2.vue"));
+        return __webpack_require__.e(/*! import() */ 39).then(__webpack_require__.bind(null, /*! ./views/Page2.vue */ "./resources/js/src/views/Page2.vue"));
       },
       meta: {
         requiresAuth: true
@@ -78726,7 +78774,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/add-customer',
       name: 'Add Customer',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 19).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/AddCustomer.vue */ "./resources/js/src/views/pages/Customers/AddCustomer.vue"));
+        return __webpack_require__.e(/*! import() */ 20).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/AddCustomer.vue */ "./resources/js/src/views/pages/Customers/AddCustomer.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -78736,7 +78784,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/customer-update/:id',
       name: 'Customer Update',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 21).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/EditCustomer.vue */ "./resources/js/src/views/pages/Customers/EditCustomer.vue"));
+        return __webpack_require__.e(/*! import() */ 22).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/EditCustomer.vue */ "./resources/js/src/views/pages/Customers/EditCustomer.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -78746,7 +78794,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/currencies',
       name: 'Currencies',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 18).then(__webpack_require__.bind(null, /*! ./views/pages/Currencies.vue */ "./resources/js/src/views/pages/Currencies.vue"));
+        return __webpack_require__.e(/*! import() */ 19).then(__webpack_require__.bind(null, /*! ./views/pages/Currencies.vue */ "./resources/js/src/views/pages/Currencies.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -78794,7 +78842,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/testing',
       name: 'testing',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 31).then(__webpack_require__.bind(null, /*! ./views/pages/demo.vue */ "./resources/js/src/views/pages/demo.vue"));
+        return __webpack_require__.e(/*! import() */ 34).then(__webpack_require__.bind(null, /*! ./views/pages/demo.vue */ "./resources/js/src/views/pages/demo.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -78804,7 +78852,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/tax-managment',
       name: 'Tax Managment',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 14).then(__webpack_require__.bind(null, /*! ./views/pages/tax-managment/TaxManagment.vue */ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue"));
+        return __webpack_require__.e(/*! import() */ 15).then(__webpack_require__.bind(null, /*! ./views/pages/tax-managment/TaxManagment.vue */ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -78824,7 +78872,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/member-detail/:id',
       name: 'Member Detail',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 24).then(__webpack_require__.bind(null, /*! ./views/pages/MemberDetail.vue */ "./resources/js/src/views/pages/MemberDetail.vue"));
+        return __webpack_require__.e(/*! import() */ 25).then(__webpack_require__.bind(null, /*! ./views/pages/MemberDetail.vue */ "./resources/js/src/views/pages/MemberDetail.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -78837,7 +78885,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     // =============================================================================
     path: '/customer-detail/:id',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(1), __webpack_require__.e(17)]).then(__webpack_require__.bind(null, /*! ./layouts/main/customerMain.vue */ "./resources/js/src/layouts/main/customerMain.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(1), __webpack_require__.e(16), __webpack_require__.e(44)]).then(__webpack_require__.bind(null, /*! ./layouts/main/customerMain.vue */ "./resources/js/src/layouts/main/customerMain.vue"));
     },
     props: true,
     meta: {
@@ -78851,7 +78899,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/',
       name: 'Company Detail',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 20).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/CustomerDetail.vue */ "./resources/js/src/views/pages/Customers/CustomerDetail.vue"));
+        return __webpack_require__.e(/*! import() */ 21).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/CustomerDetail.vue */ "./resources/js/src/views/pages/Customers/CustomerDetail.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -78861,7 +78909,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/add-employee',
       name: 'Add Employee',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 22).then(__webpack_require__.bind(null, /*! ./views/pages/Employees/AddEmployee.vue */ "./resources/js/src/views/pages/Employees/AddEmployee.vue"));
+        return __webpack_require__.e(/*! import() */ 23).then(__webpack_require__.bind(null, /*! ./views/pages/Employees/AddEmployee.vue */ "./resources/js/src/views/pages/Employees/AddEmployee.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -78871,7 +78919,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/employees-list',
       name: 'Employees List',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 23).then(__webpack_require__.bind(null, /*! ./views/pages/Employees/Employees.vue */ "./resources/js/src/views/pages/Employees/Employees.vue"));
+        return __webpack_require__.e(/*! import() */ 24).then(__webpack_require__.bind(null, /*! ./views/pages/Employees/Employees.vue */ "./resources/js/src/views/pages/Employees/Employees.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -78894,7 +78942,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     // =============================================================================
     path: '/tax-collection/:id',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(1), __webpack_require__.e(16)]).then(__webpack_require__.bind(null, /*! ./layouts/main/TaxDetailMain.vue */ "./resources/js/src/layouts/main/TaxDetailMain.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(1), __webpack_require__.e(16), __webpack_require__.e(43)]).then(__webpack_require__.bind(null, /*! ./layouts/main/TaxDetailMain.vue */ "./resources/js/src/layouts/main/TaxDetailMain.vue"));
     },
     meta: {
       requiresAuth: true,
@@ -78907,7 +78955,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/',
       name: 'Tax Detail',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(32), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! ./views/pages/Tax/TaxDetail.vue */ "./resources/js/src/views/pages/Tax/TaxDetail.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(35), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! ./views/pages/Tax/TaxDetail.vue */ "./resources/js/src/views/pages/Tax/TaxDetail.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -78917,7 +78965,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/add-sale',
       name: 'Add Sale',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 28).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/AddSale.vue */ "./resources/js/src/views/pages/Sales/AddSale.vue"));
+        return __webpack_require__.e(/*! import() */ 30).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/AddSale.vue */ "./resources/js/src/views/pages/Sales/AddSale.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -78927,7 +78975,17 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/sale-update/:id',
       name: 'Update Sale',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 38).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/EditSale.vue */ "./resources/js/src/views/pages/Sales/EditSale.vue"));
+        return __webpack_require__.e(/*! import() */ 31).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/EditSale.vue */ "./resources/js/src/views/pages/Sales/EditSale.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+      }
+    }, {
+      path: '/sale-detail/:id',
+      name: 'Sale Detail',
+      component: function component() {
+        return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(13), __webpack_require__.e(41)]).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/SaleDetail.vue */ "./resources/js/src/views/pages/Sales/SaleDetail.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -78937,7 +78995,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/sales-list',
       name: 'Sales List',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 30).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/Sales.vue */ "./resources/js/src/views/pages/Sales/Sales.vue"));
+        return __webpack_require__.e(/*! import() */ 33).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/Sales.vue */ "./resources/js/src/views/pages/Sales/Sales.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -78947,7 +79005,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/un-reviewed-sales',
       name: 'Un Reviewed Sales',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 29).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/PendingSales.vue */ "./resources/js/src/views/pages/Sales/PendingSales.vue"));
+        return __webpack_require__.e(/*! import() */ 32).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/PendingSales.vue */ "./resources/js/src/views/pages/Sales/PendingSales.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -78957,7 +79015,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/add-purchase',
       name: 'Add Purchase',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/AddPurchase.vue */ "./resources/js/src/views/pages/Purchases/AddPurchase.vue"));
+        return __webpack_require__.e(/*! import() */ 28).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/AddPurchase.vue */ "./resources/js/src/views/pages/Purchases/AddPurchase.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -78967,7 +79025,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/purchase-update/:id',
       name: 'Update Purchase',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 37).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/EditPurchase.vue */ "./resources/js/src/views/pages/Purchases/EditPurchase.vue"));
+        return __webpack_require__.e(/*! import() */ 29).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/EditPurchase.vue */ "./resources/js/src/views/pages/Purchases/EditPurchase.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -78997,7 +79055,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/add-payroll',
       name: 'Add Payroll',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 25).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/AddPayroll.vue */ "./resources/js/src/views/pages/Payrolls/AddPayroll.vue"));
+        return __webpack_require__.e(/*! import() */ 26).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/AddPayroll.vue */ "./resources/js/src/views/pages/Payrolls/AddPayroll.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -79027,7 +79085,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/edit-payroll/:id',
       name: 'Edit Payrolls',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 26).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/EditPayroll.vue */ "./resources/js/src/views/pages/Payrolls/EditPayroll.vue"));
+        return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/EditPayroll.vue */ "./resources/js/src/views/pages/Payrolls/EditPayroll.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -79037,7 +79095,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/tax-team',
       name: 'Tax Team',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! ./views/pages/Tax/TaxTeam.vue */ "./resources/js/src/views/pages/Tax/TaxTeam.vue"));
+        return __webpack_require__.e(/*! import() */ 14).then(__webpack_require__.bind(null, /*! ./views/pages/Tax/TaxTeam.vue */ "./resources/js/src/views/pages/Tax/TaxTeam.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -79050,7 +79108,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   {
     path: '',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 34).then(__webpack_require__.bind(null, /*! @/layouts/full-page/FullPage.vue */ "./resources/js/src/layouts/full-page/FullPage.vue"));
+      return __webpack_require__.e(/*! import() */ 37).then(__webpack_require__.bind(null, /*! @/layouts/full-page/FullPage.vue */ "./resources/js/src/layouts/full-page/FullPage.vue"));
     },
     children: [// =============================================================================
     // PAGES
@@ -79068,7 +79126,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/pages/error-404',
       name: 'pageError404',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 33).then(__webpack_require__.bind(null, /*! @/views/pages/Error404.vue */ "./resources/js/src/views/pages/Error404.vue"));
+        return __webpack_require__.e(/*! import() */ 36).then(__webpack_require__.bind(null, /*! @/views/pages/Error404.vue */ "./resources/js/src/views/pages/Error404.vue"));
       }
     }]
   }, // Redirect to 404 page, if no match found
@@ -80058,8 +80116,18 @@ __webpack_require__.r(__webpack_exports__);
       commit('setSales', res.data.sales);
     });
   },
-  getPendingSales: function getPendingSales(_ref2, tax_id) {
+  getSale: function getSale(_ref2, id) {
     var commit = _ref2.commit;
+    axios.get('get-sale', {
+      params: {
+        id: id
+      }
+    }).then(function (res) {
+      commit('setSale', res.data.sale);
+    });
+  },
+  getPendingSales: function getPendingSales(_ref3, tax_id) {
+    var commit = _ref3.commit;
     axios.get('get-pending-sales', {
       params: {
         tax_id: tax_id
@@ -80068,15 +80136,15 @@ __webpack_require__.r(__webpack_exports__);
       commit('setSales', res.data.sales);
     });
   },
-  addSale: function addSale(_ref3, fd) {
-    var commit = _ref3.commit;
+  addSale: function addSale(_ref4, fd) {
+    var commit = _ref4.commit;
     // alert('action called');
     return axios.post('add-sale', fd).then(function (res) {
       return res;
     });
   },
-  updateSale: function updateSale(_ref4, fd) {
-    var commit = _ref4.commit;
+  updateSale: function updateSale(_ref5, fd) {
+    var commit = _ref5.commit;
     return axios.post('update-sale', fd).then(function (res) {
       return res;
     });
@@ -80114,6 +80182,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   setSales: function setSales(state, sales) {
     state.sales = sales;
+  },
+  setSale: function setSale(state, sale) {
+    state.sale = sale;
   }
 });
 
@@ -80129,7 +80200,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  sales: []
+  sales: [],
+  sale: {}
 });
 
 /***/ }),
@@ -80269,11 +80341,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   getTaxes: function getTaxes(_ref, customer_id) {
     var commit = _ref.commit;
@@ -80295,40 +80362,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       commit('setSingleTax', res.data);
     });
   },
-  getTaxTeam: function () {
-    var _getTaxTeam = _asyncToGenerator(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(_ref3, tax_id) {
-      var commit;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              commit = _ref3.commit;
-              _context.next = 3;
-              return axios.get('get-tax-team', {
-                params: {
-                  tax_id: tax_id
-                }
-              }).then(function (res) {
-                commit('setTaxTeam', res.data.team);
-                return res;
-              });
+  getTaxTeam: function getTaxTeam(_ref3, tax_id) {
+    var commit;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getTaxTeam$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            commit = _ref3.commit;
+            _context.next = 3;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios.get('get-tax-team', {
+              params: {
+                tax_id: tax_id
+              }
+            }).then(function (res) {
+              commit('setTaxTeam', res.data.team);
+              return res;
+            }));
 
-            case 3:
-            case "end":
-              return _context.stop();
-          }
+          case 3:
+          case "end":
+            return _context.stop();
         }
-      }, _callee);
-    }));
-
-    function getTaxTeam(_x, _x2) {
-      return _getTaxTeam.apply(this, arguments);
-    }
-
-    return getTaxTeam;
-  }(),
+      }
+    });
+  },
   addTax: function addTax(_ref4, data) {
     var commit = _ref4.commit;
     // alert('action called');
@@ -80519,10 +80576,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
 
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
 /*=========================================================================================
   File Name: actions.js
   Description: Vuex Store - actions
@@ -80576,70 +80629,61 @@ var actions = {
     var commit = _ref9.commit;
     commit('ARRANGE_STARRED_PAGES_MORE', list);
   },
-  getAverageRate: function () {
-    var _getAverageRate = _asyncToGenerator(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(_ref10) {
-      var commit;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              commit = _ref10.commit;
-              _context.next = 3;
-              return axios.get('get-average-rate').then(function (res) {
-                commit('setAverageRate', res.data);
-                return res;
-              });
+  getAverageRate: function getAverageRate(_ref10) {
+    var commit;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getAverageRate$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            commit = _ref10.commit;
+            _context.next = 3;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios.get('get-average-rate').then(function (res) {
+              commit('setAverageRate', res.data);
+              return res;
+            }));
 
-            case 3:
-            case "end":
-              return _context.stop();
-          }
+          case 3:
+          case "end":
+            return _context.stop();
         }
-      }, _callee);
-    }));
+      }
+    });
+  },
+  getLoginUser: function getLoginUser(_ref11) {
+    var commit;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getLoginUser$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            commit = _ref11.commit;
+            _context2.next = 3;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios.get('login-user', {
+              params: {
+                user: localStorage.getItem('admin')
+              }
+            }).then(function (res) {
+              commit('setLoginUser', res.data);
+              return res;
+            }));
 
-    function getAverageRate(_x) {
-      return _getAverageRate.apply(this, arguments);
-    }
-
-    return getAverageRate;
-  }(),
-  getLoginUser: function () {
-    var _getLoginUser = _asyncToGenerator(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(_ref11) {
-      var commit;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              commit = _ref11.commit;
-              _context2.next = 3;
-              return axios.get('login-user', {
-                params: {
-                  user: localStorage.getItem('admin')
-                }
-              }).then(function (res) {
-                commit('setLoginUser', res.data);
-                return res;
-              });
-
-            case 3:
-            case "end":
-              return _context2.stop();
-          }
+          case 3:
+          case "end":
+            return _context2.stop();
         }
-      }, _callee2);
-    }));
-
-    function getLoginUser(_x2) {
-      return _getLoginUser.apply(this, arguments);
-    }
-
-    return getLoginUser;
-  }()
+      }
+    });
+  },
+  getComments: function getComments(_ref12, commentsUrl, type, object_id) {
+    var commit = _ref12.commit;
+    axios.get(commentsUrl, {
+      params: {
+        type: type,
+        object_id: object_id
+      }
+    }).then(function (res) {
+      commit('setComments');
+    });
+  }
 };
 /* harmony default export */ __webpack_exports__["default"] = (actions);
 
@@ -80776,6 +80820,9 @@ var mutations = {
   },
   setAverageRate: function setAverageRate(state, val) {
     state.averageRate = val;
+  },
+  setComments: function setComments(state, comments) {
+    state.comments = comments;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (mutations);
@@ -80805,6 +80852,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var state = {
+  comments: [],
   averageRate: 0,
   rootUrl: '/',
   isSidebarActive: true,

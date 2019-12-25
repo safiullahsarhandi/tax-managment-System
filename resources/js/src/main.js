@@ -95,6 +95,34 @@ if (token) {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
+axios.interceptors.request.use(function (config) {
+    if((config.url === 'get-sale-comment')){
+
+    Vue.prototype.$vs.loading.close();
+    }else if((config.url === 'get-payroll-comment')){
+
+    Vue.prototype.$vs.loading.close();
+    }else if((config.url === 'get-purchase-comment')){
+
+    Vue.prototype.$vs.loading.close();
+    }else{
+    Vue.prototype.$vs.loading();      
+    }
+    return config;
+  }, function (error) {
+
+    return Promise.reject(error);
+  });
+
+axios.interceptors.response.use(function (response) {
+    setTimeout(function(){
+      Vue.prototype.$vs.loading.close();
+    },1000)
+    return response;
+  }, function (error) {
+    
+    return Promise.reject(error);
+  });
 Vue.config.productionTip = false
 new Vue({
 	provide(){
