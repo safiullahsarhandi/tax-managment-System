@@ -739,13 +739,16 @@ class ApplicationController extends Controller {
 		$sale->total_taxable_value = $request->total_taxable_value;
 
 		$customfields = $request->additional_field;
-		for ($i = 1; $i <= count($request->additional_field); $i++) {
-			if (($key = array_search(null, $customfields)) !== false) {
-				unset($customfields[$key]);
-			}
-		}
+		if ($request->has('additional_field')) {
 
-		$sale->additional_fields = $customfields;
+			for ($i = 1; $i <= count($request->additional_field); $i++) {
+				if (($key = array_search(null, $customfields)) !== false) {
+					unset($customfields[$key]);
+				}
+			}
+
+			$sale->additional_fields = $customfields;
+		}
 
 		$sale->save();
 

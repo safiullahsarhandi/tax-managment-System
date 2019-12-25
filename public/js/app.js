@@ -78924,6 +78924,16 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         requiresAdmin: true
       }
     }, {
+      path: '/sale-update/:id',
+      name: 'Update Sale',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 38).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/EditSale.vue */ "./resources/js/src/views/pages/Sales/EditSale.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+      }
+    }, {
       path: '/sales-list',
       name: 'Sales List',
       component: function component() {
@@ -78948,6 +78958,16 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       name: 'Add Purchase',
       component: function component() {
         return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/AddPurchase.vue */ "./resources/js/src/views/pages/Purchases/AddPurchase.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+      }
+    }, {
+      path: '/purchase-update/:id',
+      name: 'Update Purchase',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 37).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/EditPurchase.vue */ "./resources/js/src/views/pages/Purchases/EditPurchase.vue"));
       },
       meta: {
         requiresAuth: true,

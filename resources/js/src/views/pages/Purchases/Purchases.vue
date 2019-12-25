@@ -11,9 +11,6 @@
                     <vs-th>Invoice No.</vs-th>
                     <vs-th>Invoice Date</vs-th>
                     <vs-th>Quantity</vs-th>
-                    <vs-th>Description</vs-th>
-                    <vs-th>Client Response</vs-th>
-                    <vs-th>Total VAT</vs-th>
                     <vs-th>Actions</vs-th>
                 </template> 
                 <template slot-scope="{data}">
@@ -23,9 +20,6 @@
                         <vs-td :data="tr.invoice_num">{{tr.invoice_num}}</vs-td>
                         <vs-td :data="tr.invoice_date">{{tr.invoice_date}}</vs-td>
                         <vs-td :data="tr.quantity">{{tr.quantity}}</vs-td>
-                        <vs-td :data="tr.description">{{tr.description}}</vs-td>
-                        <vs-td :data="tr.client_response">{{tr.client_response}}</vs-td>
-                        <vs-td :data="tr.total_vat">{{tr.total_vat}}</vs-td>
                             
                         <vs-td>
                             <vs-button :to="'purchase-update/'+tr.purchase_id" size="small" type="border" icon-pack="feather" icon="icon-edit"></vs-button>

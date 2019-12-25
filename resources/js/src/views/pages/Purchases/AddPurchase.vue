@@ -118,7 +118,7 @@
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="comments_for_top" v-validate="`required`" label-placeholder="Comments for ToP" v-model="comments_for_top" />
+                            <vs-input name="comments_for_top" label-placeholder="Comments for ToP" v-model="comments_for_top" />
                         </vx-input-group>
                     </vs-col>
                     <vs-col v-for="(field,index) in customField" :key="index" class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">

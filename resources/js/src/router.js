@@ -242,6 +242,15 @@ const router = new Router({
                     }
                 },
                 {
+                    path: '/sale-update/:id',
+                    name: 'Update Sale',
+                    component: () => import('./views/pages/Sales/EditSale.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+                {
                     path: '/sales-list',
                     name: 'Sales List',
                     component: () => import('./views/pages/Sales/Sales.vue'),
@@ -263,6 +272,15 @@ const router = new Router({
                     path: '/add-purchase',
                     name: 'Add Purchase',
                     component: () => import('./views/pages/Purchases/AddPurchase.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+                 {
+                    path: '/purchase-update/:id',
+                    name: 'Update Purchase',
+                    component: () => import('./views/pages/Purchases/EditPurchase.vue'),
                     meta: {
                         requiresAuth: true,
                         requiresAdmin: true,
