@@ -147,7 +147,6 @@
            ref="commentsView"
            :object_id="$route.params.id"
            type="Sale"
-           v-if="openComments"
            comments-url="get-sale-comment"
             />
         <!-- <Slide right width="350" isOpen>
@@ -209,17 +208,7 @@ export default {
     },
     methods: {
         handleToggleDrawer() {
-        	if(this.openComments){
-            this.openComments = false
-            this.$refs.commentsView.active = false;
-
-        	}else{
-        		this.openComments = true
-        		var self = this;
-        		setTimeout(function(){
-            		self.$refs.commentsView.active = true;
-        		})
-        	}
+        	this.$refs.commentsView.active = !this.$refs.commentsView.active;
         },
         ...mapActions({
             getSale: 'sales/getSale',

@@ -36,32 +36,36 @@ import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 
 export default {
     props: {
-        object_id : {
-            type : String,
-            required : true,
+        object_id: {
+            type: String,
+            required: true,
         },
-        type : {
-            type : String,
-            required : true,
+        type: {
+            type: String,
+            required: true,
         },
-        commentsUrl : {
-            type : String,
-            required : true,
+        commentsUrl: {
+            type: String,
+            required: true,
         },
 
     },
     watch: {
-      active(val, oldVal) {
-        /*this.interVal  = setInterval(this.$store.dispatch('getComments',this.commentsUrl,this.type,this.object_id),2000)
-        if(val == false){
-            clearInterval(interVal);
-        }*/
-        this.scrollToEnd()
-      }
+        active(val, oldVal) {
+            if (val == false) {
+                clearInterval(this.invterVal)
+            }else{
+                var self = this;
+        this.invterVal = setInterval(function() {
+            self.$store.dispatch('getComments', self.commentsUrl, self.type, self.object_id);
+        }, 2000)
+            }
+            this.scrollToEnd()
+        }
     },
     data() {
         return {
-            invterVal : '',
+            invterVal: '',
             active: false,
             settings: { // perfectscrollbar settings
                 maxScrollbarLength: 60,
@@ -82,14 +86,8 @@ export default {
             ],
         }
     },
-    created(){
-        var self  = this;
-        this.invterVal = setInterval(function(){
-            self.$store.dispatch('getComments',self.commentsUrl,self.type,self.object_id);
-        },2000)
-    },
-    beforeDestroy(){
-        clearInterval(this.invterVal)
+    created() {
+        
     },
     computed: {
         hideScrollToTopLocal: {
