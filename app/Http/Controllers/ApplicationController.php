@@ -473,6 +473,24 @@ class ApplicationController extends Controller {
 
 	public function get_exchange_rates() {
 
+		if (!$ar = Settings::where('key', 'annual_rate')->first()) {
+			$data = new Settings();
+			$data->key = 'annual_rate';
+			$data->value = 0;
+			$data->save();
+		}
+		if (!$ar = Settings::where('key', 'average_rate')->first()) {
+			$data = new Settings();
+			$data->key = 'average_rate';
+			$data->value = 0;
+			$data->save();
+		}
+		if (!$ar = Settings::where('key', 'salary_rate')->first()) {
+			$data = new Settings();
+			$data->key = 'salary_rate';
+			$data->value = 0;
+			$data->save();
+		}
 		$setting = Settings::all();
 		$rates = $setting;
 		return response()->json(compact('rates'));
@@ -1123,7 +1141,77 @@ class ApplicationController extends Controller {
 	}
 
 	public function get_payroll_comment(Request $request) {
+	}
+	public function status_updateSPP(Request $request) {
 
+		$data = array();
+		if ($request->type == 'sale') {
+			$data = Sales::whereSaleId($request->id)->whereTaxId($request->tax_id)->first();
+		}
+		if ($request->type == 'purchase') {
+			$data = Purchases::wherePurchaseId($request->id)->whereTaxId($request->tax_id)->first();
+		}
+		if ($request->type == 'payroll') {
+			$data = Payrolls::wherePayrollId($request->id)->whereTaxId($request->tax_id)->first();
+		}
+
+		if (is_null($data)) {
+			return response()->json(['status' => false, 'msg' => 'server not response, please try again or reload page', 'response' => 'undefined']);
+		}
+
+		$msg = '';
+		if ($data->supervisor_confirmed == 0) {
+
+			if ($data->officer_confirmed == 1) {
+				$data->officer_confirmed = 0;
+				$data->save();
+				$msg = 'Status Disabled Successfully';
+			} else {
+				$data->officer_confirmed = 1;
+				$data->save();
+				$msg = 'Status Enabled Successfully';
+			}
+		} else {
+
+			return response()->json(['status' => false, 'msg' => 'Your ' . $request->type . ' status approved by supervisor.', 'response' => $data->officer_confirmed]);
+		}
+
+		return response()->json(['status' => true, 'msg' => $msg, 'response' => $data->officer_confirmed]);
+
+	}
+
+	public function status_change_management(Request $request) {
+
+		$data = array();
+		if ($request->tax_type == 'sale') {
+			$data = Sales::whereId($request->id)->whereTaxId($request->tax_id)->first();
+		}
+		if ($request->tax_type == 'purchase') {
+			$data = Purchases::whereId($request->id)->whereTaxId($request->tax_id)->first();
+		}
+		if ($request->tax_type == 'payroll') {
+			$data = Payrolls::whereId($request->id)->whereTaxId($request->tax_id)->first();
+		}
+
+		if (is_null($data)) {
+			return response()->json(['status' => false, 'msg' => 'server not response, please try again or reload page', 'response' => 'undefined']);
+		}
+
+		$msg = '';
+		if ($request->by == 'supervisor') {
+
+			if ($data->management_confirmed == 0) {
+				$data->supervisor_confirmed = $request->status;
+				$data->save();
+			} else {
+				return response()->json(['status' => false, 'msg' => 'Your ' . $request->type . ' status approved by supervisor.', 'response' => $data->officer_confirmed]);
+			}
+		} else if ($request->by == 'admin') {
+			$data->management_confirmed = $request->status;
+			$data->save();
+		}
+
+		return response()->json(['status' => true, 'msg' => 'Changes successfully', 'response' => $request->status]);
 	}
 
 }
