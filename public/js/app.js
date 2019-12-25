@@ -80398,6 +80398,60 @@ __webpack_require__.r(__webpack_exports__);
       });
       data.close();
     });
+  },
+  statusUpdateSPP: function statusUpdateSPP(_ref8, data) {
+    var commit = _ref8.commit;
+    return axios.post('status-update-spp', {
+      id: data.id,
+      tax_id: data.tax_id,
+      type: data.type
+    }).then(function (res) {
+      if (res.data.status == true) {
+        data.notify({
+          title: 'Updated!...',
+          text: res.data.msg,
+          color: 'success',
+          position: 'top-right'
+        });
+      } else {
+        data.notify({
+          title: 'Sorry!...',
+          text: res.data.msg,
+          color: 'danger',
+          position: 'top-right'
+        });
+      }
+
+      return res;
+    });
+  },
+  statusChangeManagment: function statusChangeManagment(_ref9, data) {
+    var commit = _ref9.commit;
+    return axios.post('status-change-management', {
+      id: data.id,
+      by: data.by,
+      status: data.status,
+      tax_id: data.tax_id,
+      tax_type: data.tax_type
+    }).then(function (res) {
+      if (res.data.status == true) {
+        data.notify({
+          title: 'Updated!...',
+          text: res.data.msg,
+          color: 'success',
+          position: 'top-right'
+        });
+      } else {
+        data.notify({
+          title: 'Sorry!...',
+          text: res.data.msg,
+          color: 'danger',
+          position: 'top-right'
+        });
+      }
+
+      return res;
+    });
   }
 });
 

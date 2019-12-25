@@ -1132,60 +1132,78 @@ class ApplicationController extends Controller {
 		}
 	}
 
-	public function status_update_sale(Request $request){
+	public function status_updateSPP(Request $request){
 
-		$sale = Sales::whereSaleId($request->id)->whereTaxId($request->tax_id)->first();
-
-		$msg = '';
-		if($sale->status == 1){
-			$sale->status = 0;
-			$sale->save();
-			$msg = 'Status Disabled Successfully';
-		}else{
-			$sale->status = 1;
-			$sale->save();
-			$msg = 'Status Enabled Successfully';
+		$data = array();
+		if($request->type == 'sale'){
+			$data = Sales::whereSaleId($request->id)->whereTaxId($request->tax_id)->first();
+		}
+		if($request->type == 'purchase'){
+			$data = Purchases::wherePurchaseId($request->id)->whereTaxId($request->tax_id)->first();
+		}
+		if($request->type == 'payroll'){
+			$data = Payrolls::wherePayrollId($request->id)->whereTaxId($request->tax_id)->first();
 		}
 
-		return response()->json(['status' => true, 'msg' => $msg, 'response' => $sale->status]);
+		if(is_null($data)){
+			return response()->json(['status' => false, 'msg' => 'server not response, please try again or reload page', 'response' => 'undefined']);
+		}
+
+
+		$msg = '';
+		if($data->supervisor_confirmed == 0){
+
+			if($data->officer_confirmed == 1){
+				$data->officer_confirmed = 0;
+				$data->save();
+				$msg = 'Status Disabled Successfully';
+			}else{
+				$data->officer_confirmed = 1;
+				$data->save();
+				$msg = 'Status Enabled Successfully';
+			}
+		}else{
+
+			return response()->json(['status' => false, 'msg' => 'Your '.$request->type.' status approved by supervisor.', 'response' => $data->officer_confirmed]);
+		}
+
+		return response()->json(['status' => true, 'msg' => $msg, 'response' => $data->officer_confirmed]);
 
 	}
 
-	public function status_update_purchase(Request $request){
+	public function status_change_management(Request $request){
 
-		$purchase = Purchases::wherePurchaseId($request->id)->whereTaxId($request->tax_id)->first();
-
-		$msg = '';
-		if($purchase->status == 1){
-			$purchase->status = 0;
-			$purchase->save();
-			$msg = 'Status Disabled Successfully';
-		}else{
-			$purchase->status = 1;
-			$purchase->save();
-			$msg = 'Status Enabled Successfully';
+		$data = array();
+		if($request->tax_type == 'sale'){
+			$data = Sales::whereId($request->id)->whereTaxId($request->tax_id)->first();
+		}
+		if($request->tax_type == 'purchase'){
+			$data = Purchases::whereId($request->id)->whereTaxId($request->tax_id)->first();
+		}
+		if($request->tax_type == 'payroll'){
+			$data = Payrolls::whereId($request->id)->whereTaxId($request->tax_id)->first();
 		}
 
-		return response()->json(['status' => true, 'msg' => $msg, 'response' => $purchase->status]);
-
-	}
-
-	public function status_update_payroll(Request $request){
-
-		$res = Payrolls::wherePayrollId($request->id)->whereTaxId($request->tax_id)->first();
-
-		$msg = '';
-		if($res->status == 1){
-			$res->status = 0;
-			$res->save();
-			$msg = 'Status Disabled Successfully';
-		}else{
-			$res->status = 1;
-			$res->save();
-			$msg = 'Status Enabled Successfully';
+		if(is_null($data)){
+			return response()->json(['status' => false, 'msg' => 'server not response, please try again or reload page', 'response' => 'undefined']);
 		}
 
-		return response()->json(['status' => true, 'msg' => $msg, 'response' => $res->status]);
+		$msg = '';
+		if($request->by == 'supervisor'){
+
+			if($data->management_confirmed == 0){
+				$data->supervisor_confirmed = $request->status;
+				$data->save();		
+			}else{
+				return response()->json(['status' => false, 'msg' => 'Your '.$request->type.' status approved by supervisor.', 'response' => $data->officer_confirmed]);
+			}
+		}else if($request->by == 'admin'){
+			$data->management_confirmed = $request->status;
+			$data->save();
+		}
+
+		return response()->json(['status' => true, 'msg' => 'Changes successfully', 'response' => $request->status]);
+
 
 	}
 

@@ -79,7 +79,7 @@ Route::group(['prefix' => ''], function () {
 	Route::post('get-single-purchase', 'ApplicationController@get_purchase');
 	Route::post('update-purchase', 'ApplicationController@update_purchase');
 	Route::post('add-multiple-purchases/{customer_id}/{tax_id}/{type}/{userLoginId}', 'ApplicationController@add_multiple_purchases');
-	Route::post('status-update-purchase', 'ApplicationController@status_update_purchase');
+	
 
 	// Sales
 	Route::post('add-sale', 'ApplicationController@add_sale');
@@ -88,7 +88,7 @@ Route::group(['prefix' => ''], function () {
 	Route::post('get-single-sale', 'ApplicationController@get_sale');
 	Route::post('update-sale', 'ApplicationController@update_sale');
 	Route::post('add-multiple-sales/{customer_id}/{tax_id}/{type}/{userLoginId}', 'ApplicationController@add_multiple_sales');
-	Route::post('status-update-sale', 'ApplicationController@status_update_sale');
+	
 
 	// Payrolls
 	Route::post('add-payroll', 'ApplicationController@add_payroll');
@@ -97,7 +97,11 @@ Route::group(['prefix' => ''], function () {
 	Route::post('get-payroll', 'ApplicationController@get_payroll');
 	Route::post('update-payroll', 'ApplicationController@update_payroll');
 	Route::post('add-multiple-payrolls/{employee_id}/{tax_id}/{type}/{userLoginId}', 'ApplicationController@add_multiple_payrolls');
-	Route::post('status-update-payroll', 'ApplicationController@status_update_payroll');
+	
+
+	Route::post('status-update-spp', 'ApplicationController@status_updateSPP');
+	Route::post('status-change-management', 'ApplicationController@status_change_management');
+
 
 	Route::get('logout', 'ApplicationController@logout');
 

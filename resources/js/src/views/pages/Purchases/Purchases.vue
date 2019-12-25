@@ -21,7 +21,21 @@
                         <vs-td :data="tr.invoice_num">{{tr.invoice_num}}</vs-td>
                         <vs-td :data="tr.invoice_date">{{tr.invoice_date}}</vs-td>
                         <vs-td :data="tr.quantity">{{tr.quantity}}</vs-td>
-                        <vs-td :data="tr.status"><vs-switch @click="statusUpdate(tr.purchase_id)" v-model="tr.status"/></vs-td>
+
+                        <vs-td v-show='is_officer == true' :data="tr.officer_confirmed"><vs-switch @click="statusUpdate(tr.purchase_id, tr.officer_confirmed)" v-model="tr.officer_confirmed"/></vs-td>
+
+                        <vs-td v-show='is_admin == true' :data="tr.management_confirmed"> 
+                            <vs-select v-model="tr.management_confirmed" width="120px"  @input="changeManagementStatus(tr.management_confirmed, tr.id, 'admin')">
+                                  <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="item,index in statusList" />
+                            </vs-select>
+                        </vs-td>
+
+                        <vs-td v-show='is_supervisor == true' :data="tr.supervisor_confirmed"> 
+                            <vs-select v-model="tr.supervisor_confirmed" width="120px" @input="changeManagementStatus(tr.supervisor_confirmed, tr.id, 'supervisor')">
+                                  <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="item,index in statusList" />
+                            </vs-select>
+                        </vs-td>
+
                             
                         <vs-td>
                             <vs-button :to="'purchase-update/'+tr.purchase_id" size="small" type="border" icon-pack="feather" icon="icon-edit"></vs-button>
@@ -41,6 +55,15 @@ export default {
     data() {
         return {
             tax_id : '',
+            is_admin: false,
+            is_supervisor: false,
+            is_officer: false,
+            selected_status: 1,
+            statusList:[
+                {text:'Pending',value:0},
+                {text:'Approve',value:1},
+                {text:'Un approve',value:2},
+              ],
             // switch1: true,
 
         };
@@ -52,12 +75,42 @@ export default {
 
         this.tax_id = this.$store.state.rootUrl.split('/')[2];
         this.getPurchases(this.tax_id);
+
+        if (this.$store.state.AppActiveUser.type == 'Admin') {
+            this.is_admin = true;
+        }
+
+        if (this.$store.state.AppActiveUser.type == 'Supervisor') {
+            this.is_supervisor = true;
+        }
+
+        if (this.$store.state.AppActiveUser.type == 'Officer') {
+            this.is_officer = true;
+        }        
     },
     methods: {
         ...mapActions({
             getPurchases: 'purchases/getPurchases',
-            update: 'purchases/updatePurchase'
+            update: 'purchases/updatePurchase',
+            statusChange: 'taxes/statusUpdateSPP',
+            statusChangeManagment: 'taxes/statusChangeManagment'
         }),
+
+        changeManagementStatus(status, id, by){
+            
+            let data = {
+                id: id,
+                status: status,
+                by: by,
+                tax_id: this.tax_id,
+                notify: this.$vs.notify,
+                tax_type: 'purchase'
+            };
+            this.statusChangeManagment(data).then((res)=> {
+              
+            });
+        },
+
         updateCustomer(e) {
             this.$validator.validateAll('editform').then(result => {
                 if (result) {
@@ -82,11 +135,21 @@ export default {
             })
         },
 
-        statusUpdate(id){
-            this.$vs.loading();
-            axios.post('status-update-purchase',{id:id, tax_id: this.tax_id}).then(res=>{
-                this.$vs.notify({title:'Updated!...',text:res.data.msg,color:'success',position:'top-right'})
-                this.$vs.loading.close();
+        statusUpdate(id, status){
+
+            let data = {
+                id: id,
+                tax_id: this.tax_id,
+                notify: this.$vs.notify,
+                type: 'purchase'
+            };
+            this.statusChange(data).then((res)=> {
+                    var index = this.purchases.findIndex(function(o){ return o.purchase_id == id;} );
+                    if(res.data.response == 'undefined'){
+                        this.purchases[index].officer_confirmed = status; 
+                    }else{
+                        this.purchases[index].officer_confirmed = res.data.response; 
+                    }
             });
         },
 
