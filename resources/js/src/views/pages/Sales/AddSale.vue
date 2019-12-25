@@ -1,6 +1,6 @@
 <template>
     <div>
-        <multi-uploads @uploaded="successMultipleUpload" ref="multiUploads" :action="multipleRoute" sample-url="./public/samples/sale.xlsx" :active="multipleUploadPopup"></multi-uploads>
+        <multi-uploads @error="hasError" @uploaded="successMultipleUpload" ref="multiUploads" :action="multipleRoute" sample-url="./public/samples/sale.xlsx" :active="multipleUploadPopup"></multi-uploads>
         <!-- <vx-card title="Add Customer" subtitle="Add Information Of Customer OR company which tax will be managed by system" noShadow noRadius> -->
         <vx-card title="Add Sale" noShadow noRadius>
             <template slot="actions">
@@ -58,15 +58,13 @@
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="client_name" v-validate="`required`" label-placeholder="Client Name" v-model="client_name" />
+                            <vs-input disabled name="client_name" label-placeholder="Client Name" v-model="customer.name_english" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('client_name')">{{errors.first('client_name')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="client_tin" v-validate="`required`" label-placeholder="Client TIN" v-model="client_tin" />
+                            <vs-input disabled name="client_tin" label-placeholder="Client TIN" v-model="customer.tin_no" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('client_tin')">{{errors.first('client_tin')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
@@ -82,13 +80,13 @@
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="non_taxable_sales" v-validate="`required`" label-placeholder="Non-Taxable Sales" v-model="non_taxable_sales" />
+                            <vs-input name="non_taxable_sales" v-validate="`decimal`" label-placeholder="Non-Taxable Sales" v-model="non_taxable_sales" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('non_taxable_sales')">{{errors.first('non_taxable_sales')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="export_value" v-validate="`required`" label-placeholder="Value of Exports/ 0% VAT" v-model="export_value" />
+                            <vs-input name="export_value" label-placeholder="Value of Exports/ 0% VAT" v-model="export_value" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('export_value')">{{errors.first('export_value')}}</span>
                     </vs-col>
@@ -98,13 +96,13 @@
                 <vs-row>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="person_non_taxable_sales" label-placeholder="Non-Taxable Sales" v-model="person_non_taxable_sales" />
+                            <vs-input name="person_non_taxable_sales" v-validate="'decimal'" label-placeholder="Non-Taxable Sales" v-model="person_non_taxable_sales" />
                         </vx-input-group>
-                        <!-- <span class="text-danger" v-show="errors.has('person_non_taxable_sales')">{{errors.first('person_non_taxable_sales')}}</span> -->
+                        <span class="text-danger" v-show="errors.has('person_non_taxable_sales')">{{errors.first('person_non_taxable_sales')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="person_export_value" label-placeholder="Value of Exports/ 0% VAT" v-model="person_export_value" />
+                            <vs-input disabled name="person_export_value" label-placeholder="VAT" v-model="person_export_value" />
                         </vx-input-group>
                         <!-- <span class="text-danger" v-show="errors.has('person_export_value')">{{errors.first('person_export_value')}}</span> -->
                     </vs-col>
@@ -114,13 +112,13 @@
                 <vs-row>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="customer_non_taxable_sales" label-placeholder="Non-Taxable Sales" v-model="customer_non_taxable_sales" />
+                            <vs-input name="customer_non_taxable_sales" v-validate="'decimal'" label-placeholder="Non-Taxable Sales" v-model="customer_non_taxable_sales" />
                         </vx-input-group>
-                        <!-- <span class="text-danger" v-show="errors.has('customer_non_taxable_sales')">{{errors.first('customer_non_taxable_sales')}}</span> -->
+                        <span class="text-danger" v-show="errors.has('customer_non_taxable_sales')">{{errors.first('customer_non_taxable_sales')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="customer_export_value" label-placeholder="Value of Exports/ 0% VAT" v-model="customer_export_value" />
+                            <vs-input disabled name="customer_export_value" label-placeholder="VAT" v-model="customer_export_value" />
                         </vx-input-group>
                         <!-- <span class="text-danger" v-show="errors.has('customer_export_value')">{{errors.first('customer_export_value')}}</span> -->
                     </vs-col>
@@ -128,7 +126,7 @@
                 <vs-row>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="total_taxable_value" v-validate="`required`" label-placeholder="Total Taxable Value" v-model="total_taxable_value" />
+                            <vs-input disabled name="total_taxable_value" label-placeholder="Total Taxable Value" v-model="total_taxable_value" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('total_taxable_value')">{{errors.first('total_taxable_value')}}</span>
                     </vs-col>
@@ -136,25 +134,25 @@
                 <vs-row>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="item_subject_taxes" v-validate="`required`" label-placeholder="Itesm subject to taxes:" v-model="item_subject_taxes" />
+                            <vs-input name="item_subject_taxes" v-validate="`required`" label-placeholder="Item subject to taxes:" v-model="item_subject_taxes" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('item_subject_taxes')">{{errors.first('item_subject_taxes')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="comments_3e_fii" v-validate="`required`" label-placeholder="Comments (3E-Fii)" v-model="comments_3e_fii" />
+                            <vs-input name="comments_3e_fii" label-placeholder="Comments (3E-Fii)" v-model="comments_3e_fii" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('comments_3e_fii')">{{errors.first('comments_3e_fii')}}</span>
+                        <!-- <span class="text-danger" v-show="errors.has('comments_3e_fii')">{{errors.first('comments_3e_fii')}}</span> -->
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="client_responses" v-validate="`required`" label-placeholder="Client Responses" v-model="client_responses" />
+                            <vs-input name="client_responses" label-placeholder="Client Responses" v-model="client_responses" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('client_responses')">{{errors.first('client_responses')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="comments_for_top" v-validate="`required`" label-placeholder="Comments for ToP" v-model="comments_for_top" />
+                            <vs-input name="comments_for_top" label-placeholder="Comments for ToP" v-model="comments_for_top" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('comments_for_top')">{{errors.first('comments_for_top')}}</span>
                     </vs-col>
@@ -201,10 +199,10 @@ export default {
             non_taxable_sales: '',
             export_value: '',
             person_non_taxable_sales: '',
-            person_export_value: '',
+            person_export_value: 0,
             customer_non_taxable_sales: '',
-            customer_export_value: '',
-            total_taxable_value: '',
+            customer_export_value: 0,
+            total_taxable_value: 0,
             item_subject_taxes: '',
             comments_3e_fii: '',
             client_responses: '',
@@ -213,13 +211,62 @@ export default {
             customer_id: '',
             multipleRoute: ''
         };
-    }, 
+    },
     components: {
         multiUploads
+    },
+    computed : {
+        ...mapState('customers',['customer']),
+        averageRate(){
+            return this.$store.state.averageRate;
+        }
+    },
+    watch: {
+      person_non_taxable_sales(val, oldVal){
+        if(parseInt(val) >= 0){
+
+        this.person_export_value = parseFloat(val * 0.1).toFixed(2)
+        // this.total_taxable_value += (taxable_value + (taxable_value * 0.1));
+        }else{
+        this.person_export_value = 0   
+        }
+        this.setTotalVat()
+
+      },
+      customer_non_taxable_sales(val, oldVal){
+        if(parseInt(val) >= 0){
+
+        this.customer_export_value = parseFloat(val * 0.1).toFixed(2)
+        var taxable_value = (val * this.averageRate);
+        // this.total_taxable_value += (taxable_value + (taxable_value * 0.1));
+        }else{
+        this.customer_export_value = 0   
+        }
+        this.setTotalVat()
+
+      },
+      non_taxable_sales(val, oldVal){
+        if(parseInt(val) >= 0){
+
+        var non_taxable_value = (val * this.averageRate);
+        }
+        this.setTotalVat()
+
+      },
+      export_value(val, oldVal){
+        if(parseInt(val) >= 0){
+
+        var non_taxable_value = (val * this.averageRate);
+        // this.total_taxable_value += (non_taxable_value);
+        }
+        this.setTotalVat()
+      }
     },
     created() {
         this.tax_id = this.$store.state.rootUrl.split('/')[2];
         this.customer_id = localStorage.getItem('customer');
+        this.$store.dispatch('getAverageRate');
+        this.getCustomer(this.customer_id);
         let loginUserId;
         let loginUsertype;
         if (this.$store.state.AppActiveUser.type == 'Supervisor') {
@@ -229,24 +276,49 @@ export default {
         }
         loginUserId = this.$store.state.AppActiveUser.manager_id;
         // console.log(loginUserId)
-        this.multipleRoute = 'add-multiple-sales/'+this.customer_id+'/'+this.tax_id+'/'+loginUsertype+'/'+loginUserId;
+        this.multipleRoute = 'add-multiple-sales/' + this.customer_id + '/' + this.tax_id + '/' + loginUsertype + '/' + loginUserId;
     },
     methods: {
+        setTotalVat(){
+            var taxable_value = (this.person_non_taxable_sales * this.averageRate);
+            var person_non_taxable_val = (taxable_value + (taxable_value * 0.1));
+
+            var taxable_value = (this.customer_non_taxable_sales * this.averageRate);
+            var customer_non_taxable_val = (taxable_value + (taxable_value * 0.1));
+
+            var non_taxable_sale = (this.non_taxable_sales * this.averageRate);
+            var export_value = (this.export_value * this.averageRate);
+
+            this.total_taxable_value = person_non_taxable_val + customer_non_taxable_val + non_taxable_sale + export_value;
+
+
+        },
         showUploader() {
             this.$refs.multiUploads.isShown = true;
         },
         addMoreFeild() {
             this.customField.push({ name: 'additional_field[]', value: '', type: 'text' });
         },
-        successMultipleUpload(){
+        hasError(res) {
             this.$vs.notify({
-                color : 'success',
-                text : 'Successfully Uploaded'
+                color: 'danger',
+                text: res.msg,
+                position: 'right-top',
+                fixed: true,
+            })
+        },
+        successMultipleUpload(res) {
+            this.$vs.notify({
+                color: 'success',
+                text: res.msg,
+                position: 'right-top',
+                fixed: true,
             })
             this.$refs.multiUploads.isShown = false;
         },
         ...mapActions({
             submit: 'sales/addSale',
+            getCustomer : 'customers/getCustomer'
         }),
 
         addForm(e) {

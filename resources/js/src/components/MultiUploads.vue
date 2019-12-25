@@ -2,7 +2,7 @@
     <vs-popup :title="title" :active.sync="isShown">
         <vs-row>
             <vs-col class="uploader-column">
-                <vs-upload text="Drag/Drop OR select csv file" accept=".xlsx" :fileName="fileName" @on-success="successFunc" @on-error="errorFunc" @on-delete="deleteFunc" :action="action" :limit="1" :multiple="false"></vs-upload>
+                <vs-upload ref="multiUploader" :singleUpload="true" text="Drag/Drop OR select .xlsx file" accept=".xlsx" :fileName="fileName" @on-success="successFunc" @on-error="errorFunc" @on-delete="deleteFunc" :action="action" :limit="1" :multiple="false"></vs-upload>
             </vs-col>
             <vs-col class="text-right">
             	<a :href="sampleUrl" download>View Sample</a>
@@ -42,16 +42,26 @@ export default {
         };
     },
     methods: {
-      deleteFunc() {
+      deleteFunc(error) {
+            
 			this.$emit('deleted'); 
       },
-      successFunc() {
-			this.$emit('uploaded');        
+      successFunc(success) {
+        var response = JSON.parse(success.target.response);
+        var multiUploader = this.$refs.multiUploader;
+            var file = _.filter(multiUploader.filesx, (o) => { return o.remove !== true })
+            if (file.length > 0) {
+
+                var index = _.findLastIndex(multiUploader.filesx);
+                this.$refs.multiUploader.removeFile(index)
+            }
+			this.$emit('uploaded',response);        
             // this.successMultipleUpload();
             // console.log('testing');
       },
-      errorFunc() {
-			this.$emit('hasError');        
+      errorFunc(error) {
+         var response = JSON.parse(error.target.response);
+			this.$emit('error',response);        
       },
     }
 }

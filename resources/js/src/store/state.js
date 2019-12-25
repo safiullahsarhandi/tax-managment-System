@@ -12,6 +12,7 @@ import themeConfig from '@/../themeConfig.js'
 import colors from '@/../themeConfig.js'
 
 const state = {
+    averageRate : 0,
     rootUrl : '/',
     isSidebarActive: true,
     breakpoint: null,

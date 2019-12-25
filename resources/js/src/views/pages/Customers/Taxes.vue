@@ -19,7 +19,7 @@
                         <vs-td>{{tr.description}}</vs-td>
                         <vs-td>{{tr.supervisor.full_name}}</vs-td>
                         <vs-td>{{tr.officers_count}}</vs-td>
-                        <vs-td>{{tr.status == 1? 'In progress':'Completed'}}</vs-td>
+                        <vs-td>{{tr.status == 0? 'In progress':'Completed'}}</vs-td>
                         <vs-td>
                              <vs-button v-if="$store.getters.userType == 'Admin'" size="small" type="border" icon-pack="feather" icon="icon-edit" @click="editTax(tr.id)"></vs-button>
                              <vs-button size="small" type="border" icon-pack="feather" icon="icon-maximize-2" :to="'tax-collection/'+tr.tax_id"></vs-button>
@@ -127,6 +127,7 @@ export default {
                     this.$vs.loading();
                     self = this;
                     let fd = new FormData(self.$refs.addTaxManagmentForm);
+                    fd.append('customer_id',this.tax_customer_id)
                     fd.append('officers', self.officer)
                     fd.append('supervisor_id',self.supervisor)
                     let data = {

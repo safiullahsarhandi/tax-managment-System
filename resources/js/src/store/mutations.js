@@ -93,6 +93,9 @@ const mutations = {
 
         state.AppActiveUser  = data;
 
+    },
+    setAverageRate(state,val){
+        state.averageRate = val;
     }
 }
 

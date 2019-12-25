@@ -124,6 +124,7 @@
         </vx-card>
 
         <multi-uploads
+                    @error='hasError'
                     @uploaded="successMultipleUpload"
                     ref="multiUploads" 
                     action="add-multiple-customer" 
@@ -171,12 +172,23 @@ export default {
         showUploader() {
             this.$refs.multiUploads.isShown = true;
         },
-        successMultipleUpload(){
+        successMultipleUpload(res){
+
             this.$vs.notify({
                 color : 'success',
-                text : 'Successfully Uploaded'
+                text : res.msg,
+                position : 'right-top',
+                fixed : true,
             })
             this.$refs.multiUploads.isShown = false;
+        },
+        hasError(res){
+            this.$vs.notify({
+                color : 'danger',
+                text : res.msg,
+                position : 'right-top',
+                fixed : true,
+            })
         },
         addMoreFeild() {
             this.customField.push({ name: 'additional_field[]', value: '', type: 'text' });

@@ -82,7 +82,7 @@
                 </vs-row>
             </form>
         </vx-card>
-        <multi-uploads @uploaded="successMultipleUpload" :action="multipleRoute" sample-url="./public/samples/employee.xlsx" ref="multiUploads" :active="multipleUploadPopup"></multi-uploads>
+        <multi-uploads @error="hasError" @uploaded="successMultipleUpload" :action="multipleRoute" sample-url="./public/samples/employee.xlsx" ref="multiUploads" :active="multipleUploadPopup"></multi-uploads>
     </div>
 </template>
 <script>
@@ -119,13 +119,23 @@ export default {
         ...mapActions({
             create: 'employees/create',
         }),
+        hasError(res){
+            this.$vs.notify({
+                color : 'danger',
+                text : res.msg,
+                position : 'right-top',
+                fixed : true,
+            })
+        },
         showUploader() {
             this.$refs.multiUploads.isShown = true;
         },
-        successMultipleUpload(){
+        successMultipleUpload(res){
             this.$vs.notify({
                 color : 'success',
-                text : 'Successfully Uploaded'
+                text : res.msg,
+                position : 'right-top',
+                fixed : true,
             })
             this.$refs.multiUploads.isShown = false;
         },

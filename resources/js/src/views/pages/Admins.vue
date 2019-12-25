@@ -10,7 +10,7 @@
                     <vs-th>Phone #</vs-th>
                     <vs-th>Email</vs-th>
                     <vs-th>Address</vs-th>
-                    <vs-th>Roll</vs-th>
+                    <vs-th>Role</vs-th>
                     <vs-th>Status</vs-th>
                     <vs-th>Actions</vs-th>
                 </template>
@@ -194,7 +194,7 @@ export default {
             defaultRoll:0,
             selectedRoll:0,
             rolles:[
-                {value: 0, label: 'Select Roll', selectedText: 'Select Roll', isSelected: false },
+                {value: 0, label: 'Select Role', selectedText: 'Select Role', isSelected: false },
                 {value: 1, label: 'Admin', selectedText: 'Admin', isSelected: false },
                 {value: 2, label: 'Supervisor', selectedText: 'Supervisor', isSelected: false },
                 {value: 3, label: 'Officer', selectedText: 'Officer', isSelected: false },
@@ -223,10 +223,24 @@ export default {
                     // console.log(res.data);
                         if (res.data.status == 'success') {
                             this.password = this.email = this.first_name = this.last_name = this.zip_code = this.city = this.state = this.address = this.phone = '';
+                            this.gender = 'male'
+                            this.selectedRoll = 0;
                             e.target.reset();
                             this.errors.clear();
                             this.addAdminModal = false;
                             this.getAdmins();
+                            this.$vs.notify({
+                                color : 'danger',
+                                position : 'right-top',
+                                text : res.data.msg, 
+                            })
+
+                        }else{
+                            this.$vs.notify({
+                                color : 'danger',
+                                position : 'right-top',
+                                text : res.data.msg, 
+                            })
                         }
                     })
                 }

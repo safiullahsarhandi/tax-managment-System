@@ -1,6 +1,6 @@
 <template>
     <div>
-        <multi-uploads @uploaded="successMultipleUpload" ref="multiUploads" :action="multipleRoute" sample-url="./public/samples/payroll.xlsx" :active="multipleUploadPopup"></multi-uploads>
+        <multi-uploads @error='hasError' @uploaded="successMultipleUpload" ref="multiUploads" :action="multipleRoute" sample-url="./public/samples/payroll.xlsx" :active="multipleUploadPopup"></multi-uploads>
         <vx-card title="Add Payroll" noShadow noRadius>
             <template slot="actions">
                 <vs-button @click="showUploader()" class="mt-5" type="gradient" button="button">Upload Excel Sheet</vs-button>
@@ -222,14 +222,15 @@ export default {
             deduction_advance: '',
             salary_adjustment: '',
             remark: '',
-            employee_id:''
+            employee_id: '',
+            multipleRoute : ''
         };
     },
     created() {
         this.tax_id = this.$store.state.rootUrl.split('/')[2];
         this.tax_customer_id = localStorage.getItem('customer');
         this.getEmployees(this.tax_customer_id);
-        
+
     },
 
     components: {
@@ -261,12 +262,22 @@ export default {
         addMoreFeild() {
             this.customField.push({ name: 'additional_field[]', value: '', type: 'text' });
         },
-        successMultipleUpload(){
+        hasError(res) {
             this.$vs.notify({
-                color : 'success',
-                text : 'Successfully Uploaded'
+                color: 'danger',
+                text: res.msg,
+                position: 'right-top',
+                fixed: true,
             })
-            this.$refs.multiUploads.isShown = false
+        },
+        successMultipleUpload(res) {
+            this.$vs.notify({
+                color: 'success',
+                text: res.msg,
+                position: 'right-top',
+                fixed: true,
+            })
+            this.$refs.multiUploads.isShown = false;
         },
 
         getEmployee() {
@@ -274,7 +285,7 @@ export default {
                 axios.post('get-employee', { id: this.employee }).then(res => {
                     // var employee = this.findEmployee(this.employee);
                     var employee = res.data.data;
-                    
+
                     this.employeeVal = employee;
                     let loginUserId;
                     let loginUsertype;
@@ -284,7 +295,7 @@ export default {
                         loginUsertype = 'officer';
                     }
                     loginUserId = this.$store.state.AppActiveUser.manager_id;
-                    this.multipleRoute = 'add-multiple-payrolls/'+this.employee+'/'+this.tax_id+'/'+loginUsertype+'/'+loginUserId;
+                    this.multipleRoute = 'add-multiple-payrolls/' + this.employee + '/' + this.tax_id + '/' + loginUsertype + '/' + loginUserId;
                     self = this;
                     self.customField = [];
                     if (employee.additional_fields != null) {

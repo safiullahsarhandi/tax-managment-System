@@ -25,6 +25,10 @@ class ApplicationController extends Controller {
 	public function __invoke() {
 		return view('application');
 	}
+	public function get_average_rate() {
+		$rate = Settings::where('key', 'average_rate')->first();
+		return $rate->value;
+	}
 	public function get_login_user(Request $request) {
 		$admin = Admin::whereManagerId($request->user)->first();
 		$request->session()->put('admin', $admin);
@@ -161,59 +165,68 @@ class ApplicationController extends Controller {
 	public function add_multiple_customer(Request $request) {
 
 		if ($request->hasFile('file')) {
-
-
-				$data = Excel::load($request->file('file'), function ($reader){
-				// Getting all results
-				
-				$customers = $reader->get()->toArray();
-				// $totalAddedCount = 0;
-				foreach ($customers as $key => $value) {
-
-						/*if ($res = TaxCustomers::whereEmail($request->email)->first()) {
-							return response()->json(['status' => "error", 'msg' => "email already exists"]);
-						}
-						if ($res = TaxCustomers::whereTaxCardNum($request->tax_card_num)->first()) {
-							return response()->json(['status' => "error", 'msg' => "Account with this tax card number already exist"]);
-						}
-						if ($res = TaxCustomers::whereTinNo($request->tin_no)->first()) {
-							return response()->json(['status' => "error", 'msg' => "Account with this tax card number already exist"]);
-					*/
-
-					settype($value['tax_id_no'], 'Integer');
-					$tax_id_no = $value['tax_id_no'];
-
-					settype($value['tin_num'], 'Integer');
-					$tin_no = $value['tin_no'];
-
-					settype($value['tel'], 'Integer');
-					$tel = $value['tel'];
-
-					$customer = new TaxCustomers;
-					$customer->customer_id = (String) Str::uuid();
-					$customer->name_english = $value['name_english'];
-					$customer->name_khmer = $value['name_khmer'];
-					$customer->tax_card_num = $tax_id_no;
-					$customer->tin_no =   $tin_no;
-					$customer->address = $value['address'];
-					$customer->street = $value['street'];
-					$customer->group = $value['group'];
-					$customer->sangkat = $value['sangkat'];
-					$customer->district = $value['district'];
-					$customer->province = $value['province'];
-					$customer->muncipality = $value['muncipality'];
-					$customer->telephone = '+' . $tel;
-					$customer->email =  $value['email'];
-					$customer->industry = $value['industry'];
-					$customer->incorporation_date = $value['incorporation_date'];
-					$customer->village = $value['village'];
-					$result = $customer->save();
-					
-				}
+			$emailCount = $taxCardNo = $tinNo = 0;
+			$reader = Excel::selectSheetsByIndex(0)->load($request->file('file'), function ($reader) use (&$emailCount, &$taxCardNo, &$tinNo) {
 
 			})->get();
-				$totalAddedCount = $data->count();
-				return response()->json(['status' => 'success', 'msg' => "$totalAddedCount new companies added."]);
+			// Getting all results
+			$customers = $reader->toArray();
+			$headers = $reader->getHeading();
+			$possibleVals = ['name_khmer', 'name_english', 'tax_id_no', 'tin_no', 'incorporation_date', 'address', 'street', 'group', 'village', 'sangkat', 'district', 'province', 'muncipality', 'tel', 'email', 'industry'];
+			$possibleValsCount = count($possibleVals);
+			$uploadedHeaderCount = count(array_intersect($possibleVals, $headers));
+			if ($possibleValsCount != $uploadedHeaderCount) {
+				return response()->json(['status' => false, 'msg' => 'upload cannot be processed. <br> please upload file which contain same columns as defined in sample file also uploaded file must contain some data'], 422);
+			}
+			foreach ($customers as $key => $value) {
+
+				settype($value['tax_id_no'], 'Integer');
+				$tax_id_no = $value['tax_id_no'];
+
+				settype($value['tin_num'], 'Integer');
+				$tin_no = $value['tin_no'];
+
+				settype($value['tel'], 'Integer');
+				$tel = $value['tel'];
+
+				if ($res = TaxCustomers::whereEmail($value['email'])->orwhere('tax_card_num', $tax_id_no)->orwhere('tin_no', $tin_no)->first()) {
+					$emailCount++;
+					$tinNo++;
+					$taxCardNo++;
+					continue;
+				}
+				/*if ($res = TaxCustomers::whereTaxCardNum($tax_id_no)->first()) {
+							continue;
+
+						}
+						if ($res = TaxCustomers::whereTinNo($tin_no)->first()) {
+							continue;
+
+					*/
+				$customer = new TaxCustomers;
+				$customer->customer_id = (String) Str::uuid();
+				$customer->name_english = $value['name_english'];
+				$customer->name_khmer = $value['name_khmer'];
+				$customer->tax_card_num = $tax_id_no;
+				$customer->tin_no = $tin_no;
+				$customer->address = $value['address'];
+				$customer->street = $value['street'];
+				$customer->group = $value['group'];
+				$customer->sangkat = $value['sangkat'];
+				$customer->district = $value['district'];
+				$customer->province = $value['province'];
+				$customer->muncipality = $value['muncipality'];
+				$customer->telephone = '+' . $tel;
+				$customer->email = $value['email'];
+				$customer->industry = $value['industry'];
+				$customer->incorporation_date = $value['incorporation_date'];
+				$customer->village = $value['village'];
+				$result = $customer->save();
+
+			}
+			$totalAddedCount = $reader->count();
+			$totalAddedCount -= $emailCount;
+			return response()->json(['status' => 'success', 'msg' => "$totalAddedCount new companies added. <br> $emailCount email already exists, <br> $taxCardNo tax card No. already associated with companies <br> $tinNo Tin No. already associated with companies."]);
 		}
 	}
 
@@ -347,7 +360,7 @@ class ApplicationController extends Controller {
 
 	// admins methods
 	public function get_admins(Request $request) {
-		$admins = Admin::all();
+		$admins = Admin::latest('id')->get();
 		return response()->json(compact('admins'));
 	}
 	public function get_member_detail($id) {
@@ -357,6 +370,9 @@ class ApplicationController extends Controller {
 		return response()->json(compact('member'));
 	}
 	public function add_admin(Request $request) {
+		if (Admin::where('email', $request->email)->exists()) {
+			return response()->json(['status' => 'false', 'msg' => 'account with this email already exists'], 200);
+		}
 		$admin = new Admin;
 		$admin->manager_id = (String) Str::uuid();
 		$admin->first_name = $request->first_name;
@@ -369,7 +385,16 @@ class ApplicationController extends Controller {
 		$admin->state = $request->state;
 		$admin->zip_code = $request->zip_code;
 		$admin->phone = $request->phone;
-		$admin->type = 1; // 2 means admin
+		if ($request->roll == 'Admin') {
+			$admin->type = 1; // 1 means admin
+
+		} elseif ($request->roll == 'Supervisor') {
+			$admin->type = 2; // 2 means Supervisor
+
+		} else {
+			$admin->type = 3; // 1 means officer
+
+		}
 		$result = $admin->save();
 		$admins = Admin::all();
 		return response()->json(['status' => 'success', 'admins' => $admins], 200);
@@ -580,17 +605,15 @@ class ApplicationController extends Controller {
 		$purchase->description = $request->good_desc;
 		$purchase->quantity = $request->quantity;
 		$purchase->local_purchase_tax_val = $request->taxable_value_local;
-		$purchase->local_purchase_vat = $request->vat_local;
+		// $purchase->local_purchase_vat = $request->vat_local;
 		$purchase->imports_taxable_val = $request->taxable_value_import;
-		$purchase->imports_vat = $request->vat_import;
-		$purchase->total_vat = $request->total_vat;
+		// $purchase->imports_vat = $request->vat_import;
 		$purchase->subject = $request->item_subject_taxes;
 		$purchase->comments = $request->comments_3e_fii;
 		$purchase->top_comments = $request->comments_for_top;
 		$purchase->client_responses = $request->client_responses;
 		$purchase->non_taxable_purchases = $request->non_taxable_purchases;
 		$purchase->supplier = $request->supplier;
-		$purchase->vat_tin = $request->vat_tin;
 		$purchase->additional_fields = $request->additional_field;
 		$purchase->status = 0;
 		if ($request->has('supervisor_id')) {
@@ -624,8 +647,6 @@ class ApplicationController extends Controller {
 		$sale->tax_period = $request->tax_period;
 		$sale->invoice_date = $request->invoice_date;
 		$sale->invoice_num = $request->invoice_number;
-		$sale->client_name = $request->client_name;
-		$sale->client_tin = $request->client_tin;
 		$sale->description = $request->description;
 		$sale->quantity = $request->quantity;
 		$sale->taxes_subject = $request->item_subject_taxes;
@@ -646,19 +667,9 @@ class ApplicationController extends Controller {
 			$sale->taxable_person_sales = $request->person_non_taxable_sales;
 		}
 
-		if (!is_null($request->person_export_value)) {
-			$sale->taxable_person_vat = $request->person_export_value;
-		}
-
 		if (!is_null($request->customer_non_taxable_sales)) {
 			$sale->cust_sales = $request->customer_non_taxable_sales;
 		}
-
-		if (!is_null($request->customer_export_value)) {
-			$sale->cust_sales_vat = $request->customer_export_value;
-		}
-
-		$sale->total_taxable_value = $request->total_taxable_value;
 
 		$sale->additional_fields = $request->additional_field;
 		$sale->status = 0;
@@ -885,113 +896,117 @@ class ApplicationController extends Controller {
 
 	}
 
-
 	public function add_multiple_employee(Request $request, $id) {
 
 		if ($request->hasFile('file')) {
-				$data = Excel::load($request->file('file'), function ($reader) use ($id){
-				// Getting all results
-				
-				$employees = $reader->get()->toArray();
-				foreach ($employees as $key => $value) {
-
-					if($find=CustomerEmployee::whereEmployeeNum($value['employee_no'])->orWhere('nssf_num',$value['nssf_no'])->exists()){
-						continue;
-					}
-
-					$customer_id = $id;
-
-					$employee = new CustomerEmployee;
-					$employee->employee_id 			= (String) Str::uuid();
-					$employee->tax_customer_id 		= $customer_id;
-					$employee->nssf_num 			= $value['nssf_no'];
-					$employee->employee_num 		= $value['employee_no'];
-					$employee->name_english 		= $value['name_english'];
-					$employee->name_khmer 			= $value['name_khmer'];
-					$employee->nationality 			= $value['nationality'];
-					$employee->dob 					= $value['dob'];
-					$employee->joining_date 		= $value['joining_date'];
-					$employee->position 			= $value['position'];
-					$employee->sex 					= $value['sex'];
-					$employee->contract_type 		= $value['contract_type'];
-					$employee->spouse 				= $value['spouse'];
-					$result 						= $employee->save();
-				}
+			$data = Excel::load($request->file('file'), function ($reader) use ($id) {
 
 			})->get();
-				$totalAddedCount = $data->count();
-				return response()->json(['status' => 'success', 'msg' => "$totalAddedCount new Employee(s) added."]);
+			// Getting all results
+
+			$employees = $data->toArray();
+			$headers = $data->getHeading();
+			$possibleVals = ['nssf_no', 'employee_no', 'name_english', 'name_khmer', 'nationality', 'dob', 'joining_date', 'position', 'sex', 'contract_type', 'spouse'];
+			$possibleValsCount = count($possibleVals);
+			$uploadedHeaderCount = count(array_intersect($possibleVals, $headers));
+			if ($possibleValsCount != $uploadedHeaderCount) {
+				return response()->json(['status' => false, 'msg' => 'upload cannot be processed. <br> please upload file which contain same columns as defined in sample file also uploaded file must contain some data'], 422);
+			}
+			foreach ($employees as $key => $value) {
+
+				if ($find = CustomerEmployee::whereEmployeeNum($value['employee_no'])->orWhere('nssf_num', $value['nssf_no'])->exists()) {
+					continue;
+				}
+
+				$customer_id = $id;
+
+				$employee = new CustomerEmployee;
+				$employee->employee_id = (String) Str::uuid();
+				$employee->tax_customer_id = $customer_id;
+				$employee->nssf_num = $value['nssf_no'];
+				$employee->employee_num = $value['employee_no'];
+				$employee->name_english = $value['name_english'];
+				$employee->name_khmer = $value['name_khmer'];
+				$employee->nationality = $value['nationality'];
+				$employee->dob = $value['dob'];
+				$employee->joining_date = $value['joining_date'];
+				$employee->position = $value['position'];
+				$employee->sex = $value['sex'];
+				$employee->contract_type = $value['contract_type'];
+				$employee->spouse = $value['spouse'];
+				$result = $employee->save();
+			}
+			$totalAddedCount = $data->count();
+			return response()->json(['status' => 'success', 'msg' => "$totalAddedCount new Employee(s) added."]);
 		}
 	}
 
-	public function add_multiple_sales(Request $request, $customer_id, $tax_id, $type, $userLoginId){
+	public function add_multiple_sales(Request $request, $customer_id, $tax_id, $type, $userLoginId) {
 
 		if ($request->hasFile('file')) {
-				$data = Excel::load($request->file('file'), function ($reader) use ($customer_id, $tax_id, $type, $userLoginId){
-				// Getting all results
+			$data = Excel::selectSheetsByIndex(0)->load($request->file('file'))->get();
 
-				$sales = $reader->get()->toArray();
-				foreach ($sales as $key => $value) {
+			// Getting all results
+			$sales = $data->toArray();
+			$headers = $data->getHeading();
+			$possibleVals = ['account_code', 'account_description', 'account_reference', 'signature_date', 'branch_name', 'tax_period', 'invoice_date', 'invoice_number', 'description', 'quantity', 'item_subject_to_taxes', 'non_taxable_sales', 'value_of_exports', 'sales_to_taxable_person_value', 'sales_to_consumer_value'];
+			$possibleValsCount = count($possibleVals);
+			$uploadedHeaderCount = count(array_intersect($possibleVals, $headers));
+			if ($possibleValsCount != $uploadedHeaderCount) {
+				return response()->json(['status' => false, 'msg' => 'upload cannot be processed. <br> please upload file which contain same columns as defined in sample file also uploaded file must contain some data'], 422);
+			}
+			foreach ($sales as $key => $value) {
 
-					$sale = new Sales();
+				$sale = new Sales();
 
-					$sale->sale_id = (String) Str::uuid();
-					$sale->tax_id = $tax_id;
-					$sale->customer_id = $customer_id;
-					$sale->account_code = $value['account_code'];
-					$sale->account_description = $value['account_description'];
-					$sale->accounting_reference = $value['account_ref'];
-					$sale->signature_date = $value['sign_date'];
-					$sale->branch_name = $value['branch_name'];
-					$sale->tax_period = $value['tax_period'];
-					$sale->invoice_date = $value['invoice_date'];
-					$sale->invoice_num = $value['invoice_number'];
-					$sale->client_name = $value['client_name'];
-					$sale->client_tin = $value['client_tin'];
-					$sale->description = $value['description'];
-					$sale->quantity = $value['quantity'];
-					$sale->taxes_subject = $value['item_subject_taxes'];
-					$sale->comments = $value['comments_3e_fii'];
-					$sale->top_comments = $value['comments_for_top'];
-					$sale->client_response = $value['client_responses'];
-					$sale->non_taxable_sales = $value['non_taxable_sales'];
-					$sale->vat = $value['export_value'];
-					if ($type == 'supervisor') {
-						$sale->supervisor_id = $userLoginId;
-						$sale->officer_confirmed = 1;
-					} else {
-						$sale->tax_officer_id = $userLoginId;
-					}
-
-
-					if ($value['person_non_taxable_sales']??false) {
-						$sale->taxable_person_sales = $value['person_non_taxable_sales'];
-					}
-
-					if ($value['person_export_value']??false) {
-						$sale->taxable_person_vat = $value['person_export_value'];
-					}
-
-					if ($value['customer_non_taxable_sales']??false) {
-						$sale->cust_sales = $value['customer_non_taxable_sales'];
-					}
-
-					if ($value['customer_export_value']) {
-						$sale->cust_sales_vat = $value['customer_export_value'];
-					}
-
-					$sale->total_taxable_value = $value['total_taxable_value'];
-
-					// $sale->additional_fields = $value['additional_field'];
-					$sale->status = 0;
-
-					$sale->save();
-					
+				$sale->sale_id = (String) Str::uuid();
+				$sale->tax_id = $tax_id;
+				$sale->customer_id = $customer_id;
+				$sale->account_code = $value['account_code'];
+				$sale->account_description = $value['account_description'];
+				$sale->accounting_reference = $value['account_reference'];
+				$sale->signature_date = $value['signature_date'];
+				$sale->branch_name = $value['branch_name'];
+				$sale->tax_period = $value['tax_period'];
+				$sale->invoice_date = $value['invoice_date'];
+				$sale->invoice_num = $value['invoice_number'];
+				$sale->description = $value['description'];
+				$sale->quantity = $value['quantity'];
+				$sale->taxes_subject = $value['item_subject_to_taxes'];
+				$sale->non_taxable_sales = $value['non_taxable_sales'];
+				$sale->vat = $value['value_of_exports'];
+				$sale->taxable_person_sales = $value['sales_to_taxable_person_value'];
+				$sale->cust_sales = $value['sales_to_consumer_value'];
+				if ($type == 'supervisor') {
+					$sale->supervisor_id = $userLoginId;
+					$sale->officer_confirmed = 1;
+				} else {
+					$sale->tax_officer_id = $userLoginId;
 				}
 
-			})->get();
-				$totalAddedCount = $data->count();
-				return response()->json(['status' => 'success', 'msg' => "$totalAddedCount new Sale(s) added."]);
+				if ($value['sales_to_taxable_person_value'] ?? false) {
+				}
+
+				/*if ($value['person_export_value'] ?? false) {
+					$sale->taxable_person_vat = $value['person_export_value'];
+				}*/
+
+				if ($value['sales_to_consumer_value'] ?? false) {
+				}
+
+				/*if ($value['customer_export_value']) {
+					$sale->cust_sales_vat = $value['customer_export_value'];
+				}*/
+
+				// $sale->total_taxable_value = $value['total_taxable_value'];
+
+				$sale->status = 0;
+
+				$sale->save();
+
+			}
+			$totalAddedCount = $data->count();
+			return response()->json(['status' => 'success', 'msg' => "$totalAddedCount new Sale(s) added."]);
 		}
 
 	}
@@ -999,97 +1014,101 @@ class ApplicationController extends Controller {
 	public function add_multiple_payrolls(Request $request, $employee_id, $tax_id, $type, $userLoginId) {
 
 		if ($request->hasFile('file')) {
-				$data = Excel::load($request->file('file'), function ($reader) use ($employee_id, $tax_id, $type, $userLoginId){
+			$data = Excel::load($request->file('file'), function ($reader) use ($employee_id, $tax_id, $type, $userLoginId) {
 				// Getting all results
-				
-				$payrolls = $reader->get()->toArray();
-				foreach ($payrolls as $key => $value) {
-
-					$pr = new Payrolls();
-					$pr->payroll_id = (String) Str::uuid();
-					$pr->tax_id = $tax_id;
-					$pr->employee_id = $employee_id;
-					$pr->basic_salary = $value['basic_salary'];
-					$pr->bonus = $value['bonus'];
-					$pr->over_time = $value['over_time'];
-					$pr->commissions = $value['commission'];
-					$pr->seniority_payment = $value['seniority_payment'];
-					$pr->severance_pay = $value['severance_pay'];
-					$pr->maternity_leave = $value['maternity_leave'];
-					$pr->paid_annual_leave = $value['paid_annual_leave'];
-					$pr->food_allowance = $value['food_allowance'];
-					$pr->transport_allowance = $value['transport_allowance'];
-					$pr->others = $value['other_allowance'];
-					$pr->deduction_advance = $value['deduction_advance'];
-					$pr->salary_adjusment = $value['salary_adjustment'];
-					$pr->remark = $value['remark'];
-					if ($type == 'supervisor') {
-						$pr->supervisor_id = $userLoginId;
-						$pr->officer_confirmed = 1;
-					} else {
-						$pr->tax_officer_id = $userLoginId;
-					}
-					// $pr->additional_fields = $value['additional_field'];
-
-					$pr->save();
-
-					
-				}
 
 			})->get();
-				$totalAddedCount = $data->count();
-				return response()->json(['status' => 'success', 'msg' => "$totalAddedCount new Payroll(s) added."]);
+
+			$payrolls = $data->toArray();
+			$headers = $data->getHeading();
+			$possibleVals = ['nssf_no', 'employee_no', 'name_english', 'name_khmer', 'nationality', 'dob', 'joining_date', 'position', 'sex', 'contract_type', 'spouse'];
+			$possibleValsCount = count($possibleVals);
+			$uploadedHeaderCount = count(array_intersect($possibleVals, $headers));
+			if ($possibleValsCount != $uploadedHeaderCount) {
+				return response()->json(['status' => false, 'msg' => 'upload cannot be processed. <br> please upload file which contain same columns as defined in sample file also uploaded file must contain some data'], 422);
+			}
+			foreach ($payrolls as $key => $value) {
+
+				$pr = new Payrolls();
+				$pr->payroll_id = (String) Str::uuid();
+				$pr->tax_id = $tax_id;
+				$pr->employee_id = $employee_id;
+				$pr->basic_salary = $value['basic_salary'];
+				$pr->bonus = $value['bonus'];
+				$pr->over_time = $value['over_time'];
+				$pr->commissions = $value['commission'];
+				$pr->seniority_payment = $value['seniority_payment'];
+				$pr->severance_pay = $value['severance_pay'];
+				$pr->maternity_leave = $value['maternity_leave'];
+				$pr->paid_annual_leave = $value['paid_annual_leave'];
+				$pr->food_allowance = $value['food_allowance'];
+				$pr->transport_allowance = $value['transport_allowance'];
+				$pr->others = $value['other_allowance'];
+				$pr->deduction_advance = $value['deduction_advance'];
+				$pr->salary_adjusment = $value['salary_adjustment'];
+				$pr->remark = $value['remark'];
+				if ($type == 'supervisor') {
+					$pr->supervisor_id = $userLoginId;
+					$pr->officer_confirmed = 1;
+				} else {
+					$pr->tax_officer_id = $userLoginId;
+				}
+				// $pr->additional_fields = $value['additional_field'];
+
+				$pr->save();
+
+			}
+			$totalAddedCount = $data->count();
+			return response()->json(['status' => 'success', 'msg' => "$totalAddedCount new Payroll(s) added."]);
 		}
 	}
 
 	public function add_multiple_purchases(Request $request, $customer_id, $tax_id, $type, $userLoginId) {
 
 		if ($request->hasFile('file')) {
-				$data = Excel::load($request->file('file'), function ($reader) use ($customer_id, $tax_id, $type, $userLoginId){
-				// Getting all results
-				$purchases = $reader->get()->toArray();
-				foreach ($purchases as $key => $value) {
+			$data = Excel::selectSheetsByIndex(0)->load($request->file('file'))->get();
+			$purchases = $data->toArray();
+			// dd($data);
+			$headers = $data->getHeading();
+			$possibleVals = ['branch_name', 'tax_period', 'invoice_date', 'invoice_number', 'goods_description', 'quantity', 'local_purchase_taxable_value', 'imports_taxable_value', 'item_subject_to_taxes', 'non_taxable_purchases', 'supplier'];
+			$possibleValsCount = count($possibleVals);
+			$uploadedHeaderCount = count(array_intersect($possibleVals, $headers));
+			if ($possibleValsCount != $uploadedHeaderCount) {
+				return response()->json(['status' => false, 'msg' => 'upload cannot be processed. <br> please upload file which contain same columns as defined in sample file also uploaded file must contain some data'], 422);
+			}
 
-					$purchase = new Purchases();
+			// Getting all results
+			foreach ($purchases as $key => $value) {
 
-					$purchase->purchase_id = (String) Str::uuid();
-					$purchase->tax_id = $tax_id;
-					$purchase->customer_id = $customer_id;
-					$purchase->branch_name = $value['branch_name'];
-					$purchase->tax_period = $value['tax_period'];
-					$purchase->invoice_date = $value['invoice_date'];
-					$purchase->invoice_num = $value['invoice_number'];
-					$purchase->description = $value['goods_description'];
-					$purchase->quantity = $value['quantity'];
-					$purchase->local_purchase_tax_val = $value['taxable_value_local'];
-					$purchase->local_purchase_vat = $value['vat_local'];
-					$purchase->imports_taxable_val = $value['taxable_value_import'];
-					$purchase->imports_vat = $value['vat_import'];
-					$purchase->total_vat = $value['total_vat'];
-					$purchase->subject = $value['item_subject_taxes'];
-					$purchase->comments = $value['comments_3e_fii'];
-					$purchase->top_comments = $value['comments_for_top'];
-					$purchase->client_responses = $value['client_responses'];
-					$purchase->non_taxable_purchases = $value['non_taxable_purchases'];
-					$purchase->supplier = $value['supplier'];
-					$purchase->vat_tin = $value['vat_tin'];
-					// $purchase->additional_fields = $request->additional_field;
-					$purchase->status = 0;
-					if ($type == 'supervisor') {
-						$purchase->supervisor_id = $userLoginId;
-						$purchase->officer_confirmed = 1;
-					} else {
-						$purchase->tax_officer_id = $userLoginId;
-					}
-					$purchase->save();
-					
+				$purchase = new Purchases();
+
+				$purchase->purchase_id = (String) Str::uuid();
+				$purchase->tax_id = $tax_id;
+				$purchase->customer_id = $customer_id;
+				$purchase->branch_name = $value['branch_name'];
+				$purchase->tax_period = $value['tax_period'];
+				$purchase->invoice_date = $value['invoice_date'];
+				$purchase->invoice_num = $value['invoice_number'];
+				$purchase->description = $value['goods_description'];
+				$purchase->quantity = $value['quantity'];
+				$purchase->local_purchase_tax_val = $value['local_purchase_taxable_value'];
+				$purchase->imports_taxable_val = $value['imports_taxable_value'];
+				$purchase->subject = $value['item_subject_to_taxes'];
+				$purchase->non_taxable_purchases = $value['non_taxable_purchases'];
+				$purchase->supplier = $value['supplier'];
+				$purchase->status = 0;
+				if ($type == 'supervisor') {
+					$purchase->supervisor_id = $userLoginId;
+					$purchase->officer_confirmed = 1;
+				} else {
+					$purchase->tax_officer_id = $userLoginId;
 				}
+				$purchase->save();
 
-			})->get();
-				$totalAddedCount = $data->count();
-				return response()->json(['status' => 'success', 'msg' => "$totalAddedCount new Purchase(s) added."]);
+			}
+			$totalAddedCount = $data->count();
+			return response()->json(['status' => 'success', 'msg' => "$totalAddedCount new Purchase(s) added."]);
 		}
 	}
-
 
 }

@@ -50,6 +50,12 @@ const actions = {
     arrangeStarredPagesMore({ commit }, list) {
       commit('ARRANGE_STARRED_PAGES_MORE', list)
     },
+    async getAverageRate({commit}){
+      await axios.get('get-average-rate').then((res)=>{
+        commit('setAverageRate',res.data)
+        return res;
+      })
+    },
     async getLoginUser({commit}){
       await axios.get('login-user',{params:{
         user : localStorage.getItem('admin')

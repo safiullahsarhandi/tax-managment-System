@@ -12,6 +12,7 @@
  */
 Route::group(['prefix' => ''], function () {
 
+	Route::get('get-average-rate', 'ApplicationController@get_average_rate');
 	Route::get('login-user', 'ApplicationController@get_login_user');
 	Route::post('login', 'ApplicationController@login');
 	// officers routes
@@ -50,7 +51,7 @@ Route::group(['prefix' => ''], function () {
 	Route::post('get-employee', 'ApplicationController@get_employee');
 	Route::get('get-active-employees', 'ApplicationController@get_active_employees');
 	Route::post('update-employee', 'ApplicationController@update_employee');
-	Route::post('status-update-employee', 'ApplicationController@status_update_employee'); 
+	Route::post('status-update-employee', 'ApplicationController@status_update_employee');
 	Route::post('add-multiple-employees/{id}', 'ApplicationController@add_multiple_employee');
 
 	// Tax

@@ -61,13 +61,6 @@ export default [{
         isMain : false,
     },
     {
-        url: "/tax-managment",
-        name: "Tax Managment",
-        slug: "tax-mangment",
-        icon: "FileIcon",
-        isMain : false,
-    },
-    {
         url: "/team-members",
         name: "Team Members",
         slug: "team-members",

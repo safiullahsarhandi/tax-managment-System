@@ -1,6 +1,6 @@
 <template>
     <div>
-        <multi-uploads @uploaded="successMultipleUpload" ref="multiUploads" :action="multipleRoute" sample-url="./public/samples/purchase.xlsx" :active="multipleUploadPopup"></multi-uploads>
+        <multi-uploads @error='hasError' @uploaded="successMultipleUpload" ref="multiUploads" :action="multipleRoute" sample-url="./public/samples/purchase.xlsx" :active="multipleUploadPopup"></multi-uploads>
         <!-- <vx-card title="Add Customer" subtitle="Add Information Of Customer OR company which tax will be managed by system" noShadow noRadius> -->
         <vx-card title="Add Purchase" noShadow noRadius>
             <template slot="actions">
@@ -38,12 +38,11 @@
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('supplier')">{{errors.first('supplier')}}</span>
                     </vs-col>
-                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                   <!--  <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="vat_tin" v-validate="`required`" label-placeholder="VAT-Tin" v-model="vat_tin" />
+                            <vs-input disabled name="vat_tin" label-placeholder="VAT-Tin" v-model="vat_tin" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('vat_tin')">{{errors.first('vat_tin')}}</span>
-                    </vs-col>
+                    </vs-col> -->
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
                             <vs-input name="good_desc" v-validate="`required`" label-placeholder="Description of good/services" v-model="good_desc" />
@@ -58,7 +57,7 @@
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="non_taxable_purchases" v-validate="`required`" label-placeholder="Non-Taxable Purchases" v-model="non_taxable_purchases" />
+                            <vs-input name="non_taxable_purchases" label-placeholder="Non-Taxable Purchases" v-model="non_taxable_purchases" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('non_taxable_purchases')">{{errors.first('non_taxable_purchases')}}</span>
                     </vs-col>
@@ -70,13 +69,11 @@
                         <vx-input-group>
                             <vs-input name="taxable_value_local" label-placeholder="Taxable Value" v-model="taxable_value_local" />
                         </vx-input-group>
-                        <!-- <span class="text-danger" v-show="errors.has('taxable_value_local')">{{errors.first('taxable_value_local')}}</span> -->
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="vat_local" label-placeholder="VAT" v-model="vat_local" />
+                            <vs-input disabled name="vat_local" label-placeholder="VAT" v-model="vat_local" />
                         </vx-input-group>
-                        <!-- <span class="text-danger" v-show="errors.has('vat_local')">{{errors.first('vat_local')}}</span> -->
                     </vs-col>
                 </vs-row>
                 <br>
@@ -87,19 +84,17 @@
                         <vx-input-group>
                             <vs-input name="taxable_value_import" label-placeholder="Taxable Value" v-model="taxable_value_import" />
                         </vx-input-group>
-                        <!-- <span class="text-danger" v-show="errors.has('taxable_value_import')">{{errors.first('taxable_value_import')}}</span> -->
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="vat_import" label-placeholder="VAT" v-model="vat_import" />
+                            <vs-input disabled name="vat_import" label-placeholder="VAT" v-model="vat_import" />
                         </vx-input-group>
-                        <!-- <span class="text-danger" v-show="errors.has('vat_import')">{{errors.first('vat_import')}}</span> -->
                     </vs-col>
                 </vs-row>
                 <vs-row>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="total_vat" v-validate="`required`" label-placeholder="Total VAT" v-model="total_vat" />
+                            <vs-input disabled name="total_vat" data-vv-as="Total VAT" label-placeholder="Total VAT" v-model="total_vat" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('total_vat')">{{errors.first('total_vat')}}</span>
                     </vs-col>
@@ -107,27 +102,24 @@
                 <vs-row>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="item_subject_taxes" v-validate="`required`" label-placeholder="Itesm subject to taxes:" v-model="item_subject_taxes" />
+                            <vs-input name="item_subject_taxes" v-validate="`required`" label-placeholder="Item subject to taxes:" v-model="item_subject_taxes" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('item_subject_taxes')">{{errors.first('item_subject_taxes')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="comments_3e_fii" v-validate="`required`" label-placeholder="Comments (3E-Fii)" v-model="comments_3e_fii" />
+                            <vs-input name="comments_3e_fii" label-placeholder="Comments (3E-Fii)" v-model="comments_3e_fii" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('comments_3e_fii')">{{errors.first('comments_3e_fii')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="client_responses" v-validate="`required`" label-placeholder="Client Responses" v-model="client_responses" />
+                            <vs-input name="client_responses" label-placeholder="Client Responses" v-model="client_responses" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('client_responses')">{{errors.first('client_responses')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
                             <vs-input name="comments_for_top" v-validate="`required`" label-placeholder="Comments for ToP" v-model="comments_for_top" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('comments_for_top')">{{errors.first('comments_for_top')}}</span>
                     </vs-col>
                     <vs-col v-for="(field,index) in customField" :key="index" class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
@@ -167,11 +159,11 @@ export default {
             good_desc: '',
             quantity: '',
             non_taxable_purchases: '',
-            taxable_value_local: '',
-            vat_local: '',
-            taxable_value_import: '',
-            vat_import: '',
-            total_vat: '',
+            taxable_value_local: 0,
+            vat_local: 0,
+            taxable_value_import: 0,
+            vat_import: 0,
+            total_vat: 0,
             item_subject_taxes: '',
             comments_3e_fii: '',
             client_responses: '',
@@ -184,9 +176,33 @@ export default {
     components: {
         multiUploads
     },
+    watch: {
+      non_taxable_purchases(val, oldVal){
+        this.setTotalVat()
+
+      },
+      taxable_value_local(val, oldVal){
+        this.vat_local = parseFloat(Math.abs(val) * 0.1).toFixed(2)
+        this.setTotalVat()
+
+      },
+      taxable_value_import(val, oldVal){
+        this.vat_import = parseFloat(Math.abs(val) * 0.1).toFixed(2)
+        this.setTotalVat()
+
+      },
+    },
+    computed : {
+        ...mapState('customers',['customer']),
+        averageRate(){
+            return this.$store.state.averageRate;
+        }
+    },
     created() {
         this.tax_id = this.$store.state.rootUrl.split('/')[2];
         this.customer_id = localStorage.getItem('customer');
+        this.$store.dispatch('getAverageRate');
+        this.getCustomer(this.customer_id);
         let loginUserId;
         let loginUsertype;
         if (this.$store.state.AppActiveUser.type == 'Supervisor') {
@@ -195,24 +211,48 @@ export default {
             loginUsertype = 'officer';
         }
         loginUserId = this.$store.state.AppActiveUser.manager_id;
-        this.multipleRoute = 'add-multiple-purchases/'+this.customer_id+'/'+this.tax_id+'/'+loginUsertype+'/'+loginUserId;
+        this.multipleRoute = 'add-multiple-purchases/' + this.customer_id + '/' + this.tax_id + '/' + loginUsertype + '/' + loginUserId;
     },
     methods: {
+        setTotalVat(){
+            var non_taxable_purchase_val = (this.non_taxable_purchases * this.averageRate);
+
+            var taxable_value = (this.taxable_value_local * this.averageRate);
+            var taxable_value_local_val = (taxable_value + (taxable_value * 0.1));
+
+            var taxable_value = (this.taxable_value_import * this.averageRate);
+            var taxable_value_import_val = (taxable_value + (taxable_value * 0.1));
+            
+            this.total_vat = non_taxable_purchase_val + taxable_value_local_val + taxable_value_import_val;
+
+
+        },
         showUploader() {
             this.$refs.multiUploads.isShown = true;
         },
         addMoreFeild() {
             this.customField.push({ name: 'additional_field[]', value: '', type: 'text' });
         },
-        successMultipleUpload(){
-            this.$refs.multiUploads.isShown = false;
+        hasError(res) {
             this.$vs.notify({
-                color : 'success',
-                text : 'Successfully Uploaded'
+                color: 'danger',
+                text: res.msg,
+                position: 'right-top',
+                fixed: true,
             })
+        },
+        successMultipleUpload(res) {
+            this.$vs.notify({
+                color: 'success',
+                text: res.msg,
+                position: 'right-top',
+                fixed: true,
+            })
+            this.$refs.multiUploads.isShown = false;
         },
         ...mapActions({
             submit: 'purchases/addPurchase',
+            getCustomer : 'customers/getCustomer'
         }),
 
         addForm(e) {
