@@ -190,15 +190,9 @@
                 </vs-row>
             	<vs-row>
             		<vs-col class="text-center" vs-lg='12' vs-md='12'>
-                        
-                       
-                        
             			<vs-col class="text-center" vs-md="12" vs-lg="12">
-            				<vs-button button="submit" class="mt-5" type="gradient">Save</vs-button>
+            				<vs-button button="submit" class="mt-5" type="gradient">Save changes</vs-button>
             			</vs-col>
-            			<vs-col class="text-center" vs-md="12" vs-lg="12">
-            			<vs-button class="mt-5" type="gradient" button="button">Upload Excel Sheet</vs-button>
-            		</vs-col>	
             		</vs-col>
             	</vs-row>
 
