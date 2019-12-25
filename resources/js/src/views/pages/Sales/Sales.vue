@@ -11,6 +11,7 @@
                     <vs-th>Invoice No.</vs-th>
                     <vs-th>Invoice Date</vs-th>
                     <vs-th>Quantity</vs-th>
+                    <vs-th>Status</vs-th>
                     <vs-th>Actions</vs-th>
                 </template> 
                 <template slot-scope="{data}">
@@ -21,6 +22,7 @@
                         <vs-td :data="tr.invoice_num">{{tr.invoice_num}}</vs-td>
                         <vs-td :data="tr.invoice_date">{{tr.invoice_date}}</vs-td>
                         <vs-td :data="tr.quantity">{{tr.quantity}}</vs-td>
+                        <vs-td :data="tr.status"><vs-switch @click="statusUpdate(tr.sale_id)" v-model="tr.status"/></vs-td>
                         <vs-td>
                             <vs-button :to="'sale-update/'+tr.sale_id" size="small" type="border" icon-pack="feather" icon="icon-edit"></vs-button>
                             <vs-button size="small" icon-pack="feather" icon="icon-maximize-2" type="border"></vs-button>
@@ -29,6 +31,13 @@
                 </template>
             </vs-table>
         </vx-card>
+
+        <!-- <vs-popup class="holamundo"  title="Add Comment" :active.sync="showCommentBox">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+          </p>
+        </vs-popup> -->
 
     </div>
 </template>
@@ -39,6 +48,8 @@ export default {
     data() {
         return {
             tax_id : '',
+            // comment: '',
+            // showCommentBox: false,
             // switch1: true,
 
         };
@@ -55,6 +66,20 @@ export default {
             getSales: 'sales/getSales',
             update: 'sales/updateSales'
         }),
+
+        // openCommentBox(id){
+        //     this.showCommentBox = true;
+        // },
+
+        statusUpdate(id){
+
+            axios.post('status-update-sale',{id: id, tax_id:this.tax_id}).then(res=>{
+                this.$vs.notify({title:'Updated!...',text:res.data.msg,color:'success',position:'top-right'})
+                this.$vs.loading.close();
+            });
+
+
+        },
 
         addMoreFeild () {
             this.customField.push({name : 'additional_field[]',value : '',type: 'text'});

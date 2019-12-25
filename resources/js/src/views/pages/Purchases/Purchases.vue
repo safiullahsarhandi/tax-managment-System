@@ -11,6 +11,7 @@
                     <vs-th>Invoice No.</vs-th>
                     <vs-th>Invoice Date</vs-th>
                     <vs-th>Quantity</vs-th>
+                    <vs-th>Status</vs-th>
                     <vs-th>Actions</vs-th>
                 </template> 
                 <template slot-scope="{data}">
@@ -20,6 +21,7 @@
                         <vs-td :data="tr.invoice_num">{{tr.invoice_num}}</vs-td>
                         <vs-td :data="tr.invoice_date">{{tr.invoice_date}}</vs-td>
                         <vs-td :data="tr.quantity">{{tr.quantity}}</vs-td>
+                        <vs-td :data="tr.status"><vs-switch @click="statusUpdate(tr.purchase_id)" v-model="tr.status"/></vs-td>
                             
                         <vs-td>
                             <vs-button :to="'purchase-update/'+tr.purchase_id" size="small" type="border" icon-pack="feather" icon="icon-edit"></vs-button>
@@ -82,7 +84,7 @@ export default {
 
         statusUpdate(id){
             this.$vs.loading();
-            axios.post('status-update-customer',{id:id}).then(res=>{
+            axios.post('status-update-purchase',{id:id, tax_id: this.tax_id}).then(res=>{
                 this.$vs.notify({title:'Updated!...',text:res.data.msg,color:'success',position:'top-right'})
                 this.$vs.loading.close();
             });

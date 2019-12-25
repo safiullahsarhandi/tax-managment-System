@@ -1114,4 +1114,61 @@ class ApplicationController extends Controller {
 		}
 	}
 
+	public function status_update_sale(Request $request){
+
+		$sale = Sales::whereSaleId($request->id)->whereTaxId($request->tax_id)->first();
+
+		$msg = '';
+		if($sale->status == 1){
+			$sale->status = 0;
+			$sale->save();
+			$msg = 'Status Disabled Successfully';
+		}else{
+			$sale->status = 1;
+			$sale->save();
+			$msg = 'Status Enabled Successfully';
+		}
+
+		return response()->json(['status' => true, 'msg' => $msg, 'response' => $sale->status]);
+
+	}
+
+	public function status_update_purchase(Request $request){
+
+		$purchase = Purchases::wherePurchaseId($request->id)->whereTaxId($request->tax_id)->first();
+
+		$msg = '';
+		if($purchase->status == 1){
+			$purchase->status = 0;
+			$purchase->save();
+			$msg = 'Status Disabled Successfully';
+		}else{
+			$purchase->status = 1;
+			$purchase->save();
+			$msg = 'Status Enabled Successfully';
+		}
+
+		return response()->json(['status' => true, 'msg' => $msg, 'response' => $purchase->status]);
+
+	}
+
+	public function status_update_payroll(Request $request){
+
+		$res = Payrolls::wherePayrollId($request->id)->whereTaxId($request->tax_id)->first();
+
+		$msg = '';
+		if($res->status == 1){
+			$res->status = 0;
+			$res->save();
+			$msg = 'Status Disabled Successfully';
+		}else{
+			$res->status = 1;
+			$res->save();
+			$msg = 'Status Enabled Successfully';
+		}
+
+		return response()->json(['status' => true, 'msg' => $msg, 'response' => $res->status]);
+
+	}
+
 }

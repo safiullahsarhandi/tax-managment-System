@@ -10,6 +10,7 @@
                     <vs-th>Basic Salary</vs-th>
                     <vs-th>Bonus</vs-th>
                     <vs-th>Remarks</vs-th>
+                    <vs-th>Status</vs-th>
 
                     <vs-th>Actions</vs-th>
                 </template>
@@ -22,6 +23,7 @@
                         <vs-td :data="tr.basic_salary">{{tr.basic_salary}}</vs-td>
                         <vs-td :data="tr.bonus">{{tr.bonus}}</vs-td>
                         <vs-td :data="tr.remark">{{tr.remark}}</vs-td>
+                        <vs-td :data="tr.status"><vs-switch @click="statusUpdate(tr.payroll_id)" v-model="tr.status"/></vs-td>
                             
                         <vs-td>
                             <vs-button :to="'edit-payroll/'+tr.payroll_id" size="small" type="border" icon-pack="feather" icon="icon-edit"></vs-button>
@@ -78,7 +80,15 @@ export default {
             getPayrolls: 'payrolls/getPayrolls',
         }),
 
+        statusUpdate(id){
 
+            axios.post('status-update-payroll',{id: id, tax_id:this.tax_id}).then(res=>{
+                this.$vs.notify({title:'Updated!...',text:res.data.msg,color:'success',position:'top-right'})
+                this.$vs.loading.close();
+            });
+
+
+        },
 
         addMoreFeild () {
             this.customField.push({name : 'additional_field[]',value : '',type: 'text'});
