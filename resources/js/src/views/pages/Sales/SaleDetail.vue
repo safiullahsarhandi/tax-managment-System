@@ -147,7 +147,7 @@
            ref="commentsView"
            :object_id="$route.params.id"
            type="Sale"
-           comments-url="get-sale-comment"
+           comments-url="get-comments"
             />
         <!-- <Slide right width="350" isOpen>
         </Slide> -->

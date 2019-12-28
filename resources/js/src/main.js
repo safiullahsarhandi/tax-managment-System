@@ -96,13 +96,7 @@ if (token) {
 }
 
 axios.interceptors.request.use(function (config) {
-    if((config.url === 'get-sale-comment')){
-
-    Vue.prototype.$vs.loading.close();
-    }else if((config.url === 'get-payroll-comment')){
-
-    Vue.prototype.$vs.loading.close();
-    }else if((config.url === 'get-purchase-comment')){
+    if((config.url === 'get-comments')){
 
     Vue.prototype.$vs.loading.close();
     }else{

@@ -13,6 +13,7 @@ use App\Sales;
 use App\Settings;
 use App\Supervisor;
 use App\Tax;
+use App\TaxComments;
 use App\TaxCustomers;
 use App\TaxOfficer;
 use Excel;
@@ -1132,15 +1133,21 @@ class ApplicationController extends Controller {
 		}
 	}
 
-	public function get_sale_comment(Request $request) {
-
+	public function get_comments(Request $request) {
+		$comments = TaxComments::where('object_id', $request->object_id)->get();
+		return response()->json(compact('comments'));
 	}
-
-	public function get_purchase_comment(Request $request) {
-
-	}
-
-	public function get_payroll_comment(Request $request) {
+	public function send_comment(Request $request) {
+		$comment = new TaxComments;
+		$comment->comment_id = (String) Str::uuid();
+		$comment->object_id = $request->object_id;
+		$comment->object_type = $request->type;
+		$comment->member_id = $request->sender;
+		$comment->member_type = $request->senderType;
+		$comment->comment = $request->comment;
+		$comment->save();
+		$comments = TaxComments::where('object_id', $request->object_id)->get();
+		return response()->json(compact('comments'));
 	}
 	public function status_updateSPP(Request $request) {
 
