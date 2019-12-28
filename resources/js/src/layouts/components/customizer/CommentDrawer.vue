@@ -14,17 +14,17 @@
                 <VuePerfectScrollbar class="scroll-area--customizer pt-4 pb-6" :settings="settings">
                     <div class="px-6">
                         <ul ref="chatLog">
-                            <li class="flex items-start" :class="{'flex-row-reverse': msg.isSent, 'mt-4': index}" v-for="(msg, index) in chatMsg" :key="index">
-                                <vs-avatar size="40px" class="m-0 flex-shrink-0" :class="msg.isSent ? 'ml-3' : 'mr-3'"></vs-avatar>
-                                <div class="msg relative bg-white shadow-md py-3 px-4 mb-2 rounded-lg max-w-md" :class="{'chat-sent-msg bg-primary-gradient text-white': msg.isSent, 'border border-solid d-theme-border-grey-light': !msg.isSent}">
-                                    <span>{{ msg.msg }}</span>
+                            <li class="flex items-start" :class="{'flex-row-reverse': commentedBy(msg.member_id), 'mt-4': index}" v-for="(msg, index) in comments" :key="index">
+                                <vs-avatar size="40px" class="m-0 flex-shrink-0" :class="commentedBy(msg.member_id)? 'ml-3' : 'mr-3'"></vs-avatar>
+                                <div class="msg relative bg-white shadow-md py-3 px-4 mb-2 rounded-lg max-w-md" :class="{'chat-sent-msg bg-primary-gradient text-white': commentedBy(msg.member_id), 'border border-solid d-theme-border-grey-light': !commentedBy(msg.member_id)}">
+                                    <span>{{ msg.comment }}</span>
                                 </div>
                             </li>
                         </ul>
                     </div>
                 </VuePerfectScrollbar>
                 <div class="customizer-footer mt-6 flex items-center justify-between px-6">
-                    <vs-input class="w-full" />
+                    <vs-input class="w-full" placeholder="Type Here" @keydown.enter="sendComment($event)" />
                 </div>
                 <vs-divider class="mb-0"></vs-divider>
             </div>
@@ -59,6 +59,7 @@ export default {
         this.invterVal = setInterval(function() {
             self.$store.dispatch('getComments', self.commentsUrl, self.type, self.object_id);
         }, 2000)
+        console.log(this.comments);
             }
             this.scrollToEnd()
         }
@@ -87,15 +88,36 @@ export default {
         }
     },
     created() {
-        
     },
     computed: {
         hideScrollToTopLocal: {
             get() { return this.hideScrollToTop },
             set(val) { this.$emit('toggleHideScrollToTop', val) }
         },
+        userType(){
+            return this.$store.getters.userType;
+        },
+        comments(){
+            return this.$store.state.comments;
+        },
+        commentedBy(val){
+            alert(val)
+            return  this.$store.getters.commentedBy;
+        }
     },
     methods: {
+        sendComment(e){
+            let data = {
+                comment : e.target.value,
+                object_id : this.object_id,
+                type : this.type,
+                scrollToEnd : this.scrollToEnd,
+                userType : this.userType,
+                loginUser : localStorage.getItem('admin'), 
+            };
+
+            this.$store.dispatch('saveComment',data)
+        },
         updatePrimaryColor(color) {
             this.primaryColor = color;
             this.$vs.theme({ primary: color });
