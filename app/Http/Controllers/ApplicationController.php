@@ -1200,15 +1200,27 @@ class ApplicationController extends Controller {
 		$msg = '';
 		if ($request->by == 'supervisor') {
 
-			if ($data->management_confirmed == 0) {
-				$data->supervisor_confirmed = $request->status;
-				$data->save();
-			} else {
-				return response()->json(['status' => false, 'msg' => 'Your ' . $request->type . ' status approved by supervisor.', 'response' => $data->officer_confirmed]);
+			if($data->officer_confirmed == 1){
+
+				if ($data->management_confirmed == 0) {
+					$data->supervisor_confirmed = $request->status;
+					$data->save();	
+				} else {
+					return response()->json(['status' => false, 'msg' => 'Your ' . $request->tax_type . ' status approved by admin.', 'response' => $data->status]);
+				}
+			}else{
+					return response()->json(['status' => false, 'msg' => 'Your ' . $request->tax_type . ' status still not approved by officer.', 'response' => $data->status]);
 			}
+
+
+
 		} else if ($request->by == 'admin') {
+			if($data->supervisor_confirmed == 1){
 			$data->management_confirmed = $request->status;
 			$data->save();
+			}else{
+				return response()->json(['status' => false, 'msg' => 'Your ' . $request->tax_type . ' status still not approved by Supervisor.', 'response' => $data->status]);
+			}
 		}
 
 		return response()->json(['status' => true, 'msg' => 'Changes successfully', 'response' => $request->status]);
