@@ -65,8 +65,9 @@ const actions = {
         commit('setLoginUser', res.data);
 
     },
-    getComments({ commit }, commentsUrl, type, object_id) {
-        axios.get(commentsUrl, { params: { type: type, object_id: object_id } }).then(res => {
+    getComments({ commit }, data) {
+        axios.post(data.path, {  type: data.type, object_id: data.object_id }).then(res => {
+
             commit('setComments',res.data.comments);
         })
     },

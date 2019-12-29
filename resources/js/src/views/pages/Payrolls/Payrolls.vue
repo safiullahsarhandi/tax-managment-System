@@ -40,6 +40,7 @@
 
                         <vs-td>
                             <vs-button :to="'edit-payroll/'+tr.payroll_id" size="small" type="border" icon-pack="feather" icon="icon-edit"></vs-button>
+                            <vs-button :to="'payroll-detail/'+tr.payroll_id" size="small" icon-pack="feather" icon="icon-maximize-2" type="border"></vs-button>
                         </vs-td>
                     </vs-tr>
                 </template>

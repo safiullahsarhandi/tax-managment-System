@@ -20,5 +20,11 @@ export default{
 		return axios.post('update-purchase',fd).then(res=>{
 			return res;
 		});
-	}	
+	},
+
+	getPurchase({commit},id){
+		axios.post('get-purchase',{id : id}).then(res=>{
+			commit('setPurchase',res.data.purchase)
+		});
+	},	
 }

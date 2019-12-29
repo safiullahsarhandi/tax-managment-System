@@ -45,5 +45,11 @@ export default{
 		});
 	},
 
+
+	getPayroll({commit},id){
+		axios.post('get-payroll',{id : id}).then(res=>{
+			commit('setPayroll',res.data.data);
+		});
+	},
 	
 }

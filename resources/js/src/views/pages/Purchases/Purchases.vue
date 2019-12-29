@@ -39,7 +39,7 @@
                             
                         <vs-td>
                             <vs-button :to="'purchase-update/'+tr.purchase_id" size="small" type="border" icon-pack="feather" icon="icon-edit"></vs-button>
-                            <vs-button size="small" icon-pack="feather" icon="icon-maximize-2" type="border"></vs-button>
+                            <vs-button :to="'purchase-detail/'+tr.purchase_id" size="small" icon-pack="feather" icon="icon-maximize-2" type="border"></vs-button>
                         </vs-td>
                     </vs-tr>
                 </template>

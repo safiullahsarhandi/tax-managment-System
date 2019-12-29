@@ -2,7 +2,7 @@
     <div>
         <vs-row>
             <vs-col vs-lg="9" vs-md="9" vs-sm="12">
-                <vx-card title="Sales Detail">
+                <vx-card title="Purchases Detail">
                     <vs-row>
                         <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
                             <h6>Client TIN:</h6>
@@ -13,67 +13,71 @@
                             <p>{{customer.name_english}}</p>
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
-                            <h6>Account Code:</h6>
-                            <p>{{sale.account_code}}</p>
-                        </vs-col>
-                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
-                            <h6>Account Description:</h6>
-                            <p>{{sale.account_description}}</p>
-                        </vs-col>
-                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
-                            <h6>Accounting Reference:</h6>
-                            <p>{{sale.accounting_reference}}</p>
-                        </vs-col>
-                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
-                            <h6>Signature Date:</h6>
-                            <p>{{sale.signature_date}}</p>
-                        </vs-col>
-                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
                             <h6>Branch Name:</h6>
-                            <p>{{sale.branch_name}}</p>
+                            <p>{{purchase.branch_name}}</p>
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
                             <h6>Tax Period:</h6>
-                            <p>{{sale.tax_period}}</p>
+                            <p>{{purchase.tax_period}}</p>
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
                             <h6>Invoice Date:</h6>
-                            <p>{{sale.invoice_date}}</p>
+                            <p>{{ new Date(purchase.invoice_date).toDateString() }}</p>
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
-                            <h6>Invoice Number:</h6>
-                            <p>{{sale.invoice_num}}</p>
+                            <h6>Invoice NO:</h6>
+                            <p>{{purchase.invoice_num}}</p>
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
                             <h6>Description:</h6>
-                            <p>{{sale.description}}</p>
+                            <p>{{purchase.description}}</p>
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
                             <h6>Quantity:</h6>
-                            <p>{{sale.quantity}}</p>
+                            <p>{{purchase.quantity}}</p>
+                        </vs-col>
+                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                            <h6>Subject:</h6>
+                            <p>{{purchase.subject}}</p>
+                        </vs-col>
+                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                            <h6>Comments:</h6>
+                            <p>{{purchase.comments}}</p>
+                        </vs-col>
+                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                            <h6>Client Response:</h6>
+                            <p>{{purchase.client_response}}</p>
+                        </vs-col>
+                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                            <h6>ToP Comments:</h6>
+                            <p>{{purchase.top_comments}}</p>
+                        </vs-col>
+                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                            <h6>Client Responses:</h6>
+                            <p>{{purchase.client_responses}}</p>
                         </vs-col>
                     </vs-row>
                 </vx-card>
-                <vx-card class="mt-base" title="Sales Summary">
+                <vx-card class="mt-base" title="Purchases Summary">
                     <vs-row>
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Non Taxable Sale:</h6>
-                            <p>{{customer.non_taxable_sales || 'NA'}}</p>
+                            <h6>Non Taxable Purchase:</h6>
+                            <p>{{customer.non_taxable_purchases || 'NA'}}</p>
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Non taxable sale x Average rate:</h6>
-                            <p>{{non_taxable_sales}}</p>
+                            <h6>Non taxable Purchases x Average rate:</h6>
+                            <p>{{non_taxable_purchases}}</p>
                         </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Value Of Exports:</h6>
-                            <p>{{sale.vat || 'NA'}}</p>
+                       <!--  <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
+                            <h6>Total VAT:</h6>
+                            <p>{{purchase.total_vat || 'NA'}}</p>
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>Value Of Exports:</h6>
                             <p>{{value_of_exports}}</p>
                         </vs-col>
                         <vs-divider position="left">
-                            <h5>Sales to Taxable Persons</h5>
+                            <h5>Purchase to Taxable Persons</h5>
                         </vs-divider>
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>Taxable Value:</h6>
@@ -117,30 +121,29 @@
                         </vs-divider>
                         <vs-col class="mt-5 text-center" vs-lg="12" vs-md="12" vs-sm="12">
                             <p>{{customer_taxable_vat}}</p>
-                        </vs-col>
+                        </vs-col> -->
                     </vs-row>
                 </vx-card>
             </vs-col>
             <vs-col vs-lg="3" vs-md="3" vs-xl="3" vs-sm="12">
                 <vx-card title="Actions">
                     <vs-list>
-                        <vs-list-item title="Edit Sale">
-                            <vs-button :to="'/sale-update/'+$route.params.id" icon-pack="feather" size="small" icon='icon-edit'></vs-button>
+                        <vs-list-item title="Edit Purchase">
+                            <vs-button :to="'/purchase-update/'+$route.params.id" icon-pack="feather" size="small" icon='icon-edit'></vs-button>
                         </vs-list-item>
                         <template>
                             <vs-list-item v-if="userType == 'Admin'" title="Status">
-                                <vs-button icon-pack="feather" size="small" icon='icon-check-circle' @click="changeManagementStatus('1', sale.id, 'admin')"></vs-button>
-                                <vs-button icon-pack="feather" size="small" icon='icon-x-circle' @click="changeManagementStatus('0', sale.id, 'admin')"></vs-button>
+                                <vs-button icon-pack="feather" size="small" icon='icon-check-circle' @click="changeManagementStatus('1', purchase.id, 'admin')"></vs-button>
+                                <vs-button icon-pack="feather" size="small" icon='icon-x-circle' @click="changeManagementStatus('0', purchase.id, 'admin')"></vs-button>
                             </vs-list-item>
 
-                             <vs-list-item v-if="userType == 'Supervisor'" title="Status">
-                                <vs-button icon-pack="feather" size="small" icon='icon-check-circle' @click="changeManagementStatus('1', sale.id, 'supervisor')"></vs-button>
-                                <vs-button icon-pack="feather" size="small" icon='icon-x-circle' @click="changeManagementStatus('0', sale.id, 'supervisor')"></vs-button>
+                            <vs-list-item v-if="userType == 'Supervisor'" title="Status">
+                                <vs-button icon-pack="feather" size="small" icon='icon-check-circle' @click="changeManagementStatus('1', purchase.id, 'supervisor')"></vs-button>
+                                <vs-button icon-pack="feather" size="small" icon='icon-x-circle' @click="changeManagementStatus('0', purchase.id, 'supervisor')"></vs-button>
                             </vs-list-item>
-
 
                             <vs-list-item v-if="userType == 'Officer'" title="Status">
-                                <vs-switch icon-pack="feather" @click="statusUpdate(sale.sale_id, sale.officer_confirmed)" v-model="sale.officer_confirmed"></vs-switch>
+                                <vs-switch icon-pack="feather" @click="statusUpdate(purchase.purchase_id, purchase.officer_confirmed)" v-model="purchase.officer_confirmed"></vs-switch>
                             </vs-list-item>
                         </template>
                         <vs-list-item title="View Comments">
@@ -150,15 +153,15 @@
                 </vx-card>
             </vs-col>
         </vs-row>
+        {{ comments }}
         <the-customizer
            ref="commentsView"
            :object_id="$route.params.id"
-           type="Sale"
+           type="Purchase"
            comments-url="get-comments"
             />
-        <!-- <Slide right width="350" isOpen>
-        </Slide> -->
     </div>
+    <!-- <div>Testing Purchase detail Page</div> -->
 </template>
 <script>
 	import TheCustomizer from "@/layouts/components/customizer/CommentDrawer.vue";
@@ -171,19 +174,20 @@ export default {
     },
     data() {
         return {
-            tax_id: '',
+            tax_id : '',
             openComments: false
         };
     },
     created() {
         this.tax_id = this.$store.state.rootUrl.split('/')[2];
         this.getCustomer(localStorage.getItem('customer'));
-        this.getSale(this.$route.params.id);
+        this.getPurchase(this.$route.params.id);
         this.$store.dispatch('getAverageRate');
     },
     computed: {
-        ...mapState('sales', ['sale']),
+        ...mapState('purchases', ['purchase']),
         ...mapState('customers', ['customer']),
+        ...mapState('', ['comments']),
         userType() {
             return this.$store.getters.userType;
         },
@@ -192,6 +196,9 @@ export default {
         },
         non_taxable_sales() {
             return (this.sale.non_taxable_sales * this.averageRate);
+        },
+        non_taxable_purchases() {
+            return (this.purchase.non_taxable_purchases * this.averageRate);
         },
         value_of_exports() {
             return (this.sale.vat * this.averageRate);
@@ -220,7 +227,7 @@ export default {
         	this.$refs.commentsView.active = !this.$refs.commentsView.active;
         },
         ...mapActions({
-            getSale: 'sales/getSale',
+            getPurchase: 'purchases/getPurchase',
             getCustomer: 'customers/getCustomer',
             statusChange: 'taxes/statusUpdateSPP',
             statusChangeManagment: 'taxes/statusChangeManagment'
@@ -232,18 +239,15 @@ export default {
                 id: id,
                 tax_id: this.tax_id,
                 notify: this.$vs.notify,
-                type: 'sale'
+                type: 'purchase'
             };
             this.statusChange(data).then((res)=> {
-               if(res.data.status != true){
                     if(res.data.response == 'undefined'){
-                        this.sale.officer_confirmed = status; 
+                        this.purchase.officer_confirmed = status; 
                     }else{
-                        this.sale.officer_confirmed = res.data.response; 
+                        this.purchase.officer_confirmed = res.data.response; 
                     }
-               }
             });
-
         },
 
         changeManagementStatus(status, id, by){
@@ -254,7 +258,7 @@ export default {
                 by: by,
                 tax_id: this.tax_id,
                 notify: this.$vs.notify,
-                tax_type: 'sale'
+                tax_type: 'purchase'
             };
             this.statusChangeManagment(data).then((res)=> {
                
