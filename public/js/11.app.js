@@ -67,6 +67,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   inject: ['generatePassword'],
@@ -476,6 +477,16 @@ var render = function() {
                                   type: "border",
                                   "icon-pack": "feather",
                                   icon: "icon-edit"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("vs-button", {
+                                attrs: {
+                                  to: "payroll-detail/" + tr.payroll_id,
+                                  size: "small",
+                                  "icon-pack": "feather",
+                                  icon: "icon-maximize-2",
+                                  type: "border"
                                 }
                               })
                             ],

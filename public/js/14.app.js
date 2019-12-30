@@ -525,6 +525,7 @@ var render = function() {
                               _vm._v(" "),
                               _c("vs-button", {
                                 attrs: {
+                                  to: "purchase-detail/" + tr.purchase_id,
                                   size: "small",
                                   "icon-pack": "feather",
                                   icon: "icon-maximize-2",
