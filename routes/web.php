@@ -75,6 +75,7 @@ Route::group(['prefix' => ''], function () {
 	// Purchases
 	Route::post('add-purchase', 'ApplicationController@add_purchase');
 	Route::get('get-purchases', 'ApplicationController@get_purchases');
+	Route::post('get-purchase', 'ApplicationController@get_purchase');
 	Route::get('get-pending-purchases', 'ApplicationController@get_pending_purchases');
 	Route::post('get-single-purchase', 'ApplicationController@get_purchase');
 	Route::post('update-purchase', 'ApplicationController@update_purchase');
@@ -84,7 +85,7 @@ Route::group(['prefix' => ''], function () {
 	Route::post('add-sale', 'ApplicationController@add_sale');
 	Route::get('get-sales', 'ApplicationController@get_sales');
 	Route::get('get-sale', 'ApplicationController@get_sale');
-	Route::get('get-comments', 'ApplicationController@get_comments');
+	Route::post('get-comments', 'ApplicationController@get_comments');
 	Route::post('send-comment', 'ApplicationController@send_comment');
 
 	Route::get('get-pending-sales', 'ApplicationController@get_pending_sales');

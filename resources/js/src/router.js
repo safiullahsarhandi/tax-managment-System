@@ -305,6 +305,15 @@ const router = new Router({
                     }
                 },
                 {
+                    path: '/purchase-detail/:id',
+                    name: 'Purchase Detail',
+                    component: () => import('./views/pages/Purchases/PurchaseDetail.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+                {
                     path: '/un-reviewed-purchases',
                     name: 'Un Reviewed Purchases',
                     component: () => import('./views/pages/Purchases/PendingPurchases.vue'),
@@ -344,6 +353,15 @@ const router = new Router({
                     path: '/edit-payroll/:id',
                     name: 'Edit Payrolls',
                     component: () => import('./views/pages/Payrolls/EditPayroll.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+                {
+                    path: '/payroll-detail/:id',
+                    name: 'Payroll Detail',
+                    component: () => import('./views/pages/Payrolls/PayrollDetail.vue'),
                     meta: {
                         requiresAuth: true,
                         requiresAdmin: true,

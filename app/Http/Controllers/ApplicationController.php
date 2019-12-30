@@ -785,7 +785,7 @@ class ApplicationController extends Controller {
 	}
 
 	public function get_purchase(Request $request) {
-		$purchase = Purchases::wherePurchaseId($request->id)->first();
+		$purchase = Purchases::with(['officer'])->wherePurchaseId($request->id)->first();
 		return response()->json(compact('purchase'));
 	}
 
@@ -878,7 +878,7 @@ class ApplicationController extends Controller {
 
 	public function get_payroll(Request $request) {
 
-		$data = Payrolls::with(['employee'])->wherePayrollId($request->id)->first();
+		$data = Payrolls::with(['employee', 'officer'])->wherePayrollId($request->id)->first();
 
 		return response()->json(['data' => $data]);
 
@@ -1134,7 +1134,18 @@ class ApplicationController extends Controller {
 	}
 
 	public function get_comments(Request $request) {
-		$comments = TaxComments::where('object_id', $request->object_id)->get();
+
+			$object_types = ['Purchase', 'Sale', 'Payroll'];
+
+			if(!in_array($request->type, $object_types)){
+				return response()->json(['status' => false, 'msg' => 'Invalid object type']);
+			}
+
+			$comments = TaxComments::where('object_id', $request->object_id)
+			->whereObjectType($request->type)
+			->orderBy('created_at', 'desc')
+			->get();
+
 		return response()->json(compact('comments'));
 	}
 	public function send_comment(Request $request) {
@@ -1207,15 +1218,27 @@ class ApplicationController extends Controller {
 		$msg = '';
 		if ($request->by == 'supervisor') {
 
-			if ($data->management_confirmed == 0) {
-				$data->supervisor_confirmed = $request->status;
-				$data->save();
-			} else {
-				return response()->json(['status' => false, 'msg' => 'Your ' . $request->type . ' status approved by supervisor.', 'response' => $data->officer_confirmed]);
+			if($data->officer_confirmed == 1){
+
+				if ($data->management_confirmed == 0) {
+					$data->supervisor_confirmed = $request->status;
+					$data->save();	
+				} else {
+					return response()->json(['status' => false, 'msg' => 'Your ' . $request->tax_type . ' status approved by admin.', 'response' => $data->status]);
+				}
+			}else{
+					return response()->json(['status' => false, 'msg' => 'Your ' . $request->tax_type . ' status still not approved by officer.', 'response' => $data->status]);
 			}
+
+
+
 		} else if ($request->by == 'admin') {
+			if($data->supervisor_confirmed == 1){
 			$data->management_confirmed = $request->status;
 			$data->save();
+			}else{
+				return response()->json(['status' => false, 'msg' => 'Your ' . $request->tax_type . ' status still not approved by Supervisor.', 'response' => $data->status]);
+			}
 		}
 
 		return response()->json(['status' => true, 'msg' => 'Changes successfully', 'response' => $request->status]);

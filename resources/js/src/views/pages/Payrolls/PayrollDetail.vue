@@ -2,7 +2,7 @@
     <div>
         <vs-row>
             <vs-col vs-lg="9" vs-md="9" vs-sm="12">
-                <vx-card title="Sales Detail">
+                <vx-card title="Payroll Detail">
                     <vs-row>
                         <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
                             <h6>Client TIN:</h6>
@@ -13,60 +13,73 @@
                             <p>{{customer.name_english}}</p>
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
-                            <h6>Account Code:</h6>
-                            <p>{{sale.account_code}}</p>
+                            <h6>Basic Salary:</h6>
+                            <p>{{payroll.basic_salary}}</p>
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
-                            <h6>Account Description:</h6>
-                            <p>{{sale.account_description}}</p>
+                            <h6>Seniority Payment:</h6>
+                            <p>{{payroll.seniority_payment}}</p>
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
-                            <h6>Accounting Reference:</h6>
-                            <p>{{sale.accounting_reference}}</p>
+                            <h6>Severance Pay:</h6>
+                            <p>{{payroll.severance_pay}}</p>
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
-                            <h6>Signature Date:</h6>
-                            <p>{{sale.signature_date}}</p>
+                            <h6>Bonus:</h6>
+                            <p>{{payroll.bonus}}</p>
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
-                            <h6>Branch Name:</h6>
-                            <p>{{sale.branch_name}}</p>
+                            <h6>Over Time:</h6>
+                            <p>{{payroll.over_time}}</p>
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
-                            <h6>Tax Period:</h6>
-                            <p>{{sale.tax_period}}</p>
+                            <h6>Commissions:</h6>
+                            <p>{{payroll.commissions}}</p>
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
-                            <h6>Invoice Date:</h6>
-                            <p>{{sale.invoice_date}}</p>
+                            <h6>Maternity Leave:</h6>
+                            <p>{{payroll.maternity_leave}}</p>
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
-                            <h6>Invoice Number:</h6>
-                            <p>{{sale.invoice_num}}</p>
+                            <h6>Paid Annual Leave:</h6>
+                            <p>{{payroll.paid_annual_leave}}</p>
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
-                            <h6>Description:</h6>
-                            <p>{{sale.description}}</p>
+                            <h6>Food Allowance:</h6>
+                            <p>{{payroll.food_allowance}}</p>
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
-                            <h6>Quantity:</h6>
-                            <p>{{sale.quantity}}</p>
+                            <h6>Transport Allowance:</h6>
+                            <p>{{payroll.transport_allowance}}</p>
                         </vs-col>
+                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                            <h6>Deduction Advance:</h6>
+                            <p>{{payroll.deduction_advance}}</p>
+                        </vs-col>
+                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                            <h6>Salary Adjusment:</h6>
+                            <p>{{payroll.salary_adjusment}}</p>
+                        </vs-col>
+                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                            <h6>Others:</h6>
+                            <p>{{payroll.others}}</p>
+                        </vs-col>
+                        
                     </vs-row>
                 </vx-card>
-                <vx-card class="mt-base" title="Sales Summary">
+                <vx-card class="mt-base" title="Payrolls Summary">
                     <vs-row>
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>Non Taxable Sale:</h6>
                             <p>{{customer.non_taxable_sales || 'NA'}}</p>
                         </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
+                        <!-- <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>Non taxable sale x Average rate:</h6>
                             <p>{{non_taxable_sales}}</p>
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>Value Of Exports:</h6>
-                            <p>{{sale.vat || 'NA'}}</p>
+                            <p>{{payroll.vat || 'NA'}}</p>
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>Value Of Exports:</h6>
@@ -77,7 +90,7 @@
                         </vs-divider>
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>Taxable Value:</h6>
-                            <p>{{sale.taxable_person_sales}}</p>
+                            <p>{{payroll.taxable_person_sales}}</p>
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>VAT:</h6>
@@ -98,7 +111,7 @@
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>Taxable Value:</h6>
-                            <p>{{sale.cust_sales}}</p>
+                            <p>{{payroll.cust_sales}}</p>
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>VAT:</h6>
@@ -117,30 +130,27 @@
                         </vs-divider>
                         <vs-col class="mt-5 text-center" vs-lg="12" vs-md="12" vs-sm="12">
                             <p>{{customer_taxable_vat}}</p>
-                        </vs-col>
+                        </vs-col> -->
                     </vs-row>
                 </vx-card>
             </vs-col>
             <vs-col vs-lg="3" vs-md="3" vs-xl="3" vs-sm="12">
                 <vx-card title="Actions">
                     <vs-list>
-                        <vs-list-item title="Edit Sale">
-                            <vs-button :to="'/sale-update/'+$route.params.id" icon-pack="feather" size="small" icon='icon-edit'></vs-button>
+                        <vs-list-item title="Edit Purchase">
+                            <vs-button :to="'/purchase-update/'+$route.params.id" icon-pack="feather" size="small" icon='icon-edit'></vs-button>
                         </vs-list-item>
                         <template>
                             <vs-list-item v-if="userType == 'Admin'" title="Status">
-                                <vs-button icon-pack="feather" size="small" icon='icon-check-circle' @click="changeManagementStatus('1', sale.id, 'admin')"></vs-button>
-                                <vs-button icon-pack="feather" size="small" icon='icon-x-circle' @click="changeManagementStatus('0', sale.id, 'admin')"></vs-button>
+                                <vs-button icon-pack="feather" size="small" icon='icon-check-circle' @click="changeManagementStatus('1', payroll.id, 'admin')"></vs-button>
+                                <vs-button icon-pack="feather" size="small" icon='icon-x-circle' @click="changeManagementStatus('0', payroll.id, 'admin')"></vs-button>
                             </vs-list-item>
-
-                             <vs-list-item v-if="userType == 'Supervisor'" title="Status">
-                                <vs-button icon-pack="feather" size="small" icon='icon-check-circle' @click="changeManagementStatus('1', sale.id, 'supervisor')"></vs-button>
-                                <vs-button icon-pack="feather" size="small" icon='icon-x-circle' @click="changeManagementStatus('0', sale.id, 'supervisor')"></vs-button>
+                            <vs-list-item v-if="userType == 'Supervisor'" title="Status">
+                                <vs-button icon-pack="feather" size="small" icon='icon-check-circle' @click="changeManagementStatus('1', payroll.id, 'supervisor')"></vs-button>
+                                <vs-button icon-pack="feather" size="small" icon='icon-x-circle' @click="changeManagementStatus('0', payroll.id, 'supervisor')"></vs-button>
                             </vs-list-item>
-
-
                             <vs-list-item v-if="userType == 'Officer'" title="Status">
-                                <vs-switch icon-pack="feather" @click="statusUpdate(sale.sale_id, sale.officer_confirmed)" v-model="sale.officer_confirmed"></vs-switch>
+                                <vs-switch icon-pack="feather" @click="statusUpdate(payroll.payroll_id, payroll.officer_confirmed)" v-model="payroll.officer_confirmed"></vs-switch>
                             </vs-list-item>
                         </template>
                         <vs-list-item title="View Comments">
@@ -153,12 +163,11 @@
         <the-customizer
            ref="commentsView"
            :object_id="$route.params.id"
-           type="Sale"
+           type="Payroll"
            comments-url="get-comments"
             />
-        <!-- <Slide right width="350" isOpen>
-        </Slide> -->
     </div>
+    <!-- <div>Testing Payroll detail Page</div> -->
 </template>
 <script>
 	import TheCustomizer from "@/layouts/components/customizer/CommentDrawer.vue";
@@ -178,11 +187,11 @@ export default {
     created() {
         this.tax_id = this.$store.state.rootUrl.split('/')[2];
         this.getCustomer(localStorage.getItem('customer'));
-        this.getSale(this.$route.params.id);
+        this.getPayroll(this.$route.params.id);
         this.$store.dispatch('getAverageRate');
     },
     computed: {
-        ...mapState('sales', ['sale']),
+        ...mapState('payrolls', ['payroll']),
         ...mapState('customers', ['customer']),
         userType() {
             return this.$store.getters.userType;
@@ -220,26 +229,25 @@ export default {
         	this.$refs.commentsView.active = !this.$refs.commentsView.active;
         },
         ...mapActions({
-            getSale: 'sales/getSale',
+            getPayroll: 'payrolls/getPayroll',
             getCustomer: 'customers/getCustomer',
             statusChange: 'taxes/statusUpdateSPP',
             statusChangeManagment: 'taxes/statusChangeManagment'
         }),
-
         statusUpdate(id, status){
 
             let data = {
                 id: id,
                 tax_id: this.tax_id,
                 notify: this.$vs.notify,
-                type: 'sale'
+                type: 'payroll'
             };
             this.statusChange(data).then((res)=> {
                if(res.data.status != true){
                     if(res.data.response == 'undefined'){
-                        this.sale.officer_confirmed = status; 
+                        this.payroll.officer_confirmed = status; 
                     }else{
-                        this.sale.officer_confirmed = res.data.response; 
+                        this.payroll.officer_confirmed = res.data.response; 
                     }
                }
             });
@@ -254,7 +262,7 @@ export default {
                 by: by,
                 tax_id: this.tax_id,
                 notify: this.$vs.notify,
-                tax_type: 'sale'
+                tax_type: 'payroll'
             };
             this.statusChangeManagment(data).then((res)=> {
                

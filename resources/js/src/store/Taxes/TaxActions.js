@@ -71,7 +71,7 @@ export default {
             if(res.data.status == true){
                 data.notify({title:'Updated!...',text:res.data.msg,color:'success',position:'top-right'});
             }else{
-                data.notify({title:'Sorry!...',text:res.data.msg,color:'danger',position:'top-right'});
+                data.notify({title:'Sorry!...',text:res.data.msg,color:'danger',position:'top-right', time: 5000});
             }
             return res;
         });
@@ -91,7 +91,7 @@ export default {
             if(res.data.status == true){
                 data.notify({title:'Updated!...',text:res.data.msg,color:'success',position:'top-right'});
             }else{
-                data.notify({title:'Sorry!...',text:res.data.msg,color:'danger',position:'top-right'});
+                data.notify({title:'Sorry!...',text:res.data.msg,color:'danger',position:'top-right', time: 5000});
             }
             return res;
         });

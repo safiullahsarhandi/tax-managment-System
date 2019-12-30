@@ -24,7 +24,7 @@
                     </div>
                 </VuePerfectScrollbar>
                 <div class="customizer-footer mt-6 flex items-center justify-between px-6">
-                    <vs-input class="w-full" placeholder="Type Here" @keydown.enter="sendComment($event)" />
+                    <vs-input class="w-full" placeholder="Type Here" model="textMsg" @keydown.enter="sendComment($event)" />
                 </div>
                 <vs-divider class="mb-0"></vs-divider>
             </div>
@@ -50,6 +50,7 @@ export default {
         },
 
     },
+
     watch: {
         active(val, oldVal) {
             if (val == false) {
@@ -57,9 +58,13 @@ export default {
             }else{
                 var self = this;
         this.invterVal = setInterval(function() {
-            self.$store.dispatch('getComments', self.commentsUrl, self.type, self.object_id);
+            let data = {
+                    'path': self.commentsUrl,
+                    'type': self.type,
+                    'object_id' : self.object_id
+                };
+            self.$store.dispatch('getComments', data);
         }, 2000)
-        console.log(this.comments);
             }
             this.scrollToEnd()
         }
@@ -68,6 +73,7 @@ export default {
         return {
             invterVal: '',
             active: false,
+            textMsg: '',
             settings: { // perfectscrollbar settings
                 maxScrollbarLength: 60,
                 wheelSpeed: .60,
@@ -101,7 +107,6 @@ export default {
             return this.$store.state.comments;
         },
         commentedBy(val){
-            alert(val)
             return  this.$store.getters.commentedBy;
         }
     },
