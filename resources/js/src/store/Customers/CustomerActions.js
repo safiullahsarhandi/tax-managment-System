@@ -4,6 +4,11 @@ export default{
 			commit('setCustomers',res.data.customers)
 		});
 	},
+	getCustomer({commit},customer_id){
+		axios.get('get-customer?customer_id='+customer_id,).then(res=>{
+			commit('setCustomer',res.data.customer)
+		});
+	},
 	addCustomer({commit},fd){
 		// alert('action called');
 		return axios.post('add-customer',fd).then(res=>{

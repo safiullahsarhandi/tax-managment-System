@@ -5,7 +5,6 @@
             <div @mouseenter="sidebarMouseEntered" @mouseleave="sidebarMouseLeave">
                 <div class="header-sidebar flex items-end justify-between" slot="header">
                     <div class="logo flex items-center">
-                        <img :src="logo" alt="logo" class="w-10 mr-4" v-if="logo">
                         <span class="logo-text" v-show="isMouseEnter || !reduce" v-if="title">{{ title }}</span>
                     </div>
                     <div>
@@ -29,7 +28,7 @@
                         <template v-else-if="!sidebarItem.header">
 
                             <!-- IF IT'S SINGLE ITEM -->
-                            <vx-sidebar-item ref="sidebarLink" :key="`sidebarItem-${index}`" v-if="!sidebarItem.submenu" :index="index" :to="sidebarItem.slug != 'external' ? sidebarItem.url : ''" :href="sidebarItem.slug == 'external' ? sidebarItem.url : ''" :icon="sidebarItem.icon" :target="sidebarItem.target" :isDisabled="sidebarItem.isDisabled">
+                            <vx-sidebar-item ref="sidebarLink" :key="`sidebarItem-${index}`" v-if="!sidebarItem.submenu" :index="index" :to="sidebarItem.slug != 'external' ? sidebarItem.isMain?$store.state.rootUrl:sidebarItem.url : ''" :href="sidebarItem.slug == 'external' ? sidebarItem.url : ''" :icon="sidebarItem.icon" :target="sidebarItem.target" :isDisabled="sidebarItem.isDisabled">
                                 <span v-show="!sidebarItemsMin" class="truncate">{{ sidebarItem.name }}</span>
                                 <vs-chip class="ml-auto" :color="sidebarItem.tagColor" v-if="sidebarItem.tag && (isMouseEnter || !reduce)">{{ sidebarItem.tag }}</vs-chip>
                             </vx-sidebar-item>

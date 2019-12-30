@@ -3939,3 +3939,8 @@ button:focus {
   outline: none;
 }
 
+.vs-button.includeIcon {
+  float: left !important;
+  margin: 2px;
+}
+

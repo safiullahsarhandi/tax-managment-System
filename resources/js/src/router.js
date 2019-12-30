@@ -1,22 +1,3 @@
-/*=========================================================================================
-  File Name: router.js
-  Description: Routes for vue-router. Lazy loading is enabled.
-  Object Strucutre:
-                    path => router path
-                    name => router name
-                    component(lazy loading) => component to load
-                    meta : {
-                      rule => which user can have access (ACL)
-                      breadcrumb => Add breadcrumb to specific page
-                      pageTitle => Display title besides breadcrumb
-                    }
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuesax Admin - VueJS Dashboard Admin Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
-
-
 import Vue from 'vue'
 import Router from 'vue-router'
 
@@ -25,176 +6,391 @@ Vue.use(Router)
 const router = new Router({
     // mode: 'history',
     base: '/',
-    routes: [
+    routes: [{
+            // =============================================================================
+            // MAIN LAYOUT ROUTES
+            // =============================================================================
+            path: '/dashboard',
+            component: () => import('./layouts/main/Main.vue'),
+            meta: {
+                requiresAuth: true,
+                requiresAdmin: true,
 
-      {
-    // =============================================================================
-    // MAIN LAYOUT ROUTES
-    // =============================================================================
-        path: '',
-        component: () => import('./layouts/main/Main.vue'),
-        children: [
-      // =============================================================================
-      // Theme Routes
-      // =============================================================================
-          {
-            path: '/',
-            name: 'home',
-            component: () => import('./views/Home.vue'),
-          },
-          {
-            path: '/page2',
-            name: 'page2',
-            component: () => import('./views/Page2.vue'),
-          },
-          {
-            path: '/customers',
-            name: 'Customers',
-            component: () => import('./views/pages/Customers/Customers.vue'),
-          },
-          {
-              path : '/add-customer',
-              name : 'Add Customer',
-              component : () => import('./views/pages/Customers/AddCustomer.vue'),
             },
-          {
-            path: '/currencies',
-            name: 'Currencies',
-            component: () => import('./views/pages/Currencies.vue'),
-          },
-          {
-            path: '/exchange-rates',
-            name: 'Exhange Rates',
-            component: () => import('./views/pages/ExchangeRates.vue'),
-          },
-          {
-            path: '/admins',
-            name: 'Admins',
-            component: () => import('./views/pages/Admins.vue'),
-          },
-          {
-            path: '/supervisors',
-            name: 'Supervisors',
-            component: () => import('./views/pages/Supervisors.vue'),
-          },
-          {
-            path: '/officers',
-            name: 'Officers',
-            component: () => import('./views/pages/Officers.vue'),
-          },
-          {
-            path: '/testing',
-            name: 'testing',
-            component: () => import('./views/pages/demo.vue'),
-          },
-          {
-            path: '/tax-managment',
-            name: 'Tax Managment',
-            component: () => import('./views/pages/tax-managment/TaxManagment.vue'),
-          },
-        ],
-      },
-      {
-    // =============================================================================
-    // CUSTOMER DETAIL LAYOUT ROUTES
-    // =============================================================================
-        path: '/customer-detail/:id',
-        component: () => import('./layouts/full-page/customerDetailFullPage.vue'),
-        children: [
-      // =============================================================================
-      // Theme Routes
-      // =============================================================================
-          {
-            path: '/',
-            name: 'Company Detail',
-            component: () => import('./views/pages/Customers/CustomerDetail.vue'),
-          },
-          /*{
-            path: '/add-sale',
-            name: 'Add Sale',
-            component: () => import('./views/pages/Sales/AddSale.vue'),
-          },
-          {
-            path: '/sales-list',
-            name: 'Sales List',
-            component: () => import('./views/pages/Sales/Sales.vue'),
-          },
-          {
-            path: '/add-purchase',
-            name: 'Add Purchase',
-            component: () => import('./views/pages/Purchases/AddPurchase.vue'),
-          },
-          {
-            path: '/purchases-list',
-            name: 'Purchases List',
-            component: () => import('./views/pages/Purchases/Purchases.vue'),
-          },*/
-        ],
-      },
-      {
-    // =============================================================================
-    // TAX DETAIL LAYOUT ROUTES
-    // =============================================================================
-        path: '/tax-collection/:id',
-        component: () => import('./layouts/main/TaxDetailMain.vue'),
-        children: [
-      // =============================================================================
-      // Theme Routes
-      // =============================================================================
-          {
-            path: '/',
-            name: 'Tax Detail',
-            component: () => import('./views/pages/Tax/TaxDetail.vue'),
-          },
-          {
-            path: '/add-sale',
-            name: 'Add Sale',
-            component: () => import('./views/pages/Sales/AddSale.vue'),
-          },
-          {
-            path: '/sales-list',
-            name: 'Sales List',
-            component: () => import('./views/pages/Sales/Sales.vue'),
-          },
-          {
-            path: '/add-purchase',
-            name: 'Add Purchase',
-            component: () => import('./views/pages/Purchases/AddPurchase.vue'),
-          },
-          {
-            path: '/purchases-list',
-            name: 'Purchases List',
-            component: () => import('./views/pages/Purchases/Purchases.vue'),
-          },
-        ],
-      },
-    // =============================================================================
-    // FULL PAGE LAYOUTS
-    // =============================================================================
-      {
-        path: '',
-        component: () => import('@/layouts/full-page/FullPage.vue'),
-        children: [
-      // =============================================================================
-      // PAGES
-      // =============================================================================
-          {
-            path: '/pages/login',
-            name: 'pageLogin',
-            component: () => import('@/views/pages/Login.vue')
-          },
-          {
-            path: '/pages/error-404',
-            name: 'pageError404',
-            component: () => import('@/views/pages/Error404.vue')
-          },
-        ]
-      },
-      // Redirect to 404 page, if no match found
-      {
-        path: '*',
-        redirect: '/pages/error-404'
-      }
+            children: [
+                // =============================================================================
+                // Theme Routes
+                // =============================================================================
+                {
+                    path: '/',
+                    name: 'home',
+                    component: () => import('./views/Home.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+
+                    }
+                },
+                {
+                    path: '/page2',
+                    name: 'page2',
+                    component: () => import('./views/Page2.vue'),
+                    meta: {
+                        requiresAuth: true,
+                    }
+                },
+                {
+                    path: '/customers',
+                    name: 'Customers',
+                    component: () => import('./views/pages/Customers/Customers.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+
+                    }
+                },
+                {
+                    path: '/add-customer',
+                    name: 'Add Customer',
+                    component: () => import('./views/pages/Customers/AddCustomer.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: false,
+
+                    }
+                },
+                {
+                    path: '/customer-update/:id',
+                    name: 'Customer Update',
+                    component: () => import('./views/pages/Customers/EditCustomer.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: false,
+
+                    }
+                },
+                {
+                    path: '/currencies',
+                    name: 'Currencies',
+                    component: () => import('./views/pages/Currencies.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+
+                    }
+                },
+                {
+                    path: '/exchange-rates',
+                    name: 'Exhange Rates',
+                    component: () => import('./views/pages/ExchangeRates.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+
+                    }
+                },
+                /*{
+                    path: '/admins',
+                    name: 'Admins',
+                    component: () => import('./views/pages/Admins.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+
+                    }
+                },
+                {
+                    path: '/supervisors',
+                    name: 'Supervisors',
+                    component: () => import('./views/pages/Supervisors.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+                {
+                    path: '/officers',
+                    name: 'Officers',
+                    component: () => import('./views/pages/Officers.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },*/
+                {
+                    path: '/testing',
+                    name: 'testing',
+                    component: () => import('./views/pages/demo.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+                {
+                    path: '/tax-managment',
+                    name: 'Tax Managment',
+                    component: () => import('./views/pages/tax-managment/TaxManagment.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+                {
+                    path: '/team-members',
+                    name: 'Team Members',
+                    component: () => import('./views/pages/Admins.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: false,
+                        
+                    }
+                },
+                {
+                    path: '/member-detail/:id',
+                    name: 'Member Detail',
+                    component: () => import('./views/pages/MemberDetail.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+            ],
+        },
+        {
+            // =============================================================================
+            // CUSTOMER DETAIL LAYOUT ROUTES
+            // =============================================================================
+            path: '/customer-detail/:id',
+            component: () => import('./layouts/main/customerMain.vue'),
+            props: true,
+            meta : {
+                        requiresAuth : true,
+                        requiresAdmin: true,
+                    },
+            children: [
+                // =============================================================================
+                // Theme Routes
+                // =============================================================================
+                {
+                    path: '/',
+                    name: 'Company Detail',
+                    component: () => import('./views/pages/Customers/CustomerDetail.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+                {
+                    path: '/add-employee',
+                    name: 'Add Employee',
+                    component: () => import('./views/pages/Employees/AddEmployee.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: false,
+                    }
+                },
+                {
+                    path: '/employees-list',
+                    name: 'Employees List',
+                    component: () => import('./views/pages/Employees/Employees.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: false,
+                    }
+                },
+                {
+                    path: '/taxes',
+                    name: 'Taxes',
+                    component: () => import('./views/pages/Customers/Taxes.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+            ],
+        },
+        {
+            // =============================================================================
+            // TAX DETAIL LAYOUT ROUTES
+            // =============================================================================
+            path: '/tax-collection/:id',
+            component: () => import('./layouts/main/TaxDetailMain.vue'),
+            meta: {
+                requiresAuth: true,
+                requiresAdmin: true,
+            },
+            children: [
+                // =============================================================================
+                // Theme Routes
+                // =============================================================================
+                {
+                    path: '/',
+                    name: 'Tax Detail',
+                    component: () => import('./views/pages/Tax/TaxDetail.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+                {
+                    path: '/add-sale',
+                    name: 'Add Sale',
+                    component: () => import('./views/pages/Sales/AddSale.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+                {
+                    path: '/sale-update/:id',
+                    name: 'Update Sale',
+                    component: () => import('./views/pages/Sales/EditSale.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+                {
+                    path: '/sale-detail/:id',
+                    name: 'Sale Detail',
+                    component: () => import('./views/pages/Sales/SaleDetail.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+                {
+                    path: '/sales-list',
+                    name: 'Sales List',
+                    component: () => import('./views/pages/Sales/Sales.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+                {
+                    path: '/un-reviewed-sales',
+                    name: 'Un Reviewed Sales',
+                    component: () => import('./views/pages/Sales/PendingSales.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+                {
+                    path: '/add-purchase',
+                    name: 'Add Purchase',
+                    component: () => import('./views/pages/Purchases/AddPurchase.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+                 {
+                    path: '/purchase-update/:id',
+                    name: 'Update Purchase',
+                    component: () => import('./views/pages/Purchases/EditPurchase.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+                {
+                    path: '/purchases-list',
+                    name: 'Purchases List',
+                    component: () => import('./views/pages/Purchases/Purchases.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+                {
+                    path: '/un-reviewed-purchases',
+                    name: 'Un Reviewed Purchases',
+                    component: () => import('./views/pages/Purchases/PendingPurchases.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+                {
+                    path: '/add-payroll',
+                    name: 'Add Payroll',
+                    component: () => import('./views/pages/Payrolls/AddPayroll.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+                {
+                    path: '/employees-payrolls',
+                    name: 'Employees Payrolls',
+                    component: () => import('./views/pages/Payrolls/Payrolls.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+                {
+                    path: '/un-reviewed-payrolls',
+                    name: 'Un Reviewed Payrolls',
+                    component: () => import('./views/pages/Payrolls/PendingPayrolls.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+                {
+                    path: '/edit-payroll/:id',
+                    name: 'Edit Payrolls',
+                    component: () => import('./views/pages/Payrolls/EditPayroll.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+                {
+                    path: '/tax-team',
+                    name: 'Tax Team',
+                    component: () => import('./views/pages/Tax/TaxTeam.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+            ],
+        },
+        // =============================================================================
+        // FULL PAGE LAYOUTS
+        // =============================================================================
+        {
+            path: '',
+            component: () => import('@/layouts/full-page/FullPage.vue'),
+            children: [
+                // =============================================================================
+                // PAGES
+                // =============================================================================
+                {
+                    path: '/',
+                    name: 'pageLogin',
+                    component: () => import('@/views/pages/Login.vue'),
+                    meta: {
+                        requiresAdmin: true,
+                    }
+                },
+                {
+                    path: '/pages/error-404',
+                    name: 'pageError404',
+                    component: () => import('@/views/pages/Error404.vue')
+                    
+                },
+            ]
+        },
+        // Redirect to 404 page, if no match found
+        {
+            path: '*',
+            redirect: '/pages/error-404'
+        }
     ],
 })
 

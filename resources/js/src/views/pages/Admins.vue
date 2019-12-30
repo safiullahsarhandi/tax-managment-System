@@ -1,6 +1,6 @@
 <template>
     <div>
-        <vx-card title="List of Admins">
+        <vx-card title="List of Team Members">
             <template slot="actions">
                 <vs-button type="border" @click="addAdminModal = true" icon-pack="feather" icon="icon-plus"></vs-button>
             </template>
@@ -10,6 +10,8 @@
                     <vs-th>Phone #</vs-th>
                     <vs-th>Email</vs-th>
                     <vs-th>Address</vs-th>
+                    <vs-th>Role</vs-th>
+                    <vs-th>Status</vs-th>
                     <vs-th>Actions</vs-th>
                 </template>
                 <template  slot-scope="{data}">
@@ -18,15 +20,17 @@
                         <vs-td :data="tr.phone">{{tr.phone}}</vs-td>
                         <vs-td :data="tr.email">{{tr.email}}</vs-td>
                         <vs-td :data="tr.address+' '+tr.state+' '+tr.city+' '+tr.zip_code">{{tr.address}} {{tr.state}} {{tr.city}} {{tr.zip_code}}</vs-td>
+                        <vs-td :data="tr.type == 1?'Admin':tr.type == 2?'Supervisor':'Officer'">{{tr.type}}</vs-td>
+                        <vs-td :data="tr.status"><vs-switch @click="statusUpdate(tr.manager_id)" v-model="tr.status"/></vs-td>
                         <vs-td>
-                            <vs-button type="border" @click="editAdmin(tr.id)">Edit</vs-button>
-                            <vs-button type="border">Detail</vs-button>
+                            <vs-button size="small" type="border" icon-pack="feather" icon="icon-edit-2" @click="editAdmin(tr.id)"></vs-button>
+                            <vs-button size="small" type="border" :to="'/member-detail/'+tr.manager_id" icon-pack="feather" icon="icon-maximize-2"></vs-button>
                         </vs-td>
                     </vs-tr>
                 </template>
             </vs-table>
         </vx-card>
-        <vs-popup :active.sync="addAdminModal" title="Add New Admin">
+        <vs-popup :active.sync="addAdminModal" title="Add New Member">
             <form ref="addAdminForm" @submit.prevent="addAdmin($event)" data-vv-scope="addform">
                 <vs-row>
                     <vs-col vs-lg="6" vs-md="6" vs-sm="12">
@@ -53,7 +57,16 @@
                         </vx-input-group>
                     </vs-col>
                     <vs-col vs-lg="6" vs-md="12" vs-sm="12">
-                        <vx-input-group class="mt-2">
+
+                        <vx-input-group>
+                            <vs-select class="selectExample" v-validate="'required|excluded:0'" name='roll' v-model="defaultRoll" data-vv-scope="addform" >
+                                <vs-select-item :is-selected.sync="item.isSelected" :key="index" :value="item.value" :text="item.isSelected?item.selectedText:item.label" v-for="item,index in rolles" />
+                            </vs-select>
+                            <span class="text-danger" v-show="errors.has('roll')">{{errors.first('addform.roll')}}</span>
+                        </vx-input-group>
+                    
+
+                        <vx-input-group class="mt-6">
                             <vs-radio v-model="gender" vs-name="gender" vs-value="male">Male</vs-radio>
                             <vs-radio v-model="gender" vs-name="gender" vs-value="female">Female</vs-radio>
                         </vx-input-group>
@@ -76,13 +89,13 @@
                     </vs-col>
                     <vs-col vs-lg="12" vs-md="12" vs-sm="12">
                         <br>
-                        <vs-button button="submit" class="float-right" type="gradient">Add Admin</vs-button>
+                        <vs-button button="submit" class="float-right" type="gradient">Add Member</vs-button>
                     </vs-col>
                 </vs-row>
             </form>
         </vs-popup>
 
-        <vs-popup :active.sync="editAdminModal" title="Update Admin">
+        <vs-popup :active.sync="editAdminModal" title="Update Member">
             <form ref="editAdminForm" @submit.prevent="updateAdmin($event)" autocomplete="off" data-vv-scope="editform">
                 <vs-row>
                     <vs-col vs-lg="6" vs-md="6" vs-sm="12">
@@ -103,6 +116,12 @@
                             <vs-input readonly v-validate="'required'" name="email" v-model="edit_email" label-placeholder="Email" ata-vv-scope="editform" data-vv-scope="editform" />
                             <span class="text-danger" v-show="errors.has('email')">{{errors.first('email')}}</span>
                         </vx-input-group>
+
+                        <vx-input-group class="mt-2">
+                            <vs-input v-validate="'required'" name="address" v-model="edit_address" label-placeholder="Address" data-vv-scope="editform" />
+                            <span class="text-danger" v-show="errors.has('address')">{{errors.first('address')}}</span>
+                        </vx-input-group>
+                        
                         <!-- <vx-input-group class="mt-2">
                             <vs-input v-validate="'required'" name="password" v-model="password" label-placeholder="Password" />
                             <div class="text-danger" v-show="errors.has('password')">{{errors.first('password')}}</div>
@@ -110,18 +129,21 @@
                         </vx-input-group> -->
                     </vs-col>
                     <vs-col vs-lg="6" vs-md="12" vs-sm="12">
-                        <vx-input-group class="mt-2">
+
+                        <vs-select class="selectExample mt-2" v-model="selectedRoll" >
+                            <vs-select-item :is-selected.sync="item.isSelected" :key="index" :value="item.value" :text="item.isSelected?item.selectedText:item.label" v-for="item,index in rolles" />
+                        </vs-select>
+
+                        <vx-input-group class="mt-6">
                             <vs-radio v-model="edit_gender" name="edit_gender" vs-value="male">Male</vs-radio>
                             <vs-radio v-model="edit_gender" name="edit_gender" vs-value="female">Female</vs-radio>
                         </vx-input-group>
-                        <vx-input-group class="mt-2">
-                            <vs-input v-validate="'required'" name="address" v-model="edit_address" label-placeholder="Address" data-vv-scope="editform" />
-                            <span class="text-danger" v-show="errors.has('address')">{{errors.first('address')}}</span>
-                        </vx-input-group>
-                        <vx-input-group class="mt-2">
+
+                        <vx-input-group class="mt-5">
                             <vs-input v-validate="'required'" name="state" v-model="edit_state" label-placeholder="State" data-vv-scope="editform" />
                             <span class="text-danger" v-show="errors.has('state')">{{errors.first('state')}}</span>
                         </vx-input-group>
+                        
                         <vx-input-group class="mt-2">
                             <vs-input v-validate="'required'" name="city" v-model="edit_city" label-placeholder="City" data-vv-scope="editform" />
                             <span class="text-danger" v-show="errors.has('city')">{{errors.first('city')}}</span>
@@ -169,6 +191,14 @@ export default {
             edit_gender: "male",
             edit_password: "",
             edit_manager_id: '',
+            defaultRoll:0,
+            selectedRoll:0,
+            rolles:[
+                {value: 0, label: 'Select Role', selectedText: 'Select Role', isSelected: false },
+                {value: 1, label: 'Admin', selectedText: 'Admin', isSelected: false },
+                {value: 2, label: 'Supervisor', selectedText: 'Supervisor', isSelected: false },
+                {value: 3, label: 'Officer', selectedText: 'Officer', isSelected: false },
+            ],
         };
     },
     computed: {
@@ -193,14 +223,36 @@ export default {
                     // console.log(res.data);
                         if (res.data.status == 'success') {
                             this.password = this.email = this.first_name = this.last_name = this.zip_code = this.city = this.state = this.address = this.phone = '';
+                            this.gender = 'male'
+                            this.selectedRoll = 0;
                             e.target.reset();
                             this.errors.clear();
                             this.addAdminModal = false;
                             this.getAdmins();
+                            this.$vs.notify({
+                                color : 'danger',
+                                position : 'right-top',
+                                text : res.data.msg, 
+                            })
+
+                        }else{
+                            this.$vs.notify({
+                                color : 'danger',
+                                position : 'right-top',
+                                text : res.data.msg, 
+                            })
                         }
                     })
                 }
             })
+        },
+
+        statusUpdate(id){
+            this.$vs.loading();
+            axios.post('status-update-admin',{id:id}).then(res=>{
+                this.$vs.notify({title:'Updated!...',text:res.data.msg,color:'success',position:'top-right'})
+                this.$vs.loading.close();
+            });
         },
 
         editAdmin(id){
@@ -220,12 +272,23 @@ export default {
             this.edit_state = admin.state;
             this.edit_zip_code = admin.zip_code;
             this.edit_city = admin.city;
+            if(admin.type == 'Admin'){
+                this.selectedRoll = 1;
+            }
+            if(admin.type == 'Supervisor'){
+                this.selectedRoll = 2;
+            }
+            if(admin.type == 'Officer'){
+                this.selectedRoll = 3;
+            }
+             
             this.editAdminModal = true;
         },
         updateAdmin(e) {
 
             this.$validator.validateAll('editform').then(result => {
                 if (result) {
+                    this.$vs.loading();
                     var fd = new FormData(this.$refs.editAdminForm);
                     fd.append('gender', this.edit_gender);
                     this.update(fd).then( (res) => {
@@ -236,6 +299,8 @@ export default {
                             e.target.reset();
                             this.errors.clear();
                             this.editAdminModal = false;
+                            this.$vs.notify({title:'Updated!...',text:'Admin record updated',color:'success',position:'top-right'})
+                            this.$vs.loading.close();
                             // this.getAdmins();
                         }
                     })
@@ -249,3 +314,18 @@ export default {
 }
 
 </script>
+
+<style lang="css">
+.selectExample {
+  margin-top: 10px;
+}
+
+.con-select {
+     width: 100% !important; 
+    clear: both;
+}
+.con-select .vs-select--input {
+    margin-top: 10px !important;
+}
+
+</style>

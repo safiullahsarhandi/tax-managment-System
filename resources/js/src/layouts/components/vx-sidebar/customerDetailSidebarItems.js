@@ -21,10 +21,43 @@
 
 export default [
     {
-        url: "#",
+        url: "/customers",
+        name: "Back",
+        slug: "home",
+        icon: "ArrowLeftCircleIcon",
+        isMain : false,
+    },
+    {
+        url: "/",
         name: "Overview",
         slug: "home",
         icon: "HomeIcon",
+        isMain : true,
+    },
+    {
+        url: "/taxes",
+        name: "Taxes",
+        slug: "taxes",
+        icon: "DollarSignIcon",
+        isMain : false,
+    },
+    {
+        url: "/employees",
+        name: "Employees",
+        slug: "customer-employees",
+        icon: "UsersIcon",
+        isMain : false,
+        submenu: [{
+            url: "/add-employee",
+            name: "Add Employee",
+            slug: "add-employee",
+            icon: "UserIcon",
+        },{
+            url: "/employees-list",
+            name: "List Of Employees",
+            slug: "employees-list",
+            icon: "UserIcon",
+        }],
     },
     /*{
         url: "/",

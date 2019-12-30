@@ -9,7 +9,9 @@
 
 
 const mutations = {
-
+    setRootUrl(state,url){
+        state.rootUrl = url;
+    },
     // ////////////////////////////////////////////
     // SIDEBAR & UI UX
     // ////////////////////////////////////////////
@@ -87,6 +89,17 @@ const mutations = {
             state.starredPages.splice(10, 0, lastItemInStarredLimited);
         }
     },
+    setLoginUser(state,data){
+
+        state.AppActiveUser  = data;
+
+    },
+    setAverageRate(state,val){
+        state.averageRate = val;
+    },
+    setComments(state,comments){
+        state.comments = comments
+    }
 }
 
 export default mutations

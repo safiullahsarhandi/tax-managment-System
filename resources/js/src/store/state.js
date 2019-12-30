@@ -12,6 +12,9 @@ import themeConfig from '@/../themeConfig.js'
 import colors from '@/../themeConfig.js'
 
 const state = {
+    comments : [],
+    averageRate : 0,
+    rootUrl : '/',
     isSidebarActive: true,
     breakpoint: null,
     sidebarWidth: "default",
@@ -20,13 +23,7 @@ const state = {
     sidebarItemsMin: false,
     theme: themeConfig.theme || 'light',
     navbarSearchAndPinList: navbarSearchAndPinList,
-    AppActiveUser: {
-        id: 0,
-        name: 'John Doe',
-        about: 'Dessert chocolate cake lemon drops jujubes. Biscuit cupcake ice cream bear claw brownie brownie marshmallow.',
-        img: 'avatar-s-11.png',
-        status: 'online',
-    },
+    AppActiveUser: {},
 
     themePrimaryColor: colors.primary,
 

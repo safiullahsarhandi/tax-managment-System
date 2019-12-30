@@ -201,6 +201,21 @@
 /************************************************************************/
 /******/ ({
 
+<<<<<<< HEAD
+=======
+/***/ "./node_modules/@babel/runtime/regenerator/index.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/regenerator-runtime/runtime.js");
+
+
+/***/ }),
+
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
@@ -24332,6 +24347,746 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
+<<<<<<< HEAD
+=======
+/***/ "./node_modules/regenerator-runtime/runtime.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/regenerator-runtime/runtime.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+var runtime = (function (exports) {
+  "use strict";
+
+  var Op = Object.prototype;
+  var hasOwn = Op.hasOwnProperty;
+  var undefined; // More compressible than void 0.
+  var $Symbol = typeof Symbol === "function" ? Symbol : {};
+  var iteratorSymbol = $Symbol.iterator || "@@iterator";
+  var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
+  var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
+
+  function wrap(innerFn, outerFn, self, tryLocsList) {
+    // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
+    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
+    var generator = Object.create(protoGenerator.prototype);
+    var context = new Context(tryLocsList || []);
+
+    // The ._invoke method unifies the implementations of the .next,
+    // .throw, and .return methods.
+    generator._invoke = makeInvokeMethod(innerFn, self, context);
+
+    return generator;
+  }
+  exports.wrap = wrap;
+
+  // Try/catch helper to minimize deoptimizations. Returns a completion
+  // record like context.tryEntries[i].completion. This interface could
+  // have been (and was previously) designed to take a closure to be
+  // invoked without arguments, but in all the cases we care about we
+  // already have an existing method we want to call, so there's no need
+  // to create a new function object. We can even get away with assuming
+  // the method takes exactly one argument, since that happens to be true
+  // in every case, so we don't have to touch the arguments object. The
+  // only additional allocation required is the completion record, which
+  // has a stable shape and so hopefully should be cheap to allocate.
+  function tryCatch(fn, obj, arg) {
+    try {
+      return { type: "normal", arg: fn.call(obj, arg) };
+    } catch (err) {
+      return { type: "throw", arg: err };
+    }
+  }
+
+  var GenStateSuspendedStart = "suspendedStart";
+  var GenStateSuspendedYield = "suspendedYield";
+  var GenStateExecuting = "executing";
+  var GenStateCompleted = "completed";
+
+  // Returning this object from the innerFn has the same effect as
+  // breaking out of the dispatch switch statement.
+  var ContinueSentinel = {};
+
+  // Dummy constructor functions that we use as the .constructor and
+  // .constructor.prototype properties for functions that return Generator
+  // objects. For full spec compliance, you may wish to configure your
+  // minifier not to mangle the names of these two functions.
+  function Generator() {}
+  function GeneratorFunction() {}
+  function GeneratorFunctionPrototype() {}
+
+  // This is a polyfill for %IteratorPrototype% for environments that
+  // don't natively support it.
+  var IteratorPrototype = {};
+  IteratorPrototype[iteratorSymbol] = function () {
+    return this;
+  };
+
+  var getProto = Object.getPrototypeOf;
+  var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
+  if (NativeIteratorPrototype &&
+      NativeIteratorPrototype !== Op &&
+      hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
+    // This environment has a native %IteratorPrototype%; use it instead
+    // of the polyfill.
+    IteratorPrototype = NativeIteratorPrototype;
+  }
+
+  var Gp = GeneratorFunctionPrototype.prototype =
+    Generator.prototype = Object.create(IteratorPrototype);
+  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
+  GeneratorFunctionPrototype.constructor = GeneratorFunction;
+  GeneratorFunctionPrototype[toStringTagSymbol] =
+    GeneratorFunction.displayName = "GeneratorFunction";
+
+  // Helper for defining the .next, .throw, and .return methods of the
+  // Iterator interface in terms of a single ._invoke method.
+  function defineIteratorMethods(prototype) {
+    ["next", "throw", "return"].forEach(function(method) {
+      prototype[method] = function(arg) {
+        return this._invoke(method, arg);
+      };
+    });
+  }
+
+  exports.isGeneratorFunction = function(genFun) {
+    var ctor = typeof genFun === "function" && genFun.constructor;
+    return ctor
+      ? ctor === GeneratorFunction ||
+        // For the native GeneratorFunction constructor, the best we can
+        // do is to check its .name property.
+        (ctor.displayName || ctor.name) === "GeneratorFunction"
+      : false;
+  };
+
+  exports.mark = function(genFun) {
+    if (Object.setPrototypeOf) {
+      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
+    } else {
+      genFun.__proto__ = GeneratorFunctionPrototype;
+      if (!(toStringTagSymbol in genFun)) {
+        genFun[toStringTagSymbol] = "GeneratorFunction";
+      }
+    }
+    genFun.prototype = Object.create(Gp);
+    return genFun;
+  };
+
+  // Within the body of any async function, `await x` is transformed to
+  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
+  // `hasOwn.call(value, "__await")` to determine if the yielded value is
+  // meant to be awaited.
+  exports.awrap = function(arg) {
+    return { __await: arg };
+  };
+
+  function AsyncIterator(generator) {
+    function invoke(method, arg, resolve, reject) {
+      var record = tryCatch(generator[method], generator, arg);
+      if (record.type === "throw") {
+        reject(record.arg);
+      } else {
+        var result = record.arg;
+        var value = result.value;
+        if (value &&
+            typeof value === "object" &&
+            hasOwn.call(value, "__await")) {
+          return Promise.resolve(value.__await).then(function(value) {
+            invoke("next", value, resolve, reject);
+          }, function(err) {
+            invoke("throw", err, resolve, reject);
+          });
+        }
+
+        return Promise.resolve(value).then(function(unwrapped) {
+          // When a yielded Promise is resolved, its final value becomes
+          // the .value of the Promise<{value,done}> result for the
+          // current iteration.
+          result.value = unwrapped;
+          resolve(result);
+        }, function(error) {
+          // If a rejected Promise was yielded, throw the rejection back
+          // into the async generator function so it can be handled there.
+          return invoke("throw", error, resolve, reject);
+        });
+      }
+    }
+
+    var previousPromise;
+
+    function enqueue(method, arg) {
+      function callInvokeWithMethodAndArg() {
+        return new Promise(function(resolve, reject) {
+          invoke(method, arg, resolve, reject);
+        });
+      }
+
+      return previousPromise =
+        // If enqueue has been called before, then we want to wait until
+        // all previous Promises have been resolved before calling invoke,
+        // so that results are always delivered in the correct order. If
+        // enqueue has not been called before, then it is important to
+        // call invoke immediately, without waiting on a callback to fire,
+        // so that the async generator function has the opportunity to do
+        // any necessary setup in a predictable way. This predictability
+        // is why the Promise constructor synchronously invokes its
+        // executor callback, and why async functions synchronously
+        // execute code before the first await. Since we implement simple
+        // async functions in terms of async generators, it is especially
+        // important to get this right, even though it requires care.
+        previousPromise ? previousPromise.then(
+          callInvokeWithMethodAndArg,
+          // Avoid propagating failures to Promises returned by later
+          // invocations of the iterator.
+          callInvokeWithMethodAndArg
+        ) : callInvokeWithMethodAndArg();
+    }
+
+    // Define the unified helper method that is used to implement .next,
+    // .throw, and .return (see defineIteratorMethods).
+    this._invoke = enqueue;
+  }
+
+  defineIteratorMethods(AsyncIterator.prototype);
+  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
+    return this;
+  };
+  exports.AsyncIterator = AsyncIterator;
+
+  // Note that simple async functions are implemented on top of
+  // AsyncIterator objects; they just return a Promise for the value of
+  // the final result produced by the iterator.
+  exports.async = function(innerFn, outerFn, self, tryLocsList) {
+    var iter = new AsyncIterator(
+      wrap(innerFn, outerFn, self, tryLocsList)
+    );
+
+    return exports.isGeneratorFunction(outerFn)
+      ? iter // If outerFn is a generator, return the full iterator.
+      : iter.next().then(function(result) {
+          return result.done ? result.value : iter.next();
+        });
+  };
+
+  function makeInvokeMethod(innerFn, self, context) {
+    var state = GenStateSuspendedStart;
+
+    return function invoke(method, arg) {
+      if (state === GenStateExecuting) {
+        throw new Error("Generator is already running");
+      }
+
+      if (state === GenStateCompleted) {
+        if (method === "throw") {
+          throw arg;
+        }
+
+        // Be forgiving, per 25.3.3.3.3 of the spec:
+        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
+        return doneResult();
+      }
+
+      context.method = method;
+      context.arg = arg;
+
+      while (true) {
+        var delegate = context.delegate;
+        if (delegate) {
+          var delegateResult = maybeInvokeDelegate(delegate, context);
+          if (delegateResult) {
+            if (delegateResult === ContinueSentinel) continue;
+            return delegateResult;
+          }
+        }
+
+        if (context.method === "next") {
+          // Setting context._sent for legacy support of Babel's
+          // function.sent implementation.
+          context.sent = context._sent = context.arg;
+
+        } else if (context.method === "throw") {
+          if (state === GenStateSuspendedStart) {
+            state = GenStateCompleted;
+            throw context.arg;
+          }
+
+          context.dispatchException(context.arg);
+
+        } else if (context.method === "return") {
+          context.abrupt("return", context.arg);
+        }
+
+        state = GenStateExecuting;
+
+        var record = tryCatch(innerFn, self, context);
+        if (record.type === "normal") {
+          // If an exception is thrown from innerFn, we leave state ===
+          // GenStateExecuting and loop back for another invocation.
+          state = context.done
+            ? GenStateCompleted
+            : GenStateSuspendedYield;
+
+          if (record.arg === ContinueSentinel) {
+            continue;
+          }
+
+          return {
+            value: record.arg,
+            done: context.done
+          };
+
+        } else if (record.type === "throw") {
+          state = GenStateCompleted;
+          // Dispatch the exception by looping back around to the
+          // context.dispatchException(context.arg) call above.
+          context.method = "throw";
+          context.arg = record.arg;
+        }
+      }
+    };
+  }
+
+  // Call delegate.iterator[context.method](context.arg) and handle the
+  // result, either by returning a { value, done } result from the
+  // delegate iterator, or by modifying context.method and context.arg,
+  // setting context.delegate to null, and returning the ContinueSentinel.
+  function maybeInvokeDelegate(delegate, context) {
+    var method = delegate.iterator[context.method];
+    if (method === undefined) {
+      // A .throw or .return when the delegate iterator has no .throw
+      // method always terminates the yield* loop.
+      context.delegate = null;
+
+      if (context.method === "throw") {
+        // Note: ["return"] must be used for ES3 parsing compatibility.
+        if (delegate.iterator["return"]) {
+          // If the delegate iterator has a return method, give it a
+          // chance to clean up.
+          context.method = "return";
+          context.arg = undefined;
+          maybeInvokeDelegate(delegate, context);
+
+          if (context.method === "throw") {
+            // If maybeInvokeDelegate(context) changed context.method from
+            // "return" to "throw", let that override the TypeError below.
+            return ContinueSentinel;
+          }
+        }
+
+        context.method = "throw";
+        context.arg = new TypeError(
+          "The iterator does not provide a 'throw' method");
+      }
+
+      return ContinueSentinel;
+    }
+
+    var record = tryCatch(method, delegate.iterator, context.arg);
+
+    if (record.type === "throw") {
+      context.method = "throw";
+      context.arg = record.arg;
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    var info = record.arg;
+
+    if (! info) {
+      context.method = "throw";
+      context.arg = new TypeError("iterator result is not an object");
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    if (info.done) {
+      // Assign the result of the finished delegate to the temporary
+      // variable specified by delegate.resultName (see delegateYield).
+      context[delegate.resultName] = info.value;
+
+      // Resume execution at the desired location (see delegateYield).
+      context.next = delegate.nextLoc;
+
+      // If context.method was "throw" but the delegate handled the
+      // exception, let the outer generator proceed normally. If
+      // context.method was "next", forget context.arg since it has been
+      // "consumed" by the delegate iterator. If context.method was
+      // "return", allow the original .return call to continue in the
+      // outer generator.
+      if (context.method !== "return") {
+        context.method = "next";
+        context.arg = undefined;
+      }
+
+    } else {
+      // Re-yield the result returned by the delegate method.
+      return info;
+    }
+
+    // The delegate iterator is finished, so forget it and continue with
+    // the outer generator.
+    context.delegate = null;
+    return ContinueSentinel;
+  }
+
+  // Define Generator.prototype.{next,throw,return} in terms of the
+  // unified ._invoke helper method.
+  defineIteratorMethods(Gp);
+
+  Gp[toStringTagSymbol] = "Generator";
+
+  // A Generator should always return itself as the iterator object when the
+  // @@iterator function is called on it. Some browsers' implementations of the
+  // iterator prototype chain incorrectly implement this, causing the Generator
+  // object to not be returned from this call. This ensures that doesn't happen.
+  // See https://github.com/facebook/regenerator/issues/274 for more details.
+  Gp[iteratorSymbol] = function() {
+    return this;
+  };
+
+  Gp.toString = function() {
+    return "[object Generator]";
+  };
+
+  function pushTryEntry(locs) {
+    var entry = { tryLoc: locs[0] };
+
+    if (1 in locs) {
+      entry.catchLoc = locs[1];
+    }
+
+    if (2 in locs) {
+      entry.finallyLoc = locs[2];
+      entry.afterLoc = locs[3];
+    }
+
+    this.tryEntries.push(entry);
+  }
+
+  function resetTryEntry(entry) {
+    var record = entry.completion || {};
+    record.type = "normal";
+    delete record.arg;
+    entry.completion = record;
+  }
+
+  function Context(tryLocsList) {
+    // The root entry object (effectively a try statement without a catch
+    // or a finally block) gives us a place to store values thrown from
+    // locations where there is no enclosing try statement.
+    this.tryEntries = [{ tryLoc: "root" }];
+    tryLocsList.forEach(pushTryEntry, this);
+    this.reset(true);
+  }
+
+  exports.keys = function(object) {
+    var keys = [];
+    for (var key in object) {
+      keys.push(key);
+    }
+    keys.reverse();
+
+    // Rather than returning an object with a next method, we keep
+    // things simple and return the next function itself.
+    return function next() {
+      while (keys.length) {
+        var key = keys.pop();
+        if (key in object) {
+          next.value = key;
+          next.done = false;
+          return next;
+        }
+      }
+
+      // To avoid creating an additional object, we just hang the .value
+      // and .done properties off the next function object itself. This
+      // also ensures that the minifier will not anonymize the function.
+      next.done = true;
+      return next;
+    };
+  };
+
+  function values(iterable) {
+    if (iterable) {
+      var iteratorMethod = iterable[iteratorSymbol];
+      if (iteratorMethod) {
+        return iteratorMethod.call(iterable);
+      }
+
+      if (typeof iterable.next === "function") {
+        return iterable;
+      }
+
+      if (!isNaN(iterable.length)) {
+        var i = -1, next = function next() {
+          while (++i < iterable.length) {
+            if (hasOwn.call(iterable, i)) {
+              next.value = iterable[i];
+              next.done = false;
+              return next;
+            }
+          }
+
+          next.value = undefined;
+          next.done = true;
+
+          return next;
+        };
+
+        return next.next = next;
+      }
+    }
+
+    // Return an iterator with no values.
+    return { next: doneResult };
+  }
+  exports.values = values;
+
+  function doneResult() {
+    return { value: undefined, done: true };
+  }
+
+  Context.prototype = {
+    constructor: Context,
+
+    reset: function(skipTempReset) {
+      this.prev = 0;
+      this.next = 0;
+      // Resetting context._sent for legacy support of Babel's
+      // function.sent implementation.
+      this.sent = this._sent = undefined;
+      this.done = false;
+      this.delegate = null;
+
+      this.method = "next";
+      this.arg = undefined;
+
+      this.tryEntries.forEach(resetTryEntry);
+
+      if (!skipTempReset) {
+        for (var name in this) {
+          // Not sure about the optimal order of these conditions:
+          if (name.charAt(0) === "t" &&
+              hasOwn.call(this, name) &&
+              !isNaN(+name.slice(1))) {
+            this[name] = undefined;
+          }
+        }
+      }
+    },
+
+    stop: function() {
+      this.done = true;
+
+      var rootEntry = this.tryEntries[0];
+      var rootRecord = rootEntry.completion;
+      if (rootRecord.type === "throw") {
+        throw rootRecord.arg;
+      }
+
+      return this.rval;
+    },
+
+    dispatchException: function(exception) {
+      if (this.done) {
+        throw exception;
+      }
+
+      var context = this;
+      function handle(loc, caught) {
+        record.type = "throw";
+        record.arg = exception;
+        context.next = loc;
+
+        if (caught) {
+          // If the dispatched exception was caught by a catch block,
+          // then let that catch block handle the exception normally.
+          context.method = "next";
+          context.arg = undefined;
+        }
+
+        return !! caught;
+      }
+
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        var record = entry.completion;
+
+        if (entry.tryLoc === "root") {
+          // Exception thrown outside of any try block that could handle
+          // it, so set the completion value of the entire function to
+          // throw the exception.
+          return handle("end");
+        }
+
+        if (entry.tryLoc <= this.prev) {
+          var hasCatch = hasOwn.call(entry, "catchLoc");
+          var hasFinally = hasOwn.call(entry, "finallyLoc");
+
+          if (hasCatch && hasFinally) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            } else if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else if (hasCatch) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            }
+
+          } else if (hasFinally) {
+            if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else {
+            throw new Error("try statement without catch or finally");
+          }
+        }
+      }
+    },
+
+    abrupt: function(type, arg) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc <= this.prev &&
+            hasOwn.call(entry, "finallyLoc") &&
+            this.prev < entry.finallyLoc) {
+          var finallyEntry = entry;
+          break;
+        }
+      }
+
+      if (finallyEntry &&
+          (type === "break" ||
+           type === "continue") &&
+          finallyEntry.tryLoc <= arg &&
+          arg <= finallyEntry.finallyLoc) {
+        // Ignore the finally entry if control is not jumping to a
+        // location outside the try/catch block.
+        finallyEntry = null;
+      }
+
+      var record = finallyEntry ? finallyEntry.completion : {};
+      record.type = type;
+      record.arg = arg;
+
+      if (finallyEntry) {
+        this.method = "next";
+        this.next = finallyEntry.finallyLoc;
+        return ContinueSentinel;
+      }
+
+      return this.complete(record);
+    },
+
+    complete: function(record, afterLoc) {
+      if (record.type === "throw") {
+        throw record.arg;
+      }
+
+      if (record.type === "break" ||
+          record.type === "continue") {
+        this.next = record.arg;
+      } else if (record.type === "return") {
+        this.rval = this.arg = record.arg;
+        this.method = "return";
+        this.next = "end";
+      } else if (record.type === "normal" && afterLoc) {
+        this.next = afterLoc;
+      }
+
+      return ContinueSentinel;
+    },
+
+    finish: function(finallyLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.finallyLoc === finallyLoc) {
+          this.complete(entry.completion, entry.afterLoc);
+          resetTryEntry(entry);
+          return ContinueSentinel;
+        }
+      }
+    },
+
+    "catch": function(tryLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc === tryLoc) {
+          var record = entry.completion;
+          if (record.type === "throw") {
+            var thrown = record.arg;
+            resetTryEntry(entry);
+          }
+          return thrown;
+        }
+      }
+
+      // The context.catch method must only be called with a location
+      // argument that corresponds to a known catch block.
+      throw new Error("illegal catch attempt");
+    },
+
+    delegateYield: function(iterable, resultName, nextLoc) {
+      this.delegate = {
+        iterator: values(iterable),
+        resultName: resultName,
+        nextLoc: nextLoc
+      };
+
+      if (this.method === "next") {
+        // Deliberately forget the last sent value so that we don't
+        // accidentally pass it on to the delegate.
+        this.arg = undefined;
+      }
+
+      return ContinueSentinel;
+    }
+  };
+
+  // Regardless of whether this script is executing as a CommonJS module
+  // or not, return the runtime object so that we can declare the variable
+  // regeneratorRuntime in the outer scope, which allows this module to be
+  // injected easily by `bin/regenerator --include-runtime script.js`.
+  return exports;
+
+}(
+  // If this script is executing as a CommonJS module, use module.exports
+  // as the regeneratorRuntime namespace. Otherwise create a new empty
+  // object. Either way, the resulting object will be used to initialize
+  // the regeneratorRuntime variable at the top of this file.
+   true ? module.exports : undefined
+));
+
+try {
+  regeneratorRuntime = runtime;
+} catch (accidentalStrictMode) {
+  // This module should not be running in strict mode, so the above
+  // assignment should always work unless something is misconfigured. Just
+  // in case runtime.js accidentally runs in strict mode, we can escape
+  // strict mode using a global Function call. This could conceivably fail
+  // if a Content Security Policy forbids using Function, but in that case
+  // the proper solution is to fix the accidental strict mode problem. If
+  // you've misconfigured your bundler to force strict mode and applied a
+  // CSP to forbid Function, and you're not willing to fix either of those
+  // problems, please detail your unique predicament in a GitHub issue.
+  Function("r", "regeneratorRuntime = r")(runtime);
+}
+
+
+/***/ }),
+
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
 /***/ "./node_modules/setimmediate/setImmediate.js":
 /*!***************************************************!*\
   !*** ./node_modules/setimmediate/setImmediate.js ***!
@@ -63933,7 +64688,11 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, _vm.size],style:([_vm.styles,{
     'width':/[px]/.test(_vm.size)?("" + _vm.size):null,
     'height':/[px]/.test(_vm.size)?("" + _vm.size):null
+<<<<<<< HEAD
   }]),attrs:{"name":"button"}},'button',_vm.$attrs,false),_vm.listeners),[(!_vm.is('line')&&!_vm.is('gradient')&&!_vm.is('relief'))?_c('span',{ref:"backgroundx",staticClass:"vs-button-backgroundx vs-button--background",style:(_vm.stylesBackGround)}):_vm._e(),(_vm.icon)?_c('vs-icon',{staticClass:"vs-button--icon ",style:({
+=======
+  }]),attrs:{"name":"button","type":_vm.$attrs.button}},'button',_vm.$attrs,false),_vm.listeners),[(!_vm.is('line')&&!_vm.is('gradient')&&!_vm.is('relief'))?_c('span',{ref:"backgroundx",staticClass:"vs-button-backgroundx vs-button--background",style:(_vm.stylesBackGround)}):_vm._e(),(_vm.icon)?_c('vs-icon',{staticClass:"vs-button--icon ",style:({
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
       'order':_vm.iconAfter?2:0,
       'margin-right':_vm.$slots.default&&!_vm.iconAfter?'5px':'0px',
       'margin-left':_vm.$slots.default&&_vm.iconAfter?'5px':'0px'
@@ -66026,7 +66785,11 @@ vsCheckBox_component.options.__file = "vsCheckBox.vue"
   Vue.component(vsCheckBox.name, vsCheckBox);
 });
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"aef9cfe0-vue-loader-template"}!C:/Users/DELL/AppData/Roaming/npm/node_modules/@vue/cli-service-global/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/vsRadio/vsRadio.vue?vue&type=template&id=970bbb56&lang=html&
+<<<<<<< HEAD
 var vsRadiovue_type_template_id_970bbb56_lang_html_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('label',{staticClass:"vs-component con-vs-radio",class:[("vs-radio-" + _vm.color)]},[_c('input',_vm._g(_vm._b({staticClass:"vs-radio--input",attrs:{"name":_vm.value,"type":"radio"},domProps:{"checked":_vm.isChecked,"value":_vm.value}},'input',_vm.$attrs,false),_vm.listeners)),_c('span',{staticClass:"vs-radio"},[_c('span',{staticClass:"vs-radio--borde",style:(_vm.styles)}),_c('span',{staticClass:"vs-radio--circle",style:(_vm.styleCircle)})]),_c('span',{staticClass:"vs-radio--label"},[_vm._t("default")],2)])}
+=======
+var vsRadiovue_type_template_id_970bbb56_lang_html_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('label',{staticClass:"vs-component con-vs-radio",class:[("vs-radio-" + _vm.color)]},[_c('input',_vm._g(_vm._b({staticClass:"vs-radio--input",attrs:{"name":_vm.$attrs.name,"type":"radio"},domProps:{"checked":_vm.isChecked,"value":_vm.value}},'input',_vm.$attrs,false),_vm.listeners)),_c('span',{staticClass:"vs-radio"},[_c('span',{staticClass:"vs-radio--borde",style:(_vm.styles)}),_c('span',{staticClass:"vs-radio--circle",style:(_vm.styleCircle)})]),_c('span',{staticClass:"vs-radio--label"},[_vm._t("default")],2)])}
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
 var vsRadiovue_type_template_id_970bbb56_lang_html_staticRenderFns = []
 
 
@@ -75722,7 +76485,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapActions", function() { return mapActions; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNamespacedHelpers", function() { return createNamespacedHelpers; });
 /**
+<<<<<<< HEAD
  * vuex v3.1.1
+=======
+ * vuex v3.1.2
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
  * (c) 2019 Evan You
  * @license MIT
  */
@@ -76044,6 +76811,10 @@ var Store = function Store (options) {
   this._modulesNamespaceMap = Object.create(null);
   this._subscribers = [];
   this._watcherVM = new Vue();
+<<<<<<< HEAD
+=======
+  this._makeLocalGettersCache = Object.create(null);
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
 
   // bind commit and dispatch to self
   var store = this;
@@ -76276,12 +77047,21 @@ function resetStoreVM (store, state, hot) {
 
   // bind store public getters
   store.getters = {};
+<<<<<<< HEAD
+=======
+  // reset local getters cache
+  store._makeLocalGettersCache = Object.create(null);
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
   var wrappedGetters = store._wrappedGetters;
   var computed = {};
   forEachValue(wrappedGetters, function (fn, key) {
     // use computed to leverage its lazy-caching mechanism
     // direct inline function use will lead to closure preserving oldVm.
+<<<<<<< HEAD
     // using partial to return function with only arguments preserved in closure enviroment.
+=======
+    // using partial to return function with only arguments preserved in closure environment.
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
     computed[key] = partial(fn, store);
     Object.defineProperty(store.getters, key, {
       get: function () { return store._vm[key]; },
@@ -76325,6 +77105,12 @@ function installModule (store, rootState, path, module, hot) {
 
   // register in namespace map
   if (module.namespaced) {
+<<<<<<< HEAD
+=======
+    if (store._modulesNamespaceMap[namespace] && "development" !== 'production') {
+      console.error(("[vuex] duplicate namespace " + namespace + " for the namespaced module " + (path.join('/'))));
+    }
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
     store._modulesNamespaceMap[namespace] = module;
   }
 
@@ -76333,6 +77119,16 @@ function installModule (store, rootState, path, module, hot) {
     var parentState = getNestedState(rootState, path.slice(0, -1));
     var moduleName = path[path.length - 1];
     store._withCommit(function () {
+<<<<<<< HEAD
+=======
+      if (true) {
+        if (moduleName in parentState) {
+          console.warn(
+            ("[vuex] state field \"" + moduleName + "\" was overridden by a module with the same name at \"" + (path.join('.')) + "\"")
+          );
+        }
+      }
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
       Vue.set(parentState, moduleName, module.state);
     });
   }
@@ -76420,6 +77216,7 @@ function makeLocalContext (store, namespace, path) {
 }
 
 function makeLocalGetters (store, namespace) {
+<<<<<<< HEAD
   var gettersProxy = {};
 
   var splitPos = namespace.length;
@@ -76440,6 +77237,30 @@ function makeLocalGetters (store, namespace) {
   });
 
   return gettersProxy
+=======
+  if (!store._makeLocalGettersCache[namespace]) {
+    var gettersProxy = {};
+    var splitPos = namespace.length;
+    Object.keys(store.getters).forEach(function (type) {
+      // skip if the target getter is not match this namespace
+      if (type.slice(0, splitPos) !== namespace) { return }
+
+      // extract local getter type
+      var localType = type.slice(splitPos);
+
+      // Add a port to the getters proxy.
+      // Define as getter property because
+      // we do not want to evaluate the getters in this time.
+      Object.defineProperty(gettersProxy, localType, {
+        get: function () { return store.getters[type]; },
+        enumerable: true
+      });
+    });
+    store._makeLocalGettersCache[namespace] = gettersProxy;
+  }
+
+  return store._makeLocalGettersCache[namespace]
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
 }
 
 function registerMutation (store, type, handler, local) {
@@ -76451,7 +77272,11 @@ function registerMutation (store, type, handler, local) {
 
 function registerAction (store, type, handler, local) {
   var entry = store._actions[type] || (store._actions[type] = []);
+<<<<<<< HEAD
   entry.push(function wrappedActionHandler (payload, cb) {
+=======
+  entry.push(function wrappedActionHandler (payload) {
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
     var res = handler.call(store, {
       dispatch: local.dispatch,
       commit: local.commit,
@@ -76459,7 +77284,11 @@ function registerAction (store, type, handler, local) {
       state: local.state,
       rootGetters: store.getters,
       rootState: store.state
+<<<<<<< HEAD
     }, payload, cb);
+=======
+    }, payload);
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
     if (!isPromise(res)) {
       res = Promise.resolve(res);
     }
@@ -76540,6 +77369,12 @@ function install (_Vue) {
  */
 var mapState = normalizeNamespace(function (namespace, states) {
   var res = {};
+<<<<<<< HEAD
+=======
+  if ( true && !isValidMap(states)) {
+    console.error('[vuex] mapState: mapper parameter must be either an Array or an Object');
+  }
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
   normalizeMap(states).forEach(function (ref) {
     var key = ref.key;
     var val = ref.val;
@@ -76573,6 +77408,12 @@ var mapState = normalizeNamespace(function (namespace, states) {
  */
 var mapMutations = normalizeNamespace(function (namespace, mutations) {
   var res = {};
+<<<<<<< HEAD
+=======
+  if ( true && !isValidMap(mutations)) {
+    console.error('[vuex] mapMutations: mapper parameter must be either an Array or an Object');
+  }
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
   normalizeMap(mutations).forEach(function (ref) {
     var key = ref.key;
     var val = ref.val;
@@ -76606,6 +77447,12 @@ var mapMutations = normalizeNamespace(function (namespace, mutations) {
  */
 var mapGetters = normalizeNamespace(function (namespace, getters) {
   var res = {};
+<<<<<<< HEAD
+=======
+  if ( true && !isValidMap(getters)) {
+    console.error('[vuex] mapGetters: mapper parameter must be either an Array or an Object');
+  }
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
   normalizeMap(getters).forEach(function (ref) {
     var key = ref.key;
     var val = ref.val;
@@ -76636,6 +77483,12 @@ var mapGetters = normalizeNamespace(function (namespace, getters) {
  */
 var mapActions = normalizeNamespace(function (namespace, actions) {
   var res = {};
+<<<<<<< HEAD
+=======
+  if ( true && !isValidMap(actions)) {
+    console.error('[vuex] mapActions: mapper parameter must be either an Array or an Object');
+  }
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
   normalizeMap(actions).forEach(function (ref) {
     var key = ref.key;
     var val = ref.val;
@@ -76681,12 +77534,30 @@ var createNamespacedHelpers = function (namespace) { return ({
  * @return {Object}
  */
 function normalizeMap (map) {
+<<<<<<< HEAD
+=======
+  if (!isValidMap(map)) {
+    return []
+  }
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
   return Array.isArray(map)
     ? map.map(function (key) { return ({ key: key, val: key }); })
     : Object.keys(map).map(function (key) { return ({ key: key, val: map[key] }); })
 }
 
 /**
+<<<<<<< HEAD
+=======
+ * Validate whether given map is valid or not
+ * @param {*} map
+ * @return {Boolean}
+ */
+function isValidMap (map) {
+  return Array.isArray(map) || isObject(map)
+}
+
+/**
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
  * Return a function expect two param contains namespace and map. it will normalize the namespace and then the param's function will handle the new namespace and the map.
  * @param {Function} fn
  * @return {Function}
@@ -76721,7 +77592,11 @@ function getModuleByNamespace (store, helper, namespace) {
 var index_esm = {
   Store: Store,
   install: install,
+<<<<<<< HEAD
   version: '3.1.1',
+=======
+  version: '3.1.2',
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
   mapState: mapState,
   mapMutations: mapMutations,
   mapGetters: mapGetters,
@@ -77024,6 +77899,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _src_main_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./src/main.js */ "./resources/js/src/main.js");
+<<<<<<< HEAD
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -77053,6 +77929,8 @@ if (token) {
  */
 
 
+=======
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
 
 
 /***/ }),
@@ -77780,6 +78658,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+<<<<<<< HEAD
 /* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./App.vue */ "./resources/js/src/App.vue");
 /* harmony import */ var vuesax__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuesax */ "./node_modules/vuesax/dist/vuesax.common.js");
 /* harmony import */ var vuesax__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuesax__WEBPACK_IMPORTED_MODULE_1__);
@@ -77793,6 +78672,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue2_hammer__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(vue2_hammer__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var prismjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! prismjs */ "./node_modules/prismjs/prism.js");
 /* harmony import */ var prismjs__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(prismjs__WEBPACK_IMPORTED_MODULE_9__);
+=======
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./App.vue */ "./resources/js/src/App.vue");
+/* harmony import */ var vuesax__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuesax */ "./node_modules/vuesax/dist/vuesax.common.js");
+/* harmony import */ var vuesax__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vuesax__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+/* harmony import */ var _themeConfig_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../themeConfig.js */ "./resources/js/themeConfig.js");
+/* harmony import */ var _globalComponents_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./globalComponents.js */ "./resources/js/src/globalComponents.js");
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./router */ "./resources/js/src/router.js");
+/* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./store/store */ "./resources/js/src/store/store.js");
+/* harmony import */ var _filters_filters__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./filters/filters */ "./resources/js/src/filters/filters.js");
+/* harmony import */ var vue2_hammer__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vue2-hammer */ "./node_modules/vue2-hammer/index.min.js");
+/* harmony import */ var vue2_hammer__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(vue2_hammer__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var prismjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! prismjs */ "./node_modules/prismjs/prism.js");
+/* harmony import */ var prismjs__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(prismjs__WEBPACK_IMPORTED_MODULE_10__);
+
+
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
 /*=========================================================================================
   File Name: main.js
   Description: main vue(js) file
@@ -77806,8 +78704,13 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 
 
+<<<<<<< HEAD
 Vue.use(vuesax__WEBPACK_IMPORTED_MODULE_1___default.a);
 Vue.use(vee_validate__WEBPACK_IMPORTED_MODULE_2__["default"]); // Theme Configurations
+=======
+Vue.use(vuesax__WEBPACK_IMPORTED_MODULE_2___default.a);
+Vue.use(vee_validate__WEBPACK_IMPORTED_MODULE_3__["default"]); // Theme Configurations
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
 
  // Globally Registered Components
 
@@ -77820,14 +78723,89 @@ Vue.use(vee_validate__WEBPACK_IMPORTED_MODULE_2__["default"]); // Theme Configur
  // Vuejs - Vue wrapper for hammerjs
 
 
+<<<<<<< HEAD
 Vue.use(vue2_hammer__WEBPACK_IMPORTED_MODULE_8__["VueHammer"]); // PrismJS
 
  // import 'prismjs/themes/prism-tomorrow.css'
 
+=======
+Vue.use(vue2_hammer__WEBPACK_IMPORTED_MODULE_9__["VueHammer"]); // PrismJS
+
+ // import 'prismjs/themes/prism-tomorrow.css'
+
+_router__WEBPACK_IMPORTED_MODULE_6__["default"].beforeEach(function (to, from, next) {
+  if (to.meta.requiresAuth) {
+    if (!localStorage.getItem('admin')) {
+      next({
+        path: '/'
+      });
+    } else {
+      if (typeof _store_store__WEBPACK_IMPORTED_MODULE_7__["default"].getters.userType == 'undefined') {
+        _store_store__WEBPACK_IMPORTED_MODULE_7__["default"].dispatch('getLoginUser').then(function (res) {
+          if (to.meta.requiresAdmin == true || _store_store__WEBPACK_IMPORTED_MODULE_7__["default"].getters.userType == 'Admin') {
+            next();
+          } else {
+            next({
+              path: '/pages/error-404'
+            });
+          }
+        });
+      } else {
+        if (to.meta.requiresAdmin == true || _store_store__WEBPACK_IMPORTED_MODULE_7__["default"].getters.userType == 'Admin') {
+          next();
+        } else {
+          next({
+            path: '/pages/error-404'
+          });
+        }
+      }
+    }
+  } else {
+    next();
+  }
+});
+window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/**
+ * We'll load the axios HTTP library which allows us to easily issue requests
+ * to our Laravel back-end. This library automatically handles sending the
+ * CSRF token as a header based on the value of the "XSRF" token cookie.
+ */
+
+window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+var token = document.head.querySelector('meta[name="csrf-token"]');
+
+if (token) {
+  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+} else {
+  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+}
+
+axios.interceptors.request.use(function (config) {
+  if (config.url === 'get-comments') {
+    Vue.prototype.$vs.loading.close();
+  } else {
+    Vue.prototype.$vs.loading();
+  }
+
+  return config;
+}, function (error) {
+  return Promise.reject(error);
+});
+axios.interceptors.response.use(function (response) {
+  setTimeout(function () {
+    Vue.prototype.$vs.loading.close();
+  }, 1000);
+  return response;
+}, function (error) {
+  return Promise.reject(error);
+});
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
 Vue.config.productionTip = false;
 new Vue({
   provide: function provide() {
     return {
+<<<<<<< HEAD
       generatePassword: this.generatePassword
     };
   },
@@ -77835,6 +78813,36 @@ new Vue({
   store: _store_store__WEBPACK_IMPORTED_MODULE_6__["default"],
   render: function render(h) {
     return h(_App_vue__WEBPACK_IMPORTED_MODULE_0__["default"]);
+=======
+      generatePassword: this.generatePassword,
+      loginUser: this.loginUser
+    };
+  },
+  router: _router__WEBPACK_IMPORTED_MODULE_6__["default"],
+  store: _store_store__WEBPACK_IMPORTED_MODULE_7__["default"],
+  render: function render(h) {
+    return h(_App_vue__WEBPACK_IMPORTED_MODULE_1__["default"]);
+  },
+  created: function created() {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function created$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$store.dispatch('getLoginUser'));
+
+          case 2:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, null, this);
+  },
+  computed: {
+    loginUser: function loginUser() {
+      return this.$store.getters.userType;
+    }
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
   },
   methods: {
     generatePassword: function generatePassword() {
@@ -77865,6 +78873,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+<<<<<<< HEAD
 /*=========================================================================================
   File Name: router.js
   Description: Routes for vue-router. Lazy loading is enabled.
@@ -77882,6 +78891,8 @@ __webpack_require__.r(__webpack_exports__);
   Author: Pixinvent
   Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
+=======
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
@@ -77892,9 +78903,19 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     // =============================================================================
     // MAIN LAYOUT ROUTES
     // =============================================================================
+<<<<<<< HEAD
     path: '',
     component: function component() {
       return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0), __webpack_require__.e(7)]).then(__webpack_require__.bind(null, /*! ./layouts/main/Main.vue */ "./resources/js/src/layouts/main/Main.vue"));
+=======
+    path: '/dashboard',
+    component: function component() {
+      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(3), __webpack_require__.e(2), __webpack_require__.e(17)]).then(__webpack_require__.bind(null, /*! ./layouts/main/Main.vue */ "./resources/js/src/layouts/main/Main.vue"));
+    },
+    meta: {
+      requiresAuth: true,
+      requiresAdmin: true
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
     },
     children: [// =============================================================================
     // Theme Routes
@@ -77903,36 +78924,86 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/',
       name: 'home',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 17).then(__webpack_require__.bind(null, /*! ./views/Home.vue */ "./resources/js/src/views/Home.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 39).then(__webpack_require__.bind(null, /*! ./views/Home.vue */ "./resources/js/src/views/Home.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
       }
     }, {
       path: '/page2',
       name: 'page2',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 18).then(__webpack_require__.bind(null, /*! ./views/Page2.vue */ "./resources/js/src/views/Page2.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 40).then(__webpack_require__.bind(null, /*! ./views/Page2.vue */ "./resources/js/src/views/Page2.vue"));
+      },
+      meta: {
+        requiresAuth: true
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
       }
     }, {
       path: '/customers',
       name: 'Customers',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/Customers.vue */ "./resources/js/src/views/pages/Customers/Customers.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/Customers.vue */ "./resources/js/src/views/pages/Customers/Customers.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
       }
     }, {
       path: '/add-customer',
       name: 'Add Customer',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 10).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/AddCustomer.vue */ "./resources/js/src/views/pages/Customers/AddCustomer.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 21).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/AddCustomer.vue */ "./resources/js/src/views/pages/Customers/AddCustomer.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: false
+      }
+    }, {
+      path: '/customer-update/:id',
+      name: 'Customer Update',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 23).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/EditCustomer.vue */ "./resources/js/src/views/pages/Customers/EditCustomer.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: false
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
       }
     }, {
       path: '/currencies',
       name: 'Currencies',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 19).then(__webpack_require__.bind(null, /*! ./views/pages/Currencies.vue */ "./resources/js/src/views/pages/Currencies.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 20).then(__webpack_require__.bind(null, /*! ./views/pages/Currencies.vue */ "./resources/js/src/views/pages/Currencies.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
       }
     }, {
       path: '/exchange-rates',
       name: 'Exhange Rates',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./views/pages/ExchangeRates.vue */ "./resources/js/src/views/pages/ExchangeRates.vue"));
       }
     }, {
@@ -77964,6 +79035,81 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       name: 'Tax Managment',
       component: function component() {
         return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./views/pages/tax-managment/TaxManagment.vue */ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! ./views/pages/ExchangeRates.vue */ "./resources/js/src/views/pages/ExchangeRates.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+      }
+    },
+    /*{
+        path: '/admins',
+        name: 'Admins',
+        component: () => import('./views/pages/Admins.vue'),
+        meta: {
+            requiresAuth: true,
+            requiresAdmin: true,
+          }
+    },
+    {
+        path: '/supervisors',
+        name: 'Supervisors',
+        component: () => import('./views/pages/Supervisors.vue'),
+        meta: {
+            requiresAuth: true,
+            requiresAdmin: true,
+        }
+    },
+    {
+        path: '/officers',
+        name: 'Officers',
+        component: () => import('./views/pages/Officers.vue'),
+        meta: {
+            requiresAuth: true,
+            requiresAdmin: true,
+        }
+    },*/
+    {
+      path: '/testing',
+      name: 'testing',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 35).then(__webpack_require__.bind(null, /*! ./views/pages/demo.vue */ "./resources/js/src/views/pages/demo.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+      }
+    }, {
+      path: '/tax-managment',
+      name: 'Tax Managment',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 16).then(__webpack_require__.bind(null, /*! ./views/pages/tax-managment/TaxManagment.vue */ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+      }
+    }, {
+      path: '/team-members',
+      name: 'Team Members',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./views/pages/Admins.vue */ "./resources/js/src/views/pages/Admins.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: false
+      }
+    }, {
+      path: '/member-detail/:id',
+      name: 'Member Detail',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 26).then(__webpack_require__.bind(null, /*! ./views/pages/MemberDetail.vue */ "./resources/js/src/views/pages/MemberDetail.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
       }
     }]
   }, {
@@ -77972,7 +79118,16 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     // =============================================================================
     path: '/customer-detail/:id',
     component: function component() {
+<<<<<<< HEAD
       return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./layouts/full-page/customerDetailFullPage.vue */ "./resources/js/src/layouts/full-page/customerDetailFullPage.vue"));
+=======
+      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(3), __webpack_require__.e(2), __webpack_require__.e(19)]).then(__webpack_require__.bind(null, /*! ./layouts/main/customerMain.vue */ "./resources/js/src/layouts/main/customerMain.vue"));
+    },
+    props: true,
+    meta: {
+      requiresAuth: true,
+      requiresAdmin: true
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
     },
     children: [// =============================================================================
     // Theme Routes
@@ -77981,6 +79136,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/',
       name: 'Company Detail',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 20).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/CustomerDetail.vue */ "./resources/js/src/views/pages/Customers/CustomerDetail.vue"));
       }
     }
@@ -78005,13 +79161,60 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       component: () => import('./views/pages/Purchases/Purchases.vue'),
     },*/
     ]
+=======
+        return __webpack_require__.e(/*! import() */ 22).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/CustomerDetail.vue */ "./resources/js/src/views/pages/Customers/CustomerDetail.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+      }
+    }, {
+      path: '/add-employee',
+      name: 'Add Employee',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 24).then(__webpack_require__.bind(null, /*! ./views/pages/Employees/AddEmployee.vue */ "./resources/js/src/views/pages/Employees/AddEmployee.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: false
+      }
+    }, {
+      path: '/employees-list',
+      name: 'Employees List',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 25).then(__webpack_require__.bind(null, /*! ./views/pages/Employees/Employees.vue */ "./resources/js/src/views/pages/Employees/Employees.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: false
+      }
+    }, {
+      path: '/taxes',
+      name: 'Taxes',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/Taxes.vue */ "./resources/js/src/views/pages/Customers/Taxes.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+      }
+    }]
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
   }, {
     // =============================================================================
     // TAX DETAIL LAYOUT ROUTES
     // =============================================================================
     path: '/tax-collection/:id',
     component: function component() {
+<<<<<<< HEAD
       return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0), __webpack_require__.e(8)]).then(__webpack_require__.bind(null, /*! ./layouts/main/TaxDetailMain.vue */ "./resources/js/src/layouts/main/TaxDetailMain.vue"));
+=======
+      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(3), __webpack_require__.e(2), __webpack_require__.e(18)]).then(__webpack_require__.bind(null, /*! ./layouts/main/TaxDetailMain.vue */ "./resources/js/src/layouts/main/TaxDetailMain.vue"));
+    },
+    meta: {
+      requiresAuth: true,
+      requiresAdmin: true
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
     },
     children: [// =============================================================================
     // Theme Routes
@@ -78020,31 +79223,171 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/',
       name: 'Tax Detail',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 24).then(__webpack_require__.bind(null, /*! ./views/pages/Tax/TaxDetail.vue */ "./resources/js/src/views/pages/Tax/TaxDetail.vue"));
+=======
+        return Promise.all(/*! import() */[__webpack_require__.e(36), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, /*! ./views/pages/Tax/TaxDetail.vue */ "./resources/js/src/views/pages/Tax/TaxDetail.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
       }
     }, {
       path: '/add-sale',
       name: 'Add Sale',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 12).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/AddSale.vue */ "./resources/js/src/views/pages/Sales/AddSale.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 31).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/AddSale.vue */ "./resources/js/src/views/pages/Sales/AddSale.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+      }
+    }, {
+      path: '/sale-update/:id',
+      name: 'Update Sale',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 32).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/EditSale.vue */ "./resources/js/src/views/pages/Sales/EditSale.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+      }
+    }, {
+      path: '/sale-detail/:id',
+      name: 'Sale Detail',
+      component: function component() {
+        return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(41), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/SaleDetail.vue */ "./resources/js/src/views/pages/Sales/SaleDetail.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
       }
     }, {
       path: '/sales-list',
       name: 'Sales List',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 23).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/Sales.vue */ "./resources/js/src/views/pages/Sales/Sales.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 34).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/Sales.vue */ "./resources/js/src/views/pages/Sales/Sales.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+      }
+    }, {
+      path: '/un-reviewed-sales',
+      name: 'Un Reviewed Sales',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 33).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/PendingSales.vue */ "./resources/js/src/views/pages/Sales/PendingSales.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
       }
     }, {
       path: '/add-purchase',
       name: 'Add Purchase',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 21).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/AddPurchase.vue */ "./resources/js/src/views/pages/Purchases/AddPurchase.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 29).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/AddPurchase.vue */ "./resources/js/src/views/pages/Purchases/AddPurchase.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+      }
+    }, {
+      path: '/purchase-update/:id',
+      name: 'Update Purchase',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 30).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/EditPurchase.vue */ "./resources/js/src/views/pages/Purchases/EditPurchase.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
       }
     }, {
       path: '/purchases-list',
       name: 'Purchases List',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 22).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/Purchases.vue */ "./resources/js/src/views/pages/Purchases/Purchases.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 14).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/Purchases.vue */ "./resources/js/src/views/pages/Purchases/Purchases.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+      }
+    }, {
+      path: '/un-reviewed-purchases',
+      name: 'Un Reviewed Purchases',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/PendingPurchases.vue */ "./resources/js/src/views/pages/Purchases/PendingPurchases.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+      }
+    }, {
+      path: '/add-payroll',
+      name: 'Add Payroll',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/AddPayroll.vue */ "./resources/js/src/views/pages/Payrolls/AddPayroll.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+      }
+    }, {
+      path: '/employees-payrolls',
+      name: 'Employees Payrolls',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 11).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/Payrolls.vue */ "./resources/js/src/views/pages/Payrolls/Payrolls.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+      }
+    }, {
+      path: '/un-reviewed-payrolls',
+      name: 'Un Reviewed Payrolls',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 12).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/PendingPayrolls.vue */ "./resources/js/src/views/pages/Payrolls/PendingPayrolls.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+      }
+    }, {
+      path: '/edit-payroll/:id',
+      name: 'Edit Payrolls',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 28).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/EditPayroll.vue */ "./resources/js/src/views/pages/Payrolls/EditPayroll.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+      }
+    }, {
+      path: '/tax-team',
+      name: 'Tax Team',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 15).then(__webpack_require__.bind(null, /*! ./views/pages/Tax/TaxTeam.vue */ "./resources/js/src/views/pages/Tax/TaxTeam.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
       }
     }]
   }, // =============================================================================
@@ -78053,22 +79396,40 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   {
     path: '',
     component: function component() {
+<<<<<<< HEAD
       return __webpack_require__.e(/*! import() */ 16).then(__webpack_require__.bind(null, /*! @/layouts/full-page/FullPage.vue */ "./resources/js/src/layouts/full-page/FullPage.vue"));
+=======
+      return __webpack_require__.e(/*! import() */ 38).then(__webpack_require__.bind(null, /*! @/layouts/full-page/FullPage.vue */ "./resources/js/src/layouts/full-page/FullPage.vue"));
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
     },
     children: [// =============================================================================
     // PAGES
     // =============================================================================
     {
+<<<<<<< HEAD
       path: '/pages/login',
       name: 'pageLogin',
       component: function component() {
         return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! @/views/pages/Login.vue */ "./resources/js/src/views/pages/Login.vue"));
+=======
+      path: '/',
+      name: 'pageLogin',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 10).then(__webpack_require__.bind(null, /*! @/views/pages/Login.vue */ "./resources/js/src/views/pages/Login.vue"));
+      },
+      meta: {
+        requiresAdmin: true
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
       }
     }, {
       path: '/pages/error-404',
       name: 'pageError404',
       component: function component() {
+<<<<<<< HEAD
         return __webpack_require__.e(/*! import() */ 15).then(__webpack_require__.bind(null, /*! @/views/pages/Error404.vue */ "./resources/js/src/views/pages/Error404.vue"));
+=======
+        return __webpack_require__.e(/*! import() */ 37).then(__webpack_require__.bind(null, /*! @/views/pages/Error404.vue */ "./resources/js/src/views/pages/Error404.vue"));
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
       }
     }]
   }, // Redirect to 404 page, if no match found
@@ -78097,15 +79458,31 @@ __webpack_require__.r(__webpack_exports__);
       commit('setAdmins', res.data.admins);
     });
   },
+<<<<<<< HEAD
   addAdmin: function addAdmin(_ref2, fd) {
     var commit = _ref2.commit;
+=======
+  getMemberDetail: function getMemberDetail(_ref2, id) {
+    var commit = _ref2.commit;
+    axios.get('get-member-detail/' + id).then(function (res) {
+      commit('setMember', res.data.member);
+    });
+  },
+  addAdmin: function addAdmin(_ref3, fd) {
+    var commit = _ref3.commit;
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
     return axios.post('add-admin', fd).then(function (res) {
       // commit('setAdmin',res.data.Admins)
       return res;
     });
   },
+<<<<<<< HEAD
   updateAdmin: function updateAdmin(_ref3, fd) {
     var commit = _ref3.commit;
+=======
+  updateAdmin: function updateAdmin(_ref4, fd) {
+    var commit = _ref4.commit;
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
     return axios.post('update-admin', fd).then(function (res) {
       commit('setSingleAdmin', res.data.admin);
       return res;
@@ -78157,6 +79534,12 @@ __webpack_require__.r(__webpack_exports__);
     });
 
     Vue.set(state.admins, index, admin);
+<<<<<<< HEAD
+=======
+  },
+  setMember: function setMember(state, member) {
+    state.member = member;
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
   }
 });
 
@@ -78172,7 +79555,12 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
+<<<<<<< HEAD
   admins: []
+=======
+  admins: [],
+  member: {}
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
 });
 
 /***/ }),
@@ -78220,16 +79608,32 @@ __webpack_require__.r(__webpack_exports__);
       commit('setCustomers', res.data.customers);
     });
   },
+<<<<<<< HEAD
   addCustomer: function addCustomer(_ref2, fd) {
     var commit = _ref2.commit;
+=======
+  getCustomer: function getCustomer(_ref2, customer_id) {
+    var commit = _ref2.commit;
+    axios.get('get-customer?customer_id=' + customer_id).then(function (res) {
+      commit('setCustomer', res.data.customer);
+    });
+  },
+  addCustomer: function addCustomer(_ref3, fd) {
+    var commit = _ref3.commit;
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
     // alert('action called');
     return axios.post('add-customer', fd).then(function (res) {
       // commit('setOfficer',res.data.officers)
       return res;
     });
   },
+<<<<<<< HEAD
   updateCustomer: function updateCustomer(_ref3, fd) {
     var commit = _ref3.commit;
+=======
+  updateCustomer: function updateCustomer(_ref4, fd) {
+    var commit = _ref4.commit;
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
     return axios.post('update-customer', fd).then(function (res) {
       // commit('setSingleCustomer',res.data.customer);
       return res;
@@ -78274,6 +79678,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   setCustomers: function setCustomers(state, customers) {
     state.customers = customers;
+<<<<<<< HEAD
+=======
+  },
+  setCustomer: function setCustomer(state, customer) {
+    state.customer = customer;
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
   }
 });
 
@@ -78289,7 +79699,12 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
+<<<<<<< HEAD
   customers: []
+=======
+  customers: [],
+  customer: {}
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
 });
 
 /***/ }),
@@ -78321,6 +79736,282 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+<<<<<<< HEAD
+=======
+/***/ "./resources/js/src/store/Employees/EmployeeActions.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/src/store/Employees/EmployeeActions.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  getEmployees: function getEmployees(_ref) {
+    var commit = _ref.commit;
+    axios.get('get-employees').then(function (res) {
+      commit('setEmployees', res.data.employees);
+    });
+  },
+  getActiveEmployees: function getActiveEmployees(_ref2, customer_id) {
+    var commit = _ref2.commit;
+    axios.get('get-active-employees', {
+      customer_id: customer_id
+    }).then(function (res) {
+      commit('setEmployees', res.data.employees);
+    });
+  },
+  create: function create(_ref3, data) {
+    var commit = _ref3.commit;
+    // alert('action called');
+    return axios.post('add-employee', data.fd).then(function (res) {
+      // commit('setOfficer',res.data.officers)
+      if (res.data.status == 'error') {
+        data.notify({
+          color: 'danger',
+          text: res.data.msg,
+          title: 'Oops',
+          position: 'top-right'
+        });
+      } else {
+        data.notify({
+          color: 'success',
+          text: res.data.msg,
+          position: 'top-right'
+        });
+      }
+
+      setTimeout(function () {
+        data.close();
+      }, 500);
+      return res;
+    });
+  },
+  updateEmployee: function updateEmployee(_ref4, fd) {
+    var commit = _ref4.commit;
+    return axios.post('update-employee', fd).then(function (res) {
+      commit('setEmployee', res.data.employee);
+      return res;
+    });
+  },
+  statusUpdate: function statusUpdate(_ref5, data) {
+    var commit = _ref5.commit;
+    axios.post('status-update-employee', {
+      id: data.id
+    }).then(function (res) {
+      data.notify({
+        title: 'Updated!...',
+        text: res.data.msg,
+        color: 'success',
+        position: 'top-right'
+      });
+      commit('setStatus', {
+        id: data.id,
+        status: res.data.employee.status
+      });
+      data.close();
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Employees/EmployeeGetters.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/src/store/Employees/EmployeeGetters.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  findEmployee: function findEmployee(state) {
+    return function (id) {
+      var index = _.findIndex(state.employees, function (o) {
+        return o.id === id;
+      });
+
+      return state.employees[index];
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Employees/EmployeeMutations.js":
+/*!***************************************************************!*\
+  !*** ./resources/js/src/store/Employees/EmployeeMutations.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  setEmployees: function setEmployees(state, employees) {
+    state.employees = employees;
+  },
+  setEmployee: function setEmployee(state, employee) {
+    var index = _.findIndex(state.employees, function (o) {
+      return o.id === employee.id;
+    });
+
+    Vue.set(state.employees, index, employee);
+  },
+  setStatus: function setStatus(state, data) {
+    var index = _.findIndex(state.employees, function (o) {
+      return o.id === data.id;
+    });
+
+    state.employees[index].status = data.status; // Vue.set(state.employees,index,employee);
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Employees/EmployeeState.js":
+/*!***********************************************************!*\
+  !*** ./resources/js/src/store/Employees/EmployeeState.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  employees: []
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Employees/Employees.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/src/store/Employees/Employees.js ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _EmployeeState_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EmployeeState.js */ "./resources/js/src/store/Employees/EmployeeState.js");
+/* harmony import */ var _EmployeeActions_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EmployeeActions.js */ "./resources/js/src/store/Employees/EmployeeActions.js");
+/* harmony import */ var _EmployeeMutations_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./EmployeeMutations.js */ "./resources/js/src/store/Employees/EmployeeMutations.js");
+/* harmony import */ var _EmployeeGetters_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./EmployeeGetters.js */ "./resources/js/src/store/Employees/EmployeeGetters.js");
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  actions: _EmployeeActions_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  state: _EmployeeState_js__WEBPACK_IMPORTED_MODULE_0__["default"],
+  mutations: _EmployeeMutations_js__WEBPACK_IMPORTED_MODULE_2__["default"],
+  getters: _EmployeeGetters_js__WEBPACK_IMPORTED_MODULE_3__["default"]
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/ExchangeRates/Exchangerates.js":
+/*!***************************************************************!*\
+  !*** ./resources/js/src/store/ExchangeRates/Exchangerates.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ExchangeratesState_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ExchangeratesState.js */ "./resources/js/src/store/ExchangeRates/ExchangeratesState.js");
+/* harmony import */ var _ExchangeratesActions_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ExchangeratesActions.js */ "./resources/js/src/store/ExchangeRates/ExchangeratesActions.js");
+/* harmony import */ var _ExchangeratesMutations_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ExchangeratesMutations.js */ "./resources/js/src/store/ExchangeRates/ExchangeratesMutations.js");
+/* harmony import */ var _ExchangeratesGetters_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ExchangeratesGetters.js */ "./resources/js/src/store/ExchangeRates/ExchangeratesGetters.js");
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  actions: _ExchangeratesActions_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  state: _ExchangeratesState_js__WEBPACK_IMPORTED_MODULE_0__["default"],
+  mutations: _ExchangeratesMutations_js__WEBPACK_IMPORTED_MODULE_2__["default"],
+  getters: _ExchangeratesGetters_js__WEBPACK_IMPORTED_MODULE_3__["default"]
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/ExchangeRates/ExchangeratesActions.js":
+/*!**********************************************************************!*\
+  !*** ./resources/js/src/store/ExchangeRates/ExchangeratesActions.js ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  getExchangeRates: function getExchangeRates(_ref) {
+    var commit = _ref.commit;
+    axios.get('get-exchange-rates').then(function (res) {
+      commit('setExchangeRates', res.data.rates);
+    });
+  },
+  updateExchangeRates: function updateExchangeRates(_ref2, fd) {
+    var commit = _ref2.commit;
+    return axios.post('update-exchange-rates', fd).then(function (res) {
+      return res;
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/ExchangeRates/ExchangeratesGetters.js":
+/*!**********************************************************************!*\
+  !*** ./resources/js/src/store/ExchangeRates/ExchangeratesGetters.js ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/ExchangeRates/ExchangeratesMutations.js":
+/*!************************************************************************!*\
+  !*** ./resources/js/src/store/ExchangeRates/ExchangeratesMutations.js ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  setExchangeRates: function setExchangeRates(state, rates) {
+    state.exchangerates = rates;
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/ExchangeRates/ExchangeratesState.js":
+/*!********************************************************************!*\
+  !*** ./resources/js/src/store/ExchangeRates/ExchangeratesState.js ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  exchangerates: []
+});
+
+/***/ }),
+
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
 /***/ "./resources/js/src/store/Officers/OfficerActions.js":
 /*!***********************************************************!*\
   !*** ./resources/js/src/store/Officers/OfficerActions.js ***!
@@ -78445,6 +80136,419 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+<<<<<<< HEAD
+=======
+/***/ "./resources/js/src/store/Payrolls/Payrolls.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/src/store/Payrolls/Payrolls.js ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PayrollsState_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PayrollsState.js */ "./resources/js/src/store/Payrolls/PayrollsState.js");
+/* harmony import */ var _PayrollsActions_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PayrollsActions.js */ "./resources/js/src/store/Payrolls/PayrollsActions.js");
+/* harmony import */ var _PayrollsMutations_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PayrollsMutations.js */ "./resources/js/src/store/Payrolls/PayrollsMutations.js");
+/* harmony import */ var _PayrollsGetters_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PayrollsGetters.js */ "./resources/js/src/store/Payrolls/PayrollsGetters.js");
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  actions: _PayrollsActions_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  state: _PayrollsState_js__WEBPACK_IMPORTED_MODULE_0__["default"],
+  mutations: _PayrollsMutations_js__WEBPACK_IMPORTED_MODULE_2__["default"],
+  getters: _PayrollsGetters_js__WEBPACK_IMPORTED_MODULE_3__["default"]
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Payrolls/PayrollsActions.js":
+/*!************************************************************!*\
+  !*** ./resources/js/src/store/Payrolls/PayrollsActions.js ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  getPayrolls: function getPayrolls(_ref, tax_id) {
+    var commit = _ref.commit;
+    return axios.get('get-payrolls', {
+      params: {
+        tax_id: tax_id
+      }
+    }).then(function (res) {
+      commit('setPayrolls', res.data.data);
+      return res;
+    });
+  },
+  getPendingPayrolls: function getPendingPayrolls(_ref2, tax_id) {
+    var commit = _ref2.commit;
+    return axios.get('get-pending-payrolls', {
+      params: {
+        tax_id: tax_id
+      }
+    }).then(function (res) {
+      commit('setPayrolls', res.data.payrolls);
+      return res;
+    });
+  },
+  updatePayroll: function updatePayroll(_ref3, fd) {
+    var commit = _ref3.commit;
+    return axios.post('update-payroll', fd).then(function (res) {
+      return res;
+    });
+  },
+  create: function create(_ref4, data) {
+    var commit = _ref4.commit;
+    // alert('action called');
+    return axios.post('add-payroll', data.fd).then(function (res) {
+      // commit('setOfficer',res.data.officers)
+      if (res.data.status == 'error') {
+        data.notify({
+          color: 'danger',
+          text: res.data.msg,
+          title: 'Oops',
+          position: 'top-right'
+        });
+      } else {
+        data.notify({
+          color: 'success',
+          text: res.data.msg,
+          position: 'top-right'
+        });
+      }
+
+      setTimeout(function () {
+        data.close();
+      }, 500);
+      return res;
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Payrolls/PayrollsGetters.js":
+/*!************************************************************!*\
+  !*** ./resources/js/src/store/Payrolls/PayrollsGetters.js ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({// findCustomer : state => id => {
+  // 	var index = _.findIndex(state.customers,(o)=> {return o.id === id})
+  // 	return state.customers[index];
+  // }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Payrolls/PayrollsMutations.js":
+/*!**************************************************************!*\
+  !*** ./resources/js/src/store/Payrolls/PayrollsMutations.js ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  setPayrolls: function setPayrolls(state, payrolls) {
+    state.payrolls = payrolls;
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Payrolls/PayrollsState.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/src/store/Payrolls/PayrollsState.js ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  payrolls: []
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Purchases/PurchaseActions.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/src/store/Purchases/PurchaseActions.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  getPurchases: function getPurchases(_ref, tax_id) {
+    var commit = _ref.commit;
+    axios.get('get-purchases', {
+      params: {
+        tax_id: tax_id
+      }
+    }).then(function (res) {
+      commit('setPurchases', res.data.purchases);
+    });
+  },
+  getPendingPurchases: function getPendingPurchases(_ref2, tax_id) {
+    var commit = _ref2.commit;
+    axios.get('get-pending-purchases', {
+      params: {
+        tax_id: tax_id
+      }
+    }).then(function (res) {
+      commit('setPurchases', res.data.purchases);
+    });
+  },
+  addPurchase: function addPurchase(_ref3, fd) {
+    var commit = _ref3.commit;
+    // alert('action called');
+    return axios.post('add-purchase', fd).then(function (res) {
+      return res;
+    });
+  },
+  updatePurchase: function updatePurchase(_ref4, fd) {
+    var commit = _ref4.commit;
+    return axios.post('update-purchase', fd).then(function (res) {
+      return res;
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Purchases/PurchaseGetters.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/src/store/Purchases/PurchaseGetters.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  findCustomer: function findCustomer(state) {
+    return function (id) {
+      var index = _.findIndex(state.customers, function (o) {
+        return o.id === id;
+      });
+
+      return state.customers[index];
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Purchases/PurchaseMutations.js":
+/*!***************************************************************!*\
+  !*** ./resources/js/src/store/Purchases/PurchaseMutations.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  setPurchases: function setPurchases(state, purchases) {
+    state.purchases = purchases;
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Purchases/PurchaseState.js":
+/*!***********************************************************!*\
+  !*** ./resources/js/src/store/Purchases/PurchaseState.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  purchases: []
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Purchases/Purchases.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/src/store/Purchases/Purchases.js ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PurchaseState_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PurchaseState.js */ "./resources/js/src/store/Purchases/PurchaseState.js");
+/* harmony import */ var _PurchaseActions_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PurchaseActions.js */ "./resources/js/src/store/Purchases/PurchaseActions.js");
+/* harmony import */ var _PurchaseMutations_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PurchaseMutations.js */ "./resources/js/src/store/Purchases/PurchaseMutations.js");
+/* harmony import */ var _PurchaseGetters_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PurchaseGetters.js */ "./resources/js/src/store/Purchases/PurchaseGetters.js");
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  actions: _PurchaseActions_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  state: _PurchaseState_js__WEBPACK_IMPORTED_MODULE_0__["default"],
+  mutations: _PurchaseMutations_js__WEBPACK_IMPORTED_MODULE_2__["default"],
+  getters: _PurchaseGetters_js__WEBPACK_IMPORTED_MODULE_3__["default"]
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Sales/Sales.js":
+/*!***********************************************!*\
+  !*** ./resources/js/src/store/Sales/Sales.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SalesState_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SalesState.js */ "./resources/js/src/store/Sales/SalesState.js");
+/* harmony import */ var _SalesActions_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SalesActions.js */ "./resources/js/src/store/Sales/SalesActions.js");
+/* harmony import */ var _SalesMutations_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SalesMutations.js */ "./resources/js/src/store/Sales/SalesMutations.js");
+/* harmony import */ var _SalesGetters_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SalesGetters.js */ "./resources/js/src/store/Sales/SalesGetters.js");
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  actions: _SalesActions_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  state: _SalesState_js__WEBPACK_IMPORTED_MODULE_0__["default"],
+  mutations: _SalesMutations_js__WEBPACK_IMPORTED_MODULE_2__["default"],
+  getters: _SalesGetters_js__WEBPACK_IMPORTED_MODULE_3__["default"]
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Sales/SalesActions.js":
+/*!******************************************************!*\
+  !*** ./resources/js/src/store/Sales/SalesActions.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  getSales: function getSales(_ref, tax_id) {
+    var commit = _ref.commit;
+    axios.get('get-sales', {
+      params: {
+        tax_id: tax_id
+      }
+    }).then(function (res) {
+      commit('setSales', res.data.sales);
+    });
+  },
+  getSale: function getSale(_ref2, id) {
+    var commit = _ref2.commit;
+    axios.get('get-sale', {
+      params: {
+        id: id
+      }
+    }).then(function (res) {
+      commit('setSale', res.data.sale);
+    });
+  },
+  getPendingSales: function getPendingSales(_ref3, tax_id) {
+    var commit = _ref3.commit;
+    axios.get('get-pending-sales', {
+      params: {
+        tax_id: tax_id
+      }
+    }).then(function (res) {
+      commit('setSales', res.data.sales);
+    });
+  },
+  addSale: function addSale(_ref4, fd) {
+    var commit = _ref4.commit;
+    // alert('action called');
+    return axios.post('add-sale', fd).then(function (res) {
+      return res;
+    });
+  },
+  updateSale: function updateSale(_ref5, fd) {
+    var commit = _ref5.commit;
+    return axios.post('update-sale', fd).then(function (res) {
+      return res;
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Sales/SalesGetters.js":
+/*!******************************************************!*\
+  !*** ./resources/js/src/store/Sales/SalesGetters.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({// findCustomer : state => id => {
+  // 	var index = _.findIndex(state.customers,(o)=> {return o.id === id})
+  // 	return state.customers[index];
+  // }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Sales/SalesMutations.js":
+/*!********************************************************!*\
+  !*** ./resources/js/src/store/Sales/SalesMutations.js ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  setSales: function setSales(state, sales) {
+    state.sales = sales;
+  },
+  setSale: function setSale(state, sale) {
+    state.sale = sale;
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Sales/SalesState.js":
+/*!****************************************************!*\
+  !*** ./resources/js/src/store/Sales/SalesState.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  sales: [],
+  sale: {}
+});
+
+/***/ }),
+
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
 /***/ "./resources/js/src/store/Supervisors/SupervisorActions.js":
 /*!*****************************************************************!*\
   !*** ./resources/js/src/store/Supervisors/SupervisorActions.js ***!
@@ -78568,6 +80672,297 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+<<<<<<< HEAD
+=======
+/***/ "./resources/js/src/store/Taxes/TaxActions.js":
+/*!****************************************************!*\
+  !*** ./resources/js/src/store/Taxes/TaxActions.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  getTaxes: function getTaxes(_ref, customer_id) {
+    var commit = _ref.commit;
+    axios.get('get-taxes', {
+      params: {
+        customer_id: customer_id
+      }
+    }).then(function (res) {
+      commit('setTaxes', res.data.taxes);
+    });
+  },
+  getTax: function getTax(_ref2, tax_id) {
+    var commit = _ref2.commit;
+    axios.get('get-tax', {
+      params: {
+        tax_id: tax_id
+      }
+    }).then(function (res) {
+      commit('setSingleTax', res.data);
+    });
+  },
+  getTaxTeam: function getTaxTeam(_ref3, tax_id) {
+    var commit;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getTaxTeam$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            commit = _ref3.commit;
+            _context.next = 3;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios.get('get-tax-team', {
+              params: {
+                tax_id: tax_id
+              }
+            }).then(function (res) {
+              commit('setTaxTeam', res.data.team);
+              return res;
+            }));
+
+          case 3:
+          case "end":
+            return _context.stop();
+        }
+      }
+    });
+  },
+  addTax: function addTax(_ref4, data) {
+    var commit = _ref4.commit;
+    // alert('action called');
+    return axios.post('add-tax', data.fd).then(function (res) {
+      if (res.data.status == 'error') {
+        data.notify({
+          color: 'danger',
+          text: res.data.msg,
+          title: 'Oops',
+          position: 'top-right'
+        });
+      } else {
+        data.notify({
+          color: 'success',
+          text: res.data.msg,
+          position: 'top-right'
+        });
+      }
+
+      setTimeout(function () {
+        data.close();
+      }, 500);
+      return res;
+    });
+  },
+  updateTax: function updateTax(_ref5, fd) {
+    var commit = _ref5.commit;
+    return axios.post('update-tax', fd).then(function (res) {
+      commit('setEmployee', res.data.employee);
+      return res;
+    });
+  },
+  updateTeamMembers: function updateTeamMembers(_ref6, data) {
+    var commit = _ref6.commit;
+    return axios.post('update-tax-team', data.fd).then(function (res) {
+      commit('setTaxTeam', res.data.team);
+      setTimeout(function () {
+        data.close();
+      }, 500);
+      return res;
+    });
+  },
+  statusUpdate: function statusUpdate(_ref7, data) {
+    var commit = _ref7.commit;
+    axios.post('status-update-tax', {
+      id: data.id
+    }).then(function (res) {
+      data.notify({
+        title: 'Updated!...',
+        text: res.data.msg,
+        color: 'success',
+        position: 'top-right'
+      });
+      commit('setStatus', {
+        id: data.id,
+        status: res.data.tax.status
+      });
+      data.close();
+    });
+  },
+  statusUpdateSPP: function statusUpdateSPP(_ref8, data) {
+    var commit = _ref8.commit;
+    return axios.post('status-update-spp', {
+      id: data.id,
+      tax_id: data.tax_id,
+      type: data.type
+    }).then(function (res) {
+      if (res.data.status == true) {
+        data.notify({
+          title: 'Updated!...',
+          text: res.data.msg,
+          color: 'success',
+          position: 'top-right'
+        });
+      } else {
+        data.notify({
+          title: 'Sorry!...',
+          text: res.data.msg,
+          color: 'danger',
+          position: 'top-right'
+        });
+      }
+
+      return res;
+    });
+  },
+  statusChangeManagment: function statusChangeManagment(_ref9, data) {
+    var commit = _ref9.commit;
+    return axios.post('status-change-management', {
+      id: data.id,
+      by: data.by,
+      status: data.status,
+      tax_id: data.tax_id,
+      tax_type: data.tax_type
+    }).then(function (res) {
+      if (res.data.status == true) {
+        data.notify({
+          title: 'Updated!...',
+          text: res.data.msg,
+          color: 'success',
+          position: 'top-right'
+        });
+      } else {
+        data.notify({
+          title: 'Sorry!...',
+          text: res.data.msg,
+          color: 'danger',
+          position: 'top-right'
+        });
+      }
+
+      return res;
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Taxes/TaxGetters.js":
+/*!****************************************************!*\
+  !*** ./resources/js/src/store/Taxes/TaxGetters.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  findEmployee: function findEmployee(state) {
+    return function (id) {
+      var index = _.findIndex(state.employees, function (o) {
+        return o.id === id;
+      });
+
+      return state.employees[index];
+    };
+  },
+  supervisor: function supervisor(state) {
+    return state.tax.supervisor;
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Taxes/TaxMutations.js":
+/*!******************************************************!*\
+  !*** ./resources/js/src/store/Taxes/TaxMutations.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  setTaxes: function setTaxes(state, taxes) {
+    state.taxes = taxes;
+  },
+  setSingleTax: function setSingleTax(state, data) {
+    state.tax = data.tax;
+    state.purchases_approval = data.approval_purchases;
+    state.sales_approval = data.approval_sales;
+    state.payrolls_approval = data.approval_payrolls;
+  },
+  setTaxTeam: function setTaxTeam(state, team) {
+    state.tax_team = team; // Vue.set(,'tax_team',team);
+  },
+  setTax: function setTax(state, tax) {
+    var index = _.findIndex(state.taxes, function (o) {
+      return o.id === tax.id;
+    });
+
+    Vue.set(state.taxes, index, tax);
+  },
+  setStatus: function setStatus(state, data) {
+    var index = _.findIndex(state.taxes, function (o) {
+      return o.id === data.id;
+    });
+
+    state.taxes[index].status = data.status; // Vue.set(state.taxs,index,tax);
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Taxes/TaxState.js":
+/*!**************************************************!*\
+  !*** ./resources/js/src/store/Taxes/TaxState.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  taxes: [],
+  tax: {},
+  purchases_approval: 0,
+  sales_approval: 0,
+  payrolls_approval: 0,
+  tax_team: []
+});
+
+/***/ }),
+
+/***/ "./resources/js/src/store/Taxes/Taxes.js":
+/*!***********************************************!*\
+  !*** ./resources/js/src/store/Taxes/Taxes.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _TaxState_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TaxState.js */ "./resources/js/src/store/Taxes/TaxState.js");
+/* harmony import */ var _TaxActions_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TaxActions.js */ "./resources/js/src/store/Taxes/TaxActions.js");
+/* harmony import */ var _TaxMutations_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TaxMutations.js */ "./resources/js/src/store/Taxes/TaxMutations.js");
+/* harmony import */ var _TaxGetters_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./TaxGetters.js */ "./resources/js/src/store/Taxes/TaxGetters.js");
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  actions: _TaxActions_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  state: _TaxState_js__WEBPACK_IMPORTED_MODULE_0__["default"],
+  mutations: _TaxMutations_js__WEBPACK_IMPORTED_MODULE_2__["default"],
+  getters: _TaxGetters_js__WEBPACK_IMPORTED_MODULE_3__["default"]
+});
+
+/***/ }),
+
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
 /***/ "./resources/js/src/store/actions.js":
 /*!*******************************************!*\
   !*** ./resources/js/src/store/actions.js ***!
@@ -78577,6 +80972,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+<<<<<<< HEAD
+=======
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
 /*=========================================================================================
   File Name: actions.js
   Description: Vuex Store - actions
@@ -78629,6 +81031,79 @@ var actions = {
   arrangeStarredPagesMore: function arrangeStarredPagesMore(_ref9, list) {
     var commit = _ref9.commit;
     commit('ARRANGE_STARRED_PAGES_MORE', list);
+<<<<<<< HEAD
+=======
+  },
+  getAverageRate: function getAverageRate(_ref10) {
+    var commit;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getAverageRate$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            commit = _ref10.commit;
+            _context.next = 3;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios.get('get-average-rate').then(function (res) {
+              commit('setAverageRate', res.data);
+              return res;
+            }));
+
+          case 3:
+          case "end":
+            return _context.stop();
+        }
+      }
+    });
+  },
+  getLoginUser: function getLoginUser(_ref11) {
+    var commit, res;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getLoginUser$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            commit = _ref11.commit;
+            _context2.next = 3;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios.get('login-user', {
+              params: {
+                user: localStorage.getItem('admin')
+              }
+            }));
+
+          case 3:
+            res = _context2.sent;
+            commit('setLoginUser', res.data);
+
+          case 5:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    });
+  },
+  getComments: function getComments(_ref12, commentsUrl, type, object_id) {
+    var commit = _ref12.commit;
+    axios.get(commentsUrl, {
+      params: {
+        type: type,
+        object_id: object_id
+      }
+    }).then(function (res) {
+      commit('setComments', res.data.comments);
+    });
+  },
+  saveComment: function saveComment(_ref13, data) {
+    var commit = _ref13.commit;
+    console.log(data);
+    axios.post('send-comment', {
+      comment: data.comment,
+      type: data.type,
+      object_id: data.object_id,
+      senderType: data.userType,
+      sender: data.loginUser
+    }).then(function (res) {
+      commit('setComments');
+      data.scrollToEnd();
+    });
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (actions);
@@ -78652,9 +81127,19 @@ __webpack_require__.r(__webpack_exports__);
   Author: Pixinvent
   Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
+<<<<<<< HEAD
 var getters = {// COMPONENT
   // vx-autosuggest
   // starredPages: state => state.navbarSearchAndPinList.data.filter((page) => page.highlightAction),
+=======
+var getters = {
+  userType: function userType(state) {
+    return state.AppActiveUser.type;
+  } // COMPONENT
+  // vx-autosuggest
+  // starredPages: state => state.navbarSearchAndPinList.data.filter((page) => page.highlightAction),
+
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
 };
 /* harmony default export */ __webpack_exports__["default"] = (getters);
 
@@ -78678,6 +81163,12 @@ __webpack_require__.r(__webpack_exports__);
   Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
 var mutations = {
+<<<<<<< HEAD
+=======
+  setRootUrl: function setRootUrl(state, url) {
+    state.rootUrl = url;
+  },
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
   // ////////////////////////////////////////////
   // SIDEBAR & UI UX
   // ////////////////////////////////////////////
@@ -78753,6 +81244,18 @@ var mutations = {
     if (!downToUp) {
       state.starredPages.splice(10, 0, lastItemInStarredLimited);
     }
+<<<<<<< HEAD
+=======
+  },
+  setLoginUser: function setLoginUser(state, data) {
+    state.AppActiveUser = data;
+  },
+  setAverageRate: function setAverageRate(state, val) {
+    state.averageRate = val;
+  },
+  setComments: function setComments(state, comments) {
+    state.comments = comments;
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (mutations);
@@ -78782,6 +81285,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var state = {
+<<<<<<< HEAD
+=======
+  comments: [],
+  averageRate: 0,
+  rootUrl: '/',
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
   isSidebarActive: true,
   breakpoint: null,
   sidebarWidth: "default",
@@ -78790,6 +81299,7 @@ var state = {
   sidebarItemsMin: false,
   theme: _themeConfig_js__WEBPACK_IMPORTED_MODULE_1__["default"].theme || 'light',
   navbarSearchAndPinList: _layouts_components_navbarSearchAndPinList__WEBPACK_IMPORTED_MODULE_0__["default"],
+<<<<<<< HEAD
   AppActiveUser: {
     id: 0,
     name: 'John Doe',
@@ -78797,6 +81307,9 @@ var state = {
     img: 'avatar-s-11.png',
     status: 'online'
   },
+=======
+  AppActiveUser: {},
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
   themePrimaryColor: _themeConfig_js__WEBPACK_IMPORTED_MODULE_1__["default"].primary,
   starredPages: _layouts_components_navbarSearchAndPinList__WEBPACK_IMPORTED_MODULE_0__["default"].data.filter(function (page) {
     return page.highlightAction;
@@ -78830,6 +81343,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Supervisors_Supervisors_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Supervisors/Supervisors.js */ "./resources/js/src/store/Supervisors/Supervisors.js");
 /* harmony import */ var _Admins_Admins_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Admins/Admins.js */ "./resources/js/src/store/Admins/Admins.js");
 /* harmony import */ var _Customers_Customers_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Customers/Customers.js */ "./resources/js/src/store/Customers/Customers.js");
+<<<<<<< HEAD
+=======
+/* harmony import */ var _ExchangeRates_Exchangerates_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ExchangeRates/Exchangerates.js */ "./resources/js/src/store/ExchangeRates/Exchangerates.js");
+/* harmony import */ var _Purchases_Purchases_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Purchases/Purchases.js */ "./resources/js/src/store/Purchases/Purchases.js");
+/* harmony import */ var _Sales_Sales_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Sales/Sales.js */ "./resources/js/src/store/Sales/Sales.js");
+/* harmony import */ var _Employees_Employees_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Employees/Employees.js */ "./resources/js/src/store/Employees/Employees.js");
+/* harmony import */ var _Taxes_Taxes_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Taxes/Taxes.js */ "./resources/js/src/store/Taxes/Taxes.js");
+/* harmony import */ var _Payrolls_Payrolls_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Payrolls/Payrolls.js */ "./resources/js/src/store/Payrolls/Payrolls.js");
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
 /*=========================================================================================
   File Name: store.js
   Description: Vuex store
@@ -78848,8 +81370,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+<<<<<<< HEAD
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
+=======
+
+
+
+
+
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
+var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
   getters: _getters__WEBPACK_IMPORTED_MODULE_3__["default"],
   mutations: _mutations__WEBPACK_IMPORTED_MODULE_4__["default"],
   state: _state__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -78858,10 +81391,24 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     officers: _Officers_Officers_js__WEBPACK_IMPORTED_MODULE_6__["default"],
     supervisors: _Supervisors_Supervisors_js__WEBPACK_IMPORTED_MODULE_7__["default"],
     admins: _Admins_Admins_js__WEBPACK_IMPORTED_MODULE_8__["default"],
+<<<<<<< HEAD
     customers: _Customers_Customers_js__WEBPACK_IMPORTED_MODULE_9__["default"]
   } // strict: process.env.NODE_ENV !== 'production'
 
 }));
+=======
+    customers: _Customers_Customers_js__WEBPACK_IMPORTED_MODULE_9__["default"],
+    exchangerates: _ExchangeRates_Exchangerates_js__WEBPACK_IMPORTED_MODULE_10__["default"],
+    purchases: _Purchases_Purchases_js__WEBPACK_IMPORTED_MODULE_11__["default"],
+    sales: _Sales_Sales_js__WEBPACK_IMPORTED_MODULE_12__["default"],
+    employees: _Employees_Employees_js__WEBPACK_IMPORTED_MODULE_13__["default"],
+    taxes: _Taxes_Taxes_js__WEBPACK_IMPORTED_MODULE_14__["default"],
+    payrolls: _Payrolls_Payrolls_js__WEBPACK_IMPORTED_MODULE_15__["default"]
+  } // strict: process.env.NODE_ENV !== 'production'
+
+});
+/* harmony default export */ __webpack_exports__["default"] = (store);
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
 
 /***/ }),
 
@@ -78945,9 +81492,15 @@ var themeConfig = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 __webpack_require__(/*! D:\xampp\htdocs\tax-managment-System\resources\js\app.js */"./resources/js/app.js");
 __webpack_require__(/*! D:\xampp\htdocs\tax-managment-System\resources\sass\app.scss */"./resources/sass/app.scss");
 module.exports = __webpack_require__(/*! D:\xampp\htdocs\tax-managment-System\resources\assets\css\main.css */"./resources/assets/css/main.css");
+=======
+__webpack_require__(/*! C:\xampp2019\htdocs\tax-mangment\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\xampp2019\htdocs\tax-mangment\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! C:\xampp2019\htdocs\tax-mangment\resources\assets\css\main.css */"./resources/assets/css/main.css");
+>>>>>>> d141a309bc9a8c547b8ec775e9f2438f525e5555
 
 
 /***/ })

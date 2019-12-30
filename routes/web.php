@@ -11,6 +11,10 @@
 |
  */
 Route::group(['prefix' => ''], function () {
+
+	Route::get('get-average-rate', 'ApplicationController@get_average_rate');
+	Route::get('login-user', 'ApplicationController@get_login_user');
+	Route::post('login', 'ApplicationController@login');
 	// officers routes
 	Route::get('get-officers', 'ApplicationController@get_officers');
 	Route::post('add-officer', 'ApplicationController@add_officer');
@@ -25,14 +29,81 @@ Route::group(['prefix' => ''], function () {
 
 	// admins routes
 	Route::get('get-admins', 'ApplicationController@get_admins');
+	Route::get('get-member-detail/{id}', 'ApplicationController@get_member_detail');
+
 	Route::post('add-admin', 'ApplicationController@add_admin');
 	Route::post('update-admin', 'ApplicationController@update_admin');
+	Route::post('status-update-admin', 'ApplicationController@status_update_admin');
+
 	// Customers
 	Route::post('add-customer', 'ApplicationController@add_customer');
+	Route::post('add-multiple-customer', 'ApplicationController@add_multiple_customer');
+
 	Route::get('get-customers', 'ApplicationController@get_customers');
+	Route::get('get-customer', 'ApplicationController@get_customer');
+	Route::post('get-customer-profile', 'ApplicationController@get_customer_profile');
 	Route::post('update-customer', 'ApplicationController@update_customer');
 	Route::post('status-update-customer', 'ApplicationController@status_update_customer');
 
+	// Customers
+	Route::post('add-employee', 'ApplicationController@add_employee');
+	Route::get('get-employees', 'ApplicationController@get_employees');
+	Route::post('get-employee', 'ApplicationController@get_employee');
+	Route::get('get-active-employees', 'ApplicationController@get_active_employees');
+	Route::post('update-employee', 'ApplicationController@update_employee');
+	Route::post('status-update-employee', 'ApplicationController@status_update_employee');
+	Route::post('add-multiple-employees/{id}', 'ApplicationController@add_multiple_employee');
+
+	// Tax
+	Route::post('add-tax', 'ApplicationController@add_tax');
+	Route::get('get-taxes', 'ApplicationController@get_taxes');
+	Route::get('get-tax', 'ApplicationController@get_tax');
+	Route::get('get-tax-team', 'ApplicationController@get_tax_team');
+	Route::post('update-tax-team', 'ApplicationController@update_tax_team');
+
+	Route::post('update-tax', 'ApplicationController@update_tax');
+	Route::post('status-update-tax', 'ApplicationController@status_update_tax');
+
+	// Exchange Rates
+	Route::get('get-exchange-rates', 'ApplicationController@get_exchange_rates');
+	Route::post('update-exchange-rates', 'ApplicationController@update_exchange_rates');
+
+	// Currencies
+	Route::get('get-currencies', 'ApplicationController@get_currencies');
+	Route::post('status-update-currency', 'ApplicationController@status_update_currency');
+
+	// Purchases
+	Route::post('add-purchase', 'ApplicationController@add_purchase');
+	Route::get('get-purchases', 'ApplicationController@get_purchases');
+	Route::get('get-pending-purchases', 'ApplicationController@get_pending_purchases');
+	Route::post('get-single-purchase', 'ApplicationController@get_purchase');
+	Route::post('update-purchase', 'ApplicationController@update_purchase');
+	Route::post('add-multiple-purchases/{customer_id}/{tax_id}/{type}/{userLoginId}', 'ApplicationController@add_multiple_purchases');
+
+	// Sales
+	Route::post('add-sale', 'ApplicationController@add_sale');
+	Route::get('get-sales', 'ApplicationController@get_sales');
+	Route::get('get-sale', 'ApplicationController@get_sale');
+	Route::get('get-comments', 'ApplicationController@get_comments');
+	Route::post('send-comment', 'ApplicationController@send_comment');
+
+	Route::get('get-pending-sales', 'ApplicationController@get_pending_sales');
+	Route::post('get-single-sale', 'ApplicationController@get_sale');
+	Route::post('update-sale', 'ApplicationController@update_sale');
+	Route::post('add-multiple-sales/{customer_id}/{tax_id}/{type}/{userLoginId}', 'ApplicationController@add_multiple_sales');
+
+	// Payrolls
+	Route::post('add-payroll', 'ApplicationController@add_payroll');
+	Route::get('get-payrolls', 'ApplicationController@get_payrolls');
+	Route::get('get-pending-payrolls', 'ApplicationController@get_pending_payrolls');
+	Route::post('get-payroll', 'ApplicationController@get_payroll');
+	Route::post('update-payroll', 'ApplicationController@update_payroll');
+	Route::post('add-multiple-payrolls/{employee_id}/{tax_id}/{type}/{userLoginId}', 'ApplicationController@add_multiple_payrolls');
+
+	Route::post('status-update-spp', 'ApplicationController@status_updateSPP');
+	Route::post('status-change-management', 'ApplicationController@status_change_management');
+
+	Route::get('logout', 'ApplicationController@logout');
 
 });
 Route::get('/{any}', 'ApplicationController')->where('any', '.*');

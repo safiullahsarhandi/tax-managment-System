@@ -13,7 +13,7 @@
             <div class="p-6 pb-0" :class="{'flex justify-between flex-row-reverse items-center': iconRight}">
                 <feather-icon :icon="icon" class="p-3 inline-flex rounded-full" :class="[`text-${color}`, {'mb-4': !iconRight}]" :style="{background: `rgba(var(--vs-${color}),.15)`}"></feather-icon>
                 <div>
-                    <h2 class="mb-1 font-bold">{{ statistic }}</h2>
+                    <h3 class="mb-1 font-bold">{{ statistic }}</h3>
                     <span>{{ statisticTitle }}</span>
                 </div>
             </div>

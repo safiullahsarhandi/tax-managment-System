@@ -21,16 +21,25 @@
 
 export default [
     {
-        url: "#",
+        url: "/",
+        name: "Back",
+        slug: "home",
+        icon: "HomeIcon",
+        isMain : false,
+    },
+    {
+        url: "/",
         name: "Overview",
         slug: "home",
         icon: "HomeIcon",
+        isMain : true,
     },
     {
         url: "/",
         name: "Sales",
         slug: "customer-sales",
         icon: "DollarSignIcon",
+        isMain : false,
         submenu: [{
             url: "/add-sale",
             name: "Add Sale",
@@ -48,6 +57,7 @@ export default [
         name: "purchases",
         slug: "customer-purchases",
         icon: "TruckIcon",
+        isMain : false,
         submenu: [{
             url: "/add-purchase",
             name: "Add purchase",
@@ -61,27 +71,11 @@ export default [
         }],
     },
     {
-        url: "/employees",
-        name: "Employees",
-        slug: "customer-employees",
-        icon: "UsersIcon",
-        submenu: [{
-            url: "/add-employee",
-            name: "Add Employees",
-            slug: "add-employee",
-            icon: "UserIcon",
-        },{
-            url: "/employees-list",
-            name: "List Of Employees",
-            slug: "employees-list",
-            icon: "UserIcon",
-        }],
-    },
-    {
         url: "/payrolls",
         name: "Payrolls",
         slug: "employees-payrolls",
         icon: "ActivityIcon",
+        isMain : false,
         submenu: [{
             url: "/add-payroll",
             name: "Add Payroll",
@@ -95,11 +89,44 @@ export default [
         }],
     },
     {
+        url: "/pending-approvals",
+        name: "Pending Approvals",
+        slug: "pending-approvals",
+        icon: "BookOpenIcon",
+        isMain : false,
+        submenu : [
+        {
+            url: "/un-reviewed-payrolls",
+            name: "Payrolls",
+            slug: "employees-list",
+            icon: "UserIcon",
+        },{
+            url: "/un-reviewed-purchases",
+            name: "Purchases",
+            slug: "un-reviewed-purchases",
+            icon: "UserIcon",
+        },{
+            url: "/un-reviewed-sales",
+            name: "Sales",
+            slug: "un-reviewed-sales",
+            icon: "UserIcon",
+        }
+        ],
+    },
+    {
         url: "/reports",
         name: "Reports",
         slug: "reports",
         icon: "BookOpenIcon",
-    }
+        isMain : false,
+    },
+    {
+        url: "/tax-team",
+        name: "Tax Team",
+        slug: "tax-team",
+        icon: "BookOpenIcon",
+        isMain : false,
+    },
     /*{
         url: "/page2",
         name: "Page 2",
