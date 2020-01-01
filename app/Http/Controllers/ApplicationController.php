@@ -179,16 +179,22 @@ class ApplicationController extends Controller {
 			if ($possibleValsCount != $uploadedHeaderCount) {
 				return response()->json(['status' => false, 'msg' => 'upload cannot be processed. <br> please upload file which contain same columns as defined in sample file also uploaded file must contain some data'], 422);
 			}
+			$totalRecords = count($customers);
+			$totalRecordsMinusOne = ($totalRecords - 1);
+			$counter = 0;
+
 			foreach ($customers as $key => $value) {
 
-				settype($value['tax_id_no'], 'Integer');
+
 				$tax_id_no = $value['tax_id_no'];
-
-				settype($value['tin_num'], 'Integer');
+				list($tax_id_no) = explode(".", "$tax_id_no");
+				
 				$tin_no = $value['tin_no'];
-
-				settype($value['tel'], 'Integer');
+				list($tin_no) = explode(".", "$tin_no");
+				
 				$tel = $value['tel'];
+				list($tel) = explode(".", "$tel");
+				
 
 				if ($res = TaxCustomers::whereEmail($value['email'])->orwhere('tax_card_num', $tax_id_no)->orwhere('tin_no', $tin_no)->first()) {
 					$emailCount++;
@@ -196,6 +202,7 @@ class ApplicationController extends Controller {
 					$taxCardNo++;
 					continue;
 				}
+				
 				/*if ($res = TaxCustomers::whereTaxCardNum($tax_id_no)->first()) {
 							continue;
 
@@ -204,7 +211,13 @@ class ApplicationController extends Controller {
 							continue;
 
 					*/
-				$customer = new TaxCustomers;
+
+				if($totalRecordsMinusOne == $counter){
+					continue;
+				}
+				$counter++;
+
+				$customer = new TaxCustomers();
 				$customer->customer_id = (String) Str::uuid();
 				$customer->name_english = $value['name_english'];
 				$customer->name_khmer = $value['name_khmer'];
@@ -227,6 +240,7 @@ class ApplicationController extends Controller {
 			}
 			$totalAddedCount = $reader->count();
 			$totalAddedCount -= $emailCount;
+			$totalAddedCount = $totalRecordsMinusOne;
 			return response()->json(['status' => 'success', 'msg' => "$totalAddedCount new companies added. <br> $emailCount email already exists, <br> $taxCardNo tax card No. already associated with companies <br> $tinNo Tin No. already associated with companies."]);
 		}
 	}
@@ -235,7 +249,7 @@ class ApplicationController extends Controller {
 
 		if (session('admin.type') == 'Admin') {
 
-			$customers = TaxCustomers::all();
+			$customers = TaxCustomers::orderBy('created_at', 'desc')->get();
 		} else if (session('admin.type') == 'Supervisor') {
 			$customers = TaxCustomers::whereRaw('customer_id IN (SELECT customer_id from tax_managment where supervisor_id = ?)', ['supervisor_id' => session('admin.manager_id')])->get();
 		} else {
