@@ -78981,7 +78981,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/sale-detail/:id',
       name: 'Sale Detail',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(5), __webpack_require__.e(47), __webpack_require__.e(18)]).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/SaleDetail.vue */ "./resources/js/src/views/pages/Sales/SaleDetail.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(5), __webpack_require__.e(4), __webpack_require__.e(18)]).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/SaleDetail.vue */ "./resources/js/src/views/pages/Sales/SaleDetail.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -79041,7 +79041,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/purchase-detail/:id',
       name: 'Purchase Detail',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(5), __webpack_require__.e(47), __webpack_require__.e(16)]).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/PurchaseDetail.vue */ "./resources/js/src/views/pages/Purchases/PurchaseDetail.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(5), __webpack_require__.e(4), __webpack_require__.e(16)]).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/PurchaseDetail.vue */ "./resources/js/src/views/pages/Purchases/PurchaseDetail.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -79101,7 +79101,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/payroll-detail/:id',
       name: 'Payroll Detail',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(5), __webpack_require__.e(47), __webpack_require__.e(12)]).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/PayrollDetail.vue */ "./resources/js/src/views/pages/Payrolls/PayrollDetail.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(5), __webpack_require__.e(4), __webpack_require__.e(12)]).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/PayrollDetail.vue */ "./resources/js/src/views/pages/Payrolls/PayrollDetail.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -79425,9 +79425,13 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  getEmployees: function getEmployees(_ref) {
+  getEmployees: function getEmployees(_ref, customer_id) {
     var commit = _ref.commit;
-    axios.get('get-employees').then(function (res) {
+    axios.get('get-employees', {
+      params: {
+        tax_customer_id: customer_id
+      }
+    }).then(function (res) {
       commit('setEmployees', res.data.employees);
     });
   },

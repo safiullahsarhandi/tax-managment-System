@@ -1,6 +1,6 @@
 export default{
-	getEmployees({commit}){
-		axios.get('get-employees').then(res=>{
+	getEmployees({commit},customer_id){
+		axios.get('get-employees',{params : { tax_customer_id : customer_id}}).then(res=>{
 			commit('setEmployees',res.data.employees)
 		});
 	},

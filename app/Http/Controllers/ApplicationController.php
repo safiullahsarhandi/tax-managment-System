@@ -168,10 +168,11 @@ class ApplicationController extends Controller {
 		if ($request->hasFile('file')) {
 			$emailCount = $taxCardNo = $tinNo = 0;
 			$reader = Excel::selectSheetsByIndex(0)->load($request->file('file'), function ($reader) use (&$emailCount, &$taxCardNo, &$tinNo) {
-
-			})->get();
+			});
+			// dd();
+			$reader = $reader->get();
 			// Getting all results
-			$customers = $reader->toArray();
+			$customers = $reader;
 			$headers = $reader->getHeading();
 			$possibleVals = ['name_khmer', 'name_english', 'tax_id_no', 'tin_no', 'incorporation_date', 'address', 'street', 'group', 'village', 'sangkat', 'district', 'province', 'muncipality', 'tel', 'email', 'industry'];
 			$possibleValsCount = count($possibleVals);
@@ -179,69 +180,62 @@ class ApplicationController extends Controller {
 			if ($possibleValsCount != $uploadedHeaderCount) {
 				return response()->json(['status' => false, 'msg' => 'upload cannot be processed. <br> please upload file which contain same columns as defined in sample file also uploaded file must contain some data'], 422);
 			}
-			$totalRecords = count($customers);
-			$totalRecordsMinusOne = ($totalRecords - 1);
-			$counter = 0;
-
 			foreach ($customers as $key => $value) {
-
-
+				if (!$value->filter()->isNotEmpty()) {
+					continue;
+				}
 				$tax_id_no = $value['tax_id_no'];
 				list($tax_id_no) = explode(".", "$tax_id_no");
-				
+
+				$street = $value['street'];
+				list($street) = explode(".", "$street");
+
 				$tin_no = $value['tin_no'];
 				list($tin_no) = explode(".", "$tin_no");
-				
+
 				$tel = $value['tel'];
 				list($tel) = explode(".", "$tel");
-				
 
-				if ($res = TaxCustomers::whereEmail($value['email'])->orwhere('tax_card_num', $tax_id_no)->orwhere('tin_no', $tin_no)->first()) {
+				if ($res = TaxCustomers::whereEmail($value['email'])->first()) {
 					$emailCount++;
-					$tinNo++;
+					continue;
+				}
+
+				if ($res = TaxCustomers::whereTaxCardNum($tax_id_no)->first()) {
 					$taxCardNo++;
 					continue;
+
 				}
-				
-				/*if ($res = TaxCustomers::whereTaxCardNum($tax_id_no)->first()) {
-							continue;
-
-						}
-						if ($res = TaxCustomers::whereTinNo($tin_no)->first()) {
-							continue;
-
-					*/
-
-				if($totalRecordsMinusOne == $counter){
+				if ($res = TaxCustomers::whereTinNo($tin_no)->first()) {
+					$tinNo++;
 					continue;
+
+					$counter++;
+
+					$customer = new TaxCustomers();
+					$customer->customer_id = (String) Str::uuid();
+					$customer->name_english = $value['name_english'];
+					$customer->name_khmer = $value['name_khmer'];
+					$customer->tax_card_num = $tax_id_no;
+					$customer->tin_no = $tin_no;
+					$customer->address = $value['address'];
+					$customer->street = $street;
+					$customer->group = $value['group'];
+					$customer->sangkat = $value['sangkat'];
+					$customer->district = $value['district'];
+					$customer->province = $value['province'];
+					$customer->muncipality = $value['muncipality'];
+					$customer->telephone = '+' . $tel;
+					$customer->email = $value['email'];
+					$customer->industry = $value['industry'];
+					$customer->incorporation_date = $value['incorporation_date'];
+					$customer->village = $value['village'];
+					$result = $customer->save();
+
 				}
-				$counter++;
-
-				$customer = new TaxCustomers();
-				$customer->customer_id = (String) Str::uuid();
-				$customer->name_english = $value['name_english'];
-				$customer->name_khmer = $value['name_khmer'];
-				$customer->tax_card_num = $tax_id_no;
-				$customer->tin_no = $tin_no;
-				$customer->address = $value['address'];
-				$customer->street = $value['street'];
-				$customer->group = $value['group'];
-				$customer->sangkat = $value['sangkat'];
-				$customer->district = $value['district'];
-				$customer->province = $value['province'];
-				$customer->muncipality = $value['muncipality'];
-				$customer->telephone = '+' . $tel;
-				$customer->email = $value['email'];
-				$customer->industry = $value['industry'];
-				$customer->incorporation_date = $value['incorporation_date'];
-				$customer->village = $value['village'];
-				$result = $customer->save();
-
+				$totalAddedCount = $reader->count();
+				return response()->json(['status' => 'success', 'msg' => "$totalAddedCount new companies added. <br> $emailCount email already exists, <br> $taxCardNo tax card No. already associated with companies <br> $tinNo Tin No. already associated with companies."]);
 			}
-			$totalAddedCount = $reader->count();
-			$totalAddedCount -= $emailCount;
-			$totalAddedCount = $totalRecordsMinusOne;
-			return response()->json(['status' => 'success', 'msg' => "$totalAddedCount new companies added. <br> $emailCount email already exists, <br> $taxCardNo tax card No. already associated with companies <br> $tinNo Tin No. already associated with companies."]);
 		}
 	}
 
@@ -1149,13 +1143,13 @@ class ApplicationController extends Controller {
 
 	public function get_comments(Request $request) {
 
-			$object_types = ['Purchase', 'Sale', 'Payroll'];
+		$object_types = ['Purchase', 'Sale', 'Payroll'];
 
-			if(!in_array($request->type, $object_types)){
-				return response()->json(['status' => false, 'msg' => 'Invalid object type']);
-			}
+		if (!in_array($request->type, $object_types)) {
+			return response()->json(['status' => false, 'msg' => 'Invalid object type']);
+		}
 
-			$comments = TaxComments::where('object_id', $request->object_id)
+		$comments = TaxComments::where('object_id', $request->object_id)
 			->whereObjectType($request->type)
 			->orderBy('created_at', 'desc')
 			->get();
@@ -1232,25 +1226,23 @@ class ApplicationController extends Controller {
 		$msg = '';
 		if ($request->by == 'supervisor') {
 
-			if($data->officer_confirmed == 1){
+			if ($data->officer_confirmed == 1) {
 
 				if ($data->management_confirmed == 0) {
 					$data->supervisor_confirmed = $request->status;
-					$data->save();	
+					$data->save();
 				} else {
 					return response()->json(['status' => false, 'msg' => 'Your ' . $request->tax_type . ' status approved by admin.', 'response' => $data->status]);
 				}
-			}else{
-					return response()->json(['status' => false, 'msg' => 'Your ' . $request->tax_type . ' status still not approved by officer.', 'response' => $data->status]);
+			} else {
+				return response()->json(['status' => false, 'msg' => 'Your ' . $request->tax_type . ' status still not approved by officer.', 'response' => $data->status]);
 			}
 
-
-
 		} else if ($request->by == 'admin') {
-			if($data->supervisor_confirmed == 1){
-			$data->management_confirmed = $request->status;
-			$data->save();
-			}else{
+			if ($data->supervisor_confirmed == 1) {
+				$data->management_confirmed = $request->status;
+				$data->save();
+			} else {
 				return response()->json(['status' => false, 'msg' => 'Your ' . $request->tax_type . ' status still not approved by Supervisor.', 'response' => $data->status]);
 			}
 		}
