@@ -137,12 +137,12 @@
                                 <vs-button icon-pack="feather" size="small" icon='icon-x-circle' @click="changeManagementStatus('0', purchase.id, 'admin')"></vs-button>
                             </vs-list-item>
 
-                            <vs-list-item v-if="userType == 'Supervisor'" title="Status">
+                            <vs-list-item v-else-if="userType == 'Supervisor'" title="Status">
                                 <vs-button icon-pack="feather" size="small" icon='icon-check-circle' @click="changeManagementStatus('1', purchase.id, 'supervisor')"></vs-button>
                                 <vs-button icon-pack="feather" size="small" icon='icon-x-circle' @click="changeManagementStatus('0', purchase.id, 'supervisor')"></vs-button>
                             </vs-list-item>
 
-                            <vs-list-item v-if="userType == 'Officer'" title="Status">
+                            <vs-list-item v-else title="Status">
                                 <vs-switch icon-pack="feather" @click="statusUpdate(purchase.purchase_id, purchase.officer_confirmed)" v-model="purchase.officer_confirmed"></vs-switch>
                             </vs-list-item>
                         </template>
@@ -153,7 +153,6 @@
                 </vx-card>
             </vs-col>
         </vs-row>
-        {{ comments }}
         <the-customizer
            ref="commentsView"
            :object_id="$route.params.id"
@@ -187,7 +186,6 @@ export default {
     computed: {
         ...mapState('purchases', ['purchase']),
         ...mapState('customers', ['customer']),
-        ...mapState('', ['comments']),
         userType() {
             return this.$store.getters.userType;
         },

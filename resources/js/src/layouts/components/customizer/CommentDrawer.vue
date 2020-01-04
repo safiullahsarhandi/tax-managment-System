@@ -24,7 +24,7 @@
                     </div>
                 </VuePerfectScrollbar>
                 <div class="customizer-footer mt-6 flex items-center justify-between px-6">
-                    <vs-input class="w-full" placeholder="Type Here" model="textMsg" @keydown.enter="sendComment($event)" />
+                    <vs-input class="w-full" placeholder="Type Here" v-model="textMsg" @keydown.enter="sendComment($event)" />
                 </div>
                 <vs-divider class="mb-0"></vs-divider>
             </div>
@@ -55,16 +55,16 @@ export default {
         active(val, oldVal) {
             if (val == false) {
                 clearInterval(this.invterVal)
-            }else{
+            } else {
                 var self = this;
-        this.invterVal = setInterval(function() {
-            let data = {
-                    'path': self.commentsUrl,
-                    'type': self.type,
-                    'object_id' : self.object_id
-                };
-            self.$store.dispatch('getComments', data);
-        }, 2000)
+                this.invterVal = setInterval(function() {
+                    let data = {
+                        'path': self.commentsUrl,
+                        'type': self.type,
+                        'object_id': self.object_id
+                    };
+                    self.$store.dispatch('getComments', data);
+                }, 2000)
             }
             this.scrollToEnd()
         }
@@ -94,34 +94,45 @@ export default {
         }
     },
     created() {
+        let data = {
+            'path': this.commentsUrl,
+            'type': this.type,
+            'object_id': this.object_id
+        };
+        this.$store.dispatch('getComments', data);
     },
     computed: {
         hideScrollToTopLocal: {
             get() { return this.hideScrollToTop },
             set(val) { this.$emit('toggleHideScrollToTop', val) }
         },
-        userType(){
+        userType() {
             return this.$store.getters.userType;
         },
-        comments(){
+        comments() {
             return this.$store.state.comments;
         },
-        commentedBy(val){
-            return  this.$store.getters.commentedBy;
-        }
     },
     methods: {
-        sendComment(e){
+        commentedBy(val) {
+            if (localStorage.getItem('admin') == val) {
+                return true;
+            } else {
+                return false;
+            }
+            // return  this.$store.getters.commentedBy;
+        },
+        sendComment(e) {
             let data = {
-                comment : e.target.value,
-                object_id : this.object_id,
-                type : this.type,
-                scrollToEnd : this.scrollToEnd,
-                userType : this.userType,
-                loginUser : localStorage.getItem('admin'), 
+                comment: e.target.value,
+                object_id: this.object_id,
+                type: this.type,
+                scrollToEnd: this.scrollToEnd,
+                userType: this.userType,
+                loginUser: localStorage.getItem('admin'),
             };
 
-            this.$store.dispatch('saveComment',data)
+            this.$store.dispatch('saveComment', data)
         },
         updatePrimaryColor(color) {
             this.primaryColor = color;

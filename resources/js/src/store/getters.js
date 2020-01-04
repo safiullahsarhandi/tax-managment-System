@@ -11,7 +11,7 @@
 const getters = {
 	userType : state => {
 		return state.AppActiveUser.type
-	}
+	},
 	// COMPONENT
 		// vx-autosuggest
 	// starredPages: state => state.navbarSearchAndPinList.data.filter((page) => page.highlightAction),
