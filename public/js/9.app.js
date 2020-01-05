@@ -115,7 +115,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('supervisors/', ['supervisors']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('taxes/', ['taxes']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('officers/', ['officers'])),
   beforeCreate: function beforeCreate() {},
   created: function created() {
-    this.tax_customer_id = this.$store.state.rootUrl.split('/')[2];
+    this.tax_customer_id = localStorage.getItem('customer');
     this.getSupervisors();
     this.getOfficers();
     this.getTaxes(this.tax_customer_id);
@@ -625,7 +625,10 @@ var render = function() {
                             "vs-select",
                             {
                               staticClass: "selectExample",
-                              attrs: { name: "supervisor", label: "Figuras" },
+                              attrs: {
+                                name: "supervisor",
+                                label: "Supervisor"
+                              },
                               model: {
                                 value: _vm.supervisor,
                                 callback: function($$v) {

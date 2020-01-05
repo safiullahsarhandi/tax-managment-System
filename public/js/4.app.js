@@ -44,6 +44,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -171,7 +172,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     sendComment: function sendComment(e) {
       var data = {
-        comment: e.target.value,
+        comment: this.textMsg,
         object_id: this.object_id,
         type: this.type,
         scrollToEnd: this.scrollToEnd,
@@ -179,6 +180,8 @@ __webpack_require__.r(__webpack_exports__);
         loginUser: localStorage.getItem('admin')
       };
       this.$store.dispatch('saveComment', data);
+      this.textMsg = '';
+      this.scrollToEnd();
     },
     updatePrimaryColor: function updatePrimaryColor(color) {
       this.primaryColor = color;
@@ -193,6 +196,7 @@ __webpack_require__.r(__webpack_exports__);
         var container = _this.$el.querySelector('.ps-container');
 
         container.scrollTop = container.scrollHeight;
+        console.log(container.scrollHeight);
       }, 0);
     }
   },
@@ -369,7 +373,13 @@ var render = function() {
                                   )
                                 }
                               },
-                              [_c("span", [_vm._v(_vm._s(msg.comment))])]
+                              [
+                                _c("div", [
+                                  _vm._v(_vm._s(msg.member_info.full_name))
+                                ]),
+                                _vm._v(" "),
+                                _c("span", [_vm._v(_vm._s(msg.comment))])
+                              ]
                             )
                           ],
                           1

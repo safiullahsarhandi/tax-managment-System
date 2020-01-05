@@ -21,4 +21,8 @@ export default {
 		state.taxes[index].status = data.status
 		// Vue.set(state.taxs,index,tax);
 	},
+	setSingleStatus(state,data){
+		state.tax.status = data.status
+		// Vue.set(state.taxs,index,tax);
+	},
 }

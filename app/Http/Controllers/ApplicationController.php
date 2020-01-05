@@ -6,6 +6,7 @@ use App\Admin;
 use App\Currencies;
 use App\CustomerEmployee;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\MyValueBinder;
 use App\Officer;
 use App\Payrolls;
 use App\Purchases;
@@ -166,11 +167,17 @@ class ApplicationController extends Controller {
 	public function add_multiple_customer(Request $request) {
 
 		if ($request->hasFile('file')) {
-			$emailCount = $taxCardNo = $tinNo = 0;
+			$counter = $emailCount = $taxCardNo = $tinNo = 0;
 			$reader = Excel::selectSheetsByIndex(0)->load($request->file('file'), function ($reader) use (&$emailCount, &$taxCardNo, &$tinNo) {
-			});
-			// dd();
-			$reader = $reader->get();
+
+				$reader->sheet("company", function ($sheet) {
+
+					$sheet->setColumnFormat(array(
+						"A:P" => "@",
+					));
+				});
+			})->get();
+			// $reader = $reader;
 			// Getting all results
 			$customers = $reader;
 			$headers = $reader->getHeading();
@@ -184,6 +191,7 @@ class ApplicationController extends Controller {
 				if (!$value->filter()->isNotEmpty()) {
 					continue;
 				}
+				// dd($value->set);
 				$tax_id_no = $value['tax_id_no'];
 				list($tax_id_no) = explode(".", "$tax_id_no");
 
@@ -195,7 +203,6 @@ class ApplicationController extends Controller {
 
 				$tel = $value['tel'];
 				list($tel) = explode(".", "$tel");
-
 				if ($res = TaxCustomers::whereEmail($value['email'])->first()) {
 					$emailCount++;
 					continue;
@@ -209,33 +216,32 @@ class ApplicationController extends Controller {
 				if ($res = TaxCustomers::whereTinNo($tin_no)->first()) {
 					$tinNo++;
 					continue;
-
-					$counter++;
-
-					$customer = new TaxCustomers();
-					$customer->customer_id = (String) Str::uuid();
-					$customer->name_english = $value['name_english'];
-					$customer->name_khmer = $value['name_khmer'];
-					$customer->tax_card_num = $tax_id_no;
-					$customer->tin_no = $tin_no;
-					$customer->address = $value['address'];
-					$customer->street = $street;
-					$customer->group = $value['group'];
-					$customer->sangkat = $value['sangkat'];
-					$customer->district = $value['district'];
-					$customer->province = $value['province'];
-					$customer->muncipality = $value['muncipality'];
-					$customer->telephone = '+' . $tel;
-					$customer->email = $value['email'];
-					$customer->industry = $value['industry'];
-					$customer->incorporation_date = $value['incorporation_date'];
-					$customer->village = $value['village'];
-					$result = $customer->save();
-
 				}
-				$totalAddedCount = $reader->count();
-				return response()->json(['status' => 'success', 'msg' => "$totalAddedCount new companies added. <br> $emailCount email already exists, <br> $taxCardNo tax card No. already associated with companies <br> $tinNo Tin No. already associated with companies."]);
+
+				$customer = new TaxCustomers();
+				$customer->customer_id = (String) Str::uuid();
+				$customer->name_english = $value['name_english'];
+				$customer->name_khmer = $value['name_khmer'];
+				$customer->tax_card_num = $tax_id_no;
+				$customer->tin_no = $tin_no;
+				$customer->address = $value['address'];
+				$customer->street = $street;
+				$customer->group = $value['group'];
+				$customer->sangkat = $value['sangkat'];
+				$customer->district = $value['district'];
+				$customer->province = $value['province'];
+				$customer->muncipality = $value['muncipality'];
+				$customer->telephone = '+' . $tel;
+				$customer->email = $value['email'];
+				$customer->industry = $value['industry'];
+				$customer->incorporation_date = $value['incorporation_date'];
+				$customer->village = $value['village'];
+				$result = $customer->save();
+				$counter++;
+
 			}
+			$totalAddedCount = $counter;
+			return response()->json(['status' => 'success', 'msg' => "$totalAddedCount new companies added. <br> $emailCount email already exists, <br> $taxCardNo tax card No. already associated with companies <br> $tinNo Tin No. already associated with companies."]);
 		}
 	}
 
@@ -563,6 +569,29 @@ class ApplicationController extends Controller {
 				$taxOfficer->save();
 			}
 			return response()->json(['status' => 'success', 'msg' => 'Tax Created Successfully'], 200);
+		}
+
+	}
+	public function update_tax(Request $request) {
+
+		$tax = Tax::whereTaxId($request->tax_id)->first();
+		$tax->title = $request->title;
+		$tax->description = $request->description;
+		$tax->duration = $request->duration;
+		$tax->type = $request->type;
+		$tax->supervisor_id = $request->supervisor_id;
+		$save = $tax->save();
+		if ($save) {
+			$officers = explode(',', $request->officers);
+			TaxOfficer::where('tax_id', $request->tax_id)->delete();
+			foreach ($officers as $key => $officer) {
+				$taxOfficer = new TaxOfficer;
+				$taxOfficer->tax_officer_id = (String) Str::uuid();
+				$taxOfficer->tax_id = $tax->tax_id;
+				$taxOfficer->officer_id = $officer;
+				$taxOfficer->save();
+			}
+			return response()->json(['status' => 'success', 'msg' => 'Tax Updated Successfully'], 200);
 		}
 
 	}
@@ -938,12 +967,13 @@ class ApplicationController extends Controller {
 	public function add_multiple_employee(Request $request, $id) {
 
 		if ($request->hasFile('file')) {
-			$data = Excel::load($request->file('file'), function ($reader) use ($id) {
+			$myValueBinder = new MyValueBinder;
+			$data = Excel::setValueBinder($myValueBinder)->load($request->file('file'), function ($reader) use ($id) {
 
 			})->get();
 			// Getting all results
-
 			$employees = $data->toArray();
+			$counter = 0;
 			$headers = $data->getHeading();
 			$possibleVals = ['nssf_no', 'employee_no', 'name_english', 'name_khmer', 'nationality', 'dob', 'joining_date', 'position', 'sex', 'contract_type', 'spouse'];
 			$possibleValsCount = count($possibleVals);
@@ -952,7 +982,9 @@ class ApplicationController extends Controller {
 				return response()->json(['status' => false, 'msg' => 'upload cannot be processed. <br> please upload file which contain same columns as defined in sample file also uploaded file must contain some data'], 422);
 			}
 			foreach ($employees as $key => $value) {
-
+				if (!$value->filter()->isNotEmpty()) {
+					continue;
+				}
 				if ($find = CustomerEmployee::whereEmployeeNum($value['employee_no'])->orWhere('nssf_num', $value['nssf_no'])->exists()) {
 					continue;
 				}
@@ -974,9 +1006,10 @@ class ApplicationController extends Controller {
 				$employee->contract_type = $value['contract_type'];
 				$employee->spouse = $value['spouse'];
 				$result = $employee->save();
+				$counter++;
 			}
 			$totalAddedCount = $data->count();
-			return response()->json(['status' => 'success', 'msg' => "$totalAddedCount new Employee(s) added."]);
+			return response()->json(['status' => 'success', 'msg' => "$counter new Employee(s) added."]);
 		}
 	}
 
@@ -994,8 +1027,11 @@ class ApplicationController extends Controller {
 			if ($possibleValsCount != $uploadedHeaderCount) {
 				return response()->json(['status' => false, 'msg' => 'upload cannot be processed. <br> please upload file which contain same columns as defined in sample file also uploaded file must contain some data'], 422);
 			}
+			$counter = 0;
 			foreach ($sales as $key => $value) {
-
+				if (!$value->filter()->isNotEmpty()) {
+					continue;
+				}
 				$sale = new Sales();
 
 				$sale->sale_id = (String) Str::uuid();
@@ -1042,10 +1078,11 @@ class ApplicationController extends Controller {
 				$sale->status = 0;
 
 				$sale->save();
+				$counter++;
 
 			}
 			$totalAddedCount = $data->count();
-			return response()->json(['status' => 'success', 'msg' => "$totalAddedCount new Sale(s) added."]);
+			return response()->json(['status' => 'success', 'msg' => "$counter new Sale(s) added."]);
 		}
 
 	}
@@ -1066,8 +1103,11 @@ class ApplicationController extends Controller {
 			if ($possibleValsCount != $uploadedHeaderCount) {
 				return response()->json(['status' => false, 'msg' => 'upload cannot be processed. <br> please upload file which contain same columns as defined in sample file also uploaded file must contain some data'], 422);
 			}
+			$counter = 0;
 			foreach ($payrolls as $key => $value) {
-
+				if (!$value->filter()->isNotEmpty()) {
+					continue;
+				}
 				$pr = new Payrolls();
 				$pr->payroll_id = (String) Str::uuid();
 				$pr->tax_id = $tax_id;
@@ -1095,10 +1135,10 @@ class ApplicationController extends Controller {
 				// $pr->additional_fields = $value['additional_field'];
 
 				$pr->save();
-
+				$counter++;
 			}
 			$totalAddedCount = $data->count();
-			return response()->json(['status' => 'success', 'msg' => "$totalAddedCount new Payroll(s) added."]);
+			return response()->json(['status' => 'success', 'msg' => "$counter new Payroll(s) added."]);
 		}
 	}
 
@@ -1115,10 +1155,12 @@ class ApplicationController extends Controller {
 			if ($possibleValsCount != $uploadedHeaderCount) {
 				return response()->json(['status' => false, 'msg' => 'upload cannot be processed. <br> please upload file which contain same columns as defined in sample file also uploaded file must contain some data'], 422);
 			}
-
+			$counter = 0;
 			// Getting all results
 			foreach ($purchases as $key => $value) {
-
+				if (!$value->filter()->isNotEmpty()) {
+					continue;
+				}
 				$purchase = new Purchases();
 
 				$purchase->purchase_id = (String) Str::uuid();
@@ -1143,10 +1185,10 @@ class ApplicationController extends Controller {
 					$purchase->tax_officer_id = $userLoginId;
 				}
 				$purchase->save();
-
+				$counter++;
 			}
 			$totalAddedCount = $data->count();
-			return response()->json(['status' => 'success', 'msg' => "$totalAddedCount new Purchase(s) added."]);
+			return response()->json(['status' => 'success', 'msg' => "$counter new Purchase(s) added."]);
 		}
 	}
 
@@ -1158,9 +1200,9 @@ class ApplicationController extends Controller {
 			return response()->json(['status' => false, 'msg' => 'Invalid object type']);
 		}
 
-		$comments = TaxComments::where('object_id', $request->object_id)
+		$comments = TaxComments::with('member_info')->where('object_id', $request->object_id)
 			->whereObjectType($request->type)
-			->orderBy('created_at', 'desc')
+			->orderBy('created_at', 'asc')
 			->get();
 
 		return response()->json(compact('comments'));
@@ -1259,4 +1301,32 @@ class ApplicationController extends Controller {
 		return response()->json(['status' => true, 'msg' => 'Changes successfully', 'response' => $request->status]);
 	}
 
+	public function status_update_tax(Request $request) {
+		$data = array();
+
+		//count of total sales , purchases , payrolls in particular tax collection
+		$totalSales = Sales::whereTaxId($request->id)->count();
+		$totalPurchases = Purchases::whereTaxId($request->id)->count();
+		$totalPayrolls = Payrolls::whereTaxId($request->id)->count();
+		$totalTaxChilds = $totalSales + $totalPurchases + $totalPayrolls;
+
+		//count of total approved sales , purchases , payrolls by both supervisor and admin
+		$totalApprovedSale = Sales::whereTaxId($request->id)->whereSupervisorConfirmed(2)->whereManagementConfirmed(2)->count();
+		$totalApprovedPurchase = Purchases::whereTaxId($request->id)->whereSupervisorConfirmed(2)->whereManagementConfirmed(2)->count();
+		$totalApprovedPayrolls = Purchases::whereTaxId($request->id)->whereSupervisorConfirmed(2)->whereManagementConfirmed(2)->count();
+		$totalTaxApprovedChilds = $totalApprovedSale + $totalApprovedPurchase + $totalApprovedPayrolls;
+
+		$tax = Tax::where('tax_id', $request->id)->first();
+		if ($totalTaxApprovedChilds >= $totalTaxChilds) {
+			if ($tax->status == 1) {
+				$tax->status = 0;
+			} else {
+				$tax->status = 1;
+			}
+			$tax->save();
+			return response()->json(['status' => true, 'msg' => 'tax has been completed successfully', 'tax' => $tax]);
+		} else {
+			return response()->json(['status' => false, 'msg' => 'all sales, purchases payrolls need to be approved first before making completed ', 'tax' => $tax]);
+		}
+	}
 }

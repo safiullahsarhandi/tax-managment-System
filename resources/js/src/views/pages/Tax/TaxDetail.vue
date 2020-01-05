@@ -1,7 +1,7 @@
 <template>
     <div id="tax-detail">
         <vs-row>
-            <vs-col vs-md="8" vs-lg="8" vs-sm="12" vs-xs="12">
+            <vs-col :vs-md="activeUser.type == 'Admin'?'9':'12'" :vs-lg="activeUser.type == 'Admin'?'9':'12'" vs-sm="12" vs-xs="12">
             	<vs-row class="mt-base p-0">
                     <vs-col vs-lg="4" vs-md="4" vs-sm="12" vs-xs="12">
                         <statistics-card-line icon="DollarSignIcon" :statistic="tax.purchases_count || 0" statisticTitle="No of Purchases Added" :chartData="analyticsData.revenueGenerated" type='area'></statistics-card-line>
@@ -65,16 +65,16 @@
                 </vx-card>
                 <template>
                 	<vs-row class="mt-base p-0">
-                    <vs-col vs-lg="4" vs-md="4" vs-sm="12" vs-xs="12">
-                        <statistics-card-line icon="DollarSignIcon" :statistic="purchases_approval || 0" statisticTitle="Pending Approvals Purchases" :chartData="analyticsData.revenueGenerated" type='area'></statistics-card-line>
-                    </vs-col>
-                    <vs-col vs-lg="4" vs-md="4" vs-sm="12" vs-xs="12">
-                        <statistics-card-line icon="DollarSignIcon" :statistic="sales_approval || 0" statisticTitle="Pending Approvals Sales" :chartData="analyticsData.revenueGenerated" color='success' type='area'></statistics-card-line>
-                    </vs-col>
-                    <vs-col vs-lg="4" vs-md="4" vs-sm="12" vs-xs="12">
-                        <statistics-card-line icon="DollarSignIcon" :statistic="payrolls_approval || 0" statisticTitle="Pending Approvals Payroll" :chartData="analyticsData.revenueGenerated" color='danger' type='area'></statistics-card-line>
-                    </vs-col>
-                </vs-row>
+	                    <vs-col vs-lg="4" vs-md="4" vs-sm="12" vs-xs="12">
+	                        <statistics-card-line icon="DollarSignIcon" :statistic="purchases_approval || 0" statisticTitle="Pending Approvals Purchases" :chartData="analyticsData.revenueGenerated" type='area'></statistics-card-line>
+	                    </vs-col>
+	                    <vs-col vs-lg="4" vs-md="4" vs-sm="12" vs-xs="12">
+	                        <statistics-card-line icon="DollarSignIcon" :statistic="sales_approval || 0" statisticTitle="Pending Approvals Sales" :chartData="analyticsData.revenueGenerated" color='success' type='area'></statistics-card-line>
+	                    </vs-col>
+	                    <vs-col vs-lg="4" vs-md="4" vs-sm="12" vs-xs="12">
+	                        <statistics-card-line icon="DollarSignIcon" :statistic="payrolls_approval || 0" statisticTitle="Pending Approvals Payroll" :chartData="analyticsData.revenueGenerated" color='danger' type='area'></statistics-card-line>
+	                    </vs-col>
+	                </vs-row>
                    <!--  <vx-card v-if="activeUser.type == 'Supervisor'" class="mt-base" title="Pending Task Approvals" subtitle="listed below Purchases, Payrolls & sales need your approval">
                         <vs-table search pagination max-items="6" :data="purchases_approval	">
                             <template slot="header">
@@ -146,7 +146,7 @@
                     </vx-card> -->
                 </template>
             </vs-col>
-            <vs-col class="mt-base" vs-md="4" vs-lg="4" vs-sm="12" vs-xs="12">
+            <vs-col v-show="activeUser.type == 'Admin'" class="mt-base" vs-md="3" vs-lg="3" vs-sm="12" vs-xs="12">
                 <vx-card title="Actions">
                     <vs-list>
                         <vs-list-item title="Mark as Complete" v-if="activeUser.type == 'Supervisor'" subtitle="">
@@ -157,10 +157,59 @@
                         <vs-list-item title="Approve Tax" v-if="activeUser.type == 'Admin'" subtitle="">
                             <vs-switch color="warning" :disabled="activeUser.type != 'Admin'" @input="changeTaxStatus(tax.tax_id)" />
                         </vs-list-item>
+                        <vs-list-item title="Edit Tax" v-if="activeUser.type == 'Admin'" subtitle="">
+                        	<vs-button size="small" icon-pack="feather" @click="editTax()" icon="icon-edit"></vs-button>
+                        </vs-list-item>
                     </vs-list>
                 </vx-card>
             </vs-col>
         </vs-row>
+        <vs-popup :active.sync="editTaxManagmentModal" title="Add Tax Managment">
+            <form ref="editTaxManagmentForm" @submit.prevent="editTaxManagment($event)" data-vv-scope="editform">
+                <input type="hidden" name="category_id" v-model="tax_customer_id">
+                <vs-row>
+                    <vs-col vs-lg="6" vs-md="6" vs-sm="12">
+                        <vx-input-group>
+                            <vs-input v-validate="'required'" name="title" v-model="title" label-placeholder="Title" data-vv-scope="editform" />
+                            <span class="text-danger" v-show="errors.has('editform.title')">{{errors.first('editform.title')}}</span>
+                        </vx-input-group>
+                        <vx-input-group>
+                            <br>
+                            <vs-textarea v-validate="'required'" name="description" v-model="description" :counter="50" label="Description" data-vv-scope="editform" />
+                            <span class="text-danger" v-show="errors.has('editform.description')">{{errors.first('editform.description')}}</span>
+                        </vx-input-group>
+                        <vx-input-group class="mt-2">
+                            <vs-input v-validate="'required'" name="duration" v-model="duration" label-placeholder="Duration" data-vv-scope="editform" />
+                            <span class="text-danger" v-show="errors.has('editform.duration')">{{errors.first('editform.duration')}}</span>
+                        </vx-input-group>
+                        <br>
+                        <vx-input-group class="mt-2">
+                            <label>Tax Type</label><br><br>
+                            <vs-radio v-model="type" name="type" vs-value="Monthly">Monthly</vs-radio>
+                            <vs-radio v-model="type" name="type" vs-value="Yearly">Yearly</vs-radio>
+                        </vx-input-group>
+                    </vs-col>
+                    <vs-col vs-lg="6" vs-md="12" vs-sm="12">
+                        <vx-input-group class="mt-2">
+                            <vs-select name="supervisor" class="selectExample" label="Supervisor" v-model="editSupervisor">
+                                <vs-select-item value="" text="Select Supervisor"></vs-select-item>
+                                <vs-select-item :key="index" :value="item.manager_id" :text="item.first_name+' '+item.last_name" v-for="(item,index) in supervisors" />
+                            </vs-select>
+                        </vx-input-group>
+                        <vx-input-group class="mt-2">
+                            <vs-select name="officer[]" placeholder="Search and select" class="selectExample" label="Officers" label-placeholder="Officers" multiple v-model="officer">
+                                <vs-select-item value="" :disabled="true" text="Select Officers"></vs-select-item>
+                                <vs-select-item :key="index" :value="item.manager_id" :text="item.first_name+' '+item.last_name" v-for="(item,index) in officers" />
+                            </vs-select>
+                        </vx-input-group>
+                    </vs-col>
+                    <vs-col vs-lg="12" vs-md="12" vs-sm="12">
+                        <br>
+                        <vs-button button="submit" class="float-right" type="gradient">Update</vs-button>
+                    </vs-col>
+                </vs-row>
+            </form>
+        </vs-popup>
     </div>
 </template>
 <script>
@@ -171,6 +220,17 @@ export default {
     data() {
         return {
             analyticsData: analyticsData,
+            editTaxManagmentModal: false,
+            title: "",
+            description: "",
+            type: 'Monthly',
+            duration: '',
+            officer: [],
+            editSupervisor : '',
+            default_selected_officer: "",
+            default_selected_supervisor: "",
+            tax_customer_id: '',
+            editedTax : {},
 
         };
     },
@@ -181,7 +241,13 @@ export default {
     },
     computed: {
         ...mapState('taxes/', ['tax', 'purchases_approval', 'payrolls_approval', 'sales_approval']),
-        ...mapGetters('taxes/', 'supervisor'),
+        /*...mapState({
+        	supervisors : 'supervisors/supervisors',
+        	officers : 'officers/officers',
+        }),*/
+        ...mapState('supervisors/', ['supervisors']),
+		...mapState('officers/', ['officers']),
+        ...mapGetters('taxes/', ['supervisor']),
         activeUser() {
             return this.$store.state.AppActiveUser
         }
@@ -189,15 +255,60 @@ export default {
     created() {
     	localStorage.setItem('currentDetail', this.$route.fullPath);
         this.$store.commit('setRootUrl', this.$route.fullPath);
+        this.tax_customer_id = localStorage.getItem('customer')
+        this.getSupervisors();
+        this.getOfficers();
         this.getTax(this.$route.params.id);
     },
     methods: {
         ...mapActions({
+			getSupervisors: 'supervisors/getSupervisors',
+            getOfficers: 'officers/getOfficers',
             getTax: 'taxes/getTax',
             statusUpdate: 'taxes/statusUpdate',
-        })
-    },
-    changeTaxStatus(id) {
+            update: 'taxes/editTax',
+        }),
+        editTax() {
+        	console.log(this.tax);
+            this.editTaxManagmentModal = true;
+            this.title = this.tax.title;
+            this.duration = this.tax.duration;
+            this.editSupervisor = this.tax.supervisor_id;
+            this.type = this.tax.type;
+            this.officer = _.map(this.tax.officers,'officer_id');
+            this.description = this.tax.description;
+            // this.$data.editedTax = this.tax;
+
+        },
+        editTaxManagment(e) {
+            this.$validator.validateAll().then((result) => {
+                if (result) {
+                    self = this;
+                    let fd = new FormData(self.$refs.editTaxManagmentForm);
+                    fd.append('customer_id',this.tax_customer_id)
+                    fd.append('tax_id',this.$route.params.id);
+                    fd.append('officers', self.officer)
+                    fd.append('supervisor_id',self.editSupervisor)
+                    let data = {
+                        fd: fd,
+                        close: this.$vs.loading.close,
+                        notify: this.$vs.notify,
+                    };
+                    this.update(data).then((res)=> {
+                        if (res.data.status == 'success') {
+                            self.title = self.description = self.duration = self.editSupervisor = '';
+                            self.officer = [];
+                            self.type = 'Monthly';
+                            // e.target.reset();
+                            self.$validator.reset();
+                            this.getTax(self.$route.params.id)
+                            this.editTaxManagmentModal = false;
+                        }
+                    });
+                }
+            })
+        },
+        changeTaxStatus(id) {
         this.$vs.loading();
         let data = {
             status: this.tax.status,
@@ -207,6 +318,7 @@ export default {
         }
         this.statusUpdate(data);
     }
+    },
 }
 
 </script>
