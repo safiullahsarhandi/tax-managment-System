@@ -55,7 +55,7 @@
                     </vs-col>
                     <vs-col vs-lg="6" vs-md="12" vs-sm="12">
                         <vx-input-group class="mt-2">
-                            <vs-select name="supervisor" class="selectExample" label="Figuras" v-model="supervisor">
+                            <vs-select name="supervisor" class="selectExample" label="Supervisor" v-model="supervisor">
                                 <vs-select-item value="" text="Select Supervisor"></vs-select-item>
                                 <vs-select-item :key="index" :value="item.manager_id" :text="item.first_name+' '+item.last_name" v-for="(item,index) in supervisors" />
                             </vs-select>
@@ -103,7 +103,7 @@ export default {
     beforeCreate() {
     },
     created() {
-        this.tax_customer_id = this.$store.state.rootUrl.split('/')[2];
+        this.tax_customer_id = localStorage.getItem('customer');
         this.getSupervisors();
         this.getOfficers();
         this.getTaxes(this.tax_customer_id);

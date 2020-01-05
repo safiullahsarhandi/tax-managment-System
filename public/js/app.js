@@ -78981,7 +78981,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/sale-detail/:id',
       name: 'Sale Detail',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(5), __webpack_require__.e(4), __webpack_require__.e(18)]).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/SaleDetail.vue */ "./resources/js/src/views/pages/Sales/SaleDetail.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(5), __webpack_require__.e(47), __webpack_require__.e(18)]).then(__webpack_require__.bind(null, /*! ./views/pages/Sales/SaleDetail.vue */ "./resources/js/src/views/pages/Sales/SaleDetail.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -79041,7 +79041,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/purchase-detail/:id',
       name: 'Purchase Detail',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(5), __webpack_require__.e(4), __webpack_require__.e(16)]).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/PurchaseDetail.vue */ "./resources/js/src/views/pages/Purchases/PurchaseDetail.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(5), __webpack_require__.e(47), __webpack_require__.e(16)]).then(__webpack_require__.bind(null, /*! ./views/pages/Purchases/PurchaseDetail.vue */ "./resources/js/src/views/pages/Purchases/PurchaseDetail.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -79101,7 +79101,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/payroll-detail/:id',
       name: 'Payroll Detail',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(5), __webpack_require__.e(4), __webpack_require__.e(12)]).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/PayrollDetail.vue */ "./resources/js/src/views/pages/Payrolls/PayrollDetail.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(5), __webpack_require__.e(47), __webpack_require__.e(12)]).then(__webpack_require__.bind(null, /*! ./views/pages/Payrolls/PayrollDetail.vue */ "./resources/js/src/views/pages/Payrolls/PayrollDetail.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -80455,10 +80455,24 @@ __webpack_require__.r(__webpack_exports__);
       return res;
     });
   },
-  updateTax: function updateTax(_ref5, fd) {
+  editTax: function editTax(_ref5, data) {
     var commit = _ref5.commit;
-    return axios.post('update-tax', fd).then(function (res) {
-      commit('setEmployee', res.data.employee);
+    return axios.post('update-tax', data.fd).then(function (res) {
+      if (res.data.status == 'error') {
+        data.notify({
+          color: 'danger',
+          text: res.data.msg,
+          title: 'Oops',
+          position: 'top-right'
+        });
+      } else {
+        data.notify({
+          color: 'success',
+          text: res.data.msg,
+          position: 'top-right'
+        });
+      }
+
       return res;
     });
   },
@@ -80477,13 +80491,24 @@ __webpack_require__.r(__webpack_exports__);
     axios.post('status-update-tax', {
       id: data.id
     }).then(function (res) {
-      data.notify({
-        title: 'Updated!...',
-        text: res.data.msg,
-        color: 'success',
-        position: 'top-right'
-      });
-      commit('setStatus', {
+      if (res.data.status) {
+        data.notify({
+          title: 'Updated!...',
+          text: res.data.msg,
+          color: 'success',
+          position: 'top-right'
+        });
+      } else {
+        data.notify({
+          title: 'Oops!...',
+          text: res.data.msg,
+          color: 'danger',
+          position: 'top-right',
+          fixed: true
+        });
+      }
+
+      commit('setSingleStatus', {
         id: data.id,
         status: res.data.tax.status
       });
@@ -80611,6 +80636,9 @@ __webpack_require__.r(__webpack_exports__);
     });
 
     state.taxes[index].status = data.status; // Vue.set(state.taxs,index,tax);
+  },
+  setSingleStatus: function setSingleStatus(state, data) {
+    state.tax.status = data.status; // Vue.set(state.taxs,index,tax);
   }
 });
 
@@ -80785,16 +80813,13 @@ var actions = {
   },
   saveComment: function saveComment(_ref13, data) {
     var commit = _ref13.commit;
-    console.log(data);
     axios.post('send-comment', {
       comment: data.comment,
       type: data.type,
       object_id: data.object_id,
       senderType: data.userType,
       sender: data.loginUser
-    }).then(function (res) {
-      commit('setComments');
-      data.scrollToEnd();
+    }).then(function (res) {// commit('setComments');
     });
   }
 };

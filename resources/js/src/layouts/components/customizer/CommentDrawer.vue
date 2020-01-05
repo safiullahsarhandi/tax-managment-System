@@ -17,6 +17,7 @@
                             <li class="flex items-start" :class="{'flex-row-reverse': commentedBy(msg.member_id), 'mt-4': index}" v-for="(msg, index) in comments" :key="index">
                                 <vs-avatar size="40px" class="m-0 flex-shrink-0" :class="commentedBy(msg.member_id)? 'ml-3' : 'mr-3'"></vs-avatar>
                                 <div class="msg relative bg-white shadow-md py-3 px-4 mb-2 rounded-lg max-w-md" :class="{'chat-sent-msg bg-primary-gradient text-white': commentedBy(msg.member_id), 'border border-solid d-theme-border-grey-light': !commentedBy(msg.member_id)}">
+                                    <div>{{ msg.member_info.full_name}}</div>
                                     <span>{{ msg.comment }}</span>
                                 </div>
                             </li>
@@ -124,15 +125,16 @@ export default {
         },
         sendComment(e) {
             let data = {
-                comment: e.target.value,
+                comment: this.textMsg,
                 object_id: this.object_id,
                 type: this.type,
                 scrollToEnd: this.scrollToEnd,
                 userType: this.userType,
                 loginUser: localStorage.getItem('admin'),
             };
-
             this.$store.dispatch('saveComment', data)
+            this.textMsg = '';
+             this.scrollToEnd();
         },
         updatePrimaryColor(color) {
             this.primaryColor = color;
@@ -142,6 +144,7 @@ export default {
             setTimeout(() => {
                 const container = this.$el.querySelector('.ps-container');
                 container.scrollTop = container.scrollHeight;
+                console.log(container.scrollHeight);
             }, 0);
         }
     },
