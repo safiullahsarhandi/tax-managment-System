@@ -372,12 +372,21 @@ class ApplicationController extends Controller {
 		$admins = Admin::latest('id')->get();
 		return response()->json(compact('admins'));
 	}
+
+
 	public function get_member_detail($id) {
-		$member = Admin::with('taxes.tax.supervisor')->withCount(['taxes', 'taxes as active_taxes' => function ($q) {
+		$member = Admin::with(['taxes'=> function($taxes){
+			$taxes->with(['tax'=>function($tax){
+				$tax->with(['supervisor', 'customer']);
+			}]);
+		}])->withCount(['taxes', 'taxes as active_taxes' => function ($q) {
 			$q->where('status', 1);
 		}])->where('manager_id', $id)->first();
 		return response()->json(compact('member'));
 	}
+
+
+	
 	public function add_admin(Request $request) {
 		if (Admin::where('email', $request->email)->exists()) {
 			return response()->json(['status' => 'false', 'msg' => 'account with this email already exists'], 200);

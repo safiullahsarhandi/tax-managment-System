@@ -10,6 +10,10 @@ class Admin extends Model {
 	public function taxes() {
 		return $this->hasMany(TaxOfficer::class, 'officer_id', 'manager_id');
 	}
+	public function customer()
+	{
+	    return $this->belongsTo(TaxCustomers::class, 'customer_id', 'customer_id');
+	}
 	public function getTypeAttribute($val) {
 
 		if ($val == 1) {

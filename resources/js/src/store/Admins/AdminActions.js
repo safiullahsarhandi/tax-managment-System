@@ -5,8 +5,9 @@ export default{
 		});
 	},
 	getMemberDetail({commit},id){
-		axios.get('get-member-detail/'+id).then(res=>{
+		return axios.get('get-member-detail/'+id).then(res=>{
 			commit('setMember',res.data.member)
+			return res;
 		});
 	},
 	addAdmin({commit},fd){

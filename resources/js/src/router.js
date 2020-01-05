@@ -161,6 +161,7 @@ const router = new Router({
             // CUSTOMER DETAIL LAYOUT ROUTES
             // =============================================================================
             path: '/customer-detail/:id',
+            name: 'Customer Detail',
             component: () => import('./layouts/main/customerMain.vue'),
             props: true,
             meta : {
