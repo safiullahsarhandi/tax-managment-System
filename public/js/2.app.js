@@ -344,62 +344,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -413,6 +357,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      activeUser: '',
       navbarSearchAndPinList: this.$store.state.navbarSearchAndPinList,
       searchQuery: '',
       showFullSearch: false,
@@ -501,6 +446,9 @@ __webpack_require__.r(__webpack_exports__);
         this.$store.dispatch('arrangeStarredPagesMore', list);
       }
     }
+  },
+  created: function created() {
+    this.activeUser = this.$store.state.AppActiveUser.full_name;
   },
   methods: {
     logout: function logout() {
@@ -1801,7 +1749,7 @@ var render = function() {
                   },
                   [
                     _c("p", { staticClass: "font-semibold" }, [
-                      _vm._v("Login User")
+                      _vm._v(_vm._s(_vm.activeUser))
                     ]),
                     _vm._v(" "),
                     _c("small", [_vm._v("Available")])

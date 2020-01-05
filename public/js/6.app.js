@@ -392,7 +392,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     update: 'taxes/editTax'
   }), {
     editTax: function editTax() {
-      console.log(this.tax);
       this.editTaxManagmentModal = true;
       this.title = this.tax.title;
       this.duration = this.tax.duration;

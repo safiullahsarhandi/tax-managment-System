@@ -61,6 +61,7 @@ Route::group(['prefix' => ''], function () {
 	Route::get('get-tax', 'ApplicationController@get_tax');
 	Route::get('get-tax-team', 'ApplicationController@get_tax_team');
 	Route::post('update-tax-team', 'ApplicationController@update_tax_team');
+	Route::post('tax/get-tax', 'ApplicationController@get_edittax');
 
 	Route::post('update-tax', 'ApplicationController@update_tax');
 	Route::post('status-update-tax', 'ApplicationController@status_update_tax');

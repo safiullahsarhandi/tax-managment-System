@@ -650,6 +650,13 @@ class ApplicationController extends Controller {
 		return response()->json(compact('team'));
 	}
 
+	public function get_edittax(Request $request) {
+		$tax = Tax::with('supervisor', 'officers')->withCount('officers', 'sales', 'purchases', 'payrolls')->where('tax_id', $request->id)->first();
+
+
+		return response()->json(compact('tax'));
+	}
+
 	public function get_customer_profile(Request $request) {
 
 		$customer = TaxCustomers::whereCustomerId($request->id)->first();

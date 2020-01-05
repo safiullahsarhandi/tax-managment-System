@@ -136,7 +136,6 @@
         },
         created(){
             this.getMemberDetail(this.$route.params.id).then(res=>{
-                console.log(res.data.member);
             });
         },
         methods: {
