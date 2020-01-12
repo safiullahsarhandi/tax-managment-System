@@ -1274,10 +1274,10 @@ class ApplicationController extends Controller {
 					$data->supervisor_confirmed = $request->status;
 					$data->save();
 				} else {
-					return response()->json(['status' => false, 'msg' => 'Your ' . $request->tax_type . ' status approved by admin.', 'response' => $data->status]);
+					return response()->json(['status' => false, 'msg' => '' . $request->tax_type . ' approved by admin.', 'response' => $data->status]);
 				}
 			} else {
-				return response()->json(['status' => false, 'msg' => 'Your ' . $request->tax_type . ' status still not approved by officer.', 'response' => $data->status]);
+				return response()->json(['status' => false, 'msg' => '' . $request->tax_type . ' still not completed by officer. please check later.', 'response' => $data->status]);
 			}
 
 		} else if ($request->by == 'admin') {
@@ -1285,7 +1285,7 @@ class ApplicationController extends Controller {
 				$data->management_confirmed = $request->status;
 				$data->save();
 			} else {
-				return response()->json(['status' => false, 'msg' => 'Your ' . $request->tax_type . ' status still not approved by Supervisor.', 'response' => $data->status]);
+				return response()->json(['status' => false, 'msg' => '' . $request->tax_type . ' still not approved by Supervisor. please check later.', 'response' => $data->status]);
 			}
 		}
 
