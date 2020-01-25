@@ -1336,4 +1336,30 @@ class ApplicationController extends Controller {
 			return response()->json(['status' => false, 'msg' => 'all sales, purchases payrolls need to be approved first before making completed ', 'tax' => $tax]);
 		}
 	}
+
+	public function change_password(Request $request){
+
+		$id = $request->id;
+		$current_password = $request->current_password;
+		$new_password = $request->new_password;
+		$confirm_password = $request->confirm_password;
+
+		if($new_password != $confirm_password){
+			return response()->json(['status' => false, 'msg' => 'Confirm password mis-match']);
+		}
+
+		$getUser = Supervisor::where('manager_id', $id)->first();
+
+		if(!$check=Hash::check($current_password, $getUser->password)){
+			return response()->json(['status' => false, 'msg' => 'invalid current password']);
+		}else{
+
+			$getUser->password = bcrypt($new_password);
+			$getUser->save();
+			return response()->json(['status' => true, 'msg' => 'Password changed successfully']);
+
+		}
+
+
+	}
 }

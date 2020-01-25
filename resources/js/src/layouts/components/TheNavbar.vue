@@ -10,7 +10,7 @@
 
 
 <template>
-<div class="relative">
+<div class="relative" id="navbar">
 	<div class="vx-navbar-wrapper">
 		<vs-navbar class="vx-navbar navbar-custom" :color="navbarColor" :class="classObj">
 
@@ -58,16 +58,18 @@
 			<vs-spacer></vs-spacer>
 			<!-- USER META -->
 			<div class="the-navbar__user-meta flex items-center">
-				<div class="    text-right leading-tight hidden sm:block">
+				<div class="text-right leading-tight hidden sm:block">
 					<p class="font-semibold">{{ activeUser }}</p>
 					<small>Available</small>
 				</div>
-
+ 
                 
 				<vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
 					<div class="con-img ml-3"><vs-avatar>Admin</vs-avatar></div>
 					<vs-dropdown-menu class="vx-navbar-dropdown">
-						<ul style="min-width: 9rem">
+						<ul style="min-width: 14rem">
+                            <li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white" @click="changePasswordPopUp()"><feather-icon icon="KeyIcon" svgClasses="w-4 h-4"></feather-icon> <span class="ml-2">Change Passowrd</span></li>
+
 							<li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white" @click="logout()"><feather-icon icon="LogOutIcon" svgClasses="w-4 h-4"></feather-icon> <span class="ml-2">Logout</span></li>
 						</ul>
 					</vs-dropdown-menu>
@@ -76,6 +78,37 @@
 
 		</vs-navbar>
 	</div>
+
+
+    <vs-popup :active.sync="changepassword" title="Change Password">
+            <form ref="changePassword" @submit.prevent="changePassword($event, 'changePassword')" autocomplete="off" data-vv-scope="changePassword" id="changePassword">
+                <vs-row>
+                    
+                    <vs-col >
+                        
+                         <vx-input-group class="mt-2">
+                            <vs-input type="password" v-validate="'required'" name="current_password" v-model="current_password" label-placeholder="Current Password" data-vv-scope="changePassword"/>
+                            <span class="text-danger" v-show="errors.has('changePassword.current_password')">{{errors.first('changePassword.current_password')}}</span>
+                        </vx-input-group>
+
+                        <vx-input-group class="mt-2">
+                            <vs-input type="password" v-validate="'required|min:6'" name="password" v-model="new_password" label-placeholder="New Password" data-vv-scope="changePassword" ref="password"/>
+                            <span class="text-danger" v-show="errors.has('changePassword.password')">{{errors.first('changePassword.password')}}</span>
+                        </vx-input-group>
+
+                        <vx-input-group class="mt-2">
+                            <vs-input type="password" v-validate="'required|min:6|confirmed:password'" name="confirm_password" v-model="confirm_password" label-placeholder="Confirm Password" data-vv-scope="changePassword" data-vv-as="password"/>
+                            <span class="text-danger" v-show="errors.has('changePassword.confirm_password')">{{errors.first('changePassword.confirm_password')}}</span>
+                        </vx-input-group>
+                       
+                        
+                    </vs-col>
+                    <vs-col class="mt-2" vs-lg="12" vs-md="12" vs-sm="12">
+                        <vs-button button="submit" class="float-right mt-2" type="gradient">Change Password</vs-button>
+                    </vs-col>
+                </vs-row>
+            </form>
+        </vs-popup>
 </div>
 </template>
 
@@ -94,6 +127,10 @@ export default {
     },
     data() {
         return {
+            changepassword: false,
+            current_password: null,
+            new_password: null,
+            confirm_password: null,
             activeUser: '',
             navbarSearchAndPinList: this.$store.state.navbarSearchAndPinList,
             searchQuery: '',
@@ -162,6 +199,48 @@ export default {
         this.activeUser = this.$store.state.AppActiveUser.full_name;
     },
     methods: {
+        changePasswordPopUp(e, scope){
+            this.current_password = null;
+            this.new_password = null;
+            this.confirm_password = null;
+            this.changepassword = true;
+        },
+        changePassword(){
+
+            this.$validator.validateAll('changePassword').then(result => {
+                if (result) {
+                    var manager_id = this.$store.state.AppActiveUser.manager_id;
+                    var data = 
+                        {
+                            'id': manager_id,
+                            'current_password': this.current_password,
+                            'new_password': this.new_password,
+                            'confirm_password': this.confirm_password
+                        };
+                    
+                    axios.post('change-password', data).then(res=>{
+                        this.$vs.loading.close();
+                        if(res.data.status == true){
+                            
+                            this.changepassword = false;
+                            // document.getElementById('changePassword').reset();
+                            this.$vs.notify({
+                                    position : 'top-right',
+                                    color : 'success',
+                                    text : res.data.msg,
+                                });
+                        }else{
+                            this.$vs.notify({
+                                    position : 'top-right',
+                                    color : 'danger',
+                                    text : res.data.msg,
+                                });
+                        }
+                    });
+                }
+            });
+
+        },
         logout(){
             axios.get('logout').then(res=>{
                 if(res.data.status == 'success'){
@@ -260,3 +339,9 @@ export default {
     },
 }
 </script>
+
+<style>
+    #navbar .con-vs-popup .vs-popup {
+        width: 460px !important;
+    }
+</style>

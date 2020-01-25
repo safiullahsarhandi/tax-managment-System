@@ -108,5 +108,7 @@ Route::group(['prefix' => ''], function () {
 
 	Route::get('logout', 'ApplicationController@logout');
 
+	Route::post('change-password', 'ApplicationController@change_password');
+
 });
 Route::get('/{any}', 'ApplicationController')->where('any', '.*');

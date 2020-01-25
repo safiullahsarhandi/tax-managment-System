@@ -344,6 +344,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -357,6 +390,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      changepassword: false,
+      current_password: null,
+      new_password: null,
+      confirm_password: null,
       activeUser: '',
       navbarSearchAndPinList: this.$store.state.navbarSearchAndPinList,
       searchQuery: '',
@@ -451,12 +488,52 @@ __webpack_require__.r(__webpack_exports__);
     this.activeUser = this.$store.state.AppActiveUser.full_name;
   },
   methods: {
-    logout: function logout() {
+    changePasswordPopUp: function changePasswordPopUp(e, scope) {
+      this.current_password = null;
+      this.new_password = null;
+      this.confirm_password = null;
+      this.changepassword = true;
+    },
+    changePassword: function changePassword() {
       var _this = this;
+
+      this.$validator.validateAll('changePassword').then(function (result) {
+        if (result) {
+          var manager_id = _this.$store.state.AppActiveUser.manager_id;
+          var data = {
+            'id': manager_id,
+            'current_password': _this.current_password,
+            'new_password': _this.new_password,
+            'confirm_password': _this.confirm_password
+          };
+          axios.post('change-password', data).then(function (res) {
+            _this.$vs.loading.close();
+
+            if (res.data.status == true) {
+              _this.changepassword = false; // document.getElementById('changePassword').reset();
+
+              _this.$vs.notify({
+                position: 'top-right',
+                color: 'success',
+                text: res.data.msg
+              });
+            } else {
+              _this.$vs.notify({
+                position: 'top-right',
+                color: 'danger',
+                text: res.data.msg
+              });
+            }
+          });
+        }
+      });
+    },
+    logout: function logout() {
+      var _this2 = this;
 
       axios.get('logout').then(function (res) {
         if (res.data.status == 'success') {
-          _this.$vs.notify({
+          _this2.$vs.notify({
             position: 'center-top',
             color: 'success',
             text: res.data.msg
@@ -464,7 +541,7 @@ __webpack_require__.r(__webpack_exports__);
 
           localStorage.removeItem('admin');
 
-          _this.$router.push({
+          _this2.$router.push({
             name: 'login'
           });
         }
@@ -1172,6 +1249,25 @@ exports.push([module.i, "/*=====================================================
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/layouts/components/TheNavbar.vue?vue&type=style&index=0&lang=css&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/layouts/components/TheNavbar.vue?vue&type=style&index=0&lang=css& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "#navbar .con-vs-popup .vs-popup {\n  width: 460px !important;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/components/vx-auto-suggest/VxAutoSuggest.vue?vue&type=style&index=0&lang=scss&":
 /*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--8-2!./node_modules/sass-loader/dist/cjs.js??ref--8-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/components/vx-auto-suggest/VxAutoSuggest.vue?vue&type=style&index=0&lang=scss& ***!
@@ -1255,6 +1351,36 @@ options.transform = transform
 options.insertInto = undefined;
 
 var update = __webpack_require__(/*! ../../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/layouts/components/TheNavbar.vue?vue&type=style&index=0&lang=css&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/layouts/components/TheNavbar.vue?vue&type=style&index=0&lang=css& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../node_modules/css-loader??ref--7-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./TheNavbar.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/layouts/components/TheNavbar.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -1498,324 +1624,595 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "relative" }, [
-    _c(
-      "div",
-      { staticClass: "vx-navbar-wrapper" },
-      [
-        _c(
-          "vs-navbar",
-          {
-            staticClass: "vx-navbar navbar-custom",
-            class: _vm.classObj,
-            attrs: { color: _vm.navbarColor }
-          },
-          [
-            _c("feather-icon", {
-              staticClass: "sm:inline-flex xl:hidden cursor-pointer mr-1",
-              attrs: { icon: "MenuIcon" },
-              on: {
-                click: function($event) {
-                  $event.stopPropagation()
-                  return _vm.showSidebar($event)
+  return _c(
+    "div",
+    { staticClass: "relative", attrs: { id: "navbar" } },
+    [
+      _c(
+        "div",
+        { staticClass: "vx-navbar-wrapper" },
+        [
+          _c(
+            "vs-navbar",
+            {
+              staticClass: "vx-navbar navbar-custom",
+              class: _vm.classObj,
+              attrs: { color: _vm.navbarColor }
+            },
+            [
+              _c("feather-icon", {
+                staticClass: "sm:inline-flex xl:hidden cursor-pointer mr-1",
+                attrs: { icon: "MenuIcon" },
+                on: {
+                  click: function($event) {
+                    $event.stopPropagation()
+                    return _vm.showSidebar($event)
+                  }
                 }
-              }
-            }),
-            _vm._v(" "),
-            _vm.breakpoint != "md"
-              ? [
+              }),
+              _vm._v(" "),
+              _vm.breakpoint != "md"
+                ? [
+                    _c(
+                      "ul",
+                      { staticClass: "vx-navbar__starred-pages" },
+                      [
+                        _c(
+                          "draggable",
+                          {
+                            staticClass: "flex cursor-move",
+                            attrs: { group: { name: "pinList" } },
+                            model: {
+                              value: _vm.starredPagesLimited,
+                              callback: function($$v) {
+                                _vm.starredPagesLimited = $$v
+                              },
+                              expression: "starredPagesLimited"
+                            }
+                          },
+                          _vm._l(_vm.starredPagesLimited, function(page) {
+                            return _c(
+                              "li",
+                              { key: page.url, staticClass: "starred-page" },
+                              [
+                                _c(
+                                  "vx-tooltip",
+                                  {
+                                    attrs: {
+                                      text: page.label,
+                                      position: "bottom",
+                                      delay: ".3s"
+                                    }
+                                  },
+                                  [
+                                    _c("feather-icon", {
+                                      staticClass: "p-2 cursor-pointer",
+                                      attrs: {
+                                        svgClasses: "h-6 w-6",
+                                        icon: page.labelIcon
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.$router.push(page.url)
+                                        }
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          }),
+                          0
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _vm.starredPagesMore.length
+                      ? _c(
+                          "div",
+                          {
+                            staticClass:
+                              "vx-navbar__starred-pages--more-dropdown"
+                          },
+                          [
+                            _c(
+                              "vs-dropdown",
+                              {
+                                attrs: {
+                                  "vs-custom-content": "",
+                                  "vs-trigger-click": ""
+                                }
+                              },
+                              [
+                                _c("feather-icon", {
+                                  staticClass: "cursor-pointer p-2",
+                                  attrs: {
+                                    icon: "ChevronDownIcon",
+                                    svgClasses: "h-4 w-4"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("vs-dropdown-menu", [
+                                  _c(
+                                    "ul",
+                                    {
+                                      staticClass:
+                                        "vx-navbar__starred-pages-more--list"
+                                    },
+                                    [
+                                      _c(
+                                        "draggable",
+                                        {
+                                          staticClass: "cursor-move",
+                                          attrs: { group: { name: "pinList" } },
+                                          model: {
+                                            value: _vm.starredPagesMore,
+                                            callback: function($$v) {
+                                              _vm.starredPagesMore = $$v
+                                            },
+                                            expression: "starredPagesMore"
+                                          }
+                                        },
+                                        _vm._l(_vm.starredPagesMore, function(
+                                          page
+                                        ) {
+                                          return _c(
+                                            "li",
+                                            {
+                                              key: page.url,
+                                              staticClass:
+                                                "starred-page--more flex items-center cursor-pointer",
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.$router.push(
+                                                    page.url
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _c("feather-icon", {
+                                                staticClass: "ml-2 mr-1",
+                                                attrs: {
+                                                  svgClasses: "h-5 w-5",
+                                                  icon: page.labelIcon
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c(
+                                                "span",
+                                                {
+                                                  staticClass: "px-2 pt-2 pb-1"
+                                                },
+                                                [_vm._v(_vm._s(page.label))]
+                                              )
+                                            ],
+                                            1
+                                          )
+                                        }),
+                                        0
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ])
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "bookmark-container" },
+                      [
+                        _c("feather-icon", {
+                          staticClass: "cursor-pointer p-2",
+                          attrs: {
+                            icon: "StarIcon",
+                            svgClasses: [
+                              "stoke-current text-warning",
+                              { "text-white": _vm.navbarColor != "#fff" }
+                            ]
+                          },
+                          on: {
+                            click: function($event) {
+                              $event.stopPropagation()
+                              _vm.showBookmarkPagesDropdown = !_vm.showBookmarkPagesDropdown
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.showBookmarkPagesDropdown
+                          ? _c(
+                              "div",
+                              {
+                                directives: [
+                                  {
+                                    name: "click-outside",
+                                    rawName: "v-click-outside",
+                                    value: _vm.outside,
+                                    expression: "outside"
+                                  }
+                                ],
+                                staticClass:
+                                  "absolute bookmark-list w-1/3 xl:w-1/4 mt-4"
+                              },
+                              [
+                                _c("vx-auto-suggest", {
+                                  attrs: {
+                                    autoFocus: true,
+                                    data: _vm.navbarSearchAndPinList,
+                                    inputClassses: "w-full",
+                                    "show-action": "",
+                                    "show-pinned": "",
+                                    "background-overlay": ""
+                                  },
+                                  on: {
+                                    selected: _vm.selected,
+                                    actionClicked: _vm.actionClicked
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          : _vm._e()
+                      ],
+                      1
+                    )
+                  ]
+                : _vm._e(),
+              _vm._v(" "),
+              _c("vs-spacer"),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "the-navbar__user-meta flex items-center" },
+                [
                   _c(
-                    "ul",
-                    { staticClass: "vx-navbar__starred-pages" },
+                    "div",
+                    { staticClass: "text-right leading-tight hidden sm:block" },
+                    [
+                      _c("p", { staticClass: "font-semibold" }, [
+                        _vm._v(_vm._s(_vm.activeUser))
+                      ]),
+                      _vm._v(" "),
+                      _c("small", [_vm._v("Available")])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-dropdown",
+                    {
+                      staticClass: "cursor-pointer",
+                      attrs: { "vs-custom-content": "", "vs-trigger-click": "" }
+                    },
                     [
                       _c(
-                        "draggable",
-                        {
-                          staticClass: "flex cursor-move",
-                          attrs: { group: { name: "pinList" } },
-                          model: {
-                            value: _vm.starredPagesLimited,
-                            callback: function($$v) {
-                              _vm.starredPagesLimited = $$v
-                            },
-                            expression: "starredPagesLimited"
-                          }
-                        },
-                        _vm._l(_vm.starredPagesLimited, function(page) {
-                          return _c(
-                            "li",
-                            { key: page.url, staticClass: "starred-page" },
-                            [
-                              _c(
-                                "vx-tooltip",
-                                {
-                                  attrs: {
-                                    text: page.label,
-                                    position: "bottom",
-                                    delay: ".3s"
+                        "div",
+                        { staticClass: "con-img ml-3" },
+                        [_c("vs-avatar", [_vm._v("Admin")])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-dropdown-menu",
+                        { staticClass: "vx-navbar-dropdown" },
+                        [
+                          _c("ul", { staticStyle: { "min-width": "14rem" } }, [
+                            _c(
+                              "li",
+                              {
+                                staticClass:
+                                  "flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.changePasswordPopUp()
                                   }
-                                },
-                                [
-                                  _c("feather-icon", {
-                                    staticClass: "p-2 cursor-pointer",
-                                    attrs: {
-                                      svgClasses: "h-6 w-6",
-                                      icon: page.labelIcon
-                                    },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.$router.push(page.url)
-                                      }
-                                    }
-                                  })
-                                ],
-                                1
-                              )
+                                }
+                              },
+                              [
+                                _c("feather-icon", {
+                                  attrs: {
+                                    icon: "KeyIcon",
+                                    svgClasses: "w-4 h-4"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "ml-2" }, [
+                                  _vm._v("Change Passowrd")
+                                ])
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "li",
+                              {
+                                staticClass:
+                                  "flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.logout()
+                                  }
+                                }
+                              },
+                              [
+                                _c("feather-icon", {
+                                  attrs: {
+                                    icon: "LogOutIcon",
+                                    svgClasses: "w-4 h-4"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "ml-2" }, [
+                                  _vm._v("Logout")
+                                ])
+                              ],
+                              1
+                            )
+                          ])
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            2
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "vs-popup",
+        {
+          attrs: { active: _vm.changepassword, title: "Change Password" },
+          on: {
+            "update:active": function($event) {
+              _vm.changepassword = $event
+            }
+          }
+        },
+        [
+          _c(
+            "form",
+            {
+              ref: "changePassword",
+              attrs: {
+                autocomplete: "off",
+                "data-vv-scope": "changePassword",
+                id: "changePassword"
+              },
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.changePassword($event, "changePassword")
+                }
+              }
+            },
+            [
+              _c(
+                "vs-row",
+                [
+                  _c(
+                    "vs-col",
+                    [
+                      _c(
+                        "vx-input-group",
+                        { staticClass: "mt-2" },
+                        [
+                          _c("vs-input", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
                             ],
-                            1
+                            attrs: {
+                              type: "password",
+                              name: "current_password",
+                              "label-placeholder": "Current Password",
+                              "data-vv-scope": "changePassword"
+                            },
+                            model: {
+                              value: _vm.current_password,
+                              callback: function($$v) {
+                                _vm.current_password = $$v
+                              },
+                              expression: "current_password"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has(
+                                    "changePassword.current_password"
+                                  ),
+                                  expression:
+                                    "errors.has('changePassword.current_password')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(
+                                  _vm.errors.first(
+                                    "changePassword.current_password"
+                                  )
+                                )
+                              )
+                            ]
                           )
-                        }),
-                        0
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vx-input-group",
+                        { staticClass: "mt-2" },
+                        [
+                          _c("vs-input", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required|min:6",
+                                expression: "'required|min:6'"
+                              }
+                            ],
+                            ref: "password",
+                            attrs: {
+                              type: "password",
+                              name: "password",
+                              "label-placeholder": "New Password",
+                              "data-vv-scope": "changePassword"
+                            },
+                            model: {
+                              value: _vm.new_password,
+                              callback: function($$v) {
+                                _vm.new_password = $$v
+                              },
+                              expression: "new_password"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has(
+                                    "changePassword.password"
+                                  ),
+                                  expression:
+                                    "errors.has('changePassword.password')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(
+                                  _vm.errors.first("changePassword.password")
+                                )
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vx-input-group",
+                        { staticClass: "mt-2" },
+                        [
+                          _c("vs-input", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required|min:6|confirmed:password",
+                                expression:
+                                  "'required|min:6|confirmed:password'"
+                              }
+                            ],
+                            attrs: {
+                              type: "password",
+                              name: "confirm_password",
+                              "label-placeholder": "Confirm Password",
+                              "data-vv-scope": "changePassword",
+                              "data-vv-as": "password"
+                            },
+                            model: {
+                              value: _vm.confirm_password,
+                              callback: function($$v) {
+                                _vm.confirm_password = $$v
+                              },
+                              expression: "confirm_password"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has(
+                                    "changePassword.confirm_password"
+                                  ),
+                                  expression:
+                                    "errors.has('changePassword.confirm_password')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(
+                                  _vm.errors.first(
+                                    "changePassword.confirm_password"
+                                  )
+                                )
+                              )
+                            ]
+                          )
+                        ],
+                        1
                       )
                     ],
                     1
                   ),
                   _vm._v(" "),
-                  _vm.starredPagesMore.length
-                    ? _c(
-                        "div",
-                        {
-                          staticClass: "vx-navbar__starred-pages--more-dropdown"
-                        },
-                        [
-                          _c(
-                            "vs-dropdown",
-                            {
-                              attrs: {
-                                "vs-custom-content": "",
-                                "vs-trigger-click": ""
-                              }
-                            },
-                            [
-                              _c("feather-icon", {
-                                staticClass: "cursor-pointer p-2",
-                                attrs: {
-                                  icon: "ChevronDownIcon",
-                                  svgClasses: "h-4 w-4"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("vs-dropdown-menu", [
-                                _c(
-                                  "ul",
-                                  {
-                                    staticClass:
-                                      "vx-navbar__starred-pages-more--list"
-                                  },
-                                  [
-                                    _c(
-                                      "draggable",
-                                      {
-                                        staticClass: "cursor-move",
-                                        attrs: { group: { name: "pinList" } },
-                                        model: {
-                                          value: _vm.starredPagesMore,
-                                          callback: function($$v) {
-                                            _vm.starredPagesMore = $$v
-                                          },
-                                          expression: "starredPagesMore"
-                                        }
-                                      },
-                                      _vm._l(_vm.starredPagesMore, function(
-                                        page
-                                      ) {
-                                        return _c(
-                                          "li",
-                                          {
-                                            key: page.url,
-                                            staticClass:
-                                              "starred-page--more flex items-center cursor-pointer",
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.$router.push(
-                                                  page.url
-                                                )
-                                              }
-                                            }
-                                          },
-                                          [
-                                            _c("feather-icon", {
-                                              staticClass: "ml-2 mr-1",
-                                              attrs: {
-                                                svgClasses: "h-5 w-5",
-                                                icon: page.labelIcon
-                                              }
-                                            }),
-                                            _vm._v(" "),
-                                            _c(
-                                              "span",
-                                              { staticClass: "px-2 pt-2 pb-1" },
-                                              [_vm._v(_vm._s(page.label))]
-                                            )
-                                          ],
-                                          1
-                                        )
-                                      }),
-                                      0
-                                    )
-                                  ],
-                                  1
-                                )
-                              ])
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
                   _c(
-                    "div",
-                    { staticClass: "bookmark-container" },
+                    "vs-col",
+                    {
+                      staticClass: "mt-2",
+                      attrs: { "vs-lg": "12", "vs-md": "12", "vs-sm": "12" }
+                    },
                     [
-                      _c("feather-icon", {
-                        staticClass: "cursor-pointer p-2",
-                        attrs: {
-                          icon: "StarIcon",
-                          svgClasses: [
-                            "stoke-current text-warning",
-                            { "text-white": _vm.navbarColor != "#fff" }
-                          ]
+                      _c(
+                        "vs-button",
+                        {
+                          staticClass: "float-right mt-2",
+                          attrs: { button: "submit", type: "gradient" }
                         },
-                        on: {
-                          click: function($event) {
-                            $event.stopPropagation()
-                            _vm.showBookmarkPagesDropdown = !_vm.showBookmarkPagesDropdown
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.showBookmarkPagesDropdown
-                        ? _c(
-                            "div",
-                            {
-                              directives: [
-                                {
-                                  name: "click-outside",
-                                  rawName: "v-click-outside",
-                                  value: _vm.outside,
-                                  expression: "outside"
-                                }
-                              ],
-                              staticClass:
-                                "absolute bookmark-list w-1/3 xl:w-1/4 mt-4"
-                            },
-                            [
-                              _c("vx-auto-suggest", {
-                                attrs: {
-                                  autoFocus: true,
-                                  data: _vm.navbarSearchAndPinList,
-                                  inputClassses: "w-full",
-                                  "show-action": "",
-                                  "show-pinned": "",
-                                  "background-overlay": ""
-                                },
-                                on: {
-                                  selected: _vm.selected,
-                                  actionClicked: _vm.actionClicked
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        : _vm._e()
+                        [_vm._v("Change Password")]
+                      )
                     ],
                     1
                   )
-                ]
-              : _vm._e(),
-            _vm._v(" "),
-            _c("vs-spacer"),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "the-navbar__user-meta flex items-center" },
-              [
-                _c(
-                  "div",
-                  {
-                    staticClass: "    text-right leading-tight hidden sm:block"
-                  },
-                  [
-                    _c("p", { staticClass: "font-semibold" }, [
-                      _vm._v(_vm._s(_vm.activeUser))
-                    ]),
-                    _vm._v(" "),
-                    _c("small", [_vm._v("Available")])
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "vs-dropdown",
-                  {
-                    staticClass: "cursor-pointer",
-                    attrs: { "vs-custom-content": "", "vs-trigger-click": "" }
-                  },
-                  [
-                    _c(
-                      "div",
-                      { staticClass: "con-img ml-3" },
-                      [_c("vs-avatar", [_vm._v("Admin")])],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "vs-dropdown-menu",
-                      { staticClass: "vx-navbar-dropdown" },
-                      [
-                        _c("ul", { staticStyle: { "min-width": "9rem" } }, [
-                          _c(
-                            "li",
-                            {
-                              staticClass:
-                                "flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white",
-                              on: {
-                                click: function($event) {
-                                  return _vm.logout()
-                                }
-                              }
-                            },
-                            [
-                              _c("feather-icon", {
-                                attrs: {
-                                  icon: "LogOutIcon",
-                                  svgClasses: "w-4 h-4"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("span", { staticClass: "ml-2" }, [
-                                _vm._v("Logout")
-                              ])
-                            ],
-                            1
-                          )
-                        ])
-                      ]
-                    )
-                  ],
-                  1
-                )
-              ],
-              1
-            )
-          ],
-          2
-        )
-      ],
-      1
-    )
-  ])
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ]
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -2539,7 +2936,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TheNavbar_vue_vue_type_template_id_71a5bfd2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TheNavbar.vue?vue&type=template&id=71a5bfd2& */ "./resources/js/src/layouts/components/TheNavbar.vue?vue&type=template&id=71a5bfd2&");
 /* harmony import */ var _TheNavbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TheNavbar.vue?vue&type=script&lang=js& */ "./resources/js/src/layouts/components/TheNavbar.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _TheNavbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TheNavbar.vue?vue&type=style&index=0&lang=css& */ "./resources/js/src/layouts/components/TheNavbar.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -2547,7 +2946,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _TheNavbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _TheNavbar_vue_vue_type_template_id_71a5bfd2___WEBPACK_IMPORTED_MODULE_0__["render"],
   _TheNavbar_vue_vue_type_template_id_71a5bfd2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -2576,6 +2975,22 @@ component.options.__file = "resources/js/src/layouts/components/TheNavbar.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TheNavbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./TheNavbar.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/layouts/components/TheNavbar.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TheNavbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/src/layouts/components/TheNavbar.vue?vue&type=style&index=0&lang=css&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/src/layouts/components/TheNavbar.vue?vue&type=style&index=0&lang=css& ***!
+  \********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TheNavbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader!../../../../../node_modules/css-loader??ref--7-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./TheNavbar.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/layouts/components/TheNavbar.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TheNavbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TheNavbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TheNavbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TheNavbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TheNavbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
