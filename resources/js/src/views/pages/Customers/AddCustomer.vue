@@ -102,6 +102,23 @@
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('industry')">{{errors.first('industry')}}</span>
                     </vs-col>
+
+                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                        <vx-input-group>
+                            <vs-select
+                                  autocomplete
+                                  label="Select Tax Duration"
+                                  v-model="taxDurationSelected"
+                                  name="tax_duration"
+                                  width="100%"
+                                  v-validate="'excluded:`Monthly`,`Yearly`'"
+                                  >
+                                  <vs-select-item :key="indx" :value="i.value" :text="i.text" v-for="(i,indx) in taxDuration" />
+                            </vs-select>
+                        </vx-input-group>
+                        <span class="text-danger" v-show="errors.has('tax_duration')">{{errors.first('tax_duration')}}</span>
+                    </vs-col>
+
                     <vs-col v-for="(field,index) in customField" :key="index" class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
                             <vs-input :type="field.text" :name="field.name" v-validate="`required`" :label-placeholder="'Custom Field '+(index + 1)" v-model="field.value" />
@@ -158,7 +175,12 @@ export default {
             tel: '',
             email: '',
             industry: '',
-        };
+            taxDurationSelected: 'Monthly',
+            taxDuration:[
+                {text: 'Monthly', value: 'Monthly'},
+                {text: 'Yearly', value: 'Yearly'}
+                ]
+            }
     },
     watch: {},
     components: {
@@ -205,6 +227,7 @@ export default {
                         if (res.data.status == 'success') {
                             e.target.reset();
                             this.errors.clear();
+                            this.taxDurationSelected = 'Monthly';
                             this.$vs.notify({ title: 'Success', text: 'Customer Added Successfully', color: 'success', position: 'top-right' })
                             this.$vs.loading.close();
                         }

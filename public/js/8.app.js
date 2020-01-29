@@ -177,6 +177,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   inject: ['generatePassword', 'loginUser'],
@@ -452,6 +454,10 @@ var render = function() {
                             _vm._v(_vm._s(tr.industry))
                           ]),
                           _vm._v(" "),
+                          _c("vs-td", { attrs: { data: tr.id } }, [
+                            _vm._v(_vm._s(tr.tax_duration))
+                          ]),
+                          _vm._v(" "),
                           _c("vs-td", { attrs: { data: tr.tax_card_num } }, [
                             _vm._v(_vm._s(tr.tax_card_num))
                           ]),
@@ -543,6 +549,8 @@ var render = function() {
                   _c("vs-th", [_vm._v("Name(Khmer)")]),
                   _vm._v(" "),
                   _c("vs-th", [_vm._v("Industy / Sector")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Tax Duration")]),
                   _vm._v(" "),
                   _c("vs-th", [_vm._v("Tax ID")]),
                   _vm._v(" "),

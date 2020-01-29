@@ -203,7 +203,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             if (res.data.status == 'success') {
               self.title = self.description = self.duration = self.supervisor = '';
               self.officer = [];
-              self.type = 'Monthly';
               e.target.reset();
               self.$validator.reset();
 
@@ -660,49 +659,6 @@ var render = function() {
                           )
                         ],
                         1
-                      ),
-                      _vm._v(" "),
-                      _c("br"),
-                      _vm._v(" "),
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c("label", [_vm._v("Tax Type")]),
-                          _c("br"),
-                          _c("br"),
-                          _vm._v(" "),
-                          _c(
-                            "vs-radio",
-                            {
-                              attrs: { name: "type", "vs-value": "Monthly" },
-                              model: {
-                                value: _vm.type,
-                                callback: function($$v) {
-                                  _vm.type = $$v
-                                },
-                                expression: "type"
-                              }
-                            },
-                            [_vm._v("Monthly")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "vs-radio",
-                            {
-                              attrs: { name: "type", "vs-value": "Yearly" },
-                              model: {
-                                value: _vm.type,
-                                callback: function($$v) {
-                                  _vm.type = $$v
-                                },
-                                expression: "type"
-                              }
-                            },
-                            [_vm._v("Yearly")]
-                          )
-                        ],
-                        1
                       )
                     ],
                     1
@@ -1028,49 +984,6 @@ var render = function() {
                                 _vm._s(_vm.errors.first("editform.duration"))
                               )
                             ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("br"),
-                      _vm._v(" "),
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c("label", [_vm._v("Tax Type")]),
-                          _c("br"),
-                          _c("br"),
-                          _vm._v(" "),
-                          _c(
-                            "vs-radio",
-                            {
-                              attrs: { name: "type", "vs-value": "Monthly" },
-                              model: {
-                                value: _vm.editTax.type,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.editTax, "type", $$v)
-                                },
-                                expression: "editTax.type"
-                              }
-                            },
-                            [_vm._v("Monthly")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "vs-radio",
-                            {
-                              attrs: { name: "type", "vs-value": "Yearly" },
-                              model: {
-                                value: _vm.editTax.type,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.editTax, "type", $$v)
-                                },
-                                expression: "editTax.type"
-                              }
-                            },
-                            [_vm._v("Yearly")]
                           )
                         ],
                         1

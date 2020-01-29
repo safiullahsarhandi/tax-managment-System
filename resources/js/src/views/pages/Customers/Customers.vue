@@ -6,6 +6,7 @@
                     <vs-th>Name(English)</vs-th>
                     <vs-th>Name(Khmer)</vs-th>
                     <vs-th>Industy / Sector</vs-th>
+                    <vs-th>Tax Duration</vs-th>
                     <vs-th>Tax ID</vs-th>
                     <vs-th>TIN # </vs-th>
                     <vs-th>Email</vs-th>
@@ -19,6 +20,7 @@
                         <vs-td :data="tr.name_english">{{tr.name_english}}</vs-td>
                         <vs-td :data="tr.name_khmer">{{tr.name_khmer}}</vs-td>
                         <vs-td :data="tr.industry">{{tr.industry}}</vs-td>
+                        <vs-td :data="tr.id">{{tr.tax_duration}}</vs-td>
                         <vs-td :data="tr.tax_card_num">{{tr.tax_card_num}}</vs-td>
                         <vs-td :data="tr.tin_no">{{tr.tin_no}}</vs-td>
                         <vs-td :data="tr.email">{{tr.email}}</vs-td>

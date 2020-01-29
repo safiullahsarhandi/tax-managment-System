@@ -46,12 +46,12 @@
                             <vs-input v-validate="'required'" name="duration" v-model="duration" label-placeholder="Duration" data-vv-scope="addform" />
                             <span class="text-danger" v-show="errors.has('addform.duration')">{{errors.first('addform.duration')}}</span>
                         </vx-input-group>
-                        <br>
-                        <vx-input-group class="mt-2">
+                        <!-- <br> -->
+                        <!-- <vx-input-group class="mt-2">
                             <label>Tax Type</label><br><br>
                             <vs-radio v-model="type" name="type" vs-value="Monthly">Monthly</vs-radio>
                             <vs-radio v-model="type" name="type" vs-value="Yearly">Yearly</vs-radio>
-                        </vx-input-group>
+                        </vx-input-group> -->
                     </vs-col>
                     <vs-col vs-lg="6" vs-md="12" vs-sm="12">
                         <vx-input-group class="mt-2">
@@ -94,12 +94,12 @@
                             <vs-input v-validate="'required'" name="duration" v-model="editTax.duration" label-placeholder="Duration" data-vv-scope="editform" />
                             <span class="text-danger" v-show="errors.has('editform.duration')">{{errors.first('editform.duration')}}</span>
                         </vx-input-group>
-                        <br>
+                        <!-- <br>
                         <vx-input-group class="mt-2">
                             <label>Tax Type</label><br><br>
                             <vs-radio v-model="editTax.type" name="type" vs-value="Monthly">Monthly</vs-radio>
                             <vs-radio v-model="editTax.type" name="type" vs-value="Yearly">Yearly</vs-radio>
-                        </vx-input-group>
+                        </vx-input-group> -->
                     </vs-col>
                     <vs-col vs-lg="6" vs-md="12" vs-sm="12">
                         
@@ -191,7 +191,7 @@ export default {
                         if (res.data.status == 'success') {
                             self.title = self.description = self.duration = self.supervisor = '';
                             self.officer = [];
-                            self.type = 'Monthly';
+                           
 
                             e.target.reset();
                             self.$validator.reset();

@@ -160,6 +160,8 @@ class ApplicationController extends Controller {
 		$customer->incorporation_date = $request->incorporation_date;
 		$customer->village = $request->village;
 		$customer->additional_fields = $request->additional_field;
+		$customer->tax_duration = $request->tax_duration;
+
 		$result = $customer->save();
 		return response()->json(['status' => 'success', 'customers' => $customer]);
 	}
@@ -177,11 +179,10 @@ class ApplicationController extends Controller {
 					));
 				});
 			})->get();
-			// $reader = $reader;
-			// Getting all results
+
 			$customers = $reader;
 			$headers = $reader->getHeading();
-			$possibleVals = ['name_khmer', 'name_english', 'tax_id_no', 'tin_no', 'incorporation_date', 'address', 'street', 'group', 'village', 'sangkat', 'district', 'province', 'muncipality', 'tel', 'email', 'industry'];
+			$possibleVals = ['name_khmer', 'name_english', 'tax_id_no', 'tin_no', 'incorporation_date', 'address', 'street', 'group', 'village', 'sangkat', 'district', 'province', 'muncipality', 'tel', 'email', 'industry', 'tax_duration'];
 			$possibleValsCount = count($possibleVals);
 			$uploadedHeaderCount = count(array_intersect($possibleVals, $headers));
 			if ($possibleValsCount != $uploadedHeaderCount) {
@@ -236,6 +237,7 @@ class ApplicationController extends Controller {
 				$customer->industry = $value['industry'];
 				$customer->incorporation_date = $value['incorporation_date'];
 				$customer->village = $value['village'];
+				$customer->tax_duration = $value['tax_duration'];
 				$result = $customer->save();
 				$counter++;
 
@@ -281,16 +283,21 @@ class ApplicationController extends Controller {
 		$customer->group = $request->group;
 		$customer->street = $request->street;
 		$customer->village = $request->village;
+		$customer->tax_duration = $request->tax_duration;
 		$customer->incorporation_date = $request->incorporation_date;
 
-		$customfields = $request->additional_field;
-		for ($i = 1; $i <= count($request->additional_field); $i++) {
-			if (($key = array_search(null, $customfields)) !== false) {
-				unset($customfields[$key]);
+		if($request->has('additional_field')){
+			$customfields = $request->additional_field;
+
+			for ($i = 1; $i <= count($request->additional_field); $i++) {
+				if (($key = array_search(null, $customfields)) !== false) {
+					unset($customfields[$key]);
+				}
 			}
+
+			$customer->additional_fields = $customfields;
 		}
 
-		$customer->additional_fields = $customfields;
 
 		$result = $customer->save();
 		return response()->json(['status' => 'success', 'customer' => $customer], 200);
@@ -556,7 +563,8 @@ class ApplicationController extends Controller {
 		$tax->title = $request->title;
 		$tax->description = $request->description;
 		$tax->duration = $request->duration;
-		$tax->type = $request->type;
+		$cust = TaxCustomers::whereCustomerId($request->customer_id)->first();
+		$tax->type = $cust->tax_duration;
 		$tax->supervisor_id = $request->supervisor_id;
 		$save = $tax->save();
 		if ($save) {
@@ -578,7 +586,7 @@ class ApplicationController extends Controller {
 		$tax->title = $request->title;
 		$tax->description = $request->description;
 		$tax->duration = $request->duration;
-		$tax->type = $request->type;
+		// $tax->type = $request->type;
 		$tax->supervisor_id = $request->supervisor_id;
 		$save = $tax->save();
 		if ($save) {
