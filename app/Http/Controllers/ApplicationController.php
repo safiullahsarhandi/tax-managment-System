@@ -160,6 +160,8 @@ class ApplicationController extends Controller {
 		$customer->incorporation_date = $request->incorporation_date;
 		$customer->village = $request->village;
 		$customer->additional_fields = $request->additional_field;
+		$customer->tax_duration = $request->tax_duration;
+
 		$result = $customer->save();
 		return response()->json(['status' => 'success', 'customers' => $customer]);
 	}
@@ -177,11 +179,10 @@ class ApplicationController extends Controller {
 					));
 				});
 			})->get();
-			// $reader = $reader;
-			// Getting all results
+
 			$customers = $reader;
 			$headers = $reader->getHeading();
-			$possibleVals = ['name_khmer', 'name_english', 'tax_id_no', 'tin_no', 'incorporation_date', 'address', 'street', 'group', 'village', 'sangkat', 'district', 'province', 'muncipality', 'tel', 'email', 'industry'];
+			$possibleVals = ['name_khmer', 'name_english', 'tax_id_no', 'tin_no', 'incorporation_date', 'address', 'street', 'group', 'village', 'sangkat', 'district', 'province', 'muncipality', 'tel', 'email', 'industry', 'tax_duration'];
 			$possibleValsCount = count($possibleVals);
 			$uploadedHeaderCount = count(array_intersect($possibleVals, $headers));
 			if ($possibleValsCount != $uploadedHeaderCount) {
@@ -236,6 +237,7 @@ class ApplicationController extends Controller {
 				$customer->industry = $value['industry'];
 				$customer->incorporation_date = $value['incorporation_date'];
 				$customer->village = $value['village'];
+				$customer->tax_duration = $value['tax_duration'];
 				$result = $customer->save();
 				$counter++;
 
@@ -281,16 +283,21 @@ class ApplicationController extends Controller {
 		$customer->group = $request->group;
 		$customer->street = $request->street;
 		$customer->village = $request->village;
+		$customer->tax_duration = $request->tax_duration;
 		$customer->incorporation_date = $request->incorporation_date;
 
-		$customfields = $request->additional_field;
-		for ($i = 1; $i <= count($request->additional_field); $i++) {
-			if (($key = array_search(null, $customfields)) !== false) {
-				unset($customfields[$key]);
+		if($request->has('additional_field')){
+			$customfields = $request->additional_field;
+
+			for ($i = 1; $i <= count($request->additional_field); $i++) {
+				if (($key = array_search(null, $customfields)) !== false) {
+					unset($customfields[$key]);
+				}
 			}
+
+			$customer->additional_fields = $customfields;
 		}
 
-		$customer->additional_fields = $customfields;
 
 		$result = $customer->save();
 		return response()->json(['status' => 'success', 'customer' => $customer], 200);
@@ -378,12 +385,21 @@ class ApplicationController extends Controller {
 		$admins = Admin::latest('id')->get();
 		return response()->json(compact('admins'));
 	}
+
+
 	public function get_member_detail($id) {
-		$member = Admin::with('taxes.tax.supervisor')->withCount(['taxes', 'taxes as active_taxes' => function ($q) {
+		$member = Admin::with(['taxes'=> function($taxes){
+			$taxes->with(['tax'=>function($tax){
+				$tax->with(['supervisor', 'customer']);
+			}]);
+		}])->withCount(['taxes', 'taxes as active_taxes' => function ($q) {
 			$q->where('status', 1);
 		}])->where('manager_id', $id)->first();
 		return response()->json(compact('member'));
 	}
+
+
+	
 	public function add_admin(Request $request) {
 		if (Admin::where('email', $request->email)->exists()) {
 			return response()->json(['status' => 'false', 'msg' => 'account with this email already exists'], 200);
@@ -547,7 +563,8 @@ class ApplicationController extends Controller {
 		$tax->title = $request->title;
 		$tax->description = $request->description;
 		$tax->duration = $request->duration;
-		$tax->type = $request->type;
+		$cust = TaxCustomers::whereCustomerId($request->customer_id)->first();
+		$tax->type = $cust->tax_duration;
 		$tax->supervisor_id = $request->supervisor_id;
 		$save = $tax->save();
 		if ($save) {
@@ -569,7 +586,7 @@ class ApplicationController extends Controller {
 		$tax->title = $request->title;
 		$tax->description = $request->description;
 		$tax->duration = $request->duration;
-		$tax->type = $request->type;
+		// $tax->type = $request->type;
 		$tax->supervisor_id = $request->supervisor_id;
 		$save = $tax->save();
 		if ($save) {
@@ -639,6 +656,13 @@ class ApplicationController extends Controller {
 		}
 
 		return response()->json(compact('team'));
+	}
+
+	public function get_edittax(Request $request) {
+		$tax = Tax::with('supervisor', 'officers')->withCount('officers', 'sales', 'purchases', 'payrolls')->where('tax_id', $request->id)->first();
+
+
+		return response()->json(compact('tax'));
 	}
 
 	public function get_customer_profile(Request $request) {
@@ -1319,5 +1343,31 @@ class ApplicationController extends Controller {
 		} else {
 			return response()->json(['status' => false, 'msg' => 'all sales, purchases payrolls need to be approved first before making completed ', 'tax' => $tax]);
 		}
+	}
+
+	public function change_password(Request $request){
+
+		$id = $request->id;
+		$current_password = $request->current_password;
+		$new_password = $request->new_password;
+		$confirm_password = $request->confirm_password;
+
+		if($new_password != $confirm_password){
+			return response()->json(['status' => false, 'msg' => 'Confirm password mis-match']);
+		}
+
+		$getUser = Supervisor::where('manager_id', $id)->first();
+
+		if(!$check=Hash::check($current_password, $getUser->password)){
+			return response()->json(['status' => false, 'msg' => 'invalid current password']);
+		}else{
+
+			$getUser->password = bcrypt($new_password);
+			$getUser->save();
+			return response()->json(['status' => true, 'msg' => 'Password changed successfully']);
+
+		}
+
+
 	}
 }

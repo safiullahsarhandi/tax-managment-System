@@ -24,4 +24,8 @@ class Tax extends Model {
 	public function payrolls() {
 		return $this->hasMany(Payrolls::class, 'tax_id', 'tax_id');
 	}
+	public function customer()
+	{
+	    return $this->belongsTo(TaxCustomers::class, 'customer_id', 'customer_id');
+	}
 }

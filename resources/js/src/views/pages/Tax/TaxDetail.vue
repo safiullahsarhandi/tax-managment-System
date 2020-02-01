@@ -269,7 +269,7 @@ export default {
             update: 'taxes/editTax',
         }),
         editTax() {
-        	console.log(this.tax);
+        	
             this.editTaxManagmentModal = true;
             this.title = this.tax.title;
             this.duration = this.tax.duration;
