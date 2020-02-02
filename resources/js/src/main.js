@@ -41,7 +41,7 @@ Vue.use(VueHammer)
 import 'prismjs'
 // import 'prismjs/themes/prism-tomorrow.css'
 
-router.beforeEach((to, from, next) => {
+/*router.beforeEach((to, from, next) => {
     if (document.querySelector('#page-click-loader') != null) {
 
         Vue.prototype.$vs.loading({
@@ -52,6 +52,9 @@ router.beforeEach((to, from, next) => {
         });
         document.querySelector('#page-click-loader').style.display = 'block';
     }
+    if(localStorage.getItem('admin') == null){
+      next();
+    }else{
     if (to.meta.requiresAuth) {
         if (typeof store.getters.userType == 'undefined') {
 
@@ -75,9 +78,54 @@ router.beforeEach((to, from, next) => {
             }
         }
     } else {
-        next();
+        next({path: '/pages/error-404'});
     }
-})
+  }
+})*/
+
+router.beforeEach((to, from, next) => {
+  if (document.querySelector('#page-click-loader') != null) {
+
+        Vue.prototype.$vs.loading({
+            background: 'transparent',
+            container: "#page-click-loader",
+            scale: 1,
+            type: 'point',
+        });
+        document.querySelector('#page-click-loader').style.display = 'block';
+    }
+    
+    if (to.meta.requiresAuth) {
+
+        if (!localStorage.getItem('admin')) {
+            next({path: '/'})
+        } else {
+          if(typeof store.getters.userType == 'undefined'){
+
+
+          store.dispatch('getLoginUser').then(res=>{
+          if(to.meta.requiresAdmin == true || store.getters.userType == 'Admin'){
+            next();
+
+            }else{
+            next({path: '/pages/error-404'})
+
+            }
+          });
+          }else{
+            if(to.meta.requiresAdmin == true || store.getters.userType == 'Admin'){
+            next();
+
+            }else{
+            next({path: '/pages/error-404'})
+
+            }
+          }
+        }
+    } else {
+        next();
+        }
+   })     
 router.afterEach(() => {
     setTimeout(function() {
         Vue.prototype.$vs.loading.close('#page-click-loader > .con-vs-loading');

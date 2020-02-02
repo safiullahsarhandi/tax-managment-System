@@ -1,1 +1,1898 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[7],{146:function(t,s,e){"use strict";e.r(s);var a=e(9),n=e(10),i=e(1);function r(t,s){var e=Object.keys(t);if(Object.getOwnPropertySymbols){var a=Object.getOwnPropertySymbols(t);s&&(a=a.filter((function(s){return Object.getOwnPropertyDescriptor(t,s).enumerable}))),e.push.apply(e,a)}return e}function o(t){for(var s=1;s<arguments.length;s++){var e=null!=arguments[s]?arguments[s]:{};s%2?r(e,!0).forEach((function(s){c(t,s,e[s])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(e)):r(e).forEach((function(s){Object.defineProperty(t,s,Object.getOwnPropertyDescriptor(e,s))}))}return t}function c(t,s,e){return s in t?Object.defineProperty(t,s,{value:e,enumerable:!0,configurable:!0,writable:!0}):t[s]=e,t}var l={components:{TheCustomizer:a.a,Slide:n.Slide},data:function(){return{tax_id:"",openComments:!1}},created:function(){this.tax_id=this.$store.state.rootUrl.split("/")[2],this.getCustomer(localStorage.getItem("customer")),this.getSale(this.$route.params.id),this.$store.dispatch("getAverageRate")},computed:o({},Object(i.d)("sales",["sale"]),{},Object(i.d)("customers",["customer"]),{userType:function(){return this.$store.getters.userType},averageRate:function(){return this.$store.state.averageRate},non_taxable_sales:function(){return this.sale.non_taxable_sales*this.averageRate},value_of_exports:function(){return this.sale.vat*this.averageRate},person_vat:function(){return parseFloat(.1*this.sale.taxable_person_sales).toFixed(2)},person_taxable:function(){return parseFloat(this.sale.taxable_person_sales*this.averageRate)},person_taxable_vat:function(){return parseFloat(.1*this.person_taxable).toFixed(2)},customer_vat:function(){return parseFloat(.1*this.sale.cust_sales).toFixed(2)},customer_taxable:function(){return parseFloat(this.sale.cust_sales*this.averageRate)},customer_taxable_vat:function(){return parseFloat(.1*this.customer_taxable).toFixed(2)}}),methods:o({handleToggleDrawer:function(){this.$refs.commentsView.active=!this.$refs.commentsView.active}},Object(i.b)({getSale:"sales/getSale",getCustomer:"customers/getCustomer",statusChange:"taxes/statusUpdateSPP",statusChangeManagment:"taxes/statusChangeManagment"}),{statusUpdate:function(t,s){var e=this,a={id:t,tax_id:this.tax_id,notify:this.$vs.notify,type:"sale"};this.statusChange(a).then((function(t){1!=t.data.status&&("undefined"==t.data.response?e.sale.officer_confirmed=s:e.sale.officer_confirmed=t.data.response)}))},changeManagementStatus:function(t,s,e){var a={id:s,status:t,by:e,tax_id:this.tax_id,notify:this.$vs.notify,tax_type:"sale"};this.statusChangeManagment(a).then((function(t){}))}})},v=(e(79),e(2)),m=Object(v.a)(l,(function(){var t=this,s=t.$createElement,e=t._self._c||s;return e("div",[e("vs-row",[e("vs-col",{attrs:{"vs-lg":"9","vs-md":"9","vs-sm":"12"}},[e("vx-card",{attrs:{title:"Sales Detail"}},[e("vs-row",[e("vs-col",{staticClass:"mt-5",attrs:{"vs-lg":"4","vs-md":"4","vs-sm":"12"}},[e("h6",[t._v("Client TIN:")]),t._v(" "),e("p",[t._v(t._s(t.customer.tin_no))])]),t._v(" "),e("vs-col",{staticClass:"mt-5",attrs:{"vs-lg":"4","vs-md":"4","vs-sm":"12"}},[e("h6",[t._v("Client Name:")]),t._v(" "),e("p",[t._v(t._s(t.customer.name_english))])]),t._v(" "),e("vs-col",{staticClass:"mt-5",attrs:{"vs-lg":"4","vs-md":"4","vs-sm":"12"}},[e("h6",[t._v("Account Code:")]),t._v(" "),e("p",[t._v(t._s(t.sale.account_code))])]),t._v(" "),e("vs-col",{staticClass:"mt-5",attrs:{"vs-lg":"4","vs-md":"4","vs-sm":"12"}},[e("h6",[t._v("Account Description:")]),t._v(" "),e("p",[t._v(t._s(t.sale.account_description))])]),t._v(" "),e("vs-col",{staticClass:"mt-5",attrs:{"vs-lg":"4","vs-md":"4","vs-sm":"12"}},[e("h6",[t._v("Accounting Reference:")]),t._v(" "),e("p",[t._v(t._s(t.sale.accounting_reference))])]),t._v(" "),e("vs-col",{staticClass:"mt-5",attrs:{"vs-lg":"4","vs-md":"4","vs-sm":"12"}},[e("h6",[t._v("Signature Date:")]),t._v(" "),e("p",[t._v(t._s(t.sale.signature_date))])]),t._v(" "),e("vs-col",{staticClass:"mt-5",attrs:{"vs-lg":"4","vs-md":"4","vs-sm":"12"}},[e("h6",[t._v("Branch Name:")]),t._v(" "),e("p",[t._v(t._s(t.sale.branch_name))])]),t._v(" "),e("vs-col",{staticClass:"mt-5",attrs:{"vs-lg":"4","vs-md":"4","vs-sm":"12"}},[e("h6",[t._v("Tax Period:")]),t._v(" "),e("p",[t._v(t._s(t.sale.tax_period))])]),t._v(" "),e("vs-col",{staticClass:"mt-5",attrs:{"vs-lg":"4","vs-md":"4","vs-sm":"12"}},[e("h6",[t._v("Invoice Date:")]),t._v(" "),e("p",[t._v(t._s(t.sale.invoice_date))])]),t._v(" "),e("vs-col",{staticClass:"mt-5",attrs:{"vs-lg":"4","vs-md":"4","vs-sm":"12"}},[e("h6",[t._v("Invoice Number:")]),t._v(" "),e("p",[t._v(t._s(t.sale.invoice_num))])]),t._v(" "),e("vs-col",{staticClass:"mt-5",attrs:{"vs-lg":"4","vs-md":"4","vs-sm":"12"}},[e("h6",[t._v("Description:")]),t._v(" "),e("p",[t._v(t._s(t.sale.description))])]),t._v(" "),e("vs-col",{staticClass:"mt-5",attrs:{"vs-lg":"4","vs-md":"4","vs-sm":"12"}},[e("h6",[t._v("Quantity:")]),t._v(" "),e("p",[t._v(t._s(t.sale.quantity))])])],1)],1),t._v(" "),e("vx-card",{staticClass:"mt-base",attrs:{title:"Sales Summary"}},[e("vs-row",[e("vs-col",{staticClass:"mt-5",attrs:{"vs-lg":"6","vs-md":"6","vs-sm":"12"}},[e("h6",[t._v("Non Taxable Sale:")]),t._v(" "),e("p",[t._v(t._s(t.customer.non_taxable_sales||"NA"))])]),t._v(" "),e("vs-col",{staticClass:"mt-5",attrs:{"vs-lg":"6","vs-md":"6","vs-sm":"12"}},[e("h6",[t._v("Non taxable sale x Average rate:")]),t._v(" "),e("p",[t._v(t._s(t.non_taxable_sales))])]),t._v(" "),e("vs-col",{staticClass:"mt-5",attrs:{"vs-lg":"6","vs-md":"6","vs-sm":"12"}},[e("h6",[t._v("Value Of Exports:")]),t._v(" "),e("p",[t._v(t._s(t.sale.vat||"NA"))])]),t._v(" "),e("vs-col",{staticClass:"mt-5",attrs:{"vs-lg":"6","vs-md":"6","vs-sm":"12"}},[e("h6",[t._v("Value Of Exports:")]),t._v(" "),e("p",[t._v(t._s(t.value_of_exports))])]),t._v(" "),e("vs-divider",{attrs:{position:"left"}},[e("h5",[t._v("Sales to Taxable Persons")])]),t._v(" "),e("vs-col",{staticClass:"mt-5",attrs:{"vs-lg":"6","vs-md":"6","vs-sm":"12"}},[e("h6",[t._v("Taxable Value:")]),t._v(" "),e("p",[t._v(t._s(t.sale.taxable_person_sales))])]),t._v(" "),e("vs-col",{staticClass:"mt-5",attrs:{"vs-lg":"6","vs-md":"6","vs-sm":"12"}},[e("h6",[t._v("VAT:")]),t._v(" "),e("p",[t._v(t._s(t.person_vat))])]),t._v(" "),e("vs-col",{staticClass:"mt-5",attrs:{"vs-lg":"6","vs-md":"6","vs-sm":"12"}},[e("h6",[t._v("Taxable Value x Average Rate:")]),t._v(" "),e("p",[t._v(t._s(t.person_taxable))])]),t._v(" "),e("vs-col",{staticClass:"mt-5",attrs:{"vs-lg":"6","vs-md":"6","vs-sm":"12"}},[e("h6",[t._v("VAT:")]),t._v(" "),e("p",[t._v(t._s(t.person_taxable_vat))])]),t._v(" "),e("vs-divider",{attrs:{position:"left"}},[e("h5",[t._v("Sales to Customers")])]),t._v(" "),e("vs-col",{staticClass:"mt-5",attrs:{"vs-lg":"12","vs-md":"12","vs-sm":"12"}}),t._v(" "),e("vs-col",{staticClass:"mt-5",attrs:{"vs-lg":"6","vs-md":"6","vs-sm":"12"}},[e("h6",[t._v("Taxable Value:")]),t._v(" "),e("p",[t._v(t._s(t.sale.cust_sales))])]),t._v(" "),e("vs-col",{staticClass:"mt-5",attrs:{"vs-lg":"6","vs-md":"6","vs-sm":"12"}},[e("h6",[t._v("VAT:")]),t._v(" "),e("p",[t._v(t._s(t.customer_vat))])]),t._v(" "),e("vs-col",{staticClass:"mt-5",attrs:{"vs-lg":"6","vs-md":"6","vs-sm":"12"}},[e("h6",[t._v("Taxable Value x Average Rate:")]),t._v(" "),e("p",[t._v(t._s(t.customer_taxable))])]),t._v(" "),e("vs-col",{staticClass:"mt-5",attrs:{"vs-lg":"6","vs-md":"6","vs-sm":"12"}},[e("h6",[t._v("VAT:")]),t._v(" "),e("p",[t._v(t._s(t.customer_taxable_vat))])]),t._v(" "),e("vs-divider",{attrs:{position:"center"}},[e("h5",[t._v("Total Taxable Value:")])]),t._v(" "),e("vs-col",{staticClass:"mt-5 text-center",attrs:{"vs-lg":"12","vs-md":"12","vs-sm":"12"}},[e("p",[t._v(t._s(t.customer_taxable_vat))])])],1)],1)],1),t._v(" "),e("vs-col",{attrs:{"vs-lg":"3","vs-md":"3","vs-xl":"3","vs-sm":"12"}},[e("vx-card",{attrs:{title:"Actions"}},[e("vs-list",[e("vs-list-item",{attrs:{title:"Edit Sale"}},[e("vs-button",{attrs:{to:"/sale-update/"+t.$route.params.id,"icon-pack":"feather",size:"small",icon:"icon-edit"}})],1),t._v(" "),["Admin"==t.userType?e("vs-list-item",{attrs:{title:"Status"}},[e("vs-button",{attrs:{"icon-pack":"feather",size:"small",icon:"icon-check-circle"},on:{click:function(s){return t.changeManagementStatus("1",t.sale.id,"admin")}}}),t._v(" "),e("vs-button",{attrs:{"icon-pack":"feather",size:"small",icon:"icon-x-circle"},on:{click:function(s){return t.changeManagementStatus("0",t.sale.id,"admin")}}})],1):t._e(),t._v(" "),"Supervisor"==t.userType?e("vs-list-item",{attrs:{title:"Status"}},[e("vs-button",{attrs:{"icon-pack":"feather",size:"small",icon:"icon-check-circle"},on:{click:function(s){return t.changeManagementStatus("1",t.sale.id,"supervisor")}}}),t._v(" "),e("vs-button",{attrs:{"icon-pack":"feather",size:"small",icon:"icon-x-circle"},on:{click:function(s){return t.changeManagementStatus("0",t.sale.id,"supervisor")}}})],1):t._e(),t._v(" "),"Officer"==t.userType?e("vs-list-item",{attrs:{title:"Status"}},[e("vs-switch",{attrs:{"icon-pack":"feather"},on:{click:function(s){return t.statusUpdate(t.sale.sale_id,t.sale.officer_confirmed)}},model:{value:t.sale.officer_confirmed,callback:function(s){t.$set(t.sale,"officer_confirmed",s)},expression:"sale.officer_confirmed"}})],1):t._e()],t._v(" "),e("vs-list-item",{attrs:{title:"View Comments"}},[e("vs-button",{attrs:{"icon-pack":"feather",size:"small",icon:"icon-maximize-2"},on:{click:t.handleToggleDrawer}})],1)],2)],1)],1)],1),t._v(" "),e("the-customizer",{ref:"commentsView",attrs:{object_id:t.$route.params.id,type:"Sale","comments-url":"get-comments"}})],1)}),[],!1,null,null,null);s.default=m.exports},16:function(t,s,e){var a=e(50);"string"==typeof a&&(a=[[t.i,a,""]]);var n={hmr:!0,transform:void 0,insertInto:void 0};e(5)(a,n);a.locals&&(t.exports=a.locals)},29:function(t,s,e){var a=e(80);"string"==typeof a&&(a=[[t.i,a,""]]);var n={hmr:!0,transform:void 0,insertInto:void 0};e(5)(a,n);a.locals&&(t.exports=a.locals)},49:function(t,s,e){"use strict";var a=e(16);e.n(a).a},50:function(t,s,e){(t.exports=e(4)(!1)).push([t.i,"#theme-customizer .vs-sidebar {\n  position: fixed;\n  z-index: 52000;\n  width: 400px;\n  max-width: 90vw;\n  box-shadow: 0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08);\n}\n.customizer-btn {\n  position: fixed;\n  top: 50%;\n  right: 0;\n  border-top-right-radius: 0;\n  border-bottom-right-radius: 0;\n  z-index: 50000;\n}\n.customizer-btn .vs-icon {\n  -webkit-animation: spin 1.5s linear infinite;\n          animation: spin 1.5s linear infinite;\n}\n.scroll-area--customizer {\n  height: calc(88% - 5rem);\n}",""])},79:function(t,s,e){"use strict";var a=e(29);e.n(a).a},80:function(t,s,e){(t.exports=e(4)(!1)).push([t.i,".bm-menu {\n  z-index: 99999;\n}\n.bm-burger-button {\n  position: fixed;\n  width: 36px;\n  height: 30px;\n  left: 36px;\n  top: 36px;\n  cursor: pointer;\n}\n.bm-burger-bars {\n  background-color: #373a47;\n}\n.line-style {\n  position: absolute;\n  height: 20%;\n  left: 0;\n  right: 0;\n}\n.cross-style {\n  position: absolute;\n  top: 12px;\n  right: 2px !important;\n  cursor: pointer;\n}\n.bm-cross {\n  background: #bdc3c7;\n}\n.bm-cross-button {\n  height: 24px;\n  width: 24px;\n}\n.bm-menu {\n  height: 100%;\n  /* 100% Full-height */\n  width: 0;\n  /* 0 width - change this with JavaScript */\n  position: fixed;\n  /* Stay in place */\n  top: 0;\n  left: 0;\n  background-color: #3f3f41;\n  /* Black*/\n  overflow-x: hidden;\n  /* Disable horizontal scroll */\n  padding-top: 60px;\n  /* Place content 60px from the top */\n  -webkit-transition: 0.5s;\n  transition: 0.5s;\n  /*0.5 second transition effect to slide in the sidenav*/\n}\n.bm-overlay {\n  background: rgba(0, 0, 0, 0.3);\n}\n.bm-item-list {\n  color: #b8b7ad;\n  margin-left: 10%;\n  font-size: 20px;\n}\n.bm-item-list > * {\n  display: -webkit-box;\n  display: flex;\n  text-decoration: none;\n  padding: 0.7em;\n}\n.bm-item-list > * > span {\n  margin-left: 10px;\n  font-weight: 700;\n  color: white;\n}",""])},9:function(t,s,e){"use strict";var a=e(8),n={props:{object_id:{type:String,required:!0},type:{type:String,required:!0},commentsUrl:{type:String,required:!0}},watch:{active:function(t,s){if(0==t)clearInterval(this.invterVal);else{var e=this;this.invterVal=setInterval((function(){var t={path:e.commentsUrl,type:e.type,object_id:e.object_id};e.$store.dispatch("getComments",t)}),2e3)}this.scrollToEnd()}},data:function(){return{invterVal:"",active:!1,textMsg:"",settings:{maxScrollbarLength:60,wheelSpeed:.6},chatMsg:[{senderImg:"avatar-s-2.png",msg:"Cake sesame snaps cupcake gingerbread",isSent:!1},{senderImg:"avatar-s-5.png",msg:"Apple pie pie jujubes chupa chups muffin",isSent:!0},{senderImg:"avatar-s-2.png",msg:"Chocolate cake",isSent:!1},{senderImg:"avatar-s-5.png",msg:"Donut sweet pie oat cake dragée fruitcake",isSent:!0},{senderImg:"avatar-s-2.png",msg:"Liquorice chocolate bar jelly beans icing",isSent:!1},{senderImg:"avatar-s-2.png",msg:"Liquorice chocolate bar jelly beans icing",isSent:!1},{senderImg:"avatar-s-2.png",msg:"Liquorice chocolate bar jelly beans icing",isSent:!1},{senderImg:"avatar-s-2.png",msg:"Liquorice chocolate bar jelly beans icing",isSent:!1},{senderImg:"avatar-s-2.png",msg:"Liquorice chocolate bar jelly beans icing",isSent:!1},{senderImg:"avatar-s-5.png",msg:"Pudding candy",isSent:!0},{senderImg:"avatar-s-5.png",msg:"Pudding candy",isSent:!0}]}},created:function(){var t={path:this.commentsUrl,type:this.type,object_id:this.object_id};this.$store.dispatch("getComments",t)},computed:{hideScrollToTopLocal:{get:function(){return this.hideScrollToTop},set:function(t){this.$emit("toggleHideScrollToTop",t)}},userType:function(){return this.$store.getters.userType},comments:function(){return this.$store.state.comments}},methods:{commentedBy:function(t){return localStorage.getItem("admin")==t},sendComment:function(t){var s={comment:this.textMsg,object_id:this.object_id,type:this.type,scrollToEnd:this.scrollToEnd,userType:this.userType,loginUser:localStorage.getItem("admin")};""!=this.textMsg.trim()&&(this.$store.dispatch("saveComment",s),this.textMsg="",this.scrollToEnd())},updatePrimaryColor:function(t){this.primaryColor=t,this.$vs.theme({primary:t})},scrollToEnd:function(){var t=this;setTimeout((function(){var s=t.$el.querySelector(".ps-container");s.scrollTop=s.scrollHeight,console.log(s.scrollHeight)}),0)}},components:{VuePerfectScrollbar:e.n(a).a}},i=(e(49),e(2)),r=Object(i.a)(n,(function(){var t=this,s=t.$createElement,e=t._self._c||s;return e("div",{attrs:{id:"theme-customizer"}},[e("vs-sidebar",{staticClass:"items-no-padding",attrs:{"hidden-background":"","position-right":"","click-not-close":""},model:{value:t.active,callback:function(s){t.active=s},expression:"active"}},[e("div",{staticClass:"h-full"},[e("div",{staticClass:"customizer-header mt-6 flex items-center justify-between px-6"},[e("div",[e("h4",[t._v("COMMENTS")]),t._v(" "),e("small",[t._v("Comments & Task Reviews")])]),t._v(" "),e("feather-icon",{staticClass:"cursor-pointer",attrs:{icon:"XIcon"},on:{click:function(s){s.stopPropagation(),t.active=!1}}})],1),t._v(" "),e("vs-divider",{staticClass:"mb-0"}),t._v(" "),e("VuePerfectScrollbar",{staticClass:"scroll-area--customizer pt-4 pb-6",attrs:{settings:t.settings}},[e("div",{staticClass:"px-6"},[e("ul",{ref:"chatLog"},t._l(t.comments,(function(s,a){return e("li",{key:a},[e("div",{staticClass:"flex items-start",class:{"flex-row-reverse":t.commentedBy(s.member_id),"mt-4":a}},[e("vs-avatar",{staticClass:"m-0 flex-shrink-0",class:t.commentedBy(s.member_id)?"ml-3":"mr-3",attrs:{text:s.member_info.full_name,size:"40px"}}),t._v(" "),e("div",{staticClass:"msg relative bg-white shadow-md py-3 px-4 rounded-lg max-w-md",class:{"chat-sent-msg bg-primary-gradient text-white":t.commentedBy(s.member_id),"border border-solid d-theme-border-grey-light":!t.commentedBy(s.member_id)}},[e("span",[t._v(t._s(s.comment))])])],1),t._v(" "),e("div",{staticClass:"p-0 text-right"},[t._v(t._s(s.member_info.full_name))]),t._v(" "),e("div",{staticClass:"p-0 text-right"},[t._v(t._s(s.created_at))])])})),0)])]),t._v(" "),e("div",{staticClass:"customizer-footer mt-6 flex items-center justify-between px-6"},[e("vs-input",{staticClass:"w-full",attrs:{placeholder:"Type Here"},on:{keydown:function(s){return!s.type.indexOf("key")&&t._k(s.keyCode,"enter",13,s.key,"Enter")?null:t.sendComment(s)}},model:{value:t.textMsg,callback:function(s){t.textMsg=s},expression:"textMsg"}})],1),t._v(" "),e("vs-divider",{staticClass:"mb-0"})],1)])],1)}),[],!1,null,null,null);s.a=r.exports}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[7],{
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Admins.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Admins.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  inject: ['generatePassword'],
+  data: function data() {
+    return {
+      addAdminModal: false,
+      editAdminModal: false,
+      first_name: "",
+      last_name: "",
+      email: "",
+      phone: "",
+      address: "",
+      state: "",
+      zip_code: "",
+      city: "",
+      gender: "male",
+      password: "",
+      edit_first_name: "",
+      edit_last_name: "",
+      edit_email: "",
+      edit_phone: "",
+      edit_address: "",
+      edit_state: "",
+      edit_zip_code: "",
+      edit_city: "",
+      edit_gender: "male",
+      edit_password: "",
+      edit_manager_id: '',
+      defaultRoll: 0,
+      selectedRoll: 0,
+      rolles: [{
+        value: 0,
+        label: 'Select Role',
+        selectedText: 'Select Role',
+        isSelected: false
+      }, {
+        value: 1,
+        label: 'Admin',
+        selectedText: 'Admin',
+        isSelected: false
+      }, {
+        value: 2,
+        label: 'Supervisor',
+        selectedText: 'Supervisor',
+        isSelected: false
+      }, {
+        value: 3,
+        label: 'Officer',
+        selectedText: 'Officer',
+        isSelected: false
+      }]
+    };
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('admins/', ['admins']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('admins/', ['findAdmin'])),
+  created: function created() {
+    this.getAdmins();
+  },
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
+    getAdmins: 'admins/getAdmins',
+    submit: 'admins/addAdmin',
+    update: 'admins/updateAdmin'
+  }), {
+    addAdmin: function addAdmin(e) {
+      var _this = this;
+
+      this.$validator.validateAll('addform').then(function (result) {
+        if (result) {
+          var fd = new FormData(_this.$refs.addAdminForm);
+          fd.append('gender', _this.gender);
+
+          _this.submit(fd).then(function (res) {
+            // console.log(res.data);
+            if (res.data.status == 'success') {
+              _this.password = _this.email = _this.first_name = _this.last_name = _this.zip_code = _this.city = _this.state = _this.address = _this.phone = '';
+              _this.gender = 'male';
+              _this.selectedRoll = 0;
+              e.target.reset();
+
+              _this.errors.clear();
+
+              _this.addAdminModal = false;
+
+              _this.getAdmins();
+
+              _this.$vs.notify({
+                color: 'danger',
+                position: 'right-top',
+                text: res.data.msg
+              });
+            } else {
+              _this.$vs.notify({
+                color: 'danger',
+                position: 'right-top',
+                text: res.data.msg
+              });
+            }
+          });
+        }
+      });
+    },
+    statusUpdate: function statusUpdate(id) {
+      var _this2 = this;
+
+      this.$vs.loading();
+      axios.post('status-update-admin', {
+        id: id
+      }).then(function (res) {
+        _this2.$vs.notify({
+          title: 'Updated!...',
+          text: res.data.msg,
+          color: 'success',
+          position: 'top-right'
+        });
+
+        _this2.$vs.loading.close();
+      });
+    },
+    editAdmin: function editAdmin(id) {
+      var admin = this.findAdmin(id); // console.log(admin)
+      // console.log(admin);
+      // console.log(admin);
+
+      this.edit_manager_id = admin.manager_id;
+      this.edit_first_name = admin.first_name;
+      this.edit_last_name = admin.last_name;
+      this.edit_email = admin.email;
+      this.edit_gender = admin.gender; // console.log(this.edit_gender)
+
+      this.edit_zip_code = admin.zip_code;
+      this.edit_address = admin.address;
+      this.edit_phone = admin.phone;
+      this.edit_state = admin.state;
+      this.edit_zip_code = admin.zip_code;
+      this.edit_city = admin.city;
+
+      if (admin.type == 'Admin') {
+        this.selectedRoll = 1;
+      }
+
+      if (admin.type == 'Supervisor') {
+        this.selectedRoll = 2;
+      }
+
+      if (admin.type == 'Officer') {
+        this.selectedRoll = 3;
+      }
+
+      this.editAdminModal = true;
+    },
+    updateAdmin: function updateAdmin(e) {
+      var _this3 = this;
+
+      this.$validator.validateAll('editform').then(function (result) {
+        if (result) {
+          _this3.$vs.loading();
+
+          var fd = new FormData(_this3.$refs.editAdminForm);
+          fd.append('gender', _this3.edit_gender);
+
+          _this3.update(fd).then(function (res) {
+            // console.log(res.data);
+            if (res.data.status == 'success') {
+              _this3.edit_email = _this3.edit_first_name = _this3.edit_last_name = _this3.edit_zip_code = _this3.edit_city = _this3.edit_state = _this3.edit_address = _this3.edit_phone = '';
+              _this3.edit_gender = 'male';
+              e.target.reset();
+
+              _this3.errors.clear();
+
+              _this3.editAdminModal = false;
+
+              _this3.$vs.notify({
+                title: 'Updated!...',
+                text: 'Admin record updated',
+                color: 'success',
+                position: 'top-right'
+              });
+
+              _this3.$vs.loading.close(); // this.getAdmins();
+
+            }
+          });
+        }
+      });
+    },
+    makePassword: function makePassword() {
+      this.password = this.generatePassword();
+    }
+  })
+});
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Admins.vue?vue&type=style&index=0&lang=css&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Admins.vue?vue&type=style&index=0&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".selectExample {\n  margin-top: 10px;\n}\n.con-select {\n  width: 100% !important;\n  clear: both;\n}\n.con-select .vs-select--input {\n  margin-top: 10px !important;\n}\r\n\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Admins.vue?vue&type=style&index=0&lang=css&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Admins.vue?vue&type=style&index=0&lang=css& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../node_modules/css-loader??ref--7-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Admins.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Admins.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Admins.vue?vue&type=template&id=51444659&":
+/*!**************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Admins.vue?vue&type=template&id=51444659& ***!
+  \**************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "vx-card",
+        { attrs: { title: "List of Team Members" } },
+        [
+          _c(
+            "template",
+            { slot: "actions" },
+            [
+              _c("vs-button", {
+                attrs: {
+                  type: "border",
+                  "icon-pack": "feather",
+                  icon: "icon-plus"
+                },
+                on: {
+                  click: function($event) {
+                    _vm.addAdminModal = true
+                  }
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "vs-table",
+            {
+              attrs: {
+                search: "",
+                pagination: "",
+                "max-items": "6",
+                data: _vm.admins
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "default",
+                  fn: function(ref) {
+                    var data = ref.data
+                    return _vm._l(data, function(tr, index) {
+                      return _c(
+                        "vs-tr",
+                        { key: index },
+                        [
+                          _c(
+                            "vs-td",
+                            {
+                              attrs: {
+                                data: tr.first_name + " " + tr.last_name
+                              }
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(tr.first_name) +
+                                  " " +
+                                  _vm._s(tr.last_name)
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("vs-td", { attrs: { data: tr.phone } }, [
+                            _vm._v(_vm._s(tr.phone))
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", { attrs: { data: tr.email } }, [
+                            _vm._v(_vm._s(tr.email))
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            {
+                              attrs: {
+                                data:
+                                  tr.address +
+                                  " " +
+                                  tr.state +
+                                  " " +
+                                  tr.city +
+                                  " " +
+                                  tr.zip_code
+                              }
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(tr.address) +
+                                  " " +
+                                  _vm._s(tr.state) +
+                                  " " +
+                                  _vm._s(tr.city) +
+                                  " " +
+                                  _vm._s(tr.zip_code)
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            {
+                              attrs: {
+                                data:
+                                  tr.type == 1
+                                    ? "Admin"
+                                    : tr.type == 2
+                                    ? "Supervisor"
+                                    : "Officer"
+                              }
+                            },
+                            [_vm._v(_vm._s(tr.type))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            { attrs: { data: tr.status } },
+                            [
+                              _c("vs-switch", {
+                                on: {
+                                  click: function($event) {
+                                    return _vm.statusUpdate(tr.manager_id)
+                                  }
+                                },
+                                model: {
+                                  value: tr.status,
+                                  callback: function($$v) {
+                                    _vm.$set(tr, "status", $$v)
+                                  },
+                                  expression: "tr.status"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            [
+                              _c("vs-button", {
+                                attrs: {
+                                  size: "small",
+                                  type: "border",
+                                  "icon-pack": "feather",
+                                  icon: "icon-edit-2"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.editAdmin(tr.id)
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("vs-button", {
+                                attrs: {
+                                  size: "small",
+                                  type: "border",
+                                  to: "/member-detail/" + tr.manager_id,
+                                  "icon-pack": "feather",
+                                  icon: "icon-maximize-2"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    })
+                  }
+                }
+              ])
+            },
+            [
+              _c(
+                "template",
+                { slot: "thead" },
+                [
+                  _c("vs-th", [_vm._v("Name")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Phone #")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Email")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Address")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Role")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Status")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Actions")])
+                ],
+                1
+              )
+            ],
+            2
+          )
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c(
+        "vs-popup",
+        {
+          attrs: { active: _vm.addAdminModal, title: "Add New Member" },
+          on: {
+            "update:active": function($event) {
+              _vm.addAdminModal = $event
+            }
+          }
+        },
+        [
+          _c(
+            "form",
+            {
+              ref: "addAdminForm",
+              attrs: { "data-vv-scope": "addform" },
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.addAdmin($event)
+                }
+              }
+            },
+            [
+              _c(
+                "vs-row",
+                [
+                  _c(
+                    "vs-col",
+                    { attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" } },
+                    [
+                      _c(
+                        "vx-input-group",
+                        [
+                          _c("vs-input", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
+                            ],
+                            attrs: {
+                              name: "first_name",
+                              "label-placeholder": "First Name",
+                              "data-vv-scope": "addform"
+                            },
+                            model: {
+                              value: _vm.first_name,
+                              callback: function($$v) {
+                                _vm.first_name = $$v
+                              },
+                              expression: "first_name"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has("first_name"),
+                                  expression: "errors.has('first_name')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(_vm.errors.first("addform.first_name"))
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vx-input-group",
+                        [
+                          _c("vs-input", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
+                            ],
+                            attrs: {
+                              name: "last_name",
+                              "label-placeholder": "Last Name",
+                              "data-vv-scope": "addform"
+                            },
+                            model: {
+                              value: _vm.last_name,
+                              callback: function($$v) {
+                                _vm.last_name = $$v
+                              },
+                              expression: "last_name"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has("last_name"),
+                                  expression: "errors.has('last_name')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(_vm.errors.first("addform.last_name"))
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vx-input-group",
+                        { staticClass: "mt-2" },
+                        [
+                          _c("vs-input", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
+                            ],
+                            attrs: {
+                              name: "phone",
+                              "label-placeholder": "Phone",
+                              "data-vv-scope": "addform"
+                            },
+                            model: {
+                              value: _vm.phone,
+                              callback: function($$v) {
+                                _vm.phone = $$v
+                              },
+                              expression: "phone"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has("phone"),
+                                  expression: "errors.has('phone')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [_vm._v(_vm._s(_vm.errors.first("addform.phone")))]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vx-input-group",
+                        { staticClass: "mt-2" },
+                        [
+                          _c("vs-input", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
+                            ],
+                            attrs: {
+                              name: "email",
+                              "label-placeholder": "Email",
+                              "data-vv-scope": "addform"
+                            },
+                            model: {
+                              value: _vm.email,
+                              callback: function($$v) {
+                                _vm.email = $$v
+                              },
+                              expression: "email"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has("email"),
+                                  expression: "errors.has('email')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [_vm._v(_vm._s(_vm.errors.first("addform.email")))]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vx-input-group",
+                        { staticClass: "mt-2" },
+                        [
+                          _c("vs-input", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
+                            ],
+                            attrs: {
+                              name: "password",
+                              "label-placeholder": "Password",
+                              "data-vv-scope": "addform"
+                            },
+                            model: {
+                              value: _vm.password,
+                              callback: function($$v) {
+                                _vm.password = $$v
+                              },
+                              expression: "password"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has("password"),
+                                  expression: "errors.has('password')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(_vm.errors.first("addform.password"))
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-button",
+                            {
+                              staticClass: "mt-2",
+                              attrs: { button: "button", type: "border" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.makePassword()
+                                }
+                              }
+                            },
+                            [_vm._v("Generate Password")]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-col",
+                    { attrs: { "vs-lg": "6", "vs-md": "12", "vs-sm": "12" } },
+                    [
+                      _c(
+                        "vx-input-group",
+                        [
+                          _c(
+                            "vs-select",
+                            {
+                              directives: [
+                                {
+                                  name: "validate",
+                                  rawName: "v-validate",
+                                  value: "required|excluded:0",
+                                  expression: "'required|excluded:0'"
+                                }
+                              ],
+                              staticClass: "selectExample",
+                              attrs: {
+                                name: "roll",
+                                "data-vv-scope": "addform"
+                              },
+                              model: {
+                                value: _vm.defaultRoll,
+                                callback: function($$v) {
+                                  _vm.defaultRoll = $$v
+                                },
+                                expression: "defaultRoll"
+                              }
+                            },
+                            _vm._l(_vm.rolles, function(item, index) {
+                              return _c("vs-select-item", {
+                                key: index,
+                                attrs: {
+                                  "is-selected": item.isSelected,
+                                  value: item.value,
+                                  text: item.isSelected
+                                    ? item.selectedText
+                                    : item.label
+                                },
+                                on: {
+                                  "update:isSelected": function($event) {
+                                    return _vm.$set(item, "isSelected", $event)
+                                  },
+                                  "update:is-selected": function($event) {
+                                    return _vm.$set(item, "isSelected", $event)
+                                  }
+                                }
+                              })
+                            }),
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has("roll"),
+                                  expression: "errors.has('roll')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [_vm._v(_vm._s(_vm.errors.first("addform.roll")))]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vx-input-group",
+                        { staticClass: "mt-6" },
+                        [
+                          _c(
+                            "vs-radio",
+                            {
+                              attrs: {
+                                "vs-name": "gender",
+                                "vs-value": "male"
+                              },
+                              model: {
+                                value: _vm.gender,
+                                callback: function($$v) {
+                                  _vm.gender = $$v
+                                },
+                                expression: "gender"
+                              }
+                            },
+                            [_vm._v("Male")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-radio",
+                            {
+                              attrs: {
+                                "vs-name": "gender",
+                                "vs-value": "female"
+                              },
+                              model: {
+                                value: _vm.gender,
+                                callback: function($$v) {
+                                  _vm.gender = $$v
+                                },
+                                expression: "gender"
+                              }
+                            },
+                            [_vm._v("Female")]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vx-input-group",
+                        { staticClass: "mt-2" },
+                        [
+                          _c("vs-input", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
+                            ],
+                            attrs: {
+                              name: "address",
+                              "label-placeholder": "Address",
+                              "data-vv-scope": "addform"
+                            },
+                            model: {
+                              value: _vm.address,
+                              callback: function($$v) {
+                                _vm.address = $$v
+                              },
+                              expression: "address"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has("address"),
+                                  expression: "errors.has('address')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(_vm.errors.first("addform.address"))
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vx-input-group",
+                        { staticClass: "mt-2" },
+                        [
+                          _c("vs-input", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
+                            ],
+                            attrs: {
+                              name: "state",
+                              "label-placeholder": "State",
+                              "data-vv-scope": "addform"
+                            },
+                            model: {
+                              value: _vm.state,
+                              callback: function($$v) {
+                                _vm.state = $$v
+                              },
+                              expression: "state"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has("state"),
+                                  expression: "errors.has('state')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [_vm._v(_vm._s(_vm.errors.first("addform.state")))]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vx-input-group",
+                        { staticClass: "mt-2" },
+                        [
+                          _c("vs-input", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
+                            ],
+                            attrs: {
+                              name: "city",
+                              "label-placeholder": "City",
+                              "data-vv-scope": "addform"
+                            },
+                            model: {
+                              value: _vm.city,
+                              callback: function($$v) {
+                                _vm.city = $$v
+                              },
+                              expression: "city"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has("city"),
+                                  expression: "errors.has('city')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [_vm._v(_vm._s(_vm.errors.first("addform.city")))]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vx-input-group",
+                        { staticClass: "mt-2" },
+                        [
+                          _c("vs-input", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
+                            ],
+                            attrs: {
+                              name: "zip_code",
+                              "label-placeholder": "Zip Code",
+                              "data-vv-scope": "addform"
+                            },
+                            model: {
+                              value: _vm.zip_code,
+                              callback: function($$v) {
+                                _vm.zip_code = $$v
+                              },
+                              expression: "zip_code"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has("zip_code"),
+                                  expression: "errors.has('zip_code')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(_vm.errors.first("addform.zip_code"))
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-col",
+                    { attrs: { "vs-lg": "12", "vs-md": "12", "vs-sm": "12" } },
+                    [
+                      _c("br"),
+                      _vm._v(" "),
+                      _c(
+                        "vs-button",
+                        {
+                          staticClass: "float-right",
+                          attrs: { button: "submit", type: "gradient" }
+                        },
+                        [_vm._v("Add Member")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "vs-popup",
+        {
+          attrs: { active: _vm.editAdminModal, title: "Update Member" },
+          on: {
+            "update:active": function($event) {
+              _vm.editAdminModal = $event
+            }
+          }
+        },
+        [
+          _c(
+            "form",
+            {
+              ref: "editAdminForm",
+              attrs: { autocomplete: "off", "data-vv-scope": "editform" },
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.updateAdmin($event)
+                }
+              }
+            },
+            [
+              _c(
+                "vs-row",
+                [
+                  _c(
+                    "vs-col",
+                    { attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" } },
+                    [
+                      _c(
+                        "vx-input-group",
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.edit_manager_id,
+                                expression: "edit_manager_id"
+                              }
+                            ],
+                            attrs: {
+                              type: "hidden",
+                              name: "id",
+                              "data-vv-scope": "editform"
+                            },
+                            domProps: { value: _vm.edit_manager_id },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.edit_manager_id = $event.target.value
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("vs-input", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
+                            ],
+                            attrs: {
+                              name: "first_name",
+                              "label-placeholder": "First Name",
+                              "data-vv-scope": "editform"
+                            },
+                            model: {
+                              value: _vm.edit_first_name,
+                              callback: function($$v) {
+                                _vm.edit_first_name = $$v
+                              },
+                              expression: "edit_first_name"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has("first_name"),
+                                  expression: "errors.has('first_name')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [_vm._v(_vm._s(_vm.errors.first("first_name")))]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vx-input-group",
+                        [
+                          _c("vs-input", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
+                            ],
+                            attrs: {
+                              name: "last_name",
+                              "label-placeholder": "Last Name",
+                              "data-vv-scope": "editform"
+                            },
+                            model: {
+                              value: _vm.edit_last_name,
+                              callback: function($$v) {
+                                _vm.edit_last_name = $$v
+                              },
+                              expression: "edit_last_name"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has("last_name"),
+                                  expression: "errors.has('last_name')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [_vm._v(_vm._s(_vm.errors.first("last_name")))]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vx-input-group",
+                        { staticClass: "mt-2" },
+                        [
+                          _c("vs-input", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
+                            ],
+                            attrs: {
+                              name: "phone",
+                              "label-placeholder": "Phone",
+                              "data-vv-scope": "editform"
+                            },
+                            model: {
+                              value: _vm.edit_phone,
+                              callback: function($$v) {
+                                _vm.edit_phone = $$v
+                              },
+                              expression: "edit_phone"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has("phone"),
+                                  expression: "errors.has('phone')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [_vm._v(_vm._s(_vm.errors.first("phone")))]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vx-input-group",
+                        { staticClass: "mt-2" },
+                        [
+                          _c("vs-input", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
+                            ],
+                            attrs: {
+                              readonly: "",
+                              name: "email",
+                              "label-placeholder": "Email",
+                              "ata-vv-scope": "editform",
+                              "data-vv-scope": "editform"
+                            },
+                            model: {
+                              value: _vm.edit_email,
+                              callback: function($$v) {
+                                _vm.edit_email = $$v
+                              },
+                              expression: "edit_email"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has("email"),
+                                  expression: "errors.has('email')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [_vm._v(_vm._s(_vm.errors.first("email")))]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vx-input-group",
+                        { staticClass: "mt-2" },
+                        [
+                          _c("vs-input", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
+                            ],
+                            attrs: {
+                              name: "address",
+                              "label-placeholder": "Address",
+                              "data-vv-scope": "editform"
+                            },
+                            model: {
+                              value: _vm.edit_address,
+                              callback: function($$v) {
+                                _vm.edit_address = $$v
+                              },
+                              expression: "edit_address"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has("address"),
+                                  expression: "errors.has('address')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [_vm._v(_vm._s(_vm.errors.first("address")))]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-col",
+                    { attrs: { "vs-lg": "6", "vs-md": "12", "vs-sm": "12" } },
+                    [
+                      _c(
+                        "vs-select",
+                        {
+                          staticClass: "selectExample mt-2",
+                          model: {
+                            value: _vm.selectedRoll,
+                            callback: function($$v) {
+                              _vm.selectedRoll = $$v
+                            },
+                            expression: "selectedRoll"
+                          }
+                        },
+                        _vm._l(_vm.rolles, function(item, index) {
+                          return _c("vs-select-item", {
+                            key: index,
+                            attrs: {
+                              "is-selected": item.isSelected,
+                              value: item.value,
+                              text: item.isSelected
+                                ? item.selectedText
+                                : item.label
+                            },
+                            on: {
+                              "update:isSelected": function($event) {
+                                return _vm.$set(item, "isSelected", $event)
+                              },
+                              "update:is-selected": function($event) {
+                                return _vm.$set(item, "isSelected", $event)
+                              }
+                            }
+                          })
+                        }),
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vx-input-group",
+                        { staticClass: "mt-6" },
+                        [
+                          _c(
+                            "vs-radio",
+                            {
+                              attrs: {
+                                name: "edit_gender",
+                                "vs-value": "male"
+                              },
+                              model: {
+                                value: _vm.edit_gender,
+                                callback: function($$v) {
+                                  _vm.edit_gender = $$v
+                                },
+                                expression: "edit_gender"
+                              }
+                            },
+                            [_vm._v("Male")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-radio",
+                            {
+                              attrs: {
+                                name: "edit_gender",
+                                "vs-value": "female"
+                              },
+                              model: {
+                                value: _vm.edit_gender,
+                                callback: function($$v) {
+                                  _vm.edit_gender = $$v
+                                },
+                                expression: "edit_gender"
+                              }
+                            },
+                            [_vm._v("Female")]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vx-input-group",
+                        { staticClass: "mt-5" },
+                        [
+                          _c("vs-input", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
+                            ],
+                            attrs: {
+                              name: "state",
+                              "label-placeholder": "State",
+                              "data-vv-scope": "editform"
+                            },
+                            model: {
+                              value: _vm.edit_state,
+                              callback: function($$v) {
+                                _vm.edit_state = $$v
+                              },
+                              expression: "edit_state"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has("state"),
+                                  expression: "errors.has('state')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [_vm._v(_vm._s(_vm.errors.first("state")))]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vx-input-group",
+                        { staticClass: "mt-2" },
+                        [
+                          _c("vs-input", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
+                            ],
+                            attrs: {
+                              name: "city",
+                              "label-placeholder": "City",
+                              "data-vv-scope": "editform"
+                            },
+                            model: {
+                              value: _vm.edit_city,
+                              callback: function($$v) {
+                                _vm.edit_city = $$v
+                              },
+                              expression: "edit_city"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has("city"),
+                                  expression: "errors.has('city')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [_vm._v(_vm._s(_vm.errors.first("city")))]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vx-input-group",
+                        { staticClass: "mt-2" },
+                        [
+                          _c("vs-input", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
+                            ],
+                            attrs: {
+                              name: "zip_code",
+                              "label-placeholder": "Zip Code",
+                              "data-vv-scope": "editform"
+                            },
+                            model: {
+                              value: _vm.edit_zip_code,
+                              callback: function($$v) {
+                                _vm.edit_zip_code = $$v
+                              },
+                              expression: "edit_zip_code"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has("zip_code"),
+                                  expression: "errors.has('zip_code')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [_vm._v(_vm._s(_vm.errors.first("zip_code")))]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-col",
+                    { attrs: { "vs-lg": "12", "vs-md": "12", "vs-sm": "12" } },
+                    [
+                      _c("br"),
+                      _vm._v(" "),
+                      _c(
+                        "vs-button",
+                        {
+                          staticClass: "float-right",
+                          attrs: { button: "submit", type: "gradient" }
+                        },
+                        [_vm._v("Update Admin")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/Admins.vue":
+/*!*************************************************!*\
+  !*** ./resources/js/src/views/pages/Admins.vue ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Admins_vue_vue_type_template_id_51444659___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Admins.vue?vue&type=template&id=51444659& */ "./resources/js/src/views/pages/Admins.vue?vue&type=template&id=51444659&");
+/* harmony import */ var _Admins_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Admins.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/Admins.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _Admins_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Admins.vue?vue&type=style&index=0&lang=css& */ "./resources/js/src/views/pages/Admins.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _Admins_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Admins_vue_vue_type_template_id_51444659___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Admins_vue_vue_type_template_id_51444659___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/src/views/pages/Admins.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/Admins.vue?vue&type=script&lang=js&":
+/*!**************************************************************************!*\
+  !*** ./resources/js/src/views/pages/Admins.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Admins_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Admins.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Admins.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Admins_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/Admins.vue?vue&type=style&index=0&lang=css&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/src/views/pages/Admins.vue?vue&type=style&index=0&lang=css& ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Admins_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader!../../../../../node_modules/css-loader??ref--7-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Admins.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Admins.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Admins_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Admins_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Admins_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Admins_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Admins_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/Admins.vue?vue&type=template&id=51444659&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/src/views/pages/Admins.vue?vue&type=template&id=51444659& ***!
+  \********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Admins_vue_vue_type_template_id_51444659___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Admins.vue?vue&type=template&id=51444659& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Admins.vue?vue&type=template&id=51444659&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Admins_vue_vue_type_template_id_51444659___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Admins_vue_vue_type_template_id_51444659___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ })
+
+}]);

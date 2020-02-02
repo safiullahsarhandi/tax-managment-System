@@ -1,1 +1,1018 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[18],{135:function(e,t,a){"use strict";a.r(t);var r=a(1);function s(e,t){var a=Object.keys(e);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(e);t&&(r=r.filter((function(t){return Object.getOwnPropertyDescriptor(e,t).enumerable}))),a.push.apply(a,r)}return a}function i(e){for(var t=1;t<arguments.length;t++){var a=null!=arguments[t]?arguments[t]:{};t%2?s(a,!0).forEach((function(t){o(e,t,a[t])})):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(a)):s(a).forEach((function(t){Object.defineProperty(e,t,Object.getOwnPropertyDescriptor(a,t))}))}return e}function o(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}var d={inject:["loginUser"],data:function(){return{editTax:{},addTaxParameterModal:!1,editTaxParameterModal:!1,type:"Monthly",tax_id:"",tax_code:"",description_khmer:"",description_english:"",rate:"",base_tax:"",amount_min:"",amount_max:"",effective_date:"",remarks:"",identifier:0,edit_type:"Monthly",edit_tax_id:"",edit_tax_code:"",edit_description_khmer:"",edit_description_english:"",edit_rate:"",edit_base_tax:"",edit_amount_min:"",edit_amount_max:"",edit_effective_date:"",edit_remarks:"",parameter:{}}},computed:i({},Object(r.d)("taxes/",["parameters"]),{},Object(r.c)("taxes/",["getParameter"])),beforeCreate:function(){},created:function(){this.fetchParameters()},methods:i({},Object(r.b)({create:"taxes/addParameter",fetchParameters:"taxes/getParameters",update:"taxes/editParameter"}),{taxParam:function(e){var t=this.getParameter(e);return t.tax_param_id+""+t.expiry_date},addTax:function(){this.addTaxParameterModal=!0},add:function(e){var t=this;this.$validator.validateAll("addform").then((function(a){if(a){t.$vs.loading(),self=t;var r={fd:new FormData(self.$refs.addTaxParameterForm),close:t.$vs.loading.close,notify:t.$vs.notify};t.create(r).then((function(a){"success"==a.data.status&&(self.title=self.description=self.duration=self.supervisor="",self.officer=[],e.target.reset(),self.$validator.reset(),t.fetchParameters(),t.addTaxParameterModal=!1)}))}}))},showEditPopup:function(e){var t=this.getParameter(e,"id");this.identifier=e,this.edit_tax_code=t.tax_code,this.edit_tax_id=t.tax_param_id.substring(3),this.edit_effective_date=t.effective_date,this.edit_description_khmer=t.khmer_description,this.edit_description_english=t.english_description,this.edit_rate=t.rate,this.edit_base_tax=t.base_tax,this.edit_amount_min=t.amount_min,this.edit_amount_max=t.amount_max,this.edit_remarks=t.remarks,this.edit_type=t.tax_type,this.editTaxParameterModal=!0},edit:function(e){var t=this;this.$validator.validateAll("editform").then((function(e){if(e){self=t;var a={fd:new FormData(self.$refs.editTaxParameterForm),close:t.$vs.loading.close,notify:t.$vs.notify};t.update(a).then((function(e){"success"==e.data.status&&(self.$validator.reset(),self.editTaxParameterModal=!1)}))}}))}})},n=(a(70),a(2)),v=Object(n.a)(d,(function(){var e=this,t=e.$createElement,a=e._self._c||t;return a("div",[a("vx-card",{attrs:{title:"List of Tax Parameters",subtitle:""}},[a("template",{slot:"actions"},["Admin"==e.$store.getters.userType?a("vs-button",{attrs:{type:"border","icon-pack":"feather",icon:"icon-plus"},on:{click:function(t){return e.addTax()}}}):e._e()],1),e._v(" "),a("vs-table",{attrs:{search:"",pagination:"",data:e.parameters},scopedSlots:e._u([{key:"default",fn:function(t){var r=t.data;return e._l(r,(function(t,r){return a("vs-tr",{key:r},[a("vs-td",[e._v(e._s(e.taxParam(r)))]),e._v(" "),a("vs-td",[e._v(e._s(t.khmer_description))]),e._v(" "),a("vs-td",[e._v(e._s(t.english_description))]),e._v(" "),a("vs-td",[e._v(e._s(t.rate))]),e._v(" "),a("vs-td",[e._v(e._s(t.base_tax))]),e._v(" "),a("vs-td",[e._v(e._s(t.tax_type||"NA"))]),e._v(" "),a("vs-td",[e._v(e._s(t.amount_min||"NA"))]),e._v(" "),a("vs-td",[e._v(e._s(t.amount_max||"NA"))]),e._v(" "),a("vs-td",[e._v(e._s(t.effective_date))]),e._v(" "),a("vs-td",[e._v(e._s(t.remarks||"NA"))]),e._v(" "),a("vs-td",[a("vs-button",{attrs:{size:"small",type:"border","icon-pack":"feather",icon:"icon-edit"},on:{click:function(a){return e.showEditPopup(t.id)}}})],1)],1)}))}}])},[a("template",{slot:"thead"},[a("vs-th",[e._v("Tax Param")]),e._v(" "),a("vs-th",[e._v("Description (Khmer)")]),e._v(" "),a("vs-th",[e._v("Description (English)")]),e._v(" "),a("vs-th",[e._v("Rate (%)")]),e._v(" "),a("vs-th",[e._v("Base Tax Percentage")]),e._v(" "),a("vs-th",[e._v("Tax Type")]),e._v(" "),a("vs-th",[e._v("Amount Min")]),e._v(" "),a("vs-th",[e._v("Amount Max")]),e._v(" "),a("vs-th",[e._v("Effective Date")]),e._v(" "),a("vs-th",[e._v("Remarks")]),e._v(" "),a("vs-th",[e._v("Action")])],1)],2)],2),e._v(" "),a("vs-popup",{attrs:{active:e.addTaxParameterModal,title:"Add Tax Parameter"},on:{"update:active":function(t){e.addTaxParameterModal=t}}},[a("form",{ref:"addTaxParameterForm",attrs:{"data-vv-scope":"addform"},on:{submit:function(t){return t.preventDefault(),e.add(t,"addform")}}},[a("vs-row",[a("vs-col",{attrs:{"vs-lg":"6","vs-md":"6","vs-sm":"12"}},[a("vx-input-group",[a("vx-input-group",{staticClass:"mt-2"},[a("vs-select",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],staticClass:"selectExample",attrs:{name:"tax_code",placeholder:"Search and select",label:"Tax Code","data-vv-as":"Tax Code","data-vv-scope":"addform"},model:{value:e.tax_code,callback:function(t){e.tax_code=t},expression:"tax_code"}},[a("vs-select-item",{attrs:{value:"ACT",text:"ACT"}}),e._v(" "),a("vs-select-item",{attrs:{value:"PPT",text:"PPT"}}),e._v(" "),a("vs-select-item",{attrs:{value:"VAT",text:"VAT"}}),e._v(" "),a("vs-select-item",{attrs:{value:"SPT",text:"SPT"}}),e._v(" "),a("vs-select-item",{attrs:{value:"PLT",text:"PLT"}}),e._v(" "),a("vs-select-item",{attrs:{value:"WHT",text:"WHT"}}),e._v(" "),a("vs-select-item",{attrs:{value:"FBT",text:"FBT"}}),e._v(" "),a("vs-select-item",{attrs:{value:"TOS",text:"TOS"}}),e._v(" "),a("vs-select-item",{attrs:{value:"OTX",text:"OTX"}})],1),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("addform.tax_code"),expression:"errors.has('addform.tax_code')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("addform.tax_code")))])],1)],1),e._v(" "),a("vx-input-group",[a("vs-input",{directives:[{name:"validate",rawName:"v-validate",value:"required|numeric",expression:"'required|numeric'"}],attrs:{name:"tax_id","data-vv-as":"Tax ID","label-placeholder":"Tax ID","data-vv-scope":"addform"},model:{value:e.tax_id,callback:function(t){e.tax_id=t},expression:"tax_id"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("addform.tax_id"),expression:"errors.has('addform.tax_id')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("addform.tax_id")))])],1),e._v(" "),a("vx-input-group",[a("br"),e._v(" "),a("vs-textarea",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],attrs:{name:"description_khmer","data-vv-as":"Description (Khmer)",counter:50,label:"Description (Khmer)","data-vv-scope":"addform"},model:{value:e.description_khmer,callback:function(t){e.description_khmer=t},expression:"description_khmer"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("addform.description_khmer"),expression:"errors.has('addform.description_khmer')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("addform.description_khmer")))])],1),e._v(" "),a("vx-input-group",[a("br"),e._v(" "),a("vs-textarea",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],attrs:{name:"description_english","data-vv-as":"Description (English)",counter:50,label:"Description (English)","data-vv-scope":"addform"},model:{value:e.description_english,callback:function(t){e.description_english=t},expression:"description_english"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("addform.description_english"),expression:"errors.has('addform.description_english')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("addform.description_english")))])],1),e._v(" "),a("vx-input-group",{staticClass:"mt-2"},[a("label",[e._v("Tax Type:")]),a("br"),e._v(" "),a("vs-radio",{attrs:{name:"type","vs-value":"Monthly"},model:{value:e.type,callback:function(t){e.type=t},expression:"type"}},[e._v("Monthly")]),e._v(" "),a("vs-radio",{attrs:{name:"type","vs-value":"Yearly"},model:{value:e.type,callback:function(t){e.type=t},expression:"type"}},[e._v("Yearly")])],1)],1),e._v(" "),a("vs-col",{attrs:{"vs-lg":"6","vs-md":"12","vs-sm":"12"}},[a("vx-input-group",{staticClass:"mt-2"},[a("vs-input",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],attrs:{name:"rate","data-vv-as":"Rate","label-placeholder":"Rate (%)","data-vv-scope":"addform"},model:{value:e.rate,callback:function(t){e.rate=t},expression:"rate"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("addform.rate"),expression:"errors.has('addform.rate')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("addform.rate")))])],1),e._v(" "),a("vx-input-group",{staticClass:"mt-2"},[a("vs-input",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],attrs:{name:"base_tax","data-vv-as":"Base Tax Percentage","label-placeholder":"Base Tax Percentage (%)","data-vv-scope":"addform"},model:{value:e.base_tax,callback:function(t){e.base_tax=t},expression:"base_tax"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("addform.base_tax"),expression:"errors.has('addform.base_tax')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("addform.base_tax")))])],1),e._v(" "),a("vx-input-group",{staticClass:"mt-2"},[a("vs-input",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],attrs:{type:"date","data-vv-as":"Effective Date",name:"effective_date",label:"Effective Date","data-vv-scope":"addform"},model:{value:e.effective_date,callback:function(t){e.effective_date=t},expression:"effective_date"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("addform.effective_date"),expression:"errors.has('addform.effective_date')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("addform.effective_date")))])],1),e._v(" "),a("vx-input-group",{staticClass:"mt-2"},[a("vs-input",{attrs:{name:"amount_min","data-vv-as":"Amount Min","label-placeholder":"Amount Min","data-vv-scope":"addform"},model:{value:e.amount_min,callback:function(t){e.amount_min=t},expression:"amount_min"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("addform.amount_min"),expression:"errors.has('addform.amount_min')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("addform.amount_min")))])],1),e._v(" "),a("vx-input-group",{staticClass:"mt-2"},[a("vs-input",{attrs:{name:"amount_max","data-vv-as":"Amount Max","label-placeholder":"Amount Max","data-vv-scope":"addform"},model:{value:e.amount_max,callback:function(t){e.amount_max=t},expression:"amount_max"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("addform.amount_max"),expression:"errors.has('addform.amount_max')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("addform.amount_max")))])],1),e._v(" "),a("vx-input-group",{staticClass:"mt-2"},[a("vs-textarea",{attrs:{name:"remarks","data-vv-as":"Remarks",counter:50,label:"Remarks","data-vv-scope":"addform"},model:{value:e.remarks,callback:function(t){e.remarks=t},expression:"remarks"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("addform.remarks"),expression:"errors.has('addform.remarks')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("addform.remarks")))])],1)],1),e._v(" "),a("vs-col",{attrs:{"vs-lg":"12","vs-md":"12","vs-sm":"12"}},[a("br"),e._v(" "),a("vs-button",{staticClass:"float-right",attrs:{button:"submit",type:"gradient"}},[e._v("Add Tax Parameter")])],1)],1)],1)]),e._v(" "),a("vs-popup",{attrs:{active:e.editTaxParameterModal,title:"Edit Tax Parameter"},on:{"update:active":function(t){e.editTaxParameterModal=t}}},[a("form",{ref:"editTaxParameterForm",attrs:{"data-vv-scope":"editform"},on:{submit:function(t){return t.preventDefault(),e.edit(t,"editform")}}},[a("vs-row",[a("input",{directives:[{name:"model",rawName:"v-model",value:e.identifier,expression:"identifier"}],attrs:{type:"hidden",name:"identifier"},domProps:{value:e.identifier},on:{input:function(t){t.target.composing||(e.identifier=t.target.value)}}}),e._v(" "),a("vs-col",{attrs:{"vs-lg":"6","vs-md":"6","vs-sm":"12"}},[a("vx-input-group",[a("vx-input-group",{staticClass:"mt-2"},[a("vs-select",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],staticClass:"selectExample",attrs:{name:"tax_code",placeholder:"Search and select",label:"Tax Code","data-vv-as":"Tax Code","data-vv-scope":"editform"},model:{value:e.edit_tax_code,callback:function(t){e.edit_tax_code=t},expression:"edit_tax_code"}},[a("vs-select-item",{attrs:{value:"ACT",text:"ACT"}}),e._v(" "),a("vs-select-item",{attrs:{value:"PPT",text:"PPT"}}),e._v(" "),a("vs-select-item",{attrs:{value:"VAT",text:"VAT"}}),e._v(" "),a("vs-select-item",{attrs:{value:"SPT",text:"SPT"}}),e._v(" "),a("vs-select-item",{attrs:{value:"PLT",text:"PLT"}}),e._v(" "),a("vs-select-item",{attrs:{value:"WHT",text:"WHT"}}),e._v(" "),a("vs-select-item",{attrs:{value:"FBT",text:"FBT"}}),e._v(" "),a("vs-select-item",{attrs:{value:"TOS",text:"TOS"}}),e._v(" "),a("vs-select-item",{attrs:{value:"OTX",text:"OTX"}})],1),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("editform.tax_code"),expression:"errors.has('editform.tax_code')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("editform.tax_code")))])],1)],1),e._v(" "),a("vx-input-group",[a("vs-input",{directives:[{name:"validate",rawName:"v-validate",value:"required|numeric",expression:"'required|numeric'"}],attrs:{name:"tax_id","data-vv-as":"Tax ID","label-placeholder":"Tax ID","data-vv-scope":"editform"},model:{value:e.edit_tax_id,callback:function(t){e.edit_tax_id=t},expression:"edit_tax_id"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("editform.tax_id"),expression:"errors.has('editform.tax_id')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("editform.tax_id")))])],1),e._v(" "),a("vx-input-group",[a("br"),e._v(" "),a("vs-textarea",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],attrs:{name:"description_khmer","data-vv-as":"Description (Khmer)",counter:50,label:"Description (Khmer)","data-vv-scope":"editform"},model:{value:e.edit_description_khmer,callback:function(t){e.edit_description_khmer=t},expression:"edit_description_khmer"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("editform.description_khmer"),expression:"errors.has('editform.description_khmer')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("editform.description_khmer")))])],1),e._v(" "),a("vx-input-group",[a("br"),e._v(" "),a("vs-textarea",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],attrs:{name:"description_english","data-vv-as":"Description (English)",counter:50,label:"Description (English)","data-vv-scope":"editform"},model:{value:e.edit_description_english,callback:function(t){e.edit_description_english=t},expression:"edit_description_english"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("editform.description_english"),expression:"errors.has('editform.description_english')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("editform.description_english")))])],1),e._v(" "),a("vx-input-group",{staticClass:"mt-2"},[a("label",[e._v("Tax Type:")]),a("br"),e._v(" "),a("vs-radio",{attrs:{name:"type","vs-value":"Monthly"},model:{value:e.edit_type,callback:function(t){e.edit_type=t},expression:"edit_type"}},[e._v("Monthly")]),e._v(" "),a("vs-radio",{attrs:{name:"type","vs-value":"Yearly"},model:{value:e.edit_type,callback:function(t){e.edit_type=t},expression:"edit_type"}},[e._v("Yearly")])],1)],1),e._v(" "),a("vs-col",{attrs:{"vs-lg":"6","vs-md":"12","vs-sm":"12"}},[a("vx-input-group",{staticClass:"mt-2"},[a("vs-input",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],attrs:{name:"rate","data-vv-as":"Rate","label-placeholder":"Rate (%)","data-vv-scope":"editform"},model:{value:e.edit_rate,callback:function(t){e.edit_rate=t},expression:"edit_rate"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("editform.rate"),expression:"errors.has('editform.rate')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("editform.rate")))])],1),e._v(" "),a("vx-input-group",{staticClass:"mt-2"},[a("vs-input",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],attrs:{name:"base_tax","data-vv-as":"Base Tax Percentage","label-placeholder":"Base Tax Percentage (%)","data-vv-scope":"editform"},model:{value:e.edit_base_tax,callback:function(t){e.edit_base_tax=t},expression:"edit_base_tax"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("editform.base_tax"),expression:"errors.has('editform.base_tax')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("editform.base_tax")))])],1),e._v(" "),a("vx-input-group",{staticClass:"mt-2"},[a("vs-input",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],attrs:{type:"date","data-vv-as":"Effective Date",name:"effective_date",label:"Effective Date","data-vv-scope":"editform"},model:{value:e.edit_effective_date,callback:function(t){e.edit_effective_date=t},expression:"edit_effective_date"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("editform.effective_date"),expression:"errors.has('editform.effective_date')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("editform.effective_date")))])],1),e._v(" "),a("vx-input-group",{staticClass:"mt-2"},[a("vs-input",{attrs:{name:"amount_min","data-vv-as":"Amount Min","label-placeholder":"Amount Min","data-vv-scope":"editform"},model:{value:e.edit_amount_min,callback:function(t){e.edit_amount_min=t},expression:"edit_amount_min"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("editform.amount_min"),expression:"errors.has('editform.amount_min')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("editform.amount_min")))])],1),e._v(" "),a("vx-input-group",{staticClass:"mt-2"},[a("vs-input",{attrs:{name:"amount_max","data-vv-as":"Amount Max","label-placeholder":"Amount Max","data-vv-scope":"editform"},model:{value:e.edit_amount_max,callback:function(t){e.edit_amount_max=t},expression:"edit_amount_max"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("editform.amount_max"),expression:"errors.has('editform.amount_max')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("editform.amount_max")))])],1)],1),e._v(" "),a("vs-col",{attrs:{"vs-lg":"12","vs-md":"12","vs-sm":"12"}},[a("vx-input-group",[a("br"),e._v(" "),a("vs-textarea",{attrs:{name:"remarks","data-vv-as":"Remarks",counter:50,label:"Remarks","data-vv-scope":"editform"},model:{value:e.edit_remarks,callback:function(t){e.edit_remarks=t},expression:"edit_remarks"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("editform.remarks"),expression:"errors.has('editform.remarks')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("editform.remarks")))])],1)],1),e._v(" "),a("vs-col",{attrs:{"vs-lg":"12","vs-md":"12","vs-sm":"12"}},[a("br"),e._v(" "),a("vs-button",{staticClass:"float-right",attrs:{button:"submit",type:"gradient"}},[e._v("Add Tax Parameter")])],1)],1)],1)])],1)}),[],!1,null,null,null);t.default=v.exports},26:function(e,t,a){var r=a(71);"string"==typeof r&&(r=[[e.i,r,""]]);var s={hmr:!0,transform:void 0,insertInto:void 0};a(5)(r,s);r.locals&&(e.exports=r.locals)},70:function(e,t,a){"use strict";var r=a(26);a.n(r).a},71:function(e,t,a){(e.exports=a(4)(!1)).push([e.i,".selectExample {\n  margin: 10px;\n}\n.con-select-example {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n          justify-content: center;\n}\n.con-select .vs-select {\n  width: 100%\n}\n@media (max-width: 550px) {\n.con-select {\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n            flex-direction: column;\n}\n.con-select .vs-select {\n    width: 100%\n}\n}\r\n\r\n",""])}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[18],{
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _layouts_components_customizer_CommentDrawer_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/layouts/components/customizer/CommentDrawer.vue */ "./resources/js/src/layouts/components/customizer/CommentDrawer.vue");
+/* harmony import */ var vue_burger_menu__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-burger-menu */ "./node_modules/vue-burger-menu/dist/vue-burger-menu.common.js");
+/* harmony import */ var vue_burger_menu__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_burger_menu__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    TheCustomizer: _layouts_components_customizer_CommentDrawer_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    Slide: vue_burger_menu__WEBPACK_IMPORTED_MODULE_1__["Slide"] // Register your component
+
+  },
+  data: function data() {
+    return {
+      tax_id: '',
+      openComments: false
+    };
+  },
+  created: function created() {
+    this.tax_id = this.$store.state.rootUrl.split('/')[2];
+    this.getCustomer(localStorage.getItem('customer'));
+    this.getSale(this.$route.params.id);
+    this.$store.dispatch('getAverageRate');
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])('sales', ['sale']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])('customers', ['customer']), {
+    userType: function userType() {
+      return this.$store.getters.userType;
+    },
+    averageRate: function averageRate() {
+      return this.$store.state.averageRate;
+    },
+    non_taxable_sales: function non_taxable_sales() {
+      return this.sale.non_taxable_sales * this.averageRate;
+    },
+    value_of_exports: function value_of_exports() {
+      return this.sale.vat * this.averageRate;
+    },
+    person_vat: function person_vat() {
+      return parseFloat(this.sale.taxable_person_sales * 0.1).toFixed(2);
+    },
+    person_taxable: function person_taxable() {
+      return parseFloat(this.sale.taxable_person_sales * this.averageRate);
+    },
+    person_taxable_vat: function person_taxable_vat() {
+      return parseFloat(this.person_taxable * 0.1).toFixed(2);
+    },
+    customer_vat: function customer_vat() {
+      return parseFloat(this.sale.cust_sales * 0.1).toFixed(2);
+    },
+    customer_taxable: function customer_taxable() {
+      return parseFloat(this.sale.cust_sales * this.averageRate);
+    },
+    customer_taxable_vat: function customer_taxable_vat() {
+      return parseFloat(this.customer_taxable * 0.1).toFixed(2);
+    }
+  }),
+  methods: _objectSpread({
+    handleToggleDrawer: function handleToggleDrawer() {
+      this.$refs.commentsView.active = !this.$refs.commentsView.active;
+    }
+  }, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])({
+    getSale: 'sales/getSale',
+    getCustomer: 'customers/getCustomer',
+    statusChange: 'taxes/statusUpdateSPP',
+    statusChangeManagment: 'taxes/statusChangeManagment'
+  }), {
+    statusUpdate: function statusUpdate(id, status) {
+      var _this = this;
+
+      var data = {
+        id: id,
+        tax_id: this.tax_id,
+        notify: this.$vs.notify,
+        type: 'sale'
+      };
+      this.statusChange(data).then(function (res) {
+        if (res.data.status != true) {
+          if (res.data.response == 'undefined') {
+            _this.sale.officer_confirmed = status;
+          } else {
+            _this.sale.officer_confirmed = res.data.response;
+          }
+        }
+      });
+    },
+    changeManagementStatus: function changeManagementStatus(status, id, by) {
+      var data = {
+        id: id,
+        status: status,
+        by: by,
+        tax_id: this.tax_id,
+        notify: this.$vs.notify,
+        tax_type: 'sale'
+      };
+      this.statusChangeManagment(data).then(function (res) {});
+    }
+  })
+});
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=style&index=0&lang=scss&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--8-2!./node_modules/sass-loader/dist/cjs.js??ref--8-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=style&index=0&lang=scss& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".bm-menu {\n  z-index: 99999;\n}\n.bm-burger-button {\n  position: fixed;\n  width: 36px;\n  height: 30px;\n  left: 36px;\n  top: 36px;\n  cursor: pointer;\n}\n.bm-burger-bars {\n  background-color: #373a47;\n}\n.line-style {\n  position: absolute;\n  height: 20%;\n  left: 0;\n  right: 0;\n}\n.cross-style {\n  position: absolute;\n  top: 12px;\n  right: 2px !important;\n  cursor: pointer;\n}\n.bm-cross {\n  background: #bdc3c7;\n}\n.bm-cross-button {\n  height: 24px;\n  width: 24px;\n}\n.bm-menu {\n  height: 100%;\n  /* 100% Full-height */\n  width: 0;\n  /* 0 width - change this with JavaScript */\n  position: fixed;\n  /* Stay in place */\n  top: 0;\n  left: 0;\n  background-color: #3f3f41;\n  /* Black*/\n  overflow-x: hidden;\n  /* Disable horizontal scroll */\n  padding-top: 60px;\n  /* Place content 60px from the top */\n  -webkit-transition: 0.5s;\n  transition: 0.5s;\n  /*0.5 second transition effect to slide in the sidenav*/\n}\n.bm-overlay {\n  background: rgba(0, 0, 0, 0.3);\n}\n.bm-item-list {\n  color: #b8b7ad;\n  margin-left: 10%;\n  font-size: 20px;\n}\n.bm-item-list > * {\n  display: -webkit-box;\n  display: flex;\n  text-decoration: none;\n  padding: 0.7em;\n}\n.bm-item-list > * > span {\n  margin-left: 10px;\n  font-weight: 700;\n  color: white;\n}", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=style&index=0&lang=scss&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--8-2!./node_modules/sass-loader/dist/cjs.js??ref--8-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=style&index=0&lang=scss& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--8-2!../../../../../../node_modules/sass-loader/dist/cjs.js??ref--8-3!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./SaleDetail.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=style&index=0&lang=scss&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=template&id=436c7c10&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=template&id=436c7c10& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "vs-row",
+        [
+          _c(
+            "vs-col",
+            { attrs: { "vs-lg": "9", "vs-md": "9", "vs-sm": "12" } },
+            [
+              _c(
+                "vx-card",
+                { attrs: { title: "Sales Detail" } },
+                [
+                  _c(
+                    "vs-row",
+                    [
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Client TIN:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.customer.tin_no))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Client Name:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.customer.name_english))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Account Code:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.sale.account_code))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Account Description:")]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(_vm._s(_vm.sale.account_description))
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Accounting Reference:")]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(_vm._s(_vm.sale.accounting_reference))
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Signature Date:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.sale.signature_date))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Branch Name:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.sale.branch_name))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Tax Period:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.sale.tax_period))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Invoice Date:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.sale.invoice_date))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Invoice Number:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.sale.invoice_num))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Description:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.sale.description))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Quantity:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.sale.quantity))])
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "vx-card",
+                { staticClass: "mt-base", attrs: { title: "Sales Summary" } },
+                [
+                  _c(
+                    "vs-row",
+                    [
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Non Taxable Sale:")]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(
+                              _vm._s(_vm.customer.non_taxable_sales || "NA")
+                            )
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [
+                            _vm._v("Non taxable sale x Average rate:")
+                          ]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.non_taxable_sales))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Value Of Exports:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.sale.vat || "NA"))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Value Of Exports:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.value_of_exports))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("vs-divider", { attrs: { position: "left" } }, [
+                        _c("h5", [_vm._v("Sales to Taxable Persons")])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Taxable Value:")]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(_vm._s(_vm.sale.taxable_person_sales))
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("VAT:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.person_vat))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Taxable Value x Average Rate:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.person_taxable))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("VAT:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.person_taxable_vat))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("vs-divider", { attrs: { position: "left" } }, [
+                        _c("h5", [_vm._v("Sales to Customers")])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-col", {
+                        staticClass: "mt-5",
+                        attrs: { "vs-lg": "12", "vs-md": "12", "vs-sm": "12" }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Taxable Value:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.sale.cust_sales))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("VAT:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.customer_vat))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Taxable Value x Average Rate:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.customer_taxable))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("VAT:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.customer_taxable_vat))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("vs-divider", { attrs: { position: "center" } }, [
+                        _c("h5", [_vm._v("Total Taxable Value:")])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5 text-center",
+                          attrs: { "vs-lg": "12", "vs-md": "12", "vs-sm": "12" }
+                        },
+                        [_c("p", [_vm._v(_vm._s(_vm.customer_taxable_vat))])]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "vs-col",
+            {
+              attrs: { "vs-lg": "3", "vs-md": "3", "vs-xl": "3", "vs-sm": "12" }
+            },
+            [
+              _c(
+                "vx-card",
+                { attrs: { title: "Actions" } },
+                [
+                  _c(
+                    "vs-list",
+                    [
+                      _c(
+                        "vs-list-item",
+                        { attrs: { title: "Edit Sale" } },
+                        [
+                          _c("vs-button", {
+                            attrs: {
+                              to: "/sale-update/" + _vm.$route.params.id,
+                              "icon-pack": "feather",
+                              size: "small",
+                              icon: "icon-edit"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      [
+                        _vm.userType == "Admin"
+                          ? _c(
+                              "vs-list-item",
+                              { attrs: { title: "Status" } },
+                              [
+                                _c("vs-button", {
+                                  attrs: {
+                                    "icon-pack": "feather",
+                                    size: "small",
+                                    icon: "icon-check-circle"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.changeManagementStatus(
+                                        "1",
+                                        _vm.sale.id,
+                                        "admin"
+                                      )
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("vs-button", {
+                                  attrs: {
+                                    "icon-pack": "feather",
+                                    size: "small",
+                                    icon: "icon-x-circle"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.changeManagementStatus(
+                                        "0",
+                                        _vm.sale.id,
+                                        "admin"
+                                      )
+                                    }
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.userType == "Supervisor"
+                          ? _c(
+                              "vs-list-item",
+                              { attrs: { title: "Status" } },
+                              [
+                                _c("vs-button", {
+                                  attrs: {
+                                    "icon-pack": "feather",
+                                    size: "small",
+                                    icon: "icon-check-circle"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.changeManagementStatus(
+                                        "1",
+                                        _vm.sale.id,
+                                        "supervisor"
+                                      )
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("vs-button", {
+                                  attrs: {
+                                    "icon-pack": "feather",
+                                    size: "small",
+                                    icon: "icon-x-circle"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.changeManagementStatus(
+                                        "0",
+                                        _vm.sale.id,
+                                        "supervisor"
+                                      )
+                                    }
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.userType == "Officer"
+                          ? _c(
+                              "vs-list-item",
+                              { attrs: { title: "Status" } },
+                              [
+                                _c("vs-switch", {
+                                  attrs: { "icon-pack": "feather" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.statusUpdate(
+                                        _vm.sale.sale_id,
+                                        _vm.sale.officer_confirmed
+                                      )
+                                    }
+                                  },
+                                  model: {
+                                    value: _vm.sale.officer_confirmed,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.sale,
+                                        "officer_confirmed",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "sale.officer_confirmed"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          : _vm._e()
+                      ],
+                      _vm._v(" "),
+                      _c(
+                        "vs-list-item",
+                        { attrs: { title: "View Comments" } },
+                        [
+                          _c("vs-button", {
+                            attrs: {
+                              "icon-pack": "feather",
+                              size: "small",
+                              icon: "icon-maximize-2"
+                            },
+                            on: { click: _vm.handleToggleDrawer }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    2
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("the-customizer", {
+        ref: "commentsView",
+        attrs: {
+          object_id: _vm.$route.params.id,
+          type: "Sale",
+          "comments-url": "get-comments"
+        }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/Sales/SaleDetail.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/src/views/pages/Sales/SaleDetail.vue ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SaleDetail_vue_vue_type_template_id_436c7c10___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SaleDetail.vue?vue&type=template&id=436c7c10& */ "./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=template&id=436c7c10&");
+/* harmony import */ var _SaleDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SaleDetail.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _SaleDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SaleDetail.vue?vue&type=style&index=0&lang=scss& */ "./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _SaleDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SaleDetail_vue_vue_type_template_id_436c7c10___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SaleDetail_vue_vue_type_template_id_436c7c10___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/src/views/pages/Sales/SaleDetail.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SaleDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./SaleDetail.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SaleDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=style&index=0&lang=scss&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=style&index=0&lang=scss& ***!
+  \*********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_SaleDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/style-loader!../../../../../../node_modules/css-loader!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--8-2!../../../../../../node_modules/sass-loader/dist/cjs.js??ref--8-3!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./SaleDetail.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_SaleDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_SaleDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_SaleDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_SaleDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_SaleDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=template&id=436c7c10&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=template&id=436c7c10& ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SaleDetail_vue_vue_type_template_id_436c7c10___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./SaleDetail.vue?vue&type=template&id=436c7c10& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=template&id=436c7c10&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SaleDetail_vue_vue_type_template_id_436c7c10___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SaleDetail_vue_vue_type_template_id_436c7c10___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ })
+
+}]);

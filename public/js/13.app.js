@@ -1,1 +1,630 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[13],{141:function(e,s,t){"use strict";t.r(s);var a={data:function(){return{email:"",password:"",checkbox_remember_me:!1}},created:function(){localStorage.getItem("admin")&&this.$router.push("/dashboard")},methods:{onSubmit:function(e){var s=this;self=this,this.$validator.validateAll().then((function(e){if(e){s.$vs.loading({type:"sound",text:"Loading..."});var t=new FormData(s.$refs.loginForm);axios.post("login",t).then((function(e){if("error"==e.data.status)s.$vs.notify({color:"danger",text:e.data.msg,position:"top-right",icon:"warning"});else{s.$vs.notify({color:"success",text:e.data.msg,position:"top-right",icon:"check_box"});var t=e.data.session;localStorage.setItem("admin",t.manager_id),s.$store.commit("setLoginUser",t),s.$store.state.AppActiveUser,s.$router.push("/dashboard")}s.$vs.loading.close()}))}}))}}},o=(t(95),t(2)),r=Object(o.a)(a,(function(){var e=this,s=e.$createElement,t=e._self._c||s;return t("div",{staticClass:"h-screen flex w-full bg-img vx-row no-gutter items-center justify-center",attrs:{id:"page-login"}},[t("div",{staticClass:"vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 xl:w-3/5 sm:m-0 m-4"},[t("vx-card",[t("div",{staticClass:"full-page-bg-color",attrs:{slot:"no-body"},slot:"no-body"},[t("div",{staticClass:"vx-row no-gutter justify-center items-center"},[t("div",{staticClass:"vx-col hidden lg:block lg:w-1/2"},[t("img",{staticClass:"mx-auto",staticStyle:{width:"100%"},attrs:{src:"resources/assets/images/pages/login.png",alt:"login"}})]),e._v(" "),t("div",{staticClass:"vx-col sm:w-full md:w-full lg:w-1/2 d-theme-dark-bg"},[t("form",{ref:"loginForm",attrs:{autocomplete:"off"},on:{submit:function(s){return s.preventDefault(),e.onSubmit(s)}}},[t("div",{staticClass:"p-8"},[t("div",{staticClass:"vx-card__title mb-8"},[t("h4",{staticClass:"mb-4"},[e._v("Login")]),e._v(" "),t("p",[e._v("Welcome back, please login to your account.")])]),e._v(" "),t("vs-input",{directives:[{name:"validate",rawName:"v-validate",value:"required|email",expression:"'required|email'"}],staticClass:"w-full no-icon-border",attrs:{icon:"icon icon-user",name:"email","icon-pack":"feather","label-placeholder":"Email"},model:{value:e.email,callback:function(s){e.email=s},expression:"email"}}),e._v(" "),t("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("email"),expression:"errors.has('email')"}],staticClass:"text-danger",domProps:{innerHTML:e._s(e.errors.first("email"))}}),e._v(" "),t("vs-input",{directives:[{name:"validate",rawName:"v-validate",value:"required|min:6",expression:"'required|min:6'"}],staticClass:"w-full mt-6 no-icon-border",attrs:{type:"password",name:"password",icon:"icon icon-lock","icon-pack":"feather","label-placeholder":"Password"},model:{value:e.password,callback:function(s){e.password=s},expression:"password"}}),e._v(" "),t("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("password"),expression:"errors.has('password')"}],staticClass:"text-danger",domProps:{innerHTML:e._s(e.errors.first("password"))}}),e._v(" "),t("div",{staticClass:"flex flex-wrap justify-between my-5"},[t("vs-checkbox",{staticClass:"mb-3",model:{value:e.checkbox_remember_me,callback:function(s){e.checkbox_remember_me=s},expression:"checkbox_remember_me"}},[e._v("Remember Me")]),e._v(" "),t("router-link",{attrs:{to:"#"}},[e._v("Forgot Password?")])],1),e._v(" "),t("vs-row",[t("vs-col",{attrs:{"vs-w":"12"}},[t("vs-button",{staticClass:"float-right",attrs:{button:"submit",color:"#e5554a","gradient-color-secondary":"#e5554a",type:"gradient"}},[e._v("Login")])],1)],1)],1)])])])])])],1)])}),[],!1,null,"8c0d6f76",null);s.default=r.exports},37:function(e,s,t){var a=t(96);"string"==typeof a&&(a=[[e.i,a,""]]);var o={hmr:!0,transform:void 0,insertInto:void 0};t(5)(a,o);a.locals&&(e.exports=a.locals)},95:function(e,s,t){"use strict";var a=t(37);t.n(a).a},96:function(e,s,t){(e.exports=t(4)(!1)).push([e.i,"/*.p-8 {\r\n    padding: 1.9rem !important;\r\n}\r\n*/\r\n",""])}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[13],{
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Payrolls/Payrolls.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Payrolls/Payrolls.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  inject: ['generatePassword'],
+  data: function data() {
+    return {
+      // switch1: true,
+      editCustomerModal: false,
+      customer_id: '',
+      name_english: '',
+      name_khmer: '',
+      industry: '',
+      tax_card_num: '',
+      tin_no: '',
+      email: '',
+      telephone: '',
+      address: '',
+      street: '',
+      village: '',
+      muncipality: '',
+      district: '',
+      province: '',
+      sangkat: '',
+      group: '',
+      incorporation_date: '',
+      customField: [],
+      tax_id: '',
+      is_admin: false,
+      is_supervisor: false,
+      is_officer: false,
+      selected_status: 1,
+      statusList: [{
+        text: 'Pending',
+        value: 0
+      }, {
+        text: 'Approve',
+        value: 1
+      }, {
+        text: 'Un approve',
+        value: 2
+      }]
+    };
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('payrolls/', ['payrolls'])),
+  created: function created() {
+    this.tax_id = this.$store.state.rootUrl.split('/')[2];
+    this.getPayrolls(this.tax_id);
+
+    if (this.$store.state.AppActiveUser.type == 'Admin') {
+      this.is_admin = true;
+    }
+
+    if (this.$store.state.AppActiveUser.type == 'Supervisor') {
+      this.is_supervisor = true;
+    }
+
+    if (this.$store.state.AppActiveUser.type == 'Officer') {
+      this.is_officer = true;
+    }
+  },
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
+    getPayrolls: 'payrolls/getPayrolls',
+    statusChange: 'taxes/statusUpdateSPP',
+    statusChangeManagment: 'taxes/statusChangeManagment'
+  }), {
+    changeManagementStatus: function changeManagementStatus(status, id, by) {
+      var data = {
+        id: id,
+        status: status,
+        by: by,
+        tax_id: this.tax_id,
+        notify: this.$vs.notify,
+        tax_type: 'payroll'
+      };
+      this.statusChangeManagment(data).then(function (res) {});
+    },
+    statusUpdate: function statusUpdate(id, status) {
+      var _this = this;
+
+      var data = {
+        id: id,
+        tax_id: this.tax_id,
+        notify: this.$vs.notify,
+        type: 'payroll'
+      };
+      this.statusChange(data).then(function (res) {
+        if (res.data.status != true) {
+          var index = _this.payrolls.findIndex(function (o) {
+            return o.payroll_id == id;
+          });
+
+          if (res.data.response == 'undefined') {
+            _this.payrolls[index].officer_confirmed = status;
+          } else {
+            _this.payrolls[index].officer_confirmed = res.data.response;
+          }
+        }
+      });
+    },
+    addMoreFeild: function addMoreFeild() {
+      this.customField.push({
+        name: 'additional_field[]',
+        value: '',
+        type: 'text'
+      });
+    },
+    updateCustomer: function updateCustomer(e) {
+      var _this2 = this;
+
+      this.$validator.validateAll('editform').then(function (result) {
+        if (result) {
+          _this2.$vs.loading();
+
+          var fd = new FormData(_this2.$refs.editCustomerForm);
+
+          _this2.update(fd).then(function (res) {
+            if (res.data.status == 'success') {
+              e.target.reset();
+
+              _this2.errors.clear();
+
+              _this2.editCustomerModal = false;
+
+              _this2.$vs.notify({
+                title: 'Success',
+                text: 'Customer Updated Successfully',
+                color: 'success',
+                position: 'top-right'
+              });
+
+              _this2.$vs.loading.close();
+
+              _this2.getCustomers();
+            }
+          });
+        }
+      });
+    }
+  })
+});
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Payrolls/Payrolls.vue?vue&type=style&index=0&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Payrolls/Payrolls.vue?vue&type=style&index=0&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".con-vs-popup .vs-popup {\n  width: 1000px !important;\n}\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Payrolls/Payrolls.vue?vue&type=style&index=0&lang=css&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Payrolls/Payrolls.vue?vue&type=style&index=0&lang=css& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader??ref--7-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Payrolls.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Payrolls/Payrolls.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Payrolls/Payrolls.vue?vue&type=template&id=3b876d4a&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Payrolls/Payrolls.vue?vue&type=template&id=3b876d4a& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "vx-card",
+        { attrs: { title: "List of Payrolls" } },
+        [
+          _c(
+            "vs-table",
+            {
+              attrs: {
+                search: "",
+                pagination: "",
+                "max-items": "6",
+                data: _vm.payrolls
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "default",
+                  fn: function(ref) {
+                    var data = ref.data
+                    return _vm._l(data, function(tr, index) {
+                      return _c(
+                        "vs-tr",
+                        { key: index },
+                        [
+                          _c(
+                            "vs-td",
+                            { attrs: { data: tr.employee.name_english } },
+                            [_vm._v(_vm._s(tr.employee.name_english))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            { attrs: { data: tr.employee.employee_num } },
+                            [_vm._v(_vm._s(tr.employee.employee_num))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            { attrs: { data: tr.employee.nssf_num } },
+                            [_vm._v(_vm._s(tr.employee.nssf_num))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            { attrs: { data: tr.employee.contract_type } },
+                            [_vm._v(_vm._s(tr.employee.contract_type))]
+                          ),
+                          _vm._v(" "),
+                          _c("vs-td", { attrs: { data: tr.basic_salary } }, [
+                            _vm._v(_vm._s(tr.basic_salary))
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", { attrs: { data: tr.bonus } }, [
+                            _vm._v(_vm._s(tr.bonus))
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.is_officer == true,
+                                  expression: "is_officer == true"
+                                }
+                              ],
+                              attrs: { data: tr.officer_confirmed }
+                            },
+                            [
+                              _c("vs-switch", {
+                                on: {
+                                  click: function($event) {
+                                    return _vm.statusUpdate(
+                                      tr.payroll_id,
+                                      tr.officer_confirmed
+                                    )
+                                  }
+                                },
+                                model: {
+                                  value: tr.officer_confirmed,
+                                  callback: function($$v) {
+                                    _vm.$set(tr, "officer_confirmed", $$v)
+                                  },
+                                  expression: "tr.officer_confirmed"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.is_admin == true,
+                                  expression: "is_admin == true"
+                                }
+                              ],
+                              attrs: { data: tr.management_confirmed }
+                            },
+                            [
+                              _c(
+                                "vs-select",
+                                {
+                                  attrs: { width: "120px" },
+                                  on: {
+                                    input: function($event) {
+                                      return _vm.changeManagementStatus(
+                                        tr.management_confirmed,
+                                        tr.id,
+                                        "admin"
+                                      )
+                                    }
+                                  },
+                                  model: {
+                                    value: tr.management_confirmed,
+                                    callback: function($$v) {
+                                      _vm.$set(tr, "management_confirmed", $$v)
+                                    },
+                                    expression: "tr.management_confirmed"
+                                  }
+                                },
+                                _vm._l(_vm.statusList, function(item, index) {
+                                  return _c("vs-select-item", {
+                                    key: index,
+                                    attrs: {
+                                      value: item.value,
+                                      text: item.text
+                                    }
+                                  })
+                                }),
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.is_supervisor == true,
+                                  expression: "is_supervisor == true"
+                                }
+                              ],
+                              attrs: { data: tr.supervisor_confirmed }
+                            },
+                            [
+                              _c(
+                                "vs-select",
+                                {
+                                  attrs: { width: "120px" },
+                                  on: {
+                                    input: function($event) {
+                                      return _vm.changeManagementStatus(
+                                        tr.supervisor_confirmed,
+                                        tr.id,
+                                        "supervisor"
+                                      )
+                                    }
+                                  },
+                                  model: {
+                                    value: tr.supervisor_confirmed,
+                                    callback: function($$v) {
+                                      _vm.$set(tr, "supervisor_confirmed", $$v)
+                                    },
+                                    expression: "tr.supervisor_confirmed"
+                                  }
+                                },
+                                _vm._l(_vm.statusList, function(item, index) {
+                                  return _c("vs-select-item", {
+                                    key: index,
+                                    attrs: {
+                                      value: item.value,
+                                      text: item.text
+                                    }
+                                  })
+                                }),
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            [
+                              _c("vs-button", {
+                                attrs: {
+                                  to: "edit-payroll/" + tr.payroll_id,
+                                  size: "small",
+                                  type: "border",
+                                  "icon-pack": "feather",
+                                  icon: "icon-edit"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("vs-button", {
+                                attrs: {
+                                  to: "payroll-detail/" + tr.payroll_id,
+                                  size: "small",
+                                  "icon-pack": "feather",
+                                  icon: "icon-maximize-2",
+                                  type: "border"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    })
+                  }
+                }
+              ])
+            },
+            [
+              _c(
+                "template",
+                { slot: "thead" },
+                [
+                  _c("vs-th", [_vm._v("Employee Name")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Employee No.")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("NSSF No.")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Contract Type")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Basic Salary")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Bonus")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Status")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Actions")])
+                ],
+                1
+              )
+            ],
+            2
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/Payrolls/Payrolls.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/src/views/pages/Payrolls/Payrolls.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Payrolls_vue_vue_type_template_id_3b876d4a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Payrolls.vue?vue&type=template&id=3b876d4a& */ "./resources/js/src/views/pages/Payrolls/Payrolls.vue?vue&type=template&id=3b876d4a&");
+/* harmony import */ var _Payrolls_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Payrolls.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/Payrolls/Payrolls.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _Payrolls_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Payrolls.vue?vue&type=style&index=0&lang=css& */ "./resources/js/src/views/pages/Payrolls/Payrolls.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _Payrolls_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Payrolls_vue_vue_type_template_id_3b876d4a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Payrolls_vue_vue_type_template_id_3b876d4a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/src/views/pages/Payrolls/Payrolls.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/Payrolls/Payrolls.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/Payrolls/Payrolls.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Payrolls_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Payrolls.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Payrolls/Payrolls.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Payrolls_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/Payrolls/Payrolls.vue?vue&type=style&index=0&lang=css&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/Payrolls/Payrolls.vue?vue&type=style&index=0&lang=css& ***!
+  \*********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Payrolls_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/style-loader!../../../../../../node_modules/css-loader??ref--7-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Payrolls.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Payrolls/Payrolls.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Payrolls_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Payrolls_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Payrolls_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Payrolls_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Payrolls_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/Payrolls/Payrolls.vue?vue&type=template&id=3b876d4a&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/Payrolls/Payrolls.vue?vue&type=template&id=3b876d4a& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Payrolls_vue_vue_type_template_id_3b876d4a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Payrolls.vue?vue&type=template&id=3b876d4a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Payrolls/Payrolls.vue?vue&type=template&id=3b876d4a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Payrolls_vue_vue_type_template_id_3b876d4a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Payrolls_vue_vue_type_template_id_3b876d4a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ })
+
+}]);
