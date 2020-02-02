@@ -252,13 +252,21 @@ class ApplicationController extends Controller {
 
 		if (session('admin.type') == 'Admin') {
 
-			$customers = TaxCustomers::orderBy('created_at', 'desc')->get();
+			$customers = TaxCustomers::with(['taxes' => function($tax){
+				$tax->with(['officers.detail', 'supervisor'])->whereStatus(0);
+			}])->orderBy('created_at', 'desc')->get();
+
 		} else if (session('admin.type') == 'Supervisor') {
-			$customers = TaxCustomers::whereRaw('customer_id IN (SELECT customer_id from tax_managment where supervisor_id = ?)', ['supervisor_id' => session('admin.manager_id')])->get();
+			$customers = TaxCustomers::with(['taxes' => function($tax){
+				$tax->with(['officers.detail', 'supervisor'])->whereStatus(0);
+			}])->whereRaw('customer_id IN (SELECT customer_id from tax_managment where supervisor_id = ?)', ['supervisor_id' => session('admin.manager_id')])->get();
 		} else {
-			$customers = TaxCustomers::whereRaw('customer_id IN (SELECT customer_id from tax_managment where tax_id IN (SELECT tax_id from tax_officers where officer_id = ?) )', ['officer_id' => session('admin.manager_id')])->get();
+			$customers = TaxCustomers::with(['taxes' => function($tax){
+				$tax->with(['officers.detail', 'supervisor'])->whereStatus(0);
+			}])->whereRaw('customer_id IN (SELECT customer_id from tax_managment where tax_id IN (SELECT tax_id from tax_officers where officer_id = ?) )', ['officer_id' => session('admin.manager_id')])->get();
 
 		}
+		
 		return response()->json(compact('customers'));
 	}
 	public function get_customer(Request $request) {

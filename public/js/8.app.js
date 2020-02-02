@@ -10,8 +10,6 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-var _objectSpread2;
-
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -107,94 +105,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   inject: ['generatePassword', 'loginUser'],
   data: function data() {
     return {
       // switch1: true,
+      viewTaxTeamModal: false,
       editCustomerModal: false,
       customer_id: '',
       name_english: '',
@@ -214,6 +131,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       group: '',
       incorporation_date: '',
       customField: [],
+      taxes: [],
       tableEntries: 10
     };
   },
@@ -222,143 +140,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.getCustomers();
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
-    getCustomers: 'customers/getCustomers',
-    // submit: 'customers/addCustomer',
-    update: 'customers/updateCustomer'
-  }), (_objectSpread2 = {
-    updateCustomer: function updateCustomer(e) {
-      var _this = this;
-
-      this.$validator.validateAll('editform').then(function (result) {
-        if (result) {
-          _this.$vs.loading();
-
-          var fd = new FormData(_this.$refs.editCustomerForm);
-          fd.append('gender', _this.gender);
-
-          _this.submit(fd).then(function (res) {
-            // console.log(res.data);
-            if (res.data.status == 'success') {
-              _this.password = _this.email = _this.first_name = _this.last_name = _this.zip_code = _this.city = _this.state = _this.address = _this.phone = '';
-              e.target.reset();
-
-              _this.errors.clear();
-
-              _this.editCustomerModal = false;
-
-              _this.$vs.notify({
-                title: 'Success',
-                text: 'Customer Updated Successfully',
-                color: 'success',
-                position: 'top-right'
-              });
-
-              _this.$vs.loading.close(); // this.getCustomers();
-
-            }
-
-            if (res.data.status == 'error') {
-              alert(res.data.msg);
-            }
-          });
-        }
-      });
-    },
+    getCustomers: 'customers/getCustomers'
+  }), {
     statusUpdate: function statusUpdate(id) {
-      var _this2 = this;
+      var _this = this;
 
       this.$vs.loading();
       axios.post('status-update-customer', {
         id: id
       }).then(function (res) {
-        _this2.$vs.notify({
+        _this.$vs.notify({
           title: 'Updated!...',
           text: res.data.msg,
           color: 'success',
           position: 'top-right'
         });
 
-        _this2.$vs.loading.close();
+        _this.$vs.loading.close();
       });
     },
-    addMoreFeild: function addMoreFeild() {
-      this.customField.push({
-        name: 'additional_field[]',
-        value: '',
-        type: 'text'
-      });
-    },
-    editCustomer: function editCustomer(id) {
+    viewTaxTeam: function viewTaxTeam(id) {
       var customer = this.findCustomer(id);
-      this.customer_id = customer.customer_id;
-      this.name_english = customer.name_english;
-      this.name_khmer = customer.name_khmer;
-      this.industry = customer.industry;
-      this.tax_card_num = customer.tax_card_num;
-      this.tin_no = customer.tin_no;
-      this.email = customer.email;
-      this.telephone = customer.telephone;
-      this.additional_fields = customer.additional_fields;
-      this.address = customer.address;
-      this.district = customer.district;
-      this.group = customer.group;
-      this.incorporation_date = customer.incorporation_date;
-      this.muncipality = customer.muncipality;
-      this.province = customer.province;
-      this.sangkat = customer.sangkat;
-      this.street = customer.street;
-      this.village = customer.village;
-      self = this;
-      self.customField = [];
-
-      if (customer.additional_fields != null) {
-        if (customer.additional_fields.length > 0) {
-          customer.additional_fields.map(function (val, key) {
-            self.customField.push({
-              name: 'additional_field[]',
-              value: val,
-              type: 'text'
-            });
-          });
-        }
-      }
-
-      this.editCustomerModal = true;
+      console.log(customer);
+      console.log(customer.taxes);
+      this.taxes = customer.taxes;
+      this.viewTaxTeamModal = true;
     }
-  }, _defineProperty(_objectSpread2, "updateCustomer", function updateCustomer(e) {
-    var _this3 = this;
-
-    this.$validator.validateAll('editform').then(function (result) {
-      if (result) {
-        _this3.$vs.loading();
-
-        var fd = new FormData(_this3.$refs.editCustomerForm);
-
-        _this3.update(fd).then(function (res) {
-          if (res.data.status == 'success') {
-            e.target.reset();
-
-            _this3.errors.clear();
-
-            _this3.editCustomerModal = false;
-
-            _this3.$vs.notify({
-              title: 'Success',
-              text: 'Customer Updated Successfully',
-              color: 'success',
-              position: 'top-right'
-            });
-
-            _this3.$vs.loading.close();
-
-            _this3.getCustomers();
-          }
-        });
-      }
-    });
-  }), _defineProperty(_objectSpread2, "makePassword", function makePassword() {
-    this.password = this.generatePassword();
-  }), _objectSpread2))
+  })
 });
 
 /***/ }),
@@ -538,6 +346,20 @@ var render = function() {
                                   icon: "icon-maximize-2",
                                   type: "border"
                                 }
+                              }),
+                              _vm._v(" "),
+                              _c("vs-button", {
+                                attrs: {
+                                  size: "small",
+                                  "icon-pack": "feather",
+                                  icon: "icon-users",
+                                  type: "border"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.viewTaxTeam(tr.id)
+                                  }
+                                }
                               })
                             ],
                             1
@@ -649,961 +471,166 @@ var render = function() {
       _c(
         "vs-popup",
         {
-          attrs: { active: _vm.editCustomerModal, title: "Update Customer" },
+          attrs: {
+            active: _vm.viewTaxTeamModal,
+            title: "List Of Taxes",
+            subtitle:
+              "List of supervisors and officers who are working on customer tax. "
+          },
           on: {
             "update:active": function($event) {
-              _vm.editCustomerModal = $event
+              _vm.viewTaxTeamModal = $event
             }
           }
         },
         [
-          _c(
-            "form",
-            {
-              ref: "editCustomerForm",
-              attrs: { autocomplete: "off", "data-vv-scope": "editform" },
-              on: {
-                submit: function($event) {
-                  $event.preventDefault()
-                  return _vm.updateCustomer($event)
-                }
-              }
-            },
-            [
-              _c(
-                "vs-row",
-                [
-                  _c(
-                    "vs-col",
-                    { attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" } },
-                    [
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.customer_id,
-                                expression: "customer_id"
-                              }
-                            ],
-                            attrs: {
-                              type: "hidden",
-                              name: "id",
-                              "data-vv-scope": "editform"
-                            },
-                            domProps: { value: _vm.customer_id },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.customer_id = $event.target.value
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("vs-input", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
-                            ],
-                            attrs: {
-                              name: "name_eng",
-                              "label-placeholder": "Name (English)",
-                              "data-vv-scope": "editform"
-                            },
-                            model: {
-                              value: _vm.name_english,
-                              callback: function($$v) {
-                                _vm.name_english = $$v
-                              },
-                              expression: "name_english"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("editform.name_eng"),
-                                  expression: "errors.has('editform.name_eng')"
-                                }
-                              ],
-                              staticClass: "text-danger"
-                            },
-                            [
-                              _vm._v(
-                                _vm._s(_vm.errors.first("editform.name_eng"))
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c("vs-input", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
-                            ],
-                            attrs: {
-                              name: "name_khmer",
-                              "label-placeholder": "Name (Khmer)",
-                              "data-vv-scope": "editform"
-                            },
-                            model: {
-                              value: _vm.name_khmer,
-                              callback: function($$v) {
-                                _vm.name_khmer = $$v
-                              },
-                              expression: "name_khmer"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("editform.name_khmer"),
-                                  expression:
-                                    "errors.has('editform.name_khmer')"
-                                }
-                              ],
-                              staticClass: "text-danger"
-                            },
-                            [
-                              _vm._v(
-                                _vm._s(_vm.errors.first("editform.name_khmer"))
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c("vs-input", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
-                            ],
-                            attrs: {
-                              name: "email",
-                              "label-placeholder": "Email",
-                              "data-vv-scope": "editform"
-                            },
-                            model: {
-                              value: _vm.email,
-                              callback: function($$v) {
-                                _vm.email = $$v
-                              },
-                              expression: "email"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("editform.email"),
-                                  expression: "errors.has('editform.email')"
-                                }
-                              ],
-                              staticClass: "text-danger"
-                            },
-                            [_vm._v(_vm._s(_vm.errors.first("editform.email")))]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c("vs-input", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
-                            ],
-                            attrs: {
-                              name: "telephone",
-                              "label-placeholder": "Telephone",
-                              "data-vv-scope": "editform"
-                            },
-                            model: {
-                              value: _vm.telephone,
-                              callback: function($$v) {
-                                _vm.telephone = $$v
-                              },
-                              expression: "telephone"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("editform.telephone"),
-                                  expression: "errors.has('editform.telephone')"
-                                }
-                              ],
-                              staticClass: "text-danger"
-                            },
-                            [
-                              _vm._v(
-                                _vm._s(_vm.errors.first("editform.telephone"))
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c("vs-input", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
-                            ],
-                            attrs: {
-                              name: "address",
-                              "label-placeholder": "Address",
-                              "data-vv-scope": "editform"
-                            },
-                            model: {
-                              value: _vm.address,
-                              callback: function($$v) {
-                                _vm.address = $$v
-                              },
-                              expression: "address"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("editform.address"),
-                                  expression: "errors.has('editform.address')"
-                                }
-                              ],
-                              staticClass: "text-danger"
-                            },
-                            [
-                              _vm._v(
-                                _vm._s(_vm.errors.first("editform.address"))
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c("vs-input", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
-                            ],
-                            attrs: {
-                              name: "street",
-                              "label-placeholder": "Street",
-                              "data-vv-scope": "editform"
-                            },
-                            model: {
-                              value: _vm.street,
-                              callback: function($$v) {
-                                _vm.street = $$v
-                              },
-                              expression: "street"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("editform.street"),
-                                  expression: "errors.has('editform.street')"
-                                }
-                              ],
-                              staticClass: "text-danger"
-                            },
-                            [
-                              _vm._v(
-                                _vm._s(_vm.errors.first("editform.street"))
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c("vs-input", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
-                            ],
-                            attrs: {
-                              name: "tin_no",
-                              "label-placeholder": "TIN No.",
-                              "ata-vv-scope": "editform",
-                              "data-vv-scope": "editform"
-                            },
-                            model: {
-                              value: _vm.tin_no,
-                              callback: function($$v) {
-                                _vm.tin_no = $$v
-                              },
-                              expression: "tin_no"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("editform.tin_no"),
-                                  expression: "errors.has('editform.tin_no')"
-                                }
-                              ],
-                              staticClass: "text-danger"
-                            },
-                            [
-                              _vm._v(
-                                _vm._s(_vm.errors.first("editform.tin_no"))
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "vs-col",
-                    { attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" } },
-                    [
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c("vs-input", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
-                            ],
-                            attrs: {
-                              name: "village",
-                              "label-placeholder": "Village",
-                              "data-vv-scope": "editform"
-                            },
-                            model: {
-                              value: _vm.village,
-                              callback: function($$v) {
-                                _vm.village = $$v
-                              },
-                              expression: "village"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("editform.village"),
-                                  expression: "errors.has('editform.village')"
-                                }
-                              ],
-                              staticClass: "text-danger"
-                            },
-                            [
-                              _vm._v(
-                                _vm._s(_vm.errors.first("editform.village"))
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c("vs-input", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
-                            ],
-                            attrs: {
-                              name: "muncipality",
-                              "label-placeholder": "Muncipality",
-                              "data-vv-scope": "editform"
-                            },
-                            model: {
-                              value: _vm.muncipality,
-                              callback: function($$v) {
-                                _vm.muncipality = $$v
-                              },
-                              expression: "muncipality"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("editform.muncipality"),
-                                  expression:
-                                    "errors.has('editform.muncipality')"
-                                }
-                              ],
-                              staticClass: "text-danger"
-                            },
-                            [
-                              _vm._v(
-                                _vm._s(_vm.errors.first("editform.muncipality"))
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c("vs-input", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
-                            ],
-                            attrs: {
-                              name: "industry",
-                              "label-placeholder": "Industry",
-                              "data-vv-scope": "editform"
-                            },
-                            model: {
-                              value: _vm.industry,
-                              callback: function($$v) {
-                                _vm.industry = $$v
-                              },
-                              expression: "industry"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("editform.industry"),
-                                  expression: "errors.has('editform.industry')"
-                                }
-                              ],
-                              staticClass: "text-danger"
-                            },
-                            [
-                              _vm._v(
-                                _vm._s(_vm.errors.first("editform.industry"))
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c("vs-input", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
-                            ],
-                            attrs: {
-                              name: "district",
-                              "label-placeholder": "District",
-                              "ata-vv-scope": "editform",
-                              "data-vv-scope": "editform"
-                            },
-                            model: {
-                              value: _vm.district,
-                              callback: function($$v) {
-                                _vm.district = $$v
-                              },
-                              expression: "district"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("editform.district"),
-                                  expression: "errors.has('editform.district')"
-                                }
-                              ],
-                              staticClass: "text-danger"
-                            },
-                            [
-                              _vm._v(
-                                _vm._s(_vm.errors.first("editform.district"))
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c("vs-input", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
-                            ],
-                            attrs: {
-                              name: "province",
-                              "label-placeholder": "Province",
-                              "ata-vv-scope": "editform",
-                              "data-vv-scope": "editform"
-                            },
-                            model: {
-                              value: _vm.province,
-                              callback: function($$v) {
-                                _vm.province = $$v
-                              },
-                              expression: "province"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("editform.province"),
-                                  expression: "errors.has('editform.province')"
-                                }
-                              ],
-                              staticClass: "text-danger"
-                            },
-                            [
-                              _vm._v(
-                                _vm._s(_vm.errors.first("editform.province"))
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c("vs-input", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
-                            ],
-                            attrs: {
-                              name: "sangkat",
-                              "label-placeholder": "Sangkat",
-                              "ata-vv-scope": "editform",
-                              "data-vv-scope": "editform"
-                            },
-                            model: {
-                              value: _vm.sangkat,
-                              callback: function($$v) {
-                                _vm.sangkat = $$v
-                              },
-                              expression: "sangkat"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("editform.sangkat"),
-                                  expression: "errors.has('editform.sangkat')"
-                                }
-                              ],
-                              staticClass: "text-danger"
-                            },
-                            [
-                              _vm._v(
-                                _vm._s(_vm.errors.first("editform.sangkat"))
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c("vs-input", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
-                            ],
-                            attrs: {
-                              name: "tax_id",
-                              "label-placeholder": "Tax Id",
-                              "ata-vv-scope": "editform",
-                              "data-vv-scope": "editform"
-                            },
-                            model: {
-                              value: _vm.tax_card_num,
-                              callback: function($$v) {
-                                _vm.tax_card_num = $$v
-                              },
-                              expression: "tax_card_num"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("editform.tax_id"),
-                                  expression: "errors.has('editform.tax_id')"
-                                }
-                              ],
-                              staticClass: "text-danger"
-                            },
-                            [
-                              _vm._v(
-                                _vm._s(_vm.errors.first("editform.tax_id"))
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "vs-col",
-                    { attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" } },
-                    [
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c("vs-input", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
-                            ],
-                            attrs: {
-                              name: "group",
-                              "label-placeholder": "Group",
-                              "ata-vv-scope": "editform",
-                              "data-vv-scope": "editform"
-                            },
-                            model: {
-                              value: _vm.group,
-                              callback: function($$v) {
-                                _vm.group = $$v
-                              },
-                              expression: "group"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("editform.group"),
-                                  expression: "errors.has('editform.group')"
-                                }
-                              ],
-                              staticClass: "text-danger"
-                            },
-                            [_vm._v(_vm._s(_vm.errors.first("editform.group")))]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c("vs-input", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
-                            ],
-                            attrs: {
-                              name: "incorporation_date",
-                              "label-placeholder": "Incorporation Date",
-                              "ata-vv-scope": "editform",
-                              "data-vv-scope": "editform"
-                            },
-                            model: {
-                              value: _vm.incorporation_date,
-                              callback: function($$v) {
-                                _vm.incorporation_date = $$v
-                              },
-                              expression: "incorporation_date"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has(
-                                    "editform.incorporation_date"
-                                  ),
-                                  expression:
-                                    "errors.has('editform.incorporation_date')"
-                                }
-                              ],
-                              staticClass: "text-danger"
-                            },
-                            [
-                              _vm._v(
-                                _vm._s(
-                                  _vm.errors.first(
-                                    "editform.incorporation_date"
-                                  )
-                                )
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _vm._l(_vm.customField, function(field, index) {
-                        return _c(
-                          "div",
+          _vm._l(_vm.taxes, function(tax, taxIndex) {
+            return _vm.taxes.length > 0
+              ? _c(
+                  "div",
+                  { key: taxIndex },
+                  [
+                    _c(
+                      "vs-card",
+                      [
+                        _c(
+                          "vs-table",
                           {
-                            key: index,
-                            staticClass: "mb-2",
-                            attrs: {
-                              "vs-md": "12",
-                              "vs-lg": "4",
-                              "vs-sm": "12"
-                            }
+                            attrs: { data: tax.officers },
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "default",
+                                  fn: function(ref) {
+                                    var data = ref.data
+                                    return [
+                                      _c(
+                                        "vs-tr",
+                                        [
+                                          _c(
+                                            "vs-td",
+                                            {
+                                              attrs: {
+                                                data: "tax.supervisor.full_name"
+                                              }
+                                            },
+                                            [
+                                              _vm._v(
+                                                _vm._s(tax.supervisor.full_name)
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "vs-td",
+                                            { attrs: { data: "supervisor" } },
+                                            [_vm._v("Supervisor")]
+                                          )
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _vm._l(data, function(tr2, indextr) {
+                                        return _c(
+                                          "vs-tr",
+                                          {
+                                            key: indextr,
+                                            attrs: { data: tr2 }
+                                          },
+                                          [
+                                            _c(
+                                              "vs-td",
+                                              {
+                                                attrs: {
+                                                  data: tr2.detail.full_name
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(tr2.detail.full_name)
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "vs-td",
+                                              { attrs: { data: "officer" } },
+                                              [_vm._v("Officer")]
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      })
+                                    ]
+                                  }
+                                }
+                              ],
+                              null,
+                              true
+                            )
                           },
                           [
+                            _c("template", { slot: "header" }, [
+                              _c("h5", { staticStyle: { color: "#5b3cc4" } }, [
+                                _vm._v("Tax: ( " + _vm._s(tax.title) + " )")
+                              ]),
+                              _vm._v(" "),
+                              _c("h6", { staticStyle: { color: "#5b3cc4" } }, [
+                                _vm._v(
+                                  "created at: " +
+                                    _vm._s(
+                                      new Date(tax.created_at).toDateString()
+                                    )
+                                )
+                              ])
+                            ]),
+                            _vm._v(" "),
                             _c(
-                              "vx-input-group",
+                              "template",
+                              { slot: "thead" },
                               [
-                                _c("vs-input", {
-                                  attrs: {
-                                    type: field.text,
-                                    name: field.name,
-                                    "label-placeholder":
-                                      "Custom Field " + (index + 1)
-                                  },
-                                  model: {
-                                    value: field.value,
-                                    callback: function($$v) {
-                                      _vm.$set(field, "value", $$v)
-                                    },
-                                    expression: "field.value"
-                                  }
-                                })
+                                _c(
+                                  "vs-th",
+                                  { staticStyle: { width: "400px" } },
+                                  [_vm._v("Name")]
+                                ),
+                                _vm._v(" "),
+                                _c("vs-th", [_vm._v("Role")])
                               ],
                               1
                             )
                           ],
-                          1
+                          2
                         )
-                      })
-                    ],
-                    2
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "vs-col",
-                    { attrs: { "vs-lg": "12", "vs-md": "12", "vs-sm": "12" } },
-                    [
-                      _c("br"),
-                      _vm._v(" "),
-                      _c(
-                        "vs-button",
-                        {
-                          staticClass: "float-left",
-                          attrs: { type: "gradient", button: "button" },
-                          on: {
-                            click: function($event) {
-                              return _vm.addMoreFeild()
-                            }
-                          }
-                        },
-                        [_vm._v("Add More Custom Fields")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vs-button",
-                        {
-                          staticClass: "float-right",
-                          attrs: { button: "submit", type: "gradient" }
-                        },
-                        [_vm._v("Update Customer")]
-                      )
-                    ],
-                    1
-                  )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              : _vm._e()
+          }),
+          _vm._v(" "),
+          _vm.taxes.length <= 0
+            ? _c(
+                "div",
+                [
+                  _c("vx-card", [
+                    _c(
+                      "h4",
+                      {
+                        staticClass: "text-center",
+                        staticStyle: { color: "#5b3cc4" }
+                      },
+                      [_vm._v("Taxes not found!")]
+                    )
+                  ])
                 ],
                 1
               )
-            ],
-            1
-          )
-        ]
+            : _vm._e()
+        ],
+        2
       )
     ],
     1
