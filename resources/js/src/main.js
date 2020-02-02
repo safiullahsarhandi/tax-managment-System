@@ -42,37 +42,49 @@ import 'prismjs'
 // import 'prismjs/themes/prism-tomorrow.css'
 
 router.beforeEach((to, from, next) => {
+    if (document.querySelector('#page-click-loader') != null) {
+
+        Vue.prototype.$vs.loading({
+            background: 'transparent',
+            container: "#page-click-loader",
+            scale: 1,
+            type: 'point',
+        });
+        document.querySelector('#page-click-loader').style.display = 'block';
+    }
     if (to.meta.requiresAuth) {
+        if (typeof store.getters.userType == 'undefined') {
 
-        if (!localStorage.getItem('admin')) {
-            next({path: '/'})
+
+            store.dispatch('getLoginUser').then(res => {
+                if (to.meta.requiresAdmin == true || store.getters.userType == 'Admin') {
+                    next();
+
+                } else {
+                    next({ path: '/pages/error-404' })
+
+                }
+            });
         } else {
-          if(typeof store.getters.userType == 'undefined'){
+            if (to.meta.requiresAdmin == true || store.getters.userType == 'Admin') {
+                next();
 
-
-          store.dispatch('getLoginUser').then(res=>{
-          if(to.meta.requiresAdmin == true || store.getters.userType == 'Admin'){
-            next();
-
-            }else{
-            next({path: '/pages/error-404'})
+            } else {
+                next({ path: '/pages/error-404' })
 
             }
-          });
-          }else{
-            if(to.meta.requiresAdmin == true || store.getters.userType == 'Admin'){
-            next();
-
-            }else{
-            next({path: '/pages/error-404'})
-
-            }
-          }
         }
     } else {
         next();
     }
 })
+router.afterEach(() => {
+    setTimeout(function() {
+        Vue.prototype.$vs.loading.close('#page-click-loader > .con-vs-loading');
+        document.querySelector('#page-click-loader').style.display = 'none';
+
+    }, 1000)
+});
 
 
 window._ = require('lodash');
@@ -95,56 +107,56 @@ if (token) {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
-axios.interceptors.request.use(function (config) {
-    if((config.url === 'get-comments')){
+axios.interceptors.request.use(function(config) {
+    if ((config.url === 'get-comments')) {
 
-    Vue.prototype.$vs.loading.close();
-    }else{
-    Vue.prototype.$vs.loading();      
+        Vue.prototype.$vs.loading.close();
+    } else {
+        Vue.prototype.$vs.loading();
     }
     return config;
-  }, function (error) {
+}, function(error) {
 
     return Promise.reject(error);
-  });
+});
 
-axios.interceptors.response.use(function (response) {
-    setTimeout(function(){
-      Vue.prototype.$vs.loading.close();
-    },1000)
+axios.interceptors.response.use(function(response) {
+    setTimeout(function() {
+        Vue.prototype.$vs.loading.close();
+    }, 1000)
     return response;
-  }, function (error) {
-    
+}, function(error) {
+
     return Promise.reject(error);
-  });
+});
 Vue.config.productionTip = false
 new Vue({
-	provide(){
-		return {
-			generatePassword : this.generatePassword,
-      loginUser : this.loginUser,
-		}
-	},
+    provide() {
+        return {
+            generatePassword: this.generatePassword,
+            loginUser: this.loginUser,
+        }
+    },
     router,
     store,
     render: h => h(App),
-    async created(){
-      await this.$store.dispatch('getLoginUser')
+    async created() {
+        await this.$store.dispatch('getLoginUser')
     },
-    computed : {
-      loginUser(){
-        return this.$store.getters.userType;
-      }
+    computed: {
+        loginUser() {
+            return this.$store.getters.userType;
+        }
     },
     methods: {
-    generatePassword : function() {
-    var length = 8,
-        charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
-        retVal = "";
-    for (var i = 0, n = charset.length; i < length; ++i) {
-        retVal += charset.charAt(Math.floor(Math.random() * n));
-    }
-    return retVal;
-}
+        generatePassword: function() {
+            var length = 8,
+                charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+                retVal = "";
+            for (var i = 0, n = charset.length; i < length; ++i) {
+                retVal += charset.charAt(Math.floor(Math.random() * n));
+            }
+            return retVal;
+        }
     }
 }).$mount('#app')

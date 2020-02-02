@@ -127,6 +127,13 @@ export default [{
         icon: "UsersIcon",
         isMain : false,
     },
+    {
+        url: "/tax-parameters",
+        name: "Tax Parameters",
+        slug: "tax-parameters",
+        icon: "PercentIcon",
+        isMain : false,
+    },
     // {
     //     url: "/manage-team",
     //     name: "Our Team",

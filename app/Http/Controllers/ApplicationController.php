@@ -8,6 +8,7 @@ use App\CustomerEmployee;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\MyValueBinder;
 use App\Officer;
+use App\Parameter;
 use App\Payrolls;
 use App\Purchases;
 use App\Sales;
@@ -286,7 +287,7 @@ class ApplicationController extends Controller {
 		$customer->tax_duration = $request->tax_duration;
 		$customer->incorporation_date = $request->incorporation_date;
 
-		if($request->has('additional_field')){
+		if ($request->has('additional_field')) {
 			$customfields = $request->additional_field;
 
 			for ($i = 1; $i <= count($request->additional_field); $i++) {
@@ -297,7 +298,6 @@ class ApplicationController extends Controller {
 
 			$customer->additional_fields = $customfields;
 		}
-
 
 		$result = $customer->save();
 		return response()->json(['status' => 'success', 'customer' => $customer], 200);
@@ -386,10 +386,9 @@ class ApplicationController extends Controller {
 		return response()->json(compact('admins'));
 	}
 
-
 	public function get_member_detail($id) {
-		$member = Admin::with(['taxes'=> function($taxes){
-			$taxes->with(['tax'=>function($tax){
+		$member = Admin::with(['taxes' => function ($taxes) {
+			$taxes->with(['tax' => function ($tax) {
 				$tax->with(['supervisor', 'customer']);
 			}]);
 		}])->withCount(['taxes', 'taxes as active_taxes' => function ($q) {
@@ -398,8 +397,6 @@ class ApplicationController extends Controller {
 		return response()->json(compact('member'));
 	}
 
-
-	
 	public function add_admin(Request $request) {
 		if (Admin::where('email', $request->email)->exists()) {
 			return response()->json(['status' => 'false', 'msg' => 'account with this email already exists'], 200);
@@ -580,6 +577,7 @@ class ApplicationController extends Controller {
 		}
 
 	}
+
 	public function update_tax(Request $request) {
 
 		$tax = Tax::whereTaxId($request->tax_id)->first();
@@ -636,7 +634,10 @@ class ApplicationController extends Controller {
 		}
 		return response()->json(compact('taxes'));
 	}
-
+	public function get_parameters(Parameter $parameter) {
+		$parameters = $parameter->orderBy('status', 'desc')->orderBy('effective_date', 'asc')->get();
+		return response()->json(compact('parameters'));
+	}
 	public function get_tax(Request $request) {
 		$tax = Tax::with('supervisor', 'officers')->withCount('officers', 'sales', 'purchases', 'payrolls')->where('tax_id', $request->tax_id)->first();
 		if (session('admin.type') == 'Supervisor') {
@@ -660,7 +661,6 @@ class ApplicationController extends Controller {
 
 	public function get_edittax(Request $request) {
 		$tax = Tax::with('supervisor', 'officers')->withCount('officers', 'sales', 'purchases', 'payrolls')->where('tax_id', $request->id)->first();
-
 
 		return response()->json(compact('tax'));
 	}
@@ -1345,22 +1345,22 @@ class ApplicationController extends Controller {
 		}
 	}
 
-	public function change_password(Request $request){
+	public function change_password(Request $request) {
 
 		$id = $request->id;
 		$current_password = $request->current_password;
 		$new_password = $request->new_password;
 		$confirm_password = $request->confirm_password;
 
-		if($new_password != $confirm_password){
+		if ($new_password != $confirm_password) {
 			return response()->json(['status' => false, 'msg' => 'Confirm password mis-match']);
 		}
 
 		$getUser = Supervisor::where('manager_id', $id)->first();
 
-		if(!$check=Hash::check($current_password, $getUser->password)){
+		if (!$check = Hash::check($current_password, $getUser->password)) {
 			return response()->json(['status' => false, 'msg' => 'invalid current password']);
-		}else{
+		} else {
 
 			$getUser->password = bcrypt($new_password);
 			$getUser->save();
@@ -1368,6 +1368,49 @@ class ApplicationController extends Controller {
 
 		}
 
+	}
+	public function add_parameter(Request $request) {
+		if (Parameter::where('tax_param_id', $request->tax_code . $request->tax_id)->where('effective_date', '<=', now())->where('status', 1)->exists()) {
+			return response()->json(['status' => 'error', 'msg' => 'You cannot add new Tax Parameter until previous added parameter exeeds effective date range']);
+		}
+		$tax = new Parameter;
+		$tax->tax_param_id = $request->tax_code . $request->tax_id;
+		$tax->khmer_description = $request->description_khmer;
+		$tax->english_description = $request->description_english;
+		$tax->tax_code = $request->tax_code;
+		$tax->rate = $request->rate;
+		$tax->base_tax = $request->base_tax;
+		$tax->tax_type = $request->type;
+		$tax->effective_date = $request->effective_date;
+		$tax->amount_min = $request->amount_min;
+		$tax->amount_max = $request->amount_max;
+		$tax->remarks = $request->amount_max;
+		$save = $tax->save();
+		if ($save) {
+			return response()->json(['status' => 'success', 'msg' => 'Parameter Added Successfully'], 200);
+		}
+
+	}
+	public function update_parameter(Request $request) {
+		if (Parameter::where('tax_param_id', $request->tax_code . $request->tax_id)->where('effective_date', '<=', now())->where('id', '!=', $request->identifier)->exists()) {
+			return response()->json(['status' => 'error', 'msg' => 'You cannot add new Tax Parameter until previous added parameter exeeds effective date range']);
+		}
+		$parameter = Parameter::find($request->identifier);
+		$parameter->tax_param_id = $request->tax_code . $request->tax_id;
+		$parameter->khmer_description = $request->description_khmer;
+		$parameter->english_description = $request->description_english;
+		$parameter->tax_code = $request->tax_code;
+		$parameter->rate = $request->rate;
+		$parameter->base_tax = $request->base_tax;
+		$parameter->tax_type = $request->type;
+		$parameter->effective_date = $request->effective_date;
+		$parameter->amount_min = $request->amount_min;
+		$parameter->amount_max = $request->amount_max;
+		$parameter->remarks = $request->amount_max;
+		$save = $parameter->save();
+		if ($save) {
+			return response()->json(['status' => 'success', 'msg' => 'Parameter updated successfully', 'parameter' => $parameter], 200);
+		}
 
 	}
 }

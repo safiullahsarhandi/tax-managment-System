@@ -1,7 +1,17 @@
 <template>
     <div>
         <vx-card title="List of Customers">
-            <vs-table search pagination max-items="6" :data="customers">
+            <vs-table search pagination :max-items="tableEntries" :data="customers">
+                <template slot="header">
+                    Show
+                    <select style="width: 100px" class="vs-select--input" v-model="tableEntries">
+                        <option value="10" v-html="10"></option>
+                        <option value="25" v-html="25"></option>
+                        <option value="50" v-html="50"></option>
+                        <option value="100" v-html="100"></option>
+                    </select>
+                    Entries
+                </template>
                 <template slot="thead">
                     <vs-th>Name(English)</vs-th>
                     <vs-th>Name(Khmer)</vs-th>
@@ -185,6 +195,7 @@ export default {
             group: '',
             incorporation_date: '',
             customField:[],
+            tableEntries : 10,
 
         };
     },

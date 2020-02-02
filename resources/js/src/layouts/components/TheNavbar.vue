@@ -11,6 +11,7 @@
 
 <template>
 <div class="relative" id="navbar">
+        <div id="page-click-loader" class="vs-con-loading__container"></div>
 	<div class="vx-navbar-wrapper">
 		<vs-navbar class="vx-navbar navbar-custom" :color="navbarColor" :class="classObj">
 
@@ -251,7 +252,7 @@ export default {
                         });
                     localStorage.removeItem('admin');
                     this.$router.push({
-                        name: 'login' 
+                        name: 'pageLogin' 
                     });
                 }
             });
@@ -344,4 +345,17 @@ export default {
     #navbar .con-vs-popup .vs-popup {
         width: 460px !important;
     }
+    div#page-click-loader {
+    background: transparent;
+    width: 100px;
+    height: 100px;
+    position: fixed;
+    z-index: 99999;
+    right: 16px;
+}
+@media screen and (max-width: 768px){
+    div#page-click-loader {
+        right: 1px;
+    }
+}
 </style>

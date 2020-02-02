@@ -2,6 +2,13 @@ export default {
 	setTaxes(state,taxes){
 		state.taxes = taxes;
 	},
+	setParameters(state,parameters){
+		state.parameters = parameters;
+	},
+	setParameter(state,parameter){
+		var index = _.findIndex(state.parameters,(o)=>{ return o.id === parameter.id});
+		Vue.set(state.parameters,index,parameter);
+	},
 	setSingleTax(state,data){
 		state.tax = data.tax;
 		state.purchases_approval = data.approval_purchases;

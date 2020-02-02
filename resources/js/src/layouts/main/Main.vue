@@ -184,6 +184,7 @@ export default {
                 // console.log()
             })
             self.sidebarItems.splice(4, 1);
+            self.sidebarItems.splice(5, 1);
         
         }
         }, 1);

@@ -4,6 +4,11 @@ export default {
             commit('setTaxes', res.data.taxes)
         });
     },
+    getParameters({ commit }) {
+        axios.get('get-parameters').then(res => {
+            commit('setParameters', res.data.parameters)
+        });
+    },
     getTax({ commit }, tax_id) {
         axios.get('get-tax', { params: { tax_id: tax_id } }).then(res => {
             commit('setSingleTax', res.data)
@@ -63,6 +68,28 @@ export default {
             return res;
         });
     },
+    editParameter({ commit }, data) {
+
+        return axios.post('update-parameter', data.fd).then(res => {
+            if (res.data.status == 'error') {
+                data.notify({
+                    color: 'danger',
+                    text: res.data.msg,
+                    title: 'Oops',
+                    position: 'top-right'
+                });
+
+            } else {
+                data.notify({
+                    color: 'success',
+                    text: res.data.msg,
+                    position: 'top-right'
+                });
+            }
+            commit('setParameter',res.data.parameter)
+            return res;
+        });
+    },
     updateTeamMembers({ commit }, data) {
         return axios.post('update-tax-team', data.fd).then(res => {
             commit('setTaxTeam', res.data.team);
@@ -114,6 +141,33 @@ export default {
             }else{
                 data.notify({title:'Sorry!...',text:res.data.msg,color:'danger',position:'top-right', time: 5000});
             }
+            return res;
+        });
+    },
+
+    addParameter({ commit }, data) {
+        // alert('action called');
+        return axios.post('add-parameter', data.fd).then(res => {
+            if (res.data.status == 'error') {
+                data.notify({
+                    color: 'danger',
+                    text: res.data.msg,
+                    title: 'Oops',
+                    position: 'top-right'
+                });
+
+            } else {
+                data.notify({
+                    color: 'success',
+                    text: res.data.msg,
+                    position: 'top-right'
+                });
+            }
+            setTimeout(function() {
+                data.close();
+
+            }, 500)
+
             return res;
         });
     },
