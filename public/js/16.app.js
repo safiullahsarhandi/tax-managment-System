@@ -183,6 +183,41 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -211,32 +246,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     averageRate: function averageRate() {
       return this.$store.state.averageRate;
     },
-    non_taxable_sales: function non_taxable_sales() {
-      return this.sale.non_taxable_sales * this.averageRate;
-    },
-    non_taxable_purchases: function non_taxable_purchases() {
+    non_taxable_purchases_riel: function non_taxable_purchases_riel() {
       return this.purchase.non_taxable_purchases * this.averageRate;
     },
-    value_of_exports: function value_of_exports() {
-      return this.sale.vat * this.averageRate;
+    vat_local_usd: function vat_local_usd() {
+      return parseFloat(Math.abs(this.purchase.local_purchase_tax_val) * 0.1).toFixed(2);
     },
-    person_vat: function person_vat() {
-      return parseFloat(this.sale.taxable_person_sales * 0.1).toFixed(2);
+    vat_import_riel: function vat_import_riel() {
+      return parseFloat(this.purchase.imports_taxable_val * 0.1).toFixed(2);
     },
-    person_taxable: function person_taxable() {
-      return parseFloat(this.sale.taxable_person_sales * this.averageRate);
+    local_purchase_tax_val_reil: function local_purchase_tax_val_reil() {
+      return parseFloat(Math.abs(this.purchase.local_purchase_tax_val) * this.averageRate).toFixed(2);
     },
-    person_taxable_vat: function person_taxable_vat() {
-      return parseFloat(this.person_taxable * 0.1).toFixed(2);
+    local_purchase_tax_vat_reil: function local_purchase_tax_vat_reil() {
+      return parseFloat(Math.abs(this.local_purchase_tax_val_reil) * 0.1).toFixed(2);
     },
-    customer_vat: function customer_vat() {
-      return parseFloat(this.sale.cust_sales * 0.1).toFixed(2);
-    },
-    customer_taxable: function customer_taxable() {
-      return parseFloat(this.sale.cust_sales * this.averageRate);
-    },
-    customer_taxable_vat: function customer_taxable_vat() {
-      return parseFloat(this.customer_taxable * 0.1).toFixed(2);
+    total_vat: function total_vat() {
+      return parseFloat(this.purchase.imports_taxable_val + this.vat_import_riel + this.local_purchase_tax_val_reil + this.local_purchase_tax_vat_reil).toFixed(2) + this.non_taxable_purchases_riel;
     }
   }),
   methods: _objectSpread({
@@ -567,11 +593,11 @@ var render = function() {
                           attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
                         },
                         [
-                          _c("h6", [_vm._v("Non Taxable Purchase:")]),
+                          _c("h6", [_vm._v("Non Taxable Purchase (USD):")]),
                           _vm._v(" "),
                           _c("p", [
                             _vm._v(
-                              _vm._s(_vm.customer.non_taxable_purchases || "NA")
+                              _vm._s(_vm.customer.non_taxable_purchases || 0)
                             )
                           ])
                         ]
@@ -584,12 +610,139 @@ var render = function() {
                           attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
                         },
                         [
-                          _c("h6", [
-                            _vm._v("Non taxable Purchases x Average rate:")
-                          ]),
+                          _c("h6", [_vm._v("Non taxable Purchases (RIEL):")]),
                           _vm._v(" "),
-                          _c("p", [_vm._v(_vm._s(_vm.non_taxable_purchases))])
+                          _c("p", [
+                            _vm._v(_vm._s(_vm.non_taxable_purchases_riel))
+                          ])
                         ]
+                      ),
+                      _vm._v(" "),
+                      _c("vs-divider", { attrs: { position: "left" } }, [
+                        _c("h5", [_vm._v("Local Purchases")])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Taxable Value (USD):")]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(
+                              _vm._s(_vm.purchase.local_purchase_tax_val || 0)
+                            )
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("VAT (USD):")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.vat_local_usd))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("vs-divider", { attrs: { position: "left" } }, [
+                        _c("h5", [_vm._v("Taxable Purchases")])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "12", "vs-md": "12", "vs-sm": "12" }
+                        },
+                        [_c("h6", [_vm._v("Imports:")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Taxable Value (RIEL):")]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(_vm._s(_vm.purchase.imports_taxable_val))
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("VAT (RIEL):")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.vat_import_riel))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "12", "vs-md": "12", "vs-sm": "12" }
+                        },
+                        [_c("h6", [_vm._v("Local Purchases:")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Taxable Value (RIEL):")]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(_vm._s(_vm.local_purchase_tax_val_reil))
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("VAT (RIEL):")]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(_vm._s(_vm.local_purchase_tax_vat_reil))
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("vs-divider", { attrs: { position: "center" } }, [
+                        _c("h5", [_vm._v("Total Taxable Value:")])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5 text-center",
+                          attrs: { "vs-lg": "12", "vs-md": "12", "vs-sm": "12" }
+                        },
+                        [_c("p", [_vm._v(_vm._s(_vm.total_vat))])]
                       )
                     ],
                     1

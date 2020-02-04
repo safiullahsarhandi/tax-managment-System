@@ -46,24 +46,86 @@
         </vx-card>
         <vx-card class="mt-base" title="Managed OR Managing Taxes">
             <vs-table :data="member.taxes">
-                <template slot="thead">
+              
+              <template slot="thead">
                     <vs-th>Title</vs-th>
                     <vs-th>Duration</vs-th>
                     <vs-th>Tax Type</vs-th>
                     <vs-th>Reports To</vs-th>
                     <vs-th>Work Status</vs-th>
-                </template>
-                <template slot-scope="{data}">
-                    <vs-tr :key="tr.id" v-for="(tr,index) in data">
-                        <vs-td>{{tr.tax.title}}</vs-td>
+                    <vs-th>Work Started</vs-th>
+                    <vs-th>Last Updated</vs-th>
+              </template>
+
+              <template slot-scope="{data}">
+                <vs-tr :key="tr.id" v-for="(tr,index) in data">
+                        <vs-td style="width:150px">{{tr.tax.title}}</vs-td>
                         <vs-td>{{tr.tax.duration}}</vs-td>
                         <vs-td>{{tr.tax.type}}</vs-td>
-                        <vs-td>{{tr.tax.supervisor.full_name}}</vs-td>
+                        <vs-td style="width:150px">
+                                {{tr.tax.supervisor.full_name}}
+                            
+                        </vs-td>
                         <vs-td>{{tr.tax.status?"In Progess": "Completed"}}</vs-td>
-                    </vs-tr>
-                </template>
+                        <vs-td>{{ new Date(tr.tax.created_at).toDateString()}}</vs-td>
+                        <vs-td>{{ new Date(tr.tax.updated_at).toDateString()}}</vs-td>
+                  
+
+
+                  <template class="expand-user" slot="expand">
+                    <div class="con-expand-users">
+
+                    <vs-table id="custInfo" :data="tr.tax.customer">
+
+                      <template slot="header">
+                          <h3 style="color: #6244c7">Company / Customer</h3>
+                      </template>
+              
+                      <template slot="thead">
+                            <vs-th>Name In English</vs-th>
+                            <vs-th>Name In Khmer</vs-th>
+                            <vs-th>Email</vs-th>
+                            <vs-th>Tax Card No.</vs-th>
+                            <vs-th>TIN No.</vs-th>
+                            <vs-th>Group</vs-th>
+                            <vs-th>Industry</vs-th>
+                            <vs-th>Status</vs-th>
+                            <vs-th>Registered At</vs-th>
+                            <vs-th>Action</vs-th>
+                      </template>
+
+                      <template slot-scope="{data}">
+                          <vs-tr style="justify-content: normal;">
+                            <vs-td style="width:150px">{{tr.tax.customer.name_english}}</vs-td>
+                            <vs-td style="width:150px">{{tr.tax.customer.name_khmer}}</vs-td>
+                            <vs-td>{{tr.tax.customer.email}}</vs-td>
+                            <vs-td>{{tr.tax.customer.tax_card_num}}</vs-td>
+                            <vs-td>{{tr.tax.customer.tin_no}}</vs-td>
+                            <vs-td>{{tr.tax.customer.group}}</vs-td>
+                            <vs-td>{{tr.tax.customer.industry}}</vs-td>
+                            <vs-td>{{tr.tax.customer.status?"Active": "Deactive"}}</vs-td>
+                            <vs-td>{{ new Date(tr.tax.customer.created_at).toDateString()}}</vs-td>
+                            <vs-td>
+                            
+                                <!-- <vs-button :to="'/customer-detail/'+tr.tax.customer.customer_id" size="small" icon-pack="feather" icon="icon-maximize-2" type="border"></vs-button>  --> 
+                            
+                                <vs-button @click="customerDetail( tr.tax.customer.customer_id )" size="small" icon-pack="feather" icon="icon-maximize-2" type="border"></vs-button>
+
+                            </vs-td>
+                          </vs-tr>
+                      </template>
+                    </vs-table>
+                      
+                    </div>
+                  </template>
+
+
+                </vs-tr>
+              </template>
             </vs-table>
         </vx-card>
+
+
     </div>
 </template>
 <script>
@@ -73,12 +135,18 @@
           ...mapState('admins/',['member']),
         },
         created(){
-            this.getMemberDetail(this.$route.params.id);
+            this.getMemberDetail(this.$route.params.id).then(res=>{
+            });
         },
         methods: {
           ...mapActions({
             getMemberDetail : 'admins/getMemberDetail',
           }),
+          customerDetail(id){
+            this.$router.push({ name: 'Customer Detail', params: { id: id } });
+          }
         }
     }
 </script>
+<style type="text/css">
+</style>

@@ -2,6 +2,13 @@ export default {
 	setTaxes(state,taxes){
 		state.taxes = taxes;
 	},
+	setParameters(state,parameters){
+		state.parameters = parameters;
+	},
+	setParameter(state,parameter){
+		var index = _.findIndex(state.parameters,(o)=>{ return o.id === parameter.id});
+		Vue.set(state.parameters,index,parameter);
+	},
 	setSingleTax(state,data){
 		state.tax = data.tax;
 		state.purchases_approval = data.approval_purchases;
@@ -19,6 +26,10 @@ export default {
 	setStatus(state,data){
 		var index = _.findIndex(state.taxes,(o)=>{ return o.id === data.id});
 		state.taxes[index].status = data.status
+		// Vue.set(state.taxs,index,tax);
+	},
+	setSingleStatus(state,data){
+		state.tax.status = data.status
 		// Vue.set(state.taxs,index,tax);
 	},
 }

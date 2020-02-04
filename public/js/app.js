@@ -78588,23 +78588,19 @@ Vue.use(vue2_hammer__WEBPACK_IMPORTED_MODULE_9__["VueHammer"]); // PrismJS
  // import 'prismjs/themes/prism-tomorrow.css'
 
 _router__WEBPACK_IMPORTED_MODULE_6__["default"].beforeEach(function (to, from, next) {
+  if (document.querySelector('#page-click-loader') != null) {
+    Vue.prototype.$vs.loading({
+      background: 'transparent',
+      container: "#page-click-loader",
+      scale: 1,
+      type: 'point'
+    });
+    document.querySelector('#page-click-loader').style.display = 'block';
+  }
+
   if (to.meta.requiresAuth) {
-    if (!localStorage.getItem('admin')) {
-      next({
-        path: '/'
-      });
-    } else {
-      if (typeof _store_store__WEBPACK_IMPORTED_MODULE_7__["default"].getters.userType == 'undefined') {
-        _store_store__WEBPACK_IMPORTED_MODULE_7__["default"].dispatch('getLoginUser').then(function (res) {
-          if (to.meta.requiresAdmin == true || _store_store__WEBPACK_IMPORTED_MODULE_7__["default"].getters.userType == 'Admin') {
-            next();
-          } else {
-            next({
-              path: '/pages/error-404'
-            });
-          }
-        });
-      } else {
+    if (typeof _store_store__WEBPACK_IMPORTED_MODULE_7__["default"].getters.userType == 'undefined') {
+      _store_store__WEBPACK_IMPORTED_MODULE_7__["default"].dispatch('getLoginUser').then(function (res) {
         if (to.meta.requiresAdmin == true || _store_store__WEBPACK_IMPORTED_MODULE_7__["default"].getters.userType == 'Admin') {
           next();
         } else {
@@ -78612,11 +78608,25 @@ _router__WEBPACK_IMPORTED_MODULE_6__["default"].beforeEach(function (to, from, n
             path: '/pages/error-404'
           });
         }
+      });
+    } else {
+      if (to.meta.requiresAdmin == true || _store_store__WEBPACK_IMPORTED_MODULE_7__["default"].getters.userType == 'Admin') {
+        next();
+      } else {
+        next({
+          path: '/pages/error-404'
+        });
       }
     }
   } else {
     next();
   }
+});
+_router__WEBPACK_IMPORTED_MODULE_6__["default"].afterEach(function () {
+  setTimeout(function () {
+    Vue.prototype.$vs.loading.close('#page-click-loader > .con-vs-loading');
+    document.querySelector('#page-click-loader').style.display = 'none';
+  }, 1000);
 });
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /**
@@ -78865,6 +78875,16 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         requiresAdmin: false
       }
     }, {
+      path: '/tax-parameters',
+      name: 'Tax Parameters',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 45).then(__webpack_require__.bind(null, /*! ./views/pages/TaxParameters.vue */ "./resources/js/src/views/pages/TaxParameters.vue"));
+      },
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: false
+      }
+    }, {
       path: '/member-detail/:id',
       name: 'Member Detail',
       component: function component() {
@@ -78880,6 +78900,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     // CUSTOMER DETAIL LAYOUT ROUTES
     // =============================================================================
     path: '/customer-detail/:id',
+    name: 'Customer Detail',
     component: function component() {
       return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(2), __webpack_require__.e(23)]).then(__webpack_require__.bind(null, /*! ./layouts/main/customerMain.vue */ "./resources/js/src/layouts/main/customerMain.vue"));
     },
@@ -79136,7 +79157,8 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         return __webpack_require__.e(/*! import() */ 11).then(__webpack_require__.bind(null, /*! @/views/pages/Login.vue */ "./resources/js/src/views/pages/Login.vue"));
       },
       meta: {
-        requiresAdmin: true
+        requiresAdmin: false,
+        requiresAuth: false
       }
     }, {
       path: '/pages/error-404',
@@ -79173,8 +79195,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   getMemberDetail: function getMemberDetail(_ref2, id) {
     var commit = _ref2.commit;
-    axios.get('get-member-detail/' + id).then(function (res) {
+    return axios.get('get-member-detail/' + id).then(function (res) {
       commit('setMember', res.data.member);
+      return res;
     });
   },
   addAdmin: function addAdmin(_ref3, fd) {
@@ -80396,8 +80419,14 @@ __webpack_require__.r(__webpack_exports__);
       commit('setTaxes', res.data.taxes);
     });
   },
-  getTax: function getTax(_ref2, tax_id) {
+  getParameters: function getParameters(_ref2) {
     var commit = _ref2.commit;
+    axios.get('get-parameters').then(function (res) {
+      commit('setParameters', res.data.parameters);
+    });
+  },
+  getTax: function getTax(_ref3, tax_id) {
+    var commit = _ref3.commit;
     axios.get('get-tax', {
       params: {
         tax_id: tax_id
@@ -80406,13 +80435,13 @@ __webpack_require__.r(__webpack_exports__);
       commit('setSingleTax', res.data);
     });
   },
-  getTaxTeam: function getTaxTeam(_ref3, tax_id) {
+  getTaxTeam: function getTaxTeam(_ref4, tax_id) {
     var commit;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getTaxTeam$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            commit = _ref3.commit;
+            commit = _ref4.commit;
             _context.next = 3;
             return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios.get('get-tax-team', {
               params: {
@@ -80430,8 +80459,8 @@ __webpack_require__.r(__webpack_exports__);
       }
     });
   },
-  addTax: function addTax(_ref4, data) {
-    var commit = _ref4.commit;
+  addTax: function addTax(_ref5, data) {
+    var commit = _ref5.commit;
     // alert('action called');
     return axios.post('add-tax', data.fd).then(function (res) {
       if (res.data.status == 'error') {
@@ -80455,15 +80484,51 @@ __webpack_require__.r(__webpack_exports__);
       return res;
     });
   },
-  updateTax: function updateTax(_ref5, fd) {
-    var commit = _ref5.commit;
-    return axios.post('update-tax', fd).then(function (res) {
-      commit('setEmployee', res.data.employee);
+  editTax: function editTax(_ref6, data) {
+    var commit = _ref6.commit;
+    return axios.post('update-tax', data.fd).then(function (res) {
+      if (res.data.status == 'error') {
+        data.notify({
+          color: 'danger',
+          text: res.data.msg,
+          title: 'Oops',
+          position: 'top-right'
+        });
+      } else {
+        data.notify({
+          color: 'success',
+          text: res.data.msg,
+          position: 'top-right'
+        });
+      }
+
       return res;
     });
   },
-  updateTeamMembers: function updateTeamMembers(_ref6, data) {
-    var commit = _ref6.commit;
+  editParameter: function editParameter(_ref7, data) {
+    var commit = _ref7.commit;
+    return axios.post('update-parameter', data.fd).then(function (res) {
+      if (res.data.status == 'error') {
+        data.notify({
+          color: 'danger',
+          text: res.data.msg,
+          title: 'Oops',
+          position: 'top-right'
+        });
+      } else {
+        data.notify({
+          color: 'success',
+          text: res.data.msg,
+          position: 'top-right'
+        });
+      }
+
+      commit('setParameter', res.data.parameter);
+      return res;
+    });
+  },
+  updateTeamMembers: function updateTeamMembers(_ref8, data) {
+    var commit = _ref8.commit;
     return axios.post('update-tax-team', data.fd).then(function (res) {
       commit('setTaxTeam', res.data.team);
       setTimeout(function () {
@@ -80472,26 +80537,37 @@ __webpack_require__.r(__webpack_exports__);
       return res;
     });
   },
-  statusUpdate: function statusUpdate(_ref7, data) {
-    var commit = _ref7.commit;
+  statusUpdate: function statusUpdate(_ref9, data) {
+    var commit = _ref9.commit;
     axios.post('status-update-tax', {
       id: data.id
     }).then(function (res) {
-      data.notify({
-        title: 'Updated!...',
-        text: res.data.msg,
-        color: 'success',
-        position: 'top-right'
-      });
-      commit('setStatus', {
+      if (res.data.status) {
+        data.notify({
+          title: 'Updated!...',
+          text: res.data.msg,
+          color: 'success',
+          position: 'top-right'
+        });
+      } else {
+        data.notify({
+          title: 'Oops!...',
+          text: res.data.msg,
+          color: 'danger',
+          position: 'top-right',
+          fixed: true
+        });
+      }
+
+      commit('setSingleStatus', {
         id: data.id,
         status: res.data.tax.status
       });
       data.close();
     });
   },
-  statusUpdateSPP: function statusUpdateSPP(_ref8, data) {
-    var commit = _ref8.commit;
+  statusUpdateSPP: function statusUpdateSPP(_ref10, data) {
+    var commit = _ref10.commit;
     return axios.post('status-update-spp', {
       id: data.id,
       tax_id: data.tax_id,
@@ -80517,8 +80593,8 @@ __webpack_require__.r(__webpack_exports__);
       return res;
     });
   },
-  statusChangeManagment: function statusChangeManagment(_ref9, data) {
-    var commit = _ref9.commit;
+  statusChangeManagment: function statusChangeManagment(_ref11, data) {
+    var commit = _ref11.commit;
     return axios.post('status-change-management', {
       id: data.id,
       by: data.by,
@@ -80543,6 +80619,31 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
 
+      return res;
+    });
+  },
+  addParameter: function addParameter(_ref12, data) {
+    var commit = _ref12.commit;
+    // alert('action called');
+    return axios.post('add-parameter', data.fd).then(function (res) {
+      if (res.data.status == 'error') {
+        data.notify({
+          color: 'danger',
+          text: res.data.msg,
+          title: 'Oops',
+          position: 'top-right'
+        });
+      } else {
+        data.notify({
+          color: 'success',
+          text: res.data.msg,
+          position: 'top-right'
+        });
+      }
+
+      setTimeout(function () {
+        data.close();
+      }, 500);
       return res;
     });
   }
@@ -80571,6 +80672,21 @@ __webpack_require__.r(__webpack_exports__);
   },
   supervisor: function supervisor(state) {
     return state.tax.supervisor;
+  },
+  getParameter: function getParameter(state) {
+    return function (param) {
+      var paramType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'index';
+
+      if (paramType == 'index') {
+        return state.parameters[param];
+      } else {
+        var index = _.findIndex(state.parameters, function (o) {
+          return o.id === param;
+        });
+
+        return state.parameters[index];
+      }
+    };
   }
 });
 
@@ -80588,6 +80704,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   setTaxes: function setTaxes(state, taxes) {
     state.taxes = taxes;
+  },
+  setParameters: function setParameters(state, parameters) {
+    state.parameters = parameters;
+  },
+  setParameter: function setParameter(state, parameter) {
+    var index = _.findIndex(state.parameters, function (o) {
+      return o.id === parameter.id;
+    });
+
+    Vue.set(state.parameters, index, parameter);
   },
   setSingleTax: function setSingleTax(state, data) {
     state.tax = data.tax;
@@ -80611,6 +80737,9 @@ __webpack_require__.r(__webpack_exports__);
     });
 
     state.taxes[index].status = data.status; // Vue.set(state.taxs,index,tax);
+  },
+  setSingleStatus: function setSingleStatus(state, data) {
+    state.tax.status = data.status; // Vue.set(state.taxs,index,tax);
   }
 });
 
@@ -80631,7 +80760,8 @@ __webpack_require__.r(__webpack_exports__);
   purchases_approval: 0,
   sales_approval: 0,
   payrolls_approval: 0,
-  tax_team: []
+  tax_team: [],
+  parameters: []
 });
 
 /***/ }),
@@ -80785,16 +80915,13 @@ var actions = {
   },
   saveComment: function saveComment(_ref13, data) {
     var commit = _ref13.commit;
-    console.log(data);
     axios.post('send-comment', {
       comment: data.comment,
       type: data.type,
       object_id: data.object_id,
       senderType: data.userType,
       sender: data.loginUser
-    }).then(function (res) {
-      commit('setComments');
-      data.scrollToEnd();
+    }).then(function (res) {// commit('setComments');
     });
   }
 };

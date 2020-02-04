@@ -1,11 +1,22 @@
 <template>
     <div>
         <vx-card title="List of Customers">
-            <vs-table search pagination max-items="6" :data="customers">
+            <vs-table search pagination :max-items="tableEntries" :data="customers">
+                <template slot="header">
+                    Show
+                    <select style="width: 100px" class="vs-select--input" v-model="tableEntries">
+                        <option value="10" v-html="10"></option>
+                        <option value="25" v-html="25"></option>
+                        <option value="50" v-html="50"></option>
+                        <option value="100" v-html="100"></option>
+                    </select>
+                    Entries
+                </template>
                 <template slot="thead">
                     <vs-th>Name(English)</vs-th>
                     <vs-th>Name(Khmer)</vs-th>
                     <vs-th>Industy / Sector</vs-th>
+                    <vs-th>Tax Duration</vs-th>
                     <vs-th>Tax ID</vs-th>
                     <vs-th>TIN # </vs-th>
                     <vs-th>Email</vs-th>
@@ -19,6 +30,7 @@
                         <vs-td :data="tr.name_english">{{tr.name_english}}</vs-td>
                         <vs-td :data="tr.name_khmer">{{tr.name_khmer}}</vs-td>
                         <vs-td :data="tr.industry">{{tr.industry}}</vs-td>
+                        <vs-td :data="tr.id">{{tr.tax_duration}}</vs-td>
                         <vs-td :data="tr.tax_card_num">{{tr.tax_card_num}}</vs-td>
                         <vs-td :data="tr.tin_no">{{tr.tin_no}}</vs-td>
                         <vs-td :data="tr.email">{{tr.email}}</vs-td>
@@ -103,6 +115,7 @@ export default {
             incorporation_date: '',
             customField:[],
             taxes : [],
+            tableEntries : 10,
 
         };
     },

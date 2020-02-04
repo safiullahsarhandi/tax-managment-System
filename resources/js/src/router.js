@@ -146,6 +146,16 @@ const router = new Router({
                     }
                 },
                 {
+                    path: '/tax-parameters',
+                    name: 'Tax Parameters',
+                    component: () => import('./views/pages/TaxParameters.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: false,
+                        
+                    }
+                },
+                {
                     path: '/member-detail/:id',
                     name: 'Member Detail',
                     component: () => import('./views/pages/MemberDetail.vue'),
@@ -161,6 +171,7 @@ const router = new Router({
             // CUSTOMER DETAIL LAYOUT ROUTES
             // =============================================================================
             path: '/customer-detail/:id',
+            name: 'Customer Detail',
             component: () => import('./layouts/main/customerMain.vue'),
             props: true,
             meta : {
@@ -393,7 +404,8 @@ const router = new Router({
                     name: 'pageLogin',
                     component: () => import('@/views/pages/Login.vue'),
                     meta: {
-                        requiresAdmin: true,
+                        requiresAdmin: false,
+                        requiresAuth : false,
                     }
                 },
                 {

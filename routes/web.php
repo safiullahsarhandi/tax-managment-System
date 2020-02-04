@@ -56,10 +56,15 @@ Route::group(['prefix' => ''], function () {
 
 	// Tax
 	Route::post('add-tax', 'ApplicationController@add_tax');
+	Route::post('add-parameter', 'ApplicationController@add_parameter');
+	Route::post('update-parameter', 'ApplicationController@update_parameter');
+	Route::post('update-tax', 'ApplicationController@update_tax');
 	Route::get('get-taxes', 'ApplicationController@get_taxes');
+	Route::get('get-parameters', 'ApplicationController@get_parameters');
 	Route::get('get-tax', 'ApplicationController@get_tax');
 	Route::get('get-tax-team', 'ApplicationController@get_tax_team');
 	Route::post('update-tax-team', 'ApplicationController@update_tax_team');
+	Route::post('tax/get-tax', 'ApplicationController@get_edittax');
 
 	Route::post('update-tax', 'ApplicationController@update_tax');
 	Route::post('status-update-tax', 'ApplicationController@status_update_tax');
@@ -105,6 +110,8 @@ Route::group(['prefix' => ''], function () {
 	Route::post('status-change-management', 'ApplicationController@status_change_management');
 
 	Route::get('logout', 'ApplicationController@logout');
+
+	Route::post('change-password', 'ApplicationController@change_password');
 
 });
 Route::get('/{any}', 'ApplicationController')->where('any', '.*');

@@ -5,4 +5,5 @@ export default {
 	sales_approval : 0,
 	payrolls_approval : 0,
 	tax_team : [],
+	parameters : [],
 }

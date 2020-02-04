@@ -44,6 +44,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -171,14 +176,19 @@ __webpack_require__.r(__webpack_exports__);
     },
     sendComment: function sendComment(e) {
       var data = {
-        comment: e.target.value,
+        comment: this.textMsg,
         object_id: this.object_id,
         type: this.type,
         scrollToEnd: this.scrollToEnd,
         userType: this.userType,
         loginUser: localStorage.getItem('admin')
       };
-      this.$store.dispatch('saveComment', data);
+
+      if (this.textMsg.trim() != '') {
+        this.$store.dispatch('saveComment', data);
+        this.textMsg = '';
+        this.scrollToEnd();
+      }
     },
     updatePrimaryColor: function updatePrimaryColor(color) {
       this.primaryColor = color;
@@ -193,6 +203,7 @@ __webpack_require__.r(__webpack_exports__);
         var container = _this.$el.querySelector('.ps-container');
 
         container.scrollTop = container.scrollHeight;
+        console.log(container.scrollHeight);
       }, 0);
     }
   },
@@ -334,46 +345,58 @@ var render = function() {
                       "ul",
                       { ref: "chatLog" },
                       _vm._l(_vm.comments, function(msg, index) {
-                        return _c(
-                          "li",
-                          {
-                            key: index,
-                            staticClass: "flex items-start",
-                            class: {
-                              "flex-row-reverse": _vm.commentedBy(
-                                msg.member_id
-                              ),
-                              "mt-4": index
-                            }
-                          },
-                          [
-                            _c("vs-avatar", {
-                              staticClass: "m-0 flex-shrink-0",
-                              class: _vm.commentedBy(msg.member_id)
-                                ? "ml-3"
-                                : "mr-3",
-                              attrs: { size: "40px" }
-                            }),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "msg relative bg-white shadow-md py-3 px-4 mb-2 rounded-lg max-w-md",
-                                class: {
-                                  "chat-sent-msg bg-primary-gradient text-white": _vm.commentedBy(
-                                    msg.member_id
-                                  ),
-                                  "border border-solid d-theme-border-grey-light": !_vm.commentedBy(
-                                    msg.member_id
-                                  )
+                        return _c("li", { key: index }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "flex items-start",
+                              class: {
+                                "flex-row-reverse": _vm.commentedBy(
+                                  msg.member_id
+                                ),
+                                "mt-4": index
+                              }
+                            },
+                            [
+                              _c("vs-avatar", {
+                                staticClass: "m-0 flex-shrink-0",
+                                class: _vm.commentedBy(msg.member_id)
+                                  ? "ml-3"
+                                  : "mr-3",
+                                attrs: {
+                                  text: msg.member_info.full_name,
+                                  size: "40px"
                                 }
-                              },
-                              [_c("span", [_vm._v(_vm._s(msg.comment))])]
-                            )
-                          ],
-                          1
-                        )
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "msg relative bg-white shadow-md py-3 px-4 rounded-lg max-w-md",
+                                  class: {
+                                    "chat-sent-msg bg-primary-gradient text-white": _vm.commentedBy(
+                                      msg.member_id
+                                    ),
+                                    "border border-solid d-theme-border-grey-light": !_vm.commentedBy(
+                                      msg.member_id
+                                    )
+                                  }
+                                },
+                                [_c("span", [_vm._v(_vm._s(msg.comment))])]
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "p-0 text-right" }, [
+                            _vm._v(_vm._s(msg.member_info.full_name))
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "p-0 text-right" }, [
+                            _vm._v(_vm._s(msg.created_at))
+                          ])
+                        ])
                       }),
                       0
                     )

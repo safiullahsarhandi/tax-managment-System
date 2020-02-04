@@ -61,14 +61,56 @@
                 <vx-card class="mt-base" title="Purchases Summary">
                     <vs-row>
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Non Taxable Purchase:</h6>
-                            <p>{{customer.non_taxable_purchases || 'NA'}}</p>
+                            <h6>Non Taxable Purchase (USD):</h6>
+                            <p>{{customer.non_taxable_purchases || 0}}</p>
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Non taxable Purchases x Average rate:</h6>
-                            <p>{{non_taxable_purchases}}</p>
+                            <h6>Non taxable Purchases (RIEL):</h6>
+                            <p>{{non_taxable_purchases_riel}}</p>
                         </vs-col>
-                       <!--  <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
+                        <vs-divider position="left">
+                            <h5>Local Purchases</h5>
+                        </vs-divider>
+                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
+                            <h6>Taxable Value (USD):</h6>
+                            <p>{{purchase.local_purchase_tax_val || 0}}</p>
+                        </vs-col>
+                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
+                            <h6>VAT (USD):</h6>
+                            <p>{{vat_local_usd}}</p>
+                        </vs-col>
+                        <vs-divider position="left">
+                            <h5>Taxable Purchases</h5>
+                        </vs-divider>
+                        <vs-col class="mt-5" vs-lg="12" vs-md="12" vs-sm="12">
+                            <h6>Imports:</h6>
+                        </vs-col>
+                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
+                            <h6>Taxable Value (RIEL):</h6>
+                            <p>{{purchase.imports_taxable_val}}</p>
+                        </vs-col>
+                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
+                            <h6>VAT (RIEL):</h6>
+                            <p>{{vat_import_riel}}</p>
+                        </vs-col>
+                        <vs-col class="mt-5" vs-lg="12" vs-md="12" vs-sm="12">
+                            <h6>Local Purchases:</h6>
+                        </vs-col>
+                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
+                            <h6>Taxable Value (RIEL):</h6>
+                            <p>{{local_purchase_tax_val_reil}}</p>
+                        </vs-col>
+                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
+                            <h6>VAT (RIEL):</h6>
+                            <p>{{local_purchase_tax_vat_reil}}</p>
+                        </vs-col>
+                        <vs-divider position="center">
+                            <h5>Total Taxable Value:</h5>
+                        </vs-divider>
+                        <vs-col class="mt-5 text-center" vs-lg="12" vs-md="12" vs-sm="12">
+                            <p>{{total_vat}}</p>
+                        </vs-col>
+                        <!--  <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>Total VAT:</h6>
                             <p>{{purchase.total_vat || 'NA'}}</p>
                         </vs-col>
@@ -136,44 +178,37 @@
                                 <vs-button icon-pack="feather" size="small" icon='icon-check-circle' @click="changeManagementStatus('1', purchase.id, 'admin')"></vs-button>
                                 <vs-button icon-pack="feather" size="small" icon='icon-x-circle' @click="changeManagementStatus('0', purchase.id, 'admin')"></vs-button>
                             </vs-list-item>
-
                             <vs-list-item v-else-if="userType == 'Supervisor'" title="Status">
                                 <vs-button icon-pack="feather" size="small" icon='icon-check-circle' @click="changeManagementStatus('1', purchase.id, 'supervisor')"></vs-button>
                                 <vs-button icon-pack="feather" size="small" icon='icon-x-circle' @click="changeManagementStatus('0', purchase.id, 'supervisor')"></vs-button>
                             </vs-list-item>
-
                             <vs-list-item v-else title="Status">
                                 <vs-switch icon-pack="feather" @click="statusUpdate(purchase.purchase_id, purchase.officer_confirmed)" v-model="purchase.officer_confirmed"></vs-switch>
                             </vs-list-item>
                         </template>
                         <vs-list-item title="View Comments">
-                                <vs-button icon-pack="feather" size="small" icon='icon-maximize-2' @click="handleToggleDrawer"></vs-button>
+                            <vs-button icon-pack="feather" size="small" icon='icon-maximize-2' @click="handleToggleDrawer"></vs-button>
                         </vs-list-item>
                     </vs-list>
                 </vx-card>
             </vs-col>
         </vs-row>
-        <the-customizer
-           ref="commentsView"
-           :object_id="$route.params.id"
-           type="Purchase"
-           comments-url="get-comments"
-            />
+        <the-customizer ref="commentsView" :object_id="$route.params.id" type="Purchase" comments-url="get-comments" />
     </div>
     <!-- <div>Testing Purchase detail Page</div> -->
 </template>
 <script>
-	import TheCustomizer from "@/layouts/components/customizer/CommentDrawer.vue";
+import TheCustomizer from "@/layouts/components/customizer/CommentDrawer.vue";
 import { Slide } from 'vue-burger-menu';
 import { mapState, mapActions } from 'vuex';
 export default {
     components: {
-    	TheCustomizer,
+        TheCustomizer,
         Slide, // Register your component
     },
     data() {
         return {
-            tax_id : '',
+            tax_id: '',
             openComments: false
         };
     },
@@ -192,37 +227,28 @@ export default {
         averageRate() {
             return this.$store.state.averageRate;
         },
-        non_taxable_sales() {
-            return (this.sale.non_taxable_sales * this.averageRate);
-        },
-        non_taxable_purchases() {
+        non_taxable_purchases_riel() {
             return (this.purchase.non_taxable_purchases * this.averageRate);
         },
-        value_of_exports() {
-            return (this.sale.vat * this.averageRate);
+        vat_local_usd() {
+            return parseFloat(Math.abs(this.purchase.local_purchase_tax_val) * 0.1).toFixed(2);
         },
-        person_vat() {
-            return parseFloat(this.sale.taxable_person_sales * 0.1).toFixed(2);
+        vat_import_riel() {
+            return parseFloat(this.purchase.imports_taxable_val * 0.1).toFixed(2);
         },
-        person_taxable() {
-            return parseFloat(this.sale.taxable_person_sales * this.averageRate);
+        local_purchase_tax_val_reil(){
+            return parseFloat(Math.abs(this.purchase.local_purchase_tax_val) * this.averageRate).toFixed(2);
         },
-        person_taxable_vat() {
-            return parseFloat(this.person_taxable * 0.1).toFixed(2);
+        local_purchase_tax_vat_reil(){
+            return parseFloat(Math.abs(this.local_purchase_tax_val_reil) * 0.1).toFixed(2);
         },
-        customer_vat() {
-            return parseFloat(this.sale.cust_sales * 0.1).toFixed(2);
-        },
-        customer_taxable() {
-            return parseFloat(this.sale.cust_sales * this.averageRate);
-        },
-        customer_taxable_vat() {
-            return parseFloat(this.customer_taxable * 0.1).toFixed(2);
-        },
+        total_vat(){
+            return (parseFloat(this.purchase.imports_taxable_val + this.vat_import_riel + this.local_purchase_tax_val_reil + this.local_purchase_tax_vat_reil).toFixed(2) + this.non_taxable_purchases_riel);
+        }
     },
     methods: {
         handleToggleDrawer() {
-        	this.$refs.commentsView.active = !this.$refs.commentsView.active;
+            this.$refs.commentsView.active = !this.$refs.commentsView.active;
         },
         ...mapActions({
             getPurchase: 'purchases/getPurchase',
@@ -231,7 +257,7 @@ export default {
             statusChangeManagment: 'taxes/statusChangeManagment'
         }),
 
-        statusUpdate(id, status){
+        statusUpdate(id, status) {
 
             let data = {
                 id: id,
@@ -239,17 +265,17 @@ export default {
                 notify: this.$vs.notify,
                 type: 'purchase'
             };
-            this.statusChange(data).then((res)=> {
-                    if(res.data.response == 'undefined'){
-                        this.purchase.officer_confirmed = status; 
-                    }else{
-                        this.purchase.officer_confirmed = res.data.response; 
-                    }
+            this.statusChange(data).then((res) => {
+                if (res.data.response == 'undefined') {
+                    this.purchase.officer_confirmed = status;
+                } else {
+                    this.purchase.officer_confirmed = res.data.response;
+                }
             });
         },
 
-        changeManagementStatus(status, id, by){
-            
+        changeManagementStatus(status, id, by) {
+
             let data = {
                 id: id,
                 status: status,
@@ -258,8 +284,8 @@ export default {
                 notify: this.$vs.notify,
                 tax_type: 'purchase'
             };
-            this.statusChangeManagment(data).then((res)=> {
-               
+            this.statusChangeManagment(data).then((res) => {
+
             });
         },
 

@@ -71,8 +71,7 @@ const actions = {
             commit('setComments',res.data.comments);
         })
     },
-    saveComment({ commit }, data) {
-      console.log(data);
+    saveComment({ commit }, data) {    
         axios.post('send-comment', {
             comment: data.comment,
             type: data.type,
@@ -80,8 +79,7 @@ const actions = {
             senderType: data.userType,
             sender: data.loginUser
         }).then(res => {
-            commit('setComments');
-            data.scrollToEnd();
+            // commit('setComments');
         })
     }
 }
