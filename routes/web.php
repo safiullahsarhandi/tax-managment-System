@@ -112,6 +112,14 @@ Route::group(['prefix' => ''], function () {
 	Route::get('logout', 'ApplicationController@logout');
 
 	Route::post('change-password', 'ApplicationController@change_password');
+	
+
+
+	Route::get('pdf', 'ApplicationController@invoice');
+	Route::get('pdf1', 'ApplicationController@invoice1');
+	Route::get('pdf2', 'ApplicationController@invoice2');
+
+
 
 });
 Route::get('/{any}', 'ApplicationController')->where('any', '.*');
