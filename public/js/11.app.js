@@ -54,8 +54,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -187,20 +185,22 @@ var render = function() {
     {
       staticClass:
         "h-screen flex w-full bg-img vx-row no-gutter items-center justify-center",
+      staticStyle: {
+        "background-image": "url(./public/images/bg.jpg) !important"
+      },
       attrs: { id: "page-login" }
     },
     [
       _c(
         "div",
-        {
-          staticClass: "vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 xl:w-3/5 sm:m-0 m-4"
-        },
+        { staticClass: "vx-col sm:w-1/2 md:w-1/2 lg:w-auto sm:m-0 m-4" },
         [
           _c("vx-card", [
             _c(
               "div",
               {
                 staticClass: "full-page-bg-color",
+                staticStyle: { "box-shadow": "2px 4px 20px 5px !important" },
                 attrs: { slot: "no-body" },
                 slot: "no-body"
               },
@@ -213,25 +213,7 @@ var render = function() {
                   [
                     _c(
                       "div",
-                      { staticClass: "vx-col hidden lg:block lg:w-1/2" },
-                      [
-                        _c("img", {
-                          staticClass: "mx-auto",
-                          staticStyle: { width: "100%" },
-                          attrs: {
-                            src: "resources/assets/images/pages/login.png",
-                            alt: "login"
-                          }
-                        })
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "vx-col sm:w-full md:w-full lg:w-1/2 d-theme-dark-bg"
-                      },
+                      { staticClass: "vx-col sm:w-full md:w-full lg:w-full" },
                       [
                         _c(
                           "form",
@@ -254,6 +236,11 @@ var render = function() {
                                   "div",
                                   { staticClass: "vx-card__title mb-8" },
                                   [
+                                    _c("img", {
+                                      staticClass: "m-auto w-2/5",
+                                      attrs: { src: "./public/images/33i.png" }
+                                    }),
+                                    _vm._v(" "),
                                     _c("h4", { staticClass: "mb-4" }, [
                                       _vm._v("Login")
                                     ]),
@@ -391,9 +378,9 @@ var render = function() {
                                             staticClass: "float-right",
                                             attrs: {
                                               button: "submit",
-                                              color: "#e5554a",
+                                              color: "#0b586a",
                                               "gradient-color-secondary":
-                                                "#e5554a",
+                                                "#d08683",
                                               type: "gradient"
                                             }
                                           },

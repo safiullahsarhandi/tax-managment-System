@@ -92,49 +92,52 @@
                     </vs-col>
                 </vs-row>
                 <br>
-                <label>Sales to Taxable Persons</label><br>
                 <vs-row>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                        <label>Sales to Taxable Persons</label> 
                         <vx-input-group>
                             <vs-input name="person_non_taxable_sales" v-validate="'decimal'" label-placeholder="Non-Taxable Sales" v-model="person_non_taxable_sales" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('person_non_taxable_sales')">{{errors.first('person_non_taxable_sales')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
-                        <vx-input-group>
-                            <vs-input disabled name="person_export_value" label-placeholder="VAT" v-model="person_export_value" />
-                        </vx-input-group>
-                        <!-- <span class="text-danger" v-show="errors.has('person_export_value')">{{errors.first('person_export_value')}}</span> -->
-                    </vs-col>
-                </vs-row>
-                <br>
-                <label>Sales to Customers</label><br>
-                <vs-row>
-                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                        <label>Sales to Customers</label><br>
                         <vx-input-group>
                             <vs-input name="customer_non_taxable_sales" v-validate="'decimal'" label-placeholder="Non-Taxable Sales" v-model="customer_non_taxable_sales" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('customer_non_taxable_sales')">{{errors.first('customer_non_taxable_sales')}}</span>
                     </vs-col>
-                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
-                        <vx-input-group>
-                            <vs-input disabled name="customer_export_value" label-placeholder="VAT" v-model="customer_export_value" />
-                        </vx-input-group>
-                        <!-- <span class="text-danger" v-show="errors.has('customer_export_value')">{{errors.first('customer_export_value')}}</span> -->
-                    </vs-col>
-                </vs-row>
-                <vs-row>
-                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                    <vs-col class="mt-5" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
                             <vs-input disabled name="total_taxable_value" label-placeholder="Total Taxable Value" v-model="total_taxable_value" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('total_taxable_value')">{{errors.first('total_taxable_value')}}</span>
                     </vs-col>
+                    <!-- <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                        <vx-input-group>
+                            <vs-input disabled name="person_export_value" label-placeholder="VAT" v-model="person_export_value" />
+                        </vx-input-group>
+                    </vs-col> -->
+                </vs-row>
+                <vs-divider>Tax Parameters</vs-divider>
+                <vs-row>
+                    <vs-col vs-lg="12" vs-md="12" vs-sm="12" vs-xs="12" class="flex justify-end">
+                        <vs-button @click="calculateTaxParams" type="border" icon="icon-refresh-ccw" icon-pack="feather"></vs-button>
+                    </vs-col>
+                    <vs-col v-for="(param,index) in params" :key="index" vs-md="12" vs-lg="4" vs-sm="12">
+                        <vx-input-group>
+                            <vs-input disabled name="param" :label-placeholder="param.tax_param_id" v-model="param.calculated_val" />
+                        </vx-input-group>
+                        <!-- <span class="text-danger" v-show="errors.has('total_taxable_value')">{{errors.first('total_taxable_value')}}</span> -->
+                    </vs-col>
                 </vs-row>
                 <vs-row>
-                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                    <vs-col class="mt-5" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="item_subject_taxes" v-validate="`required`" label-placeholder="Item subject to taxes:" v-model="item_subject_taxes" />
+                            <vs-select width="100%" label-placeholder="Item subject to taxes" multiple v-model='params' @input="getSelected" name="params">
+                                <vs-select-item :disabled="param.tax_code == 'PPT' || param.tax_code == 'VAT'"  v-for="(param,index) in parameters" :key="index" :text="param.tax_param_id" :value="param"></vs-select-item>
+                            </vs-select>
+                            <!-- <vs-input name="item_subject_taxes" v-validate="`required`" label-placeholder="Item subject to taxes:" v-model="item_subject_taxes" /> -->
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('item_subject_taxes')">{{errors.first('item_subject_taxes')}}</span>
                     </vs-col>
@@ -209,7 +212,9 @@ export default {
             comments_for_top: '',
             tax_id: '',
             customer_id: '',
-            multipleRoute: ''
+            multipleRoute: '',
+            params : [],
+            totalVat : 0,
         };
     },
     components: {
@@ -217,49 +222,31 @@ export default {
     },
     computed : {
         ...mapState('customers',['customer']),
+        ...mapState('taxes', ['parameters']),
         averageRate(){
             return this.$store.state.averageRate;
         }
     },
     watch: {
       person_non_taxable_sales(val, oldVal){
-        if(parseInt(val) >= 0){
-
-        this.person_export_value = parseFloat(val * 0.1).toFixed(2)
-        // this.total_taxable_value += (taxable_value + (taxable_value * 0.1));
-        }else{
-        this.person_export_value = 0   
-        }
-        this.setTotalVat()
+        this.setTotalVat();
+        this.setTotalTaxableValue()
 
       },
       customer_non_taxable_sales(val, oldVal){
-        if(parseInt(val) >= 0){
 
-        this.customer_export_value = parseFloat(val * 0.1).toFixed(2)
-        var taxable_value = (val * this.averageRate);
-        // this.total_taxable_value += (taxable_value + (taxable_value * 0.1));
-        }else{
-        this.customer_export_value = 0   
-        }
-        this.setTotalVat()
+        this.setTotalVat();
+        this.setTotalTaxableValue()
 
       },
       non_taxable_sales(val, oldVal){
-        if(parseInt(val) >= 0){
 
-        var non_taxable_value = (val * this.averageRate);
-        }
-        this.setTotalVat()
+        this.setTotalTaxableValue()
 
       },
       export_value(val, oldVal){
-        if(parseInt(val) >= 0){
-
-        var non_taxable_value = (val * this.averageRate);
-        // this.total_taxable_value += (non_taxable_value);
-        }
-        this.setTotalVat()
+        
+        this.setTotalTaxableValue()
       }
     },
     created() {
@@ -277,24 +264,69 @@ export default {
         loginUserId = this.$store.state.AppActiveUser.manager_id;
         // console.log(loginUserId)
         this.multipleRoute = 'add-multiple-sales/' + this.customer_id + '/' + this.tax_id + '/' + loginUsertype + '/' + loginUserId;
+        var self = this;
+        this.getParameters().then(function(){
+        _.each(self.parameters,(o)=>{
+            if(o.tax_code == 'PPT' || o.tax_code == 'VAT'){
+                self.params.push(o)
+            }
+        });
+        });
     },
     methods: {
         setTotalVat(){
-            var taxable_value = (this.person_non_taxable_sales * this.averageRate);
+            this.totalVat = this.customer_non_taxable_sales + this.person_non_taxable_sales;
+        },
+        setTotalTaxableValue(){
+            /*var taxable_value = (this.person_non_taxable_sales * this.averageRate);
             var person_non_taxable_val = (taxable_value + (taxable_value * 0.1));
 
             var taxable_value = (this.customer_non_taxable_sales * this.averageRate);
             var customer_non_taxable_val = (taxable_value + (taxable_value * 0.1));
 
             var non_taxable_sale = (this.non_taxable_sales * this.averageRate);
-            var export_value = (this.export_value * this.averageRate);
+            var export_value = (this.export_value * this.averageRate);*/
 
-            this.total_taxable_value = person_non_taxable_val + customer_non_taxable_val + non_taxable_sale + export_value;
+            // end
+
+            /*var person_non_taxable_val = ();
+            var person_non_taxable_val = (taxable_value + (taxable_value * 0.1));
+
+            var taxable_value = ( * this.averageRate);
+            var customer_non_taxable_val = (taxable_value + (taxable_value * 0.1));
+
+            var non_taxable_sale = ( * this.averageRate);
+            var export_value = ( * this.averageRate);*/
+
+            this.total_taxable_value = ( ( this.person_non_taxable_sales + this.customer_non_taxable_sales + this.non_taxable_sales + this.export_value) * this.averageRate);
 
 
         },
+        calculateTaxParams(){
+            _.each(this.params,(o)=>{
+
+            if(o.tax_code == 'PPT'){
+                o.calculated_val = Math.round((this.total_taxable_value * o.base_tax) * o.rate);
+
+            }else if (o.tax_code == 'VAT') {
+                o.calculated_val = ((this.totalVat * this.averageRate) * o.rate);
+            }
+        })
+        },
         showUploader() {
             this.$refs.multiUploads.isShown = true;
+        },
+        checkSelectedValues(param){
+            return true;
+        },
+        getSelected(values){
+            var selectedTaxes = _.filter(values,(o)=>{
+            if(o.tax_code == 'PPT' || o.tax_code == 'VAT'){
+                return o;
+            } 
+            });
+            // console.log(selectedTaxes);
+
         },
         addMoreFeild() {
             this.customField.push({ name: 'additional_field[]', value: '', type: 'text' });
@@ -318,7 +350,8 @@ export default {
         },
         ...mapActions({
             submit: 'sales/addSale',
-            getCustomer : 'customers/getCustomer'
+            getCustomer : 'customers/getCustomer',
+            getParameters : 'taxes/getParameters',
         }),
 
         addForm(e) {

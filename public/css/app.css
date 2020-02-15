@@ -1,22 +1,4 @@
 @import url(https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700);/*=========================================================================================
-  File Name: app.scss
-  Description: Write your custom scss
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuesax Admin - VueJS Dashboard Admin Template
-  Author: Pixinvent
-  Author URL: hhttp://www.themeforest.net/user/pixinvent
-==========================================================================================*/
-
-/*=========================================================================================
-  File Name: main.scss
-  Description: Main scss file. Imports other scss partials from 'vuesax' folder
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuesax Admin - VueJS Dashboard Admin Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
-
-/*=========================================================================================
     File Name: _variables.scss
     Description: partial- SCSS varibales
     ----------------------------------------------------------------------------------------
@@ -31,6 +13,7 @@
 
 /*========================================================
         COLORS
+linear-gradient(30deg, #0b586a 0%, #d08683 100%)
 =========================================================*/
 
 /*========================================================
@@ -343,6 +326,7 @@ div[id$="demo"] .vx-card:not(:last-of-type) {
 
 /*========================================================
         COLORS
+linear-gradient(30deg, #0b586a 0%, #d08683 100%)
 =========================================================*/
 
 /*========================================================
@@ -909,6 +893,7 @@ ol {
 
 /*========================================================
         COLORS
+linear-gradient(30deg, #0b586a 0%, #d08683 100%)
 =========================================================*/
 
 /*========================================================
@@ -1210,7 +1195,7 @@ ol {
 }
 
 .vs__dropdown-option--highlight {
-  background: #7367F0;
+  background: #0b586a;
   color: #fff;
 }
 
@@ -1397,6 +1382,7 @@ ol {
 
 /*========================================================
         COLORS
+linear-gradient(30deg, #0b586a 0%, #d08683 100%)
 =========================================================*/
 
 /*========================================================
@@ -1428,7 +1414,7 @@ ol {
 
 .v-context li a:focus,
 .v-context li a:hover {
-  background: #7367F0 !important;
+  background: #0b586a !important;
 }
 
 .theme-dark .v-context {
@@ -1468,6 +1454,7 @@ ol {
 
 /*========================================================
         COLORS
+linear-gradient(30deg, #0b586a 0%, #d08683 100%)
 =========================================================*/
 
 /*========================================================
@@ -1515,6 +1502,7 @@ ol {
 
 /*========================================================
         COLORS
+linear-gradient(30deg, #0b586a 0%, #d08683 100%)
 =========================================================*/
 
 /*========================================================
@@ -1569,6 +1557,7 @@ ol {
 
 /*========================================================
         COLORS
+linear-gradient(30deg, #0b586a 0%, #d08683 100%)
 =========================================================*/
 
 /*========================================================
@@ -1668,10 +1657,10 @@ ol {
 .flatpickr-calendar .flatpickr-day.selected.nextMonthDay,
 .flatpickr-calendar .flatpickr-day.startRange.nextMonthDay,
 .flatpickr-calendar .flatpickr-day.endRange.nextMonthDay {
-  background: #7367F0 !important;
+  background: #0b586a !important;
   box-shadow: none;
   color: #fff;
-  border-color: #7367F0 !important;
+  border-color: #0b586a !important;
 }
 
 .flatpickr-input {
@@ -1683,12 +1672,12 @@ ol {
 }
 
 .flatpickr-input.active {
-  border: 1px solid #7367F0;
+  border: 1px solid #0b586a;
 }
 
 .flatpickr-months .flatpickr-prev-month:hover svg,
 .flatpickr-months .flatpickr-next-month:hover svg {
-  fill: #7367F0 !important;
+  fill: #0b586a !important;
 }
 
 .theme-dark .flatpickr-calendar {
@@ -1814,7 +1803,7 @@ ol {
 }
 
 .theme-dark pre[class*="language-"] {
-  background-color: #1E1E1E;
+  background-color: #d08683;
   text-shadow: none;
 }
 
@@ -2073,7 +2062,7 @@ ol {
 }
 
 .theme-dark #todo-app .list-item-component:hover {
-  box-shadow: 0px 0 0 0px #1E1E1E;
+  box-shadow: 0px 0 0 0px #d08683;
 }
 
 .theme-dark #email-app .email__mails .email__mail-item .mail__mail-item {
@@ -2081,7 +2070,7 @@ ol {
 }
 
 .theme-dark #email-app .email__mails .email__mail-item .mail__mail-item:hover {
-  box-shadow: 10px 0 0 0px #1E1E1E;
+  box-shadow: 10px 0 0 0px #d08683;
 }
 
 .theme-dark #email-app .email__mails .email__mail-item .mail__mail-item.mail__opened-mail {
@@ -2156,7 +2145,7 @@ ol {
 }
 
 .theme-dark .vs-button-dark.vs-button-filled .vs-button--text {
-  color: #1E1E1E;
+  color: #d08683;
 }
 
 .theme-dark .demo-text-dark .vs-button-text {
@@ -3387,7 +3376,7 @@ ul.bordered-items > li:not(:last-of-type):not([class*='shadow']) {
 }
 
 .dropdown-custom .vs-dropdown--menu--after {
-  background: #7367F0 !important;
+  background: #0b586a !important;
   right: 1.6rem !important;
 }
 
@@ -3443,7 +3432,7 @@ ul.bordered-items > li:not(:last-of-type):not([class*='shadow']) {
 
 .vs-breadcrumb--ol a:focus,
 .vs-breadcrumb--ol a:hover {
-  color: #7367F0;
+  color: #0b586a;
 }
 
 .vs-tooltip {
@@ -3817,7 +3806,7 @@ i.feather {
 .vs-navbar-fund .vs-navbar--item a:hover,
 .vs-navbar-border .vs-navbar--item a:hover,
 .vs-navbar-shadow .vs-navbar--item a:hover {
-  color: #7367F0 !important;
+  color: #0b586a !important;
 }
 
 h3.vs-navbar--title {
@@ -3942,5 +3931,13 @@ button:focus {
 .vs-button.includeIcon {
   float: left !important;
   margin: 2px;
+}
+
+.vs-sidebar {
+  background: linear-gradient(30deg, #0b586a 0%, #d08683 100%) !important;
+}
+
+.vs-button-primary.vs-button-gradient {
+  background-image: linear-gradient(30deg, rgba(var(--vs-dark), 0.1), rgba(var(--vs-primary), 2.5)) !important;
 }
 

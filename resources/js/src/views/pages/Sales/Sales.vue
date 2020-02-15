@@ -69,10 +69,12 @@ export default {
     },
     computed: {
         ...mapState('sales/', ['sales']),
+      
     },
     created() {
         this.tax_id = this.$store.state.rootUrl.split('/')[2];
         this.getSales(this.tax_id);
+        
         
         if (this.$store.state.AppActiveUser.type == 'Admin') {
             this.is_admin = true;
@@ -91,7 +93,8 @@ export default {
             getSales: 'sales/getSales',
             update: 'sales/updateSales',
             statusChange: 'taxes/statusUpdateSPP',
-            statusChangeManagment: 'taxes/statusChangeManagment'
+            statusChangeManagment: 'taxes/statusChangeManagment',
+            
         }),
 
         changeManagementStatus(status, id, by){

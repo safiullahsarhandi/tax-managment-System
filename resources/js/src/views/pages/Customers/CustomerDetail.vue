@@ -44,7 +44,7 @@
                         </vs-col>
                     </vs-row>
                     <vs-row class="mt-base">
-                    	<vs-col vs-md="4" vs-lg="4" vs-sm="12" vs-xs="12">
+                        <vs-col vs-md="4" vs-lg="4" vs-sm="12" vs-xs="12">
                             <p>
                                 <label>No. Of Taxes:</label>
                                 <h4>{{customer.taxes_count}}</h4>
@@ -61,8 +61,8 @@
             </vs-col>
             <vs-col class="mt-base" vs-md="4" vs-lg="4" vs-sm="12" vs-xs="12">
                 <vx-card title="Address & Contact Info">
-                	<vs-row>
-                		<vs-col vs-md="12" vs-lg="12" vs-sm="12" vs-xs="12">
+                    <vs-row>
+                        <vs-col vs-md="12" vs-lg="12" vs-sm="12" vs-xs="12">
                             <p>
                                 <label>Address:</label>
                                 <h4>{{getAddress(customer)}}</h4>
@@ -80,27 +80,36 @@
                                 <h4>{{customer.email}}</h4>
                             </p>
                         </vs-col>
-                	</vs-row>
+                    </vs-row>
                 </vx-card>
             </vs-col>
         </vs-row>
         <vs-row>
-        	<vs-col>
-        		<vx-card class="mt-base" title="Additional Information">
-        		<vs-row>
-        			<vs-col :key="index" v-for="(info,index) in customer.additional_fields" vs-w="4" vs-sm='12' >
-        				<div>Additional info {{index + 1}}</div>
-        				<div>{{info}}</div>	
-        			</vs-col>
-        		</vs-row>	
-        		</vx-card>
-        	</vs-col>
+            <vs-col>
+                <vx-card class="mt-base" title="Additional Information">
+                    <vs-row>
+                        <vs-col :key="index" v-for="(info,index) in customer.additional_fields" vs-w="4" vs-sm='12'>
+                            <div>Additional info {{index + 1}}</div>
+                            <div>{{info}}</div>
+                        </vs-col>
+                    </vs-row>
+                </vx-card>
+            </vs-col>
+        </vs-row>
+        <vs-row>
+            <vs-col>
+                <taxes class="mt-base"></taxes>
+            </vs-col>
         </vs-row>
     </div>
 </template>
 <script>
 import { mapState, mapActions, mapGetters, mapMutations } from 'vuex';
+import Taxes from '@/views/pages/Customers/Taxes.vue';
 export default {
+    components: {
+        Taxes,
+    },
     beforeCreate() {
         localStorage.setItem('currentDetail', this.$route.fullPath);
         localStorage.setItem('customer', this.$route.params.id);
@@ -118,8 +127,8 @@ export default {
         ...mapActions({
             getCustomer: 'customers/getCustomer',
         }),
-        getAddress(customer){
-        	return customer.address+' '+customer.street+' '+customer.group+' '+customer.sangkat+' '+customer.village+' '+customer.district+' '+customer.province+' '+' '+customer.muncipality;
+        getAddress(customer) {
+            return customer.address + ' ' + customer.street + ' ' + customer.group + ' ' + customer.sangkat + ' ' + customer.village + ' ' + customer.district + ' ' + customer.province + ' ' + ' ' + customer.muncipality;
         }
     }
 }

@@ -5,9 +5,10 @@
             <div @mouseenter="sidebarMouseEntered" @mouseleave="sidebarMouseLeave">
                 <div class="header-sidebar flex items-end justify-between" slot="header">
                     <div class="logo flex items-center">
-                        <span class="logo-text" v-show="isMouseEnter || !reduce" v-if="title">{{ title }}</span>
+                        <img  :src="logo" class="w-6/12 m-auto">
+                        <!-- <span class="logo-text" v-show="isMouseEnter || !reduce" v-if="title">{{ title }}</span> -->
                     </div>
-                    <div>
+                    <div class="mb-3">
                         <template v-if="showCloseButton">
                             <feather-icon icon="XIcon" class="m-0 cursor-pointer" @click="$store.commit('TOGGLE_IS_SIDEBAR_ACTIVE', false)"></feather-icon>
                         </template>
@@ -227,5 +228,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@sass/vuesax/components/vxSidebar.scss"
+@import "@sass/vuesax/components/vxSidebar.scss";
+.main-menu-sidebar .vs-sidebar--item .router-link-active {
+    background: linear-gradient(30deg, rgba(var(--vs-primary), 1), rgba(var(--vs-dark), 0.7)) !important;
+    box-shadow: 0px 0px 10px 1px rgba(var(--vs-dark), 0.7) !important;
+    }
 </style>

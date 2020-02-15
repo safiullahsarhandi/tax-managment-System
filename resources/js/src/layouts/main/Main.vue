@@ -8,7 +8,7 @@
 ========================================================================================== -->
 <template>
     <div class="layout--main" :class="[navbarClasses, footerClasses, {'app-page': isAppPage}]">
-        <vx-sidebar :sidebarItems="sidebarItems" :logo="require('@assets/images/logo/logo.png')" title="Tax System" parent=".layout--main" />
+        <vx-sidebar :sidebarItems="sidebarItems" :logo="'./public/images/33white.png'" title="Tax System" parent=".layout--main" />
         <div id="content-area" :class="[contentAreaClass, {'show-overlay': bodyOverlay}]">
             <div id="content-overlay"></div>
             <div class="content-wrapper">

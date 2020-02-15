@@ -22,7 +22,7 @@
                         <vs-td>{{tr.status == 0? 'In progress':'Completed'}}</vs-td>
                         <vs-td>
                              <vs-button v-if="$store.getters.userType == 'Admin'" size="small" type="border" icon-pack="feather" icon="icon-edit" @click="taxEdit(tr.tax_id)"></vs-button>
-                             <vs-button size="small" type="border" icon-pack="feather" icon="icon-maximize-2" :to="'tax-collection/'+tr.tax_id"></vs-button>
+                             <vs-button size="small" type="border" icon-pack="feather" icon="icon-maximize-2" :to="'/tax-collection/'+tr.tax_id"></vs-button>
                         </vs-td>
                     </vs-tr>
                 </template>
@@ -144,6 +144,10 @@ export default {
             default_selected_officer: "",
             default_selected_supervisor: "",
             tax_customer_id: '',
+            title : '',
+            description : '',
+            duration : '',
+            supervisor : '',
         };
     },
     computed: {

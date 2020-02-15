@@ -160,7 +160,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       officer: [],
       default_selected_officer: "",
       default_selected_supervisor: "",
-      tax_customer_id: ''
+      tax_customer_id: '',
+      title: '',
+      description: '',
+      duration: '',
+      supervisor: ''
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('supervisors/', ['supervisors']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('taxes/', ['taxes']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('officers/', ['officers'])),
@@ -418,7 +422,7 @@ var render = function() {
                                   type: "border",
                                   "icon-pack": "feather",
                                   icon: "icon-maximize-2",
-                                  to: "tax-collection/" + tr.tax_id
+                                  to: "/tax-collection/" + tr.tax_id
                                 }
                               })
                             ],

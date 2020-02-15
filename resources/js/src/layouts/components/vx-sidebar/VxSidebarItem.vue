@@ -1,12 +1,3 @@
-<!-- =========================================================================================
-    File Name: VxSidebarItem.vue
-    Description: Sidebar item component. Extends vuesax framework's 'vs-sidebar-item' component
-    Component Name: VxSidebarItem
-    ----------------------------------------------------------------------------------------
-    Item Name: Vuesax Admin - VueJS Dashboard Admin Template
-      Author: Pixinvent
-    Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
 
 <template>
     <div :class="[{'vs-sidebar-item-active':activeLink}, {'disabled-item pointer-events-none': isDisabled}]" class="vs-sidebar--item">

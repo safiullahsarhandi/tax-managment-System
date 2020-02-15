@@ -7,18 +7,16 @@
     Author URL: http://www.themeforest.net/user/pixinvent
 ========================================================================================== -->
 <template>
-    <div class="h-screen flex w-full bg-img vx-row no-gutter items-center justify-center" id="page-login">
-        <div class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 xl:w-3/5 sm:m-0 m-4">
+    <div style="background-image: url(./public/images/bg.jpg) !important;" class="h-screen flex w-full bg-img vx-row no-gutter items-center justify-center" id="page-login">
+        <div class="vx-col sm:w-1/2 md:w-1/2 lg:w-auto sm:m-0 m-4">
             <vx-card>
-                <div slot="no-body" class="full-page-bg-color">
+                <div style="box-shadow: 2px 4px 20px 5px !important;" slot="no-body" class="full-page-bg-color">
                     <div class="vx-row no-gutter justify-center items-center">
-                        <div class="vx-col hidden lg:block lg:w-1/2">
-                            <img style="width: 100%;" src="resources/assets/images/pages/login.png" alt="login" class="mx-auto">
-                        </div>
-                        <div class="vx-col sm:w-full md:w-full lg:w-1/2 d-theme-dark-bg">
+                        <div class="vx-col sm:w-full md:w-full lg:w-full">
                             <form ref="loginForm" autocomplete="off" @submit.prevent="onSubmit($event)">
                                 <div class="p-8">
                                     <div class="vx-card__title mb-8">
+                                        <img class="m-auto w-2/5" :src="'./public/images/33i.png'">
                                         <h4 class="mb-4">Login</h4>
                                         <p>Welcome back, please login to your account.</p>
                                     </div>
@@ -33,7 +31,7 @@
                                     <!-- <vs-button type="border">Register</vs-button> -->
                                     <vs-row>
                                         <vs-col vs-w="12">
-                                            <vs-button button="submit" color="#e5554a" gradient-color-secondary="#e5554a" type="gradient" class="float-right">Login</vs-button>
+                                            <vs-button button="submit" color="#0b586a" gradient-color-secondary="#d08683" type="gradient" class="float-right">Login</vs-button>
                                         </vs-col>
                                     </vs-row>
                                 </div>

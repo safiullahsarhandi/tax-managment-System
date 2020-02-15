@@ -29,18 +29,18 @@ export default [
     },
     {
         url: "/",
-        name: "Overview",
-        slug: "home",
-        icon: "HomeIcon",
+        name: "Taxes",
+        slug: "taxes",
+        icon: "DollarSignIcon",
         isMain : true,
     },
-    {
+    /*{
         url: "/taxes",
         name: "Taxes",
         slug: "taxes",
         icon: "DollarSignIcon",
         isMain : false,
-    },
+    },*/
     {
         url: "/employees",
         name: "Employees",

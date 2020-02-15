@@ -63,46 +63,49 @@
                     </vs-col>
                 </vs-row>
                 <br>
-                <label>Local Purchases</label><br>
                 <vs-row>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                        <label>Local Purchases</label>
                         <vx-input-group>
                             <vs-input name="taxable_value_local" label-placeholder="Taxable Value" v-model="taxable_value_local" />
                         </vx-input-group>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
-                        <vx-input-group>
-                            <vs-input disabled name="vat_local" label-placeholder="VAT" v-model="vat_local" />
-                        </vx-input-group>
-                    </vs-col>
-                </vs-row>
-                <br>
-                <label>Imports</label><br>
-                <vs-row>
-                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <!-- <label>Imports</label> -->
+                        <label>Imports</label>
                         <vx-input-group>
                             <vs-input name="taxable_value_import" label-placeholder="Taxable Value" v-model="taxable_value_import" />
                         </vx-input-group>
                     </vs-col>
-                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
-                        <vx-input-group>
-                            <vs-input disabled name="vat_import" label-placeholder="VAT" v-model="vat_import" />
-                        </vx-input-group>
-                    </vs-col>
-                </vs-row>
-                <vs-row>
-                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                    <vs-col class="mt-5" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
                             <vs-input disabled name="total_vat" data-vv-as="Total VAT" label-placeholder="Total VAT" v-model="total_vat" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('total_vat')">{{errors.first('total_vat')}}</span>
                     </vs-col>
+                    <!-- <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                        <vx-input-group>
+                            <vs-input disabled name="vat_local" label-placeholder="VAT" v-model="vat_local" />
+                        </vx-input-group>
+                    </vs-col> -->
+                </vs-row>
+                <br>
+                <vs-row>
+                    <!-- <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                        <vx-input-group>
+                            <vs-input disabled name="vat_import" label-placeholder="VAT" v-model="vat_import" />
+                        </vx-input-group>
+                    </vs-col> -->
                 </vs-row>
                 <vs-row>
-                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                </vs-row>
+                <vs-row>
+                    <vs-col class="mt-5" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="item_subject_taxes" v-validate="`required`" label-placeholder="Item subject to taxes:" v-model="item_subject_taxes" />
+                            <vs-select width="100%" placeholder="Item subject to taxes" multiple v-model='params' name="params">
+                                <vs-select-item :disabled="param.tax_code == 'PPT' || param.tax_code == 'VAT'"  v-for="(param,index) in parameters" :key="index" :text="param.tax_param_id" :value="param"></vs-select-item>
+                            </vs-select>
+                            <!-- <vs-input name="item_subject_taxes" v-validate="`required`" label-placeholder="Item subject to taxes:" v-model="item_subject_taxes" /> -->
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('item_subject_taxes')">{{errors.first('item_subject_taxes')}}</span>
                     </vs-col>
@@ -170,7 +173,8 @@ export default {
             comments_for_top: '',
             tax_id: '',
             customer_id: '',
-            multipleRoute: ''
+            multipleRoute: '',
+            params : [],
         };
     },
     components: {
@@ -194,6 +198,7 @@ export default {
     },
     computed : {
         ...mapState('customers',['customer']),
+        ...mapState('taxes', ['parameters']),
         averageRate(){
             return this.$store.state.averageRate;
         }
@@ -212,6 +217,13 @@ export default {
         }
         loginUserId = this.$store.state.AppActiveUser.manager_id;
         this.multipleRoute = 'add-multiple-purchases/' + this.customer_id + '/' + this.tax_id + '/' + loginUsertype + '/' + loginUserId;
+        this.getParameters().then(function(){
+        _.each(self.parameters,(o)=>{
+            if(o.tax_code == 'PPT' || o.tax_code == 'VAT'){
+                self.params.push(o)
+            }
+        });
+        });
     },
     methods: {
         setTotalVat(){
@@ -252,7 +264,8 @@ export default {
         },
         ...mapActions({
             submit: 'purchases/addPurchase',
-            getCustomer : 'customers/getCustomer'
+            getCustomer : 'customers/getCustomer',
+            getParameters : 'taxes/getParameters',
         }),
 
         addForm(e) {

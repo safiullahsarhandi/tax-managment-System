@@ -3266,7 +3266,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "/*=========================================================================================\n    File Name: _variables.scss\n    Description: partial- SCSS varibales\n    ----------------------------------------------------------------------------------------\n    Item Name: Vuesax Admin - VueJS Dashboard Admin Template\n      Author: Pixinvent\n    Author URL: http://www.themeforest.net/user/pixinvent\n==========================================================================================*/\n\n/*========================================================\n        SPACING\n=========================================================*/\n\n/*========================================================\n        COLORS\n=========================================================*/\n\n/*========================================================\n        TYPOGRAPHY\n=========================================================*/\n\n/*========================================================\n        TYPOGRAPHY\n=========================================================*/\n\n/*========================================================\n        DARK THEME\n=========================================================*/\n.vx-input-group .vs-con-textarea {\n  margin-bottom: 0;\n}\n.vx-input-group .vx-input-group-prepend {\n  border-top-left-radius: 5px;\n  border-bottom-left-radius: 5px;\n}\n.vx-input-group .vx-input-group-prepend .prepend-text {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: center;\n          align-items: center;\n}\n.vx-input-group .vx-input-group-prepend .prepend-text:not(:first-child) {\n  border-left: 1px solid rgba(0, 0, 0, 0.18);\n}\n.vx-input-group .vx-input-group-prepend .prepend-text:not(:first-child) {\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0;\n}\n.vx-input-group .vx-input-group-prepend .prepend-text:first-child {\n  border-top-right-radius: 0;\n  border-bottom-right-radius: 0;\n}\n.vx-input-group .vx-input-group-prepend .prepend-text:not(:last-child) {\n  border-top-right-radius: 0;\n  border-bottom-right-radius: 0;\n}\n.vx-input-group .vx-input-group-prepend .prepend-text:last-child {\n  border-top-right-radius: 0;\n  border-bottom-right-radius: 0;\n}\n.vx-input-group .vx-input-group-prepend .prepend-text.btn-addon .vs-button {\n  border-top-right-radius: 0;\n  border-bottom-right-radius: 0;\n}\n.vx-input-group .vx-input-group-prepend .prepend-text.btn-addon .vs-button:not(:first-child) {\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0;\n  border-left: none;\n}\n.vx-input-group .vx-input-group-append {\n  border-top-right-radius: 5px;\n  border-bottom-right-radius: 5px;\n}\n.vx-input-group .vx-input-group-append .append-text {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: center;\n          align-items: center;\n}\n.vx-input-group .vx-input-group-append .append-text:not(:first-child) {\n  border-left: 1px solid rgba(0, 0, 0, 0.18);\n}\n.vx-input-group .vx-input-group-append .append-text:first-child {\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0;\n}\n.vx-input-group .vx-input-group-append .append-text:not(:last-child) {\n  border-top-right-radius: 0;\n  border-bottom-right-radius: 0;\n}\n.vx-input-group .vx-input-group-append .append-text:last-child {\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0;\n}\n.vx-input-group .vx-input-group-append .append-text.btn-addon .vs-button {\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0;\n}\n.vx-input-group .vx-input-group-append .append-text.btn-addon .vs-button:not(:last-child) {\n  border-top-right-radius: 0;\n  border-bottom-right-radius: 0;\n  border-right: none;\n}\n.vx-input-group .prepend-text,\n.vx-input-group .append-text {\n  color: #fff;\n}\n.vx-input-group .prepend-text:not(.btn-addon),\n.vx-input-group .append-text:not(.btn-addon) {\n  border-radius: 6px;\n  padding-left: 1rem;\n  padding-right: 1rem;\n}\n.vx-input-group .prepend-text.btn-addon .vs-button,\n.vx-input-group .append-text.btn-addon .vs-button {\n  height: 100%;\n  padding: 0 1.5rem !important;\n}\n.vx-input-group .vx-input-group-default:not(:first-child) input,\n.vx-input-group .vx-input-group-default:not(:first-child) .vs-con-textarea {\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0;\n}\n.vx-input-group .vx-input-group-default .vs-input {\n  width: 100%;\n}\n.vx-input-group .vx-input-group-default:not(:last-child) input {\n  border-top-right-radius: 0;\n  border-bottom-right-radius: 0;\n}", ""]);
+exports.push([module.i, "/*=========================================================================================\n    File Name: _variables.scss\n    Description: partial- SCSS varibales\n    ----------------------------------------------------------------------------------------\n    Item Name: Vuesax Admin - VueJS Dashboard Admin Template\n      Author: Pixinvent\n    Author URL: http://www.themeforest.net/user/pixinvent\n==========================================================================================*/\n\n/*========================================================\n        SPACING\n=========================================================*/\n\n/*========================================================\n        COLORS\nlinear-gradient(30deg, #0b586a 0%, #d08683 100%)\n=========================================================*/\n\n/*========================================================\n        TYPOGRAPHY\n=========================================================*/\n\n/*========================================================\n        TYPOGRAPHY\n=========================================================*/\n\n/*========================================================\n        DARK THEME\n=========================================================*/\n.vx-input-group .vs-con-textarea {\n  margin-bottom: 0;\n}\n.vx-input-group .vx-input-group-prepend {\n  border-top-left-radius: 5px;\n  border-bottom-left-radius: 5px;\n}\n.vx-input-group .vx-input-group-prepend .prepend-text {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: center;\n          align-items: center;\n}\n.vx-input-group .vx-input-group-prepend .prepend-text:not(:first-child) {\n  border-left: 1px solid rgba(0, 0, 0, 0.18);\n}\n.vx-input-group .vx-input-group-prepend .prepend-text:not(:first-child) {\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0;\n}\n.vx-input-group .vx-input-group-prepend .prepend-text:first-child {\n  border-top-right-radius: 0;\n  border-bottom-right-radius: 0;\n}\n.vx-input-group .vx-input-group-prepend .prepend-text:not(:last-child) {\n  border-top-right-radius: 0;\n  border-bottom-right-radius: 0;\n}\n.vx-input-group .vx-input-group-prepend .prepend-text:last-child {\n  border-top-right-radius: 0;\n  border-bottom-right-radius: 0;\n}\n.vx-input-group .vx-input-group-prepend .prepend-text.btn-addon .vs-button {\n  border-top-right-radius: 0;\n  border-bottom-right-radius: 0;\n}\n.vx-input-group .vx-input-group-prepend .prepend-text.btn-addon .vs-button:not(:first-child) {\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0;\n  border-left: none;\n}\n.vx-input-group .vx-input-group-append {\n  border-top-right-radius: 5px;\n  border-bottom-right-radius: 5px;\n}\n.vx-input-group .vx-input-group-append .append-text {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: center;\n          align-items: center;\n}\n.vx-input-group .vx-input-group-append .append-text:not(:first-child) {\n  border-left: 1px solid rgba(0, 0, 0, 0.18);\n}\n.vx-input-group .vx-input-group-append .append-text:first-child {\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0;\n}\n.vx-input-group .vx-input-group-append .append-text:not(:last-child) {\n  border-top-right-radius: 0;\n  border-bottom-right-radius: 0;\n}\n.vx-input-group .vx-input-group-append .append-text:last-child {\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0;\n}\n.vx-input-group .vx-input-group-append .append-text.btn-addon .vs-button {\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0;\n}\n.vx-input-group .vx-input-group-append .append-text.btn-addon .vs-button:not(:last-child) {\n  border-top-right-radius: 0;\n  border-bottom-right-radius: 0;\n  border-right: none;\n}\n.vx-input-group .prepend-text,\n.vx-input-group .append-text {\n  color: #fff;\n}\n.vx-input-group .prepend-text:not(.btn-addon),\n.vx-input-group .append-text:not(.btn-addon) {\n  border-radius: 6px;\n  padding-left: 1rem;\n  padding-right: 1rem;\n}\n.vx-input-group .prepend-text.btn-addon .vs-button,\n.vx-input-group .append-text.btn-addon .vs-button {\n  height: 100%;\n  padding: 0 1.5rem !important;\n}\n.vx-input-group .vx-input-group-default:not(:first-child) input,\n.vx-input-group .vx-input-group-default:not(:first-child) .vs-con-textarea {\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0;\n}\n.vx-input-group .vx-input-group-default .vs-input {\n  width: 100%;\n}\n.vx-input-group .vx-input-group-default:not(:last-child) input {\n  border-top-right-radius: 0;\n  border-bottom-right-radius: 0;\n}", ""]);
 
 // exports
 
@@ -78587,48 +78587,6 @@ Vue.use(vue2_hammer__WEBPACK_IMPORTED_MODULE_9__["VueHammer"]); // PrismJS
 
  // import 'prismjs/themes/prism-tomorrow.css'
 
-/*router.beforeEach((to, from, next) => {
-    if (document.querySelector('#page-click-loader') != null) {
-
-        Vue.prototype.$vs.loading({
-            background: 'transparent',
-            container: "#page-click-loader",
-            scale: 1,
-            type: 'point',
-        });
-        document.querySelector('#page-click-loader').style.display = 'block';
-    }
-    if(localStorage.getItem('admin') == null){
-      next();
-    }else{
-    if (to.meta.requiresAuth) {
-        if (typeof store.getters.userType == 'undefined') {
-
-
-            store.dispatch('getLoginUser').then(res => {
-                if (to.meta.requiresAdmin == true || store.getters.userType == 'Admin') {
-                    next();
-
-                } else {
-                    next({ path: '/pages/error-404' })
-
-                }
-            });
-        } else {
-            if (to.meta.requiresAdmin == true || store.getters.userType == 'Admin') {
-                next();
-
-            } else {
-                next({ path: '/pages/error-404' })
-
-            }
-        }
-    } else {
-        next({path: '/pages/error-404'});
-    }
-  }
-})*/
-
 _router__WEBPACK_IMPORTED_MODULE_6__["default"].beforeEach(function (to, from, next) {
   if (document.querySelector('#page-click-loader') != null) {
     Vue.prototype.$vs.loading({
@@ -78673,7 +78631,10 @@ _router__WEBPACK_IMPORTED_MODULE_6__["default"].beforeEach(function (to, from, n
 _router__WEBPACK_IMPORTED_MODULE_6__["default"].afterEach(function () {
   setTimeout(function () {
     Vue.prototype.$vs.loading.close('#page-click-loader > .con-vs-loading');
-    document.querySelector('#page-click-loader').style.display = 'none';
+
+    if (document.querySelector('#page-click-loader') != null) {
+      document.querySelector('#page-click-loader').style.display = 'none';
+    }
   }, 1000);
 });
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
@@ -78786,7 +78747,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     // =============================================================================
     path: '/dashboard',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(2), __webpack_require__.e(22)]).then(__webpack_require__.bind(null, /*! ./layouts/main/Main.vue */ "./resources/js/src/layouts/main/Main.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(2), __webpack_require__.e(24)]).then(__webpack_require__.bind(null, /*! ./layouts/main/Main.vue */ "./resources/js/src/layouts/main/Main.vue"));
     },
     meta: {
       requiresAuth: true,
@@ -78906,7 +78867,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/tax-managment',
       name: 'Tax Managment',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 21).then(__webpack_require__.bind(null, /*! ./views/pages/tax-managment/TaxManagment.vue */ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue"));
+        return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! ./views/pages/tax-managment/TaxManagment.vue */ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -78950,7 +78911,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     path: '/customer-detail/:id',
     name: 'Customer Detail',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(2), __webpack_require__.e(24)]).then(__webpack_require__.bind(null, /*! ./layouts/main/customerMain.vue */ "./resources/js/src/layouts/main/customerMain.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(2), __webpack_require__.e(23)]).then(__webpack_require__.bind(null, /*! ./layouts/main/customerMain.vue */ "./resources/js/src/layouts/main/customerMain.vue"));
     },
     props: true,
     meta: {
@@ -78964,7 +78925,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/',
       name: 'Company Detail',
       component: function component() {
-        return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/CustomerDetail.vue */ "./resources/js/src/views/pages/Customers/CustomerDetail.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(9), __webpack_require__.e(46)]).then(__webpack_require__.bind(null, /*! ./views/pages/Customers/CustomerDetail.vue */ "./resources/js/src/views/pages/Customers/CustomerDetail.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -79007,7 +78968,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     // =============================================================================
     path: '/tax-collection/:id',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(2), __webpack_require__.e(23)]).then(__webpack_require__.bind(null, /*! ./layouts/main/TaxDetailMain.vue */ "./resources/js/src/layouts/main/TaxDetailMain.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(2), __webpack_require__.e(22)]).then(__webpack_require__.bind(null, /*! ./layouts/main/TaxDetailMain.vue */ "./resources/js/src/layouts/main/TaxDetailMain.vue"));
     },
     meta: {
       requiresAuth: true,
@@ -79020,7 +78981,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       path: '/',
       name: 'Tax Detail',
       component: function component() {
-        return Promise.all(/*! import() */[__webpack_require__.e(41), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! ./views/pages/Tax/TaxDetail.vue */ "./resources/js/src/views/pages/Tax/TaxDetail.vue"));
+        return Promise.all(/*! import() */[__webpack_require__.e(41), __webpack_require__.e(21)]).then(__webpack_require__.bind(null, /*! ./views/pages/Tax/TaxDetail.vue */ "./resources/js/src/views/pages/Tax/TaxDetail.vue"));
       },
       meta: {
         requiresAuth: true,
@@ -80468,9 +80429,25 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   getParameters: function getParameters(_ref2) {
-    var commit = _ref2.commit;
-    axios.get('get-parameters').then(function (res) {
-      commit('setParameters', res.data.parameters);
+    var commit;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getParameters$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            commit = _ref2.commit;
+            _context.next = 3;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios.get('get-parameters').then(function (res) {
+              commit('setParameters', res.data.parameters);
+            }));
+
+          case 3:
+            return _context.abrupt("return", _context.sent);
+
+          case 4:
+          case "end":
+            return _context.stop();
+        }
+      }
     });
   },
   getTax: function getTax(_ref3, tax_id) {
@@ -80485,12 +80462,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   getTaxTeam: function getTaxTeam(_ref4, tax_id) {
     var commit;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getTaxTeam$(_context) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getTaxTeam$(_context2) {
       while (1) {
-        switch (_context.prev = _context.next) {
+        switch (_context2.prev = _context2.next) {
           case 0:
             commit = _ref4.commit;
-            _context.next = 3;
+            _context2.next = 3;
             return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios.get('get-tax-team', {
               params: {
                 tax_id: tax_id
@@ -80502,7 +80479,7 @@ __webpack_require__.r(__webpack_exports__);
 
           case 3:
           case "end":
-            return _context.stop();
+            return _context2.stop();
         }
       }
     });
@@ -81252,21 +81229,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuesax__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuesax */ "./node_modules/vuesax/dist/vuesax.common.js");
 /* harmony import */ var vuesax__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuesax__WEBPACK_IMPORTED_MODULE_1__);
-/*=========================================================================================
-  File Name: themeConfig.js
-  Description: Theme configuration
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuesax Admin - Clean Vue.js Dashboard Admin Template
-  Author: Pixinvent
-  Author URL: hhttp://www.themeforest.net/user/pixinvent
-==========================================================================================*/
 // MAIN COLORS - VUESAX THEME COLORS
+
+/*element.style {
+    background: linear-gradient(30deg, #0b586a 0%, #d08683 100%);
+}*/
 var colors = {
-  primary: '#7367F0',
+  primary: '#d08683',
   success: '#28C76F',
   danger: '#EA5455',
   warning: '#FF9F43',
-  dark: '#1E1E1E'
+  dark: '#0b586a'
 };
 
 
@@ -81277,7 +81250,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuesax__WEBPACK_IMPORTED_MODULE_1
 }); // CONFIGS
 
 var themeConfig = {
-  theme: 'light',
+  theme: 'semi-dark',
   // options[String]: 'light'(default), 'dark', 'semi-dark'
   sidebarCollapsed: false,
   // options[Boolean]: true, false(default)

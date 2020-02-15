@@ -251,6 +251,7 @@ export default {
                             text : res.data.msg,
                         });
                     localStorage.removeItem('admin');
+                    this.$store.commit('setLoginUser',{});
                     this.$router.push({
                         name: 'pageLogin' 
                     });
