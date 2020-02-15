@@ -23,6 +23,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Session;
+use PDF;
 
 class ApplicationController extends Controller {
 	public function __invoke() {
@@ -1420,5 +1421,32 @@ class ApplicationController extends Controller {
 			return response()->json(['status' => 'success', 'msg' => 'Parameter updated successfully', 'parameter' => $parameter], 200);
 		}
 
+	}
+
+	public function invoice(){
+		
+		$data = array(); 
+		$pdf = PDF::loadView('pdf.invoice', $data);
+		$customPaper = array(0,0,800,800);
+		
+
+		$pdf->setPaper($customPaper);
+		// $pdf->setPaper('letter', 'portrait');
+		
+
+
+		return $pdf->stream('invoice.pdf');
+	}
+
+	public function invoice1(){
+		$data = array(); 
+		$pdf = PDF::loadView('pdf.invoice1', $data);
+		return $pdf->download('invoice1.pdf');
+	}
+
+	public function invoice2(){
+		$data = array(); 
+		$pdf = PDF::loadView('pdf.invoice2', $data);
+		return $pdf->stream('invoice2.pdf');
 	}
 }
