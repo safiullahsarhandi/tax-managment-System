@@ -56,6 +56,24 @@
                                 <h4>{{customer.active_employees_count}}</h4>
                             </p>
                         </vs-col>
+                        <vs-col vs-md="4" vs-lg="4" vs-sm="12" vs-xs="12">
+                            <p>
+                                <label>Created By:</label>
+                                <h4>{{getFullName(customer.created_by)}}</h4>
+                            </p>
+                        </vs-col>
+                        <vs-col vs-md="4" vs-lg="4" vs-sm="12" vs-xs="12">
+                            <p>
+                                <label>Officer Who Work:</label>
+                                <h4>{{getFullName(customer.officer)}}</h4>
+                            </p>
+                        </vs-col>
+                        <vs-col vs-md="4" vs-lg="4" vs-sm="12" vs-xs="12">
+                            <p>
+                                <label>Supervisor:</label>
+                                <h4>{{getFullName(customer.supervisor)}}</h4>
+                            </p>
+                        </vs-col>
                     </vs-row>
                 </vx-card>
             </vs-col>
@@ -127,6 +145,14 @@ export default {
         ...mapActions({
             getCustomer: 'customers/getCustomer',
         }),
+        getFullName(obj){
+            if(obj !== null && !_.isUndefined(obj)){
+                return obj.full_name;
+            }else{
+                return 'N/A';
+            }
+
+        },
         getAddress(customer) {
             return customer.address + ' ' + customer.street + ' ' + customer.group + ' ' + customer.sangkat + ' ' + customer.village + ' ' + customer.district + ' ' + customer.province + ' ' + ' ' + customer.muncipality;
         }

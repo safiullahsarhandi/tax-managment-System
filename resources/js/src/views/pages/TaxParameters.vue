@@ -2,7 +2,7 @@
     <div>
         <vx-card title="List of Tax Parameters" subtitle="">
             <template slot="actions">
-                <vs-button type="border" v-if="$store.getters.userType == 'Admin'" @click="addTax()" icon-pack="feather" icon="icon-plus"></vs-button>
+                <vs-button type="border" v-if="$store.getters.userType == 'Admin' || $store.getters.userType == 'Super Admin'" @click="addTax()" icon-pack="feather" icon="icon-plus"></vs-button>
             </template>
             <vs-table search pagination :data="parameters">
                 <template slot="thead">
@@ -36,7 +36,7 @@
                         <vs-td>{{tr.officers_count}}</vs-td>
                         <vs-td>{{tr.status == 0? 'In progress':'Completed'}}</vs-td>
                         <vs-td>
-                             <vs-button v-if="$store.getters.userType == 'Admin'" size="small" type="border" icon-pack="feather" icon="icon-edit" @click="edit(tr.tax_id)"></vs-button>
+                             <vs-button v-if="$store.getters.userType == 'Admin' || $store.getters.userType == 'Super Admin'" size="small" type="border" icon-pack="feather" icon="icon-edit" @click="edit(tr.tax_id)"></vs-button>
                              <vs-button size="small" type="border" icon-pack="feather" icon="icon-maximize-2" :to="'tax-collection/'+tr.tax_id"></vs-button>
                         </vs-td> -->
                     </vs-tr>

@@ -14,7 +14,8 @@
                 <feather-icon :icon="icon" class="p-3 inline-flex rounded-full" :class="[`text-${color}`, {'mb-4': !iconRight}]" :style="{background: `rgba(var(--vs-${color}),.15)`}"></feather-icon>
                 <div>
                     <h3 class="mb-1 font-bold">{{ statistic }}</h3>
-                    <span>{{ statisticTitle }}</span>
+                    <div>{{ statisticTitle }}</div>
+                    <div>{{ statisticSubTitle }}</div>
                 </div>
             </div>
 
@@ -41,6 +42,10 @@ export default{
         statisticTitle: {
             type: String,
         },
+        statisticSubTitle: {
+            type: String,
+            default : ''
+        },
         chartData: {
             type: Object,
             required: true
@@ -60,6 +65,10 @@ export default{
         iconRight: {
             type: Boolean,
             default: false
+        },
+        cardSize: {
+            type: String,
+            default: ''
         }
     },
     watch: {

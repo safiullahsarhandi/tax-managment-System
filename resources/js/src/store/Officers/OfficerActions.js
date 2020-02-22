@@ -4,6 +4,11 @@ export default{
 			commit('setOfficers',res.data.officers)
 		});
 	},
+	getMyOfficers({commit},id){
+		axios.get('get-my-officers?supervisor='+id).then(res=>{
+			commit('setMyOfficers',res.data.officers)
+		});
+	},
 	addOfficer({commit},fd){
 		return axios.post('add-officer',fd).then(res=>{
 			// commit('setOfficer',res.data.officers)

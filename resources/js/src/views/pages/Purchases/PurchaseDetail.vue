@@ -110,6 +110,7 @@
                         <vs-col class="mt-5 text-center" vs-lg="12" vs-md="12" vs-sm="12">
                             <p>{{total_vat}}</p>
                         </vs-col>
+                        
                         <!--  <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>Total VAT:</h6>
                             <p>{{purchase.total_vat || 'NA'}}</p>
@@ -174,7 +175,7 @@
                             <vs-button :to="'/purchase-update/'+$route.params.id" icon-pack="feather" size="small" icon='icon-edit'></vs-button>
                         </vs-list-item>
                         <template>
-                            <vs-list-item v-if="userType == 'Admin'" title="Status">
+                            <vs-list-item v-if="userType == 'Admin' || userType == 'Super Admin'" title="Status">
                                 <vs-button icon-pack="feather" size="small" icon='icon-check-circle' @click="changeManagementStatus('1', purchase.id, 'admin')"></vs-button>
                                 <vs-button icon-pack="feather" size="small" icon='icon-x-circle' @click="changeManagementStatus('0', purchase.id, 'admin')"></vs-button>
                             </vs-list-item>

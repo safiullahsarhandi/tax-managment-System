@@ -6,6 +6,16 @@
             </template>
             <form ref="addCustomer" @submit.prevent="addCustomer($event)">
                 <vs-row>
+                    <vs-col class="mb-2 p-0" vs-md="12" vs-lg="12" vs-sm="12">
+                        <vs-col v-if="$store.getters.userType == 'Supervisor'" vs-md="12" vs-lg="12" vs-sm="12" class="flex justify-end">
+                            <vx-input-group>
+                                <vs-select label="List Of Officers" placeholder="Select officer who work" v-model="manager">
+                                    <vs-select-item v-for="(officer,index) in myOfficers" :key="index" :text="officer.full_name" :value="officer.manager_id"></vs-select-item>
+                                </vs-select>
+                            </vx-input-group>
+                            <span class="text-danger" v-show="errors.has('name_eng')">{{errors.first('name_eng')}}</span>
+                        </vs-col>
+                    </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
                             <vs-input name="name_eng" v-validate="`required`" label-placeholder="Name (English)" v-model="name_eng" />
@@ -102,23 +112,14 @@
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('industry')">{{errors.first('industry')}}</span>
                     </vs-col>
-
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-select
-                                  autocomplete
-                                  label="Select Tax Duration"
-                                  v-model="taxDurationSelected"
-                                  name="tax_duration"
-                                  width="100%"
-                                  v-validate="'excluded:`Monthly`,`Yearly`'"
-                                  >
-                                  <vs-select-item :key="indx" :value="i.value" :text="i.text" v-for="(i,indx) in taxDuration" />
+                            <vs-select autocomplete label="Select Tax Duration" v-model="taxDurationSelected" name="tax_duration" width="100%" v-validate="'excluded:`Monthly`,`Yearly`'">
+                                <vs-select-item :key="indx" :value="i.value" :text="i.text" v-for="(i,indx) in taxDuration" />
                             </vs-select>
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('tax_duration')">{{errors.first('tax_duration')}}</span>
                     </vs-col>
-
                     <vs-col v-for="(field,index) in customField" :key="index" class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
                             <vs-input :type="field.text" :name="field.name" v-validate="`required`" :label-placeholder="'Custom Field '+(index + 1)" v-model="field.value" />
@@ -139,16 +140,8 @@
                 </vs-row>
             </form>
         </vx-card>
-
-        <multi-uploads
-                    @error='hasError'
-                    @uploaded="successMultipleUpload"
-                    ref="multiUploads" 
-                    action="add-multiple-customer" 
-                    sample-url="./public/samples/company.xlsx" 
-                    :active="multipleUploadPopup">      
+        <multi-uploads calling-from="add-customer" :myOfficers="myOfficers" @worker-changed="onChangeWorker" @error='hasError' @uploaded="successMultipleUpload" ref="multiUploads" :action="`add-multiple-customer?created_by=${createdby}&manager=${manager}`" sample-url="./public/samples/company.xlsx" :active="multipleUploadPopup">
         </multi-uploads>
-
     </div>
 </template>
 <script>
@@ -175,12 +168,23 @@ export default {
             tel: '',
             email: '',
             industry: '',
-            taxDurationSelected: 'Monthly',
-            taxDuration:[
-                {text: 'Monthly', value: 'Monthly'},
-                {text: 'Yearly', value: 'Yearly'}
-                ]
-            }
+            taxDurationSelected: 'Monthly Tax',
+            taxDuration: [
+                { text: 'Monthly Tax', value: 'Monthly Tax' },
+                { text: 'Annual Tax ', value: 'Annual Tax' }
+            ],
+            manager: '',
+            createdby: '',
+        }
+    },
+    inject: ['loginUser'],
+    created() {
+        if (this.$store.getters.userType == 'Supervisor') {
+            this.getMyOfficers(localStorage.getItem('admin'));
+
+        }
+        this.manager = (this.$store.getters.userType == 'Officer') ? localStorage.getItem('admin') : '';
+        this.createdby = localStorage.getItem('admin');
     },
     watch: {},
     components: {
@@ -188,28 +192,34 @@ export default {
     },
     computed: {
         ...mapState('customers/', ['customers']),
+        ...mapState('officers/', ['myOfficers']),
         ...mapGetters('customers/', ['findCustomer']),
     },
     methods: {
+        onChangeWorker(manager_id){
+            // alert(manager_id)
+            this.manager = manager_id;
+
+        },
         showUploader() {
             this.$refs.multiUploads.isShown = true;
         },
-        successMultipleUpload(res){
+        successMultipleUpload(res) {
 
             this.$vs.notify({
-                color : 'success',
-                text : res.msg,
-                position : 'right-top',
-                fixed : true,
+                color: 'success',
+                text: res.msg,
+                position: 'right-top',
+                fixed: true,
             })
             this.$refs.multiUploads.isShown = false;
         },
-        hasError(res){
+        hasError(res) {
             this.$vs.notify({
-                color : 'danger',
-                text : res.msg,
-                position : 'right-top',
-                fixed : true,
+                color: 'danger',
+                text: res.msg,
+                position: 'right-top',
+                fixed: true,
             })
         },
         addMoreFeild() {
@@ -217,12 +227,16 @@ export default {
         },
         ...mapActions({
             submit: 'customers/addCustomer',
+            getMyOfficers: 'officers/getMyOfficers',
         }),
         addCustomer(e) {
             this.$validator.validateAll().then(result => {
                 if (result) {
                     this.$vs.loading();
                     var fd = new FormData(this.$refs.addCustomer);
+                    fd.append('manager', this.manager);
+                    this.createdBy = (this.$store.getters.userType != 'Officer') ? localStorage.getItem('admin') : this.manager;
+                    fd.append('created_by', this.createdBy);
                     this.submit(fd).then(res => {
                         if (res.data.status == 'success') {
                             e.target.reset();

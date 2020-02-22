@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700);/*=========================================================================================
+@import url(https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700);@import url(https://fonts.googleapis.com/css?family=Poppins&display=swap);/*=========================================================================================
     File Name: _variables.scss
     Description: partial- SCSS varibales
     ----------------------------------------------------------------------------------------
@@ -3926,6 +3926,11 @@ h3.vs-navbar--title {
 
 button:focus {
   outline: none;
+}
+
+html,
+body {
+  font-family: "Poppins";
 }
 
 .vs-button.includeIcon {

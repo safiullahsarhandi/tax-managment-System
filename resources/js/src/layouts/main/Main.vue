@@ -69,8 +69,8 @@ import TheNavbar from '../components/TheNavbar.vue';
 import TheFooter from '../components/TheFooter.vue';
 import themeConfig from '@/../themeConfig.js';
 import sidebarItems from "@/layouts/components/vx-sidebar/sidebarItems.js";
+import supervisorSidebarItems from "@/layouts/components/vx-sidebar/supervisorSidebarItems.js";
 import BackToTop from 'vue-backtotop'
-
 export default {
     inject : ['loginUser'],
     data() {
@@ -169,23 +169,17 @@ export default {
     },
     beforeCreate() {
     },
-    async created() {
+    created() {
         var self = this;
+        // console.log()
         setTimeout(function() {
-        if (self.$store.getters.userType != 'Admin') {
-            _.each(self.sidebarItems[1].submenu,(o,i)=>{ 
-                if(!_.isUndefined(o) && o.slug == 'add-customer'){
-                    // delete o;
-                    // _.remove(o)
-                    self.sidebarItems[1].submenu.splice(0, 1);
-
-                    // o.splice(i,1);
-                }
-                // console.log()
-            })
-            self.sidebarItems.splice(4, 1);
-            self.sidebarItems.splice(5, 1);
+        if (self.$store.getters.userType == 'Admin' || self.$store.getters.userType == 'Super Admin') {
+            self.sidebarItems = sidebarItems;
+            /*self.sidebarItems.splice(4, 1);
+            self.sidebarItems.splice(5, 1);*/
         
+        }else{
+            self.sidebarItems = supervisorSidebarItems;
         }
         }, 1);
         

@@ -61,6 +61,7 @@ import TheNavbar from '../components/TheNavbar.vue';
 import TheFooter from '../components/TheFooter.vue';
 import themeConfig from '@/../themeConfig.js';
 import sidebarItems from "@/layouts/components/vx-sidebar/taxDetailSidebarItems.js";
+import officerSidebarItems from "@/layouts/components/vx-sidebar/officerTaxDetailSidebarItems.js";
 import BackToTop from 'vue-backtotop'
 import { mapState } from 'vuex'
 export default {
@@ -171,7 +172,10 @@ export default {
         var self = this;
         this.$store.dispatch('getLoginUser').then(function(){
         if (self.$store.state.AppActiveUser.type == 'Officer') {
-            self.sidebarItems.splice(5,1);   
+            self.sidebarItems = officerSidebarItems;
+            // self.sidebarItems.splice(5,1);   
+        }else{
+            self.sidebarItems = sidebarItems;
         }
         setTimeout(function() {
             self.$vs.loading.close();

@@ -76,7 +76,7 @@ export default {
         this.getSales(this.tax_id);
         
         
-        if (this.$store.state.AppActiveUser.type == 'Admin') {
+        if (this.$store.state.AppActiveUser.type == 'Admin' || this.$store.state.AppActiveUser.type == 'Super Admin' ) {
             this.is_admin = true;
         }
 
