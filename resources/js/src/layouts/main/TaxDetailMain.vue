@@ -173,7 +173,6 @@ export default {
         this.$store.dispatch('getLoginUser').then(function(){
         if (self.$store.state.AppActiveUser.type == 'Officer') {
             self.sidebarItems = officerSidebarItems;
-            // self.sidebarItems.splice(5,1);   
         }else{
             self.sidebarItems = sidebarItems;
         }
