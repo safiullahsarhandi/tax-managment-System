@@ -281,11 +281,9 @@ class ApplicationController extends Controller {
 
 	public function get_customers(Request $request) {
 
-		if (session('admin.type') == 'Admin') {
+		if (session('admin.type') == 'Admin' || session('admin.type') == 'Super Admin') {
 
-			$customers = TaxCustomers::with(['taxes' => function ($tax) {
-				$tax->with(['officers.detail', 'supervisor'])->whereStatus(0);
-			}])->orderBy('created_at', 'desc')->get();
+			$customers = TaxCustomers::with('supervisor', 'officer')->orderBy('created_at', 'desc')->get();
 
 		} else if (session('admin.type') == 'Supervisor') {
 			$customers = TaxCustomers::with('supervisor', 'officer')->where('supervisor', session('admin.manager_id'))->get();

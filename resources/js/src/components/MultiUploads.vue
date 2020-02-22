@@ -45,7 +45,9 @@ export default {
         },
         myOfficers : {
             type : Array,
-            default : [],
+            default : function(){
+                return [];
+            },
         },
         callingFrom : {
             type : String,

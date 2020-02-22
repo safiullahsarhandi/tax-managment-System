@@ -55,7 +55,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     myOfficers: {
       type: Array,
-      "default": []
+      "default": function _default() {
+        return [];
+      }
     },
     callingFrom: {
       type: String,
