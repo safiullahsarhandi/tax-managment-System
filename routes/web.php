@@ -115,9 +115,9 @@ Route::group(['prefix' => ''], function () {
 	
 
 
-	Route::get('pdf', 'ApplicationController@invoice');
-	Route::get('pdf1', 'ApplicationController@invoice1');
-	Route::get('pdf2', 'ApplicationController@invoice2');
+	Route::get('vat-one', 'ApplicationController@vat_one');
+	Route::get('ppt-one', 'ApplicationController@ppt_one');
+	// Route::get('pdf2', 'ApplicationController@invoice2');
 
 
 

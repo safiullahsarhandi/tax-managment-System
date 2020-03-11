@@ -1423,30 +1423,22 @@ class ApplicationController extends Controller {
 
 	}
 
-	public function invoice(){
-		
+	public function vat_one(){
+		// return view('pdf.vat-1');
 		$data = array(); 
-		$pdf = PDF::loadView('pdf.invoice', $data);
-		$customPaper = array(0,0,800,800);
-		
-
-		$pdf->setPaper($customPaper);
-		// $pdf->setPaper('letter', 'portrait');
-		
-
-
-		return $pdf->stream('invoice.pdf');
+		$pdf = PDF::loadView('pdf.vat-1', $data);
+		$customPaper = array(0,0,800,1300);
+		$pdf->setPaper($customPaper);		
+		return $pdf->stream('VAT-1.pdf');
 	}
 
-	public function invoice1(){
+	public function ppt_one(){
 		$data = array(); 
-		$pdf = PDF::loadView('pdf.invoice1', $data);
-		return $pdf->download('invoice1.pdf');
+		$pdf = PDF::loadView('pdf.ppt-1', $data);
+		$customPaper = array(0,0,800,1300);
+		$pdf->setPaper($customPaper);		
+		return $pdf->stream('PPT-1.pdf');
 	}
 
-	public function invoice2(){
-		$data = array(); 
-		$pdf = PDF::loadView('pdf.invoice2', $data);
-		return $pdf->stream('invoice2.pdf');
-	}
+	
 }

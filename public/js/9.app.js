@@ -1,9 +1,9 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[9],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Customers/Taxes.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Customers/Taxes.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Customers/Customers.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Customers/Customers.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -105,169 +105,76 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  inject: ['loginUser'],
+  inject: ['generatePassword', 'loginUser'],
   data: function data() {
     return {
-      editTax: {},
-      addTaxManagmentModal: false,
-      editTaxManagmentModal: false,
-      type: 'Monthly',
-      officer: [],
-      default_selected_officer: "",
-      default_selected_supervisor: "",
-      tax_customer_id: '',
-      title: '',
-      description: '',
-      duration: '',
-      supervisor: ''
+      // switch1: true,
+      viewTaxTeamModal: false,
+      editCustomerModal: false,
+      customer_id: '',
+      name_english: '',
+      name_khmer: '',
+      industry: '',
+      tax_card_num: '',
+      tin_no: '',
+      email: '',
+      telephone: '',
+      address: '',
+      street: '',
+      village: '',
+      muncipality: '',
+      district: '',
+      province: '',
+      sangkat: '',
+      group: '',
+      incorporation_date: '',
+      customField: [],
+      taxes: [],
+      tableEntries: 10
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('supervisors/', ['supervisors']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('taxes/', ['taxes']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('officers/', ['officers'])),
-  beforeCreate: function beforeCreate() {},
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('customers/', ['customers']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('customers/', ['findCustomer'])),
   created: function created() {
-    this.tax_customer_id = localStorage.getItem('customer');
-    this.getSupervisors();
-    this.getOfficers();
-    this.getTaxes(this.tax_customer_id);
+    this.getCustomers();
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
-    getSupervisors: 'supervisors/getSupervisors',
-    getOfficers: 'officers/getOfficers',
-    create: 'taxes/addTax',
-    getTaxes: 'taxes/getTaxes',
-    update: 'taxes/editTax'
+    getCustomers: 'customers/getCustomers'
   }), {
-    addTax: function addTax() {
-      this.addTaxManagmentModal = true;
-    },
-    addTaxManagment: function addTaxManagment(e) {
+    statusUpdate: function statusUpdate(id) {
       var _this = this;
 
-      this.$validator.validateAll().then(function (result) {
-        if (result) {
-          _this.$vs.loading();
-
-          self = _this;
-          var fd = new FormData(self.$refs.addTaxManagmentForm);
-          fd.append('customer_id', _this.tax_customer_id);
-          fd.append('officers', self.officer);
-          fd.append('supervisor_id', self.supervisor);
-          var data = {
-            fd: fd,
-            close: _this.$vs.loading.close,
-            notify: _this.$vs.notify
-          };
-
-          _this.create(data).then(function (res) {
-            if (res.data.status == 'success') {
-              self.title = self.description = self.duration = self.supervisor = '';
-              self.officer = [];
-              e.target.reset();
-              self.$validator.reset();
-
-              _this.getTaxes(self.tax_customer_id);
-
-              _this.addTaxManagmentModal = false;
-            }
-          });
-        }
-      });
-    },
-    //  edit tax
-    taxEdit: function taxEdit(taxId) {
-      var _this2 = this;
-
-      axios.post('tax/get-tax', {
-        id: taxId
+      this.$vs.loading();
+      axios.post('status-update-customer', {
+        id: id
       }).then(function (res) {
-        _this2.editTax = res.data.tax;
-        _this2.editTaxManagmentModal = true;
-        _this2.officer = _.map(_this2.editTax.officers, 'officer_id');
-        console.log(_this2.editTax);
+        _this.$vs.notify({
+          title: 'Updated!...',
+          text: res.data.msg,
+          color: 'success',
+          position: 'top-right'
+        });
+
+        _this.$vs.loading.close();
       });
     },
-    editTaxManagment: function editTaxManagment(e) {
-      var _this3 = this;
-
-      this.$validator.validateAll().then(function (result) {
-        if (result) {
-          self = _this3;
-          var fd = new FormData(self.$refs.editTaxManagmentForm);
-          fd.append('customer_id', _this3.tax_customer_id);
-          fd.append('tax_id', self.editTax.tax_id);
-          fd.append('officers', self.officer);
-          fd.append('supervisor_id', self.editTax.supervisor_id);
-          var data = {
-            fd: fd,
-            close: _this3.$vs.loading.close,
-            notify: _this3.$vs.notify
-          };
-
-          _this3.update(data).then(function (res) {
-            if (res.data.status == 'success') {
-              self.getTaxes(_this3.tax_customer_id);
-              self.officer = [];
-              self.$validator.reset();
-              self.editTaxManagmentModal = false;
-            }
-          });
-        }
-      });
+    viewTaxTeam: function viewTaxTeam(id) {
+      var customer = this.findCustomer(id);
+      console.log(customer);
+      console.log(customer.taxes);
+      this.taxes = customer.taxes;
+      this.viewTaxTeamModal = true;
     }
   })
 });
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Customers/Taxes.vue?vue&type=style&index=0&lang=css&":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Customers/Taxes.vue?vue&type=style&index=0&lang=css& ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Customers/Customers.vue?vue&type=style&index=0&lang=css&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Customers/Customers.vue?vue&type=style&index=0&lang=css& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -276,22 +183,22 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, ".selectExample {\n  margin: 10px;\n}\n.con-select-example {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n          justify-content: center;\n}\n.con-select .vs-select {\n  width: 100%\n}\n@media (max-width: 550px) {\n.con-select {\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n            flex-direction: column;\n}\n.con-select .vs-select {\n    width: 100%\n}\n}\r\n\r\n", ""]);
+exports.push([module.i, ".con-vs-popup .vs-popup {\n  width: 1000px !important;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Customers/Taxes.vue?vue&type=style&index=0&lang=css&":
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Customers/Taxes.vue?vue&type=style&index=0&lang=css& ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Customers/Customers.vue?vue&type=style&index=0&lang=css&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Customers/Customers.vue?vue&type=style&index=0&lang=css& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader??ref--7-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Taxes.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Customers/Taxes.vue?vue&type=style&index=0&lang=css&");
+var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader??ref--7-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Customers.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Customers/Customers.vue?vue&type=style&index=0&lang=css&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -313,10 +220,10 @@ if(false) {}
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Customers/Taxes.vue?vue&type=template&id=1a2f7c3a&":
-/*!***********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Customers/Taxes.vue?vue&type=template&id=1a2f7c3a& ***!
-  \***********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Customers/Customers.vue?vue&type=template&id=24124076&":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Customers/Customers.vue?vue&type=template&id=24124076& ***!
+  \***************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -333,40 +240,17 @@ var render = function() {
     [
       _c(
         "vx-card",
-        {
-          attrs: {
-            title: "List of Taxes",
-            subtitle:
-              "The List of Taxes contains currently assigned taxes of customer Or those which are delivered succesfully"
-          }
-        },
+        { attrs: { title: "List of Customers" } },
         [
-          _c(
-            "template",
-            { slot: "actions" },
-            [
-              _vm.$store.getters.userType == "Admin"
-                ? _c("vs-button", {
-                    attrs: {
-                      type: "border",
-                      "icon-pack": "feather",
-                      icon: "icon-plus"
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.addTax()
-                      }
-                    }
-                  })
-                : _vm._e()
-            ],
-            1
-          ),
-          _vm._v(" "),
           _c(
             "vs-table",
             {
-              attrs: { search: "", pagination: "", data: _vm.taxes },
+              attrs: {
+                search: "",
+                pagination: "",
+                "max-items": _vm.tableEntries,
+                data: _vm.customers
+              },
               scopedSlots: _vm._u([
                 {
                   key: "default",
@@ -377,25 +261,67 @@ var render = function() {
                         "vs-tr",
                         { key: index },
                         [
-                          _c("vs-td", { staticStyle: { width: "200px" } }, [
-                            _vm._v(_vm._s(tr.title))
+                          _c("vs-td", { attrs: { data: tr.name_english } }, [
+                            _vm._v(_vm._s(tr.name_english))
                           ]),
                           _vm._v(" "),
-                          _c("vs-td", [_vm._v(_vm._s(tr.description))]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _vm._v(_vm._s(tr.supervisor.full_name))
+                          _c("vs-td", { attrs: { data: tr.name_khmer } }, [
+                            _vm._v(_vm._s(tr.name_khmer))
                           ]),
                           _vm._v(" "),
-                          _c("vs-td", [_vm._v(_vm._s(tr.officers_count))]),
+                          _c("vs-td", { attrs: { data: tr.industry } }, [
+                            _vm._v(_vm._s(tr.industry))
+                          ]),
                           _vm._v(" "),
-                          _c("vs-td", [
-                            _vm._v(
-                              _vm._s(
-                                tr.status == 0 ? "In progress" : "Completed"
+                          _c("vs-td", { attrs: { data: tr.id } }, [
+                            _vm._v(_vm._s(tr.tax_duration))
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", { attrs: { data: tr.tax_card_num } }, [
+                            _vm._v(_vm._s(tr.tax_card_num))
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", { attrs: { data: tr.tin_no } }, [
+                            _vm._v(_vm._s(tr.tin_no))
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", { attrs: { data: tr.email } }, [
+                            _vm._v(_vm._s(tr.email))
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", { attrs: { data: tr.telephone } }, [
+                            _vm._v(_vm._s(tr.telephone))
+                          ]),
+                          _vm._v(" "),
+                          _vm.$store.getters.userType != "Admin"
+                            ? _c("vs-td", { attrs: { data: 0 } }, [
+                                _vm._v(_vm._s(0))
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.$store.getters.userType == "Admin"
+                            ? _c(
+                                "vs-td",
+                                { attrs: { data: tr.status } },
+                                [
+                                  _c("vs-switch", {
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.statusUpdate(tr.customer_id)
+                                      }
+                                    },
+                                    model: {
+                                      value: tr.status,
+                                      callback: function($$v) {
+                                        _vm.$set(tr, "status", $$v)
+                                      },
+                                      expression: "tr.status"
+                                    }
+                                  })
+                                ],
+                                1
                               )
-                            )
-                          ]),
+                            : _vm._e(),
                           _vm._v(" "),
                           _c(
                             "vs-td",
@@ -403,26 +329,36 @@ var render = function() {
                               _vm.$store.getters.userType == "Admin"
                                 ? _c("vs-button", {
                                     attrs: {
+                                      to: "customer-update/" + tr.customer_id,
                                       size: "small",
                                       type: "border",
                                       "icon-pack": "feather",
                                       icon: "icon-edit"
-                                    },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.taxEdit(tr.tax_id)
-                                      }
                                     }
                                   })
                                 : _vm._e(),
                               _vm._v(" "),
                               _c("vs-button", {
                                 attrs: {
+                                  to: "customer-detail/" + tr.customer_id,
                                   size: "small",
-                                  type: "border",
                                   "icon-pack": "feather",
                                   icon: "icon-maximize-2",
-                                  to: "/tax-collection/" + tr.tax_id
+                                  type: "border"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("vs-button", {
+                                attrs: {
+                                  size: "small",
+                                  "icon-pack": "feather",
+                                  icon: "icon-users",
+                                  type: "border"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.viewTaxTeam(tr.id)
+                                  }
                                 }
                               })
                             ],
@@ -437,19 +373,89 @@ var render = function() {
               ])
             },
             [
+              _c("template", { slot: "header" }, [
+                _vm._v("\n                Show\n                "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.tableEntries,
+                        expression: "tableEntries"
+                      }
+                    ],
+                    staticClass: "vs-select--input",
+                    staticStyle: { width: "100px" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.tableEntries = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", {
+                      attrs: { value: "10" },
+                      domProps: { innerHTML: _vm._s(10) }
+                    }),
+                    _vm._v(" "),
+                    _c("option", {
+                      attrs: { value: "25" },
+                      domProps: { innerHTML: _vm._s(25) }
+                    }),
+                    _vm._v(" "),
+                    _c("option", {
+                      attrs: { value: "50" },
+                      domProps: { innerHTML: _vm._s(50) }
+                    }),
+                    _vm._v(" "),
+                    _c("option", {
+                      attrs: { value: "100" },
+                      domProps: { innerHTML: _vm._s(100) }
+                    })
+                  ]
+                ),
+                _vm._v("\n                Entries\n            ")
+              ]),
+              _vm._v(" "),
               _c(
                 "template",
                 { slot: "thead" },
                 [
-                  _c("vs-th", [_vm._v("Title")]),
+                  _c("vs-th", [_vm._v("Name(English)")]),
                   _vm._v(" "),
-                  _c("vs-th", [_vm._v("Description")]),
+                  _c("vs-th", [_vm._v("Name(Khmer)")]),
                   _vm._v(" "),
-                  _c("vs-th", [_vm._v("Supervisor")]),
+                  _c("vs-th", [_vm._v("Industy / Sector")]),
                   _vm._v(" "),
-                  _c("vs-th", [_vm._v("No. of Officers")]),
+                  _c("vs-th", [_vm._v("Tax Duration")]),
                   _vm._v(" "),
-                  _c("vs-th", [_vm._v("Status")]),
+                  _c("vs-th", [_vm._v("Tax ID")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("TIN # ")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Email")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Tel")]),
+                  _vm._v(" "),
+                  _vm.$store.getters.userType != "Admin"
+                    ? _c("vs-th", [_vm._v("Uncompleted Taxes")])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.$store.getters.userType == "Admin"
+                    ? _c("vs-th", [_vm._v("Status")])
+                    : _vm._e(),
                   _vm._v(" "),
                   _c("vs-th", [_vm._v("Actions")])
                 ],
@@ -459,663 +465,172 @@ var render = function() {
             2
           )
         ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "vs-popup",
+        {
+          attrs: {
+            active: _vm.viewTaxTeamModal,
+            title: "List Of Taxes",
+            subtitle:
+              "List of supervisors and officers who are working on customer tax. "
+          },
+          on: {
+            "update:active": function($event) {
+              _vm.viewTaxTeamModal = $event
+            }
+          }
+        },
+        [
+          _vm._l(_vm.taxes, function(tax, taxIndex) {
+            return _vm.taxes.length > 0
+              ? _c(
+                  "div",
+                  { key: taxIndex },
+                  [
+                    _c(
+                      "vs-card",
+                      [
+                        _c(
+                          "vs-table",
+                          {
+                            attrs: { data: tax.officers },
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "default",
+                                  fn: function(ref) {
+                                    var data = ref.data
+                                    return [
+                                      _c(
+                                        "vs-tr",
+                                        [
+                                          _c(
+                                            "vs-td",
+                                            {
+                                              attrs: {
+                                                data: "tax.supervisor.full_name"
+                                              }
+                                            },
+                                            [
+                                              _vm._v(
+                                                _vm._s(tax.supervisor.full_name)
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "vs-td",
+                                            { attrs: { data: "supervisor" } },
+                                            [_vm._v("Supervisor")]
+                                          )
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _vm._l(data, function(tr2, indextr) {
+                                        return _c(
+                                          "vs-tr",
+                                          {
+                                            key: indextr,
+                                            attrs: { data: tr2 }
+                                          },
+                                          [
+                                            _c(
+                                              "vs-td",
+                                              {
+                                                attrs: {
+                                                  data: tr2.detail.full_name
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(tr2.detail.full_name)
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "vs-td",
+                                              { attrs: { data: "officer" } },
+                                              [_vm._v("Officer")]
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      })
+                                    ]
+                                  }
+                                }
+                              ],
+                              null,
+                              true
+                            )
+                          },
+                          [
+                            _c("template", { slot: "header" }, [
+                              _c("h5", { staticStyle: { color: "#5b3cc4" } }, [
+                                _vm._v("Tax: ( " + _vm._s(tax.title) + " )")
+                              ]),
+                              _vm._v(" "),
+                              _c("h6", { staticStyle: { color: "#5b3cc4" } }, [
+                                _vm._v(
+                                  "created at: " +
+                                    _vm._s(
+                                      new Date(tax.created_at).toDateString()
+                                    )
+                                )
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "template",
+                              { slot: "thead" },
+                              [
+                                _c(
+                                  "vs-th",
+                                  { staticStyle: { width: "400px" } },
+                                  [_vm._v("Name")]
+                                ),
+                                _vm._v(" "),
+                                _c("vs-th", [_vm._v("Role")])
+                              ],
+                              1
+                            )
+                          ],
+                          2
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              : _vm._e()
+          }),
+          _vm._v(" "),
+          _vm.taxes.length <= 0
+            ? _c(
+                "div",
+                [
+                  _c("vx-card", [
+                    _c(
+                      "h4",
+                      {
+                        staticClass: "text-center",
+                        staticStyle: { color: "#5b3cc4" }
+                      },
+                      [_vm._v("Taxes not found!")]
+                    )
+                  ])
+                ],
+                1
+              )
+            : _vm._e()
+        ],
         2
-      ),
-      _vm._v(" "),
-      _c(
-        "vs-popup",
-        {
-          attrs: {
-            active: _vm.addTaxManagmentModal,
-            title: "Add Tax Managment"
-          },
-          on: {
-            "update:active": function($event) {
-              _vm.addTaxManagmentModal = $event
-            }
-          }
-        },
-        [
-          _c(
-            "form",
-            {
-              ref: "addTaxManagmentForm",
-              attrs: { "data-vv-scope": "addform" },
-              on: {
-                submit: function($event) {
-                  $event.preventDefault()
-                  return _vm.addTaxManagment($event)
-                }
-              }
-            },
-            [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.tax_customer_id,
-                    expression: "tax_customer_id"
-                  }
-                ],
-                attrs: { type: "hidden", name: "category_id" },
-                domProps: { value: _vm.tax_customer_id },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.tax_customer_id = $event.target.value
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "vs-row",
-                [
-                  _c(
-                    "vs-col",
-                    { attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" } },
-                    [
-                      _c(
-                        "vx-input-group",
-                        [
-                          _c("vs-input", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
-                            ],
-                            attrs: {
-                              name: "title",
-                              "label-placeholder": "Title",
-                              "data-vv-scope": "addform"
-                            },
-                            model: {
-                              value: _vm.title,
-                              callback: function($$v) {
-                                _vm.title = $$v
-                              },
-                              expression: "title"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("addform.title"),
-                                  expression: "errors.has('addform.title')"
-                                }
-                              ],
-                              staticClass: "text-danger"
-                            },
-                            [_vm._v(_vm._s(_vm.errors.first("addform.title")))]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vx-input-group",
-                        [
-                          _c("br"),
-                          _vm._v(" "),
-                          _c("vs-textarea", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
-                            ],
-                            attrs: {
-                              name: "description",
-                              counter: 20,
-                              label: "Description",
-                              "data-vv-scope": "addform"
-                            },
-                            model: {
-                              value: _vm.description,
-                              callback: function($$v) {
-                                _vm.description = $$v
-                              },
-                              expression: "description"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("addform.description"),
-                                  expression:
-                                    "errors.has('addform.description')"
-                                }
-                              ],
-                              staticClass: "text-danger"
-                            },
-                            [
-                              _vm._v(
-                                _vm._s(_vm.errors.first("addform.description"))
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c("vs-input", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
-                            ],
-                            attrs: {
-                              name: "duration",
-                              "label-placeholder": "Duration",
-                              "data-vv-scope": "addform"
-                            },
-                            model: {
-                              value: _vm.duration,
-                              callback: function($$v) {
-                                _vm.duration = $$v
-                              },
-                              expression: "duration"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("addform.duration"),
-                                  expression: "errors.has('addform.duration')"
-                                }
-                              ],
-                              staticClass: "text-danger"
-                            },
-                            [
-                              _vm._v(
-                                _vm._s(_vm.errors.first("addform.duration"))
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "vs-col",
-                    { attrs: { "vs-lg": "6", "vs-md": "12", "vs-sm": "12" } },
-                    [
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c(
-                            "vs-select",
-                            {
-                              staticClass: "selectExample",
-                              attrs: {
-                                name: "supervisor",
-                                label: "Supervisor"
-                              },
-                              model: {
-                                value: _vm.supervisor,
-                                callback: function($$v) {
-                                  _vm.supervisor = $$v
-                                },
-                                expression: "supervisor"
-                              }
-                            },
-                            [
-                              _c("vs-select-item", {
-                                attrs: { value: "", text: "Select Supervisor" }
-                              }),
-                              _vm._v(" "),
-                              _vm._l(_vm.supervisors, function(item, index) {
-                                return _c("vs-select-item", {
-                                  key: index,
-                                  attrs: {
-                                    value: item.manager_id,
-                                    text: item.first_name + " " + item.last_name
-                                  }
-                                })
-                              })
-                            ],
-                            2
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c(
-                            "vs-select",
-                            {
-                              staticClass: "selectExample",
-                              attrs: {
-                                name: "officer[]",
-                                placeholder: "Search and select",
-                                label: "Officers",
-                                "label-placeholder": "Officers",
-                                multiple: ""
-                              },
-                              model: {
-                                value: _vm.officer,
-                                callback: function($$v) {
-                                  _vm.officer = $$v
-                                },
-                                expression: "officer"
-                              }
-                            },
-                            [
-                              _c("vs-select-item", {
-                                attrs: {
-                                  value: "",
-                                  disabled: true,
-                                  text: "Select Officers"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _vm._l(_vm.officers, function(item, index) {
-                                return _c("vs-select-item", {
-                                  key: index,
-                                  attrs: {
-                                    value: item.manager_id,
-                                    text: item.first_name + " " + item.last_name
-                                  }
-                                })
-                              })
-                            ],
-                            2
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "vs-col",
-                    { attrs: { "vs-lg": "12", "vs-md": "12", "vs-sm": "12" } },
-                    [
-                      _c("br"),
-                      _vm._v(" "),
-                      _c(
-                        "vs-button",
-                        {
-                          staticClass: "float-right",
-                          attrs: { button: "submit", type: "gradient" }
-                        },
-                        [_vm._v("Add Tax Managment")]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "vs-popup",
-        {
-          attrs: {
-            active: _vm.editTaxManagmentModal,
-            title: "Add Tax Managment"
-          },
-          on: {
-            "update:active": function($event) {
-              _vm.editTaxManagmentModal = $event
-            }
-          }
-        },
-        [
-          _c(
-            "form",
-            {
-              ref: "editTaxManagmentForm",
-              attrs: { "data-vv-scope": "editform" },
-              on: {
-                submit: function($event) {
-                  $event.preventDefault()
-                  return _vm.editTaxManagment($event)
-                }
-              }
-            },
-            [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.tax_customer_id,
-                    expression: "tax_customer_id"
-                  }
-                ],
-                attrs: { type: "hidden", name: "category_id" },
-                domProps: { value: _vm.tax_customer_id },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.tax_customer_id = $event.target.value
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "vs-row",
-                [
-                  _c(
-                    "vs-col",
-                    { attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" } },
-                    [
-                      _c(
-                        "vx-input-group",
-                        [
-                          _c("vs-input", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
-                            ],
-                            attrs: {
-                              name: "title",
-                              "label-placeholder": "Title",
-                              "data-vv-scope": "editform"
-                            },
-                            model: {
-                              value: _vm.editTax.title,
-                              callback: function($$v) {
-                                _vm.$set(_vm.editTax, "title", $$v)
-                              },
-                              expression: "editTax.title"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("editform.title"),
-                                  expression: "errors.has('editform.title')"
-                                }
-                              ],
-                              staticClass: "text-danger"
-                            },
-                            [_vm._v(_vm._s(_vm.errors.first("editform.title")))]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vx-input-group",
-                        [
-                          _c("br"),
-                          _vm._v(" "),
-                          _c("vs-textarea", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
-                            ],
-                            attrs: {
-                              name: "description",
-                              counter: 50,
-                              label: "Description",
-                              "data-vv-scope": "editform"
-                            },
-                            model: {
-                              value: _vm.editTax.description,
-                              callback: function($$v) {
-                                _vm.$set(_vm.editTax, "description", $$v)
-                              },
-                              expression: "editTax.description"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("editform.description"),
-                                  expression:
-                                    "errors.has('editform.description')"
-                                }
-                              ],
-                              staticClass: "text-danger"
-                            },
-                            [
-                              _vm._v(
-                                _vm._s(_vm.errors.first("editform.description"))
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c("vs-input", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
-                            ],
-                            attrs: {
-                              name: "duration",
-                              "label-placeholder": "Duration",
-                              "data-vv-scope": "editform"
-                            },
-                            model: {
-                              value: _vm.editTax.duration,
-                              callback: function($$v) {
-                                _vm.$set(_vm.editTax, "duration", $$v)
-                              },
-                              expression: "editTax.duration"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("editform.duration"),
-                                  expression: "errors.has('editform.duration')"
-                                }
-                              ],
-                              staticClass: "text-danger"
-                            },
-                            [
-                              _vm._v(
-                                _vm._s(_vm.errors.first("editform.duration"))
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "vs-col",
-                    { attrs: { "vs-lg": "6", "vs-md": "12", "vs-sm": "12" } },
-                    [
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c(
-                            "vs-select",
-                            {
-                              staticClass: "selectExample",
-                              attrs: {
-                                name: "supervisor",
-                                label: "Supervisor"
-                              },
-                              model: {
-                                value: _vm.editTax.supervisor_id,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.editTax, "supervisor_id", $$v)
-                                },
-                                expression: "editTax.supervisor_id"
-                              }
-                            },
-                            [
-                              _c("vs-select-item", {
-                                attrs: { value: "", text: "Select Supervisor" }
-                              }),
-                              _vm._v(" "),
-                              _vm._l(_vm.supervisors, function(item, index) {
-                                return _c("vs-select-item", {
-                                  key: index,
-                                  attrs: {
-                                    value: item.manager_id,
-                                    text: item.first_name + " " + item.last_name
-                                  }
-                                })
-                              })
-                            ],
-                            2
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c(
-                            "vs-select",
-                            {
-                              staticClass: "selectExample",
-                              attrs: {
-                                name: "officer[]",
-                                placeholder: "Search and select",
-                                label: "Officers",
-                                "label-placeholder": "Officers",
-                                multiple: ""
-                              },
-                              model: {
-                                value: _vm.officer,
-                                callback: function($$v) {
-                                  _vm.officer = $$v
-                                },
-                                expression: "officer"
-                              }
-                            },
-                            [
-                              _c("vs-select-item", {
-                                attrs: {
-                                  value: "",
-                                  disabled: true,
-                                  text: "Select Officers"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _vm._l(_vm.officers, function(item, index) {
-                                return _c("vs-select-item", {
-                                  key: index,
-                                  attrs: {
-                                    value: item.manager_id,
-                                    text: item.first_name + " " + item.last_name
-                                  }
-                                })
-                              })
-                            ],
-                            2
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "vs-col",
-                    { attrs: { "vs-lg": "12", "vs-md": "12", "vs-sm": "12" } },
-                    [
-                      _c("br"),
-                      _vm._v(" "),
-                      _c(
-                        "vs-button",
-                        {
-                          staticClass: "float-right",
-                          attrs: { button: "submit", type: "gradient" }
-                        },
-                        [_vm._v("Update")]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ]
       )
     ],
     1
@@ -1128,18 +643,18 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./resources/js/src/views/pages/Customers/Taxes.vue":
-/*!**********************************************************!*\
-  !*** ./resources/js/src/views/pages/Customers/Taxes.vue ***!
-  \**********************************************************/
+/***/ "./resources/js/src/views/pages/Customers/Customers.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/src/views/pages/Customers/Customers.vue ***!
+  \**************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Taxes_vue_vue_type_template_id_1a2f7c3a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Taxes.vue?vue&type=template&id=1a2f7c3a& */ "./resources/js/src/views/pages/Customers/Taxes.vue?vue&type=template&id=1a2f7c3a&");
-/* harmony import */ var _Taxes_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Taxes.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/Customers/Taxes.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _Taxes_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Taxes.vue?vue&type=style&index=0&lang=css& */ "./resources/js/src/views/pages/Customers/Taxes.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _Customers_vue_vue_type_template_id_24124076___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Customers.vue?vue&type=template&id=24124076& */ "./resources/js/src/views/pages/Customers/Customers.vue?vue&type=template&id=24124076&");
+/* harmony import */ var _Customers_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Customers.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/Customers/Customers.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _Customers_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Customers.vue?vue&type=style&index=0&lang=css& */ "./resources/js/src/views/pages/Customers/Customers.vue?vue&type=style&index=0&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -1150,9 +665,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _Taxes_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Taxes_vue_vue_type_template_id_1a2f7c3a___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _Taxes_vue_vue_type_template_id_1a2f7c3a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _Customers_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Customers_vue_vue_type_template_id_24124076___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Customers_vue_vue_type_template_id_24124076___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -1162,54 +677,54 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/src/views/pages/Customers/Taxes.vue"
+component.options.__file = "resources/js/src/views/pages/Customers/Customers.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/src/views/pages/Customers/Taxes.vue?vue&type=script&lang=js&":
-/*!***********************************************************************************!*\
-  !*** ./resources/js/src/views/pages/Customers/Taxes.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************************/
+/***/ "./resources/js/src/views/pages/Customers/Customers.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/Customers/Customers.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Taxes_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Taxes.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Customers/Taxes.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Taxes_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Customers_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Customers.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Customers/Customers.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Customers_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/src/views/pages/Customers/Taxes.vue?vue&type=style&index=0&lang=css&":
-/*!*******************************************************************************************!*\
-  !*** ./resources/js/src/views/pages/Customers/Taxes.vue?vue&type=style&index=0&lang=css& ***!
-  \*******************************************************************************************/
+/***/ "./resources/js/src/views/pages/Customers/Customers.vue?vue&type=style&index=0&lang=css&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/Customers/Customers.vue?vue&type=style&index=0&lang=css& ***!
+  \***********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Taxes_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/style-loader!../../../../../../node_modules/css-loader??ref--7-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Taxes.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Customers/Taxes.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Taxes_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Taxes_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Taxes_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Taxes_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Taxes_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Customers_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/style-loader!../../../../../../node_modules/css-loader??ref--7-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Customers.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Customers/Customers.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Customers_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Customers_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Customers_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Customers_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Customers_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
-/***/ "./resources/js/src/views/pages/Customers/Taxes.vue?vue&type=template&id=1a2f7c3a&":
-/*!*****************************************************************************************!*\
-  !*** ./resources/js/src/views/pages/Customers/Taxes.vue?vue&type=template&id=1a2f7c3a& ***!
-  \*****************************************************************************************/
+/***/ "./resources/js/src/views/pages/Customers/Customers.vue?vue&type=template&id=24124076&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/Customers/Customers.vue?vue&type=template&id=24124076& ***!
+  \*********************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Taxes_vue_vue_type_template_id_1a2f7c3a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Taxes.vue?vue&type=template&id=1a2f7c3a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Customers/Taxes.vue?vue&type=template&id=1a2f7c3a&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Taxes_vue_vue_type_template_id_1a2f7c3a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Customers_vue_vue_type_template_id_24124076___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Customers.vue?vue&type=template&id=24124076& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Customers/Customers.vue?vue&type=template&id=24124076&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Customers_vue_vue_type_template_id_24124076___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Taxes_vue_vue_type_template_id_1a2f7c3a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Customers_vue_vue_type_template_id_24124076___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
