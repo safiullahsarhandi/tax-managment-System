@@ -148,6 +148,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   inject: ['loginUser'],
@@ -335,7 +338,7 @@ var render = function() {
         "vx-card",
         {
           attrs: {
-            title: "List of Taxes",
+            title: "List of tax services",
             subtitle:
               "The List of Taxes contains currently assigned taxes of customer Or those which are delivered succesfully"
           }
@@ -437,6 +440,26 @@ var render = function() {
               ])
             },
             [
+              _c(
+                "template",
+                { slot: "header" },
+                [
+                  _c(
+                    "vs-button",
+                    {
+                      staticStyle: { "margin-top": "-5px" },
+                      attrs: {
+                        color: "primary",
+                        type: "border",
+                        icon: "cloud_download"
+                      }
+                    },
+                    [_vm._v("Import")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
               _c(
                 "template",
                 { slot: "thead" },

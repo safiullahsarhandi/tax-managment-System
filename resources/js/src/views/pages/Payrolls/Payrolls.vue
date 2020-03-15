@@ -2,6 +2,9 @@
     <div>
         <vx-card title="List of Payrolls">
             <vs-table search pagination max-items="6" :data="payrolls">
+                <template slot="header">
+                    <vs-button color="primary" type="border" icon="cloud_download">Import</vs-button>
+                </template>
                 <template slot="thead">
                     <vs-th>Employee Name</vs-th>
                     <vs-th>Employee No.</vs-th>

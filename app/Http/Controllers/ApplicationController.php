@@ -162,7 +162,7 @@ class ApplicationController extends Controller {
 		$customer->incorporation_date = $request->incorporation_date;
 		$customer->village = $request->village;
 		$customer->additional_fields = $request->additional_field;
-		$customer->tax_duration = $request->tax_duration;
+		// $customer->tax_duration = $request->tax_duration;
 
 		$result = $customer->save();
 		return response()->json(['status' => 'success', 'customers' => $customer]);
@@ -293,7 +293,7 @@ class ApplicationController extends Controller {
 		$customer->group = $request->group;
 		$customer->street = $request->street;
 		$customer->village = $request->village;
-		$customer->tax_duration = $request->tax_duration;
+		// $customer->tax_duration = $request->tax_duration;
 		$customer->incorporation_date = $request->incorporation_date;
 
 		if ($request->has('additional_field')) {

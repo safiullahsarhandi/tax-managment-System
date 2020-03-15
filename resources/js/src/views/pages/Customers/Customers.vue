@@ -1,18 +1,27 @@
 <template>
     <div>
         <vx-card title="List of Customers">
+            
             <vs-table search pagination :max-items="tableEntries" :data="customers">
                 <template slot="header">
-                    Show
-                    <select style="width: 100px" class="vs-select--input" v-model="tableEntries">
-                        <option value="10" v-html="10"></option>
-                        <option value="25" v-html="25"></option>
-                        <option value="50" v-html="50"></option>
-                        <option value="100" v-html="100"></option>
-                    </select>
-                    Entries
+                    <vs-row>
+                        <vs-col vs-lg="3" vs-md="3" vs-sm="12" vs-xs="12">
+                            Show
+                            <select style="width: 100px" class="vs-select--input" v-model="tableEntries">
+                                <option value="10" v-html="10"></option>
+                                <option value="25" v-html="25"></option>
+                                <option value="50" v-html="50"></option>
+                                <option value="100" v-html="100"></option>
+                            </select>
+                            Entries
+                        </vs-col>
+                        <vs-col  vs-lg="9" vs-md="9" vs-sm="12" vs-xs="12">
+                            <vs-button style="margin-top: -5px" color="primary" type="border" icon="cloud_download">Import</vs-button>
+                        </vs-col>
+                    </vs-row>
                 </template>
                 <template slot="thead">
+                    <vs-th>Customer ID</vs-th>
                     <vs-th>Name(English)</vs-th>
                     <vs-th>Name(Khmer)</vs-th>
                     <vs-th>Industy / Sector</vs-th>
@@ -27,6 +36,8 @@
                 </template>
                 <template slot-scope="{data}">
                     <vs-tr v-for="(tr,index) in data" :key="index">
+
+                        <vs-td :data="tr.id"> {{'C0'+tr.id}}</vs-td>
                         <vs-td :data="tr.name_english">{{tr.name_english}}</vs-td>
                         <vs-td :data="tr.name_khmer">{{tr.name_khmer}}</vs-td>
                         <vs-td :data="tr.industry">{{tr.industry}}</vs-td>

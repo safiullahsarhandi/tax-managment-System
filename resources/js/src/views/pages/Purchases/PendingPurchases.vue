@@ -5,6 +5,9 @@
             <!-- <vs-button type="border" @click="addOfficerModal = true" icon-pack="feather" icon="icon-plus"></vs-button> -->
             <!-- </template> -->
             <vs-table search pagination max-items="6" :data="purchases">
+                <template slot="header">
+                    <vs-button style="margin-top: -5px" color="primary" type="border" icon="cloud_download">Import</vs-button>
+                </template>
                 <template slot="thead">
                     <vs-th>added by </vs-th>
                     <vs-th>Branch#/ Name</vs-th>
