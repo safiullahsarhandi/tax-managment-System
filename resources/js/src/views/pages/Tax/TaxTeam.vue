@@ -2,7 +2,7 @@
     <div>
         <vx-card title="List of Team Members">
             <template slot="actions">
-                <vs-button type="border" v-if="$store.getters.userType == 'Admin'" @click="editTaxManagmentModal = true" icon-pack="feather" icon="icon-edit"></vs-button>
+                <vs-button type="border" v-if="$store.getters.userType == 'Admin' || $store.getters.userType == 'Super Admin'" @click="editTaxManagmentModal = true" icon-pack="feather" icon="icon-edit"></vs-button>
             </template>
             <vs-table search pagination max-items="6" :data="tax_team">
                 <template slot="header">
@@ -14,7 +14,7 @@
                     <vs-th>Email</vs-th>
                     <vs-th>Address</vs-th>
                     <vs-th>Designation</vs-th>
-                    <vs-th v-if="$store.getters.userType == 'Admin'">Status</vs-th>
+                    <vs-th v-if="$store.getters.userType == 'Admin' || $store.getters.userType == 'Super Admin'">Status</vs-th>
                 </template>
                 <template slot-scope="{data}">
                     <vs-tr v-for="(tr,index) in data" :key="index">
@@ -25,7 +25,7 @@
                                 <vs-td :data="tr.detail.email">{{tr.detail.email}}</vs-td>
                                 <vs-td :data="tr.detail.address+' '+tr.detail.state+' '+tr.detail.city+' '+tr.detail.zip_code">{{tr.detail.address}} {{tr.detail.state}} {{tr.detail.city}} {{tr.detail.zip_code}}</vs-td>
                                 <vs-td :data="tr.detail.type">{{tr.detail.type}}</vs-td>
-                                <vs-td :data="tr.detail.status" v-if="$store.getters.userType == 'Admin'">
+                                <vs-td :data="tr.detail.status" v-if="$store.getters.userType == 'Admin' || $store.getters.userType == 'Super Admin'">
                                     <vs-switch @click="statusUpdate(tr.detail.manager_id)" v-model="tr.detail.status" />
                                 </vs-td>
                             </template>
@@ -35,7 +35,7 @@
                                 <vs-td :data="tr.email">{{tr.email}}</vs-td>
                                 <vs-td :data="tr.address+' '+tr.state+' '+tr.city+' '+tr.zip_code">{{tr.address}} {{tr.state}} {{tr.city}} {{tr.zip_code}}</vs-td>
                                 <vs-td :data="tr.type">{{tr.type}}</vs-td>
-                                <vs-td v-if="$store.getters.userType == 'Admin'">
+                                <vs-td v-if="$store.getters.userType == 'Admin' || $store.getters.userType == 'Super Admin'">
                                     <vs-switch @click="statusUpdate(tr.manager_id)" v-model="tr.status" />
                                 </vs-td>
                             </template>

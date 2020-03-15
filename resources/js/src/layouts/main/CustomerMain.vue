@@ -191,7 +191,7 @@ export default {
     created() {
          var self = this;
         setTimeout(function(){
-            if (self.$store.getters.userType != 'Admin') {
+            if (self.$store.getters.userType != 'Admin' || self.$store.getters.userType != 'Super Admin') {
             self.sidebarItems.splice(3, 1);
         }
     })

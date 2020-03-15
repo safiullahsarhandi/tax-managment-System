@@ -62,7 +62,7 @@ router.beforeEach((to, from, next) => {
 
 
           store.dispatch('getLoginUser').then(res=>{
-          if(to.meta.requiresAdmin == true || store.getters.userType == 'Admin'){
+          if(to.meta.requiresAdmin == true || store.getters.userType == 'Admin' || store.getters.userType == 'Super Admin'){
             next();
 
             }else{
@@ -71,7 +71,7 @@ router.beforeEach((to, from, next) => {
             }
           });
           }else{
-            if(to.meta.requiresAdmin == true || store.getters.userType == 'Admin'){
+            if(to.meta.requiresAdmin == true || store.getters.userType == 'Admin' || store.getters.userType == 'Super Admin'){
             next();
 
             }else{

@@ -55,7 +55,7 @@ const router = new Router({
                     component: () => import('./views/pages/Customers/AddCustomer.vue'),
                     meta: {
                         requiresAuth: true,
-                        requiresAdmin: false,
+                        requiresAdmin: true,
 
                     }
                 },
@@ -65,7 +65,7 @@ const router = new Router({
                     component: () => import('./views/pages/Customers/EditCustomer.vue'),
                     meta: {
                         requiresAuth: true,
-                        requiresAdmin: false,
+                        requiresAdmin: true,
 
                     }
                 },
@@ -197,7 +197,7 @@ const router = new Router({
                     component: () => import('./views/pages/Employees/AddEmployee.vue'),
                     meta: {
                         requiresAuth: true,
-                        requiresAdmin: false,
+                        requiresAdmin: true,
                     }
                 },
                 {
@@ -206,7 +206,7 @@ const router = new Router({
                     component: () => import('./views/pages/Employees/Employees.vue'),
                     meta: {
                         requiresAuth: true,
-                        requiresAdmin: false,
+                        requiresAdmin: true,
                     }
                 },
                 {
@@ -378,7 +378,7 @@ const router = new Router({
                         requiresAdmin: true,
                     }
                 },
-                {
+                /*{
                     path: '/tax-team',
                     name: 'Tax Team',
                     component: () => import('./views/pages/Tax/TaxTeam.vue'),
@@ -386,7 +386,7 @@ const router = new Router({
                         requiresAuth: true,
                         requiresAdmin: true,
                     }
-                },
+                },*/
             ],
         },
         // =============================================================================

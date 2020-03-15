@@ -61,7 +61,7 @@
 			<div class="the-navbar__user-meta flex items-center">
 				<div class="text-right leading-tight hidden sm:block">
 					<p class="font-semibold">{{ activeUser }}</p>
-					<small>Available</small>
+					<small>{{activeUserRole}}</small>
 				</div>
  
                 
@@ -133,6 +133,7 @@ export default {
             new_password: null,
             confirm_password: null,
             activeUser: '',
+            activeUserRole : '',
             navbarSearchAndPinList: this.$store.state.navbarSearchAndPinList,
             searchQuery: '',
             showFullSearch: false,
@@ -198,6 +199,7 @@ export default {
     },
     created(){
         this.activeUser = this.$store.state.AppActiveUser.full_name;
+        this.activeUserRole = this.$store.state.AppActiveUser.type;
     },
     methods: {
         changePasswordPopUp(e, scope){
@@ -255,6 +257,7 @@ export default {
                     this.$router.push({
                         name: 'pageLogin' 
                     });
+
                 }
             });
 

@@ -29,9 +29,10 @@
                     <vs-th>Tax ID</vs-th>
                     <vs-th>TIN # </vs-th>
                     <vs-th>Email</vs-th>
-                    <vs-th>Tel</vs-th>
-                    <vs-th v-if="$store.getters.userType != 'Admin'">Uncompleted Taxes</vs-th>
-                    <vs-th v-if="$store.getters.userType == 'Admin'">Status</vs-th>
+                    <vs-th v-if="$store.getters.userType == 'Admin' || $store.getters.userType == 'Super Admin'">Supervisor</vs-th>
+                    <vs-th>Officer</vs-th>
+                    <vs-th v-if="$store.getters.userType != 'Admin' || $store.getters.userType != 'Super Admin'">Uncompleted Taxes</vs-th>
+                    <vs-th v-if="$store.getters.userType == 'Admin' || $store.getters.userType != 'Super Admin'">Status</vs-th>
                     <vs-th>Actions</vs-th>
                 </template>
                 <template slot-scope="{data}">
@@ -45,14 +46,15 @@
                         <vs-td :data="tr.tax_card_num">{{tr.tax_card_num}}</vs-td>
                         <vs-td :data="tr.tin_no">{{tr.tin_no}}</vs-td>
                         <vs-td :data="tr.email">{{tr.email}}</vs-td>
-                        <vs-td :data="tr.telephone">{{tr.telephone}}</vs-td>
-                        <vs-td v-if="$store.getters.userType != 'Admin'"  :data="0">{{0}}</vs-td>
-                        <vs-td v-if="$store.getters.userType == 'Admin'"  :data="tr.status"><vs-switch @click="statusUpdate(tr.customer_id)" v-model="tr.status"/></vs-td>
+                        <vs-td v-if="$store.getters.userType == 'Admin' || $store.getters.userType == 'Super Admin'" :data="getSupervisor(tr.supervisor)">{{getSupervisor(tr.supervisor)}}</vs-td>
+                        <vs-td v-if="$store.getters.userType != 'Officer'" :data="getOfficer(tr.officer)">{{ getOfficer(tr.officer) }}</vs-td>
+                        <vs-td v-if="$store.getters.userType != 'Admin' || $store.getters.userType != 'Super Admin'"  :data="0">{{0}}</vs-td>
+                        <vs-td v-if="$store.getters.userType == 'Admin' || $store.getters.userType != 'Super Admin'"  :data="tr.status"><vs-switch @click="statusUpdate(tr.customer_id)" v-model="tr.status"/></vs-td>
                             
                         <vs-td>
-                            <vs-button v-if="$store.getters.userType == 'Admin'" :to="'customer-update/'+tr.customer_id" size="small" type="border" icon-pack="feather" icon="icon-edit"></vs-button>
+                            <vs-button v-if="$store.getters.userType == 'Admin' || $store.getters.userType != 'Super Admin'" :to="'customer-update/'+tr.customer_id" size="small" type="border" icon-pack="feather" icon="icon-edit"></vs-button>
                             <vs-button :to="'customer-detail/'+tr.customer_id" size="small" icon-pack="feather" icon="icon-maximize-2" type="border"></vs-button>
-                            <vs-button @click="viewTaxTeam(tr.id)" size="small" icon-pack="feather" icon="icon-users" type="border"></vs-button>
+                            <!-- <vs-button @click="viewTaxTeam(tr.id)" size="small" icon-pack="feather" icon="icon-users" type="border"></vs-button> -->
                         </vs-td>
 
                     </vs-tr>
@@ -60,7 +62,7 @@
             </vs-table>
 
         </vx-card>
-        <vs-popup :active.sync="viewTaxTeamModal" title="List Of Taxes" subtitle="List of supervisors and officers who are working on customer tax. ">
+        <!-- <vs-popup :active.sync="viewTaxTeamModal" title="List Of Taxes" subtitle="List of supervisors and officers who are working on customer tax. ">
             <div v-if="taxes.length > 0" v-for="(tax, taxIndex) in taxes" :key="taxIndex">
                 <vs-card >
                     <vs-table :data="tax.officers">
@@ -94,7 +96,7 @@
                     <h4 class="text-center" style="color: #5b3cc4">Taxes not found!</h4>
                 </vx-card>
             </div>
-        </vs-popup>
+        </vs-popup> -->
        
     </div>
 </template>
@@ -142,7 +144,20 @@ export default {
             getCustomers: 'customers/getCustomers',
         }),
         
-
+        getOfficer(officer){
+            if(officer != null){
+                return officer.full_name;
+            }else{
+                return 'N/A';
+            }
+        },
+        getSupervisor(supervisor){
+            if(supervisor != null){
+                return supervisor.full_name;
+            }else{
+                return 'N/A';
+            }
+        },
         statusUpdate(id){
             this.$vs.loading();
             axios.post('status-update-customer',{id:id}).then(res=>{

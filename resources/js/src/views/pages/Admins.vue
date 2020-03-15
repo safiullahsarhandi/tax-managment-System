@@ -9,7 +9,9 @@
                     <vs-th>Name</vs-th>
                     <vs-th>Phone #</vs-th>
                     <vs-th>Email</vs-th>
-                    <vs-th>Address</vs-th>
+                    <vs-th>Reports To</vs-th>
+
+                    <!-- <vs-th>Address</vs-th> -->
                     <vs-th>Role</vs-th>
                     <vs-th>Status</vs-th>
                     <vs-th>Actions</vs-th>
@@ -19,8 +21,9 @@
                         <vs-td :data="tr.first_name+' '+tr.last_name">{{tr.first_name}} {{tr.last_name}}</vs-td>
                         <vs-td :data="tr.phone">{{tr.phone}}</vs-td>
                         <vs-td :data="tr.email">{{tr.email}}</vs-td>
-                        <vs-td :data="tr.address+' '+tr.state+' '+tr.city+' '+tr.zip_code">{{tr.address}} {{tr.state}} {{tr.city}} {{tr.zip_code}}</vs-td>
-                        <vs-td :data="tr.type == 1?'Admin':tr.type == 2?'Supervisor':'Officer'">{{tr.type}}</vs-td>
+                        <vs-td :data="reportsTo(tr.reporting_to)">{{reportsTo(tr.reporting_to)}}</vs-td>
+                        <!-- <vs-td :data="tr.address+' '+tr.state+' '+tr.city+' '+tr.zip_code">{{tr.address}} {{tr.state}} {{tr.city}} {{tr.zip_code}}</vs-td> -->
+                        <vs-td :data="tr.type == 4?'Sub Admin':tr.type == 2?'Supervisor':'Officer'">{{tr.type}}</vs-td>
                         <vs-td :data="tr.status"><vs-switch @click="statusUpdate(tr.manager_id)" v-model="tr.status"/></vs-td>
                         <vs-td>
                             <vs-button size="small" type="border" icon-pack="feather" icon="icon-edit-2" @click="editAdmin(tr.id)"></vs-button>
@@ -36,35 +39,46 @@
                     <vs-col vs-lg="6" vs-md="6" vs-sm="12">
                         <vx-input-group>
                             <vs-input v-validate="'required'" name="first_name" v-model="first_name" label-placeholder="First Name" data-vv-scope="addform" />
-                            <span class="text-danger" v-show="errors.has('first_name')">{{errors.first('addform.first_name')}}</span>
+                            <span class="text-danger" v-show="errors.has('addform.first_name')">{{errors.first('addform.first_name')}}</span>
                         </vx-input-group>
                         <vx-input-group>
                             <vs-input v-validate="'required'" name="last_name" v-model="last_name" label-placeholder="Last Name" data-vv-scope="addform" />
-                            <span class="text-danger" v-show="errors.has('last_name')">{{errors.first('addform.last_name')}}</span>
+                            <span class="text-danger" v-show="errors.has('addform.last_name')">{{errors.first('addform.last_name')}}</span>
                         </vx-input-group>
                         <vx-input-group class="mt-2">
                             <vs-input v-validate="'required'" name="phone" v-model="phone" label-placeholder="Phone" data-vv-scope="addform" />
-                            <span class="text-danger" v-show="errors.has('phone')">{{errors.first('addform.phone')}}</span>
+                            <span class="text-danger" v-show="errors.has('addform.phone')">{{errors.first('addform.phone')}}</span>
                         </vx-input-group>
                         <vx-input-group class="mt-2">
                             <vs-input v-validate="'required'" name="email" v-model="email" label-placeholder="Email" data-vv-scope="addform" />
-                            <span class="text-danger" v-show="errors.has('email')">{{errors.first('addform.email')}}</span>
+                            <span class="text-danger" v-show="errors.has('addform.email')">{{errors.first('addform.email')}}</span>
                         </vx-input-group>
-                        <vx-input-group class="mt-2">
-                            <vs-input v-validate="'required'" name="password" v-model="password" label-placeholder="Password" data-vv-scope="addform" />
-                            <div class="text-danger" v-show="errors.has('password')">{{errors.first('addform.password')}}</div>
-                            <vs-button @click="makePassword()" class="mt-2" button="button" type="border">Generate Password</vs-button>
-                        </vx-input-group>
-                    </vs-col>
-                    <vs-col vs-lg="6" vs-md="12" vs-sm="12">
-
                         <vx-input-group>
-                            <vs-select class="selectExample" v-validate="'required|excluded:0'" name='roll' v-model="defaultRoll" data-vv-scope="addform" >
-                                <vs-select-item :is-selected.sync="item.isSelected" :key="index" :value="item.value" :text="item.isSelected?item.selectedText:item.label" v-for="item,index in rolles" />
+                            <vs-input v-validate="'required'" name="password" v-model="password" label-placeholder="Password" data-vv-scope="addform" />
+                            <template slot="append">
+                            <div class="append-text btn-addon mt-4">
+                              <vs-button @click="makePassword()" color="primary" button="button">Generate</vs-button>
+                            </div>
+                          </template>
+                            <!-- <vs-button @click="makePassword()" class="mt-2" button="button" type="border">Generate Password</vs-button> -->
+                        </vx-input-group>
+                        <div class="text-danger" v-show="errors.has('addform.password')">{{errors.first('addform.password')}}</div>
+                        <vx-input-group>
+                            <vs-select class="selectExample" v-validate="'required|excluded:0'" name='roll' v-model="defaultRole" data-vv-scope="addform" >
+                                <vs-select-item :disabled="!item.value == 1 && $store.getters.userType == 'Admin'" :is-selected.sync="item.isSelected" :key="index" :value="item.value" :text="item.isSelected?item.selectedText:item.label" v-for="(item,index) in rolles" />
                             </vs-select>
-                            <span class="text-danger" v-show="errors.has('roll')">{{errors.first('addform.roll')}}</span>
+                            <span class="text-danger" v-show="errors.has('addform.roll')">{{errors.first('addform.roll')}}</span>
+                        </vx-input-group>
+                        <vx-input-group class="mt-2" v-if="defaultRole == 3">
+                            <vs-select name="supervisor" v-validate="'required'" class="selectExample" label="Supervisor" v-model="supervisor">
+                                <vs-select-item value="" text="Select Supervisor"></vs-select-item>
+                                <vs-select-item :key="index" :value="item.manager_id" :text="item.first_name+' '+item.last_name" v-for="(item,index) in supervisors" />
+                            </vs-select>
+                            <span class="text-danger" v-show="errors.has('addform.supervisor')">{{errors.first('supervisor')}}</span>
                         </vx-input-group>
                     
+                    </vs-col>
+                    <vs-col vs-lg="6" vs-md="12" vs-sm="12">
 
                         <vx-input-group class="mt-6">
                             <vs-radio v-model="gender" vs-name="gender" vs-value="male">Male</vs-radio>
@@ -72,19 +86,19 @@
                         </vx-input-group>
                         <vx-input-group class="mt-2">
                             <vs-input v-validate="'required'" name="address" v-model="address" label-placeholder="Address" data-vv-scope="addform" />
-                            <span class="text-danger" v-show="errors.has('address')">{{errors.first('addform.address')}}</span>
+                            <span class="text-danger" v-show="errors.has('addform.address')">{{errors.first('addform.address')}}</span>
                         </vx-input-group>
                         <vx-input-group class="mt-2">
                             <vs-input v-validate="'required'" name="state" v-model="state" label-placeholder="State" data-vv-scope="addform" />
-                            <span class="text-danger" v-show="errors.has('state')">{{errors.first('addform.state')}}</span>
+                            <span class="text-danger" v-show="errors.has('addform.state')">{{errors.first('addform.state')}}</span>
                         </vx-input-group>
                         <vx-input-group class="mt-2">
                             <vs-input v-validate="'required'" name="city" v-model="city" label-placeholder="City" data-vv-scope="addform" />
-                            <span class="text-danger" v-show="errors.has('city')">{{errors.first('addform.city')}}</span>
+                            <span class="text-danger" v-show="errors.has('addform.city')">{{errors.first('addform.city')}}</span>
                         </vx-input-group>
                         <vx-input-group class="mt-2">
                             <vs-input v-validate="'required'" name="zip_code" v-model="zip_code" label-placeholder="Zip Code" data-vv-scope="addform" />
-                            <span class="text-danger" v-show="errors.has('zip_code')">{{errors.first('addform.zip_code')}}</span>
+                            <span class="text-danger" v-show="errors.has('addform.zip_code')">{{errors.first('addform.zip_code')}}</span>
                         </vx-input-group>
                     </vs-col>
                     <vs-col vs-lg="12" vs-md="12" vs-sm="12">
@@ -102,38 +116,44 @@
                         <vx-input-group>
                             <input type="hidden" name="id" v-model="edit_manager_id" data-vv-scope="editform">
                             <vs-input v-validate="'required'" name="first_name" v-model="edit_first_name" label-placeholder="First Name" data-vv-scope="editform"/>
-                            <span class="text-danger" v-show="errors.has('first_name')">{{errors.first('first_name')}}</span>
+                            <span class="text-danger" v-show="errors.has('editform.first_name')">{{errors.first('editform.first_name')}}</span>
                         </vx-input-group>
                         <vx-input-group>
                             <vs-input v-validate="'required'" name="last_name" v-model="edit_last_name" label-placeholder="Last Name" data-vv-scope="editform" />
-                            <span class="text-danger" v-show="errors.has('last_name')">{{errors.first('last_name')}}</span>
+                            <span class="text-danger" v-show="errors.has('editform.last_name')">{{errors.first('editform.last_name')}}</span>
                         </vx-input-group>
                         <vx-input-group class="mt-2">
                             <vs-input v-validate="'required'" name="phone" v-model="edit_phone" label-placeholder="Phone" data-vv-scope="editform" />
-                            <span class="text-danger" v-show="errors.has('phone')">{{errors.first('phone')}}</span>
+                            <span class="text-danger" v-show="errors.has('editform.phone')">{{errors.first('editform.phone')}}</span>
                         </vx-input-group>
                         <vx-input-group class="mt-2">
                             <vs-input readonly v-validate="'required'" name="email" v-model="edit_email" label-placeholder="Email" ata-vv-scope="editform" data-vv-scope="editform" />
-                            <span class="text-danger" v-show="errors.has('email')">{{errors.first('email')}}</span>
+                            <span class="text-danger" v-show="errors.has('editform.email')">{{errors.first('editform.email')}}</span>
                         </vx-input-group>
 
                         <vx-input-group class="mt-2">
                             <vs-input v-validate="'required'" name="address" v-model="edit_address" label-placeholder="Address" data-vv-scope="editform" />
-                            <span class="text-danger" v-show="errors.has('address')">{{errors.first('address')}}</span>
+                            <span class="text-danger" v-show="errors.has('editform.address')">{{errors.first('editform.address')}}</span>
                         </vx-input-group>
                         
                         <!-- <vx-input-group class="mt-2">
                             <vs-input v-validate="'required'" name="password" v-model="password" label-placeholder="Password" />
-                            <div class="text-danger" v-show="errors.has('password')">{{errors.first('password')}}</div>
+                            <div class="text-danger" v-show="errors.has('editform.password')">{{errors.first('editform.password')}}</div>
                             <vs-button class="mt-2" button="button" type="border">Generate Password</vs-button>
                         </vx-input-group> -->
                     </vs-col>
                     <vs-col vs-lg="6" vs-md="12" vs-sm="12">
 
-                        <vs-select class="selectExample mt-2" v-model="selectedRoll" >
+                        <vs-select class="selectExample mt-2" v-model="selectedRole" >
                             <vs-select-item :is-selected.sync="item.isSelected" :key="index" :value="item.value" :text="item.isSelected?item.selectedText:item.label" v-for="item,index in rolles" />
                         </vs-select>
-
+                        <vx-input-group class="mt-2" v-if="selectedRole == 3">
+                            <vs-select v-validate="'required'" name="supervisor" class="selectExample" label="Supervisor" v-model="selectedSupervisor">
+                                <vs-select-item value="" text="Select Supervisor"></vs-select-item>
+                                <vs-select-item :key="index" :value="item.manager_id" :text="item.first_name+' '+item.last_name" v-for="(item,index) in supervisors" />
+                            </vs-select>
+                            <span class="text-danger" v-show="errors.has('editform.supervisor')">{{errors.first('editform.supervisor')}}</span>
+                        </vx-input-group>
                         <vx-input-group class="mt-6">
                             <vs-radio v-model="edit_gender" name="edit_gender" vs-value="male">Male</vs-radio>
                             <vs-radio v-model="edit_gender" name="edit_gender" vs-value="female">Female</vs-radio>
@@ -141,21 +161,21 @@
 
                         <vx-input-group class="mt-5">
                             <vs-input v-validate="'required'" name="state" v-model="edit_state" label-placeholder="State" data-vv-scope="editform" />
-                            <span class="text-danger" v-show="errors.has('state')">{{errors.first('state')}}</span>
+                            <span class="text-danger" v-show="errors.has('editform.state')">{{errors.first('editform.state')}}</span>
                         </vx-input-group>
                         
                         <vx-input-group class="mt-2">
                             <vs-input v-validate="'required'" name="city" v-model="edit_city" label-placeholder="City" data-vv-scope="editform" />
-                            <span class="text-danger" v-show="errors.has('city')">{{errors.first('city')}}</span>
+                            <span class="text-danger" v-show="errors.has('editform.city')">{{errors.first('editform.city')}}</span>
                         </vx-input-group>
                         <vx-input-group class="mt-2">
                             <vs-input v-validate="'required'" name="zip_code" v-model="edit_zip_code" label-placeholder="Zip Code" data-vv-scope="editform" />
-                            <span class="text-danger" v-show="errors.has('zip_code')">{{errors.first('zip_code')}}</span>
+                            <span class="text-danger" v-show="errors.has('editform.zip_code')">{{errors.first('editform.zip_code')}}</span>
                         </vx-input-group>
                     </vs-col>
                     <vs-col vs-lg="12" vs-md="12" vs-sm="12">
                         <br>
-                        <vs-button button="submit" class="float-right" type="gradient">Update Admin</vs-button>
+                        <vs-button button="submit" class="float-right" type="gradient">Update Member</vs-button>
                     </vs-col>
                 </vs-row>
             </form>
@@ -191,11 +211,13 @@ export default {
             edit_gender: "male",
             edit_password: "",
             edit_manager_id: '',
-            defaultRoll:0,
-            selectedRoll:0,
+            defaultRole:0,
+            selectedRole:0,
+            supervisor : '',
+            selectedSupervisor : '',
             rolles:[
                 {value: 0, label: 'Select Role', selectedText: 'Select Role', isSelected: false },
-                {value: 1, label: 'Admin', selectedText: 'Admin', isSelected: false },
+                {value: 4, label: 'Admin', selectedText: 'Admin', isSelected: false },
                 {value: 2, label: 'Supervisor', selectedText: 'Supervisor', isSelected: false },
                 {value: 3, label: 'Officer', selectedText: 'Officer', isSelected: false },
             ],
@@ -204,27 +226,44 @@ export default {
     computed: {
         ...mapState('admins/', ['admins']),
         ...mapGetters('admins/',['findAdmin']),
+        ...mapState('supervisors/', ['supervisors']),
     },
     created() {
         this.getAdmins();
+        this.getSupervisors();
     },
     methods: {
         ...mapActions({
             getAdmins: 'admins/getAdmins',
             submit: 'admins/addAdmin',
-            update: 'admins/updateAdmin'
+            update: 'admins/updateAdmin',
+            getSupervisors: 'supervisors/getSupervisors',
         }),
+        reportsTo(reportsTo){
+            if(reportsTo != null){
+                return reportsTo.full_name;
+            }else{
+                return 'N/A';
+            }
+        },
         addAdmin(e) {
             this.$validator.validateAll('addform').then(result => {
                 if (result) {
                     var fd = new FormData(this.$refs.addAdminForm);
                     fd.append('gender', this.gender);
+                    if(this.defaultRole == 3){
+
+                    fd.append('reports_to', this.supervisor);
+                    }else{
+                    fd.append('reports_to', localStorage.getItem('admin')); 
+                    }
+
                     this.submit(fd).then( (res) => {
                     // console.log(res.data);
                         if (res.data.status == 'success') {
                             this.password = this.email = this.first_name = this.last_name = this.zip_code = this.city = this.state = this.address = this.phone = '';
                             this.gender = 'male'
-                            this.selectedRoll = 0;
+                            this.selectedRole = 0;
                             e.target.reset();
                             this.errors.clear();
                             this.addAdminModal = false;
@@ -257,9 +296,6 @@ export default {
 
         editAdmin(id){
             var admin = this.findAdmin(id);
-            // console.log(admin)
-            // console.log(admin);
-            // console.log(admin);
             this.edit_manager_id = admin.manager_id;
             this.edit_first_name = admin.first_name;
             this.edit_last_name = admin.last_name;
@@ -273,13 +309,14 @@ export default {
             this.edit_zip_code = admin.zip_code;
             this.edit_city = admin.city;
             if(admin.type == 'Admin'){
-                this.selectedRoll = 1;
+                this.selectedRole = 1;
             }
             if(admin.type == 'Supervisor'){
-                this.selectedRoll = 2;
+                this.selectedRole = 2;
             }
             if(admin.type == 'Officer'){
-                this.selectedRoll = 3;
+                this.selectedRole = 3;
+                this.selectedSupervisor = admin.reports_to || 0;
             }
              
             this.editAdminModal = true;
@@ -291,6 +328,13 @@ export default {
                     this.$vs.loading();
                     var fd = new FormData(this.$refs.editAdminForm);
                     fd.append('gender', this.edit_gender);
+                    if(this.defaultRole == 3){
+
+                    fd.append('reports_to', this.selectedSupervisor);
+                    }else{
+                    fd.append('reports_to', localStorage.getItem('admin')); 
+                    }
+
                     this.update(fd).then( (res) => {
                         // console.log(res.data);
                         if (res.data.status == 'success') {

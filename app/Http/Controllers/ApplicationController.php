@@ -22,8 +22,8 @@ use Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Session;
 use PDF;
+use Session;
 
 class ApplicationController extends Controller {
 	public function __invoke() {
@@ -32,6 +32,9 @@ class ApplicationController extends Controller {
 	public function get_average_rate() {
 		$rate = Settings::where('key', 'average_rate')->first();
 		return $rate->value;
+	}
+	public function get_dashboard_data() {
+		// TaxCustomers::where('type', 'Monthly');
 	}
 	public function get_login_user(Request $request) {
 		$admin = Admin::whereManagerId($request->user)->first();
@@ -58,6 +61,10 @@ class ApplicationController extends Controller {
 	// officers methods
 	public function get_officers(Request $request) {
 		$officers = Officer::whereType(3)->get();
+		return response()->json(compact('officers'));
+	}
+	public function get_my_officers(Request $request) {
+		$officers = Officer::whereType(3)->where('reports_to', $request->supervisor)->get();
 		return response()->json(compact('officers'));
 	}
 	public function add_officer(Request $request) {
@@ -164,6 +171,17 @@ class ApplicationController extends Controller {
 		$customer->additional_fields = $request->additional_field;
 		// $customer->tax_duration = $request->tax_duration;
 
+		$created_by = Admin::where('manager_id', $request->created_by)->first();
+		if ($created_by->type == 'Supervisor') {
+			$customer->manager = $request->manager;
+			$customer->supervisor = $request->created_by;
+			$customer->created_by = $request->created_by;
+		} else {
+			$customer->manager = $request->created_by;
+			$customer->supervisor = $created_by->reports_to;
+			$customer->created_by = $request->created_by;
+		}
+
 		$result = $customer->save();
 		return response()->json(['status' => 'success', 'customers' => $customer]);
 	}
@@ -240,6 +258,18 @@ class ApplicationController extends Controller {
 				$customer->incorporation_date = $value['incorporation_date'];
 				$customer->village = $value['village'];
 				$customer->tax_duration = $value['tax_duration'];
+				// $customer->manager = $request->manager;
+
+				$created_by = Admin::where('manager_id', $request->created_by)->first();
+				if ($created_by->type == 'Supervisor') {
+					$customer->manager = $request->manager;
+					$customer->supervisor = $request->created_by;
+					$customer->created_by = $request->created_by;
+				} else {
+					$customer->manager = $request->created_by;
+					$customer->supervisor = $created_by->reports_to;
+					$customer->created_by = $request->created_by;
+				}
 				$result = $customer->save();
 				$counter++;
 
@@ -251,27 +281,21 @@ class ApplicationController extends Controller {
 
 	public function get_customers(Request $request) {
 
-		if (session('admin.type') == 'Admin') {
+		if (session('admin.type') == 'Admin' || session('admin.type') == 'Super Admin') {
 
-			$customers = TaxCustomers::with(['taxes' => function($tax){
-				$tax->with(['officers.detail', 'supervisor'])->whereStatus(0);
-			}])->orderBy('created_at', 'desc')->get();
+			$customers = TaxCustomers::with('supervisor', 'officer')->orderBy('created_at', 'desc')->get();
 
 		} else if (session('admin.type') == 'Supervisor') {
-			$customers = TaxCustomers::with(['taxes' => function($tax){
-				$tax->with(['officers.detail', 'supervisor'])->whereStatus(0);
-			}])->whereRaw('customer_id IN (SELECT customer_id from tax_managment where supervisor_id = ?)', ['supervisor_id' => session('admin.manager_id')])->get();
+			$customers = TaxCustomers::with('supervisor', 'officer')->where('supervisor', session('admin.manager_id'))->get();
 		} else {
-			$customers = TaxCustomers::with(['taxes' => function($tax){
-				$tax->with(['officers.detail', 'supervisor'])->whereStatus(0);
-			}])->whereRaw('customer_id IN (SELECT customer_id from tax_managment where tax_id IN (SELECT tax_id from tax_officers where officer_id = ?) )', ['officer_id' => session('admin.manager_id')])->get();
+			$customers = TaxCustomers::where(['manager' => session('admin.manager_id')])->get();
 
 		}
-		
+
 		return response()->json(compact('customers'));
 	}
 	public function get_customer(Request $request) {
-		$customer = TaxCustomers::withCount('active_employees', 'taxes')->where('customer_id', $request->customer_id)->first();
+		$customer = TaxCustomers::withCount('active_employees', 'taxes')->with('officer', 'supervisor', 'created_by')->where('customer_id', $request->customer_id)->first();
 		return response()->json(compact('customer'));
 	}
 
@@ -391,7 +415,7 @@ class ApplicationController extends Controller {
 
 	// admins methods
 	public function get_admins(Request $request) {
-		$admins = Admin::latest('id')->get();
+		$admins = Admin::with('reportingTo')->where('manager_id', '!=', session('admin.manager_id'))->latest('id')->get();
 		return response()->json(compact('admins'));
 	}
 
@@ -427,9 +451,11 @@ class ApplicationController extends Controller {
 
 		} elseif ($request->roll == 'Supervisor') {
 			$admin->type = 2; // 2 means Supervisor
+			$admin->reports_to = $request->reports_to;
 
 		} else {
-			$admin->type = 3; // 1 means officer
+			$admin->type = 3; // 3 means officer
+			$admin->reports_to = $request->reports_to;
 
 		}
 		$result = $admin->save();
@@ -447,6 +473,17 @@ class ApplicationController extends Controller {
 		$admin->state = $request->state;
 		$admin->zip_code = $request->zip_code;
 		$admin->phone = $request->phone;
+		if ($request->roll == 'Admin') {
+			$admin->type = 1; // 1 means admin
+
+		} elseif ($request->roll == 'Supervisor') {
+			$admin->type = 2; // 2 means Supervisor
+
+		} else {
+			$admin->type = 3; // 3 means officer
+			$admin->reports_to = $request->supervisor;
+
+		}
 		$result = $admin->save();
 		return response()->json(['status' => 'success', 'admin' => $admin], 200);
 	}
@@ -568,20 +605,22 @@ class ApplicationController extends Controller {
 		$tax->customer_id = $request->customer_id;
 		$tax->title = $request->title;
 		$tax->description = $request->description;
-		$tax->duration = $request->duration;
+		// $tax->duration = $request->duration;
 		$cust = TaxCustomers::whereCustomerId($request->customer_id)->first();
-		$tax->type = $cust->tax_duration;
-		$tax->supervisor_id = $request->supervisor_id;
+		$tax->type = $request->type;
+		$tax->tax_code = $request->tax_code;
+		$tax->notes = $request->notes;
+		// $tax->supervisor_id = $request->supervisor_id;
 		$save = $tax->save();
 		if ($save) {
-			$officers = explode(',', $request->officers);
-			foreach ($officers as $key => $officer) {
-				$taxOfficer = new TaxOfficer;
-				$taxOfficer->tax_officer_id = (String) Str::uuid();
-				$taxOfficer->tax_id = $tax->tax_id;
-				$taxOfficer->officer_id = $officer;
-				$taxOfficer->save();
-			}
+			/*$officers = explode(',', $request->officers);
+				foreach ($officers as $key => $officer) {
+					$taxOfficer = new TaxOfficer;
+					$taxOfficer->tax_officer_id = (String) Str::uuid();
+					$taxOfficer->tax_id = $tax->tax_id;
+					$taxOfficer->officer_id = $officer;
+					$taxOfficer->save();
+			*/
 			return response()->json(['status' => 'success', 'msg' => 'Tax Created Successfully'], 200);
 		}
 
@@ -592,20 +631,11 @@ class ApplicationController extends Controller {
 		$tax = Tax::whereTaxId($request->tax_id)->first();
 		$tax->title = $request->title;
 		$tax->description = $request->description;
-		$tax->duration = $request->duration;
-		// $tax->type = $request->type;
-		$tax->supervisor_id = $request->supervisor_id;
+		$tax->notes = $request->notes;
+		$tax->type = $request->type;
+		$tax->tax_code = $request->tax_code;
 		$save = $tax->save();
 		if ($save) {
-			$officers = explode(',', $request->officers);
-			TaxOfficer::where('tax_id', $request->tax_id)->delete();
-			foreach ($officers as $key => $officer) {
-				$taxOfficer = new TaxOfficer;
-				$taxOfficer->tax_officer_id = (String) Str::uuid();
-				$taxOfficer->tax_id = $tax->tax_id;
-				$taxOfficer->officer_id = $officer;
-				$taxOfficer->save();
-			}
 			return response()->json(['status' => 'success', 'msg' => 'Tax Updated Successfully'], 200);
 		}
 
@@ -631,16 +661,16 @@ class ApplicationController extends Controller {
 	}
 
 	public function get_taxes(Request $request) {
-		if (session('admin.type') == 'Admin') {
+		$taxes = Tax::with('created_by')->where('customer_id', $request->customer_id)->get();
+		/*if (session('admin.type') == 'Admin') {
 
-			$taxes = Tax::with('supervisor')->withCount('officers')->where('customer_id', $request->customer_id)->get();
-		} elseif (session('admin.type') == 'Supervisor') {
+				$taxes = Tax::with('supervisor')->withCount('officers')->where('customer_id', $request->customer_id)->get();
+			} elseif (session('admin.type') == 'Supervisor') {
 
-			$taxes = Tax::with('supervisor')->withCount('officers')->where('customer_id', $request->customer_id)->where('supervisor_id', session('admin.manager_id'))->where('status', 0)->get();
-		} else {
-			$taxes = Tax::with('supervisor')->withCount('officers')->where('customer_id', $request->customer_id)->whereRaw('tax_id IN (SELECT tax_id from tax_officers where officer_id = ?)', ['officer_id' => session('admin.manager_id')])->get();
+			} else {
+				$taxes = Tax::with('supervisor')->withCount('officers')->where('customer_id', $request->customer_id)->whereRaw('tax_id IN (SELECT tax_id from tax_officers where officer_id = ?)', ['officer_id' => session('admin.manager_id')])->get();
 
-		}
+		*/
 		return response()->json(compact('taxes'));
 	}
 	public function get_parameters(Parameter $parameter) {
@@ -648,7 +678,7 @@ class ApplicationController extends Controller {
 		return response()->json(compact('parameters'));
 	}
 	public function get_tax(Request $request) {
-		$tax = Tax::with('supervisor', 'officers')->withCount('officers', 'sales', 'purchases', 'payrolls')->where('tax_id', $request->tax_id)->first();
+		$tax = Tax::with('supervisor', 'officer', 'added_by')->withCount('sales', 'purchases', 'payrolls')->where('tax_id', $request->tax_id)->first();
 		if (session('admin.type') == 'Supervisor') {
 		}
 
@@ -669,7 +699,7 @@ class ApplicationController extends Controller {
 	}
 
 	public function get_edittax(Request $request) {
-		$tax = Tax::with('supervisor', 'officers')->withCount('officers', 'sales', 'purchases', 'payrolls')->where('tax_id', $request->id)->first();
+		$tax = Tax::where('tax_id', $request->id)->first();
 
 		return response()->json(compact('tax'));
 	}
@@ -705,19 +735,19 @@ class ApplicationController extends Controller {
 		$purchase->supplier = $request->supplier;
 		$purchase->additional_fields = $request->additional_field;
 		$purchase->status = 0;
-		if ($request->has('supervisor_id')) {
-			$purchase->supervisor_id = $request->supervisor_id;
-			$purchase->officer_confirmed = 1;
-		} else {
-			$purchase->tax_officer_id = $request->officer_id;
-		}
+		$purchase->created_by = $request->created_by;
+		/*if ($request->has('supervisor_id')) {
+				$purchase->officer_confirmed = 1;
+			} else {
+				$purchase->tax_officer_id = $request->officer_id;
+		*/
 		$purchase->save();
 
 		return response()->json(['status' => 'success']);
 	}
 
 	public function get_purchases(Request $request) {
-		$purchases = Purchases::orderBy('created_at', 'desc')->where('tax_id', $request->tax_id)->get();
+		$purchases = Purchases::latest('id')->where('tax_id', $request->tax_id)->get();
 		return response()->json(compact('purchases'));
 	}
 
@@ -744,13 +774,13 @@ class ApplicationController extends Controller {
 		$sale->client_response = $request->client_responses;
 		$sale->non_taxable_sales = $request->non_taxable_sales;
 		$sale->vat = $request->export_value;
-		if ($request->has('supervisor_id')) {
-			$sale->supervisor_id = $request->supervisor_id;
-			$sale->officer_confirmed = 1;
-		} else {
-			$sale->tax_officer_id = $request->officer_id;
+		$sale->created_by = $request->created_by;
+		/*if ($request->has('supervisor_id')) {
+				$sale->officer_confirmed = 1;
+			} else {
+				$sale->tax_officer_id = $request->officer_id;
 
-		}
+		*/
 
 		if (!is_null($request->person_non_taxable_sales)) {
 			$sale->taxable_person_sales = $request->person_non_taxable_sales;
@@ -769,7 +799,7 @@ class ApplicationController extends Controller {
 	}
 
 	public function get_sales(Request $request) {
-		$sales = Sales::orderBy('created_at', 'desc')->where('tax_id', $request->tax_id)->get();
+		$sales = Sales::latest('id')->where('tax_id', $request->tax_id)->get();
 		return response()->json(compact('sales'));
 	}
 	public function get_pending_sales(Request $request) {
@@ -926,13 +956,13 @@ class ApplicationController extends Controller {
 		$pr->salary_adjusment = $request->salary_adjustment;
 		$pr->remark = $request->remark;
 		$pr->additional_fields = $request->additional_field;
-		if ($request->has('supervisor_id')) {
-			$pr->supervisor_id = $request->supervisor_id;
-			$pr->officer_confirmed = 1;
+		$pr->created_by = $request->created_by;
+		/*if ($request->has('supervisor_id')) {
+				$pr->officer_confirmed = 1;
 
-		} else {
-			$pr->tax_officer_id = $request->officer_id;
-		}
+			} else {
+				$pr->tax_officer_id = $request->officer_id;
+		*/
 		$pr->save();
 
 		return response()->json(['status' => 'success', 'data' => $pr, 'msg' => 'Payroll Added Successfully']);
@@ -1077,10 +1107,10 @@ class ApplicationController extends Controller {
 				$sale->taxable_person_sales = $value['sales_to_taxable_person_value'];
 				$sale->cust_sales = $value['sales_to_consumer_value'];
 				if ($type == 'supervisor') {
-					$sale->supervisor_id = $userLoginId;
+					$sale->created_by = $userLoginId;
 					$sale->officer_confirmed = 1;
 				} else {
-					$sale->tax_officer_id = $userLoginId;
+					$sale->created_by = $userLoginId;
 				}
 
 				if ($value['sales_to_taxable_person_value'] ?? false) {
@@ -1151,10 +1181,10 @@ class ApplicationController extends Controller {
 				$pr->salary_adjusment = $value['salary_adjustment'];
 				$pr->remark = $value['remark'];
 				if ($type == 'supervisor') {
-					$pr->supervisor_id = $userLoginId;
+					$pr->created_by = $userLoginId;
 					$pr->officer_confirmed = 1;
 				} else {
-					$pr->tax_officer_id = $userLoginId;
+					$pr->created_by = $userLoginId;
 				}
 				// $pr->additional_fields = $value['additional_field'];
 
@@ -1203,10 +1233,10 @@ class ApplicationController extends Controller {
 				$purchase->supplier = $value['supplier'];
 				$purchase->status = 0;
 				if ($type == 'supervisor') {
-					$purchase->supervisor_id = $userLoginId;
+					$purchase->created_by = $userLoginId;
 					$purchase->officer_confirmed = 1;
 				} else {
-					$purchase->tax_officer_id = $userLoginId;
+					$purchase->created_by = $userLoginId;
 				}
 				$purchase->save();
 				$counter++;
@@ -1269,7 +1299,7 @@ class ApplicationController extends Controller {
 				$msg = 'Status Disabled Successfully';
 			} else {
 				$data->officer_confirmed = 1;
-				$data->save();
+				$data->sxave();
 				$msg = 'Status Enabled Successfully';
 			}
 		} else {
@@ -1423,6 +1453,7 @@ class ApplicationController extends Controller {
 
 	}
 
+<<<<<<< HEAD
 	public function vat_one(){
 		// return view('pdf.vat-1');
 		$data = array(); 
@@ -1441,4 +1472,29 @@ class ApplicationController extends Controller {
 	}
 
 	
+=======
+	public function invoice() {
+
+		$data = array();
+		$pdf = PDF::loadView('pdf.invoice', $data);
+		$customPaper = array(0, 0, 800, 800);
+
+		$pdf->setPaper($customPaper);
+		// $pdf->setPaper('letter', 'portrait');
+
+		return $pdf->stream('invoice.pdf');
+	}
+
+	public function invoice1() {
+		$data = array();
+		$pdf = PDF::loadView('pdf.invoice1', $data);
+		return $pdf->download('invoice1.pdf');
+	}
+
+	public function invoice2() {
+		$data = array();
+		$pdf = PDF::loadView('pdf.invoice2', $data);
+		return $pdf->stream('invoice2.pdf');
+	}
+>>>>>>> master
 }

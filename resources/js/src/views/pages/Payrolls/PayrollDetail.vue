@@ -141,7 +141,7 @@
                             <vs-button :to="'/purchase-update/'+$route.params.id" icon-pack="feather" size="small" icon='icon-edit'></vs-button>
                         </vs-list-item>
                         <template>
-                            <vs-list-item v-if="userType == 'Admin'" title="Status">
+                            <vs-list-item v-if="userType == 'Admin' || userType == 'Super Admin'" title="Status">
                                 <vs-button icon-pack="feather" size="small" icon='icon-check-circle' @click="changeManagementStatus('1', payroll.id, 'admin')"></vs-button>
                                 <vs-button icon-pack="feather" size="small" icon='icon-x-circle' @click="changeManagementStatus('0', payroll.id, 'admin')"></vs-button>
                             </vs-list-item>

@@ -396,6 +396,7 @@ __webpack_require__.r(__webpack_exports__);
       new_password: null,
       confirm_password: null,
       activeUser: '',
+      activeUserRole: '',
       navbarSearchAndPinList: this.$store.state.navbarSearchAndPinList,
       searchQuery: '',
       showFullSearch: false,
@@ -487,6 +488,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.activeUser = this.$store.state.AppActiveUser.full_name;
+    this.activeUserRole = this.$store.state.AppActiveUser.type;
   },
   methods: {
     changePasswordPopUp: function changePasswordPopUp(e, scope) {
@@ -1882,7 +1884,7 @@ var render = function() {
                         _vm._v(_vm._s(_vm.activeUser))
                       ]),
                       _vm._v(" "),
-                      _c("small", [_vm._v("Available")])
+                      _c("small", [_vm._v(_vm._s(_vm.activeUserRole))])
                     ]
                   ),
                   _vm._v(" "),

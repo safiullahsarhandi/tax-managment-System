@@ -22,6 +22,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     active: {
@@ -43,17 +52,31 @@ __webpack_require__.r(__webpack_exports__);
     fileName: {
       type: String,
       "default": 'file'
+    },
+    myOfficers: {
+      type: Array,
+      "default": function _default() {
+        return [];
+      }
+    },
+    callingFrom: {
+      type: String,
+      "default": ''
     }
   },
   watch: {},
   data: function data() {
     return {
-      isShown: this.active
+      isShown: this.active,
+      manager: ''
     };
   },
   methods: {
     deleteFunc: function deleteFunc(error) {
       this.$emit('deleted');
+    },
+    changeWorker: function changeWorker() {
+      this.$emit('worker-changed', this.manager);
     },
     successFunc: function successFunc(success) {
       var response = JSON.parse(success.target.response);
@@ -159,6 +182,83 @@ var render = function() {
       _c(
         "vs-row",
         [
+          _vm.callingFrom != ""
+            ? _c(
+                "vs-col",
+                {
+                  staticClass: "mb-2 p-0",
+                  attrs: { "vs-md": "12", "vs-lg": "12", "vs-sm": "12" }
+                },
+                [
+                  _vm.$store.getters.userType == "Supervisor"
+                    ? _c(
+                        "vs-col",
+                        {
+                          staticClass: "flex justify-end",
+                          attrs: { "vs-md": "12", "vs-lg": "12", "vs-sm": "12" }
+                        },
+                        [
+                          _c(
+                            "vx-input-group",
+                            [
+                              _c(
+                                "vs-select",
+                                {
+                                  attrs: {
+                                    label: "List Of Officers",
+                                    placeholder: "Select officer who work"
+                                  },
+                                  on: { input: _vm.changeWorker },
+                                  model: {
+                                    value: _vm.manager,
+                                    callback: function($$v) {
+                                      _vm.manager = $$v
+                                    },
+                                    expression: "manager"
+                                  }
+                                },
+                                _vm._l(_vm.myOfficers, function(
+                                  officer,
+                                  index
+                                ) {
+                                  return _c("vs-select-item", {
+                                    key: index,
+                                    attrs: {
+                                      text: officer.full_name,
+                                      value: officer.manager_id
+                                    }
+                                  })
+                                }),
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has("name_eng"),
+                                  expression: "errors.has('name_eng')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [_vm._v(_vm._s(_vm.errors.first("name_eng")))]
+                          )
+                        ],
+                        1
+                      )
+                    : _vm._e()
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
           _c(
             "vs-col",
             { staticClass: "uploader-column" },

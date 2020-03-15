@@ -318,11 +318,11 @@ export default {
                     let fd = new FormData(this.$refs.addPayrollForm);
                     fd.append('employee_id', this.employee);
                     fd.append('tax_id', this.tax_id);
-                    if (this.$store.state.AppActiveUser.type == 'Supervisor') {
-                        fd.append('supervisor_id', this.$store.state.AppActiveUser.manager_id);
+                        fd.append('created_by', this.$store.state.AppActiveUser.manager_id);
+                    /*if (this.$store.state.AppActiveUser.type == 'Supervisor') {
                     } else {
                         fd.append('officer_id', this.$store.state.AppActiveUser.manager_id);
-                    }
+                    }*/
                     let data = {
                         fd: fd,
                         close: this.$vs.loading.close,

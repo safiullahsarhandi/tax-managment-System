@@ -1,24 +1,3 @@
-/*=========================================================================================
-  File Name: sidebarItems.js
-  Description: Sidebar Items list. Add / Remove menu items from here.
-  Strucutre:
-          url     => router path
-          name    => name to display in sidebar
-          slug    => router path name
-          icon    => Feather Icon component/icon name
-          tag     => text to display on badge
-          tagColor  => class to apply on badge element
-          i18n    => Internationalization
-          submenu   => submenu of current item (current item will become dropdown )
-                NOTE: Submenu don't have any icon(you can add icon if u want to display)
-          isDisabled  => disable sidebar item/group
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuesax Admin - VueJS Dashboard Admin Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
-
-
 export default [
     {
         url: "/",
@@ -68,7 +47,7 @@ export default [
             name: "List Of Purchases",
             slug: "purchases-list",
             icon: "UserIcon",
-        }],
+        }], 
     },
     {
         url: "/payrolls",
@@ -87,31 +66,6 @@ export default [
             slug: "employees-list",
             icon: "UserIcon",
         }],
-    },
-    {
-        url: "/pending-approvals",
-        name: "Pending Approvals",
-        slug: "pending-approvals",
-        icon: "BookOpenIcon",
-        isMain : false,
-        submenu : [
-        {
-            url: "/un-reviewed-payrolls",
-            name: "Payrolls",
-            slug: "employees-list",
-            icon: "UserIcon",
-        },{
-            url: "/un-reviewed-purchases",
-            name: "Purchases",
-            slug: "un-reviewed-purchases",
-            icon: "UserIcon",
-        },{
-            url: "/un-reviewed-sales",
-            name: "Sales",
-            slug: "un-reviewed-sales",
-            icon: "UserIcon",
-        }
-        ],
     },
     {
         url: "/reports",

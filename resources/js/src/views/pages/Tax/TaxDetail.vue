@@ -1,7 +1,7 @@
 <template>
     <div id="tax-detail">
         <vs-row>
-            <vs-col :vs-md="activeUser.type == 'Admin'?'9':'12'" :vs-lg="activeUser.type == 'Admin'?'9':'12'" vs-sm="12" vs-xs="12">
+            <vs-col :vs-md="activeUser.type == 'Admin' || activeUser.type == 'Super Admin'?'9':'9'" :vs-lg="activeUser.type == 'Admin' || activeUser.type == 'Super Admin'?'9':'9'" vs-sm="12" vs-xs="12">
             	<vs-row class="mt-base p-0">
                     <vs-col vs-lg="4" vs-md="4" vs-sm="12" vs-xs="12">
                         <statistics-card-line icon="DollarSignIcon" :statistic="tax.purchases_count || 0" statisticTitle="No of Purchases Added" :chartData="analyticsData.revenueGenerated" type='area'></statistics-card-line>
@@ -17,20 +17,20 @@
                     <vs-row>
                         <vs-col vs-md="4" vs-lg="4" vs-sm="12" vs-xs="12">
                             <p>
+                                <label>Tax ID:</label>
+                                <h4>{{tax.tax_code || 'N/A'}}</h4>
+                            </p>
+                        </vs-col>
+                        <vs-col vs-md="4" vs-lg="4" vs-sm="12" vs-xs="12">
+                            <p>
                                 <label>Title:</label>
-                                <h4>{{tax.title}}</h4>
+                                <h4>{{tax.title || 'N/A'}}</h4>
                             </p>
                         </vs-col>
                         <vs-col vs-md="4" vs-lg="4" vs-sm="12" vs-xs="12">
                             <p>
                                 <label>Description:</label>
-                                <h4>{{tax.description}}</h4>
-                            </p>
-                        </vs-col>
-                        <vs-col vs-md="4" vs-lg="4" vs-sm="12" vs-xs="12">
-                            <p>
-                                <label>Duration:</label>
-                                <h4>{{tax.duration}}</h4>
+                                <h4>{{tax.description || 'N/A'}}</h4>
                             </p>
                         </vs-col>
                     </vs-row>
@@ -49,16 +49,28 @@
                         </vs-col>
                         <vs-col vs-md="4" vs-lg="4" vs-sm="12" vs-xs="12">
                             <p>
-                                <label>No. Of Officers:</label>
-                                <h4>{{tax.officers_count}}</h4>
+                                <label>Officer Who Work:</label>
+                                <h4>{{typeof tax.officer!='undefined'?tax.officer.full_name: ''}}</h4>
                             </p>
                         </vs-col>
                     </vs-row>
                     <vs-row class="mt-base">
                         <vs-col vs-md="4" vs-lg="4" vs-sm="12" vs-xs="12">
                             <p>
+                                <label>Tax Created By:</label>
+                                <h4>{{typeof tax.added_by!='undefined'?tax.added_by.full_name: ''}}</h4>
+                            </p>
+                        </vs-col>
+                        <vs-col vs-md="4" vs-lg="4" vs-sm="12" vs-xs="12">
+                            <p>
                                 <label>Tax Status:</label>
                                 <h4>{{tax.status == 0? 'In Progress':'Completed'}}</h4>
+                            </p>
+                        </vs-col>
+                        <vs-col vs-md="4" vs-lg="4" vs-sm="12" vs-xs="12">
+                            <p>
+                                <label>Notes:</label>
+                                <h4>{{tax.notes || 'N/A'}}</h4>
                             </p>
                         </vs-col>
                     </vs-row>
@@ -146,18 +158,18 @@
                     </vx-card> -->
                 </template>
             </vs-col>
-            <vs-col v-show="activeUser.type == 'Admin'" class="mt-base" vs-md="3" vs-lg="3" vs-sm="12" vs-xs="12">
+            <vs-col v-show="activeUser.type == 'Admin' || activeUser.type == 'Super Admin'" class="mt-base" vs-md="3" vs-lg="3" vs-sm="12" vs-xs="12">
                 <vx-card title="Actions">
                     <vs-list>
                         <vs-list-item title="Mark as Complete" v-if="activeUser.type == 'Supervisor'" subtitle="">
-                            <vs-switch color="warning" :disabled="activeUser.type != 'Admin'" @input="changeTaxStatus(tax.tax_id)" />
+                            <vs-switch color="warning" :disabled="activeUser.type != 'Admin' || activeUser.type != 'Super Admin'" @input="changeTaxStatus(tax.tax_id)" />
                         </vs-list-item>
                        <!--  <vs-list-item title="Tax Team" subtitle="">
                         </vs-list-item> -->
-                        <vs-list-item title="Approve Tax" v-if="activeUser.type == 'Admin'" subtitle="">
-                            <vs-switch color="warning" :disabled="activeUser.type != 'Admin'" @input="changeTaxStatus(tax.tax_id)" />
+                        <vs-list-item title="Approve Tax" v-if="activeUser.type == 'Admin' || activeUser.type == 'Super Admin'" subtitle="">
+                            <vs-switch color="warning" :disabled="activeUser.type != 'Admin' || activeUser.type != 'Super Admin'" @input="changeTaxStatus(tax.tax_id)" />
                         </vs-list-item>
-                        <vs-list-item title="Edit Tax" v-if="activeUser.type == 'Admin'" subtitle="">
+                        <vs-list-item title="Edit Tax" v-if="activeUser.type == 'Admin' || activeUser.type == 'Super Admin'" subtitle="">
                         	<vs-button size="small" icon-pack="feather" @click="editTax()" icon="icon-edit"></vs-button>
                         </vs-list-item>
                     </vs-list>

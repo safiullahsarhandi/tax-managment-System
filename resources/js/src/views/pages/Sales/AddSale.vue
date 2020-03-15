@@ -361,11 +361,11 @@ export default {
                     var fd = new FormData(this.$refs.addForm);
                     fd.append('tax_id', this.tax_id)
                     fd.append('customer_id', this.customer_id)
-                    if (this.$store.state.AppActiveUser.type == 'Supervisor') {
-                        fd.append('supervisor_id', this.$store.state.AppActiveUser.manager_id);
+                    fd.append('created_by', this.$store.state.AppActiveUser.manager_id);
+                    /*if (this.$store.state.AppActiveUser.type == 'Supervisor') {
                     } else {
                         fd.append('officer_id', this.$store.state.AppActiveUser.manager_id);
-                    }
+                    }*/
                     this.submit(fd).then(res => {
                         if (res.data.status == 'success') {
                             e.target.reset();
