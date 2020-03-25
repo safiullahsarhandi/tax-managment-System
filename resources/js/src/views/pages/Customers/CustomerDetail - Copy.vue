@@ -1,20 +1,6 @@
 <template>
     <div>
         <vs-row>
-<<<<<<< HEAD
-            <vs-col class="">
-                <vx-card>
-                    <table>
-                        <tr>
-                            <th style="width: 300px; text-align: center;">Company Name (English):</th>
-                            <th style="width: 300px; text-align: center;">Company Name (Khmer):</th>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center;">{{customer.name_english}}</td>
-                            <td style="text-align: center;">{{customer.name_khmer}}</td>
-                        </tr>
-                    </table>
-=======
             <vs-col class="mt-base" vs-md="8" vs-lg="8" vs-sm="12" vs-xs="12">
                 <vx-card title="Company OR Customer Overview">
                     <vs-row>
@@ -70,24 +56,6 @@
                                 <h4>{{customer.active_employees_count}}</h4>
                             </p>
                         </vs-col>
-                        <vs-col vs-md="4" vs-lg="4" vs-sm="12" vs-xs="12">
-                            <p>
-                                <label>Created By:</label>
-                                <h4>{{getFullName(customer.created_by)}}</h4>
-                            </p>
-                        </vs-col>
-                        <vs-col vs-md="4" vs-lg="4" vs-sm="12" vs-xs="12">
-                            <p>
-                                <label>Officer Who Work:</label>
-                                <h4>{{getFullName(customer.officer)}}</h4>
-                            </p>
-                        </vs-col>
-                        <vs-col vs-md="4" vs-lg="4" vs-sm="12" vs-xs="12">
-                            <p>
-                                <label>Supervisor:</label>
-                                <h4>{{getFullName(customer.supervisor)}}</h4>
-                            </p>
-                        </vs-col>
                     </vs-row>
                 </vx-card>
             </vs-col>
@@ -125,15 +93,12 @@
                             <div>{{info}}</div>
                         </vs-col>
                     </vs-row>
->>>>>>> master
                 </vx-card>
             </vs-col>
-           
         </vs-row>
-        
         <vs-row>
             <vs-col>
-                <taxes class="mt-5"></taxes>
+                <taxes class="mt-base"></taxes>
             </vs-col>
         </vs-row>
     </div>
@@ -162,14 +127,6 @@ export default {
         ...mapActions({
             getCustomer: 'customers/getCustomer',
         }),
-        getFullName(obj){
-            if(obj !== null && !_.isUndefined(obj)){
-                return obj.full_name;
-            }else{
-                return 'N/A';
-            }
-
-        },
         getAddress(customer) {
             return customer.address + ' ' + customer.street + ' ' + customer.group + ' ' + customer.sangkat + ' ' + customer.village + ' ' + customer.district + ' ' + customer.province + ' ' + ' ' + customer.muncipality;
         }

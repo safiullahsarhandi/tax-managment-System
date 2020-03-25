@@ -1,21 +1,54 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[23],{
 
+<<<<<<< HEAD
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=script&lang=js& ***!
   \******************************************************************************************************************************************************************************************/
+=======
+<<<<<<< HEAD
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/layouts/main/TaxDetailMain.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/layouts/main/TaxDetailMain.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+=======
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
+>>>>>>> master
+>>>>>>> 90b29b1fa311125012be5716f1008a7a56924572
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+<<<<<<< HEAD
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+=======
+<<<<<<< HEAD
+/* harmony import */ var _layouts_components_vx_sidebar_VxSidebar_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/layouts/components/vx-sidebar/VxSidebar.vue */ "./resources/js/src/layouts/components/vx-sidebar/VxSidebar.vue");
+/* harmony import */ var _components_TheNavbar_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/TheNavbar.vue */ "./resources/js/src/layouts/components/TheNavbar.vue");
+/* harmony import */ var _components_TheFooter_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/TheFooter.vue */ "./resources/js/src/layouts/components/TheFooter.vue");
+/* harmony import */ var _themeConfig_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/../themeConfig.js */ "./resources/js/themeConfig.js");
+/* harmony import */ var _layouts_components_vx_sidebar_taxDetailSidebarItems_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/layouts/components/vx-sidebar/taxDetailSidebarItems.js */ "./resources/js/src/layouts/components/vx-sidebar/taxDetailSidebarItems.js");
+/* harmony import */ var vue_backtotop__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-backtotop */ "./node_modules/vue-backtotop/src/main.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+=======
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+
+>>>>>>> master
+>>>>>>> 90b29b1fa311125012be5716f1008a7a56924572
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+<<<<<<< HEAD
 //
 //
 //
@@ -33,13 +66,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
+=======
+>>>>>>> master
 //
 //
 //
@@ -95,7 +123,140 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+  data: function data() {
+    return {
+      navbarType: _themeConfig_js__WEBPACK_IMPORTED_MODULE_3__["default"].navbarType || 'floating',
+      navbarColor: _themeConfig_js__WEBPACK_IMPORTED_MODULE_3__["default"].navbarColor || '#fff',
+      footerType: _themeConfig_js__WEBPACK_IMPORTED_MODULE_3__["default"].footerType || 'static',
+      routerTransition: _themeConfig_js__WEBPACK_IMPORTED_MODULE_3__["default"].routerTransition || 'none',
+      isNavbarDark: false,
+      routeTitle: this.$route.meta.pageTitle,
+      sidebarItems: _layouts_components_vx_sidebar_taxDetailSidebarItems_js__WEBPACK_IMPORTED_MODULE_4__["default"],
+      disableCustomizer: _themeConfig_js__WEBPACK_IMPORTED_MODULE_3__["default"].disableCustomizer,
+      windowWidth: window.innerWidth,
+      //width of windows
+      hideScrollToTop: _themeConfig_js__WEBPACK_IMPORTED_MODULE_3__["default"].hideScrollToTop,
+      disableThemeTour: _themeConfig_js__WEBPACK_IMPORTED_MODULE_3__["default"].disableThemeTour
+    };
+  },
+  watch: {
+    '$route': function $route() {
+      this.routeTitle = this.$route.meta.pageTitle;
+    },
+    isThemeDark: function isThemeDark(val) {
+      if (this.navbarColor == "#fff" && val) {
+        this.updateNavbarColor("#10163a");
+      } else {
+        this.updateNavbarColor("#fff");
+      }
+    }
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapState"])(['AppActiveUser']), {
+    isAppPage: function isAppPage() {
+      if (this.$route.path.includes('/apps/')) return true;else return false;
+    },
+    isThemeDark: function isThemeDark() {
+      return this.$store.state.theme == 'dark';
+    },
+    sidebarWidth: function sidebarWidth() {
+      return this.$store.state.sidebarWidth;
+    },
+    bodyOverlay: function bodyOverlay() {
+      return this.$store.state.bodyOverlay;
+    },
+    contentAreaClass: function contentAreaClass() {
+      if (this.sidebarWidth == "default") return "content-area-default";else if (this.sidebarWidth == "reduced") return "content-area-reduced";else if (this.sidebarWidth) return "content-area-full";
+    },
+    navbarClasses: function navbarClasses() {
+      return {
+        'navbar-hidden': this.navbarType == 'hidden',
+        'navbar-sticky': this.navbarType == 'sticky',
+        'navbar-static': this.navbarType == 'static',
+        'navbar-floating': this.navbarType == 'floating'
+      };
+    },
+    footerClasses: function footerClasses() {
+      return {
+        'footer-hidden': this.footerType == 'hidden',
+        'footer-sticky': this.footerType == 'sticky',
+        'footer-static': this.footerType == 'static'
+      };
+    }
+  }),
+  methods: {
+    setSidebarLinks: function setSidebarLinks() {
+      if (this.AppActiveUser.type != 'Supervisor') {// console.log(this.$store.getters.userType)
+        // this.$delete(this.sidebarItems,5);
+      }
+    },
+    changeRouteTitle: function changeRouteTitle(title) {
+      this.routeTitle = title;
+    },
+    updateNavbarColor: function updateNavbarColor(val) {
+      this.navbarColor = val;
+      if (val == "#fff") this.isNavbarDark = false;else this.isNavbarDark = true;
+    },
+    handleWindowResize: function handleWindowResize(event) {
+      this.windowWidth = event.currentTarget.innerWidth;
+      this.setSidebarWidth();
+    },
+    setSidebarWidth: function setSidebarWidth() {
+      if (this.windowWidth < 1200) {
+        this.$store.commit('TOGGLE_IS_SIDEBAR_ACTIVE', false);
+        this.$store.dispatch('updateSidebarWidth', 'no-sidebar');
+        this.disableThemeTour = true;
+      } else if (this.windowWidth < 1200) {
+        this.$store.dispatch('updateSidebarWidth', 'reduced');
+      } else {
+        this.$store.commit('TOGGLE_IS_SIDEBAR_ACTIVE', true);
+      }
+    },
+    toggleHideScrollToTop: function toggleHideScrollToTop(val) {
+      this.hideScrollToTop = val;
+    }
+  },
+  components: {
+    VxSidebar: _layouts_components_vx_sidebar_VxSidebar_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    TheNavbar: _components_TheNavbar_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    TheFooter: _components_TheFooter_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    BackToTop: vue_backtotop__WEBPACK_IMPORTED_MODULE_5__["default"]
+  },
+  beforeCreate: function beforeCreate() {
+    this.$vs.loading({
+      background: 'light'
+    });
+    this.$store.commit('setRootUrl', localStorage.getItem('currentDetail'));
+    var self = this;
+    this.$store.dispatch('getLoginUser').then(function () {
+      if (self.$store.state.AppActiveUser.type == 'Officer') {
+        self.sidebarItems.splice(5, 1);
+      }
+
+      setTimeout(function () {
+        self.$vs.loading.close();
+      }, 500);
+    });
+  },
+  created: function created() {
+    this.sidebarItems[0].url = '/customer-detail/' + localStorage.getItem('customer');
+    this.setSidebarLinks();
+    this.setSidebarWidth();
+
+    if (this.navbarColor == "#fff" && this.isThemeDark) {
+      this.updateNavbarColor("#10163a");
+    } else {
+      this.updateNavbarColor(this.navbarColor);
+    }
+  },
+  mounted: function mounted() {}
+=======
+  inject: ['generatePassword'],
+>>>>>>> 90b29b1fa311125012be5716f1008a7a56924572
   data: function data() {
     return {
       addTaxManagmentModal: false,
@@ -123,14 +284,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.addTaxManagmentModal = true;
     }
   })
+>>>>>>> master
 });
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=style&index=0&lang=css&":
 /*!*************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=style&index=0&lang=css& ***!
   \*************************************************************************************************************************************************************************************************************************************************************************************************/
+=======
+<<<<<<< HEAD
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/layouts/main/TaxDetailMain.vue?vue&type=template&id=bf081fe4&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/layouts/main/TaxDetailMain.vue?vue&type=template&id=bf081fe4& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+=======
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=style&index=0&lang=css&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=style&index=0&lang=css& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************/
+>>>>>>> 90b29b1fa311125012be5716f1008a7a56924572
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -176,10 +351,18 @@ if(false) {}
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=template&id=89c4bd8a&":
 /*!**********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=template&id=89c4bd8a& ***!
   \**********************************************************************************************************************************************************************************************************************************/
+=======
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=template&id=40787bc2&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=template&id=40787bc2& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+>>>>>>> master
+>>>>>>> 90b29b1fa311125012be5716f1008a7a56924572
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -643,20 +826,182 @@ render._withStripped = true
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue":
 /*!*********************************************************************!*\
   !*** ./resources/js/src/views/pages/tax-managment/TaxManagment.vue ***!
   \*********************************************************************/
+=======
+<<<<<<< HEAD
+/***/ "./resources/js/src/layouts/components/vx-sidebar/taxDetailSidebarItems.js":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/src/layouts/components/vx-sidebar/taxDetailSidebarItems.js ***!
+  \*********************************************************************************/
+=======
+/***/ "./resources/js/src/views/pages/Tax/TaxTeam.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/src/views/pages/Tax/TaxTeam.vue ***!
+  \******************************************************/
+>>>>>>> master
+>>>>>>> 90b29b1fa311125012be5716f1008a7a56924572
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+<<<<<<< HEAD
 /* harmony import */ var _TaxManagment_vue_vue_type_template_id_89c4bd8a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TaxManagment.vue?vue&type=template&id=89c4bd8a& */ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=template&id=89c4bd8a&");
 /* harmony import */ var _TaxManagment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TaxManagment.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _TaxManagment_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TaxManagment.vue?vue&type=style&index=0&lang=css& */ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=style&index=0&lang=css&");
+=======
+<<<<<<< HEAD
+/*=========================================================================================
+  File Name: sidebarItems.js
+  Description: Sidebar Items list. Add / Remove menu items from here.
+  Strucutre:
+          url     => router path
+          name    => name to display in sidebar
+          slug    => router path name
+          icon    => Feather Icon component/icon name
+          tag     => text to display on badge
+          tagColor  => class to apply on badge element
+          i18n    => Internationalization
+          submenu   => submenu of current item (current item will become dropdown )
+                NOTE: Submenu don't have any icon(you can add icon if u want to display)
+          isDisabled  => disable sidebar item/group
+  ----------------------------------------------------------------------------------------
+  Item Name: Vuesax Admin - VueJS Dashboard Admin Template
+  Author: Pixinvent
+  Author URL: http://www.themeforest.net/user/pixinvent
+==========================================================================================*/
+/* harmony default export */ __webpack_exports__["default"] = ([{
+  url: "/",
+  name: "Back",
+  slug: "home",
+  icon: "HomeIcon",
+  isMain: false
+}, {
+  url: "/",
+  name: "Overview",
+  slug: "home",
+  icon: "HomeIcon",
+  isMain: true
+}, {
+  url: "/",
+  name: "Sales",
+  slug: "customer-sales",
+  icon: "DollarSignIcon",
+  isMain: false,
+  submenu: [{
+    url: "/add-sale",
+    name: "Add Sale",
+    slug: "add-sale",
+    icon: "UserIcon"
+  }, {
+    url: "/sales-list",
+    name: "List Of Sales",
+    slug: "sales-list",
+    icon: "UserIcon"
+  }]
+}, {
+  url: "/",
+  name: "purchases",
+  slug: "customer-purchases",
+  icon: "TruckIcon",
+  isMain: false,
+  submenu: [{
+    url: "/add-purchase",
+    name: "Add purchase",
+    slug: "add-purchase",
+    icon: "UserIcon"
+  }, {
+    url: "/purchases-list",
+    name: "List Of Purchases",
+    slug: "purchases-list",
+    icon: "UserIcon"
+  }]
+}, {
+  url: "/payrolls",
+  name: "Payrolls",
+  slug: "employees-payrolls",
+  icon: "ActivityIcon",
+  isMain: false,
+  submenu: [{
+    url: "/add-payroll",
+    name: "Add Payroll",
+    slug: "add-payroll",
+    icon: "UserIcon"
+  }, {
+    url: "/employees-payrolls",
+    name: "List Of Payroll",
+    slug: "employees-list",
+    icon: "UserIcon"
+  }]
+}, {
+  url: "/pending-approvals",
+  name: "Pending Approvals",
+  slug: "pending-approvals",
+  icon: "BookOpenIcon",
+  isMain: false,
+  submenu: [{
+    url: "/un-reviewed-payrolls",
+    name: "Payrolls",
+    slug: "employees-list",
+    icon: "UserIcon"
+  }, {
+    url: "/un-reviewed-purchases",
+    name: "Purchases",
+    slug: "un-reviewed-purchases",
+    icon: "UserIcon"
+  }, {
+    url: "/un-reviewed-sales",
+    name: "Sales",
+    slug: "un-reviewed-sales",
+    icon: "UserIcon"
+  }]
+}, {
+  url: "/reports",
+  name: "Reports",
+  slug: "reports",
+  icon: "BookOpenIcon",
+  isMain: false
+}, {
+  url: "/tax-team",
+  name: "Tax Team",
+  slug: "tax-team",
+  icon: "BookOpenIcon",
+  isMain: false
+}
+/*{
+    url: "/page2",
+    name: "Page 2",
+    slug: "page2",
+    icon: "FileIcon",
+},*/
+]);
+
+/***/ }),
+
+/***/ "./resources/js/src/layouts/main/TaxDetailMain.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/src/layouts/main/TaxDetailMain.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _TaxDetailMain_vue_vue_type_template_id_bf081fe4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TaxDetailMain.vue?vue&type=template&id=bf081fe4& */ "./resources/js/src/layouts/main/TaxDetailMain.vue?vue&type=template&id=bf081fe4&");
+/* harmony import */ var _TaxDetailMain_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TaxDetailMain.vue?vue&type=script&lang=js& */ "./resources/js/src/layouts/main/TaxDetailMain.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+=======
+/* harmony import */ var _TaxTeam_vue_vue_type_template_id_40787bc2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TaxTeam.vue?vue&type=template&id=40787bc2& */ "./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=template&id=40787bc2&");
+/* harmony import */ var _TaxTeam_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TaxTeam.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _TaxTeam_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TaxTeam.vue?vue&type=style&index=0&lang=css& */ "./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=style&index=0&lang=css&");
+>>>>>>> 90b29b1fa311125012be5716f1008a7a56924572
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
+>>>>>>> master
 
 
 
@@ -664,10 +1009,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
+<<<<<<< HEAD
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _TaxDetailMain_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _TaxDetailMain_vue_vue_type_template_id_bf081fe4___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _TaxDetailMain_vue_vue_type_template_id_bf081fe4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+=======
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+<<<<<<< HEAD
   _TaxManagment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _TaxManagment_vue_vue_type_template_id_89c4bd8a___WEBPACK_IMPORTED_MODULE_0__["render"],
   _TaxManagment_vue_vue_type_template_id_89c4bd8a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+=======
+  _TaxTeam_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _TaxTeam_vue_vue_type_template_id_40787bc2___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _TaxTeam_vue_vue_type_template_id_40787bc2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+>>>>>>> master
+>>>>>>> 90b29b1fa311125012be5716f1008a7a56924572
   false,
   null,
   null,
@@ -677,22 +1035,60 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
+<<<<<<< HEAD
 component.options.__file = "resources/js/src/views/pages/tax-managment/TaxManagment.vue"
+=======
+<<<<<<< HEAD
+component.options.__file = "resources/js/src/layouts/main/TaxDetailMain.vue"
+=======
+component.options.__file = "resources/js/src/views/pages/Tax/TaxTeam.vue"
+>>>>>>> master
+>>>>>>> 90b29b1fa311125012be5716f1008a7a56924572
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************!*\
   !*** ./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=script&lang=js& ***!
   \**********************************************************************************************/
+=======
+<<<<<<< HEAD
+/***/ "./resources/js/src/layouts/main/TaxDetailMain.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/src/layouts/main/TaxDetailMain.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+=======
+/***/ "./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+>>>>>>> master
+>>>>>>> 90b29b1fa311125012be5716f1008a7a56924572
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+<<<<<<< HEAD
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxManagment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./TaxManagment.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxManagment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+=======
+<<<<<<< HEAD
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxDetailMain_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./TaxDetailMain.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/layouts/main/TaxDetailMain.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxDetailMain_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/src/layouts/main/TaxDetailMain.vue?vue&type=template&id=bf081fe4&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/src/layouts/main/TaxDetailMain.vue?vue&type=template&id=bf081fe4& ***!
+  \****************************************************************************************/
+=======
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxTeam_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./TaxTeam.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxTeam_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+>>>>>>> 90b29b1fa311125012be5716f1008a7a56924572
 
 /***/ }),
 
@@ -712,19 +1108,41 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=template&id=89c4bd8a&":
 /*!****************************************************************************************************!*\
   !*** ./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=template&id=89c4bd8a& ***!
   \****************************************************************************************************/
+=======
+/***/ "./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=template&id=40787bc2&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=template&id=40787bc2& ***!
+  \*************************************************************************************/
+>>>>>>> master
+>>>>>>> 90b29b1fa311125012be5716f1008a7a56924572
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+<<<<<<< HEAD
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxManagment_vue_vue_type_template_id_89c4bd8a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./TaxManagment.vue?vue&type=template&id=89c4bd8a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=template&id=89c4bd8a&");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxManagment_vue_vue_type_template_id_89c4bd8a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxManagment_vue_vue_type_template_id_89c4bd8a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+=======
+<<<<<<< HEAD
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxDetailMain_vue_vue_type_template_id_bf081fe4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./TaxDetailMain.vue?vue&type=template&id=bf081fe4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/layouts/main/TaxDetailMain.vue?vue&type=template&id=bf081fe4&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxDetailMain_vue_vue_type_template_id_bf081fe4___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxDetailMain_vue_vue_type_template_id_bf081fe4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+=======
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxTeam_vue_vue_type_template_id_40787bc2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./TaxTeam.vue?vue&type=template&id=40787bc2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=template&id=40787bc2&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxTeam_vue_vue_type_template_id_40787bc2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxTeam_vue_vue_type_template_id_40787bc2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+>>>>>>> master
+>>>>>>> 90b29b1fa311125012be5716f1008a7a56924572
 
 
 

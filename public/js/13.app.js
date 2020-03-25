@@ -72,10 +72,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+<<<<<<< HEAD
 //
 //
 //
 //
+=======
+<<<<<<< HEAD
+>>>>>>> 90b29b1fa311125012be5716f1008a7a56924572
 //
 //
 //
@@ -83,6 +87,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> master
+>>>>>>> 90b29b1fa311125012be5716f1008a7a56924572
 /* harmony default export */ __webpack_exports__["default"] = ({
   inject: ['loginUser'],
   data: function data() {
@@ -417,6 +426,7 @@ var render = function() {
                               },
                               expression: "average_rate"
                             }
+<<<<<<< HEAD
                           }),
                           _vm._v(" "),
                           _c(
@@ -439,6 +449,259 @@ var render = function() {
                               _vm._v(
                                 _vm._s(
                                   _vm.errors.first("editform.average_rate")
+=======
+                          },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "p-8" },
+                              [
+                                _c(
+                                  "div",
+                                  { staticClass: "vx-card__title mb-8" },
+                                  [
+                                    _c("img", {
+                                      staticClass: "m-auto w-2/5",
+                                      attrs: { src: "./public/images/33i.png" }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("h4", { staticClass: "mb-4" }, [
+                                      _vm._v("Login")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("p", [
+                                      _vm._v(
+                                        "Welcome back, please login to your account."
+                                      )
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("vs-input", {
+                                  directives: [
+                                    {
+                                      name: "validate",
+                                      rawName: "v-validate",
+                                      value: "required|email",
+                                      expression: "'required|email'"
+                                    }
+                                  ],
+                                  staticClass: "w-full no-icon-border",
+                                  attrs: {
+                                    icon: "icon icon-user",
+                                    name: "email",
+                                    "icon-pack": "feather",
+                                    "label-placeholder": "Email"
+                                  },
+                                  model: {
+                                    value: _vm.email,
+                                    callback: function($$v) {
+                                      _vm.email = $$v
+                                    },
+                                    expression: "email"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("span", {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value: _vm.errors.has("email"),
+                                      expression: "errors.has('email')"
+                                    }
+                                  ],
+                                  staticClass: "text-danger",
+                                  domProps: {
+                                    innerHTML: _vm._s(_vm.errors.first("email"))
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("vs-input", {
+                                  directives: [
+                                    {
+                                      name: "validate",
+                                      rawName: "v-validate",
+                                      value: "required|min:6",
+                                      expression: "'required|min:6'"
+                                    }
+                                  ],
+                                  staticClass: "w-full mt-6 no-icon-border",
+                                  attrs: {
+                                    type: "password",
+                                    name: "password",
+                                    icon: "icon icon-lock",
+                                    "icon-pack": "feather",
+                                    "label-placeholder": "Password"
+                                  },
+                                  model: {
+                                    value: _vm.password,
+                                    callback: function($$v) {
+                                      _vm.password = $$v
+                                    },
+                                    expression: "password"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("span", {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value: _vm.errors.has("password"),
+                                      expression: "errors.has('password')"
+                                    }
+                                  ],
+                                  staticClass: "text-danger",
+                                  domProps: {
+                                    innerHTML: _vm._s(
+                                      _vm.errors.first("password")
+                                    )
+                                  }
+                                }),
+<<<<<<< HEAD
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            [
+                              _c("vs-button", {
+                                attrs: {
+                                  to: "edit-payroll/" + tr.payroll_id,
+                                  size: "small",
+                                  type: "border",
+                                  "icon-pack": "feather",
+                                  icon: "icon-edit"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("vs-button", {
+                                attrs: {
+                                  to: "payroll-detail/" + tr.payroll_id,
+                                  size: "small",
+                                  "icon-pack": "feather",
+                                  icon: "icon-maximize-2",
+                                  type: "border"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    })
+                  }
+                }
+              ])
+            },
+            [
+              _c(
+                "template",
+                { slot: "header" },
+                [
+                  _c(
+                    "vs-button",
+                    {
+                      attrs: {
+                        color: "primary",
+                        type: "border",
+                        icon: "cloud_download"
+                      }
+                    },
+                    [_vm._v("Import")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "template",
+                { slot: "thead" },
+                [
+                  _c("vs-th", [_vm._v("Employee Name")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Employee No.")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("NSSF No.")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Contract Type")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Basic Salary")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Bonus")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Status")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Actions")])
+                ],
+                1
+              )
+            ],
+            2
+          )
+=======
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "flex flex-wrap justify-between my-5"
+                                  },
+                                  [
+                                    _c(
+                                      "vs-checkbox",
+                                      {
+                                        staticClass: "mb-3",
+                                        model: {
+                                          value: _vm.checkbox_remember_me,
+                                          callback: function($$v) {
+                                            _vm.checkbox_remember_me = $$v
+                                          },
+                                          expression: "checkbox_remember_me"
+                                        }
+                                      },
+                                      [_vm._v("Remember Me")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("router-link", { attrs: { to: "#" } }, [
+                                      _vm._v("Forgot Password?")
+                                    ])
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "vs-row",
+                                  [
+                                    _c(
+                                      "vs-col",
+                                      { attrs: { "vs-w": "12" } },
+                                      [
+                                        _c(
+                                          "vs-button",
+                                          {
+                                            staticClass: "float-right",
+                                            attrs: {
+                                              button: "submit",
+                                              color: "#0b586a",
+                                              "gradient-color-secondary":
+                                                "#d08683",
+                                              type: "gradient"
+                                            }
+                                          },
+                                          [_vm._v("Login")]
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+>>>>>>> 90b29b1fa311125012be5716f1008a7a56924572
                                 )
                               )
                             ]
@@ -488,6 +751,7 @@ var render = function() {
                                     "errors.has('editform.annual_rate')"
                                 }
                               ],
+<<<<<<< HEAD
                               staticClass: "text-danger"
                             },
                             [
@@ -527,6 +791,22 @@ var render = function() {
             1
           )
         ]
+=======
+                              1
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                )
+              ]
+            )
+          ])
+>>>>>>> master
+        ],
+        1
+>>>>>>> 90b29b1fa311125012be5716f1008a7a56924572
       )
     ],
     1

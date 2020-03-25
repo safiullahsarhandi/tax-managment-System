@@ -118,6 +118,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+<<<<<<< HEAD
+//
+//
+//
+=======
+>>>>>>> master
 //
 //
 //
@@ -165,11 +171,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       title: '',
       description: '',
       duration: '',
+<<<<<<< HEAD
+      supervisor: ''
+=======
       supervisor: '',
       tax_identifier: '',
       edit_tax_identifier: '',
       notes: '',
       months: ['Jan', 'Feb', 'Mar', 'Apr', 'Ma', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+>>>>>>> master
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('supervisors/', ['supervisors']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('taxes/', ['taxes']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('officers/', ['officers'])),
@@ -381,7 +391,7 @@ var render = function() {
         "vx-card",
         {
           attrs: {
-            title: "List of Taxes",
+            title: "List of tax services",
             subtitle:
               "The List of Taxes contains currently assigned taxes of customer Or those which are delivered succesfully"
           }
@@ -489,6 +499,26 @@ var render = function() {
               ])
             },
             [
+              _c(
+                "template",
+                { slot: "header" },
+                [
+                  _c(
+                    "vs-button",
+                    {
+                      staticStyle: { "margin-top": "-5px" },
+                      attrs: {
+                        color: "primary",
+                        type: "border",
+                        icon: "cloud_download"
+                      }
+                    },
+                    [_vm._v("Import")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
               _c(
                 "template",
                 { slot: "thead" },

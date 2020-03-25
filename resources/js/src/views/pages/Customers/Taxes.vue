@@ -1,10 +1,13 @@
 <template>
     <div>
-        <vx-card title="List of Taxes" subtitle="The List of Taxes contains currently assigned taxes of customer Or those which are delivered succesfully">
+        <vx-card title="List of tax services" subtitle="The List of Taxes contains currently assigned taxes of customer Or those which are delivered succesfully">
             <template slot="actions">
                 <vs-button type="border" v-if="$store.getters.userType != 'Admin' || $store.getters.userType != 'Super Admin'" @click="addTax()" icon-pack="feather" icon="icon-plus"></vs-button>
             </template>
             <vs-table search pagination :data="taxes">
+                <template slot="header">
+                    <vs-button style="margin-top: -5px" color="primary" type="border" icon="cloud_download">Import</vs-button>
+                </template>
                 <template slot="thead">
                     <vs-th>created by</vs-th>
                     <vs-th>Code</vs-th>

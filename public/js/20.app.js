@@ -68,6 +68,126 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+<<<<<<< HEAD
+=======
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+<<<<<<< HEAD
+=======
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+>>>>>>> master
+>>>>>>> 90b29b1fa311125012be5716f1008a7a56924572
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   inject: ['generatePassword'],
@@ -337,6 +457,7 @@ var render = function() {
         { attrs: { title: "List of Purchases" } },
         [
           _c(
+<<<<<<< HEAD
             "vs-table",
             {
               attrs: {
@@ -354,6 +475,239 @@ var render = function() {
                       return _c(
                         "vs-tr",
                         { key: index },
+=======
+            "vs-col",
+            { attrs: { "vs-lg": "9", "vs-md": "9", "vs-sm": "12" } },
+            [
+              _c(
+                "vx-card",
+                { attrs: { title: "Sales Detail" } },
+                [
+                  _c(
+                    "vs-row",
+                    [
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Client TIN:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.customer.tin_no))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Client Name:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.customer.name_english))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Account Code:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.sale.account_code))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Account Description:")]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(_vm._s(_vm.sale.account_description))
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Accounting Reference:")]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(_vm._s(_vm.sale.accounting_reference))
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Signature Date:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.sale.signature_date))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Branch Name:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.sale.branch_name))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Tax Period:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.sale.tax_period))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Invoice Date:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.sale.invoice_date))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Invoice Number:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.sale.invoice_num))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Description:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.sale.description))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Quantity:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.sale.quantity))])
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+<<<<<<< HEAD
+                "template",
+                { slot: "header" },
+                [
+                  _c(
+                    "vs-button",
+                    {
+                      staticStyle: { "margin-top": "-5px" },
+                      attrs: {
+                        color: "primary",
+                        type: "border",
+                        icon: "cloud_download"
+                      }
+                    },
+                    [_vm._v("Import")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "template",
+                { slot: "thead" },
+=======
+                "vx-card",
+                { staticClass: "mt-base", attrs: { title: "Sales Summary" } },
+>>>>>>> master
+                [
+                  _c(
+                    "vs-row",
+                    [
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Non Taxable Sale:")]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(
+                              _vm._s(_vm.customer.non_taxable_sales || "NA")
+                            )
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
+                        },
+>>>>>>> 90b29b1fa311125012be5716f1008a7a56924572
                         [
                           _c("vs-td", { attrs: { data: tr.branch_name } }, [
                             _vm._v(_vm._s(tr.branch_name))

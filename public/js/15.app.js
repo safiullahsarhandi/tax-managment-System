@@ -51,6 +51,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+<<<<<<< HEAD
+=======
 //
 //
 //
@@ -71,6 +73,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+<<<<<<< HEAD
 //
 //
 //
@@ -192,6 +195,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 
+=======
+>>>>>>> master
+>>>>>>> 90b29b1fa311125012be5716f1008a7a56924572
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -780,9 +786,57 @@ var render = function() {
                         ],
                         1
                       )
+<<<<<<< HEAD
                     ],
                     2
                   )
+=======
+                    })
+                  }
+                }
+              ])
+            },
+            [
+              _c(
+                "template",
+                { slot: "header" },
+                [
+                  _c(
+                    "vs-button",
+                    {
+                      staticStyle: { "margin-top": "-5px" },
+                      attrs: {
+                        color: "primary",
+                        type: "border",
+                        icon: "cloud_download"
+                      }
+                    },
+                    [_vm._v("Import")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "template",
+                { slot: "thead" },
+                [
+                  _c("vs-th", [_vm._v("Employee Name")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Employee No.")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("NSSF No.")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Contract Type")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Basic Salary")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Bonus")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Status")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Actions")])
+>>>>>>> 90b29b1fa311125012be5716f1008a7a56924572
                 ],
                 1
               )

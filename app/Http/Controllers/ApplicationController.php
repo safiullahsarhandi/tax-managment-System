@@ -177,7 +177,7 @@ class ApplicationController extends Controller {
 		$customer->incorporation_date = $request->incorporation_date;
 		$customer->village = $request->village;
 		$customer->additional_fields = $request->additional_field;
-		$customer->tax_duration = $request->tax_duration;
+		// $customer->tax_duration = $request->tax_duration;
 
 		$created_by = Admin::where('manager_id', $request->created_by)->first();
 		if ($created_by->type == 'Supervisor') {
@@ -325,7 +325,7 @@ class ApplicationController extends Controller {
 		$customer->group = $request->group;
 		$customer->street = $request->street;
 		$customer->village = $request->village;
-		$customer->tax_duration = $request->tax_duration;
+		// $customer->tax_duration = $request->tax_duration;
 		$customer->incorporation_date = $request->incorporation_date;
 
 		if ($request->has('additional_field')) {
@@ -1468,6 +1468,26 @@ class ApplicationController extends Controller {
 
 	}
 
+<<<<<<< HEAD
+	public function vat_one(){
+		// return view('pdf.vat-1');
+		$data = array(); 
+		$pdf = PDF::loadView('pdf.vat-1', $data);
+		$customPaper = array(0,0,800,1300);
+		$pdf->setPaper($customPaper);		
+		return $pdf->stream('VAT-1.pdf');
+	}
+
+	public function ppt_one(){
+		$data = array(); 
+		$pdf = PDF::loadView('pdf.ppt-1', $data);
+		$customPaper = array(0,0,800,1300);
+		$pdf->setPaper($customPaper);		
+		return $pdf->stream('PPT-1.pdf');
+	}
+
+	
+=======
 	public function invoice() {
 
 		$data = array();
@@ -1491,4 +1511,5 @@ class ApplicationController extends Controller {
 		$pdf = PDF::loadView('pdf.invoice2', $data);
 		return $pdf->stream('invoice2.pdf');
 	}
+>>>>>>> master
 }

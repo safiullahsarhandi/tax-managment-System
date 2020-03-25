@@ -5,6 +5,9 @@
                 <vs-button type="border" v-if="$store.getters.userType == 'Admin' || $store.getters.userType == 'Super Admin'" @click="editTaxManagmentModal = true" icon-pack="feather" icon="icon-edit"></vs-button>
             </template>
             <vs-table search pagination max-items="6" :data="tax_team">
+                <template slot="header">
+                    <vs-button style="margin-top: -5px" color="primary" type="border" icon="cloud_download">Import</vs-button>
+                </template>
                 <template slot="thead">
                     <vs-th>Name</vs-th>
                     <vs-th>Phone #</vs-th>

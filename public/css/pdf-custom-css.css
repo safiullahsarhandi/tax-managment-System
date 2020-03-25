@@ -1,0 +1,303 @@
+.w-one {
+    width: 300px!important;
+    float: left
+}
+
+.section-1 img {
+    margin-left: -45px;
+    margin-top: 20px
+}
+
+.section-1 p {
+    width: 250px;
+    position: absolute;
+    left: 0;
+    top: 140px;
+    font-size: 12px;
+    text-align: center
+}
+
+.section-2 {
+    height: 250px
+}
+
+.sec2-p-style {
+    margin-top: 40px;
+    font-size: 16px;
+    text-align: center;
+    line-height: .6
+}
+
+.section-2 div {
+    position: absolute;
+    top: 120px;
+    border: 2px solid #000;
+    padding: 5px;
+    width: 320px;
+    height: 50px;
+    left: -20px
+}
+
+.section-2 .ppt-1 {
+    position: absolute;
+    top: 80px;
+    border: 2px solid #000;
+    padding: 5px;
+    width: 320px;
+    height: 125px;
+    left: -20px
+}
+
+.cell-h-ppt1{
+    line-height: 100% !important;
+}
+
+.section-2>div p {
+    top: 40px;
+    font-size: 12px;
+    text-align: center;
+    line-height: .2
+}
+
+.font-size-12 {
+    font-size: 12px
+}
+
+.khmer-font {
+    font-family: Khmer, cursive
+}
+
+.section-3 .form-vat-200 {
+    width: 120px;
+    height: 20px;
+    border: 2px solid #000;
+    text-align: center;
+    padding-left: 35px;
+    padding-bottom: 20px;
+    margin-right: 10px;
+    margin-top: 0
+}
+
+.section-3 .form-vat-200 .p1 {
+    font-size: 12px;
+    position: absolute;
+    margin-top: 0;
+    margin-left: -8px
+}
+
+.section-3 .form-vat-200 .p2 {
+    font-size: 10px;
+    position: absolute;
+    margin-top: 25px;
+    margin-left: 5px
+}
+
+.section-3 {
+    width: 100%
+}
+
+.section-2 .p0 {
+    margin-top: 80px;
+    font-size: 10px
+}
+
+.section-2 .p1 {
+    margin-top: 5px;
+    font-size: 12px;
+    line-height: .2px
+}
+
+.font9 {
+    font-size: 9px
+}
+
+.font10 {
+    font-size: 10px
+}
+
+.font11 {
+    font-size: 11px
+}
+
+.font12 {
+    font-size: 12px
+}
+
+.font13 {
+    font-size: 13px
+}
+
+.font15 {
+    font-size: 15px
+}
+
+.pos-rel {
+    position: relative!important
+}
+
+.pos-abs {
+    position: absolute
+}
+
+.mt2 {
+    margin-top: 2px
+}
+
+.mt4 {
+    margin-top: 4px
+}
+
+.mt5 {
+    margin-top: 5px
+}
+
+.mt7 {
+    margin-top: 7px
+}
+
+.mt8 {
+    margin-top: 8px
+}
+
+.mt10 {
+    margin-top: 10px
+}
+
+.bodyDiv {
+    width: 100%;
+    height: 100px;
+    top: 240px;
+    padding: 0;
+    margin: 0
+}
+
+.border {
+    border: 1px solid #000
+}
+
+.border-none {
+    border: none!important
+}
+
+.border2 {
+    border: 2px solid #000
+}
+
+.margin0 {
+    margin: 0
+}
+
+.bl {
+    border-left: 1px solid #000
+}
+
+.br {
+    border-right: 1px solid #000
+}
+
+.bt {
+    border-top: 1px solid #000
+}
+
+.bb {
+    border-bottom: 1px solid #000!important
+}
+
+.bl-n {
+    border-left: none!important
+}
+
+.br-n {
+    border-right: none!important
+}
+
+.bt-n {
+    border-top: none!important
+}
+
+.bb-n {
+    border-bottom: none!important
+}
+
+.bb-dot {
+    border-bottom: 1px dotted #000!important
+}
+
+.bb-dashed {
+    border-bottom: 1px dashed #000!important
+}
+
+.ta-c {
+    text-align: center!important
+}
+
+.pt {
+    padding-top: 9px!important
+}
+
+.tin-boxes {
+    width: 36px;
+    height: 29px;
+    text-align: center;
+    padding-top: 9px;
+    border: 2px solid #000;
+    border-top: none
+}
+
+.tin-box-mt39 {
+    top: 39px
+}
+
+table {
+    border-collapse: collapse!important
+}
+
+table td {
+    border: 1px solid #000!important
+}
+
+.cell-w {
+    width: 34px!important
+}
+
+.cell-h {
+    height: 27px!important
+}
+
+mt-5 {
+    margin-top: -5px
+}
+
+.cell-css {
+    text-align: center;
+    vertical-align: center;
+    padding-top: 10px
+}
+
+.ml-5 {
+    margin-left: 5px!important
+}
+
+.page-break {
+    page-break-after: always
+}
+
+.ml-10 {
+    margin-left: 10px!important
+}
+
+.bb-dotted {
+    border-bottom: 1.2px dotted #000!important
+}
+
+.ta-r {
+    text-align: right!important
+}
+
+.bg-gray{
+    background-color: #e0e0e0 !important;
+}
+
+.cell-w-ppt1{
+    width: 34px !important;
+}
