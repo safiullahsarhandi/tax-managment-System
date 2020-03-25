@@ -188,6 +188,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     update: 'taxes/editTax'
   }), {
     getFullName: function getFullName(obj) {
+      // alert(obj);
       if (obj !== null) {
         return obj.full_name;
       } else {
@@ -229,7 +230,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           self = _this;
           var fd = new FormData(self.$refs.addTaxManagmentForm);
           fd.append('customer_id', _this.tax_customer_id);
-          fd.append('tax_code', _this.tax_identifier); // fd.append('officers', self.officer)
+          fd.append('tax_code', _this.tax_identifier);
+          fd.append('created_by', localStorage.getItem('admin')); // fd.append('officers', self.officer)
           // fd.append('supervisor_id',self.supervisor)
 
           var data = {
@@ -260,6 +262,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       axios.post('tax/get-tax', {
         id: taxId
       }).then(function (res) {
+        var date = new Date();
         _this2.editTax = res.data.tax;
         _this2.editTaxManagmentModal = true; // this.officer = _.map(this.editTax,'officer_id');
 
@@ -692,7 +695,11 @@ var render = function() {
                                 }
                               ],
                               staticStyle: { width: "100%" },
-                              attrs: { label: "Type", name: "type" },
+                              attrs: {
+                                placeholder: "Select Type",
+                                label: "Type",
+                                name: "type"
+                              },
                               on: { input: _vm.changeType },
                               model: {
                                 value: _vm.type,
@@ -704,15 +711,17 @@ var render = function() {
                             },
                             [
                               _c("vs-select-item", {
-                                attrs: { text: "Select Type", value: "" }
+                                attrs: {
+                                  text: "Monthly Tax",
+                                  value: "Monthly Tax"
+                                }
                               }),
                               _vm._v(" "),
                               _c("vs-select-item", {
-                                attrs: { text: "Monthly Tax", value: "Monthly" }
-                              }),
-                              _vm._v(" "),
-                              _c("vs-select-item", {
-                                attrs: { text: "Annual Tax", value: "Yearly" }
+                                attrs: {
+                                  text: "Annual Tax",
+                                  value: "Yearly Tax"
+                                }
                               }),
                               _vm._v(" "),
                               _c("vs-select-item", {
@@ -750,14 +759,6 @@ var render = function() {
                           _c("br"),
                           _vm._v(" "),
                           _c("vs-textarea", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
-                            ],
                             attrs: {
                               name: "notes",
                               counter: 100,

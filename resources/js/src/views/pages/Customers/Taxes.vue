@@ -58,17 +58,17 @@
                             <span class="text-danger" v-show="errors.has('addform.duration')">{{errors.first('addform.duration')}}</span>
                         </vx-input-group> -->
                         <vx-input-group class="mt-2">
-                            <vs-select v-validate="'required'" @input="changeType" style="width: 100%;" label="Type" v-model="type" name="type">
-                                <vs-select-item text="Select Type" value=""></vs-select-item>
-                                <vs-select-item text="Monthly Tax" value="Monthly"></vs-select-item>
-                                <vs-select-item text="Annual Tax" value="Yearly"></vs-select-item>
+                            <vs-select v-validate="'required'" placeholder="Select Type" @input="changeType" style="width: 100%;" label="Type" v-model="type" name="type">
+                                <!-- <vs-select-item text="Select Type" value=""></vs-select-item> -->
+                                <vs-select-item text="Monthly Tax" value="Monthly Tax"></vs-select-item>
+                                <vs-select-item text="Annual Tax" value="Yearly Tax"></vs-select-item>
                                 <vs-select-item text="Resubmission Tax" value="Resubmission Tax"></vs-select-item>
                             </vs-select>
                             <span class="text-danger" v-show="errors.has('addform.type')">{{errors.first('addform.type')}}</span>
                         </vx-input-group>
                         <vx-input-group>
                             <br>
-                            <vs-textarea v-validate="'required'" name="notes" v-model="notes" :counter="100" label="Notes" data-vv-scope="addform" />
+                            <vs-textarea name="notes" v-model="notes" :counter="100" label="Notes" data-vv-scope="addform" />
                             <span class="text-danger" v-show="errors.has('addform.notes')">{{errors.first('addform.notes')}}</span>
                         </vx-input-group>
                         <!-- <br> -->
@@ -189,7 +189,7 @@ export default {
             update: 'taxes/editTax',
         }),
         getFullName(obj) {
-
+            // alert(obj);
             if (obj !== null) {
                 return obj.full_name;
             } else {
@@ -230,6 +230,7 @@ export default {
                     let fd = new FormData(self.$refs.addTaxManagmentForm);
                     fd.append('customer_id', this.tax_customer_id)
                     fd.append('tax_code', this.tax_identifier)
+                    fd.append('created_by', localStorage.getItem('admin'))
                     // fd.append('officers', self.officer)
                     // fd.append('supervisor_id',self.supervisor)
                     let data = {
@@ -257,6 +258,7 @@ export default {
         //  edit tax
         taxEdit(taxId) {
             axios.post('tax/get-tax', { id: taxId }).then(res => {
+                let date = new Date();
                 this.editTax = res.data.tax;
                 this.editTaxManagmentModal = true;
                 // this.officer = _.map(this.editTax,'officer_id');

@@ -33,7 +33,12 @@ class ApplicationController extends Controller {
 		$rate = Settings::where('key', 'average_rate')->first();
 		return $rate->value;
 	}
-	public function get_dashboard_data() {
+	public function get_dashboard_data(Request $request) {
+		$manager = Admin::where('manager_id', $request->manager)->first();
+		// return TaxCustomers::where()->get();
+		if ($manager->type == 'Admin') {
+
+		}
 		// TaxCustomers::where('type', 'Monthly');
 	}
 	public function get_login_user(Request $request) {
@@ -47,6 +52,9 @@ class ApplicationController extends Controller {
 		$admin = Admin::where('email', $request->email)->first();
 		if ($admin) {
 			if (Hash::check($request->password, $admin->password)) {
+				if ($admin->status == 0) {
+					return response()->json(['status' => 'error', 'msg' => 'Sorry! you have not permission to access controls. please contact your Administration']);
+				}
 				$request->session()->put('admin', $admin);
 
 				$session = session('admin');
@@ -473,18 +481,24 @@ class ApplicationController extends Controller {
 		$admin->state = $request->state;
 		$admin->zip_code = $request->zip_code;
 		$admin->phone = $request->phone;
-		if ($request->roll == 'Admin') {
+		if ($admin->type == 'Officer' && $request->role != 'Officer') {
+			TaxCustomers::where('manager', $request->id)->update(['manager' => NULL]);
+		} elseif ($admin->type == 'Supervisor' && $request->role != 'Supervisor') {
+			TaxCustomers::where('supervisor', $request->id)->update(['supervisor' => NULL]);
+		}
+		if ($request->role == 'Admin') {
 			$admin->type = 1; // 1 means admin
 
-		} elseif ($request->roll == 'Supervisor') {
+		} elseif ($request->role == 'Supervisor') {
 			$admin->type = 2; // 2 means Supervisor
 
 		} else {
 			$admin->type = 3; // 3 means officer
-			$admin->reports_to = $request->supervisor;
+			$admin->reports_to = $request->reports_to;
 
 		}
 		$result = $admin->save();
+		$admin = Admin::with('reportingTo')->where('manager_id', $admin->manager_id)->latest('id')->first();
 		return response()->json(['status' => 'success', 'admin' => $admin], 200);
 	}
 	public function status_update_customer(Request $request) {
@@ -610,6 +624,7 @@ class ApplicationController extends Controller {
 		$tax->type = $request->type;
 		$tax->tax_code = $request->tax_code;
 		$tax->notes = $request->notes;
+		$tax->created_by = $request->created_by;
 		// $tax->supervisor_id = $request->supervisor_id;
 		$save = $tax->save();
 		if ($save) {
@@ -661,7 +676,7 @@ class ApplicationController extends Controller {
 	}
 
 	public function get_taxes(Request $request) {
-		$taxes = Tax::with('created_by')->where('customer_id', $request->customer_id)->get();
+		$taxes = Tax::with('created_by')->where('customer_id', $request->customer_id)->latest('id')->get();
 		/*if (session('admin.type') == 'Admin') {
 
 				$taxes = Tax::with('supervisor')->withCount('officers')->where('customer_id', $request->customer_id)->get();
@@ -678,7 +693,7 @@ class ApplicationController extends Controller {
 		return response()->json(compact('parameters'));
 	}
 	public function get_tax(Request $request) {
-		$tax = Tax::with('supervisor', 'officer', 'added_by')->withCount('sales', 'purchases', 'payrolls')->where('tax_id', $request->tax_id)->first();
+		$tax = Tax::with('supervisor', 'officer', 'created_by')->withCount('sales', 'purchases', 'payrolls')->where('tax_id', $request->tax_id)->first();
 		if (session('admin.type') == 'Supervisor') {
 		}
 

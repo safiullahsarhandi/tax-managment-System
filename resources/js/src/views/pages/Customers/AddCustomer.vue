@@ -244,6 +244,8 @@ export default {
                             this.taxDurationSelected = 'Monthly';
                             this.$vs.notify({ title: 'Success', text: 'Customer Added Successfully', color: 'success', position: 'top-right' })
                             this.$vs.loading.close();
+                            e.target.reset();
+                            this.$router.push('/customers');
                         }
                         if (res.data.status == 'error') {
                             this.$vs.notify({ title: 'Success', text: res.data.msg, color: 'success', position: 'top-right' })

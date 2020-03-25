@@ -58,7 +58,7 @@
                         <vs-col vs-md="4" vs-lg="4" vs-sm="12" vs-xs="12">
                             <p>
                                 <label>Tax Created By:</label>
-                                <h4>{{typeof tax.added_by!='undefined'?tax.added_by.full_name: ''}}</h4>
+                                <h4>{{typeof tax.created_by!='undefined'?tax.created_by.full_name: ''}}</h4>
                             </p>
                         </vs-col>
                         <vs-col vs-md="4" vs-lg="4" vs-sm="12" vs-xs="12">

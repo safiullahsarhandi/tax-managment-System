@@ -21,7 +21,7 @@
                     <vs-th>TIN # </vs-th>
                     <vs-th>Email</vs-th>
                     <vs-th v-if="$store.getters.userType == 'Admin' || $store.getters.userType == 'Super Admin'">Supervisor</vs-th>
-                    <vs-th>Officer</vs-th>
+                    <vs-th v-if="$store.getters.userType != 'Officer'">Officer</vs-th>
                     <vs-th v-if="$store.getters.userType != 'Admin' || $store.getters.userType != 'Super Admin'">Uncompleted Taxes</vs-th>
                     <vs-th v-if="$store.getters.userType == 'Admin' || $store.getters.userType != 'Super Admin'">Status</vs-th>
                     <vs-th>Actions</vs-th>

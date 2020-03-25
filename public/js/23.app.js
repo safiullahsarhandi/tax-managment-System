@@ -1,19 +1,15 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[23],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-
-
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -84,110 +80,57 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  inject: ['generatePassword'],
   data: function data() {
     return {
-      tax_id: '',
+      addTaxManagmentModal: false,
       editTaxManagmentModal: false,
-      officer: []
+      title: "",
+      description: "",
+      type: 'Monthly',
+      duration: '',
+      supervisor: '',
+      officer: [],
+      default_selected_officer: "",
+      default_selected_supervisor: ""
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])('taxes/', ['tax_team']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])('officers/', ['officers']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])('admins/', ['findAdmin']), {
-    loginUser: function loginUser() {
-      return this.$store.state.AppActiveUser;
-    }
-  }),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('supervisors/', ['supervisors']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('officers/', ['officers'])),
   created: function created() {
-    var officer;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function created$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            this.tax_id = this.$store.state.rootUrl.split('/')[2];
-            this.getOfficers();
-            self = this;
-            _context.next = 5;
-            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.getTaxTeam(this.tax_id));
-
-          case 5:
-            officer = _.map(self.tax_team, function (o) {
-              if (!_.isUndefined(o.detail)) {
-                return o.detail.manager_id;
-              }
-            });
-            this.officer = _.slice(officer, 1, officer.length);
-
-          case 7:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, null, this);
+    this.getSupervisors();
+    this.getOfficers();
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
-    getTaxTeam: 'taxes/getTaxTeam',
-    updateTeamMembers: 'taxes/updateTeamMembers',
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
+    getSupervisors: 'supervisors/getSupervisors',
     getOfficers: 'officers/getOfficers'
   }), {
-    statusUpdate: function statusUpdate(id) {
-      var _this = this;
-
-      this.$vs.loading();
-      axios.post('status-update-tax-member', {
-        id: id
-      }).then(function (res) {
-        _this.$vs.notify({
-          title: 'Updated!...',
-          text: res.data.msg,
-          color: 'success',
-          position: 'top-right'
-        });
-
-        _this.$vs.loading.close();
-      });
-    },
-    updateTeam: function updateTeam(e) {
-      var _this2 = this;
-
-      this.$validator.validateAll().then(function (result) {
-        if (result) {
-          var fd = new FormData(_this2.$refs.updateTaxTeam);
-          fd.append('tax_id', _this2.tax_id);
-          fd.append('officers', _this2.officer);
-
-          _this2.$vs.loading();
-
-          var data = {
-            fd: fd,
-            close: _this2.$vs.loading.close,
-            notify: _this2.$vs.notify
-          };
-
-          _this2.updateTeamMembers(data).then(function (res) {
-            _this2.editTaxManagmentModal = false;
-
-            var officer = _.map(_this2.tax_team, function (o) {
-              if (!_.isUndefined(o.detail)) {
-                return o.detail.manager_id;
-              }
-            });
-
-            _this2.officer = _.slice(officer, 1, officer.length);
-          });
-        }
-      });
+    check: function check() {
+      this.addTaxManagmentModal = true;
     }
   })
 });
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=style&index=0&lang=css&":
-/*!**********************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=style&index=0&lang=css& ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=style&index=0&lang=css&":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=style&index=0&lang=css& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -196,22 +139,22 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, ".selectExample {\n  margin-top: 10px;\n}\n.con-select {\n  width: 100% !important;\n  clear: both;\n}\n.con-select .vs-select--input {\n  margin-top: 10px !important;\n}\r\n\r\n", ""]);
+exports.push([module.i, ".selectExample {\n  margin: 10px;\n}\n.con-select-example {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n          justify-content: center;\n}\n.con-select .vs-select {\n  width: 100%\n}\n@media (max-width: 550px) {\n.con-select {\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n            flex-direction: column;\n}\n.con-select .vs-select {\n    width: 100%\n}\n}\r\n\r\n", ""]);
 
 // exports
 
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=style&index=0&lang=css&":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=style&index=0&lang=css& ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=style&index=0&lang=css&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=style&index=0&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader??ref--7-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./TaxTeam.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=style&index=0&lang=css&");
+var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader??ref--7-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./TaxManagment.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=style&index=0&lang=css&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -233,10 +176,10 @@ if(false) {}
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=template&id=40787bc2&":
-/*!*******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=template&id=40787bc2& ***!
-  \*******************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=template&id=89c4bd8a&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=template&id=89c4bd8a& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -253,27 +196,30 @@ var render = function() {
     [
       _c(
         "vx-card",
-        { attrs: { title: "List of Team Members" } },
+        {
+          attrs: {
+            title: "List of Taxes",
+            subtitle:
+              "The List of Taxes contains currently assigned taxes of customer Or those which are delivered succesfully"
+          }
+        },
         [
           _c(
             "template",
             { slot: "actions" },
             [
-              _vm.$store.getters.userType == "Admin" ||
-              _vm.$store.getters.userType == "Super Admin"
-                ? _c("vs-button", {
-                    attrs: {
-                      type: "border",
-                      "icon-pack": "feather",
-                      icon: "icon-edit"
-                    },
-                    on: {
-                      click: function($event) {
-                        _vm.editTaxManagmentModal = true
-                      }
-                    }
-                  })
-                : _vm._e()
+              _c("vs-button", {
+                attrs: {
+                  type: "border",
+                  "icon-pack": "feather",
+                  icon: "icon-plus"
+                },
+                on: {
+                  click: function($event) {
+                    return _vm.check()
+                  }
+                }
+              })
             ],
             1
           ),
@@ -281,12 +227,7 @@ var render = function() {
           _c(
             "vs-table",
             {
-              attrs: {
-                search: "",
-                pagination: "",
-                "max-items": "6",
-                data: _vm.tax_team
-              },
+              attrs: { search: "", pagination: "", data: [] },
               scopedSlots: _vm._u([
                 {
                   key: "default",
@@ -297,189 +238,21 @@ var render = function() {
                         "vs-tr",
                         { key: index },
                         [
-                          [
-                            tr.detail
-                              ? [
-                                  _c(
-                                    "vs-td",
-                                    {
-                                      attrs: {
-                                        data:
-                                          tr.detail.first_name +
-                                          " " +
-                                          tr.detail.last_name
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        _vm._s(tr.detail.first_name) +
-                                          " " +
-                                          _vm._s(tr.detail.last_name)
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "vs-td",
-                                    { attrs: { data: tr.detail.phone } },
-                                    [_vm._v(_vm._s(tr.detail.phone))]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "vs-td",
-                                    { attrs: { data: tr.detail.email } },
-                                    [_vm._v(_vm._s(tr.detail.email))]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "vs-td",
-                                    {
-                                      attrs: {
-                                        data:
-                                          tr.detail.address +
-                                          " " +
-                                          tr.detail.state +
-                                          " " +
-                                          tr.detail.city +
-                                          " " +
-                                          tr.detail.zip_code
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        _vm._s(tr.detail.address) +
-                                          " " +
-                                          _vm._s(tr.detail.state) +
-                                          " " +
-                                          _vm._s(tr.detail.city) +
-                                          " " +
-                                          _vm._s(tr.detail.zip_code)
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "vs-td",
-                                    { attrs: { data: tr.detail.type } },
-                                    [_vm._v(_vm._s(tr.detail.type))]
-                                  ),
-                                  _vm._v(" "),
-                                  _vm.$store.getters.userType == "Admin" ||
-                                  _vm.$store.getters.userType == "Super Admin"
-                                    ? _c(
-                                        "vs-td",
-                                        { attrs: { data: tr.detail.status } },
-                                        [
-                                          _c("vs-switch", {
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.statusUpdate(
-                                                  tr.detail.manager_id
-                                                )
-                                              }
-                                            },
-                                            model: {
-                                              value: tr.detail.status,
-                                              callback: function($$v) {
-                                                _vm.$set(
-                                                  tr.detail,
-                                                  "status",
-                                                  $$v
-                                                )
-                                              },
-                                              expression: "tr.detail.status"
-                                            }
-                                          })
-                                        ],
-                                        1
-                                      )
-                                    : _vm._e()
-                                ]
-                              : [
-                                  _c(
-                                    "vs-td",
-                                    {
-                                      attrs: {
-                                        data: tr.first_name + " " + tr.last_name
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        _vm._s(tr.first_name) +
-                                          " " +
-                                          _vm._s(tr.last_name)
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("vs-td", { attrs: { data: tr.phone } }, [
-                                    _vm._v(_vm._s(tr.phone))
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("vs-td", { attrs: { data: tr.email } }, [
-                                    _vm._v(_vm._s(tr.email))
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "vs-td",
-                                    {
-                                      attrs: {
-                                        data:
-                                          tr.address +
-                                          " " +
-                                          tr.state +
-                                          " " +
-                                          tr.city +
-                                          " " +
-                                          tr.zip_code
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        _vm._s(tr.address) +
-                                          " " +
-                                          _vm._s(tr.state) +
-                                          " " +
-                                          _vm._s(tr.city) +
-                                          " " +
-                                          _vm._s(tr.zip_code)
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("vs-td", { attrs: { data: tr.type } }, [
-                                    _vm._v(_vm._s(tr.type))
-                                  ]),
-                                  _vm._v(" "),
-                                  _vm.$store.getters.userType == "Admin" ||
-                                  _vm.$store.getters.userType == "Super Admin"
-                                    ? _c(
-                                        "vs-td",
-                                        [
-                                          _c("vs-switch", {
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.statusUpdate(
-                                                  tr.manager_id
-                                                )
-                                              }
-                                            },
-                                            model: {
-                                              value: tr.status,
-                                              callback: function($$v) {
-                                                _vm.$set(tr, "status", $$v)
-                                              },
-                                              expression: "tr.status"
-                                            }
-                                          })
-                                        ],
-                                        1
-                                      )
-                                    : _vm._e()
-                                ]
-                          ]
+                          _c("vs-td", [_vm._v("Title")]),
+                          _vm._v(" "),
+                          _c("vs-td", [_vm._v("Description")]),
+                          _vm._v(" "),
+                          _c("vs-td", [_vm._v("Company")]),
+                          _vm._v(" "),
+                          _c("vs-td", [_vm._v("Supervisor")]),
+                          _vm._v(" "),
+                          _c("vs-td", [_vm._v("No. of Officers")]),
+                          _vm._v(" "),
+                          _c("vs-td", [_vm._v("Status")]),
+                          _vm._v(" "),
+                          _c("vs-td", [_vm._v("Actions")])
                         ],
-                        2
+                        1
                       )
                     })
                   }
@@ -491,20 +264,19 @@ var render = function() {
                 "template",
                 { slot: "thead" },
                 [
-                  _c("vs-th", [_vm._v("Name")]),
+                  _c("vs-th", [_vm._v("Title")]),
                   _vm._v(" "),
-                  _c("vs-th", [_vm._v("Phone #")]),
+                  _c("vs-th", [_vm._v("Description")]),
                   _vm._v(" "),
-                  _c("vs-th", [_vm._v("Email")]),
+                  _c("vs-th", [_vm._v("Company")]),
                   _vm._v(" "),
-                  _c("vs-th", [_vm._v("Address")]),
+                  _c("vs-th", [_vm._v("Supervisor")]),
                   _vm._v(" "),
-                  _c("vs-th", [_vm._v("Designation")]),
+                  _c("vs-th", [_vm._v("No. of Officers")]),
                   _vm._v(" "),
-                  _vm.$store.getters.userType == "Admin" ||
-                  _vm.$store.getters.userType == "Super Admin"
-                    ? _c("vs-th", [_vm._v("Status")])
-                    : _vm._e()
+                  _c("vs-th", [_vm._v("Status")]),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Actions")])
                 ],
                 1
               )
@@ -518,10 +290,13 @@ var render = function() {
       _c(
         "vs-popup",
         {
-          attrs: { active: _vm.editTaxManagmentModal, title: "Update Team" },
+          attrs: {
+            active: _vm.addTaxManagmentModal,
+            title: "Add Tax Managment"
+          },
           on: {
             "update:active": function($event) {
-              _vm.editTaxManagmentModal = $event
+              _vm.addTaxManagmentModal = $event
             }
           }
         },
@@ -529,43 +304,220 @@ var render = function() {
           _c(
             "form",
             {
-              ref: "updateTaxTeam",
-              attrs: { "data-vv-scope": "updateForm" },
+              ref: "addTaxManagmentForm",
+              attrs: { "data-vv-scope": "addform" },
               on: {
                 submit: function($event) {
                   $event.preventDefault()
-                  return _vm.updateTeam($event)
+                  return _vm.addTaxManagment($event)
                 }
               }
             },
             [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.tax_id,
-                    expression: "tax_id"
-                  }
-                ],
-                attrs: { type: "hidden", name: "category_id" },
-                domProps: { value: _vm.tax_id },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.tax_id = $event.target.value
-                  }
-                }
-              }),
-              _vm._v(" "),
               _c(
                 "vs-row",
                 [
                   _c(
                     "vs-col",
-                    { attrs: { "vs-lg": "12", "vs-md": "12", "vs-sm": "12" } },
+                    { attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" } },
+                    [
+                      _c(
+                        "vx-input-group",
+                        [
+                          _c("vs-input", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
+                            ],
+                            attrs: {
+                              name: "title",
+                              "label-placeholder": "Title",
+                              "data-vv-scope": "addform"
+                            },
+                            model: {
+                              value: _vm.title,
+                              callback: function($$v) {
+                                _vm.title = $$v
+                              },
+                              expression: "title"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has("addform.title"),
+                                  expression: "errors.has('addform.title')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [_vm._v(_vm._s(_vm.errors.first("addform.title")))]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vx-input-group",
+                        [
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("vs-textarea", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
+                            ],
+                            attrs: {
+                              name: "description",
+                              counter: 20,
+                              label: "Description",
+                              "data-vv-scope": "addform"
+                            },
+                            model: {
+                              value: _vm.description,
+                              callback: function($$v) {
+                                _vm.description = $$v
+                              },
+                              expression: "description"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has("addform.description"),
+                                  expression:
+                                    "errors.has('addform.description')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(_vm.errors.first("addform.description"))
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vx-input-group",
+                        { staticClass: "mt-2" },
+                        [
+                          _c("vs-input", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
+                            ],
+                            attrs: {
+                              name: "duration",
+                              "label-placeholder": "Duration",
+                              "data-vv-scope": "addform"
+                            },
+                            model: {
+                              value: _vm.duration,
+                              callback: function($$v) {
+                                _vm.duration = $$v
+                              },
+                              expression: "duration"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has("addform.duration"),
+                                  expression: "errors.has('addform.duration')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(_vm.errors.first("addform.duration"))
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c(
+                        "vx-input-group",
+                        { staticClass: "mt-2" },
+                        [
+                          _c("label", [_vm._v("Tax Period")]),
+                          _c("br"),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c(
+                            "vs-radio",
+                            {
+                              attrs: { name: "type", "vs-value": "Monthly" },
+                              model: {
+                                value: _vm.type,
+                                callback: function($$v) {
+                                  _vm.type = $$v
+                                },
+                                expression: "type"
+                              }
+                            },
+                            [_vm._v("Monthly")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-radio",
+                            {
+                              attrs: { name: "type", "vs-value": "Yearly" },
+                              model: {
+                                value: _vm.type,
+                                callback: function($$v) {
+                                  _vm.type = $$v
+                                },
+                                expression: "type"
+                              }
+                            },
+                            [_vm._v("Yearly")]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-col",
+                    { attrs: { "vs-lg": "6", "vs-md": "12", "vs-sm": "12" } },
                     [
                       _c(
                         "vx-input-group",
@@ -575,8 +527,45 @@ var render = function() {
                             "vs-select",
                             {
                               staticClass: "selectExample",
+                              attrs: { label: "Figuras" },
+                              model: {
+                                value: _vm.supervisor,
+                                callback: function($$v) {
+                                  _vm.supervisor = $$v
+                                },
+                                expression: "supervisor"
+                              }
+                            },
+                            [
+                              _c("vs-select-item", {
+                                attrs: { value: "", text: "Select Supervisor" }
+                              }),
+                              _vm._v(" "),
+                              _vm._l(_vm.supervisors, function(item, index) {
+                                return _c("vs-select-item", {
+                                  key: index,
+                                  attrs: {
+                                    value: item.manager_id,
+                                    text: item.first_name + " " + item.last_name
+                                  }
+                                })
+                              })
+                            ],
+                            2
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vx-input-group",
+                        { staticClass: "mt-2" },
+                        [
+                          _c(
+                            "vs-select",
+                            {
+                              staticClass: "selectExample",
                               attrs: {
-                                name: "officer[]",
                                 placeholder: "Search and select",
                                 label: "Officers",
                                 "label-placeholder": "Officers",
@@ -604,7 +593,7 @@ var render = function() {
                                   key: index,
                                   attrs: {
                                     value: item.manager_id,
-                                    text: item.full_name
+                                    text: item.first_name + " " + item.last_name
                                   }
                                 })
                               })
@@ -630,7 +619,7 @@ var render = function() {
                           staticClass: "float-right",
                           attrs: { button: "submit", type: "gradient" }
                         },
-                        [_vm._v("Update")]
+                        [_vm._v("Add Tax Managment")]
                       )
                     ],
                     1
@@ -654,18 +643,18 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./resources/js/src/views/pages/Tax/TaxTeam.vue":
-/*!******************************************************!*\
-  !*** ./resources/js/src/views/pages/Tax/TaxTeam.vue ***!
-  \******************************************************/
+/***/ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue":
+/*!*********************************************************************!*\
+  !*** ./resources/js/src/views/pages/tax-managment/TaxManagment.vue ***!
+  \*********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _TaxTeam_vue_vue_type_template_id_40787bc2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TaxTeam.vue?vue&type=template&id=40787bc2& */ "./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=template&id=40787bc2&");
-/* harmony import */ var _TaxTeam_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TaxTeam.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _TaxTeam_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TaxTeam.vue?vue&type=style&index=0&lang=css& */ "./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _TaxManagment_vue_vue_type_template_id_89c4bd8a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TaxManagment.vue?vue&type=template&id=89c4bd8a& */ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=template&id=89c4bd8a&");
+/* harmony import */ var _TaxManagment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TaxManagment.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _TaxManagment_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TaxManagment.vue?vue&type=style&index=0&lang=css& */ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=style&index=0&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -676,9 +665,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _TaxTeam_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _TaxTeam_vue_vue_type_template_id_40787bc2___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _TaxTeam_vue_vue_type_template_id_40787bc2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _TaxManagment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _TaxManagment_vue_vue_type_template_id_89c4bd8a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _TaxManagment_vue_vue_type_template_id_89c4bd8a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -688,54 +677,54 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/src/views/pages/Tax/TaxTeam.vue"
+component.options.__file = "resources/js/src/views/pages/tax-managment/TaxManagment.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************!*\
-  !*** ./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************/
+/***/ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxTeam_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./TaxTeam.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxTeam_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxManagment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./TaxManagment.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxManagment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=style&index=0&lang=css&":
-/*!***************************************************************************************!*\
-  !*** ./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=style&index=0&lang=css& ***!
-  \***************************************************************************************/
+/***/ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=style&index=0&lang=css&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=style&index=0&lang=css& ***!
+  \******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxTeam_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/style-loader!../../../../../../node_modules/css-loader??ref--7-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./TaxTeam.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxTeam_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxTeam_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxTeam_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxTeam_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxTeam_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxManagment_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/style-loader!../../../../../../node_modules/css-loader??ref--7-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./TaxManagment.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxManagment_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxManagment_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxManagment_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxManagment_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxManagment_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
-/***/ "./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=template&id=40787bc2&":
-/*!*************************************************************************************!*\
-  !*** ./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=template&id=40787bc2& ***!
-  \*************************************************************************************/
+/***/ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=template&id=89c4bd8a&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=template&id=89c4bd8a& ***!
+  \****************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxTeam_vue_vue_type_template_id_40787bc2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./TaxTeam.vue?vue&type=template&id=40787bc2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Tax/TaxTeam.vue?vue&type=template&id=40787bc2&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxTeam_vue_vue_type_template_id_40787bc2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxManagment_vue_vue_type_template_id_89c4bd8a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./TaxManagment.vue?vue&type=template&id=89c4bd8a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=template&id=89c4bd8a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxManagment_vue_vue_type_template_id_89c4bd8a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxTeam_vue_vue_type_template_id_40787bc2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxManagment_vue_vue_type_template_id_89c4bd8a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

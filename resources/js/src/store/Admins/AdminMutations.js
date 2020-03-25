@@ -8,5 +8,9 @@ export default {
 	},
 	setMember(state,member){
 		state.member = member;
-	}
+	},
+	changeStatus(state,id){
+		var index = _.findIndex(state.admins,(o)=>{return o.manager_id === id})
+		state.admins[index].status = state.admins[index].status == 1?0:1;
+	},
 }

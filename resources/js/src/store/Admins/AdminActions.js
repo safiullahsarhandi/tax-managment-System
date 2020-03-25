@@ -1,6 +1,6 @@
 export default{
-	getAdmins({commit}){
-		axios.get('get-admins').then(res=>{
+	async getAdmins({commit}){
+		await axios.get('get-admins').then(res=>{
 			commit('setAdmins',res.data.admins)
 		});
 	},
@@ -21,5 +21,14 @@ export default{
 			commit('setSingleAdmin',res.data.admin)
 			return res;
 		});
+	},
+	updateStatus({commit},data){
+        commit('changeStatus',data.id);
+		axios.post('status-update-admin',{id:data.id}).then(res=>{
+                data.notify({title:'Updated!...',text:res.data.msg,color:'success',position:'top-right'})
+                setTimeout(function(){
+                	data.closeLoader();
+                })
+            });
 	}		
 }
