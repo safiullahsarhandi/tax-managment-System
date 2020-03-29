@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use PDF;
 use Session;
+use Illuminate\Support\Facades\Mail;
+use App\PasswordReset;
 
 class ApplicationController extends Controller {
 	public function __invoke() {
@@ -1453,7 +1455,7 @@ class ApplicationController extends Controller {
 
 	}
 
-<<<<<<< HEAD
+
 	public function vat_one(){
 		// return view('pdf.vat-1');
 		$data = array(); 
@@ -1471,30 +1473,51 @@ class ApplicationController extends Controller {
 		return $pdf->stream('PPT-1.pdf');
 	}
 
-	
-=======
-	public function invoice() {
+	public function forgot_password(Request $request){
 
-		$data = array();
-		$pdf = PDF::loadView('pdf.invoice', $data);
-		$customPaper = array(0, 0, 800, 800);
+		$data = Admin::whereEmail($request->email)->first();
 
-		$pdf->setPaper($customPaper);
-		// $pdf->setPaper('letter', 'portrait');
+		if(empty($data)){
+			return response()->json(['status' => 'error', 'msg'=> 'Email does not exist'], 200);
+		}
 
-		return $pdf->stream('invoice.pdf');
+		$code = substr(time(), 5, -1);
+
+		PasswordReset::whereEmail($request->email)->delete();
+		$pr = new PasswordReset();
+		$pr->email = $request->email; 
+		$pr->token = $code;
+		$save = $pr->save();
+
+		if($save){
+			Mail::send('mail.passwordreset', ['user' => $data, 'code' => $code], function ($message) use ($data) {
+				$message->
+					to($data['email'], $data['first_name'].' '.$data['last_name'])->
+					subject('Tax Management | Automatic Generated Email: Password Reset Code');
+			});
+		}
+
+		return response()->json(['status' => 'success', 'msg' => 'Verification code sent to provided email.'], 200);
 	}
 
-	public function invoice1() {
-		$data = array();
-		$pdf = PDF::loadView('pdf.invoice1', $data);
-		return $pdf->download('invoice1.pdf');
+	public function verify_code_change_password(Request $request){
+
+		$pr = PasswordReset::whereEmail($request->email)->whereToken($request->code)->first();
+		if(empty($pr)){
+			return response()->json(['status' => false, 'msg' => 'Invalid verification code.'], 200);
+		}
+
+		$data = Admin::whereEmail($request->email)->first();
+
+		if(empty($data)){
+			return response()->json(['status' => false, 'msg' => 'un authorized action'], 200);
+		}
+
+		$data->password = bcrypt($request->password);
+		$data->save();
+
+		return response()->json(['status' => true, 'msg' => 'Password changed successfully'], 200);
 	}
 
-	public function invoice2() {
-		$data = array();
-		$pdf = PDF::loadView('pdf.invoice2', $data);
-		return $pdf->stream('invoice2.pdf');
-	}
->>>>>>> master
+
 }

@@ -16,7 +16,7 @@
                             Entries
                         </vs-col>
                         <vs-col  vs-lg="9" vs-md="9" vs-sm="12" vs-xs="12">
-                            <vs-button style="margin-top: -5px" color="primary" type="border" icon="cloud_download">Import</vs-button>
+                            <vs-button style="margin-top: -5px" color="primary" type="border" icon="cloud_download">Export</vs-button>
                         </vs-col>
                     </vs-row>
                 </template>

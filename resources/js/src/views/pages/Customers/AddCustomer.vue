@@ -121,24 +121,21 @@
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('industry')">{{errors.first('industry')}}</span>
                     </vs-col>
-<<<<<<< HEAD
+
 
                     <!-- <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
-=======
-                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
->>>>>>> master
+
                         <vx-input-group>
                             <vs-select autocomplete label="Select Tax Duration" v-model="taxDurationSelected" name="tax_duration" width="100%" v-validate="'excluded:`Monthly`,`Yearly`'">
                                 <vs-select-item :key="indx" :value="i.value" :text="i.text" v-for="(i,indx) in taxDuration" />
                             </vs-select>
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('tax_duration')">{{errors.first('tax_duration')}}</span>
-<<<<<<< HEAD
+
                     </vs-col> -->
 
-=======
-                    </vs-col>
->>>>>>> master
+
+
                     <vs-col v-for="(field,index) in customField" :key="index" class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
                             <vs-input :type="field.text" :name="field.name" v-validate="`required`" 
