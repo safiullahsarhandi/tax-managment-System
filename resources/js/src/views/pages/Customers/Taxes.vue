@@ -6,7 +6,7 @@
             </template>
             <vs-table search pagination :data="taxes">
                 <template slot="header">
-                    <vs-button style="margin-top: -5px" color="primary" type="border" icon="cloud_download">Import</vs-button>
+                    <vs-button style="margin-top: -5px" color="primary" type="border" icon="cloud_download">Export</vs-button>
                 </template>
                 <template slot="thead">
                     <vs-th>created by</vs-th>

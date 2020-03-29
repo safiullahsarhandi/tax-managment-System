@@ -6,7 +6,7 @@
             <!-- </template> -->
             <vs-table search pagination max-items="6" :data="purchases">
                 <template slot="header">
-                    <vs-button color="primary" type="border" icon="cloud_download">Import</vs-button>
+                    <vs-button color="primary" type="border" icon="cloud_download">Export</vs-button>
                 </template>
                 <template slot="thead">
                     <vs-th>Branch#/ Name</vs-th>

@@ -26,7 +26,7 @@
                                     <span class="text-danger" v-show="errors.has('password')" v-html="errors.first('password')"></span>
                                     <div class="flex flex-wrap justify-between my-5">
                                         <vs-checkbox v-model="checkbox_remember_me" class="mb-3">Remember Me</vs-checkbox>
-                                        <router-link to="#">Forgot Password?</router-link>
+                                        <router-link to="/forgot-password">Forgot Password?</router-link>
                                     </div>
                                     <!-- <vs-button type="border">Register</vs-button> -->
                                     <vs-row>

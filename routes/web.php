@@ -16,6 +16,8 @@ Route::group(['prefix' => ''], function () {
 	Route::get('get-average-rate', 'ApplicationController@get_average_rate');
 	Route::get('login-user', 'ApplicationController@get_login_user');
 	Route::post('login', 'ApplicationController@login');
+
+
 	// officers routes
 	Route::get('get-officers', 'ApplicationController@get_officers');
 	Route::get('get-my-officers', 'ApplicationController@get_my_officers');
@@ -118,6 +120,12 @@ Route::group(['prefix' => ''], function () {
 	Route::get('vat-one', 'ApplicationController@vat_one');
 	Route::get('ppt-one', 'ApplicationController@ppt_one');
 	// Route::get('pdf2', 'ApplicationController@invoice2');
+
+	Route::post('forgot-password', 'ApplicationController@forgot_password');
+	Route::post('verify-code-and-change-password', 'ApplicationController@verify_code_change_password');
+
+
+	
 
 });
 Route::get('/{any}', 'ApplicationController')->where('any', '.*');

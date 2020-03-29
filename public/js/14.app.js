@@ -356,9 +356,11 @@ var render = function() {
                                       [_vm._v("Remember Me")]
                                     ),
                                     _vm._v(" "),
-                                    _c("router-link", { attrs: { to: "#" } }, [
-                                      _vm._v("Forgot Password?")
-                                    ])
+                                    _c(
+                                      "router-link",
+                                      { attrs: { to: "/forgot-password" } },
+                                      [_vm._v("Forgot Password?")]
+                                    )
                                   ],
                                   1
                                 ),

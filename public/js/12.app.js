@@ -514,7 +514,7 @@ var render = function() {
                                 icon: "cloud_download"
                               }
                             },
-                            [_vm._v("Import")]
+                            [_vm._v("Export")]
                           )
                         ],
                         1

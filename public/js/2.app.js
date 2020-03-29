@@ -378,6 +378,62 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1811,59 +1867,25 @@ var render = function() {
                     _vm._v(" "),
                     _c(
                       "div",
-                      { staticClass: "bookmark-container" },
+                      {
+                        staticClass: "bookmark-container",
+                        staticStyle: { width: "32%" }
+                      },
                       [
-                        _c("feather-icon", {
-                          staticClass: "cursor-pointer p-2",
+                        _c("vx-auto-suggest", {
                           attrs: {
-                            icon: "StarIcon",
-                            svgClasses: [
-                              "stoke-current text-warning",
-                              { "text-white": _vm.navbarColor != "#fff" }
-                            ]
+                            autoFocus: false,
+                            data: _vm.navbarSearchAndPinList,
+                            inputClassses: "w-full",
+                            "show-action": "",
+                            "show-pinned": "",
+                            "background-overlay": ""
                           },
                           on: {
-                            click: function($event) {
-                              $event.stopPropagation()
-                              _vm.showBookmarkPagesDropdown = !_vm.showBookmarkPagesDropdown
-                            }
+                            selected: _vm.selected,
+                            actionClicked: _vm.actionClicked
                           }
-                        }),
-                        _vm._v(" "),
-                        _vm.showBookmarkPagesDropdown
-                          ? _c(
-                              "div",
-                              {
-                                directives: [
-                                  {
-                                    name: "click-outside",
-                                    rawName: "v-click-outside",
-                                    value: _vm.outside,
-                                    expression: "outside"
-                                  }
-                                ],
-                                staticClass:
-                                  "absolute bookmark-list w-1/3 xl:w-1/4 mt-4"
-                              },
-                              [
-                                _c("vx-auto-suggest", {
-                                  attrs: {
-                                    autoFocus: true,
-                                    data: _vm.navbarSearchAndPinList,
-                                    inputClassses: "w-full",
-                                    "show-action": "",
-                                    "show-pinned": "",
-                                    "background-overlay": ""
-                                  },
-                                  on: {
-                                    selected: _vm.selected,
-                                    actionClicked: _vm.actionClicked
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          : _vm._e()
+                        })
                       ],
                       1
                     )
@@ -1871,6 +1893,127 @@ var render = function() {
                 : _vm._e(),
               _vm._v(" "),
               _c("vs-spacer"),
+              _vm._v(" "),
+              _c(
+                "vs-dropdown",
+                {
+                  staticClass: "cursor-pointer ml-4",
+                  attrs: { "vs-custom-content": "", "vs-trigger-click": "" }
+                },
+                [
+                  _c("feather-icon", {
+                    staticClass: "cursor-pointer mt-1 sm:mr-6 mr-2",
+                    attrs: {
+                      icon: "BellIcon",
+                      badge: _vm.unreadNotifications.length
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "vs-dropdown-menu",
+                    {
+                      staticClass:
+                        "notification-dropdown dropdown-custom vx-navbar-dropdown"
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "notification-top text-center p-5 bg-primary text-white"
+                        },
+                        [
+                          _c("h3", { staticClass: "text-white" }, [
+                            _vm._v(
+                              _vm._s(_vm.unreadNotifications.length) + " New"
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "opacity-75" }, [
+                            _vm._v("App Notifications")
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "VuePerfectScrollbar",
+                        {
+                          ref: "mainSidebarPs",
+                          staticClass:
+                            "scroll-area--nofications-dropdown p-0 mb-10",
+                          attrs: { settings: _vm.settings }
+                        },
+                        [
+                          _c(
+                            "ul",
+                            { staticClass: "bordered-items" },
+                            _vm._l(_vm.unreadNotifications, function(ntf) {
+                              return _c(
+                                "li",
+                                {
+                                  key: ntf.index,
+                                  staticClass:
+                                    "flex justify-between px-4 py-4 notification cursor-pointer"
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    { staticClass: "flex items-start" },
+                                    [
+                                      _c("feather-icon", {
+                                        attrs: {
+                                          icon: ntf.icon,
+                                          svgClasses: [
+                                            "text-" + ntf.category,
+                                            "stroke-current mr-1 h-6 w-6"
+                                          ]
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "mx-2" }, [
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass:
+                                              "font-medium block notification-title",
+                                            class: ["text-" + ntf.category]
+                                          },
+                                          [_vm._v(_vm._s(ntf.title))]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("small", [_vm._v(_vm._s(ntf.msg))])
+                                      ])
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "small",
+                                    { staticClass: "mt-1 whitespace-no-wrap" },
+                                    [_vm._v(_vm._s(_vm.elapsedTime(ntf.time)))]
+                                  )
+                                ]
+                              )
+                            }),
+                            0
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "\r\n                        checkout-footer\r\n                        fixed\r\n                        bottom-0\r\n                        rounded-b-lg\r\n                        text-primary\r\n                        w-full\r\n                        p-2\r\n                        font-semibold\r\n                        text-center\r\n                        border\r\n                        border-b-0\r\n                        border-l-0\r\n                        border-r-0\r\n                        border-solid\r\n                        d-theme-border-grey-light\r\n                        cursor-pointer"
+                        },
+                        [_c("span", [_vm._v("View All Notifications")])]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
               _c(
                 "div",

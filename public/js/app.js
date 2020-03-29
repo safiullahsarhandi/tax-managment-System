@@ -79161,6 +79161,16 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
         requiresAuth: false
       }
     }, {
+      path: '/forgot-password',
+      name: 'ForgotPassword',
+      component: function component() {
+        return __webpack_require__.e(/*! import() */ 46).then(__webpack_require__.bind(null, /*! @/views/pages/ForgotPassword.vue */ "./resources/js/src/views/pages/ForgotPassword.vue"));
+      },
+      meta: {
+        requiresAdmin: false,
+        requiresAuth: false
+      }
+    }, {
       path: '/pages/error-404',
       name: 'pageError404',
       component: function component() {
