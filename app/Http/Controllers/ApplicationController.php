@@ -174,6 +174,7 @@ class ApplicationController extends Controller {
 		$customer->province = $request->province;
 		$customer->muncipality = $request->muncipality;
 		$customer->telephone = $request->tel;
+		$customer->e_phone = $request->e_phone;
 		$customer->email = $request->email;
 		$customer->industry = $request->industry;
 		$customer->incorporation_date = $request->incorporation_date;
@@ -212,7 +213,7 @@ class ApplicationController extends Controller {
 
 			$customers = $reader;
 			$headers = $reader->getHeading();
-			$possibleVals = ['name_khmer', 'name_english', 'tax_id_no', 'tin_no', 'incorporation_date', 'address', 'street', 'group', 'village', 'sangkat', 'district', 'province', 'muncipality', 'tel', 'email', 'industry', 'tax_duration'];
+			$possibleVals = ['name_khmer', 'name_english', 'tax_id_no', 'tin_no', 'incorporation_date', 'address', 'street', 'group', 'village', 'sangkat', 'district', 'province', 'muncipality', 'tel', 'ePhone', 'email', 'industry', 'tax_duration'];
 			$possibleValsCount = count($possibleVals);
 			$uploadedHeaderCount = count(array_intersect($possibleVals, $headers));
 			if ($possibleValsCount != $uploadedHeaderCount) {
@@ -234,6 +235,9 @@ class ApplicationController extends Controller {
 
 				$tel = $value['tel'];
 				list($tel) = explode(".", "$tel");
+
+				$ePhone = $value['ePhone'];
+				list($ePhone) = explode(".", "$ePhone");
 				if ($res = TaxCustomers::whereEmail($value['email'])->first()) {
 					$emailCount++;
 					continue;
@@ -263,6 +267,7 @@ class ApplicationController extends Controller {
 				$customer->province = $value['province'];
 				$customer->muncipality = $value['muncipality'];
 				$customer->telephone = '+' . $tel;
+				$customer->e_phone = $ePhone;
 				$customer->email = $value['email'];
 				$customer->industry = $value['industry'];
 				$customer->incorporation_date = $value['incorporation_date'];
@@ -316,6 +321,7 @@ class ApplicationController extends Controller {
 		$customer->name_khmer = $request->name_khmer;
 		$customer->email = $request->email;
 		$customer->telephone = $request->tel;
+		$customer->e_phone = $request->e_phone;
 		$customer->industry = $request->industry;
 		$customer->tax_card_num = $request->tax_id;
 		$customer->tin_no = $request->tin_num;
@@ -368,6 +374,7 @@ class ApplicationController extends Controller {
 		$employee->sex = $request->sex;
 		$employee->contract_type = $request->contract_type;
 		$employee->spouse = $request->spouse;
+		$employee->children = $request->children;
 		$result = $employee->save();
 		return response()->json(['status' => 'success', 'msg' => 'Employee added successfully']);
 	}
@@ -581,6 +588,12 @@ class ApplicationController extends Controller {
 			$data->value = 0;
 			$data->save();
 		}
+		if (!$ar = Settings::where('key', 'daily_rate')->first()) {
+			$data = new Settings();
+			$data->key = 'daily_rate';
+			$data->value = 0;
+			$data->save();
+		}
 		$setting = Settings::all();
 		$rates = $setting;
 		return response()->json(compact('rates'));
@@ -590,6 +603,7 @@ class ApplicationController extends Controller {
 		$annual_rate = Settings::where('key', 'annual_rate')->update(['value' => $request->annual_rate]);
 		$average_rate = Settings::where('key', 'average_rate')->update(['value' => $request->average_rate]);
 		$salary_rate = Settings::where('key', 'salary_rate')->update(['value' => $request->salary_rate]);
+		$salary_rate = Settings::where('key', 'daily_rate')->update(['value' => $request->daily_rate]);
 		return response()->json(['status' => 'success']);
 	}
 
@@ -1046,7 +1060,7 @@ class ApplicationController extends Controller {
 			$employees = $data->toArray();
 			$counter = 0;
 			$headers = $data->getHeading();
-			$possibleVals = ['nssf_no', 'employee_no', 'name_english', 'name_khmer', 'nationality', 'dob', 'joining_date', 'position', 'sex', 'contract_type', 'spouse'];
+			$possibleVals = ['nssf_no', 'employee_no', 'name_english', 'name_khmer', 'nationality', 'dob', 'joining_date', 'position', 'sex', 'contract_type', 'spouse', 'children'];
 			$possibleValsCount = count($possibleVals);
 			$uploadedHeaderCount = count(array_intersect($possibleVals, $headers));
 			if ($possibleValsCount != $uploadedHeaderCount) {
@@ -1076,6 +1090,7 @@ class ApplicationController extends Controller {
 				$employee->sex = $value['sex'];
 				$employee->contract_type = $value['contract_type'];
 				$employee->spouse = $value['spouse'];
+				$employee->children = $value['children'];
 				$result = $employee->save();
 				$counter++;
 			}

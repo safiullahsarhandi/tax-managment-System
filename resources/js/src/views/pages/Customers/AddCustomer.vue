@@ -110,6 +110,12 @@
                         <span class="text-danger" v-show="errors.has('tel')">{{errors.first('tel')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                            <vx-input-group>
+                                <vs-input name="e_phone" data-vv-as="ePhone" v-validate="`required`" :label-placeholder="lang=='english'?'ePhone':'ទូរស័ព្ទ'" v-model="ePhone" />
+                            </vx-input-group>
+                            <span class="text-danger" v-show="errors.has('e_phone')">{{errors.first('e_phone')}}</span>
+                        </vs-col>
+                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
                             <vs-input name="email" type="email" v-validate="`required`" :label-placeholder="lang=='english'?'Email':'អ៊ីមែល'" v-model="email" />
                         </vx-input-group>
@@ -185,6 +191,7 @@ export default {
             province: '',
             muncipality: '',
             tel: '',
+            ePhone: '',
             email: '',
             industry: '',
             taxDurationSelected: 'Monthly Tax',

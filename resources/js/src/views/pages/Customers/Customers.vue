@@ -1,7 +1,10 @@
 <template>
     <div>
         <vx-card title="List of Customers">
-            
+            <template slot="actions">
+                <vs-button  :href="{url : 'export-customers'}" color="primary" type="border" icon-pack=
+            "feather" icon="icon-download"></vs-button>
+            </template>
             <vs-table search pagination :max-items="tableEntries" :data="customers">
                 <template slot="header">
                     <vs-row>
@@ -14,9 +17,6 @@
                                 <option value="100" v-html="100"></option>
                             </select>
                             Entries
-                        </vs-col>
-                        <vs-col  vs-lg="9" vs-md="9" vs-sm="12" vs-xs="12">
-                            <vs-button style="margin-top: -5px" color="primary" type="border" icon="cloud_download">Export</vs-button>
                         </vs-col>
                     </vs-row>
                 </template>
@@ -38,7 +38,7 @@
                 <template slot-scope="{data}">
                     <vs-tr v-for="(tr,index) in data" :key="index">
 
-                        <vs-td :data="tr.id"> {{'C0'+tr.id}}</vs-td>
+                        <vs-td :data="tr.id"> {{'C00000'+tr.id}}</vs-td>
                         <vs-td :data="tr.name_english">{{tr.name_english}}</vs-td>
                         <vs-td :data="tr.name_khmer">{{tr.name_khmer}}</vs-td>
                         <vs-td :data="tr.industry">{{tr.industry}}</vs-td>

@@ -15,6 +15,9 @@
                     <vs-th>
                         Annual Rate
                     </vs-th>
+                    <vs-th>
+                        Daily Rate
+                    </vs-th>
                 </template>
                 <template slot-scope="{data}">
                     <vs-tr :data="data">
@@ -51,6 +54,10 @@
                             <vs-input v-validate="'required'" name="annual_rate" v-model="annual_rate" label-placeholder="Annual Rate" data-vv-scope="editform" />
                             <span class="text-danger" v-show="errors.has('editform.annual_rate')">{{errors.first('editform.annual_rate')}}</span>
                         </vx-input-group>
+                        <vx-input-group class="mt-2">
+                            <vs-input v-validate="'required'" name="daily_rate" v-model="daily_rate" label-placeholder="Daily Rate" data-vv-scope="editform" />
+                            <span class="text-danger" v-show="errors.has('editform.daily_rate')">{{errors.first('editform.daily_rate')}}</span>
+                        </vx-input-group>
                        
                     </vs-col>
                     
@@ -75,6 +82,7 @@ export default {
         salary_rate: 0,
         average_rate: 0,
         annual_rate: 0,
+        daily_rate: 0,
     }),
 
     computed: {

@@ -17,7 +17,6 @@ Route::group(['prefix' => ''], function () {
 	Route::get('login-user', 'ApplicationController@get_login_user');
 	Route::post('login', 'ApplicationController@login');
 
-
 	// officers routes
 	Route::get('get-officers', 'ApplicationController@get_officers');
 	Route::get('get-my-officers', 'ApplicationController@get_my_officers');
@@ -124,8 +123,9 @@ Route::group(['prefix' => ''], function () {
 	Route::post('forgot-password', 'ApplicationController@forgot_password');
 	Route::post('verify-code-and-change-password', 'ApplicationController@verify_code_change_password');
 
-
-	
+	Route::get('export-customers', 'ExportController@export_customers');
+	Route::get('export-team-members', 'ExportController@export_team_members');
+	Route::get('export-customer-employees/{customer_id}', 'ExportController@export_customer_employees');
 
 });
 Route::get('/{any}', 'ApplicationController')->where('any', '.*');

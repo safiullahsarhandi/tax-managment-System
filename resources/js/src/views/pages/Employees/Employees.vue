@@ -1,10 +1,10 @@
 <template>
 <div>
         <vx-card title="List of Employees">
+            <template slot="actions">
+                <vs-button :href="{url : `export-customer-employees/${tax_customer_id}`}" color="primary" type="border" icon-pack="feather" icon="icon-download"></vs-button>
+            </template>
             <vs-table search pagination max-items="10" :data="employees">
-                <template slot="header">
-                    <vs-button style="margin-top: -5px" color="primary" type="border" icon="cloud_download">Export</vs-button>
-                </template>
                 <template slot="thead">
                     <vs-th>Employee No.</vs-th>
                     <vs-th>Name(English)</vs-th>
@@ -94,6 +94,10 @@
                             <vs-input v-validate="'required'" name="spouse" v-model="spouse" label-placeholder="Spouse" ata-vv-scope="editform" data-vv-scope="editform" />
                             <span class="text-danger" v-show="errors.has('editform.spouse')">{{errors.first('editform.spouse')}}</span>
                         </vx-input-group>
+                        <vx-input-group>
+                            <vs-input name="children" v-validate="`required`" label-placeholder="children" v-model="children" />
+                        </vx-input-group>
+                        <span class="text-danger" v-show="errors.has('children')">{{errors.first('children')}}</span>
                     </vs-col>
                     <vs-col vs-lg="12" vs-md="12" vs-sm="12">
                         <vs-button button="submit" class="float-right" type="gradient">Update Information</vs-button>
@@ -122,7 +126,8 @@
 		    position:'',
 		    contract_type:'',
 		    sex:'',
-		    spouse : ''
+            spouse : '',
+		    children : ''
 		  };
 		},
 		computed: {
@@ -168,6 +173,7 @@
             this.sex = employee.sex;
             this.contract_type = employee.contract_type;
             this.spouse = employee.spouse;
+            this.children = employee.children;
             this.editEmployeeModal = true;
         },
         updateEmployee(e) {

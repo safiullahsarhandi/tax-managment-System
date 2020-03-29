@@ -270,6 +270,23 @@ var render = function() {
         { attrs: { title: "List of Customers" } },
         [
           _c(
+            "template",
+            { slot: "actions" },
+            [
+              _c("vs-button", {
+                attrs: {
+                  href: { url: "export-customers" },
+                  color: "primary",
+                  type: "border",
+                  "icon-pack": "feather",
+                  icon: "icon-download"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
             "vs-table",
             {
               attrs: {
@@ -289,7 +306,7 @@ var render = function() {
                         { key: index },
                         [
                           _c("vs-td", { attrs: { data: tr.id } }, [
-                            _vm._v(" " + _vm._s("C0" + tr.id))
+                            _vm._v(" " + _vm._s("C00000" + tr.id))
                           ]),
                           _vm._v(" "),
                           _c("vs-td", { attrs: { data: tr.name_english } }, [
@@ -491,33 +508,6 @@ var render = function() {
                             "\n                        Entries\n                    "
                           )
                         ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vs-col",
-                        {
-                          attrs: {
-                            "vs-lg": "9",
-                            "vs-md": "9",
-                            "vs-sm": "12",
-                            "vs-xs": "12"
-                          }
-                        },
-                        [
-                          _c(
-                            "vs-button",
-                            {
-                              staticStyle: { "margin-top": "-5px" },
-                              attrs: {
-                                color: "primary",
-                                type: "border",
-                                icon: "cloud_download"
-                              }
-                            },
-                            [_vm._v("Export")]
-                          )
-                        ],
-                        1
                       )
                     ],
                     1
@@ -573,7 +563,7 @@ var render = function() {
             2
           )
         ],
-        1
+        2
       )
     ],
     1

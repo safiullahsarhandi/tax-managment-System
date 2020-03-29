@@ -2,6 +2,7 @@
     <div>
         <vx-card title="List of Team Members">
             <template slot="actions">
+                <vs-button type="border" :href="{url : 'export-team-members'}" icon-pack="feather" icon="icon-download"></vs-button>
                 <vs-button type="border" @click="addAdminModal = true" icon-pack="feather" icon="icon-plus"></vs-button>
             </template>
             <vs-table search pagination max-items="6" :data="admins">
