@@ -1,20 +1,6 @@
 <template>
     <div>
         <vs-row>
-<<<<<<< HEAD
-            <vs-col class="">
-                <vx-card>
-                    <table>
-                        <tr>
-                            <th style="width: 300px; text-align: center;">Company Name (English):</th>
-                            <th style="width: 300px; text-align: center;">Company Name (Khmer):</th>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center;">{{customer.name_english}}</td>
-                            <td style="text-align: center;">{{customer.name_khmer}}</td>
-                        </tr>
-                    </table>
-=======
             <vs-col class="mt-base" vs-md="8" vs-lg="8" vs-sm="12" vs-xs="12">
                 <vx-card title="Company OR Customer Overview">
                     <vs-row>
@@ -125,7 +111,6 @@
                             <div>{{info}}</div>
                         </vs-col>
                     </vs-row>
->>>>>>> master
                 </vx-card>
             </vs-col>
            

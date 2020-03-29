@@ -118,12 +118,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-<<<<<<< HEAD
 //
 //
 //
-=======
->>>>>>> master
 //
 //
 //
@@ -171,15 +168,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       title: '',
       description: '',
       duration: '',
-<<<<<<< HEAD
-      supervisor: ''
-=======
       supervisor: '',
       tax_identifier: '',
       edit_tax_identifier: '',
       notes: '',
       months: ['Jan', 'Feb', 'Mar', 'Apr', 'Ma', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
->>>>>>> master
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('supervisors/', ['supervisors']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('taxes/', ['taxes']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('officers/', ['officers'])),

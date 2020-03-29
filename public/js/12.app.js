@@ -107,6 +107,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   inject: ['generatePassword', 'loginUser'],
@@ -277,6 +288,10 @@ var render = function() {
                         "vs-tr",
                         { key: index },
                         [
+                          _c("vs-td", { attrs: { data: tr.id } }, [
+                            _vm._v(" " + _vm._s("C0" + tr.id))
+                          ]),
+                          _vm._v(" "),
                           _c("vs-td", { attrs: { data: tr.name_english } }, [
                             _vm._v(_vm._s(tr.name_english))
                           ]),
@@ -399,66 +414,124 @@ var render = function() {
               ])
             },
             [
-              _c("template", { slot: "header" }, [
-                _vm._v("\n                Show\n                "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.tableEntries,
-                        expression: "tableEntries"
-                      }
+              _c(
+                "template",
+                { slot: "header" },
+                [
+                  _c(
+                    "vs-row",
+                    [
+                      _c(
+                        "vs-col",
+                        {
+                          attrs: {
+                            "vs-lg": "3",
+                            "vs-md": "3",
+                            "vs-sm": "12",
+                            "vs-xs": "12"
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        Show\n                        "
+                          ),
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.tableEntries,
+                                  expression: "tableEntries"
+                                }
+                              ],
+                              staticClass: "vs-select--input",
+                              staticStyle: { width: "100px" },
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.tableEntries = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                }
+                              }
+                            },
+                            [
+                              _c("option", {
+                                attrs: { value: "10" },
+                                domProps: { innerHTML: _vm._s(10) }
+                              }),
+                              _vm._v(" "),
+                              _c("option", {
+                                attrs: { value: "25" },
+                                domProps: { innerHTML: _vm._s(25) }
+                              }),
+                              _vm._v(" "),
+                              _c("option", {
+                                attrs: { value: "50" },
+                                domProps: { innerHTML: _vm._s(50) }
+                              }),
+                              _vm._v(" "),
+                              _c("option", {
+                                attrs: { value: "100" },
+                                domProps: { innerHTML: _vm._s(100) }
+                              })
+                            ]
+                          ),
+                          _vm._v(
+                            "\n                        Entries\n                    "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          attrs: {
+                            "vs-lg": "9",
+                            "vs-md": "9",
+                            "vs-sm": "12",
+                            "vs-xs": "12"
+                          }
+                        },
+                        [
+                          _c(
+                            "vs-button",
+                            {
+                              staticStyle: { "margin-top": "-5px" },
+                              attrs: {
+                                color: "primary",
+                                type: "border",
+                                icon: "cloud_download"
+                              }
+                            },
+                            [_vm._v("Import")]
+                          )
+                        ],
+                        1
+                      )
                     ],
-                    staticClass: "vs-select--input",
-                    staticStyle: { width: "100px" },
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.tableEntries = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      }
-                    }
-                  },
-                  [
-                    _c("option", {
-                      attrs: { value: "10" },
-                      domProps: { innerHTML: _vm._s(10) }
-                    }),
-                    _vm._v(" "),
-                    _c("option", {
-                      attrs: { value: "25" },
-                      domProps: { innerHTML: _vm._s(25) }
-                    }),
-                    _vm._v(" "),
-                    _c("option", {
-                      attrs: { value: "50" },
-                      domProps: { innerHTML: _vm._s(50) }
-                    }),
-                    _vm._v(" "),
-                    _c("option", {
-                      attrs: { value: "100" },
-                      domProps: { innerHTML: _vm._s(100) }
-                    })
-                  ]
-                ),
-                _vm._v("\n                Entries\n            ")
-              ]),
+                    1
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
               _c(
                 "template",
                 { slot: "thead" },
                 [
+                  _c("vs-th", [_vm._v("Customer ID")]),
+                  _vm._v(" "),
                   _c("vs-th", [_vm._v("Name(English)")]),
                   _vm._v(" "),
                   _c("vs-th", [_vm._v("Name(Khmer)")]),

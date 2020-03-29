@@ -45,16 +45,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 90b29b1fa311125012be5716f1008a7a56924572
-//
-//
-//
-//
-<<<<<<< HEAD
-=======
 //
 //
 //
@@ -62,22 +52,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-=======
->>>>>>> master
->>>>>>> 90b29b1fa311125012be5716f1008a7a56924572
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   inject: ['generatePassword'],
@@ -318,6 +292,7 @@ var render = function() {
                   _c(
                     "vs-button",
                     {
+                      staticStyle: { "margin-top": "-5px" },
                       attrs: {
                         color: "primary",
                         type: "border",
