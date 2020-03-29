@@ -60,6 +60,16 @@ const router = new Router({
                     }
                 },
                 {
+                    path: '/add-customer-table-view',
+                    name: 'Add Customer',
+                    component: () => import('./views/pages/Customers/AddCustomerTableView.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+
+                    }
+                },
+                {
                     path: '/customer-update/:id',
                     name: 'Customer Update',
                     component: () => import('./views/pages/Customers/EditCustomer.vue'),

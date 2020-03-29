@@ -1,1 +1,629 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[12],{149:function(e,t,a){"use strict";a.r(t);var s=a(1);function r(e,t){var a=Object.keys(e);if(Object.getOwnPropertySymbols){var s=Object.getOwnPropertySymbols(e);t&&(s=s.filter((function(t){return Object.getOwnPropertyDescriptor(e,t).enumerable}))),a.push.apply(a,s)}return a}function i(e){for(var t=1;t<arguments.length;t++){var a=null!=arguments[t]?arguments[t]:{};t%2?r(a,!0).forEach((function(t){d(e,t,a[t])})):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(a)):r(a).forEach((function(t){Object.defineProperty(e,t,Object.getOwnPropertyDescriptor(a,t))}))}return e}function d(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}var o={inject:["generatePassword"],data:function(){return{addAdminModal:!1,editAdminModal:!1,first_name:"",last_name:"",email:"",phone:"",address:"",state:"",zip_code:"",city:"",gender:"male",password:"",edit_first_name:"",edit_last_name:"",edit_email:"",edit_phone:"",edit_address:"",edit_state:"",edit_zip_code:"",edit_city:"",edit_gender:"male",edit_password:"",edit_manager_id:"",defaultRole:0,selectedRole:0,supervisor:"",selectedSupervisor:"",rolles:[{value:0,label:"Select Role",selectedText:"Select Role",isSelected:!1},{value:4,label:"Admin",selectedText:"Admin",isSelected:!1},{value:2,label:"Supervisor",selectedText:"Supervisor",isSelected:!1},{value:3,label:"Officer",selectedText:"Officer",isSelected:!1}]}},computed:i({},Object(s.d)("admins/",["admins"]),{},Object(s.c)("admins/",["findAdmin"]),{},Object(s.d)("supervisors/",["supervisors"])),created:function(){this.getAdmins(),this.getSupervisors()},methods:i({},Object(s.b)({getAdmins:"admins/getAdmins",submit:"admins/addAdmin",update:"admins/updateAdmin",getSupervisors:"supervisors/getSupervisors"}),{reportsTo:function(e){return null!=e?e.full_name:"N/A"},addAdmin:function(e){var t=this;this.$validator.validateAll("addform").then((function(a){if(a){var s=new FormData(t.$refs.addAdminForm);s.append("gender",t.gender),3==t.defaultRole?s.append("reports_to",t.supervisor):s.append("reports_to",localStorage.getItem("admin")),t.submit(s).then((function(a){"success"==a.data.status?(t.password=t.email=t.first_name=t.last_name=t.zip_code=t.city=t.state=t.address=t.phone="",t.gender="male",t.selectedRole=0,e.target.reset(),t.errors.clear(),t.addAdminModal=!1,t.getAdmins(),t.$vs.notify({color:"danger",position:"right-top",text:a.data.msg})):t.$vs.notify({color:"danger",position:"right-top",text:a.data.msg})}))}}))},statusUpdate:function(e){var t=this;this.$vs.loading(),axios.post("status-update-admin",{id:e}).then((function(e){t.$vs.notify({title:"Updated!...",text:e.data.msg,color:"success",position:"top-right"}),t.$vs.loading.close()}))},editAdmin:function(e){var t=this.findAdmin(e);this.edit_manager_id=t.manager_id,this.edit_first_name=t.first_name,this.edit_last_name=t.last_name,this.edit_email=t.email,this.edit_gender=t.gender,this.edit_zip_code=t.zip_code,this.edit_address=t.address,this.edit_phone=t.phone,this.edit_state=t.state,this.edit_zip_code=t.zip_code,this.edit_city=t.city,"Admin"==t.type&&(this.selectedRole=1),"Supervisor"==t.type&&(this.selectedRole=2),"Officer"==t.type&&(this.selectedRole=3,this.selectedSupervisor=t.reports_to||0),this.editAdminModal=!0},updateAdmin:function(e){var t=this;this.$validator.validateAll("editform").then((function(a){if(a){t.$vs.loading();var s=new FormData(t.$refs.editAdminForm);s.append("gender",t.edit_gender),3==t.defaultRole?s.append("reports_to",t.selectedSupervisor):s.append("reports_to",localStorage.getItem("admin")),t.update(s).then((function(a){"success"==a.data.status&&(t.edit_email=t.edit_first_name=t.edit_last_name=t.edit_zip_code=t.edit_city=t.edit_state=t.edit_address=t.edit_phone="",t.edit_gender="male",e.target.reset(),t.errors.clear(),t.editAdminModal=!1,t.$vs.notify({title:"Updated!...",text:"Admin record updated",color:"success",position:"top-right"}),t.$vs.loading.close())}))}}))},makePassword:function(){this.password=this.generatePassword()}})},n=(a(78),a(2)),l=Object(n.a)(o,(function(){var e=this,t=e.$createElement,a=e._self._c||t;return a("div",[a("vx-card",{attrs:{title:"List of Team Members"}},[a("template",{slot:"actions"},[a("vs-button",{attrs:{type:"border","icon-pack":"feather",icon:"icon-plus"},on:{click:function(t){e.addAdminModal=!0}}})],1),e._v(" "),a("vs-table",{attrs:{search:"",pagination:"","max-items":"6",data:e.admins},scopedSlots:e._u([{key:"default",fn:function(t){var s=t.data;return e._l(s,(function(t,s){return a("vs-tr",{key:s},[a("vs-td",{attrs:{data:t.first_name+" "+t.last_name}},[e._v(e._s(t.first_name)+" "+e._s(t.last_name))]),e._v(" "),a("vs-td",{attrs:{data:t.phone}},[e._v(e._s(t.phone))]),e._v(" "),a("vs-td",{attrs:{data:t.email}},[e._v(e._s(t.email))]),e._v(" "),a("vs-td",{attrs:{data:e.reportsTo(t.reporting_to)}},[e._v(e._s(e.reportsTo(t.reporting_to)))]),e._v(" "),a("vs-td",{attrs:{data:4==t.type?"Sub Admin":2==t.type?"Supervisor":"Officer"}},[e._v(e._s(t.type))]),e._v(" "),a("vs-td",{attrs:{data:t.status}},[a("vs-switch",{on:{click:function(a){return e.statusUpdate(t.manager_id)}},model:{value:t.status,callback:function(a){e.$set(t,"status",a)},expression:"tr.status"}})],1),e._v(" "),a("vs-td",[a("vs-button",{attrs:{size:"small",type:"border","icon-pack":"feather",icon:"icon-edit-2"},on:{click:function(a){return e.editAdmin(t.id)}}}),e._v(" "),a("vs-button",{attrs:{size:"small",type:"border",to:"/member-detail/"+t.manager_id,"icon-pack":"feather",icon:"icon-maximize-2"}})],1)],1)}))}}])},[a("template",{slot:"thead"},[a("vs-th",[e._v("Name")]),e._v(" "),a("vs-th",[e._v("Phone #")]),e._v(" "),a("vs-th",[e._v("Email")]),e._v(" "),a("vs-th",[e._v("Reports To")]),e._v(" "),a("vs-th",[e._v("Role")]),e._v(" "),a("vs-th",[e._v("Status")]),e._v(" "),a("vs-th",[e._v("Actions")])],1)],2)],2),e._v(" "),a("vs-popup",{attrs:{active:e.addAdminModal,title:"Add New Member"},on:{"update:active":function(t){e.addAdminModal=t}}},[a("form",{ref:"addAdminForm",attrs:{"data-vv-scope":"addform"},on:{submit:function(t){return t.preventDefault(),e.addAdmin(t)}}},[a("vs-row",[a("vs-col",{attrs:{"vs-lg":"6","vs-md":"6","vs-sm":"12"}},[a("vx-input-group",[a("vs-input",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],attrs:{name:"first_name","label-placeholder":"First Name","data-vv-scope":"addform"},model:{value:e.first_name,callback:function(t){e.first_name=t},expression:"first_name"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("addform.first_name"),expression:"errors.has('addform.first_name')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("addform.first_name")))])],1),e._v(" "),a("vx-input-group",[a("vs-input",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],attrs:{name:"last_name","label-placeholder":"Last Name","data-vv-scope":"addform"},model:{value:e.last_name,callback:function(t){e.last_name=t},expression:"last_name"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("addform.last_name"),expression:"errors.has('addform.last_name')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("addform.last_name")))])],1),e._v(" "),a("vx-input-group",{staticClass:"mt-2"},[a("vs-input",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],attrs:{name:"phone","label-placeholder":"Phone","data-vv-scope":"addform"},model:{value:e.phone,callback:function(t){e.phone=t},expression:"phone"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("addform.phone"),expression:"errors.has('addform.phone')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("addform.phone")))])],1),e._v(" "),a("vx-input-group",{staticClass:"mt-2"},[a("vs-input",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],attrs:{name:"email","label-placeholder":"Email","data-vv-scope":"addform"},model:{value:e.email,callback:function(t){e.email=t},expression:"email"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("addform.email"),expression:"errors.has('addform.email')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("addform.email")))])],1),e._v(" "),a("vx-input-group",[a("vs-input",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],attrs:{name:"password","label-placeholder":"Password","data-vv-scope":"addform"},model:{value:e.password,callback:function(t){e.password=t},expression:"password"}}),e._v(" "),a("template",{slot:"append"},[a("div",{staticClass:"append-text btn-addon mt-4"},[a("vs-button",{attrs:{color:"primary",button:"button"},on:{click:function(t){return e.makePassword()}}},[e._v("Generate")])],1)])],2),e._v(" "),a("div",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("addform.password"),expression:"errors.has('addform.password')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("addform.password")))]),e._v(" "),a("vx-input-group",[a("vs-select",{directives:[{name:"validate",rawName:"v-validate",value:"required|excluded:0",expression:"'required|excluded:0'"}],staticClass:"selectExample",attrs:{name:"roll","data-vv-scope":"addform"},model:{value:e.defaultRole,callback:function(t){e.defaultRole=t},expression:"defaultRole"}},e._l(e.rolles,(function(t,s){return a("vs-select-item",{key:s,attrs:{disabled:1==!t.value&&"Admin"==e.$store.getters.userType,"is-selected":t.isSelected,value:t.value,text:t.isSelected?t.selectedText:t.label},on:{"update:isSelected":function(a){return e.$set(t,"isSelected",a)},"update:is-selected":function(a){return e.$set(t,"isSelected",a)}}})})),1),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("addform.roll"),expression:"errors.has('addform.roll')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("addform.roll")))])],1),e._v(" "),3==e.defaultRole?a("vx-input-group",{staticClass:"mt-2"},[a("vs-select",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],staticClass:"selectExample",attrs:{name:"supervisor",label:"Supervisor"},model:{value:e.supervisor,callback:function(t){e.supervisor=t},expression:"supervisor"}},[a("vs-select-item",{attrs:{value:"",text:"Select Supervisor"}}),e._v(" "),e._l(e.supervisors,(function(e,t){return a("vs-select-item",{key:t,attrs:{value:e.manager_id,text:e.first_name+" "+e.last_name}})}))],2),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("addform.supervisor"),expression:"errors.has('addform.supervisor')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("supervisor")))])],1):e._e()],1),e._v(" "),a("vs-col",{attrs:{"vs-lg":"6","vs-md":"12","vs-sm":"12"}},[a("vx-input-group",{staticClass:"mt-6"},[a("vs-radio",{attrs:{"vs-name":"gender","vs-value":"male"},model:{value:e.gender,callback:function(t){e.gender=t},expression:"gender"}},[e._v("Male")]),e._v(" "),a("vs-radio",{attrs:{"vs-name":"gender","vs-value":"female"},model:{value:e.gender,callback:function(t){e.gender=t},expression:"gender"}},[e._v("Female")])],1),e._v(" "),a("vx-input-group",{staticClass:"mt-2"},[a("vs-input",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],attrs:{name:"address","label-placeholder":"Address","data-vv-scope":"addform"},model:{value:e.address,callback:function(t){e.address=t},expression:"address"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("addform.address"),expression:"errors.has('addform.address')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("addform.address")))])],1),e._v(" "),a("vx-input-group",{staticClass:"mt-2"},[a("vs-input",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],attrs:{name:"state","label-placeholder":"State","data-vv-scope":"addform"},model:{value:e.state,callback:function(t){e.state=t},expression:"state"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("addform.state"),expression:"errors.has('addform.state')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("addform.state")))])],1),e._v(" "),a("vx-input-group",{staticClass:"mt-2"},[a("vs-input",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],attrs:{name:"city","label-placeholder":"City","data-vv-scope":"addform"},model:{value:e.city,callback:function(t){e.city=t},expression:"city"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("addform.city"),expression:"errors.has('addform.city')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("addform.city")))])],1),e._v(" "),a("vx-input-group",{staticClass:"mt-2"},[a("vs-input",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],attrs:{name:"zip_code","label-placeholder":"Zip Code","data-vv-scope":"addform"},model:{value:e.zip_code,callback:function(t){e.zip_code=t},expression:"zip_code"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("addform.zip_code"),expression:"errors.has('addform.zip_code')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("addform.zip_code")))])],1)],1),e._v(" "),a("vs-col",{attrs:{"vs-lg":"12","vs-md":"12","vs-sm":"12"}},[a("br"),e._v(" "),a("vs-button",{staticClass:"float-right",attrs:{button:"submit",type:"gradient"}},[e._v("Add Member")])],1)],1)],1)]),e._v(" "),a("vs-popup",{attrs:{active:e.editAdminModal,title:"Update Member"},on:{"update:active":function(t){e.editAdminModal=t}}},[a("form",{ref:"editAdminForm",attrs:{autocomplete:"off","data-vv-scope":"editform"},on:{submit:function(t){return t.preventDefault(),e.updateAdmin(t)}}},[a("vs-row",[a("vs-col",{attrs:{"vs-lg":"6","vs-md":"6","vs-sm":"12"}},[a("vx-input-group",[a("input",{directives:[{name:"model",rawName:"v-model",value:e.edit_manager_id,expression:"edit_manager_id"}],attrs:{type:"hidden",name:"id","data-vv-scope":"editform"},domProps:{value:e.edit_manager_id},on:{input:function(t){t.target.composing||(e.edit_manager_id=t.target.value)}}}),e._v(" "),a("vs-input",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],attrs:{name:"first_name","label-placeholder":"First Name","data-vv-scope":"editform"},model:{value:e.edit_first_name,callback:function(t){e.edit_first_name=t},expression:"edit_first_name"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("editform.first_name"),expression:"errors.has('editform.first_name')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("editform.first_name")))])],1),e._v(" "),a("vx-input-group",[a("vs-input",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],attrs:{name:"last_name","label-placeholder":"Last Name","data-vv-scope":"editform"},model:{value:e.edit_last_name,callback:function(t){e.edit_last_name=t},expression:"edit_last_name"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("editform.last_name"),expression:"errors.has('editform.last_name')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("editform.last_name")))])],1),e._v(" "),a("vx-input-group",{staticClass:"mt-2"},[a("vs-input",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],attrs:{name:"phone","label-placeholder":"Phone","data-vv-scope":"editform"},model:{value:e.edit_phone,callback:function(t){e.edit_phone=t},expression:"edit_phone"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("editform.phone"),expression:"errors.has('editform.phone')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("editform.phone")))])],1),e._v(" "),a("vx-input-group",{staticClass:"mt-2"},[a("vs-input",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],attrs:{readonly:"",name:"email","label-placeholder":"Email","ata-vv-scope":"editform","data-vv-scope":"editform"},model:{value:e.edit_email,callback:function(t){e.edit_email=t},expression:"edit_email"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("editform.email"),expression:"errors.has('editform.email')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("editform.email")))])],1),e._v(" "),a("vx-input-group",{staticClass:"mt-2"},[a("vs-input",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],attrs:{name:"address","label-placeholder":"Address","data-vv-scope":"editform"},model:{value:e.edit_address,callback:function(t){e.edit_address=t},expression:"edit_address"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("editform.address"),expression:"errors.has('editform.address')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("editform.address")))])],1)],1),e._v(" "),a("vs-col",{attrs:{"vs-lg":"6","vs-md":"12","vs-sm":"12"}},[a("vs-select",{staticClass:"selectExample mt-2",model:{value:e.selectedRole,callback:function(t){e.selectedRole=t},expression:"selectedRole"}},e._l(e.rolles,(function(t,s){return a("vs-select-item",{key:s,attrs:{"is-selected":t.isSelected,value:t.value,text:t.isSelected?t.selectedText:t.label},on:{"update:isSelected":function(a){return e.$set(t,"isSelected",a)},"update:is-selected":function(a){return e.$set(t,"isSelected",a)}}})})),1),e._v(" "),3==e.selectedRole?a("vx-input-group",{staticClass:"mt-2"},[a("vs-select",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],staticClass:"selectExample",attrs:{name:"supervisor",label:"Supervisor"},model:{value:e.selectedSupervisor,callback:function(t){e.selectedSupervisor=t},expression:"selectedSupervisor"}},[a("vs-select-item",{attrs:{value:"",text:"Select Supervisor"}}),e._v(" "),e._l(e.supervisors,(function(e,t){return a("vs-select-item",{key:t,attrs:{value:e.manager_id,text:e.first_name+" "+e.last_name}})}))],2),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("editform.supervisor"),expression:"errors.has('editform.supervisor')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("editform.supervisor")))])],1):e._e(),e._v(" "),a("vx-input-group",{staticClass:"mt-6"},[a("vs-radio",{attrs:{name:"edit_gender","vs-value":"male"},model:{value:e.edit_gender,callback:function(t){e.edit_gender=t},expression:"edit_gender"}},[e._v("Male")]),e._v(" "),a("vs-radio",{attrs:{name:"edit_gender","vs-value":"female"},model:{value:e.edit_gender,callback:function(t){e.edit_gender=t},expression:"edit_gender"}},[e._v("Female")])],1),e._v(" "),a("vx-input-group",{staticClass:"mt-5"},[a("vs-input",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],attrs:{name:"state","label-placeholder":"State","data-vv-scope":"editform"},model:{value:e.edit_state,callback:function(t){e.edit_state=t},expression:"edit_state"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("editform.state"),expression:"errors.has('editform.state')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("editform.state")))])],1),e._v(" "),a("vx-input-group",{staticClass:"mt-2"},[a("vs-input",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],attrs:{name:"city","label-placeholder":"City","data-vv-scope":"editform"},model:{value:e.edit_city,callback:function(t){e.edit_city=t},expression:"edit_city"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("editform.city"),expression:"errors.has('editform.city')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("editform.city")))])],1),e._v(" "),a("vx-input-group",{staticClass:"mt-2"},[a("vs-input",{directives:[{name:"validate",rawName:"v-validate",value:"required",expression:"'required'"}],attrs:{name:"zip_code","label-placeholder":"Zip Code","data-vv-scope":"editform"},model:{value:e.edit_zip_code,callback:function(t){e.edit_zip_code=t},expression:"edit_zip_code"}}),e._v(" "),a("span",{directives:[{name:"show",rawName:"v-show",value:e.errors.has("editform.zip_code"),expression:"errors.has('editform.zip_code')"}],staticClass:"text-danger"},[e._v(e._s(e.errors.first("editform.zip_code")))])],1)],1),e._v(" "),a("vs-col",{attrs:{"vs-lg":"12","vs-md":"12","vs-sm":"12"}},[a("br"),e._v(" "),a("vs-button",{staticClass:"float-right",attrs:{button:"submit",type:"gradient"}},[e._v("Update Member")])],1)],1)],1)])],1)}),[],!1,null,null,null);t.default=l.exports},27:function(e,t,a){var s=a(79);"string"==typeof s&&(s=[[e.i,s,""]]);var r={hmr:!0,transform:void 0,insertInto:void 0};a(5)(s,r);s.locals&&(e.exports=s.locals)},78:function(e,t,a){"use strict";var s=a(27);a.n(s).a},79:function(e,t,a){(e.exports=a(4)(!1)).push([e.i,".selectExample {\n  margin-top: 10px;\n}\n.con-select {\n  width: 100% !important;\n  clear: both;\n}\n.con-select .vs-select--input {\n  margin-top: 10px !important;\n}\r\n\r\n",""])}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[12],{
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/ExchangeRates.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/ExchangeRates.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  inject: ['loginUser'],
+  data: function data() {
+    return {
+      formTitle: 'Update Exchange Rates',
+      updateBtn: 'Save changes',
+      editRatesModal: false,
+      salary_rate: 0,
+      average_rate: 0,
+      annual_rate: 0
+    };
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('exchangerates/', ['exchangerates'])),
+  created: function created() {
+    this.getExchangeRates();
+  },
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
+    getExchangeRates: 'exchangerates/getExchangeRates',
+    update: 'exchangerates/updateExchangeRates'
+  }), {
+    editRates: function editRates() {
+      if (this.exchangerates[0]['value'] == 0 && this.exchangerates[1]['value'] == 0 && this.exchangerates[2]['value'] == 0) {
+        this.formTitle = 'Add Exchange Rates';
+        this.updateBtn = 'Save';
+      }
+
+      this.salary_rate = this.exchangerates[0]['value'];
+      this.average_rate = this.exchangerates[1]['value'];
+      this.annual_rate = this.exchangerates[2]['value'];
+      this.editRatesModal = true;
+    },
+    updateRates: function updateRates(e) {
+      var _this = this;
+
+      this.$validator.validateAll('editform').then(function (result) {
+        if (result) {
+          _this.$vs.loading();
+
+          var fd = new FormData(_this.$refs.editRatesForm);
+
+          _this.update(fd).then(function (res) {
+            if (res.data.status == 'success') {
+              e.target.reset();
+
+              _this.errors.clear();
+
+              _this.editRatesModal = false;
+
+              _this.$vs.notify({
+                title: 'Success',
+                text: 'Save changes successfully',
+                color: 'success',
+                position: 'top-right'
+              });
+
+              _this.$vs.loading.close();
+
+              _this.getExchangeRates();
+            }
+          });
+        }
+      });
+    }
+  })
+});
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/ExchangeRates.vue?vue&type=style&index=0&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/ExchangeRates.vue?vue&type=style&index=0&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".vs-con-table .vs-con-tbody .vs-table--tbody-table .vs-table--thead th {\n  width: 10px;\n}\n.con-vs-popup .vs-popup {\n  width: 300px !important;\n}\r\n\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/ExchangeRates.vue?vue&type=style&index=0&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/ExchangeRates.vue?vue&type=style&index=0&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../node_modules/css-loader??ref--7-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ExchangeRates.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/ExchangeRates.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/ExchangeRates.vue?vue&type=template&id=1889dc6b&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/ExchangeRates.vue?vue&type=template&id=1889dc6b& ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "vx-card",
+        { attrs: { title: "Exchange Rates" } },
+        [
+          _c(
+            "template",
+            { slot: "actions" },
+            [
+              _vm.$store.getters.userType == "Admin" ||
+              _vm.$store.getters.userType == "Super Admin"
+                ? _c("vs-button", {
+                    attrs: {
+                      type: "border",
+                      "icon-pack": "feather",
+                      icon: "icon-edit"
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.editRates()
+                      }
+                    }
+                  })
+                : _vm._e()
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "vs-table",
+            {
+              attrs: { data: _vm.exchangerates },
+              scopedSlots: _vm._u([
+                {
+                  key: "default",
+                  fn: function(ref) {
+                    var data = ref.data
+                    return [
+                      _c(
+                        "vs-tr",
+                        { attrs: { data: data } },
+                        _vm._l(_vm.exchangerates, function(tr, index) {
+                          return _c(
+                            "vs-td",
+                            { key: index, attrs: { data: tr.value } },
+                            [
+                              _vm._v(
+                                "\n                      " +
+                                  _vm._s(tr.value) +
+                                  "\n                    "
+                              )
+                            ]
+                          )
+                        }),
+                        1
+                      )
+                    ]
+                  }
+                }
+              ])
+            },
+            [
+              _c(
+                "template",
+                { slot: "thead" },
+                [
+                  _c("vs-th", [
+                    _vm._v(
+                      "\n                    Salary Rate\n                "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("vs-th", [
+                    _vm._v(
+                      "\n                    Average Rate\n                "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("vs-th", [
+                    _vm._v(
+                      "\n                    Annual Rate\n                "
+                    )
+                  ])
+                ],
+                1
+              )
+            ],
+            2
+          )
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c(
+        "vs-popup",
+        {
+          attrs: { active: _vm.editRatesModal, title: _vm.formTitle },
+          on: {
+            "update:active": function($event) {
+              _vm.editRatesModal = $event
+            }
+          }
+        },
+        [
+          _c(
+            "form",
+            {
+              ref: "editRatesForm",
+              attrs: { autocomplete: "off", "data-vv-scope": "editform" },
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.updateRates($event)
+                }
+              }
+            },
+            [
+              _c(
+                "vs-row",
+                [
+                  _c(
+                    "vs-col",
+                    { attrs: { "vs-lg": "12", "vs-md": "12", "vs-sm": "12" } },
+                    [
+                      _c(
+                        "vx-input-group",
+                        [
+                          _c("vs-input", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
+                            ],
+                            attrs: {
+                              name: "salary_rate",
+                              "label-placeholder": "Salary Rates",
+                              "data-vv-scope": "editform"
+                            },
+                            model: {
+                              value: _vm.salary_rate,
+                              callback: function($$v) {
+                                _vm.salary_rate = $$v
+                              },
+                              expression: "salary_rate"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has("editform.salary_rate"),
+                                  expression:
+                                    "errors.has('editform.salary_rate')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(_vm.errors.first("editform.salary_rate"))
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c(
+                        "vx-input-group",
+                        [
+                          _c("vs-input", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
+                            ],
+                            attrs: {
+                              name: "average_rate",
+                              "label-placeholder": "Average Rate",
+                              "data-vv-scope": "editform"
+                            },
+                            model: {
+                              value: _vm.average_rate,
+                              callback: function($$v) {
+                                _vm.average_rate = $$v
+                              },
+                              expression: "average_rate"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has(
+                                    "editform.average_rate"
+                                  ),
+                                  expression:
+                                    "errors.has('editform.average_rate')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(
+                                  _vm.errors.first("editform.average_rate")
+                                )
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c(
+                        "vx-input-group",
+                        { staticClass: "mt-2" },
+                        [
+                          _c("vs-input", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
+                            ],
+                            attrs: {
+                              name: "annual_rate",
+                              "label-placeholder": "Annual Rate",
+                              "data-vv-scope": "editform"
+                            },
+                            model: {
+                              value: _vm.annual_rate,
+                              callback: function($$v) {
+                                _vm.annual_rate = $$v
+                              },
+                              expression: "annual_rate"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has("editform.annual_rate"),
+                                  expression:
+                                    "errors.has('editform.annual_rate')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(_vm.errors.first("editform.annual_rate"))
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-col",
+                    { attrs: { "vs-lg": "12", "vs-md": "12", "vs-sm": "12" } },
+                    [
+                      _c("br"),
+                      _vm._v(" "),
+                      _c(
+                        "vs-button",
+                        {
+                          staticClass: "float-right",
+                          attrs: { button: "submit", type: "gradient" }
+                        },
+                        [_vm._v(_vm._s(_vm.updateBtn))]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/ExchangeRates.vue":
+/*!********************************************************!*\
+  !*** ./resources/js/src/views/pages/ExchangeRates.vue ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ExchangeRates_vue_vue_type_template_id_1889dc6b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ExchangeRates.vue?vue&type=template&id=1889dc6b& */ "./resources/js/src/views/pages/ExchangeRates.vue?vue&type=template&id=1889dc6b&");
+/* harmony import */ var _ExchangeRates_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ExchangeRates.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/ExchangeRates.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _ExchangeRates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ExchangeRates.vue?vue&type=style&index=0&lang=css& */ "./resources/js/src/views/pages/ExchangeRates.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _ExchangeRates_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ExchangeRates_vue_vue_type_template_id_1889dc6b___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ExchangeRates_vue_vue_type_template_id_1889dc6b___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/src/views/pages/ExchangeRates.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/ExchangeRates.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/src/views/pages/ExchangeRates.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ExchangeRates_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ExchangeRates.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/ExchangeRates.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ExchangeRates_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/ExchangeRates.vue?vue&type=style&index=0&lang=css&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/ExchangeRates.vue?vue&type=style&index=0&lang=css& ***!
+  \*****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ExchangeRates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader!../../../../../node_modules/css-loader??ref--7-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ExchangeRates.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/ExchangeRates.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ExchangeRates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ExchangeRates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ExchangeRates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ExchangeRates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ExchangeRates_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/ExchangeRates.vue?vue&type=template&id=1889dc6b&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/ExchangeRates.vue?vue&type=template&id=1889dc6b& ***!
+  \***************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExchangeRates_vue_vue_type_template_id_1889dc6b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ExchangeRates.vue?vue&type=template&id=1889dc6b& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/ExchangeRates.vue?vue&type=template&id=1889dc6b&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExchangeRates_vue_vue_type_template_id_1889dc6b___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExchangeRates_vue_vue_type_template_id_1889dc6b___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ })
+
+}]);
