@@ -125,6 +125,9 @@ Route::group(['prefix' => ''], function () {
 
 	Route::get('export-customers', 'ExportController@export_customers');
 	Route::get('export-team-members', 'ExportController@export_team_members');
+	Route::get('export-payroll/{customer_id}/{tax_id}', 'ExportController@export_payroll');
+	Route::get('export-purchases/{customer_id}/{tax_id}', 'ExportController@export_purchases');
+	Route::get('export-sales/{customer_id}/{tax_id}', 'ExportController@export_sales');
 	Route::get('export-customer-employees/{customer_id}', 'ExportController@export_customer_employees');
 
 });

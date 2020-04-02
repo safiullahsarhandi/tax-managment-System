@@ -30,4 +30,7 @@ class Purchases extends Model {
 	public function officer() {
 		return $this->belongsTo(Officer::class, 'tax_officer_id', 'manager_id');
 	}
+	public function created_by() {
+		return $this->belongsTo(Admin::class, 'created_by', 'manager_id');
+	}
 }

@@ -4,7 +4,9 @@
             <!-- <template slot="actions"> -->
                 <!-- <vs-button type="border" @click="addOfficerModal = true" icon-pack="feather" icon="icon-plus"></vs-button> -->
             <!-- </template> -->
-             
+             <template slot="actions">
+                <vs-button type="border" :href="{url : `export-sales/${customer_id}/${tax_id}`}" icon-pack="feather" icon="icon-download"></vs-button>
+            </template>
             <vs-table search pagination max-items="6" :data="sales">
                 
                 <template slot="header">
@@ -60,6 +62,7 @@ export default {
     data() {
         return {
             tax_id : '',
+            customer_id : '',
             is_admin: false,
             is_supervisor: false,
             is_officer: false,
@@ -78,6 +81,7 @@ export default {
     },
     created() {
         this.tax_id = this.$store.state.rootUrl.split('/')[2];
+        this.customer_id = localStorage.getItem('customer');
         this.getSales(this.tax_id);
         
         

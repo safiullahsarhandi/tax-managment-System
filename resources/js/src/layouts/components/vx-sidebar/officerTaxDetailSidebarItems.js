@@ -60,6 +60,7 @@ export default [
             name: "Add Payroll",
             slug: "add-payroll",
             icon: "UserIcon",
+            target : 'blank',
         },{
             url: "/employees-payrolls",
             name: "List Of Payroll",

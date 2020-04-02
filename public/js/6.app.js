@@ -149,9 +149,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   inject: ['loginUser'],
@@ -492,26 +489,6 @@ var render = function() {
               ])
             },
             [
-              _c(
-                "template",
-                { slot: "header" },
-                [
-                  _c(
-                    "vs-button",
-                    {
-                      staticStyle: { "margin-top": "-5px" },
-                      attrs: {
-                        color: "primary",
-                        type: "border",
-                        icon: "cloud_download"
-                      }
-                    },
-                    [_vm._v("Export")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
               _c(
                 "template",
                 { slot: "thead" },

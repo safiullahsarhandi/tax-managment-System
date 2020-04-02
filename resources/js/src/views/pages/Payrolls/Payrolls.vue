@@ -1,10 +1,10 @@
 <template>
     <div>
         <vx-card title="List of Payrolls">
+            <template slot="actions">
+                <vs-button type="border" :href="{url : `export-payroll/${customer_id}/${tax_id}`}" icon-pack="feather" icon="icon-download"></vs-button>
+            </template>
             <vs-table search pagination max-items="6" :data="payrolls">
-                <template slot="header">
-                    <vs-button color="primary" type="border" icon="cloud_download">Export</vs-button>
-                </template>
                 <template slot="thead">
                     <vs-th>Employee Name</vs-th>
                     <vs-th>Employee No.</vs-th>
@@ -100,6 +100,7 @@ export default {
     created() {
     	this.tax_id = this.$store.state.rootUrl.split('/')[2];
         this.getPayrolls(this.tax_id);
+        this.customer_id = localStorage.getItem('customer');
        
        if (this.$store.state.AppActiveUser.type == 'Admin' || this.$store.state.AppActiveUser.type == 'Super Admin') {
             this.is_admin = true;

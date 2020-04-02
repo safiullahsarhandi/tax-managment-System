@@ -117,6 +117,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   created: function created() {
     this.tax_id = this.$store.state.rootUrl.split('/')[2];
     this.getPayrolls(this.tax_id);
+    this.customer_id = localStorage.getItem('customer');
 
     if (this.$store.state.AppActiveUser.type == 'Admin' || this.$store.state.AppActiveUser.type == 'Super Admin') {
       this.is_admin = true;
@@ -284,6 +285,24 @@ var render = function() {
         "vx-card",
         { attrs: { title: "List of Payrolls" } },
         [
+          _c(
+            "template",
+            { slot: "actions" },
+            [
+              _c("vs-button", {
+                attrs: {
+                  type: "border",
+                  href: {
+                    url: "export-payroll/" + _vm.customer_id + "/" + _vm.tax_id
+                  },
+                  "icon-pack": "feather",
+                  icon: "icon-download"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
           _c(
             "vs-table",
             {
@@ -506,25 +525,6 @@ var render = function() {
             [
               _c(
                 "template",
-                { slot: "header" },
-                [
-                  _c(
-                    "vs-button",
-                    {
-                      attrs: {
-                        color: "primary",
-                        type: "border",
-                        icon: "cloud_download"
-                      }
-                    },
-                    [_vm._v("Export")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "template",
                 { slot: "thead" },
                 [
                   _c("vs-th", [_vm._v("Employee Name")]),
@@ -549,7 +549,7 @@ var render = function() {
             2
           )
         ],
-        1
+        2
       )
     ],
     1

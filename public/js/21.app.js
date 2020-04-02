@@ -10,8 +10,6 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-var _objectSpread2;
-
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -97,6 +95,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('purchases/', ['purchases'])),
   created: function created() {
     this.tax_id = this.$store.state.rootUrl.split('/')[2];
+    this.customer_id = localStorage.getItem('customer');
     this.getPurchases(this.tax_id);
 
     if (this.$store.state.AppActiveUser.type == 'Admin' || this.$store.state.AppActiveUser.type == 'Super Admin') {
@@ -116,7 +115,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     update: 'purchases/updatePurchase',
     statusChange: 'taxes/statusUpdateSPP',
     statusChangeManagment: 'taxes/statusChangeManagment'
-  }), (_objectSpread2 = {
+  }), {
     changeManagementStatus: function changeManagementStatus(status, id, by) {
       var data = {
         id: id,
@@ -128,45 +127,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       };
       this.statusChangeManagment(data).then(function (res) {});
     },
-    updateCustomer: function updateCustomer(e) {
-      var _this = this;
-
-      this.$validator.validateAll('editform').then(function (result) {
-        if (result) {
-          _this.$vs.loading();
-
-          var fd = new FormData(_this.$refs.editForm);
-
-          _this.submit(fd).then(function (res) {
-            // console.log(res.data);
-            if (res.data.status == 'success') {
-              _this.password = _this.email = _this.first_name = _this.last_name = _this.zip_code = _this.city = _this.state = _this.address = _this.phone = '';
-              e.target.reset();
-
-              _this.errors.clear();
-
-              _this.editCustomerModal = false;
-
-              _this.$vs.notify({
-                title: 'Success',
-                text: 'Customer Updated Successfully',
-                color: 'success',
-                position: 'top-right'
-              });
-
-              _this.$vs.loading.close(); // this.getCustomers();
-
-            }
-
-            if (res.data.status == 'error') {
-              alert(res.data.msg);
-            }
-          });
-        }
-      });
-    },
     statusUpdate: function statusUpdate(id, status) {
-      var _this2 = this;
+      var _this = this;
 
       var data = {
         id: id,
@@ -175,14 +137,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         type: 'purchase'
       };
       this.statusChange(data).then(function (res) {
-        var index = _this2.purchases.findIndex(function (o) {
+        var index = _this.purchases.findIndex(function (o) {
           return o.purchase_id == id;
         });
 
         if (res.data.response == 'undefined') {
-          _this2.purchases[index].officer_confirmed = status;
+          _this.purchases[index].officer_confirmed = status;
         } else {
-          _this2.purchases[index].officer_confirmed = res.data.response;
+          _this.purchases[index].officer_confirmed = res.data.response;
         }
       });
     },
@@ -193,77 +155,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         type: 'text'
       });
     },
-    editCustomer: function editCustomer(id) {
-      var customer = this.findCustomer(id);
-      this.customer_id = customer.customer_id;
-      this.name_english = customer.name_english;
-      this.name_khmer = customer.name_khmer;
-      this.industry = customer.industry;
-      this.tax_card_num = customer.tax_card_num;
-      this.tin_no = customer.tin_no;
-      this.email = customer.email;
-      this.telephone = customer.telephone;
-      this.additional_fields = customer.additional_fields;
-      this.address = customer.address;
-      this.district = customer.district;
-      this.group = customer.group;
-      this.incorporation_date = customer.incorporation_date;
-      this.muncipality = customer.muncipality;
-      this.province = customer.province;
-      this.sangkat = customer.sangkat;
-      this.street = customer.street;
-      this.village = customer.village;
-      self = this;
-      self.customField = [];
-
-      if (customer.additional_fields != null) {
-        if (customer.additional_fields.length > 0) {
-          customer.additional_fields.map(function (val, key) {
-            self.customField.push({
-              name: 'additional_field[]',
-              value: val,
-              type: 'text'
-            });
-          });
-        }
-      }
-
-      this.editCustomerModal = true;
+    makePassword: function makePassword() {
+      this.password = this.generatePassword();
     }
-  }, _defineProperty(_objectSpread2, "updateCustomer", function updateCustomer(e) {
-    var _this3 = this;
-
-    this.$validator.validateAll('editform').then(function (result) {
-      if (result) {
-        _this3.$vs.loading();
-
-        var fd = new FormData(_this3.$refs.editCustomerForm);
-
-        _this3.update(fd).then(function (res) {
-          if (res.data.status == 'success') {
-            e.target.reset();
-
-            _this3.errors.clear();
-
-            _this3.editCustomerModal = false;
-
-            _this3.$vs.notify({
-              title: 'Success',
-              text: 'Customer Updated Successfully',
-              color: 'success',
-              position: 'top-right'
-            });
-
-            _this3.$vs.loading.close();
-
-            _this3.getCustomers();
-          }
-        });
-      }
-    });
-  }), _defineProperty(_objectSpread2, "makePassword", function makePassword() {
-    this.password = this.generatePassword();
-  }), _objectSpread2))
+  })
 });
 
 /***/ }),
@@ -339,6 +234,25 @@ var render = function() {
         "vx-card",
         { attrs: { title: "List of Purchases" } },
         [
+          _c(
+            "template",
+            { slot: "actions" },
+            [
+              _c("vs-button", {
+                attrs: {
+                  type: "border",
+                  href: {
+                    url:
+                      "export-purchases/" + _vm.customer_id + "/" + _vm.tax_id
+                  },
+                  "icon-pack": "feather",
+                  icon: "icon-download"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
           _c(
             "vs-table",
             {
@@ -549,25 +463,6 @@ var render = function() {
             [
               _c(
                 "template",
-                { slot: "header" },
-                [
-                  _c(
-                    "vs-button",
-                    {
-                      attrs: {
-                        color: "primary",
-                        type: "border",
-                        icon: "cloud_download"
-                      }
-                    },
-                    [_vm._v("Export")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "template",
                 { slot: "thead" },
                 [
                   _c("vs-th", [_vm._v("Branch#/ Name")]),
@@ -590,7 +485,7 @@ var render = function() {
             2
           )
         ],
-        1
+        2
       )
     ],
     1

@@ -31,4 +31,7 @@ class Sales extends Model {
 		}
 
 	}
+	public function created_by() {
+		return $this->belongsTo(Admin::class, 'created_by', 'manager_id');
+	}
 }
