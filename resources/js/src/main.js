@@ -37,6 +37,7 @@ import './filters/filters'
 import { VueHammer } from 'vue2-hammer'
 Vue.use(VueHammer)
 
+
 // PrismJS
 import 'prismjs'
 // import 'prismjs/themes/prism-tomorrow.css'
@@ -66,16 +67,24 @@ router.beforeEach((to, from, next) => {
             next();
 
             }else{
-            next({path: '/pages/error-404'})
+                if(to.meta.requiresSupervisor == true && store.getters.userType == 'Supervisor'){
+                    next();
+                }else{ 
+                    next({path: '/pages/error-404'})
+                }
 
             }
           });
           }else{
             if(to.meta.requiresAdmin == true || store.getters.userType == 'Admin' || store.getters.userType == 'Super Admin'){
-            next();
+                    next();
 
             }else{
-            next({path: '/pages/error-404'})
+                if(to.meta.requiresSupervisor == true || store.getters.userType == 'Supervisor'){
+                    next();
+                }else{ 
+                    next({path: '/pages/error-404'})
+                }
 
             }
           }

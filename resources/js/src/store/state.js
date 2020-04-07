@@ -24,7 +24,7 @@ const state = {
     theme: themeConfig.theme || 'light',
     navbarSearchAndPinList: navbarSearchAndPinList,
     AppActiveUser: {},
-
+    faqs : '',
     themePrimaryColor: colors.primary,
 
     starredPages: navbarSearchAndPinList.data.filter((page) => page.highlightAction),

@@ -81,6 +81,31 @@ const actions = {
         }).then(res => {
             // commit('setComments');
         })
+    },
+    async getFaqs({commit}){
+        let getFaqs = await axios.post('get-faqs');
+        commit('setFaqs',getFaqs.data);
+    },
+    updateFaqs({commit},data){
+
+        return axios.post('update-faqs',data.fd).then(res=>{
+            commit('setFaqs',res.data.faqs);
+            if(res.data.status){
+                data.notify({
+                    position : 'right-top',
+                    text : 'Updated Successfully',
+                    color : 'success',
+                });
+            }else{
+                data.notify({
+                    position : 'right-top',
+                    text : 'There is issue while updating Faqs',
+                    color : 'danger',
+                });
+            }
+            return res;
+        });
+
     }
 }
 

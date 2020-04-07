@@ -6,84 +6,10 @@ export default [{
         isMain : false,
     },
     {
-        url: "/",
+        url: "/customers",
         name: "Customers",
         slug: "customers",
         icon: "UsersIcon",
-        isMain : false,
-        submenu: [/*{
-                url: "/add-customer",
-                name: "Add Customer",
-                slug: "add-customer",
-                icon: "UserIcon",
-            },*/
-            {
-                url: "/customers",
-                name: "List Of Customers",
-                slug: "customers",
-                icon: "UsersIcon",
-            },
-        ]
-
-
-
-
-
-        // submenu: [
-        //         {
-        //             url: "/monthly",
-        //             name: "Monthly",
-        //             slug: "monthly",
-        //             icon: "UserIcon",
-        //             submenu: [{
-        //                     url: "/add-customer/monthly",
-        //                     name: "Add Customer",
-        //                     slug: "add-customer",
-        //                     icon: "UserIcon",
-        //                 },
-        //                 {
-        //                     url: "/customers/monthly",
-        //                     name: "List Of Customers",
-        //                     slug: "customers",
-        //                     icon: "UsersIcon",
-        //                 },
-        //             ]
-        //         },
-        //         {
-        //             url: "/yearly",
-        //             name: "Yearly",
-        //             slug: "yearly",
-        //             icon: "UserIcon",
-        //             submenu: [{
-        //                     url: "/add-customer/yearly",
-        //                     name: "Add Customer",
-        //                     slug: "add-customer",
-        //                     icon: "UserIcon",
-        //                 },
-        //                 {
-        //                     url: "/customers/yearly",
-        //                     name: "List Of Customers",
-        //                     slug: "customers",
-        //                     icon: "UsersIcon",
-        //                 },
-        //             ]
-        //         }
-        //     ]
-
-
-        // submenu: [{
-        //     url: "/add-customer",
-        //     name: "Add Customer",
-        //     slug: "add-customer",
-        //     icon: "UserIcon",
-        // },
-        // {
-        //     url: "/customers",
-        //     name: "List Of Customers",
-        //     slug: "customers",
-        //     icon: "UsersIcon",
-        // }
-        // ],
     },
     {
         url: "/currencies",
@@ -91,6 +17,27 @@ export default [{
         slug: "currencies",
         icon: "DollarSignIcon",
         isMain : false,
+    },
+    {
+        url: "/",
+        name: "Companies",
+        slug: "companies",
+        icon: "UsersIcon",
+        isMain : false,
+        submenu: [/*{
+                url: "/add-company",
+                name: "Add Company",
+                slug: "add-company",
+                icon: "UserIcon",
+                target : '_blank',
+            },*/
+            {
+                url: "/companies",
+                name: "List Of Companies",
+                slug: "companies",
+                icon: "UsersIcon",
+            },
+        ]
     },
     {
         url: "/exchange-rates",
@@ -111,6 +58,13 @@ export default [{
         name: "Tax Parameters",
         slug: "tax-parameters",
         icon: "PercentIcon",
+        isMain : false,
+    },
+    {
+        url: "/faqs",
+        name: "Faqs",
+        slug: "faqs",
+        icon: "HelpCircleIcon",
         isMain : false,
     },
     // {

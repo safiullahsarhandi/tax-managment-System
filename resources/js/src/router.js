@@ -42,7 +42,7 @@ const router = new Router({
                 {
                     path: '/customers',
                     name: 'Customers',
-                    component: () => import('./views/pages/Customers/Customers.vue'),
+                    component: () => import('./views/pages/Companies/Customers.vue'),
                     meta: {
                         requiresAuth: true,
                         requiresAdmin: true,
@@ -50,9 +50,9 @@ const router = new Router({
                     }
                 },
                 {
-                    path: '/add-customer',
-                    name: 'Add Customer',
-                    component: () => import('./views/pages/Customers/AddCustomer.vue'),
+                    path: '/companies',
+                    name: 'Companies',
+                    component: () => import('./views/pages/Companies/Companies.vue'),
                     meta: {
                         requiresAuth: true,
                         requiresAdmin: true,
@@ -60,9 +60,19 @@ const router = new Router({
                     }
                 },
                 {
-                    path: '/customer-update/:id',
-                    name: 'Customer Update',
-                    component: () => import('./views/pages/Customers/EditCustomer.vue'),
+                    path: '/add-company',
+                    name: 'Add Company',
+                    component: () => import('./views/pages/Companies/AddCompany.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+
+                    }
+                },
+                {
+                    path: '/company-update/:id',
+                    name: 'Company Update',
+                    component: () => import('./views/pages/Companies/EditCompany.vue'),
                     meta: {
                         requiresAuth: true,
                         requiresAdmin: true,
@@ -156,6 +166,16 @@ const router = new Router({
                     }
                 },
                 {
+                    path: '/faqs',
+                    name: 'Faqs',
+                    component: () => import('./views/pages/Faqs.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: false,
+                        
+                    }
+                },
+                {
                     path: '/member-detail/:id',
                     name: 'Member Detail',
                     component: () => import('./views/pages/MemberDetail.vue'),
@@ -164,15 +184,25 @@ const router = new Router({
                         requiresAdmin: true,
                     }
                 },
+                {
+                    path: '/my-team',
+                    name: 'My Team',
+                    component: () => import('./views/pages/MyTeam.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: false,
+                        requiresSupervisor: true,
+                    }
+                },
             ],
         },
         {
             // =============================================================================
             // CUSTOMER DETAIL LAYOUT ROUTES
             // =============================================================================
-            path: '/customer-detail/:id',
-            name: 'Customer Detail',
-            component: () => import('./layouts/main/customerMain.vue'),
+            path: '/company-detail/:id',
+            name: 'Company Detail',
+            component: () => import('./layouts/main/CompanyMain.vue'),
             props: true,
             meta : {
                         requiresAuth : true,
@@ -185,7 +215,7 @@ const router = new Router({
                 {
                     path: '/',
                     name: 'Company Detail',
-                    component: () => import('./views/pages/Customers/CustomerDetail.vue'),
+                    component: () => import('./views/pages/Companies/CompanyDetail.vue'),
                     meta: {
                         requiresAuth: true,
                         requiresAdmin: true,
@@ -212,7 +242,7 @@ const router = new Router({
                 {
                     path: '/taxes',
                     name: 'Taxes',
-                    component: () => import('./views/pages/Customers/Taxes.vue'),
+                    component: () => import('./views/pages/Companies/Taxes.vue'),
                     meta: {
                         requiresAuth: true,
                         requiresAdmin: true,

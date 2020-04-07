@@ -99,6 +99,11 @@ const mutations = {
     },
     setComments(state,comments){
         state.comments = comments
+    },
+    setFaqs(state,faqs){
+
+        state.faqs = faqs;
+
     }
 }
 

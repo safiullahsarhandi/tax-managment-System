@@ -1,7 +1,7 @@
 <template>
     <div>
        
-        <vx-card title="Add Customer" subtitle="Add Information Of Customer OR company which tax will be managed by system" noShadow noRadius>
+        <vx-card title="Add new Company" subtitle="Add Information Of Customer OR company which tax will be managed by system" noShadow noRadius>
             <template slot="actions">
                 <vs-button class="mt-5" @click="showUploader()" type="gradient" button="button">Upload Excel Sheet</vs-button>
             </template>
@@ -16,14 +16,34 @@
             <form ref="addCustomer" @submit.prevent="addCustomer($event)">
                 <vs-row>
                     <vs-col class="mb-2 p-0" vs-md="12" vs-lg="12" vs-sm="12">
-                        <vs-col v-if="$store.getters.userType == 'Supervisor'" vs-md="12" vs-lg="12" vs-sm="12" class="flex justify-end">
-                            <vx-input-group>
-                                <vs-select label="List Of Officers" placeholder="Select officer who work" v-model="manager">
-                                    <vs-select-item v-for="(officer,index) in myOfficers" :key="index" :text="officer.full_name" :value="officer.manager_id"></vs-select-item>
-                                </vs-select>
-                            </vx-input-group>
-                            <span class="text-danger" v-show="errors.has('name_eng')">{{errors.first('name_eng')}}</span>
+                        <vs-col v-if="$store.getters.userType == 'Supervisor'" vs-md="12" vs-lg="12" vs-sm="12" vs-xs="12">
+                            <div class="flex justify-end flex-wrap">
+                                <vx-input-group class="md:mr-5 mt-2">
+                                    <vs-select v-validate="'required'" name="status" label="Customer Status" placeholder="Select Customer Status"  v-model="customer_status">
+                                        <vs-select-item value="Prospect" text="Prospect"></vs-select-item>
+                                        <vs-select-item value="Activate" text="Activate"></vs-select-item>
+                                        <vs-select-item value="Deactivate" text="Deactivate"></vs-select-item>
+                                        <vs-select-item value="Pending" text="Pending"></vs-select-item>
+                                    </vs-select>
+                                <span class="text-danger" v-show="errors.has('status')">{{errors.first('status')}}</span>
+                                </vx-input-group>
+                                <vx-input-group class="mt-2">
+                                    <vs-select v-validate="'required'" label="List Of Officers" name="officer" placeholder="Select officer who work" v-model="manager">
+                                        <vs-select-item v-for="(officer,index) in myOfficers" :key="index" :text="officer.full_name" :value="officer.manager_id"></vs-select-item>
+                                    </vs-select>
+                                <span class="text-danger" v-show="errors.has('officer')">{{errors.first('officer')}}</span>
+                                </vx-input-group>
+                                
+                            </div>
                         </vs-col>
+                    </vs-col>
+                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                        <vx-input-group >
+                            <vs-select style="width: 100%;" v-validate="'required'" name="owner" label="Customer" placeholder="Select Customer"  v-model="owner">
+                                <vs-select-item v-for="(owner,index) in owners" :key="index"  :value="owner.name_english" :text="owner.owner_id"></vs-select-item>
+                            </vs-select>
+                            <span class="text-danger" v-show="errors.has('status')">{{errors.first('status')}}</span>
+                        </vx-input-group>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
@@ -194,6 +214,7 @@ export default {
             ePhone: '',
             email: '',
             industry: '',
+            customer_status : '',
             taxDurationSelected: 'Monthly Tax',
             taxDuration: [
                 { text: 'Monthly Tax', value: 'Monthly Tax' },
@@ -201,10 +222,12 @@ export default {
             ],
             manager: '',
             createdby: '',
+            owner : '',
         }
     },
     inject: ['loginUser'],
     created() {
+        this.getOwners();
         if (this.$store.getters.userType == 'Supervisor') {
             this.getMyOfficers(localStorage.getItem('admin'));
 
@@ -217,7 +240,7 @@ export default {
         multiUploads
     },
     computed: {
-        ...mapState('customers/', ['customers']),
+        ...mapState('customers/', ['customers','owners']),
         ...mapState('officers/', ['myOfficers']),
         ...mapGetters('customers/', ['findCustomer']),
     },
@@ -254,6 +277,7 @@ export default {
         ...mapActions({
             submit: 'customers/addCustomer',
             getMyOfficers: 'officers/getMyOfficers',
+            getOwners : 'customers/getOwners',
         }),
         addCustomer(e) {
             this.$validator.validateAll().then(result => {
@@ -261,6 +285,8 @@ export default {
                     this.$vs.loading();
                     var fd = new FormData(this.$refs.addCustomer);
                     fd.append('manager', this.manager);
+                    fd.append('customer_status',this.customer_status);
+                    fd.append('owner',this.owner);
                     this.createdBy = (this.$store.getters.userType != 'Officer') ? localStorage.getItem('admin') : this.manager;
                     fd.append('created_by', this.createdBy);
                     this.submit(fd).then(res => {
@@ -271,7 +297,7 @@ export default {
                             this.$vs.notify({ title: 'Success', text: 'Customer Added Successfully', color: 'success', position: 'top-right' })
                             this.$vs.loading.close();
                             e.target.reset();
-                            this.$router.push('/customers');
+                            this.$router.push('/companies');
                         }
                         if (res.data.status == 'error') {
                             this.$vs.notify({ title: 'Success', text: res.data.msg, color: 'success', position: 'top-right' })

@@ -1,15 +1,18 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[24],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=script&lang=js&":
-/*!******************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _layouts_components_customizer_CommentDrawer_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/layouts/components/customizer/CommentDrawer.vue */ "./resources/js/src/layouts/components/customizer/CommentDrawer.vue");
+/* harmony import */ var vue_burger_menu__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-burger-menu */ "./node_modules/vue-burger-menu/dist/vue-burger-menu.common.js");
+/* harmony import */ var vue_burger_menu__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_burger_menu__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -94,43 +97,222 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    TheCustomizer: _layouts_components_customizer_CommentDrawer_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    Slide: vue_burger_menu__WEBPACK_IMPORTED_MODULE_1__["Slide"] // Register your component
+
+  },
   data: function data() {
     return {
-      addTaxManagmentModal: false,
-      editTaxManagmentModal: false,
-      title: "",
-      description: "",
-      type: 'Monthly',
-      duration: '',
-      supervisor: '',
-      officer: [],
-      default_selected_officer: "",
-      default_selected_supervisor: ""
+      tax_id: '',
+      openComments: false
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('supervisors/', ['supervisors']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('officers/', ['officers'])),
   created: function created() {
-    this.getSupervisors();
-    this.getOfficers();
+    this.tax_id = this.$store.state.rootUrl.split('/')[2];
+    this.getCustomer(localStorage.getItem('customer'));
+    this.getPurchase(this.$route.params.id);
+    this.$store.dispatch('getAverageRate');
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
-    getSupervisors: 'supervisors/getSupervisors',
-    getOfficers: 'officers/getOfficers'
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])('purchases', ['purchase']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])('customers', ['customer']), {
+    userType: function userType() {
+      return this.$store.getters.userType;
+    },
+    averageRate: function averageRate() {
+      return this.$store.state.averageRate;
+    },
+    non_taxable_purchases_riel: function non_taxable_purchases_riel() {
+      return this.purchase.non_taxable_purchases * this.averageRate;
+    },
+    vat_local_usd: function vat_local_usd() {
+      return parseFloat(Math.abs(this.purchase.local_purchase_tax_val) * 0.1).toFixed(2);
+    },
+    vat_import_riel: function vat_import_riel() {
+      return parseFloat(this.purchase.imports_taxable_val * 0.1).toFixed(2);
+    },
+    local_purchase_tax_val_reil: function local_purchase_tax_val_reil() {
+      return parseFloat(Math.abs(this.purchase.local_purchase_tax_val) * this.averageRate).toFixed(2);
+    },
+    local_purchase_tax_vat_reil: function local_purchase_tax_vat_reil() {
+      return parseFloat(Math.abs(this.local_purchase_tax_val_reil) * 0.1).toFixed(2);
+    },
+    total_vat: function total_vat() {
+      return parseFloat(this.purchase.imports_taxable_val + this.vat_import_riel + this.local_purchase_tax_val_reil + this.local_purchase_tax_vat_reil).toFixed(2) + this.non_taxable_purchases_riel;
+    }
+  }),
+  methods: _objectSpread({
+    handleToggleDrawer: function handleToggleDrawer() {
+      this.$refs.commentsView.active = !this.$refs.commentsView.active;
+    }
+  }, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])({
+    getPurchase: 'purchases/getPurchase',
+    getCustomer: 'customers/getCustomer',
+    statusChange: 'taxes/statusUpdateSPP',
+    statusChangeManagment: 'taxes/statusChangeManagment'
   }), {
-    check: function check() {
-      this.addTaxManagmentModal = true;
+    statusUpdate: function statusUpdate(id, status) {
+      var _this = this;
+
+      var data = {
+        id: id,
+        tax_id: this.tax_id,
+        notify: this.$vs.notify,
+        type: 'purchase'
+      };
+      this.statusChange(data).then(function (res) {
+        if (res.data.response == 'undefined') {
+          _this.purchase.officer_confirmed = status;
+        } else {
+          _this.purchase.officer_confirmed = res.data.response;
+        }
+      });
+    },
+    changeManagementStatus: function changeManagementStatus(status, id, by) {
+      var data = {
+        id: id,
+        status: status,
+        by: by,
+        tax_id: this.tax_id,
+        notify: this.$vs.notify,
+        tax_type: 'purchase'
+      };
+      this.statusChangeManagment(data).then(function (res) {});
     }
   })
 });
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=style&index=0&lang=css&":
-/*!*************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=style&index=0&lang=css& ***!
-  \*************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=style&index=0&lang=scss&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--8-2!./node_modules/sass-loader/dist/cjs.js??ref--8-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=style&index=0&lang=scss& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -139,22 +321,22 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, ".selectExample {\n  margin: 10px;\n}\n.con-select-example {\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n          justify-content: center;\n}\n.con-select .vs-select {\n  width: 100%\n}\n@media (max-width: 550px) {\n.con-select {\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n            flex-direction: column;\n}\n.con-select .vs-select {\n    width: 100%\n}\n}\r\n\r\n", ""]);
+exports.push([module.i, ".bm-menu {\n  z-index: 99999;\n}\n.bm-burger-button {\n  position: fixed;\n  width: 36px;\n  height: 30px;\n  left: 36px;\n  top: 36px;\n  cursor: pointer;\n}\n.bm-burger-bars {\n  background-color: #373a47;\n}\n.line-style {\n  position: absolute;\n  height: 20%;\n  left: 0;\n  right: 0;\n}\n.cross-style {\n  position: absolute;\n  top: 12px;\n  right: 2px !important;\n  cursor: pointer;\n}\n.bm-cross {\n  background: #bdc3c7;\n}\n.bm-cross-button {\n  height: 24px;\n  width: 24px;\n}\n.bm-menu {\n  height: 100%;\n  /* 100% Full-height */\n  width: 0;\n  /* 0 width - change this with JavaScript */\n  position: fixed;\n  /* Stay in place */\n  top: 0;\n  left: 0;\n  background-color: #3f3f41;\n  /* Black*/\n  overflow-x: hidden;\n  /* Disable horizontal scroll */\n  padding-top: 60px;\n  /* Place content 60px from the top */\n  -webkit-transition: 0.5s;\n  transition: 0.5s;\n  /*0.5 second transition effect to slide in the sidenav*/\n}\n.bm-overlay {\n  background: rgba(0, 0, 0, 0.3);\n}\n.bm-item-list {\n  color: #b8b7ad;\n  margin-left: 10%;\n  font-size: 20px;\n}\n.bm-item-list > * {\n  display: -webkit-box;\n  display: flex;\n  text-decoration: none;\n  padding: 0.7em;\n}\n.bm-item-list > * > span {\n  margin-left: 10px;\n  font-weight: 700;\n  color: white;\n}", ""]);
 
 // exports
 
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=style&index=0&lang=css&":
-/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=style&index=0&lang=css& ***!
-  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=style&index=0&lang=scss&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--8-2!./node_modules/sass-loader/dist/cjs.js??ref--8-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=style&index=0&lang=scss& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader??ref--7-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./TaxManagment.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=style&index=0&lang=css&");
+var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--8-2!../../../../../../node_modules/sass-loader/dist/cjs.js??ref--8-3!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./PurchaseDetail.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=style&index=0&lang=scss&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -176,10 +358,10 @@ if(false) {}
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=template&id=89c4bd8a&":
-/*!**********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=template&id=89c4bd8a& ***!
-  \**********************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=template&id=20ecfd84&":
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=template&id=20ecfd84& ***!
+  \********************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -195,431 +377,373 @@ var render = function() {
     "div",
     [
       _c(
-        "vx-card",
-        {
-          attrs: {
-            title: "List of Taxes",
-            subtitle:
-              "The List of Taxes contains currently assigned taxes of customer Or those which are delivered succesfully"
-          }
-        },
+        "vs-row",
         [
           _c(
-            "template",
-            { slot: "actions" },
-            [
-              _c("vs-button", {
-                attrs: {
-                  type: "border",
-                  "icon-pack": "feather",
-                  icon: "icon-plus"
-                },
-                on: {
-                  click: function($event) {
-                    return _vm.check()
-                  }
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "vs-table",
-            {
-              attrs: { search: "", pagination: "", data: [] },
-              scopedSlots: _vm._u([
-                {
-                  key: "default",
-                  fn: function(ref) {
-                    var data = ref.data
-                    return _vm._l(data, function(tr, index) {
-                      return _c(
-                        "vs-tr",
-                        { key: index },
-                        [
-                          _c("vs-td", [_vm._v("Title")]),
-                          _vm._v(" "),
-                          _c("vs-td", [_vm._v("Description")]),
-                          _vm._v(" "),
-                          _c("vs-td", [_vm._v("Company")]),
-                          _vm._v(" "),
-                          _c("vs-td", [_vm._v("Supervisor")]),
-                          _vm._v(" "),
-                          _c("vs-td", [_vm._v("No. of Officers")]),
-                          _vm._v(" "),
-                          _c("vs-td", [_vm._v("Status")]),
-                          _vm._v(" "),
-                          _c("vs-td", [_vm._v("Actions")])
-                        ],
-                        1
-                      )
-                    })
-                  }
-                }
-              ])
-            },
+            "vs-col",
+            { attrs: { "vs-lg": "9", "vs-md": "9", "vs-sm": "12" } },
             [
               _c(
-                "template",
-                { slot: "thead" },
+                "vx-card",
+                { attrs: { title: "Purchases Detail" } },
                 [
-                  _c("vs-th", [_vm._v("Title")]),
-                  _vm._v(" "),
-                  _c("vs-th", [_vm._v("Description")]),
-                  _vm._v(" "),
-                  _c("vs-th", [_vm._v("Company")]),
-                  _vm._v(" "),
-                  _c("vs-th", [_vm._v("Supervisor")]),
-                  _vm._v(" "),
-                  _c("vs-th", [_vm._v("No. of Officers")]),
-                  _vm._v(" "),
-                  _c("vs-th", [_vm._v("Status")]),
-                  _vm._v(" "),
-                  _c("vs-th", [_vm._v("Actions")])
+                  _c(
+                    "vs-row",
+                    [
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Client TIN:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.customer.tin_no))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Client Name:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.customer.name_english))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Branch Name:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.purchase.branch_name))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Tax Period:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.purchase.tax_period))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Invoice Date:")]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(
+                              _vm._s(
+                                new Date(
+                                  _vm.purchase.invoice_date
+                                ).toDateString()
+                              )
+                            )
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Invoice NO:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.purchase.invoice_num))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Description:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.purchase.description))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Quantity:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.purchase.quantity))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Subject:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.purchase.subject))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Comments:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.purchase.comments))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Client Response:")]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(_vm._s(_vm.purchase.client_response))
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("ToP Comments:")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.purchase.top_comments))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Client Responses:")]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(_vm._s(_vm.purchase.client_responses))
+                          ])
+                        ]
+                      )
+                    ],
+                    1
+                  )
                 ],
                 1
-              )
-            ],
-            2
-          )
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _c(
-        "vs-popup",
-        {
-          attrs: {
-            active: _vm.addTaxManagmentModal,
-            title: "Add Tax Managment"
-          },
-          on: {
-            "update:active": function($event) {
-              _vm.addTaxManagmentModal = $event
-            }
-          }
-        },
-        [
-          _c(
-            "form",
-            {
-              ref: "addTaxManagmentForm",
-              attrs: { "data-vv-scope": "addform" },
-              on: {
-                submit: function($event) {
-                  $event.preventDefault()
-                  return _vm.addTaxManagment($event)
-                }
-              }
-            },
-            [
+              ),
+              _vm._v(" "),
               _c(
-                "vs-row",
+                "vx-card",
+                {
+                  staticClass: "mt-base",
+                  attrs: { title: "Purchases Summary" }
+                },
                 [
                   _c(
-                    "vs-col",
-                    { attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" } },
+                    "vs-row",
                     [
                       _c(
-                        "vx-input-group",
-                        [
-                          _c("vs-input", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
-                            ],
-                            attrs: {
-                              name: "title",
-                              "label-placeholder": "Title",
-                              "data-vv-scope": "addform"
-                            },
-                            model: {
-                              value: _vm.title,
-                              callback: function($$v) {
-                                _vm.title = $$v
-                              },
-                              expression: "title"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("addform.title"),
-                                  expression: "errors.has('addform.title')"
-                                }
-                              ],
-                              staticClass: "text-danger"
-                            },
-                            [_vm._v(_vm._s(_vm.errors.first("addform.title")))]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vx-input-group",
-                        [
-                          _c("br"),
-                          _vm._v(" "),
-                          _c("vs-textarea", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
-                            ],
-                            attrs: {
-                              name: "description",
-                              counter: 20,
-                              label: "Description",
-                              "data-vv-scope": "addform"
-                            },
-                            model: {
-                              value: _vm.description,
-                              callback: function($$v) {
-                                _vm.description = $$v
-                              },
-                              expression: "description"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("addform.description"),
-                                  expression:
-                                    "errors.has('addform.description')"
-                                }
-                              ],
-                              staticClass: "text-danger"
-                            },
-                            [
-                              _vm._v(
-                                _vm._s(_vm.errors.first("addform.description"))
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c("vs-input", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
-                            ],
-                            attrs: {
-                              name: "duration",
-                              "label-placeholder": "Duration",
-                              "data-vv-scope": "addform"
-                            },
-                            model: {
-                              value: _vm.duration,
-                              callback: function($$v) {
-                                _vm.duration = $$v
-                              },
-                              expression: "duration"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("addform.duration"),
-                                  expression: "errors.has('addform.duration')"
-                                }
-                              ],
-                              staticClass: "text-danger"
-                            },
-                            [
-                              _vm._v(
-                                _vm._s(_vm.errors.first("addform.duration"))
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("br"),
-                      _vm._v(" "),
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c("label", [_vm._v("Tax Period")]),
-                          _c("br"),
-                          _c("br"),
-                          _vm._v(" "),
-                          _c(
-                            "vs-radio",
-                            {
-                              attrs: { name: "type", "vs-value": "Monthly" },
-                              model: {
-                                value: _vm.type,
-                                callback: function($$v) {
-                                  _vm.type = $$v
-                                },
-                                expression: "type"
-                              }
-                            },
-                            [_vm._v("Monthly")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "vs-radio",
-                            {
-                              attrs: { name: "type", "vs-value": "Yearly" },
-                              model: {
-                                value: _vm.type,
-                                callback: function($$v) {
-                                  _vm.type = $$v
-                                },
-                                expression: "type"
-                              }
-                            },
-                            [_vm._v("Yearly")]
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "vs-col",
-                    { attrs: { "vs-lg": "6", "vs-md": "12", "vs-sm": "12" } },
-                    [
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c(
-                            "vs-select",
-                            {
-                              staticClass: "selectExample",
-                              attrs: { label: "Figuras" },
-                              model: {
-                                value: _vm.supervisor,
-                                callback: function($$v) {
-                                  _vm.supervisor = $$v
-                                },
-                                expression: "supervisor"
-                              }
-                            },
-                            [
-                              _c("vs-select-item", {
-                                attrs: { value: "", text: "Select Supervisor" }
-                              }),
-                              _vm._v(" "),
-                              _vm._l(_vm.supervisors, function(item, index) {
-                                return _c("vs-select-item", {
-                                  key: index,
-                                  attrs: {
-                                    value: item.manager_id,
-                                    text: item.first_name + " " + item.last_name
-                                  }
-                                })
-                              })
-                            ],
-                            2
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c(
-                            "vs-select",
-                            {
-                              staticClass: "selectExample",
-                              attrs: {
-                                placeholder: "Search and select",
-                                label: "Officers",
-                                "label-placeholder": "Officers",
-                                multiple: ""
-                              },
-                              model: {
-                                value: _vm.officer,
-                                callback: function($$v) {
-                                  _vm.officer = $$v
-                                },
-                                expression: "officer"
-                              }
-                            },
-                            [
-                              _c("vs-select-item", {
-                                attrs: {
-                                  value: "",
-                                  disabled: true,
-                                  text: "Select Officers"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _vm._l(_vm.officers, function(item, index) {
-                                return _c("vs-select-item", {
-                                  key: index,
-                                  attrs: {
-                                    value: item.manager_id,
-                                    text: item.first_name + " " + item.last_name
-                                  }
-                                })
-                              })
-                            ],
-                            2
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "vs-col",
-                    { attrs: { "vs-lg": "12", "vs-md": "12", "vs-sm": "12" } },
-                    [
-                      _c("br"),
-                      _vm._v(" "),
-                      _c(
-                        "vs-button",
+                        "vs-col",
                         {
-                          staticClass: "float-right",
-                          attrs: { button: "submit", type: "gradient" }
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
                         },
-                        [_vm._v("Add Tax Managment")]
+                        [
+                          _c("h6", [_vm._v("Non Taxable Purchase (USD):")]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(
+                              _vm._s(_vm.customer.non_taxable_purchases || 0)
+                            )
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Non taxable Purchases (RIEL):")]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(_vm._s(_vm.non_taxable_purchases_riel))
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("vs-divider", { attrs: { position: "left" } }, [
+                        _c("h5", [_vm._v("Local Purchases")])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Taxable Value (USD):")]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(
+                              _vm._s(_vm.purchase.local_purchase_tax_val || 0)
+                            )
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("VAT (USD):")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.vat_local_usd))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("vs-divider", { attrs: { position: "left" } }, [
+                        _c("h5", [_vm._v("Taxable Purchases")])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "12", "vs-md": "12", "vs-sm": "12" }
+                        },
+                        [_c("h6", [_vm._v("Imports:")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Taxable Value (RIEL):")]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(_vm._s(_vm.purchase.imports_taxable_val))
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("VAT (RIEL):")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.vat_import_riel))])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "12", "vs-md": "12", "vs-sm": "12" }
+                        },
+                        [_c("h6", [_vm._v("Local Purchases:")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("Taxable Value (RIEL):")]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(_vm._s(_vm.local_purchase_tax_val_reil))
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5",
+                          attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" }
+                        },
+                        [
+                          _c("h6", [_vm._v("VAT (RIEL):")]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(_vm._s(_vm.local_purchase_tax_vat_reil))
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("vs-divider", { attrs: { position: "center" } }, [
+                        _c("h5", [_vm._v("Total Taxable Value:")])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "vs-col",
+                        {
+                          staticClass: "mt-5 text-center",
+                          attrs: { "vs-lg": "12", "vs-md": "12", "vs-sm": "12" }
+                        },
+                        [_c("p", [_vm._v(_vm._s(_vm.total_vat))])]
                       )
                     ],
                     1
@@ -629,9 +753,187 @@ var render = function() {
               )
             ],
             1
+          ),
+          _vm._v(" "),
+          _c(
+            "vs-col",
+            {
+              attrs: { "vs-lg": "3", "vs-md": "3", "vs-xl": "3", "vs-sm": "12" }
+            },
+            [
+              _c(
+                "vx-card",
+                { attrs: { title: "Actions" } },
+                [
+                  _c(
+                    "vs-list",
+                    [
+                      _c(
+                        "vs-list-item",
+                        { attrs: { title: "Edit Purchase" } },
+                        [
+                          _c("vs-button", {
+                            attrs: {
+                              to: "/purchase-update/" + _vm.$route.params.id,
+                              "icon-pack": "feather",
+                              size: "small",
+                              icon: "icon-edit"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      [
+                        _vm.userType == "Admin" || _vm.userType == "Super Admin"
+                          ? _c(
+                              "vs-list-item",
+                              { attrs: { title: "Status" } },
+                              [
+                                _c("vs-button", {
+                                  attrs: {
+                                    "icon-pack": "feather",
+                                    size: "small",
+                                    icon: "icon-check-circle"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.changeManagementStatus(
+                                        "1",
+                                        _vm.purchase.id,
+                                        "admin"
+                                      )
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("vs-button", {
+                                  attrs: {
+                                    "icon-pack": "feather",
+                                    size: "small",
+                                    icon: "icon-x-circle"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.changeManagementStatus(
+                                        "0",
+                                        _vm.purchase.id,
+                                        "admin"
+                                      )
+                                    }
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          : _vm.userType == "Supervisor"
+                          ? _c(
+                              "vs-list-item",
+                              { attrs: { title: "Status" } },
+                              [
+                                _c("vs-button", {
+                                  attrs: {
+                                    "icon-pack": "feather",
+                                    size: "small",
+                                    icon: "icon-check-circle"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.changeManagementStatus(
+                                        "1",
+                                        _vm.purchase.id,
+                                        "supervisor"
+                                      )
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("vs-button", {
+                                  attrs: {
+                                    "icon-pack": "feather",
+                                    size: "small",
+                                    icon: "icon-x-circle"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.changeManagementStatus(
+                                        "0",
+                                        _vm.purchase.id,
+                                        "supervisor"
+                                      )
+                                    }
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          : _c(
+                              "vs-list-item",
+                              { attrs: { title: "Status" } },
+                              [
+                                _c("vs-switch", {
+                                  attrs: { "icon-pack": "feather" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.statusUpdate(
+                                        _vm.purchase.purchase_id,
+                                        _vm.purchase.officer_confirmed
+                                      )
+                                    }
+                                  },
+                                  model: {
+                                    value: _vm.purchase.officer_confirmed,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.purchase,
+                                        "officer_confirmed",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "purchase.officer_confirmed"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                      ],
+                      _vm._v(" "),
+                      _c(
+                        "vs-list-item",
+                        { attrs: { title: "View Comments" } },
+                        [
+                          _c("vs-button", {
+                            attrs: {
+                              "icon-pack": "feather",
+                              size: "small",
+                              icon: "icon-maximize-2"
+                            },
+                            on: { click: _vm.handleToggleDrawer }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    2
+                  )
+                ],
+                1
+              )
+            ],
+            1
           )
-        ]
-      )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("the-customizer", {
+        ref: "commentsView",
+        attrs: {
+          object_id: _vm.$route.params.id,
+          type: "Purchase",
+          "comments-url": "get-comments"
+        }
+      })
     ],
     1
   )
@@ -643,18 +945,18 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue":
-/*!*********************************************************************!*\
-  !*** ./resources/js/src/views/pages/tax-managment/TaxManagment.vue ***!
-  \*********************************************************************/
+/***/ "./resources/js/src/views/pages/Purchases/PurchaseDetail.vue":
+/*!*******************************************************************!*\
+  !*** ./resources/js/src/views/pages/Purchases/PurchaseDetail.vue ***!
+  \*******************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _TaxManagment_vue_vue_type_template_id_89c4bd8a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TaxManagment.vue?vue&type=template&id=89c4bd8a& */ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=template&id=89c4bd8a&");
-/* harmony import */ var _TaxManagment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TaxManagment.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _TaxManagment_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TaxManagment.vue?vue&type=style&index=0&lang=css& */ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _PurchaseDetail_vue_vue_type_template_id_20ecfd84___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PurchaseDetail.vue?vue&type=template&id=20ecfd84& */ "./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=template&id=20ecfd84&");
+/* harmony import */ var _PurchaseDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PurchaseDetail.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _PurchaseDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PurchaseDetail.vue?vue&type=style&index=0&lang=scss& */ "./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=style&index=0&lang=scss&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -665,9 +967,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _TaxManagment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _TaxManagment_vue_vue_type_template_id_89c4bd8a___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _TaxManagment_vue_vue_type_template_id_89c4bd8a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _PurchaseDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PurchaseDetail_vue_vue_type_template_id_20ecfd84___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PurchaseDetail_vue_vue_type_template_id_20ecfd84___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -677,54 +979,54 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/src/views/pages/tax-managment/TaxManagment.vue"
+component.options.__file = "resources/js/src/views/pages/Purchases/PurchaseDetail.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=script&lang=js&":
-/*!**********************************************************************************************!*\
-  !*** ./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************************************/
+/***/ "./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxManagment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./TaxManagment.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxManagment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PurchaseDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./PurchaseDetail.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PurchaseDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=style&index=0&lang=css&":
-/*!******************************************************************************************************!*\
-  !*** ./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=style&index=0&lang=css& ***!
-  \******************************************************************************************************/
+/***/ "./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=style&index=0&lang=scss&":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=style&index=0&lang=scss& ***!
+  \*****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxManagment_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/style-loader!../../../../../../node_modules/css-loader??ref--7-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./TaxManagment.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxManagment_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxManagment_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxManagment_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxManagment_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxManagment_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_PurchaseDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/style-loader!../../../../../../node_modules/css-loader!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--8-2!../../../../../../node_modules/sass-loader/dist/cjs.js??ref--8-3!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./PurchaseDetail.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_PurchaseDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_PurchaseDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_PurchaseDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_PurchaseDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_PurchaseDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
-/***/ "./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=template&id=89c4bd8a&":
-/*!****************************************************************************************************!*\
-  !*** ./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=template&id=89c4bd8a& ***!
-  \****************************************************************************************************/
+/***/ "./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=template&id=20ecfd84&":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=template&id=20ecfd84& ***!
+  \**************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxManagment_vue_vue_type_template_id_89c4bd8a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./TaxManagment.vue?vue&type=template&id=89c4bd8a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/tax-managment/TaxManagment.vue?vue&type=template&id=89c4bd8a&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxManagment_vue_vue_type_template_id_89c4bd8a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PurchaseDetail_vue_vue_type_template_id_20ecfd84___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./PurchaseDetail.vue?vue&type=template&id=20ecfd84& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=template&id=20ecfd84&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PurchaseDetail_vue_vue_type_template_id_20ecfd84___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxManagment_vue_vue_type_template_id_89c4bd8a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PurchaseDetail_vue_vue_type_template_id_20ecfd84___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

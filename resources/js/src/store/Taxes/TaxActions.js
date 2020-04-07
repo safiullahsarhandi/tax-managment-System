@@ -101,7 +101,7 @@ export default {
         });
     },
     statusUpdate({ commit }, data) {
-        axios.post('status-update-tax', { id: data.id }).then(res => {
+        axios.post('status-update-tax', { id: data.id, status : data.status }).then(res => {
             if(res.data.status){
             data.notify({ title: 'Updated!...', text: res.data.msg, color: 'success', position: 'top-right' })
 

@@ -38,6 +38,11 @@ Route::group(['prefix' => ''], function () {
 	Route::post('update-admin', 'ApplicationController@update_admin');
 	Route::post('status-update-admin', 'ApplicationController@status_update_admin');
 
+	// Owners
+	Route::get('get-owners', 'ApplicationController@get_owners');
+	Route::post('add-owner', 'ApplicationController@add_owner');
+	Route::post('update-owner', 'ApplicationController@update_owner');
+
 	// Customers
 	Route::post('add-customer', 'ApplicationController@add_customer');
 	Route::post('add-multiple-customer', 'ApplicationController@add_multiple_customer');
@@ -47,6 +52,7 @@ Route::group(['prefix' => ''], function () {
 	Route::post('get-customer-profile', 'ApplicationController@get_customer_profile');
 	Route::post('update-customer', 'ApplicationController@update_customer');
 	Route::post('status-update-customer', 'ApplicationController@status_update_customer');
+	Route::post('update-customer-status', 'ApplicationController@update_customer_status');
 
 	// Customers
 	Route::post('add-employee', 'ApplicationController@add_employee');
@@ -129,6 +135,7 @@ Route::group(['prefix' => ''], function () {
 	Route::get('export-purchases/{customer_id}/{tax_id}', 'ExportController@export_purchases');
 	Route::get('export-sales/{customer_id}/{tax_id}', 'ExportController@export_sales');
 	Route::get('export-customer-employees/{customer_id}', 'ExportController@export_customer_employees');
-
+	Route::post('update-faqs', 'ApplicationController@update_faqs');
+	Route::post('get-faqs', 'ApplicationController@get_faqs');
 });
 Route::get('/{any}', 'ApplicationController')->where('any', '.*');

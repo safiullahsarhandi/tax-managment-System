@@ -33,15 +33,41 @@
                         <vs-td v-show='is_officer == true' :data="tr.officer_confirmed"><vs-switch @click="statusUpdate(tr.sale_id, tr.officer_confirmed)" v-model="tr.officer_confirmed"/></vs-td>
 
                        <vs-td v-show='is_admin == true' :data="tr.management_confirmed"> 
-                            <vs-select v-model="tr.management_confirmed" width="120px"  @input="changeManagementStatus(tr.management_confirmed, tr.id, 'admin')">
+                        <template>
+                            <span v-if="tr.officer_confirmed == 0">
+                                Not Submitted yet
+                            </span>
+                            <span v-else-if="tr.officer_confirmed == 1 && tr.supervisor_confirmed == 0">
+                                Under Supervisor Review
+                            </span>
+                            <span v-else-if="tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1 && tr.management_confirmed == 0">
+                                Under Administration Review
+                            </span>
+                            <span v-else-if="tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1 && tr.management_confirmed == 1">
+                                Approved
+                            </span>
+                        </template>
+                            <!-- {{tr.officer_confirmed == 0?'not submitted yet': tr.officer_confirmed == 1? }} -->
+                            <!-- <vs-select v-model="tr.management_confirmed" width="120px"  @input="changeManagementStatus(tr.management_confirmed, tr.id, 'admin')">
                                   <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="item,index in statusList" />
-                            </vs-select>
+                            </vs-select> -->
                         </vs-td>
 
                         <vs-td v-show='is_supervisor == true' :data="tr.supervisor_confirmed"> 
-                            <vs-select v-model="tr.supervisor_confirmed" width="120px" @input="changeManagementStatus(tr.supervisor_confirmed, tr.id, 'supervisor')">
-                                  <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="item,index in statusList" />
-                            </vs-select>
+                            <template>
+                                <span v-if="tr.officer_confirmed == 0">
+                                    Not Submitted yet
+                                </span>
+                                <span v-else-if="tr.officer_confirmed == 1 && tr.supervisor_confirmed == 0">
+                                    Under Supervisor Review
+                                </span>
+                                <span v-else-if="tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1 && tr.management_confirmed == 0">
+                                    Under Administration Review
+                                </span>
+                                <span v-else-if="tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1 && tr.management_confirmed == 1">
+                                    Approved
+                                </span>
+                            </template>
                         </vs-td>
 
                         <vs-td>

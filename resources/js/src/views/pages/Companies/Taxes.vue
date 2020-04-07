@@ -27,7 +27,7 @@
                         <vs-td>{{tr.type}}</vs-td>
                         <vs-td>{{0}}</vs-td>
                         <!-- <vs-td>{{tr.officers_count}}</vs-td> -->
-                        <vs-td>{{tr.status == 0? 'In progress':'Completed'}}</vs-td>
+                        <vs-td>{{tr.status == 0? 'Work in progress':tr.status == 1?'Review':tr.status == 2?'Approve':tr.status == 3?'Client\'s Confirmation':tr.status == 4?'Tax Paid':tr.status == 5?'Submitted':tr.status == 6?'Scanned':'Released'}}</vs-td>
                         <vs-td>
                             <vs-button v-if="$store.getters.userType != 'Admin' || $store.getters.userType != 'Super Admin'" size="small" type="border" icon-pack="feather" icon="icon-edit" @click="taxEdit(tr.tax_id)"></vs-button>
                             <vs-button size="small" type="border" icon-pack="feather" icon="icon-maximize-2" :to="'/tax-collection/'+tr.tax_id"></vs-button>
@@ -41,9 +41,10 @@
                 <input type="hidden" name="category_id" v-model="tax_customer_id">
                 <vs-row>
                     <vs-col vs-lg="12" vs-md="12" vs-sm="12">
-                        <div v-if="tax_identifier != ''">
-                            <h4>Tax Code: {{tax_identifier}}</h4>
-                        </div>
+                        <vx-input-group>
+                            <vs-input v-validate="'required'" name="tax_identifier" v-model="tax_identifier" data-vv-as="Tax Identifier" label-placeholder="Tax Identifier" data-vv-scope="addform" />
+                            <span class="text-danger" v-show="errors.has('addform.tax_identifier')">{{errors.first('addform.tax_identifier')}}</span>
+                        </vx-input-group>
                         <vx-input-group>
                             <vs-input v-validate="'required'" name="title" v-model="title" label-placeholder="Title" data-vv-scope="addform" />
                             <span class="text-danger" v-show="errors.has('addform.title')">{{errors.first('addform.title')}}</span>
@@ -58,7 +59,7 @@
                             <span class="text-danger" v-show="errors.has('addform.duration')">{{errors.first('addform.duration')}}</span>
                         </vx-input-group> -->
                         <vx-input-group class="mt-2">
-                            <vs-select v-validate="'required'" placeholder="Select Type" @input="changeType" style="width: 100%;" label="Type" v-model="type" name="type">
+                            <vs-select v-validate="'required'" placeholder="Select Type" style="width: 100%;" label="Type" v-model="type" name="type">
                                 <!-- <vs-select-item text="Select Type" value=""></vs-select-item> -->
                                 <vs-select-item text="Monthly Tax" value="Monthly Tax"></vs-select-item>
                                 <vs-select-item text="Annual Tax" value="Yearly Tax"></vs-select-item>
@@ -91,9 +92,10 @@
                 <input type="hidden" name="category_id" v-model="tax_customer_id">
                 <vs-row>
                     <vs-col vs-lg="12" vs-md="12" vs-sm="12">
-                        <div v-if="editTax.tax_code">
-                            <h4>Tax Code: {{editTax.tax_code}}</h4>
-                        </div>
+                        <vx-input-group>
+                            <vs-input v-validate="'required'" name="tax_identifier" v-model="editTax.tax_code" data-vv-as="Tax Identifier" label-placeholder="Tax Identifier" data-vv-scope="editform" />
+                            <span class="text-danger" v-show="errors.has('addform.tax_identifier')">{{errors.first('addform.tax_identifier')}}</span>
+                        </vx-input-group>
                     </vs-col>
                     <vs-col vs-lg="6" vs-md="6" vs-sm="12">
                         <vx-input-group>
@@ -108,7 +110,7 @@
                     </vs-col>
                     <vs-col vs-lg="6" vs-md="12" vs-sm="12">
                         <vx-input-group>
-                            <vs-select v-validate="'required'" placeholder="Select Type" @input="editChangeType" style="width: 100%;" label="Type" v-model="editTax.type" name="type">
+                            <vs-select v-validate="'required'" placeholder="Select Type" style="width: 100%;" label="Type" v-model="editTax.type" name="type">
                                 <!-- <vs-select-item text="" value=""></vs-select-item> -->
                                 <vs-select-item text="Monthly Tax" value="Monthly Tax"></vs-select-item>
                                 <vs-select-item text="Annual Tax" value="Annual Tax"></vs-select-item>
@@ -197,7 +199,7 @@ export default {
             }
 
         },
-        changeType(type) {
+        /*changeType(type) {
             var date = new Date();
             if (type == 'Monthly Tax') {
                 this.tax_identifier = 'M-' + this.months[date.getMonth()] + '-' + date.getFullYear();
@@ -206,8 +208,8 @@ export default {
             } else if (type == 'Resubmission Tax') {
                 this.tax_identifier = 'R-' + this.months[date.getMonth()] + '-' + date.getFullYear();
             }
-        },
-        editChangeType(type) {
+        },*/
+        /*editChangeType(type) {
             var date = new Date();
             if (type == 'Monthly Tax') {
                 this.editTax.tax_code = 'M-' + this.months[date.getMonth()] + '-' + date.getFullYear();
@@ -216,7 +218,7 @@ export default {
             } else if (type == 'Resubmission Tax') {
                 this.editTax.tax_code = 'R-' + this.months[date.getMonth()] + '-' + date.getFullYear();
             }
-        },
+        },*/
         addTax() {
             this.addTaxManagmentModal = true;
 
@@ -257,18 +259,19 @@ export default {
 
         //  edit tax
         taxEdit(taxId) {
+            this.$vs.loading.close();
             axios.post('tax/get-tax', { id: taxId }).then(res => {
                 let date = new Date();
                 this.editTax = res.data.tax;
+                // this.editTax.tax_code = res.data.tax_code;
                 this.editTaxManagmentModal = true;
                 // this.officer = _.map(this.editTax,'officer_id');
-                if (this.editTax.type == 'Monthly Tax') {
-                    this.editTax.tax_code = 'M-' + this.months[date.getMonth()] + '-' + date.getFullYear();
+                /*if (this.editTax.type == 'Monthly Tax') {
                 } else if (this.editTax.type == 'Annual Tax') {
                     this.editTax.tax_code = 'Y-' + date.getFullYear();
                 } else if (this.editTax.type == 'Resubmission Tax') {
                     this.editTax.tax_code = 'R-' + this.months[date.getMonth()] + '-' + date.getFullYear();
-                }
+                }*/
                 // console.log(this.editTax);
             });
         },

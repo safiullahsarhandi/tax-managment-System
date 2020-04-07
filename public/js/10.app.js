@@ -368,6 +368,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -377,8 +383,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       analyticsData: _components_analyticsData_js__WEBPACK_IMPORTED_MODULE_1__["default"],
       editTaxManagmentModal: false,
       title: "",
+      tax_code: "",
       description: "",
       type: 'Monthly',
+      notes: '',
       duration: '',
       officer: [],
       editSupervisor: '',
@@ -416,8 +424,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.editTaxManagmentModal = true;
       this.title = this.tax.title;
       this.duration = this.tax.duration;
+      this.tax_code = this.tax.tax_code;
       this.editSupervisor = this.tax.supervisor_id;
       this.type = this.tax.type;
+      this.notes = this.tax.notes;
       this.officer = _.map(this.tax.officers, 'officer_id');
       this.description = this.tax.description; // this.$data.editedTax = this.tax;
     },
@@ -432,6 +442,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           fd.append('tax_id', _this.$route.params.id);
           fd.append('officers', self.officer);
           fd.append('supervisor_id', self.editSupervisor);
+          fd.append('tax_code', self.tax_code);
           var data = {
             fd: fd,
             close: _this.$vs.loading.close,
@@ -481,7 +492,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, "#tax-detail .vx-card .vx-card__collapsible-content.vs-con-loading__container {\n  min-height: 250px !important;\n}\r\n\r\n", ""]);
+exports.push([module.i, "#tax-detail .vx-card .vx-card__collapsible-content.vs-con-loading__container {\n  min-height: 250px !important;\n}\n.status-list-item .vs-list--slot {\n  margin-left: 0;\n}\r\n", ""]);
 
 // exports
 
@@ -902,8 +913,20 @@ var render = function() {
                             _vm._v(
                               _vm._s(
                                 _vm.tax.status == 0
-                                  ? "In Progress"
-                                  : "Completed"
+                                  ? "Work in progress"
+                                  : _vm.tax.status == 1
+                                  ? "Review"
+                                  : _vm.tax.status == 2
+                                  ? "Approve"
+                                  : _vm.tax.status == 3
+                                  ? "Client's Confirmation"
+                                  : _vm.tax.status == 4
+                                  ? "Tax Paid"
+                                  : _vm.tax.status == 5
+                                  ? "Submitted"
+                                  : _vm.tax.status == 6
+                                  ? "Scanned"
+                                  : "Released"
                               )
                             )
                           ]),
@@ -1052,77 +1075,90 @@ var render = function() {
                   _c(
                     "vs-list",
                     [
-                      _vm.activeUser.type == "Supervisor"
-                        ? _c(
-                            "vs-list-item",
+                      _c(
+                        "vs-list-item",
+                        { staticClass: "p-0 ml-0 status-list-item" },
+                        [
+                          _c(
+                            "vs-select",
                             {
-                              attrs: { title: "Mark as Complete", subtitle: "" }
+                              staticClass: "p-0 ml-0",
+                              staticStyle: { width: "170px" },
+                              attrs: { placeholder: "Select Status" },
+                              on: {
+                                input: function($event) {
+                                  return _vm.changeTaxStatus(_vm.tax.tax_id)
+                                }
+                              },
+                              model: {
+                                value: _vm.tax.status,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.tax, "status", $$v)
+                                },
+                                expression: "tax.status"
+                              }
                             },
                             [
-                              _c("vs-switch", {
+                              _c("vs-select-item", {
+                                attrs: { value: "0", text: "Work In Progress" }
+                              }),
+                              _vm._v(" "),
+                              _c("vs-select-item", {
+                                attrs: { value: "1", text: "Review" }
+                              }),
+                              _vm._v(" "),
+                              _c("vs-select-item", {
+                                attrs: { value: "2", text: "Approve" }
+                              }),
+                              _vm._v(" "),
+                              _c("vs-select-item", {
                                 attrs: {
-                                  color: "warning",
-                                  disabled:
-                                    _vm.activeUser.type != "Admin" ||
-                                    _vm.activeUser.type != "Super Admin"
-                                },
-                                on: {
-                                  input: function($event) {
-                                    return _vm.changeTaxStatus(_vm.tax.tax_id)
-                                  }
+                                  value: "3",
+                                  text: "Client Confirmation"
                                 }
+                              }),
+                              _vm._v(" "),
+                              _c("vs-select-item", {
+                                attrs: { value: "4", text: "Tax Paid" }
+                              }),
+                              _vm._v(" "),
+                              _c("vs-select-item", {
+                                attrs: { value: "5", text: "Submitted" }
+                              }),
+                              _vm._v(" "),
+                              _c("vs-select-item", {
+                                attrs: { value: "6", text: "Scanned" }
+                              }),
+                              _vm._v(" "),
+                              _c("vs-select-item", {
+                                attrs: { value: "7", text: "Released" }
                               })
                             ],
                             1
                           )
-                        : _vm._e(),
+                        ],
+                        1
+                      ),
                       _vm._v(" "),
-                      _vm.activeUser.type == "Admin" ||
-                      _vm.activeUser.type == "Super Admin"
-                        ? _c(
-                            "vs-list-item",
-                            { attrs: { title: "Approve Tax", subtitle: "" } },
-                            [
-                              _c("vs-switch", {
-                                attrs: {
-                                  color: "warning",
-                                  disabled:
-                                    _vm.activeUser.type != "Admin" ||
-                                    _vm.activeUser.type != "Super Admin"
-                                },
-                                on: {
-                                  input: function($event) {
-                                    return _vm.changeTaxStatus(_vm.tax.tax_id)
-                                  }
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.activeUser.type == "Admin" ||
-                      _vm.activeUser.type == "Super Admin"
-                        ? _c(
-                            "vs-list-item",
-                            { attrs: { title: "Edit Tax", subtitle: "" } },
-                            [
-                              _c("vs-button", {
-                                attrs: {
-                                  size: "small",
-                                  "icon-pack": "feather",
-                                  icon: "icon-edit"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.editTax()
-                                  }
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        : _vm._e()
+                      _c(
+                        "vs-list-item",
+                        { attrs: { title: "Edit Tax", subtitle: "" } },
+                        [
+                          _c("vs-button", {
+                            attrs: {
+                              size: "small",
+                              "icon-pack": "feather",
+                              icon: "icon-edit"
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.editTax()
+                              }
+                            }
+                          })
+                        ],
+                        1
+                      )
                     ],
                     1
                   )
@@ -1189,6 +1225,68 @@ var render = function() {
                 [
                   _c(
                     "vs-col",
+                    { attrs: { "vs-lg": "12", "vs-md": "12", "vs-sm": "12" } },
+                    [
+                      _c(
+                        "vx-input-group",
+                        [
+                          _c("vs-input", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
+                            ],
+                            attrs: {
+                              name: "tax_identifier",
+                              "data-vv-as": "Tax Identifier",
+                              "label-placeholder": "Tax Identifier",
+                              "data-vv-scope": "editform"
+                            },
+                            model: {
+                              value: _vm.tax_code,
+                              callback: function($$v) {
+                                _vm.tax_code = $$v
+                              },
+                              expression: "tax_code"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has(
+                                    "addform.tax_identifier"
+                                  ),
+                                  expression:
+                                    "errors.has('addform.tax_identifier')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(
+                                  _vm.errors.first("addform.tax_identifier")
+                                )
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-col",
                     { attrs: { "vs-lg": "6", "vs-md": "6", "vs-sm": "12" } },
                     [
                       _c(
@@ -1205,7 +1303,8 @@ var render = function() {
                             ],
                             attrs: {
                               name: "title",
-                              "label-placeholder": "Title",
+                              label: "Title",
+                              placeholder: "Title",
                               "data-vv-scope": "editform"
                             },
                             model: {
@@ -1287,99 +1386,6 @@ var render = function() {
                           )
                         ],
                         1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c("vs-input", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
-                            ],
-                            attrs: {
-                              name: "duration",
-                              "label-placeholder": "Duration",
-                              "data-vv-scope": "editform"
-                            },
-                            model: {
-                              value: _vm.duration,
-                              callback: function($$v) {
-                                _vm.duration = $$v
-                              },
-                              expression: "duration"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("editform.duration"),
-                                  expression: "errors.has('editform.duration')"
-                                }
-                              ],
-                              staticClass: "text-danger"
-                            },
-                            [
-                              _vm._v(
-                                _vm._s(_vm.errors.first("editform.duration"))
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("br"),
-                      _vm._v(" "),
-                      _c(
-                        "vx-input-group",
-                        { staticClass: "mt-2" },
-                        [
-                          _c("label", [_vm._v("Tax Type")]),
-                          _c("br"),
-                          _c("br"),
-                          _vm._v(" "),
-                          _c(
-                            "vs-radio",
-                            {
-                              attrs: { name: "type", "vs-value": "Monthly" },
-                              model: {
-                                value: _vm.type,
-                                callback: function($$v) {
-                                  _vm.type = $$v
-                                },
-                                expression: "type"
-                              }
-                            },
-                            [_vm._v("Monthly")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "vs-radio",
-                            {
-                              attrs: { name: "type", "vs-value": "Yearly" },
-                              model: {
-                                value: _vm.type,
-                                callback: function($$v) {
-                                  _vm.type = $$v
-                                },
-                                expression: "type"
-                              }
-                            },
-                            [_vm._v("Yearly")]
-                          )
-                        ],
-                        1
                       )
                     ],
                     1
@@ -1391,40 +1397,71 @@ var render = function() {
                     [
                       _c(
                         "vx-input-group",
-                        { staticClass: "mt-2" },
                         [
                           _c(
                             "vs-select",
                             {
-                              staticClass: "selectExample",
+                              directives: [
+                                {
+                                  name: "validate",
+                                  rawName: "v-validate",
+                                  value: "required",
+                                  expression: "'required'"
+                                }
+                              ],
+                              staticStyle: { width: "100%" },
                               attrs: {
-                                name: "supervisor",
-                                label: "Supervisor"
+                                placeholder: "Select Type",
+                                label: "Type",
+                                name: "type"
                               },
                               model: {
-                                value: _vm.editSupervisor,
+                                value: _vm.type,
                                 callback: function($$v) {
-                                  _vm.editSupervisor = $$v
+                                  _vm.type = $$v
                                 },
-                                expression: "editSupervisor"
+                                expression: "type"
                               }
                             },
                             [
                               _c("vs-select-item", {
-                                attrs: { value: "", text: "Select Supervisor" }
+                                attrs: {
+                                  text: "Monthly Tax",
+                                  value: "Monthly Tax"
+                                }
                               }),
                               _vm._v(" "),
-                              _vm._l(_vm.supervisors, function(item, index) {
-                                return _c("vs-select-item", {
-                                  key: index,
-                                  attrs: {
-                                    value: item.manager_id,
-                                    text: item.first_name + " " + item.last_name
-                                  }
-                                })
+                              _c("vs-select-item", {
+                                attrs: {
+                                  text: "Annual Tax",
+                                  value: "Annual Tax"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("vs-select-item", {
+                                attrs: {
+                                  text: "Resubmission Tax",
+                                  value: "Resubmission Tax"
+                                }
                               })
                             ],
-                            2
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has("editform.type"),
+                                  expression: "errors.has('editform.type')"
+                                }
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [_vm._v(_vm._s(_vm.errors.first("editform.type")))]
                           )
                         ],
                         1
@@ -1432,47 +1469,39 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "vx-input-group",
-                        { staticClass: "mt-2" },
                         [
-                          _c(
-                            "vs-select",
-                            {
-                              staticClass: "selectExample",
-                              attrs: {
-                                name: "officer[]",
-                                placeholder: "Search and select",
-                                label: "Officers",
-                                "label-placeholder": "Officers",
-                                multiple: ""
-                              },
-                              model: {
-                                value: _vm.officer,
-                                callback: function($$v) {
-                                  _vm.officer = $$v
-                                },
-                                expression: "officer"
-                              }
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("vs-textarea", {
+                            attrs: {
+                              name: "notes",
+                              counter: 100,
+                              label: "Notes",
+                              "data-vv-scope": "editform"
                             },
-                            [
-                              _c("vs-select-item", {
-                                attrs: {
-                                  value: "",
-                                  disabled: true,
-                                  text: "Select Officers"
+                            model: {
+                              value: _vm.notes,
+                              callback: function($$v) {
+                                _vm.notes = $$v
+                              },
+                              expression: "notes"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.errors.has("editform.notes"),
+                                  expression: "errors.has('editform.notes')"
                                 }
-                              }),
-                              _vm._v(" "),
-                              _vm._l(_vm.officers, function(item, index) {
-                                return _c("vs-select-item", {
-                                  key: index,
-                                  attrs: {
-                                    value: item.manager_id,
-                                    text: item.first_name + " " + item.last_name
-                                  }
-                                })
-                              })
-                            ],
-                            2
+                              ],
+                              staticClass: "text-danger"
+                            },
+                            [_vm._v(_vm._s(_vm.errors.first("editform.notes")))]
                           )
                         ],
                         1

@@ -2,7 +2,7 @@
     <div>
         <vx-card title="Exchange Rates">
             <template slot="actions">
-                <vs-button type="border" v-if="$store.getters.userType == 'Admin' || $store.getters.userType == 'Super Admin'"  @click="editRates()" icon-pack="feather" icon="icon-edit"></vs-button>
+                <vs-button type="border"  @click="editRates()" icon-pack="feather" icon="icon-edit"></vs-button>
             </template>
             <vs-table :data="exchangerates">
                 <template slot="thead">

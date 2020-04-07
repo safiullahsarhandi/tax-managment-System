@@ -70,6 +70,7 @@ import TheFooter from '../components/TheFooter.vue';
 import themeConfig from '@/../themeConfig.js';
 import sidebarItems from "@/layouts/components/vx-sidebar/sidebarItems.js";
 import supervisorSidebarItems from "@/layouts/components/vx-sidebar/supervisorSidebarItems.js";
+import officerSidebarItems from "@/layouts/components/vx-sidebar/officerSidebarItems.js";
 import BackToTop from 'vue-backtotop'
 export default {
     inject : ['loginUser'],
@@ -81,7 +82,7 @@ export default {
             routerTransition: themeConfig.routerTransition || 'none',
             isNavbarDark: false,
             routeTitle: this.$route.meta.pageTitle,
-            sidebarItems: sidebarItems,
+            sidebarItems: [],
             disableCustomizer: themeConfig.disableCustomizer,
             windowWidth: window.innerWidth, //width of windows
             hideScrollToTop: themeConfig.hideScrollToTop,
@@ -178,8 +179,10 @@ export default {
             /*self.sidebarItems.splice(4, 1);
             self.sidebarItems.splice(5, 1);*/
         
-        }else{
+        }else if(self.$store.getters.userType == 'Supervisor'){
             self.sidebarItems = supervisorSidebarItems;
+        }else{
+            self.sidebarItems = officerSidebarItems;
         }
         }, 1);
         

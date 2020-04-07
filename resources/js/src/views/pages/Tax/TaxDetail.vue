@@ -64,7 +64,7 @@
                         <vs-col vs-md="4" vs-lg="4" vs-sm="12" vs-xs="12">
                             <p>
                                 <label>Tax Status:</label>
-                                <h4>{{tax.status == 0? 'In Progress':'Completed'}}</h4>
+                                <h4>{{tax.status == 0?'Work in progress':tax.status == 1?'Review':tax.status == 2?'Approve':tax.status == 3?'Client\'s Confirmation':tax.status == 4?'Tax Paid':tax.status == 5?'Submitted':tax.status == 6?'Scanned':'Released'}}</h4>
                             </p>
                         </vs-col>
                         <vs-col vs-md="4" vs-lg="4" vs-sm="12" vs-xs="12">
@@ -161,15 +161,23 @@
             <vs-col v-show="activeUser.type == 'Admin' || activeUser.type == 'Super Admin'" class="mt-base" vs-md="3" vs-lg="3" vs-sm="12" vs-xs="12">
                 <vx-card title="Actions">
                     <vs-list>
-                        <vs-list-item title="Mark as Complete" v-if="activeUser.type == 'Supervisor'" subtitle="">
-                            <vs-switch color="warning" :disabled="activeUser.type != 'Admin' || activeUser.type != 'Super Admin'" @input="changeTaxStatus(tax.tax_id)" />
-                        </vs-list-item>
                        <!--  <vs-list-item title="Tax Team" subtitle="">
                         </vs-list-item> -->
-                        <vs-list-item title="Approve Tax" v-if="activeUser.type == 'Admin' || activeUser.type == 'Super Admin'" subtitle="">
-                            <vs-switch color="warning" :disabled="activeUser.type != 'Admin' || activeUser.type != 'Super Admin'" @input="changeTaxStatus(tax.tax_id)" />
+                        <vs-list-item  class="p-0 ml-0 status-list-item">
+                            <vs-select @input="changeTaxStatus(tax.tax_id)" v-model="tax.status" class="p-0 ml-0" placeholder="Select Status" style="width: 170px;" >
+                                <vs-select-item value="0" text="Work In Progress"></vs-select-item>
+                                <vs-select-item value="1" text="Review"></vs-select-item>
+                                <vs-select-item value="2" text="Approve"></vs-select-item>
+                                <vs-select-item value="3" text="Client Confirmation"></vs-select-item>
+                                <vs-select-item value="4" text="Tax Paid"></vs-select-item>
+                                <vs-select-item value="5" text="Submitted"></vs-select-item>
+                                <vs-select-item value="6" text="Scanned"></vs-select-item>
+                                <vs-select-item value="7" text="Released"></vs-select-item>
+                            </vs-select>
+
+                            <!-- <vs-switch color="warning" :disabled="activeUser.type != 'Admin' || activeUser.type != 'Super Admin'" @input="changeTaxStatus(tax.tax_id)" /> -->
                         </vs-list-item>
-                        <vs-list-item title="Edit Tax" v-if="activeUser.type == 'Admin' || activeUser.type == 'Super Admin'" subtitle="">
+                        <vs-list-item title="Edit Tax" subtitle="">
                         	<vs-button size="small" icon-pack="feather" @click="editTax()" icon="icon-edit"></vs-button>
                         </vs-list-item>
                     </vs-list>
@@ -180,9 +188,15 @@
             <form ref="editTaxManagmentForm" @submit.prevent="editTaxManagment($event)" data-vv-scope="editform">
                 <input type="hidden" name="category_id" v-model="tax_customer_id">
                 <vs-row>
+                    <vs-col vs-lg="12" vs-md="12" vs-sm="12">
+                        <vx-input-group>
+                            <vs-input v-validate="'required'" name="tax_identifier" v-model="tax_code" data-vv-as="Tax Identifier" label-placeholder="Tax Identifier" data-vv-scope="editform" />
+                            <span class="text-danger" v-show="errors.has('addform.tax_identifier')">{{errors.first('addform.tax_identifier')}}</span>
+                        </vx-input-group>
+                    </vs-col>
                     <vs-col vs-lg="6" vs-md="6" vs-sm="12">
                         <vx-input-group>
-                            <vs-input v-validate="'required'" name="title" v-model="title" label-placeholder="Title" data-vv-scope="editform" />
+                            <vs-input v-validate="'required'" name="title" v-model="title" label="Title" placeholder="Title" data-vv-scope="editform" />
                             <span class="text-danger" v-show="errors.has('editform.title')">{{errors.first('editform.title')}}</span>
                         </vx-input-group>
                         <vx-input-group>
@@ -190,29 +204,21 @@
                             <vs-textarea v-validate="'required'" name="description" v-model="description" :counter="50" label="Description" data-vv-scope="editform" />
                             <span class="text-danger" v-show="errors.has('editform.description')">{{errors.first('editform.description')}}</span>
                         </vx-input-group>
-                        <vx-input-group class="mt-2">
-                            <vs-input v-validate="'required'" name="duration" v-model="duration" label-placeholder="Duration" data-vv-scope="editform" />
-                            <span class="text-danger" v-show="errors.has('editform.duration')">{{errors.first('editform.duration')}}</span>
-                        </vx-input-group>
-                        <br>
-                        <vx-input-group class="mt-2">
-                            <label>Tax Type</label><br><br>
-                            <vs-radio v-model="type" name="type" vs-value="Monthly">Monthly</vs-radio>
-                            <vs-radio v-model="type" name="type" vs-value="Yearly">Yearly</vs-radio>
-                        </vx-input-group>
                     </vs-col>
                     <vs-col vs-lg="6" vs-md="12" vs-sm="12">
-                        <vx-input-group class="mt-2">
-                            <vs-select name="supervisor" class="selectExample" label="Supervisor" v-model="editSupervisor">
-                                <vs-select-item value="" text="Select Supervisor"></vs-select-item>
-                                <vs-select-item :key="index" :value="item.manager_id" :text="item.first_name+' '+item.last_name" v-for="(item,index) in supervisors" />
+                        <vx-input-group>
+                            <vs-select v-validate="'required'" placeholder="Select Type" style="width: 100%;" label="Type" v-model="type" name="type">
+                                <!-- <vs-select-item text="" value=""></vs-select-item> -->
+                                <vs-select-item text="Monthly Tax" value="Monthly Tax"></vs-select-item>
+                                <vs-select-item text="Annual Tax" value="Annual Tax"></vs-select-item>
+                                <vs-select-item text="Resubmission Tax" value="Resubmission Tax"></vs-select-item>
                             </vs-select>
+                            <span class="text-danger" v-show="errors.has('editform.type')">{{errors.first('editform.type')}}</span>
                         </vx-input-group>
-                        <vx-input-group class="mt-2">
-                            <vs-select name="officer[]" placeholder="Search and select" class="selectExample" label="Officers" label-placeholder="Officers" multiple v-model="officer">
-                                <vs-select-item value="" :disabled="true" text="Select Officers"></vs-select-item>
-                                <vs-select-item :key="index" :value="item.manager_id" :text="item.first_name+' '+item.last_name" v-for="(item,index) in officers" />
-                            </vs-select>
+                        <vx-input-group>
+                            <br>
+                            <vs-textarea name="notes" v-model="notes" :counter="100" label="Notes" data-vv-scope="editform" />
+                            <span class="text-danger" v-show="errors.has('editform.notes')">{{errors.first('editform.notes')}}</span>
                         </vx-input-group>
                     </vs-col>
                     <vs-col vs-lg="12" vs-md="12" vs-sm="12">
@@ -234,8 +240,10 @@ export default {
             analyticsData: analyticsData,
             editTaxManagmentModal: false,
             title: "",
+            tax_code: "",
             description: "",
             type: 'Monthly',
+            notes: '',
             duration: '',
             officer: [],
             editSupervisor : '',
@@ -285,8 +293,10 @@ export default {
             this.editTaxManagmentModal = true;
             this.title = this.tax.title;
             this.duration = this.tax.duration;
+            this.tax_code = this.tax.tax_code;
             this.editSupervisor = this.tax.supervisor_id;
             this.type = this.tax.type;
+            this.notes = this.tax.notes;
             this.officer = _.map(this.tax.officers,'officer_id');
             this.description = this.tax.description;
             // this.$data.editedTax = this.tax;
@@ -301,6 +311,7 @@ export default {
                     fd.append('tax_id',this.$route.params.id);
                     fd.append('officers', self.officer)
                     fd.append('supervisor_id',self.editSupervisor)
+                    fd.append('tax_code',self.tax_code)
                     let data = {
                         fd: fd,
                         close: this.$vs.loading.close,
@@ -338,5 +349,7 @@ export default {
 #tax-detail .vx-card .vx-card__collapsible-content.vs-con-loading__container {
     min-height: 250px !important;
 }
-
+.status-list-item .vs-list--slot {
+    margin-left: 0;
+}
 </style>

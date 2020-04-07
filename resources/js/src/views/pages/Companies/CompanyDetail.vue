@@ -29,7 +29,7 @@
 </template>
 <script>
 import { mapState, mapActions, mapGetters, mapMutations } from 'vuex';
-import Taxes from '@/views/pages/Customers/Taxes.vue';
+import Taxes from '@/views/pages/Companies/Taxes.vue';
 export default {
     components: {
         Taxes,

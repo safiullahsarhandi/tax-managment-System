@@ -52,6 +52,7 @@ export default [
             name: "Add Employee",
             slug: "add-employee",
             icon: "UserIcon",
+            target : '_blank',
         },{
             url: "/employees-list",
             name: "List Of Employees",

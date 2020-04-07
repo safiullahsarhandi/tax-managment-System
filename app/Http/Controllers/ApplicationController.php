@@ -8,6 +8,7 @@ use App\CustomerEmployee;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\MyValueBinder;
 use App\Officer;
+use App\Owner;
 use App\Parameter;
 use App\PasswordReset;
 use App\Payrolls;
@@ -163,6 +164,7 @@ class ApplicationController extends Controller {
 		$customer = new TaxCustomers;
 		$customer->customer_id = (String) Str::uuid();
 		$customer->name_english = $request->name_eng;
+		$customer->owner_id = $request->owner;
 		$customer->name_khmer = $request->name_khmer;
 		$customer->tax_card_num = $request->tax_id;
 		$customer->tin_no = $request->tin_num;
@@ -179,6 +181,7 @@ class ApplicationController extends Controller {
 		$customer->industry = $request->industry;
 		$customer->incorporation_date = $request->incorporation_date;
 		$customer->village = $request->village;
+		$customer->customer_status = $request->customer_status;
 		$customer->additional_fields = $request->additional_field;
 		// $customer->tax_duration = $request->tax_duration;
 
@@ -195,6 +198,40 @@ class ApplicationController extends Controller {
 
 		$result = $customer->save();
 		return response()->json(['status' => 'success', 'customers' => $customer]);
+	}
+
+	public function add_owner(Request $request) {
+		if ($res = Owner::whereEmail($request->email)->first()) {
+			return response()->json(['status' => "error", 'msg' => "email already exists"]);
+		}
+		if ($res = Owner::whereNic($request->nic)->first()) {
+			return response()->json(['status' => "error", 'msg' => "Account with given NIC already exist"]);
+		}
+		$owner = new Owner;
+		$owner->owner_id = (String) Str::uuid();
+		$owner->name_english = $request->name_english;
+		$owner->name_khmer = $request->name_khmer;
+		$owner->email = $request->email;
+		$owner->phone_number = $request->phone_number;
+		$owner->nic = $request->nic;
+		$owner->save();
+		return response()->json(['status' => 'success', 'msg' => 'New customer added successfully', 'customers' => $owner]);
+	}
+	public function update_owner(Request $request) {
+		if ($res = Owner::whereEmail($request->email)->where('owner_id', '!=', $request->owner_id)->first()) {
+			return response()->json(['status' => "error", 'msg' => "email already exists"]);
+		}
+		if ($res = Owner::whereNic($request->nic)->where('owner_id', '!=', $request->owner_id)->first()) {
+			return response()->json(['status' => "error", 'msg' => "Account with given NIC already exist"]);
+		}
+		$owner = Owner::withCount('companies')->where('owner_id', $request->owner_id)->first();
+		$owner->name_english = $request->name_english;
+		$owner->name_khmer = $request->name_khmer;
+		$owner->email = $request->email;
+		$owner->phone_number = $request->phone_number;
+		$owner->nic = $request->nic;
+		$owner->save();
+		return response()->json(['status' => 'success', 'msg' => 'customer information updated successfully', 'owner' => $owner]);
 	}
 
 	public function add_multiple_customer(Request $request) {
@@ -298,16 +335,23 @@ class ApplicationController extends Controller {
 
 		if (session('admin.type') == 'Admin' || session('admin.type') == 'Super Admin') {
 
-			$customers = TaxCustomers::with('supervisor', 'officer')->orderBy('created_at', 'desc')->get();
+			$customers = TaxCustomers::with('supervisor', 'officer', 'created_by')->orderBy('created_at', 'desc')->get();
 
 		} else if (session('admin.type') == 'Supervisor') {
-			$customers = TaxCustomers::with('supervisor', 'officer')->where('supervisor', session('admin.manager_id'))->get();
+			$customers = TaxCustomers::with('supervisor', 'officer', 'created_by')->where('supervisor', session('admin.manager_id'))->get();
 		} else {
 			$customers = TaxCustomers::where(['manager' => session('admin.manager_id')])->get();
 
 		}
 
 		return response()->json(compact('customers'));
+	}
+
+	public function get_owners(Request $request) {
+
+		$owners = Owner::withCount('companies')->orderBy('created_at', 'desc')->get();
+
+		return response()->json(compact('owners'));
 	}
 	public function get_customer(Request $request) {
 		$customer = TaxCustomers::withCount('active_employees', 'taxes')->with('officer', 'supervisor', 'created_by')->where('customer_id', $request->customer_id)->first();
@@ -319,6 +363,7 @@ class ApplicationController extends Controller {
 		$customer = TaxCustomers::whereCustomerId($request->id)->first();
 		$customer->name_english = $request->name_eng;
 		$customer->name_khmer = $request->name_khmer;
+		$customer->owner_id = $request->owner;
 		$customer->email = $request->email;
 		$customer->telephone = $request->tel;
 		$customer->e_phone = $request->e_phone;
@@ -432,7 +477,14 @@ class ApplicationController extends Controller {
 
 	// admins methods
 	public function get_admins(Request $request) {
-		$admins = Admin::with('reportingTo')->where('manager_id', '!=', session('admin.manager_id'))->latest('id')->get();
+		if (session('admin.type') == 'Supervisor') {
+			$admins = Admin::with('reportingTo')->where('manager_id', '!=', session('admin.manager_id'))->where('reports_to', session('admin.manager_id'))->where('type', 3)->latest('id')->get();
+
+		} elseif (session('admin.type') == 'Admin' || session('admin.type') == 'Super Admin') {
+			$admins = Admin::with('reportingTo')->where('manager_id', '!=', session('admin.manager_id'))->latest('id')->get();
+		} else {
+			$admins = [];
+		}
 		return response()->json(compact('admins'));
 	}
 
@@ -524,6 +576,13 @@ class ApplicationController extends Controller {
 		return response()->json(['status' => 'success', 'msg' => $msg], 200);
 	}
 
+	public function update_customer_status(Request $request) {
+		$customer = TaxCustomers::whereCustomerId($request->customer_id)->first();
+		$customer->customer_status = $request->status;
+		$customer->save();
+		return response()->json(['status' => 'success', 'msg' => 'Customer status updated successfully'], 200);
+	}
+
 	public function status_update_officer(Request $request) {
 		$officer = Officer::whereManagerId($request->id)->first();
 		if ($officer->status == 1) {
@@ -594,8 +653,9 @@ class ApplicationController extends Controller {
 			$data->value = 0;
 			$data->save();
 		}
-		$setting = Settings::all();
+		$setting = Settings::where('key', '!=', 'faqs')->get();
 		$rates = $setting;
+
 		return response()->json(compact('rates'));
 	}
 
@@ -806,12 +866,9 @@ class ApplicationController extends Controller {
 		$sale->non_taxable_sales = $request->non_taxable_sales;
 		$sale->vat = $request->export_value;
 		$sale->created_by = $request->created_by;
-		/*if ($request->has('supervisor_id')) {
-				$sale->officer_confirmed = 1;
-			} else {
-				$sale->tax_officer_id = $request->officer_id;
-
-		*/
+		if ($request->creator_type == 'Supervisor') {
+			$sale->officer_confirmed = 1;
+		}
 
 		if (!is_null($request->person_non_taxable_sales)) {
 			$sale->taxable_person_sales = $request->person_non_taxable_sales;
@@ -1403,12 +1460,12 @@ class ApplicationController extends Controller {
 		$totalTaxApprovedChilds = $totalApprovedSale + $totalApprovedPurchase + $totalApprovedPayrolls;
 
 		$tax = Tax::where('tax_id', $request->id)->first();
-		if ($totalTaxApprovedChilds >= $totalTaxChilds) {
-			if ($tax->status == 1) {
-				$tax->status = 0;
-			} else {
-				$tax->status = 1;
-			}
+		if ($totalTaxApprovedChilds >= $totalTaxChilds && $totalTaxChilds != 0) {
+			$tax->status = $request->status;
+			/*if ($tax->status == 1) {
+					$tax->status = 0;
+				} else {
+			*/
 			$tax->save();
 			return response()->json(['status' => true, 'msg' => 'tax has been completed successfully', 'tax' => $tax]);
 		} else {
@@ -1546,6 +1603,18 @@ class ApplicationController extends Controller {
 		$data->save();
 
 		return response()->json(['status' => true, 'msg' => 'Password changed successfully'], 200);
+	}
+
+	public function update_faqs(Request $request) {
+
+		$setting = Settings::firstOrNew(['key' => 'faqs']);
+		$setting->value = $request->content;
+		$setting->save();
+		return response()->json(['status' => true, 'faqs' => $setting->value]);
+	}
+	public function get_faqs() {
+		$faqs = Settings::where('key', 'faqs')->first();
+		return $faqs->value;
 	}
 
 }

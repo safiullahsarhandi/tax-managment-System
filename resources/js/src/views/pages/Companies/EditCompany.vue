@@ -1,111 +1,119 @@
 <template>
     <div>
-        <vx-card title="Edit Customer" subtitle="Update Information Of Customer OR company which tax will be managed by system" noShadow noRadius>
-            <form ref="editform" @submit.prevent="updateCustomer($event)">
+        <vx-card title="Edit company" subtitle="Update Information Of company whom tax will be managed by system" noShadow noRadius>
+            <form ref="editform" data-vv-scope="editform" @submit.prevent="updateCustomer($event)">
             	<vs-row>
+                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                        <vx-input-group >
+                            <vs-select style="width: 100%;" v-validate="'required'" name="owner" label="Customer" placeholder="Select Customer"  v-model="owner">
+                                <vs-select-item v-for="(owner,index) in owners" :key="index"  :value="owner.owner_id" :text="owner.name_english"></vs-select-item>
+                            </vs-select>
+                            <span class="text-danger" v-show="errors.has('editform.owner')">{{errors.first('editform.owner')}}</span>
+                        </vx-input-group>
+                    </vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
             			<vx-input-group>
                         <input type="hidden" name="id" v-model="customer_id" data-vv-scope="editform">
                         <vs-input name="name_eng" v-validate="`required`" label-placeholder="Name (English)" v-model="name_eng" />
             			</vx-input-group>
-                        <span class="text-danger" v-show="errors.has('name_eng')">{{errors.first('name_eng')}}</span>
+                        <span class="text-danger" v-show="errors.has('editform.name_eng')">{{errors.first('editform.name_eng')}}</span>
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
                         <vs-input name="name_khmer" v-validate="`required`" label-placeholder="Name (Khmer)" v-model="name_khmer" />
             			</vx-input-group>
-                        <span class="text-danger" v-show="errors.has('name_khmer')">{{errors.first('name_khmer')}}</span>
+                        <span class="text-danger" v-show="errors.has('editform.name_khmer')">{{errors.first('editform.name_khmer')}}</span>
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
             			<vx-input-group>
                         <vs-input name="tax_id" v-validate="`required`" label-placeholder="Tax ID Card #" v-model="tax_id" />
             			</vx-input-group>
-                        <span class="text-danger" v-show="errors.has('tax_id')">{{errors.first('tax_id')}}</span>
+                        <span class="text-danger" v-show="errors.has('editform.tax_id')">{{errors.first('editform.tax_id')}}</span>
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
                         <vs-input name="tin_num" v-validate="`required`" label-placeholder="TIN #" v-model="tin_num" />
             			</vx-input-group>
-                        <span class="text-danger" v-show="errors.has('tin_num')">{{errors.first('tin_num')}}</span>
+                        <span class="text-danger" v-show="errors.has('editform.tin_num')">{{errors.first('editform.tin_num')}}</span>
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
             			<vx-input-group>
                         <vs-input name="incorporation_date" v-validate="`required`" label-placeholder="Date of company incorporated" v-model="incorporation_date" />
             			</vx-input-group>
-                        <span class="text-danger" v-show="errors.has('incorporation_date')">{{errors.first('incorporation_date')}}</span>
+                        <span class="text-danger" v-show="errors.has('editform.incorporation_date')">{{errors.first('editform.incorporation_date')}}</span>
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
                         <vs-input name="address" v-validate="`required`" label-placeholder="Address" v-model="address" />
             			</vx-input-group>
-                        <span class="text-danger" v-show="errors.has('address')">{{errors.first('address')}}</span>
+                        <span class="text-danger" v-show="errors.has('editform.address')">{{errors.first('editform.address')}}</span>
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
             			<vx-input-group>
                         <vs-input name="street" v-validate="`required`" label-placeholder="Street" v-model="street" />
             			</vx-input-group>
-                        <span class="text-danger" v-show="errors.has('street')">{{errors.first('street')}}</span>
+                        <span class="text-danger" v-show="errors.has('editform.street')">{{errors.first('editform.street')}}</span>
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
                         <vs-input name="group" v-validate="`required`" label-placeholder="Group" v-model="group" />
             			</vx-input-group>
-                        <span class="text-danger" v-show="errors.has('group')">{{errors.first('group')}}</span>
+                        <span class="text-danger" v-show="errors.has('editform.group')">{{errors.first('editform.group')}}</span>
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
                         <vs-input name="village" v-validate="`required`" label-placeholder="Village" v-model="village" />
             			</vx-input-group>
-                        <span class="text-danger" v-show="errors.has('village')">{{errors.first('village')}}</span>
+                        <span class="text-danger" v-show="errors.has('editform.village')">{{errors.first('editform.village')}}</span>
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
             			<vx-input-group>
                         <vs-input name="sangkat" v-validate="`required`" label-placeholder="Sangkat" v-model="sangkat" />
             			</vx-input-group>
-                        <span class="text-danger" v-show="errors.has('sangkat')">{{errors.first('sangkat')}}</span>
+                        <span class="text-danger" v-show="errors.has('editform.sangkat')">{{errors.first('editform.sangkat')}}</span>
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
                         <vs-input name="district" v-validate="`required`" label-placeholder="District" v-model="district" />
             			</vx-input-group>
-                        <span class="text-danger" v-show="errors.has('district')">{{errors.first('district')}}</span>
+                        <span class="text-danger" v-show="errors.has('editform.district')">{{errors.first('editform.district')}}</span>
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
                         <vs-input name="province" v-validate="`required`" label-placeholder="Province" v-model="province" />
             			</vx-input-group>
-                        <span class="text-danger" v-show="errors.has('province')">{{errors.first('province')}}</span>
+                        <span class="text-danger" v-show="errors.has('editform.province')">{{errors.first('editform.province')}}</span>
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
             			<vx-input-group>
                         <vs-input name="muncipality" v-validate="`required`" label-placeholder="Muncipality" v-model="muncipality" />
             			</vx-input-group>
-                        <span class="text-danger" v-show="errors.has('muncipality')">{{errors.first('muncipality')}}</span>
+                        <span class="text-danger" v-show="errors.has('editform.muncipality')">{{errors.first('editform.muncipality')}}</span>
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
                         <vs-input name="tel" v-validate="`required`" label-placeholder="Tel." v-model="tel" />
             			</vx-input-group>
-                        <span class="text-danger" v-show="errors.has('tel')">{{errors.first('tel')}}</span>
+                        <span class="text-danger" v-show="errors.has('editform.tel')">{{errors.first('editform.tel')}}</span>
             		</vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
                             <vs-input name="e_phone" data-vv-as="ePhone" v-validate="`required`" :label-placeholder="lang=='english'?'ePhone':'ទូរស័ព្ទ'" v-model="ePhone" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('e_phone')">{{errors.first('e_phone')}}</span>
+                        <span class="text-danger" v-show="errors.has('editform.e_phone')">{{errors.first('editform.e_phone')}}</span>
                     </vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
             			<vx-input-group>
                         <vs-input name="email" type="email" v-validate="`required`" label-placeholder="Email" v-model="email" />
             			</vx-input-group>
-                        <span class="text-danger" v-show="errors.has('email')">{{errors.first('email')}}</span>
+                        <span class="text-danger" v-show="errors.has('editform.email')">{{errors.first('editform.email')}}</span>
             		</vs-col>
 
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
                         <vs-input name="industry" v-validate="`required`" label-placeholder="Industry / Sector" v-model="industry" />
             			</vx-input-group>
-                        <span class="text-danger" v-show="errors.has('industry')">{{errors.first('industry')}}</span>
+                        <span class="text-danger" v-show="errors.has('editform.industry')">{{errors.first('editform.industry')}}</span>
             		</vs-col>
 
                     <!-- <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
@@ -121,7 +129,7 @@
                                   <vs-select-item :key="indx" :value="i.value" :text="i.text" v-for="(i,indx) in taxDuration" />
                             </vs-select>
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('tax_duration')">{{errors.first('tax_duration')}}</span>
+                        <span class="text-danger" v-show="errors.has('editform.tax_duration')">{{errors.first('editform.tax_duration')}}</span>
                     </vs-col> -->
 
 
@@ -153,6 +161,7 @@
 		data () {
 		  return {
 		    customField:[],
+            customer_id : '',
 		    name_khmer : '',
 		    name_eng : '',
 		    tax_id : '',
@@ -169,7 +178,9 @@
             tel : '',
 		    ePhone : '',
 		    email : '',
-		    industry : '',
+            industry : '',
+            owner : '',
+		    lang : 'english',
             taxDurationSelected: 'Monthly',
             taxDuration:[
                 {text: 'Monthly', value: 'Monthly'},
@@ -178,11 +189,13 @@
 		  };
 		},
          computed: {
+            ...mapState('customers/',['owners']),
             ...mapGetters('customers/',['findCustomer']),
         },
         created() {
             // this.getCustomers();
             // console.log(this.$route.params.id);
+            this.getOwners();
             this.editCustomer(this.$route.params.id);
         },
 		methods: {
@@ -190,7 +203,8 @@
 		    this.customField.push({name : 'additional_field[]',value : '',type: 'text'});
 		  },
                ...mapActions({
-                  update: 'customers/updateCustomer'
+                  update: 'customers/updateCustomer',
+                  getOwners : 'customers/getOwners',
               }),
 
 
@@ -237,6 +251,7 @@
                 if (result) {
                     this.$vs.loading();
                     var fd = new FormData(this.$refs.editform);
+                    fd.append('owner',this.owner)
                     this.update(fd).then( (res) => {
                         if (res.data.status == 'success') {
                             e.target.reset();
