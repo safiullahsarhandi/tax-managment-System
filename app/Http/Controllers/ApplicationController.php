@@ -1650,7 +1650,7 @@ class ApplicationController extends Controller {
 		->orWhere('remarks', 'like', '%'.$query.'%')
 		->get();
 
-		return $value = Session::get('admin');
+		// return $value = Session::get('admin');
 
 		$data = array_merge($searchResult, compact(
 			'taxCustomers',
