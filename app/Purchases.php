@@ -10,7 +10,7 @@ class Purchases extends Model {
 	protected $casts = [
 		'additional_fields' => 'array',
 	];
-	protected $appends = ['officer_confirmation'];
+	protected $appends = ['officer_confirmation', 'table_name'];
 	public function getOfficerConfirmationAttribute() {
 		if ($this->officer_confirmed == 0) {
 			return 'Working';
@@ -29,5 +29,8 @@ class Purchases extends Model {
 	}
 	public function officer() {
 		return $this->belongsTo(Officer::class, 'tax_officer_id', 'manager_id');
+	}
+	public function getTableNameAttribute($val){
+		return 'purchases';
 	}
 }

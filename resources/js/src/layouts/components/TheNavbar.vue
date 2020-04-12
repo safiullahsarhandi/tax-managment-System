@@ -60,10 +60,6 @@
                 
 			</template>
 
-           
-
-
-
 			<vs-spacer></vs-spacer>
 			<!-- USER META -->
             <!-- <vs-icon icon="notifications" type="outline" size="30px" style="margin-right: 20px">  </vs-icon> -->
@@ -211,7 +207,8 @@ export default {
     watch: {
         '$route'() {
             if (this.showBookmarkPagesDropdown) this.showBookmarkPagesDropdown = false
-        }
+        },
+        
     },
     computed: {
         // HELPER

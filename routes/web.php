@@ -125,6 +125,8 @@ Route::group(['prefix' => ''], function () {
 	Route::post('verify-code-and-change-password', 'ApplicationController@verify_code_change_password');
 
 
+	Route::post('search-data', 'ApplicationController@search_data');
+
 	
 
 });

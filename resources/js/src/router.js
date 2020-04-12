@@ -174,6 +174,16 @@ const router = new Router({
                         requiresAdmin: true,
                     }
                 },
+                {
+                    path: '/searched-record',
+                    name: 'Search Page',
+                    component: () => import('./views/SearchedRecords.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+                
             ],
         },
         {

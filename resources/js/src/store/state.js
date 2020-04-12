@@ -24,6 +24,7 @@ const state = {
     theme: themeConfig.theme || 'light',
     navbarSearchAndPinList: navbarSearchAndPinList,
     AppActiveUser: {},
+    searchedData: {},
 
     themePrimaryColor: colors.primary,
 
