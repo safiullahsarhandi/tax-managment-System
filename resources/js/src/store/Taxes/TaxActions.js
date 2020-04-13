@@ -9,9 +9,10 @@ export default {
             commit('setParameters', res.data.parameters)
         });
     },
-    getTax({ commit }, tax_id) {
-        axios.get('get-tax', { params: { tax_id: tax_id } }).then(res => {
+    async getTax({ commit }, tax_id) {
+        return await axios.get('get-tax', { params: { tax_id: tax_id } }).then(res => {
             commit('setSingleTax', res.data)
+            return res.data;
         });
     },
     async getTaxTeam({ commit }, tax_id) {

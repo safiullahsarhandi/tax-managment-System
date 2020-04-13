@@ -298,7 +298,8 @@ const router = new Router({
                     meta: {
                         requiresAuth: true,
                         requiresAdmin: true,
-                    }
+                    },
+                    
                 },
                 {
                     path: '/sales-list',

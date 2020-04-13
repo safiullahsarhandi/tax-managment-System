@@ -30,7 +30,7 @@
                         <vs-td :data="tr.invoice_date">{{tr.invoice_date}}</vs-td>
                         <vs-td :data="tr.quantity">{{tr.quantity}}</vs-td>
                         
-                        <vs-td v-show='is_officer == true' :data="tr.officer_confirmed"><vs-switch @click="statusUpdate(tr.sale_id, tr.officer_confirmed)" v-model="tr.officer_confirmed"/></vs-td>
+                        <vs-td v-show='is_officer == true' :data="tr.officer_confirmed"><vs-switch @click="statusUpdate(tr.sale_id, tr.officer_confirmed)" v-model="tr.officer_confirmed == 1?true:false"/></vs-td>
 
                        <vs-td v-show='is_admin == true' :data="tr.management_confirmed"> 
                         <template>
@@ -157,7 +157,7 @@ export default {
                 type: 'sale'
             };
             this.statusChange(data).then((res)=> {
-               if(res.data.status != true){
+               if(res.data.status == true){
                     var index = this.sales.findIndex(function(o){ return o.sale_id == id;} );
                     if(res.data.response == 'undefined'){
                         this.sales[index].officer_confirmed = status; 

@@ -7,6 +7,7 @@ use App\Currencies;
 use App\CustomerEmployee;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\MyValueBinder;
+use App\Notification;
 use App\Officer;
 use App\Owner;
 use App\Parameter;
@@ -156,10 +157,10 @@ class ApplicationController extends Controller {
 			return response()->json(['status' => "error", 'msg' => "email already exists"]);
 		}
 		if ($res = TaxCustomers::whereTaxCardNum($request->tax_card_num)->first()) {
-			return response()->json(['status' => "error", 'msg' => "Account with this tax card number already exist"]);
+			return response()->json(['status' => "error", 'msg' => "Company with this tax card number already exist"]);
 		}
 		if ($res = TaxCustomers::whereTinNo($request->tin_no)->first()) {
-			return response()->json(['status' => "error", 'msg' => "Account with this tax card number already exist"]);
+			return response()->json(['status' => "error", 'msg' => "Company with this tax card number already exist"]);
 		}
 		$customer = new TaxCustomers;
 		$customer->customer_id = (String) Str::uuid();
@@ -197,6 +198,135 @@ class ApplicationController extends Controller {
 		}
 
 		$result = $customer->save();
+		if ($created_by->type == 'Supervisor') {
+
+			// sending notification to officer
+			$notification = new Notification;
+			$notification->transmitted_for = $customer->manager;
+			$notification->transmitted_by = $created_by->manager_id;
+			$notification->notification = 'new company alert';
+			$notification->description = 'new company ' . $customer->name_english . ' has been created by  <strong>' . $created_by->full_name . '</strong>: which were assigned to you';
+			$notification->click_action = "/company-detail/" . $customer->customer_id;
+			$save = $notification->save();
+			$officer = Admin::where('manager_id', $customer->manager)->first();
+			if ($save) {
+				$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
+
+				$fields = array(
+					// "content_available" => true,
+					"to" => $officer->token,
+					'priority' => 'high',
+					"data" => array(
+						"title" => $notification->notification,
+						"body" => $notification->description,
+						"icon" => "icon.png",
+						"click_action" => $notification->click_action,
+					),
+					"notification" => array(
+						"title" => $notification->notification,
+						"body" => $notification->description,
+						"icon" => "icon.png",
+						"click_action" => $notification->click_action,
+					),
+				);
+				$data_string = json_encode($fields);
+				$headers = array('Authorization: key=' . $serverKey, 'Content-Type: application/json');
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+				curl_setopt($ch, CURLOPT_POST, true);
+				curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+				$result = curl_exec($ch);
+				curl_close($ch);
+			}
+
+			// sending notification to Admins
+			$admins = Admin::where('manager_id', $created_by->reports_to)->orWhere('type', 1)->get();
+			foreach ($admins as $key => $admin) {
+				$notification = new Notification;
+				$notification->transmitted_for = $admin->manager_id;
+				$notification->transmitted_by = $created_by->manager_id;
+				$notification->notification = 'new company alert';
+				$notification->description = 'new company ' . $customer->name_english . ' has been created by  Supervisor: <strong>' . $created_by->full_name . '</strong>: which were assigned to ' . $officer->full_name;
+				$notification->click_action = "/company-detail/" . $customer->customer_id;
+				$save = $notification->save();
+				if ($save) {
+					$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
+
+					$fields = array(
+						"to" => $admin->token,
+						'priority' => 'high',
+						"data" => array(
+							"title" => $notification->notification,
+							"body" => $notification->description,
+							"icon" => "icon.png",
+							"click_action" => $notification->click_action,
+						),
+						"notification" => array(
+							"title" => $notification->notification,
+							"body" => $notification->description,
+							"icon" => "icon.png",
+							"click_action" => $notification->click_action,
+						),
+					);
+					$data_string = json_encode($fields);
+					$headers = array('Authorization: key=' . $serverKey, 'Content-Type: application/json');
+					$ch = curl_init();
+					curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+					curl_setopt($ch, CURLOPT_POST, true);
+					curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+					curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+					$result = curl_exec($ch);
+					curl_close($ch);
+				}
+			}
+
+		} elseif ($created_by->type == 'Officer') {
+			$supervisor = Admin::where('manager_id', $customer->manager)->first();
+			// sending notification to Admins
+			$admins = Admin::where('manager_id', $created_by->reports_to)->orWhere('type', 1)->orWhere('manager_id', $supervisor->reports_to)->get();
+			foreach ($admins as $key => $admin) {
+				$notification = new Notification;
+				$notification->transmitted_for = $admin->manager_id;
+				$notification->transmitted_by = $created_by->manager_id;
+				$notification->notification = 'new company alert';
+				$notification->description = 'new company ' . $customer->name_english . ' has been created by  Officer: <strong>' . $created_by->full_name . '</strong>';
+				$notification->click_action = "/company-detail/" . $customer->customer_id;
+				$save = $notification->save();
+				if ($save) {
+					$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
+
+					$fields = array(
+						"to" => $admin->token,
+						'priority' => 'high',
+						"data" => array(
+							"title" => $notification->notification,
+							"body" => $notification->description,
+							"icon" => "icon.png",
+							"click_action" => $notification->click_action,
+						),
+						"notification" => array(
+							"title" => $notification->notification,
+							"body" => $notification->description,
+							"icon" => "icon.png",
+							"click_action" => $notification->click_action,
+						),
+					);
+					$data_string = json_encode($fields);
+					$headers = array('Authorization: key=' . $serverKey, 'Content-Type: application/json');
+					$ch = curl_init();
+					curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+					curl_setopt($ch, CURLOPT_POST, true);
+					curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+					curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+					$result = curl_exec($ch);
+					curl_close($ch);
+				}
+			}
+		}
 		return response()->json(['status' => 'success', 'customers' => $customer]);
 	}
 
@@ -256,6 +386,7 @@ class ApplicationController extends Controller {
 			if ($possibleValsCount != $uploadedHeaderCount) {
 				return response()->json(['status' => false, 'msg' => 'upload cannot be processed. <br> please upload file which contain same columns as defined in sample file also uploaded file must contain some data'], 422);
 			}
+			$created_by = Admin::where('manager_id', $request->created_by)->first();
 			foreach ($customers as $key => $value) {
 				if (!$value->filter()->isNotEmpty()) {
 					continue;
@@ -312,7 +443,6 @@ class ApplicationController extends Controller {
 				$customer->tax_duration = $value['tax_duration'];
 				// $customer->manager = $request->manager;
 
-				$created_by = Admin::where('manager_id', $request->created_by)->first();
 				if ($created_by->type == 'Supervisor') {
 					$customer->manager = $request->manager;
 					$customer->supervisor = $request->created_by;
@@ -327,12 +457,142 @@ class ApplicationController extends Controller {
 
 			}
 			$totalAddedCount = $counter;
+			if ($totalAddedCount > 0) {
+				if ($created_by->type == 'Supervisor') {
+
+					// sending notification to officer
+					$notification = new Notification;
+					$notification->transmitted_for = $customer->manager;
+					$notification->transmitted_by = $created_by->manager_id;
+					$notification->notification = 'new company alert';
+					$notification->description = $totalAddedCount . ' new companies has been created by  <strong>' . $created_by->full_name . '</strong>: which were assigned to you';
+					$notification->click_action = "/companies";
+					$save = $notification->save();
+					$officer = Admin::where('manager_id', $request->manager)->first();
+					if ($save) {
+						$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
+
+						$fields = array(
+							// "content_available" => true,
+							"to" => $officer->token,
+							'priority' => 'high',
+							"data" => array(
+								"title" => $notification->notification,
+								"body" => $notification->description,
+								"icon" => "icon.png",
+								"click_action" => $notification->click_action,
+							),
+							"notification" => array(
+								"title" => $notification->notification,
+								"body" => $notification->description,
+								"icon" => "icon.png",
+								"click_action" => $notification->click_action,
+							),
+						);
+						$data_string = json_encode($fields);
+						$headers = array('Authorization: key=' . $serverKey, 'Content-Type: application/json');
+						$ch = curl_init();
+						curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+						curl_setopt($ch, CURLOPT_POST, true);
+						curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+						curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+						curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+						$result = curl_exec($ch);
+						curl_close($ch);
+					}
+
+					// sending notification to Admins
+					$admins = Admin::where('manager_id', $created_by->reports_to)->orWhere('type', 1)->get();
+					foreach ($admins as $key => $admin) {
+						$notification = new Notification;
+						$notification->transmitted_for = $admin->manager_id;
+						$notification->transmitted_by = $created_by->manager_id;
+						$notification->notification = 'new company alert';
+						$notification->description = $totalAddedCount . ' new companies has been created by  Supervisor: <strong>' . $created_by->full_name . '</strong>: which were assigned to ' . $officer->full_name;
+						$notification->click_action = "/companies";
+						$save = $notification->save();
+						if ($save) {
+							$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
+
+							$fields = array(
+								"to" => $admin->token,
+								'priority' => 'high',
+								"data" => array(
+									"title" => $notification->notification,
+									"body" => $notification->description,
+									"icon" => "icon.png",
+									"click_action" => $notification->click_action,
+								),
+								"notification" => array(
+									"title" => $notification->notification,
+									"body" => $notification->description,
+									"icon" => "icon.png",
+									"click_action" => $notification->click_action,
+								),
+							);
+							$data_string = json_encode($fields);
+							$headers = array('Authorization: key=' . $serverKey, 'Content-Type: application/json');
+							$ch = curl_init();
+							curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+							curl_setopt($ch, CURLOPT_POST, true);
+							curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+							curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+							curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+							$result = curl_exec($ch);
+							curl_close($ch);
+						}
+					}
+
+				} elseif ($created_by->type == 'Officer') {
+					$supervisor = Admin::where('manager_id', $created_by->reports_to)->first();
+					// sending notification to Admins
+					$admins = Admin::where('manager_id', $created_by->reports_to)->orWhere('type', 1)->orWhere('manager_id', $supervisor->reports_to)->get();
+					foreach ($admins as $key => $admin) {
+						$notification = new Notification;
+						$notification->transmitted_for = $admin->manager_id;
+						$notification->transmitted_by = $created_by->manager_id;
+						$notification->notification = 'new company alert';
+						$notification->description = $totalAddedCount . ' new companies has been created by  Officer: <strong>' . $created_by->full_name . '</strong>';
+						$notification->click_action = "/companies";
+						$save = $notification->save();
+						if ($save) {
+							$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
+
+							$fields = array(
+								"to" => $admin->token,
+								'priority' => 'high',
+								"data" => array(
+									"title" => $notification->notification,
+									"body" => $notification->description,
+									"icon" => "icon.png",
+									"click_action" => $notification->click_action,
+								),
+								"notification" => array(
+									"title" => $notification->notification,
+									"body" => $notification->description,
+									"icon" => "icon.png",
+									"click_action" => $notification->click_action,
+								),
+							);
+							$data_string = json_encode($fields);
+							$headers = array('Authorization: key=' . $serverKey, 'Content-Type: application/json');
+							$ch = curl_init();
+							curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+							curl_setopt($ch, CURLOPT_POST, true);
+							curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+							curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+							curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+							$result = curl_exec($ch);
+							curl_close($ch);
+						}
+					}
+				}
+			}
 			return response()->json(['status' => 'success', 'msg' => "$totalAddedCount new companies added. <br> $emailCount email already exists, <br> $taxCardNo tax card No. already associated with companies <br> $tinNo Tin No. already associated with companies."]);
 		}
 	}
 
 	public function get_customers(Request $request) {
-
 		if (session('admin.type') == 'Admin' || session('admin.type') == 'Super Admin') {
 
 			$customers = TaxCustomers::with('supervisor', 'officer', 'created_by')->orderBy('created_at', 'desc')->get();
@@ -891,16 +1151,16 @@ class ApplicationController extends Controller {
 		return response()->json(compact('sales'));
 	}
 	public function get_pending_sales(Request $request) {
-		$sales = Sales::with('officer')->where('officer_confirmed', 1)->where('supervisor_confirmed', 0)->where('tax_id', $request->tax_id)->get();
+		$sales = Sales::with('created_by')->where('officer_confirmed', 1)->where('supervisor_confirmed', 0)->where('tax_id', $request->tax_id)->get();
 		return response()->json(compact('sales'));
 	}
 
 	public function get_pending_purchases(Request $request) {
-		$purchases = Purchases::with('officer')->where('officer_confirmed', 1)->where('supervisor_confirmed', 0)->where('tax_id', $request->tax_id)->get();
+		$purchases = Purchases::with('created_by')->where('officer_confirmed', 1)->where('supervisor_confirmed', 0)->where('tax_id', $request->tax_id)->get();
 		return response()->json(compact('purchases'));
 	}
 	public function get_pending_payrolls(Request $request) {
-		$payrolls = Payrolls::with('officer', 'employee')->where('officer_confirmed', 1)->where('supervisor_confirmed', 0)->where('tax_id', $request->tax_id)->get();
+		$payrolls = Payrolls::with('created_by', 'employee')->where('officer_confirmed', 1)->where('supervisor_confirmed', 0)->where('tax_id', $request->tax_id)->get();
 		return response()->json(compact('payrolls'));
 	}
 
@@ -1380,16 +1640,100 @@ class ApplicationController extends Controller {
 		}
 
 		$msg = '';
+		$tax = Tax::with('customer')->whereTaxId($request->tax_id)->first();
 		if ($data->supervisor_confirmed == 0) {
 
 			if ($data->officer_confirmed == 1) {
 				$data->officer_confirmed = 0;
 				$data->save();
-				$msg = 'Status Disabled Successfully';
+				$msg = $request->type . ' submission revoked Successfully';
 			} else {
+				// $supervisor = Admin::whereManagerId(session('admin.reports_to'))->first();
+
 				$data->officer_confirmed = 1;
-				$data->sxave();
-				$msg = 'Status Enabled Successfully';
+				$data->save();
+				$msg = $request->type . ' Submitted Successfully';
+
+				$notification = new Notification;
+				$notification->transmitted_for = session('admin.reports_to');
+				$notification->transmitted_by = session('admin.manager_id');
+				$notification->notification = 'new ' . $request->type . ' submission alert';
+				$notification->description = 'new ' . $request->type . ' in ' . $tax->title . ' with in company: ' . $tax->customer->name_english . ' has been submitted by officer: ' . session('admin.full_name');
+				$notification->click_action = '/' . $request->type . "-detail/" . $request->id;
+
+				if ($notification->save()) {
+					/*$fields = [];
+					$headers = [''];*/
+					$tokens = Admin::where('manager_id', session('admin.reports_to'))->first();
+					// 	dd($tokens);
+					$url = "https://fcm.googleapis.com//v1/projects/taxportal-d57de/messages:send";
+					// 	$token = "your device token";
+					$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
+
+					$fields = array(
+						// "content_available" => true,
+						"to" => $tokens->token,
+						'priority' => 'high',
+						"data" => array(
+							"title" => $notification->notification,
+							"body" => $notification->description,
+							"icon" => "icon.png",
+							"click_action" => $notification->click_action,
+						),
+						"notification" => array(
+							"title" => $notification->notification,
+							"body" => $notification->description,
+							"icon" => "icon.png",
+							"click_action" => $notification->click_action,
+						),
+					);
+					$data_string = json_encode($fields);
+					// echo "The Json Data : " . $data_string;
+					$headers = array('Authorization: key=' . $serverKey, 'Content-Type: application/json');
+					$ch = curl_init();
+					curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+					curl_setopt($ch, CURLOPT_POST, true);
+					curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+					curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+					$result = curl_exec($ch);
+					curl_close($ch);
+					// 		echo "<p>&nbsp;</p>";
+					// 		echo "The Result : ".$result;
+					/*$fields = [
+						'notification' => [
+							"title" => "testing",
+							"body" => "testing",
+						],
+						'data' => [
+							"title" => "testing",
+							"body" => "testing",
+						],
+						"priority" => "high",
+						'registeration_ids' => $tokens,
+					];*/
+					/*$title = $notification->notification;
+						$body = "Hello I am from Your php server";
+						$notification = array('title' => $title, 'text' => $body, 'sound' => 'default', 'badge' => '1');
+					*/
+					// 	$json = json_encode($fields);
+					// 	// $headers = array();
+					// 	$headers = ['Content-Type: application/json', 'Authorization: Bearer ' . $serverKey];
+					// 	$ch = curl_init();
+					// 	curl_setopt($ch, CURLOPT_URL, $url);
+					// 	curl_setopt($ch, CURLOPT_POST, true);
+					// 	curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
+					// 	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+					// 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+					// 	//Send the request
+					// 	$response = curl_exec($ch);
+					// 	//Close request
+					// 	/*if ($response === FALSE) {
+					// 		die('FCM Send Error: ' . curl_error($ch));
+					// 	}*/
+					// 	curl_close($ch);
+					// 	dd($response);
+				}
 			}
 		} else {
 
@@ -1418,6 +1762,7 @@ class ApplicationController extends Controller {
 		}
 
 		$msg = '';
+		$tax = Tax::with('customer')->whereTaxId($request->tax_id)->first();
 		if ($request->by == 'supervisor') {
 
 			if ($data->officer_confirmed == 1) {
@@ -1425,8 +1770,54 @@ class ApplicationController extends Controller {
 				if ($data->management_confirmed == 0) {
 					$data->supervisor_confirmed = $request->status;
 					$data->save();
+
+					$notification = new Notification;
+					$notification->transmitted_for = session('admin.reports_to');
+					$notification->transmitted_by = session('admin.manager_id');
+					$notification->notification = 'new ' . $request->tax_type . ' submission alert';
+					$notification->description = 'new ' . $request->tax_type . ' in ' . $tax->title . ' with in company: ' . $tax->customer->name_english . ' has been submitted by supervisor: ' . session('admin.full_name');
+					$notification->click_action = '/' . $request->tax_type . "-detail/" . $request->id;
+
+					if ($notification->save()) {
+						/*$fields = [];
+						$headers = [''];*/
+						$tokens = Admin::where('manager_id', session('admin.reports_to'))->first();
+						// 	dd($tokens);
+						$url = "https://fcm.googleapis.com//v1/projects/taxportal-d57de/messages:send";
+						// 	$token = "your device token";
+						$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
+
+						$fields = array(
+							// "content_available" => true,
+							"to" => $tokens->token,
+							'priority' => 'high',
+							"data" => array(
+								"title" => $notification->notification,
+								"body" => $notification->description,
+								"icon" => "icon.png",
+								"click_action" => $notification->click_action,
+							),
+							"notification" => array(
+								"title" => $notification->notification,
+								"body" => $notification->description,
+								"icon" => "icon.png",
+								"click_action" => $notification->click_action,
+							),
+						);
+						$data_string = json_encode($fields);
+						// echo "The Json Data : " . $data_string;
+						$headers = array('Authorization: key=' . $serverKey, 'Content-Type: application/json');
+						$ch = curl_init();
+						curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+						curl_setopt($ch, CURLOPT_POST, true);
+						curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+						curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+						curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+						$result = curl_exec($ch);
+						curl_close($ch);
+					}
 				} else {
-					return response()->json(['status' => false, 'msg' => '' . $request->tax_type . ' approved by admin.', 'response' => $data->status]);
+					return response()->json(['status' => false, 'msg' => '' . $request->tax_type . ' approved by admin you can not revoke submission until admin revoke it.', 'response' => $data->status]);
 				}
 			} else {
 				return response()->json(['status' => false, 'msg' => '' . $request->tax_type . ' still not completed by officer. please check later.', 'response' => $data->status]);
@@ -1462,14 +1853,10 @@ class ApplicationController extends Controller {
 		$tax = Tax::where('tax_id', $request->id)->first();
 		if ($totalTaxApprovedChilds >= $totalTaxChilds && $totalTaxChilds != 0) {
 			$tax->status = $request->status;
-			/*if ($tax->status == 1) {
-					$tax->status = 0;
-				} else {
-			*/
 			$tax->save();
 			return response()->json(['status' => true, 'msg' => 'tax has been completed successfully', 'tax' => $tax]);
 		} else {
-			return response()->json(['status' => false, 'msg' => 'all sales, purchases payrolls need to be approved first before making completed ', 'tax' => $tax]);
+			return response()->json(['status' => false, 'msg' => 'all sales, purchases payrolls should be approved to mark as completed ', 'tax' => $tax]);
 		}
 	}
 
@@ -1615,6 +2002,30 @@ class ApplicationController extends Controller {
 	public function get_faqs() {
 		$faqs = Settings::where('key', 'faqs')->first();
 		return $faqs->value;
+	}
+
+	public function get_notifications() {
+		$notifications = Notification::where('transmitted_for', session('admin.manager_id'))->latest('id')->take(10)->get();
+		$totalNotifications = Notification::where('transmitted_for', session('admin.manager_id'))->latest('id')->where('is_checked', 0)->count();
+		return response()->json(compact('notifications', 'totalNotifications'));
+	}
+
+	public function mark_as_read(Request $request) {
+		$notification = Notification::find($request->id);
+		$notification->is_checked = 1;
+		$notification->save();
+		$notification = Notification::find($request->id);
+		$totalNotifications = Notification::where('transmitted_for', session('admin.manager_id'))->latest('id')->where('is_checked', 0)->count();
+		return response()->json(compact('notification', 'totalNotifications'));
+
+	}
+
+	public function sendTokenToServer(Request $request) {
+		$admin = Admin::where('manager_id', $request->manager_id)->first();
+		$admin->token = $request->token;
+		$admin->save();
+		session(['admin' => $admin]);
+		return response()->json(compact('admin'));
 	}
 
 }

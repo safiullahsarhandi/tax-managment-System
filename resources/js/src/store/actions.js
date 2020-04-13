@@ -106,6 +106,22 @@ const actions = {
             return res;
         });
 
+    },
+    async getNotifications({commit}){
+        let gettingNotifications =  await axios.get('get-notifications');
+        let fetchedNotifications = gettingNotifications.data;
+        commit('setNotifications',fetchedNotifications);
+    },
+    async markAsRead({commit},notification){
+        let markAsRead =  await axios.post('mark-as-read',{id : notification.id});
+        let markedAsRead = markAsRead.data;
+        commit('setNotification',markedAsRead);
+    },
+    async sendTokenToServer({commit,state},data){
+        data.closeLoading();
+        let manager_id = state.AppActiveUser.manager_id;
+        let sendToken = await axios.post('sendTokenToServer',{token: data.token, manager_id : manager_id})
+        commit('setLoginUser', sendToken.data.admin);
     }
 }
 

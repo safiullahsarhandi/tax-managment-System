@@ -5,4 +5,7 @@ export default {
 	setSale(state,sale){
 		state.sale = sale;
 	},
+	prepandSale(state,sale){
+		state.sales.unshift(sale);
+	}
 }

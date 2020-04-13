@@ -17,6 +17,7 @@ export default{
 	addSale({commit},fd){
 		// alert('action called');
 		return axios.post('add-sale',fd).then(res=>{
+			commit('prepandSale',res.data.data);
 			return res;
 		});
 	},

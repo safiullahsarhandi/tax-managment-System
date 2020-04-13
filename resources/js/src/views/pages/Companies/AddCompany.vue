@@ -40,7 +40,7 @@
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group >
                             <vs-select style="width: 100%;" v-validate="'required'" name="owner" label="Customer" placeholder="Select Customer"  v-model="owner">
-                                <vs-select-item v-for="(owner,index) in owners" :key="index"  :value="owner.name_english" :text="owner.owner_id"></vs-select-item>
+                                <vs-select-item v-for="(owner,index) in owners" :key="index"  :text="owner.name_english" :value="owner.owner_id"></vs-select-item>
                             </vs-select>
                             <span class="text-danger" v-show="errors.has('status')">{{errors.first('status')}}</span>
                         </vx-input-group>

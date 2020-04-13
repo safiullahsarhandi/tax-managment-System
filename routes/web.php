@@ -135,7 +135,12 @@ Route::group(['prefix' => ''], function () {
 	Route::get('export-purchases/{customer_id}/{tax_id}', 'ExportController@export_purchases');
 	Route::get('export-sales/{customer_id}/{tax_id}', 'ExportController@export_sales');
 	Route::get('export-customer-employees/{customer_id}', 'ExportController@export_customer_employees');
-	Route::post('update-faqs', 'ApplicationController@update_faqs');
 	Route::post('get-faqs', 'ApplicationController@get_faqs');
+	Route::post('update-faqs', 'ApplicationController@update_faqs');
+
+	Route::get('get-notifications', 'ApplicationController@get_notifications');
+	Route::post('mark-as-read', 'ApplicationController@mark_as_read');
+	Route::post('sendTokenToServer', 'ApplicationController@sendTokenToServer');
+	Route::get('testingGoogleAuth', 'ApplicationController@testingGoogleAuth');
 });
 Route::get('/{any}', 'ApplicationController')->where('any', '.*');

@@ -36,9 +36,32 @@ import './filters/filters'
 // Vuejs - Vue wrapper for hammerjs
 import { VueHammer } from 'vue2-hammer'
 Vue.use(VueHammer)
+import firebase from 'firebase';
+import messaging from 'firebase/messaging';
 
-
+// Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyAR4OcYHn136VZrFu5pWVTOsoqVesSyyKo",
+    authDomain: "taxportal-d57de.firebaseapp.com",
+    databaseURL: "https://taxportal-d57de.firebaseio.com",
+    projectId: "taxportal-d57de",
+    storageBucket: "taxportal-d57de.appspot.com",
+    messagingSenderId: "557900345158",
+    appId: "1:557900345158:web:8269963b84667268557f47",
+    measurementId: "G-X57N4YRYMD"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  Vue.prototype.$messaging = firebase.messaging();
+  Vue.prototype.$messaging.usePublicVapidKey("BMDzZpZEEud80L0h8iHwcnwf0lTCmx0Lb7eQadcNU2GkA9tPkMbWWrgyEOAN7qmLj5q5HYyTrtdatOcNH6WNZC4");
 // PrismJS
+navigator.serviceWorker.register('/firebase-messaging-sw.js')
+  .then((registration) => {
+    Vue.prototype.$messaging.useServiceWorker(registration)
+  }).catch(err => {
+    console.log(err)
+  });
+
 import 'prismjs'
 // import 'prismjs/themes/prism-tomorrow.css'
 
@@ -126,7 +149,7 @@ if (token) {
 }
 
 axios.interceptors.request.use(function(config) {
-    if ((config.url === 'get-comments')) {
+    if ((config.url === 'get-comments' || config.url === 'get-notifications')) {
 
         Vue.prototype.$vs.loading.close();
     } else {

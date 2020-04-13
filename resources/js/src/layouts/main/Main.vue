@@ -1,11 +1,3 @@
-<!-- =========================================================================================
-    File Name: Main.vue
-    Description: Main layout
-    ----------------------------------------------------------------------------------------
-    Item Name: Vuesax Admin - VueJS Dashboard Admin Template
-    Author: Pixinvent
-    Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
 <template>
     <div class="layout--main" :class="[navbarClasses, footerClasses, {'app-page': isAppPage}]">
         <vx-sidebar :sidebarItems="sidebarItems" :logo="'./public/images/33white.png'" title="Tax System" parent=".layout--main" />
@@ -160,7 +152,17 @@ export default {
         },
         toggleHideScrollToTop(val) {
             this.hideScrollToTop = val;
-        }
+        },
+        setTokenSentToServer(flag){
+
+            localStorage.setItem('tokenSentToServer', flag?"1":"0");
+
+        },
+        isTokenSentToServer(){
+
+            return localStorage.getItem('tokenSentToServer') === '1';
+
+        },
     },
     components: {
         VxSidebar,
@@ -171,6 +173,38 @@ export default {
     beforeCreate() {
     },
     created() {
+                if(!this.isTokenSentToServer()){
+
+                this.$messaging.getToken().then((currentToken) => {
+                // currentToken
+                    this.$store.dispatch('sendTokenToServer',{token : currentToken,closeLoading : this.$vs.loading.close});
+
+                this.setTokenSentToServer(true)
+                }).catch((err) => {
+                  console.log('An error occurred while retrieving token. ', err);
+                  // showToken('Error retrieving Instance ID token. ', err);
+                  // setTokenSentToServer(false);
+                });
+                }else{
+                    console.log('already given')
+                }
+        this.$messaging.onTokenRefresh(() => {
+            this.$messaging.getToken().then((refreshedToken) => {
+              console.log('Token refreshed.');
+              // Indicate that the new Instance ID token has not yet been sent to the
+              // app server.
+              this.setTokenSentToServer(false);
+              // Send Instance ID token to app server.
+              this.$store.dispatch('sendTokenToServer',{token : refreshedToken,closeLoading : this.$vs.loading.close});;
+              // [START_EXCLUDE]
+              // Display new Instance ID token and clear UI of all previous messages.
+              // resetUI();
+              // [END_EXCLUDE]
+            }).catch((err) => {
+              console.log('Unable to retrieve refreshed token ', err);
+              showToken('Unable to retrieve refreshed token ', err);
+            });
+  });
         var self = this;
         // console.log()
         setTimeout(function() {
