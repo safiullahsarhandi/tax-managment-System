@@ -28,7 +28,7 @@ class Admin extends Model {
 
 		if ($val == 1) {
 			return 'Super Admin';
-		}if ($val == 4) {
+		} elseif ($val == 4) {
 			return 'Admin';
 		} elseif ($val == 2) {
 			return 'Supervisor';

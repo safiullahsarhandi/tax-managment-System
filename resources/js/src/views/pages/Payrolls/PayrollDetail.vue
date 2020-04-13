@@ -142,12 +142,12 @@
                         </vs-list-item>
                         <template>
                             <vs-list-item v-if="userType == 'Admin' || userType == 'Super Admin'" title="Status">
-                                <vs-button icon-pack="feather" size="small" icon='icon-check-circle' @click="changeManagementStatus('1', payroll.id, 'admin')"></vs-button>
-                                <vs-button icon-pack="feather" size="small" icon='icon-x-circle' @click="changeManagementStatus('0', payroll.id, 'admin')"></vs-button>
+                                <vs-button icon-pack="feather" size="small" icon='icon-check-circle' @click="changeManagementStatus('1', payroll.payroll_id, 'admin')"></vs-button>
+                                <vs-button icon-pack="feather" size="small" icon='icon-x-circle' @click="changeManagementStatus('0', payroll.payroll_id, 'admin')"></vs-button>
                             </vs-list-item>
                             <vs-list-item v-if="userType == 'Supervisor'" title="Status">
-                                <vs-button icon-pack="feather" size="small" icon='icon-check-circle' @click="changeManagementStatus('1', payroll.id, 'supervisor')"></vs-button>
-                                <vs-button icon-pack="feather" size="small" icon='icon-x-circle' @click="changeManagementStatus('0', payroll.id, 'supervisor')"></vs-button>
+                                <vs-button icon-pack="feather" size="small" icon='icon-check-circle' @click="changeManagementStatus('1', payroll.payroll_id, 'supervisor')"></vs-button>
+                                <vs-button icon-pack="feather" size="small" icon='icon-x-circle' @click="changeManagementStatus('0', payroll.payroll_id, 'supervisor')"></vs-button>
                             </vs-list-item>
                             <vs-list-item v-if="userType == 'Officer'" title="Status">
                                 <vs-switch icon-pack="feather" @click="statusUpdate(payroll.payroll_id, payroll.officer_confirmed)" v-model="payroll.officer_confirmed"></vs-switch>

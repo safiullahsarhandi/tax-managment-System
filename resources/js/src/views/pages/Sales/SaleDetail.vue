@@ -129,13 +129,13 @@
                         </vs-list-item>
                         <template>
                             <vs-list-item v-if="userType == 'Admin' || userType == 'Super Admin'" title="Status">
-                                <vs-button icon-pack="feather" size="small" icon='icon-check-circle' @click="changeManagementStatus('1', sale.id, 'admin')"></vs-button>
-                                <vs-button icon-pack="feather" size="small" icon='icon-x-circle' @click="changeManagementStatus('0', sale.id, 'admin')"></vs-button>
+                                <vs-button icon-pack="feather" size="small" icon='icon-check-circle' @click="changeManagementStatus('1', sale.sale_id, 'admin')"></vs-button>
+                                <vs-button icon-pack="feather" size="small" icon='icon-x-circle' @click="changeManagementStatus('0', sale.sale_id, 'admin')"></vs-button>
                             </vs-list-item>
 
                              <vs-list-item v-if="userType == 'Supervisor'" title="Status">
-                                <vs-button icon-pack="feather" size="small" icon='icon-check-circle' @click="changeManagementStatus('1', sale.id, 'supervisor')"></vs-button>
-                                <vs-button icon-pack="feather" size="small" icon='icon-x-circle' @click="changeManagementStatus('0', sale.id, 'supervisor')"></vs-button>
+                                <vs-button icon-pack="feather" size="small" icon='icon-check-circle' @click="changeManagementStatus('1', sale.sale_id, 'supervisor')"></vs-button>
+                                <vs-button icon-pack="feather" size="small" icon='icon-x-circle' @click="changeManagementStatus('0', sale.sale_id, 'supervisor')"></vs-button>
                             </vs-list-item>
 
 

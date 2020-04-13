@@ -173,20 +173,39 @@ export default {
     beforeCreate() {
     },
     created() {
-                if(!this.isTokenSentToServer()){
+                var permission = Notification.permission;
+                alert(permission)
+                if(permission !== 'granted'){
+                        this.setTokenSentToServer(false)
+                    Notification.requestPermission().then(()=>{
+                            this.$messaging.getToken().then((currentToken) => {
+                        // currentToken
+                            this.$store.dispatch('sendTokenToServer',{token : currentToken,closeLoading : this.$vs.loading.close});
 
-                this.$messaging.getToken().then((currentToken) => {
-                // currentToken
-                    this.$store.dispatch('sendTokenToServer',{token : currentToken,closeLoading : this.$vs.loading.close});
-
-                this.setTokenSentToServer(true)
-                }).catch((err) => {
-                  console.log('An error occurred while retrieving token. ', err);
-                  // showToken('Error retrieving Instance ID token. ', err);
-                  // setTokenSentToServer(false);
-                });
+                        this.setTokenSentToServer(true)
+                        }).catch((err) => {
+                          console.log('An error occurred while retrieving token. ', err);
+                          // showToken('Error retrieving Instance ID token. ', err);
+                          // setTokenSentToServer(false);
+                        });
+                    });
                 }else{
-                    console.log('already given')
+
+                    if(!this.isTokenSentToServer()){
+
+                    this.$messaging.getToken().then((currentToken) => {
+                    // currentToken
+                        this.$store.dispatch('sendTokenToServer',{token : currentToken,closeLoading : this.$vs.loading.close});
+
+                    this.setTokenSentToServer(true)
+                    }).catch((err) => {
+                      console.log('An error occurred while retrieving token. ', err);
+                      // showToken('Error retrieving Instance ID token. ', err);
+                      // setTokenSentToServer(false);
+                    });
+                    }else{
+                        console.log('already given')
+                    }
                 }
         this.$messaging.onTokenRefresh(() => {
             this.$messaging.getToken().then((refreshedToken) => {

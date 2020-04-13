@@ -42,4 +42,14 @@ class Payrolls extends Model {
 		}
 
 	}
+	public function customer() {
+		return $this->hasOneThrough(
+			TaxCustomers::class,
+			Tax::class,
+			'tax_id',
+			'customer_id',
+			'tax_id',
+			'customer_id'
+		);
+	}
 }

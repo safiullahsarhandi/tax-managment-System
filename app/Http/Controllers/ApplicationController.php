@@ -1748,13 +1748,13 @@ class ApplicationController extends Controller {
 
 		$data = array();
 		if ($request->tax_type == 'sale') {
-			$data = Sales::whereId($request->id)->whereTaxId($request->tax_id)->first();
+			$data = Sales::with('customer')->whereSaleId($request->id)->whereTaxId($request->tax_id)->first();
 		}
 		if ($request->tax_type == 'purchase') {
-			$data = Purchases::whereId($request->id)->whereTaxId($request->tax_id)->first();
+			$data = Purchases::with('customer')->wherePurchaseId($request->id)->whereTaxId($request->tax_id)->first();
 		}
 		if ($request->tax_type == 'payroll') {
-			$data = Payrolls::whereId($request->id)->whereTaxId($request->tax_id)->first();
+			$data = Payrolls::with('customer')->wherePayrollId($request->id)->whereTaxId($request->tax_id)->first();
 		}
 
 		if (is_null($data)) {
@@ -1770,51 +1770,53 @@ class ApplicationController extends Controller {
 				if ($data->management_confirmed == 0) {
 					$data->supervisor_confirmed = $request->status;
 					$data->save();
+					if ($request->status == 1) {
 
-					$notification = new Notification;
-					$notification->transmitted_for = session('admin.reports_to');
-					$notification->transmitted_by = session('admin.manager_id');
-					$notification->notification = 'new ' . $request->tax_type . ' submission alert';
-					$notification->description = 'new ' . $request->tax_type . ' in ' . $tax->title . ' with in company: ' . $tax->customer->name_english . ' has been submitted by supervisor: ' . session('admin.full_name');
-					$notification->click_action = '/' . $request->tax_type . "-detail/" . $request->id;
+						$notification = new Notification;
+						$notification->transmitted_for = session('admin.reports_to');
+						$notification->transmitted_by = session('admin.manager_id');
+						$notification->notification = 'new ' . $request->tax_type . ' submission alert';
+						$notification->description = 'new ' . $request->tax_type . ' in ' . $tax->title . ' with in company: ' . $tax->customer->name_english . ' has been submitted by supervisor: ' . session('admin.full_name');
+						$notification->click_action = '/' . $request->tax_type . "-detail/" . $request->id;
 
-					if ($notification->save()) {
-						/*$fields = [];
-						$headers = [''];*/
-						$tokens = Admin::where('manager_id', session('admin.reports_to'))->first();
-						// 	dd($tokens);
-						$url = "https://fcm.googleapis.com//v1/projects/taxportal-d57de/messages:send";
-						// 	$token = "your device token";
-						$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
+						if ($notification->save()) {
+							/*$fields = [];
+							$headers = [''];*/
+							$tokens = Admin::where('manager_id', session('admin.reports_to'))->first();
+							// 	dd($tokens);
+							$url = "https://fcm.googleapis.com//v1/projects/taxportal-d57de/messages:send";
+							// 	$token = "your device token";
+							$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
 
-						$fields = array(
-							// "content_available" => true,
-							"to" => $tokens->token,
-							'priority' => 'high',
-							"data" => array(
-								"title" => $notification->notification,
-								"body" => $notification->description,
-								"icon" => "icon.png",
-								"click_action" => $notification->click_action,
-							),
-							"notification" => array(
-								"title" => $notification->notification,
-								"body" => $notification->description,
-								"icon" => "icon.png",
-								"click_action" => $notification->click_action,
-							),
-						);
-						$data_string = json_encode($fields);
-						// echo "The Json Data : " . $data_string;
-						$headers = array('Authorization: key=' . $serverKey, 'Content-Type: application/json');
-						$ch = curl_init();
-						curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
-						curl_setopt($ch, CURLOPT_POST, true);
-						curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-						curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-						curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-						$result = curl_exec($ch);
-						curl_close($ch);
+							$fields = array(
+								// "content_available" => true,
+								"to" => $tokens->token,
+								'priority' => 'high',
+								"data" => array(
+									"title" => $notification->notification,
+									"body" => $notification->description,
+									"icon" => "icon.png",
+									"click_action" => $notification->click_action,
+								),
+								"notification" => array(
+									"title" => $notification->notification,
+									"body" => $notification->description,
+									"icon" => "icon.png",
+									"click_action" => $notification->click_action,
+								),
+							);
+							$data_string = json_encode($fields);
+							// echo "The Json Data : " . $data_string;
+							$headers = array('Authorization: key=' . $serverKey, 'Content-Type: application/json');
+							$ch = curl_init();
+							curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+							curl_setopt($ch, CURLOPT_POST, true);
+							curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+							curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+							curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+							$result = curl_exec($ch);
+							curl_close($ch);
+						}
 					}
 				} else {
 					return response()->json(['status' => false, 'msg' => '' . $request->tax_type . ' approved by admin you can not revoke submission until admin revoke it.', 'response' => $data->status]);
@@ -1827,6 +1829,56 @@ class ApplicationController extends Controller {
 			if ($data->supervisor_confirmed == 1) {
 				$data->management_confirmed = $request->status;
 				$data->save();
+
+				if ($request->status == 1) {
+
+					$admins = Admin::where('manager_id', $data->customer->supervisor)->orWhere('status', 1)->get();
+					foreach ($admins as $key => $admin) {
+						$notification = new Notification;
+						$notification->transmitted_for = $admin->manager_id;
+						$notification->transmitted_by = session('admin.manager_id');
+						$notification->notification = 'new ' . $request->tax_type . ' submission alert';
+						$notification->description = $request->tax_type . ' in ' . $tax->title . ' with in company: ' . $tax->customer->name_english . ' has been approved by Admin:' . session('admin.full_name');
+						$notification->click_action = '/' . $request->tax_type . "-detail/" . $request->id;
+
+						if ($notification->save()) {
+
+							$url = "https://fcm.googleapis.com//v1/projects/taxportal-d57de/messages:send";
+							// 	$token = "your device token";
+							$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
+
+							$fields = array(
+								// "content_available" => true,
+								"to" => $admin->token,
+								'priority' => 'high',
+								"data" => array(
+									"title" => $notification->notification,
+									"body" => $notification->description,
+									"icon" => "icon.png",
+									"click_action" => $notification->click_action,
+								),
+								"notification" => array(
+									"title" => $notification->notification,
+									"body" => $notification->description,
+									"icon" => "icon.png",
+									"click_action" => $notification->click_action,
+								),
+							);
+							$data_string = json_encode($fields);
+							// echo "The Json Data : " . $data_string;
+							$headers = array('Authorization: key=' . $serverKey, 'Content-Type: application/json');
+							$ch = curl_init();
+							curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+							curl_setopt($ch, CURLOPT_POST, true);
+							curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+							curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+							curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+							$result = curl_exec($ch);
+							curl_close($ch);
+						}
+						# code...
+					}
+				}
 			} else {
 				return response()->json(['status' => false, 'msg' => '' . $request->tax_type . ' still not approved by Supervisor. please check later.', 'response' => $data->status]);
 			}
