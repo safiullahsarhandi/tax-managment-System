@@ -4,10 +4,10 @@
             <!-- <template slot="actions"> -->
                 <!-- <vs-button type="border" @click="addOfficerModal = true" icon-pack="feather" icon="icon-plus"></vs-button> -->
             <!-- </template> -->
+            <template slot="actions">
+                <vs-button type="border" :href="{url : `export-purchases/${customer_id}/${tax_id}`}" icon-pack="feather" icon="icon-download"></vs-button>
+            </template>
             <vs-table search pagination max-items="6" :data="purchases">
-                <template slot="header">
-                    <vs-button color="primary" type="border" icon="cloud_download">Export</vs-button>
-                </template>
                 <template slot="thead">
                     <vs-th>Branch#/ Name</vs-th>
                     <vs-th>Tax Period</vs-th>
@@ -77,6 +77,7 @@ export default {
     created() {
 
         this.tax_id = this.$store.state.rootUrl.split('/')[2];
+        this.customer_id = localStorage.getItem('customer');
         this.getPurchases(this.tax_id);
 
         if (this.$store.state.AppActiveUser.type == 'Admin' || this.$store.state.AppActiveUser.type == 'Super Admin' ) {
@@ -98,7 +99,6 @@ export default {
             statusChange: 'taxes/statusUpdateSPP',
             statusChangeManagment: 'taxes/statusChangeManagment'
         }),
-
         changeManagementStatus(status, id, by){
             
             let data = {
@@ -113,31 +113,6 @@ export default {
               
             });
         },
-
-        updateCustomer(e) {
-            this.$validator.validateAll('editform').then(result => {
-                if (result) {
-                    this.$vs.loading();
-                    var fd = new FormData(this.$refs.editForm);
-                    this.submit(fd).then( (res) => {
-                    // console.log(res.data);
-                        if (res.data.status == 'success') {
-                            this.password = this.email = this.first_name = this.last_name = this.zip_code = this.city = this.state = this.address = this.phone = '';
-                            e.target.reset();
-                            this.errors.clear();
-                            this.editCustomerModal = false;
-                            this.$vs.notify({title:'Success',text:'Customer Updated Successfully',color:'success',position:'top-right'})
-                            this.$vs.loading.close();
-                            // this.getCustomers();
-                        }
-                        if(res.data.status == 'error'){
-                             alert(res.data.msg);
-                        }
-                    })
-                }
-            })
-        },
-
         statusUpdate(id, status){
 
             let data = {
@@ -158,57 +133,6 @@ export default {
 
         addMoreFeild () {
             this.customField.push({name : 'additional_field[]',value : '',type: 'text'});
-        },
-
-        editCustomer(id){
-            var customer = this.findCustomer(id);
-            this.customer_id = customer.customer_id;
-            this.name_english = customer.name_english;
-            this.name_khmer = customer.name_khmer;
-            this.industry = customer.industry;
-            this.tax_card_num = customer.tax_card_num;
-            this.tin_no = customer.tin_no;
-            this.email = customer.email;
-            this.telephone = customer.telephone;
-            this.additional_fields = customer.additional_fields;
-            this.address = customer.address;
-            this.district = customer.district;
-            this.group = customer.group;
-            this.incorporation_date = customer.incorporation_date;
-            this.muncipality = customer.muncipality;
-            this.province = customer.province;
-            this.sangkat = customer.sangkat;
-            this.street = customer.street;
-            this.village = customer.village;
-            self = this;
-            self.customField = [];
-            if(customer.additional_fields != null){
-                if(customer.additional_fields.length > 0){
-                    customer.additional_fields.map(function(val, key) {
-                        self.customField.push({name : 'additional_field[]',value : val,type: 'text'});
-                   });
-                }            
-            }
-            
-            this.editCustomerModal = true;
-        },
-        updateCustomer(e) {
-            this.$validator.validateAll('editform').then(result => {
-                if (result) {
-                    this.$vs.loading();
-                    var fd = new FormData(this.$refs.editCustomerForm);
-                    this.update(fd).then( (res) => {
-                        if (res.data.status == 'success') {
-                            e.target.reset();
-                            this.errors.clear();
-                            this.editCustomerModal = false;
-                            this.$vs.notify({title:'Success',text:'Customer Updated Successfully',color:'success',position:'top-right'})
-                            this.$vs.loading.close();
-                            this.getCustomers();
-                        }
-                    })
-                }
-            })
         },
         makePassword(){
             this.password = this.generatePassword();

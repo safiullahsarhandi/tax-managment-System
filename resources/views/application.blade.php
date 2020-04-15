@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ url('public/css/vuesax.css') }}">
     <link rel="stylesheet" href="{{ url('public/css/iconfont.css') }}">
     <link rel="stylesheet" href="{{ url('public/css/material-icons/material-icons.css') }}">
+    <link rel="manifest" href="{{url('public/manifest.json')}}">
     <link rel="stylesheet" href="{{ url('public/css/prism-tomorrow.css') }}">
     <link rel="stylesheet" href="{{ url('public/css/app.css') }}">
   </head>

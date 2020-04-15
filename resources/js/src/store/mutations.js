@@ -99,6 +99,20 @@ const mutations = {
     },
     setComments(state,comments){
         state.comments = comments
+    },
+    setFaqs(state,faqs){
+
+        state.faqs = faqs;
+
+    },
+    setNotifications(state,data){
+        state.notifications = data.notifications;
+        state.totalNotifications = data.totalNotifications; 
+    },
+    setNotification(state,data){
+        var index = _.findIndex(state.notifications,(o)=>{return o.id == data.notification.id});
+        state.notifications[index].is_checked = 1;
+        state.totalNotifications = data.totalNotifications; 
     }
 }
 

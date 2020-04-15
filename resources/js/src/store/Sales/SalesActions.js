@@ -17,6 +17,7 @@ export default{
 	addSale({commit},fd){
 		// alert('action called');
 		return axios.post('add-sale',fd).then(res=>{
+			commit('prepandSale',res.data.data);
 			return res;
 		});
 	},
@@ -25,5 +26,10 @@ export default{
 		return axios.post('update-sale',fd).then(res=>{
 			return res;
 		});
-	}	
+	},
+	deleteRecord({commit},fd){
+		return axios.post('delete-spp',fd).then(res=>{
+			return res;
+		});
+	}
 }

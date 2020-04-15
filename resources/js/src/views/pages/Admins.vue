@@ -2,6 +2,7 @@
     <div>
         <vx-card title="List of Team Members">
             <template slot="actions">
+                <vs-button type="border" :href="{url : 'export-team-members'}" icon-pack="feather" icon="icon-download"></vs-button>
                 <vs-button type="border" @click="addAdminModal = true" icon-pack="feather" icon="icon-plus"></vs-button>
             </template>
             <vs-table search pagination max-items="6" :data="admins">
@@ -24,7 +25,7 @@
                         <vs-td :data="reportsTo(tr.reporting_to)">{{reportsTo(tr.reporting_to)}}</vs-td>
                         <!-- <vs-td :data="tr.address+' '+tr.state+' '+tr.city+' '+tr.zip_code">{{tr.address}} {{tr.state}} {{tr.city}} {{tr.zip_code}}</vs-td> -->
                         <vs-td :data="tr.type == 4?'Sub Admin':tr.type == 2?'Supervisor':'Officer'">{{tr.type}}</vs-td>
-                        <vs-td :data="tr.status"><vs-switch @click="statusUpdate(tr.manager_id)" v-model="tr.status"/></vs-td>
+                        <vs-td :data="tr.status"><vs-switch @click="statusUpdate(tr.manager_id)" v-model="tr.status== 1?true:false"/></vs-td>
                         <vs-td>
                             <vs-button size="small" type="border" icon-pack="feather" icon="icon-edit-2" @click="editAdmin(tr.id)"></vs-button>
                             <vs-button size="small" type="border" :to="'/member-detail/'+tr.manager_id" icon-pack="feather" icon="icon-maximize-2"></vs-button>
@@ -144,9 +145,10 @@
                     </vs-col>
                     <vs-col vs-lg="6" vs-md="12" vs-sm="12">
 
-                        <vs-select class="selectExample mt-2" v-model="selectedRole" >
+                        <vs-select name="role" v-validate="'required'" class="selectExample mt-2" v-model="selectedRole" >
                             <vs-select-item :is-selected.sync="item.isSelected" :key="index" :value="item.value" :text="item.isSelected?item.selectedText:item.label" v-for="item,index in rolles" />
                         </vs-select>
+                            <span class="text-danger" v-show="errors.has('editform.role')">{{errors.first('editform.role')}}</span>
                         <vx-input-group class="mt-2" v-if="selectedRole == 3">
                             <vs-select v-validate="'required'" name="supervisor" class="selectExample" label="Supervisor" v-model="selectedSupervisor">
                                 <vs-select-item value="" text="Select Supervisor"></vs-select-item>
@@ -183,7 +185,7 @@
     </div>
 </template>
 <script>
-import { mapState, mapActions,mapGetters } from 'vuex';
+import { mapState, mapActions,mapGetters,mapMutations } from 'vuex';
 export default {
     inject : ['generatePassword'],
     data() {
@@ -225,11 +227,13 @@ export default {
     },
     computed: {
         ...mapState('admins/', ['admins']),
-        ...mapGetters('admins/',['findAdmin']),
+        ...mapGetters('admins/',['findAdmin','findSupervisors']),
         ...mapState('supervisors/', ['supervisors']),
     },
     created() {
-        this.getAdmins();
+        let self = this;
+        this.getAdmins().then(function(){
+        });
         this.getSupervisors();
     },
     methods: {
@@ -237,7 +241,11 @@ export default {
             getAdmins: 'admins/getAdmins',
             submit: 'admins/addAdmin',
             update: 'admins/updateAdmin',
+            updateStatus : 'admins/updateStatus',
             getSupervisors: 'supervisors/getSupervisors',
+        }),
+        ...mapMutations({
+            setSupervisors : 'supervisors/setSupervisors',
         }),
         reportsTo(reportsTo){
             if(reportsTo != null){
@@ -247,6 +255,7 @@ export default {
             }
         },
         addAdmin(e) {
+            let self = this;
             this.$validator.validateAll('addform').then(result => {
                 if (result) {
                     var fd = new FormData(this.$refs.addAdminForm);
@@ -266,12 +275,17 @@ export default {
                             this.selectedRole = 0;
                             e.target.reset();
                             this.errors.clear();
+                            this.$validator.reset();
                             this.addAdminModal = false;
-                            this.getAdmins();
+                            this.getAdmins().then(function(){
+
+                            let findSupervisors = self.findSupervisors()
+                            self.setSupervisors(findSupervisors);                                
+                            });
                             this.$vs.notify({
-                                color : 'danger',
+                                color : 'success',
                                 position : 'right-top',
-                                text : res.data.msg, 
+                                text : 'New manager added successfully', 
                             })
 
                         }else{
@@ -288,10 +302,12 @@ export default {
 
         statusUpdate(id){
             this.$vs.loading();
-            axios.post('status-update-admin',{id:id}).then(res=>{
-                this.$vs.notify({title:'Updated!...',text:res.data.msg,color:'success',position:'top-right'})
-                this.$vs.loading.close();
-            });
+            let data = {
+                id : id,
+                notify : this.$vs.notify,
+                closeLoader : this.$vs.loading.close,
+            };
+            this.updateStatus(data);
         },
 
         editAdmin(id){
@@ -328,7 +344,7 @@ export default {
                     this.$vs.loading();
                     var fd = new FormData(this.$refs.editAdminForm);
                     fd.append('gender', this.edit_gender);
-                    if(this.defaultRole == 3){
+                    if(this.selectedRole == 3){
 
                     fd.append('reports_to', this.selectedSupervisor);
                     }else{

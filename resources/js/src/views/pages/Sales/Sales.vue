@@ -4,7 +4,9 @@
             <!-- <template slot="actions"> -->
                 <!-- <vs-button type="border" @click="addOfficerModal = true" icon-pack="feather" icon="icon-plus"></vs-button> -->
             <!-- </template> -->
-             
+             <template slot="actions">
+                <vs-button type="border" :href="{url : `export-sales/${customer_id}/${tax_id}`}" icon-pack="feather" icon="icon-download"></vs-button>
+            </template>
             <vs-table search pagination max-items="6" :data="sales">
                 
                 <template slot="header">
@@ -28,23 +30,50 @@
                         <vs-td :data="tr.invoice_date">{{tr.invoice_date}}</vs-td>
                         <vs-td :data="tr.quantity">{{tr.quantity}}</vs-td>
                         
-                        <vs-td v-show='is_officer == true' :data="tr.officer_confirmed"><vs-switch @click="statusUpdate(tr.sale_id, tr.officer_confirmed)" v-model="tr.officer_confirmed"/></vs-td>
+                        <vs-td v-show='is_officer == true' :data="tr.officer_confirmed"><vs-switch @click="statusUpdate(tr.sale_id, tr.officer_confirmed)" v-model="tr.officer_confirmed == 1?true:false"/></vs-td>
 
                        <vs-td v-show='is_admin == true' :data="tr.management_confirmed"> 
-                            <vs-select v-model="tr.management_confirmed" width="120px"  @input="changeManagementStatus(tr.management_confirmed, tr.id, 'admin')">
+                        <template>
+                            <span v-if="tr.officer_confirmed == 0">
+                                Not Submitted yet
+                            </span>
+                            <span v-else-if="tr.officer_confirmed == 1 && tr.supervisor_confirmed == 0">
+                                Under Supervisor Review
+                            </span>
+                            <span v-else-if="tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1 && tr.management_confirmed == 0">
+                                Under Administration Review
+                            </span>
+                            <span v-else-if="tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1 && tr.management_confirmed == 1">
+                                Approved
+                            </span>
+                        </template>
+                            <!-- {{tr.officer_confirmed == 0?'not submitted yet': tr.officer_confirmed == 1? }} -->
+                            <!-- <vs-select v-model="tr.management_confirmed" width="120px"  @input="changeManagementStatus(tr.management_confirmed, tr.id, 'admin')">
                                   <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="item,index in statusList" />
-                            </vs-select>
+                            </vs-select> -->
                         </vs-td>
 
                         <vs-td v-show='is_supervisor == true' :data="tr.supervisor_confirmed"> 
-                            <vs-select v-model="tr.supervisor_confirmed" width="120px" @input="changeManagementStatus(tr.supervisor_confirmed, tr.id, 'supervisor')">
-                                  <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="item,index in statusList" />
-                            </vs-select>
+                            <template>
+                                <span v-if="tr.officer_confirmed == 0">
+                                    Not Submitted yet
+                                </span>
+                                <span v-else-if="tr.officer_confirmed == 1 && tr.supervisor_confirmed == 0">
+                                    Under Supervisor Review
+                                </span>
+                                <span v-else-if="tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1 && tr.management_confirmed == 0">
+                                    Under Administration Review
+                                </span>
+                                <span v-else-if="tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1 && tr.management_confirmed == 1">
+                                    Approved
+                                </span>
+                            </template>
                         </vs-td>
 
                         <vs-td>
                             <vs-button :to="'sale-update/'+tr.sale_id" size="small" type="border" icon-pack="feather" icon="icon-edit"></vs-button>
                             <vs-button :to="'sale-detail/'+tr.sale_id" size="small" icon-pack="feather" icon="icon-maximize-2" type="border"></vs-button>
+                            <vs-button @click="deleteRecord(data[index])" size="small" type="border" icon-pack="feather" icon="icon-trash-2"></vs-button>
                         </vs-td>
                     </vs-tr>
                 </template>
@@ -60,6 +89,7 @@ export default {
     data() {
         return {
             tax_id : '',
+            customer_id : '',
             is_admin: false,
             is_supervisor: false,
             is_officer: false,
@@ -78,6 +108,7 @@ export default {
     },
     created() {
         this.tax_id = this.$store.state.rootUrl.split('/')[2];
+        this.customer_id = localStorage.getItem('customer');
         this.getSales(this.tax_id);
         
         
@@ -99,6 +130,7 @@ export default {
             update: 'sales/updateSales',
             statusChange: 'taxes/statusUpdateSPP',
             statusChangeManagment: 'taxes/statusChangeManagment',
+            deleteRecord: 'sales/deleteRecord'
             
         }),
 
@@ -117,6 +149,16 @@ export default {
             });
         },
 
+        deleteRecord(obj){
+            var fd = new FormData();
+            fd.append('sale_id', obj.sale_id);
+            fd.append('customer_id', obj.customer_id);
+            fd.append('type', 'Sale');
+            this.deleteRecord(fd).then(res=>{
+                alert('success')
+            });
+        },
+
 
         statusUpdate(id, status){
 
@@ -127,7 +169,7 @@ export default {
                 type: 'sale'
             };
             this.statusChange(data).then((res)=> {
-               if(res.data.status != true){
+               if(res.data.status == true){
                     var index = this.sales.findIndex(function(o){ return o.sale_id == id;} );
                     if(res.data.response == 'undefined'){
                         this.sales[index].officer_confirmed = status; 

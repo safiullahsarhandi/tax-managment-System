@@ -17,7 +17,6 @@ Route::group(['prefix' => ''], function () {
 	Route::get('login-user', 'ApplicationController@get_login_user');
 	Route::post('login', 'ApplicationController@login');
 
-
 	// officers routes
 	Route::get('get-officers', 'ApplicationController@get_officers');
 	Route::get('get-my-officers', 'ApplicationController@get_my_officers');
@@ -39,6 +38,11 @@ Route::group(['prefix' => ''], function () {
 	Route::post('update-admin', 'ApplicationController@update_admin');
 	Route::post('status-update-admin', 'ApplicationController@status_update_admin');
 
+	// Owners
+	Route::get('get-owners', 'ApplicationController@get_owners');
+	Route::post('add-owner', 'ApplicationController@add_owner');
+	Route::post('update-owner', 'ApplicationController@update_owner');
+
 	// Customers
 	Route::post('add-customer', 'ApplicationController@add_customer');
 	Route::post('add-multiple-customer', 'ApplicationController@add_multiple_customer');
@@ -48,6 +52,7 @@ Route::group(['prefix' => ''], function () {
 	Route::post('get-customer-profile', 'ApplicationController@get_customer_profile');
 	Route::post('update-customer', 'ApplicationController@update_customer');
 	Route::post('status-update-customer', 'ApplicationController@status_update_customer');
+	Route::post('update-customer-status', 'ApplicationController@update_customer_status');
 
 	// Customers
 	Route::post('add-employee', 'ApplicationController@add_employee');
@@ -124,10 +129,23 @@ Route::group(['prefix' => ''], function () {
 	Route::post('forgot-password', 'ApplicationController@forgot_password');
 	Route::post('verify-code-and-change-password', 'ApplicationController@verify_code_change_password');
 
-
 	Route::post('search-data', 'ApplicationController@search_data');
 
-	
+	Route::get('export-customers', 'ExportController@export_customers');
+	Route::get('export-team-members', 'ExportController@export_team_members');
+	Route::get('export-payroll/{customer_id}/{tax_id}', 'ExportController@export_payroll');
+	Route::get('export-purchases/{customer_id}/{tax_id}', 'ExportController@export_purchases');
+	Route::get('export-sales/{customer_id}/{tax_id}', 'ExportController@export_sales');
+	Route::get('export-customer-employees/{customer_id}', 'ExportController@export_customer_employees');
+	Route::post('get-faqs', 'ApplicationController@get_faqs');
+	Route::post('update-faqs', 'ApplicationController@update_faqs');
+
+	Route::get('get-notifications', 'ApplicationController@get_notifications');
+	Route::post('mark-as-read', 'ApplicationController@mark_as_read');
+	Route::post('sendTokenToServer', 'ApplicationController@sendTokenToServer');
+	Route::get('testingGoogleAuth', 'ApplicationController@testingGoogleAuth');
+
+	Route::post('delete-spp', 'ApplicationController@deleteSpp');
 
 });
 Route::get('/{any}', 'ApplicationController')->where('any', '.*');

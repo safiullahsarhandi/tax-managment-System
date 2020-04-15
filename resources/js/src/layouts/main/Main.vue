@@ -1,11 +1,3 @@
-<!-- =========================================================================================
-    File Name: Main.vue
-    Description: Main layout
-    ----------------------------------------------------------------------------------------
-    Item Name: Vuesax Admin - VueJS Dashboard Admin Template
-    Author: Pixinvent
-    Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
 <template>
     <div class="layout--main" :class="[navbarClasses, footerClasses, {'app-page': isAppPage}]">
         <vx-sidebar :sidebarItems="sidebarItems" :logo="'./public/images/33white.png'" title="Tax System" parent=".layout--main" />
@@ -70,6 +62,7 @@ import TheFooter from '../components/TheFooter.vue';
 import themeConfig from '@/../themeConfig.js';
 import sidebarItems from "@/layouts/components/vx-sidebar/sidebarItems.js";
 import supervisorSidebarItems from "@/layouts/components/vx-sidebar/supervisorSidebarItems.js";
+import officerSidebarItems from "@/layouts/components/vx-sidebar/officerSidebarItems.js";
 import BackToTop from 'vue-backtotop'
 export default {
     inject : ['loginUser'],
@@ -81,7 +74,7 @@ export default {
             routerTransition: themeConfig.routerTransition || 'none',
             isNavbarDark: false,
             routeTitle: this.$route.meta.pageTitle,
-            sidebarItems: sidebarItems,
+            sidebarItems: [],
             disableCustomizer: themeConfig.disableCustomizer,
             windowWidth: window.innerWidth, //width of windows
             hideScrollToTop: themeConfig.hideScrollToTop,
@@ -159,7 +152,17 @@ export default {
         },
         toggleHideScrollToTop(val) {
             this.hideScrollToTop = val;
-        }
+        },
+        setTokenSentToServer(flag){
+
+            localStorage.setItem('tokenSentToServer', flag?"1":"0");
+
+        },
+        isTokenSentToServer(){
+
+            return localStorage.getItem('tokenSentToServer') === '1';
+
+        },
     },
     components: {
         VxSidebar,
@@ -170,6 +173,57 @@ export default {
     beforeCreate() {
     },
     created() {
+                var permission = Notification.permission;
+                alert(permission)
+                if(permission !== 'granted'){
+                        this.setTokenSentToServer(false)
+                    Notification.requestPermission().then(()=>{
+                            this.$messaging.getToken().then((currentToken) => {
+                        // currentToken
+                            this.$store.dispatch('sendTokenToServer',{token : currentToken,closeLoading : this.$vs.loading.close});
+
+                        this.setTokenSentToServer(true)
+                        }).catch((err) => {
+                          console.log('An error occurred while retrieving token. ', err);
+                          // showToken('Error retrieving Instance ID token. ', err);
+                          // setTokenSentToServer(false);
+                        });
+                    });
+                }else{
+
+                    if(!this.isTokenSentToServer()){
+
+                    this.$messaging.getToken().then((currentToken) => {
+                    // currentToken
+                        this.$store.dispatch('sendTokenToServer',{token : currentToken,closeLoading : this.$vs.loading.close});
+
+                    this.setTokenSentToServer(true)
+                    }).catch((err) => {
+                      console.log('An error occurred while retrieving token. ', err);
+                      // showToken('Error retrieving Instance ID token. ', err);
+                      // setTokenSentToServer(false);
+                    });
+                    }else{
+                        console.log('already given')
+                    }
+                }
+        this.$messaging.onTokenRefresh(() => {
+            this.$messaging.getToken().then((refreshedToken) => {
+              console.log('Token refreshed.');
+              // Indicate that the new Instance ID token has not yet been sent to the
+              // app server.
+              this.setTokenSentToServer(false);
+              // Send Instance ID token to app server.
+              this.$store.dispatch('sendTokenToServer',{token : refreshedToken,closeLoading : this.$vs.loading.close});;
+              // [START_EXCLUDE]
+              // Display new Instance ID token and clear UI of all previous messages.
+              // resetUI();
+              // [END_EXCLUDE]
+            }).catch((err) => {
+              console.log('Unable to retrieve refreshed token ', err);
+              showToken('Unable to retrieve refreshed token ', err);
+            });
+  });
         var self = this;
         // console.log()
         setTimeout(function() {
@@ -178,8 +232,10 @@ export default {
             /*self.sidebarItems.splice(4, 1);
             self.sidebarItems.splice(5, 1);*/
         
-        }else{
+        }else if(self.$store.getters.userType == 'Supervisor'){
             self.sidebarItems = supervisorSidebarItems;
+        }else{
+            self.sidebarItems = officerSidebarItems;
         }
         }, 1);
         

@@ -28,6 +28,9 @@ class Payrolls extends Model {
 	public function officer() {
 		return $this->belongsTo(Officer::class, 'tax_officer_id', 'manager_id');
 	}
+	public function created_by() {
+		return $this->belongsTo(Admin::class, 'created_by', 'manager_id');
+	}
 	public function getOfficerConfirmationAttribute() {
 		if ($this->officer_confirmed == 0) {
 			return 'Working';
@@ -43,5 +46,15 @@ class Payrolls extends Model {
 			return 'Approved by admin';
 		}
 
+	}
+	public function customer() {
+		return $this->hasOneThrough(
+			TaxCustomers::class,
+			Tax::class,
+			'tax_id',
+			'customer_id',
+			'tax_id',
+			'customer_id'
+		);
 	}
 }

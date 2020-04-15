@@ -1,22 +1,11 @@
-<!-- =========================================================================================
-	File Name: App.vue
-	Description: Main vue file - APP
-	----------------------------------------------------------------------------------------
-	Item Name: Vuesax Admin - VueJS Dashboard Admin Template
-	Author: Pixinvent
-	Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
-
-
 <template>
 	<div id="app">
-		<router-view></router-view>
+		<router-view :key="$route.fullPath"></router-view>
 	</div>
 </template>
 
 <script>
 import themeConfig from '@/../themeConfig.js'
-
 export default {
     watch: {
         '$store.state.theme'(val) {
@@ -36,6 +25,15 @@ export default {
                 if (document.body.className.match('theme-semi-dark')) document.body.classList.remove('theme-semi-dark');
             }
         }
+    },
+    created(){
+        var self = this;
+        setTimeout(function(){
+            self.$messaging.onMessage(notification => {
+            // self.$vs.notify(notification);
+            self.$store.dispatch('getNotifications');
+        });
+        })
     },
     mounted() {
         this.toggleClassInBody(themeConfig.theme)

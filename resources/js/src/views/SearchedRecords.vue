@@ -32,7 +32,7 @@
 				</a>	
 			</vx-card>
 
-			<vx-card v-if="item.result.table_name == 'tax_managers'" class="mt-3" style="width: 100%; height: 100px">
+			<vx-card v-if="item.result.table_name == 'tax_managers' && activeUserRole != 'Officer'" class="mt-3" style="width: 100%; height: 100px">
 
 				<a style="color: #1a0dab; font-weight: bold; font-size: 12px; letter-spacing: 2px" href="javascript:void(0)" @click="goFind(makeUrl(item.result))">
 				{{ item.result.full_name+ ' ' + item.result.email+ ' ' + '(Tax Manager '+ item.result.type +' )' }}</a>
@@ -212,7 +212,9 @@ export default{
 	data() {
 		return {
 			searchedRecord: [],
-			msg: true
+			msg: true,
+			activeUserRole: '',
+			searchedDatalength: null
 		}
 	},
 	watch: {
@@ -226,30 +228,41 @@ export default{
 		
 	},
 	created(){
+		this.activeUserRole = this.$store.state.AppActiveUser.type;
 
 		// if(this.$store.state.searchedData.length <= 0 ){
 		// 	// this.$router.go(-1);
 		// 	console.log('no record found');
 		// }
 		// this.searchedRecord = this.$store.state.searchedData;
-
+		this.getData();
 	},
 	methods: {
-		makeUrl(obj){
+		getData(){
+			this.searchedDatalength = this.$store.state.searchedData;
+			// console.log(this.searchedDatalength);
+		},
+		makeUrl(obj){ 
+
+			let activeUserRole = this.$store.state.AppActiveUser.type;
 
 			if(obj.table_name == 'tax_customers'){
 				localStorage.setItem('customer', obj.customer_id);
-				localStorage.setItem('currentDetail', '/customer-detail/'+obj.customer_id);
-				return '/customer-detail/'+obj.customer_id;
+				localStorage.setItem('currentDetail', '/company-detail/'+obj.customer_id);
+				return '/company-detail/'+obj.customer_id;
 			
 			}else if(obj.table_name == 'tax_management'){
 				localStorage.setItem('customer', obj.customer_id);
-				localStorage.setItem('currentDetail', '/customer-detail/'+obj.customer_id);
+				localStorage.setItem('currentDetail', '/company-detail/'+obj.customer_id);
 				return '/tax-collection/'+obj.tax_id;
 			
 			}else if(obj.table_name == 'tax_managers'){
 			
-				return '/member-detail/'+obj.manager_id;
+				if(activeUserRole == 'Supervisor'){
+					return '/my-team';
+				}else if(activeUserRole == 'Super Admin'){
+					return '/member-detail/'+obj.manager_id;
+				}
 			
 			}else if(obj.table_name == 'customers_employees'){
 			
@@ -292,6 +305,7 @@ export default{
 	},
 	computed:{
 		searchedData() {
+			this.searchedDatalength = this.$store.state.searchedData;
 			return this.$store.state.searchedData;
 		} 
 	}

@@ -81,6 +81,47 @@ const actions = {
         }).then(res => {
             // commit('setComments');
         })
+    },
+    async getFaqs({commit}){
+        let getFaqs = await axios.post('get-faqs');
+        commit('setFaqs',getFaqs.data);
+    },
+    updateFaqs({commit},data){
+
+        return axios.post('update-faqs',data.fd).then(res=>{
+            commit('setFaqs',res.data.faqs);
+            if(res.data.status){
+                data.notify({
+                    position : 'right-top',
+                    text : 'Updated Successfully',
+                    color : 'success',
+                });
+            }else{
+                data.notify({
+                    position : 'right-top',
+                    text : 'There is issue while updating Faqs',
+                    color : 'danger',
+                });
+            }
+            return res;
+        });
+
+    },
+    async getNotifications({commit}){
+        let gettingNotifications =  await axios.get('get-notifications');
+        let fetchedNotifications = gettingNotifications.data;
+        commit('setNotifications',fetchedNotifications);
+    },
+    async markAsRead({commit},notification){
+        let markAsRead =  await axios.post('mark-as-read',{id : notification.id});
+        let markedAsRead = markAsRead.data;
+        commit('setNotification',markedAsRead);
+    },
+    async sendTokenToServer({commit,state},data){
+        data.closeLoading();
+        let manager_id = state.AppActiveUser.manager_id;
+        let sendToken = await axios.post('sendTokenToServer',{token: data.token, manager_id : manager_id})
+        commit('setLoginUser', sendToken.data.admin);
     }
 }
 

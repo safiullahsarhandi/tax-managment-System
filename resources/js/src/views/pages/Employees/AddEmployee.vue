@@ -72,6 +72,12 @@
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('spouse')">{{errors.first('spouse')}}</span>
                     </vs-col>
+                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                        <vx-input-group>
+                            <vs-input name="children" v-validate="`required`" label-placeholder="children" v-model="children" />
+                        </vx-input-group>
+                        <span class="text-danger" v-show="errors.has('children')">{{errors.first('children')}}</span>
+                    </vs-col>
                 </vs-row>
                 <vs-row>
                     <vs-col class="text-center" vs-lg='12' vs-md='12'>
@@ -104,6 +110,7 @@ export default {
             sex: '',
             contract_type: '',
             spouse: '',
+            children: '',
             multipleRoute: ''
         };
     },

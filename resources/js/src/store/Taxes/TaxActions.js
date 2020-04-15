@@ -9,9 +9,10 @@ export default {
             commit('setParameters', res.data.parameters)
         });
     },
-    getTax({ commit }, tax_id) {
-        axios.get('get-tax', { params: { tax_id: tax_id } }).then(res => {
+    async getTax({ commit }, tax_id) {
+        return await axios.get('get-tax', { params: { tax_id: tax_id } }).then(res => {
             commit('setSingleTax', res.data)
+            return res.data;
         });
     },
     async getTaxTeam({ commit }, tax_id) {
@@ -101,7 +102,7 @@ export default {
         });
     },
     statusUpdate({ commit }, data) {
-        axios.post('status-update-tax', { id: data.id }).then(res => {
+        axios.post('status-update-tax', { id: data.id, status : data.status }).then(res => {
             if(res.data.status){
             data.notify({ title: 'Updated!...', text: res.data.msg, color: 'success', position: 'top-right' })
 

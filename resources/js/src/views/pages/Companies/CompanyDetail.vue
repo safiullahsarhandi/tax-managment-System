@@ -3,16 +3,6 @@
         <vs-row>
             <vs-col>
                 <vx-card>
-                    <!-- <table>
-                        <tr>
-                            <th style="width: 300px; text-align: center;">Company Name (English):</th>
-                            <th style="width: 300px; text-align: center;">Company Name (Khmer):</th>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center;">{{customer.name_english}}</td>
-                            <td style="text-align: center;">{{customer.name_khmer}}</td>
-                        </tr>
-                    </table> -->
                     <vs-row>
                         <vs-col  vs-lg="6" vs-md="6" vs-sm="12" vs-xs="12">
                                 <P>Company Name (English):</P>
@@ -39,7 +29,7 @@
 </template>
 <script>
 import { mapState, mapActions, mapGetters, mapMutations } from 'vuex';
-import Taxes from '@/views/pages/Customers/Taxes.vue';
+import Taxes from '@/views/pages/Companies/Taxes.vue';
 export default {
     components: {
         Taxes,

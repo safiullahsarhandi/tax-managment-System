@@ -519,42 +519,7 @@ __webpack_require__.r(__webpack_exports__);
       navbarSearchAndPinList: this.$store.state.navbarSearchAndPinList,
       searchQuery: '',
       showFullSearch: false,
-      unreadNotifications: [{
-        index: 0,
-        title: 'New Message',
-        msg: 'Are your going to meet me tonight?',
-        icon: 'MessageSquareIcon',
-        time: 'Wed Jan 30 2019 07:45:23 GMT+0000 (GMT)',
-        category: 'primary'
-      }, {
-        index: 1,
-        title: 'New Order Recieved',
-        msg: 'You got new order of goods.',
-        icon: 'PackageIcon',
-        time: 'Wed Jan 30 2019 07:45:23 GMT+0000 (GMT)',
-        category: 'success'
-      }, {
-        index: 2,
-        title: 'Server Limit Reached!',
-        msg: 'Server have 99% CPU usage.',
-        icon: 'AlertOctagonIcon',
-        time: 'Thu Jan 31 2019 07:45:23 GMT+0000 (GMT)',
-        category: 'danger'
-      }, {
-        index: 3,
-        title: 'New Mail From Peter',
-        msg: 'Cake sesame snaps cupcake',
-        icon: 'MailIcon',
-        time: 'Fri Feb 01 2019 07:45:23 GMT+0000 (GMT)',
-        category: 'primary'
-      }, {
-        index: 4,
-        title: 'Bruce\'s Party',
-        msg: 'Chocolate cake oat cake tiramisu',
-        icon: 'CalendarIcon',
-        time: 'Fri Feb 02 2019 07:45:23 GMT+0000 (GMT)',
-        category: 'warning'
-      }],
+      unreadNotifications: [],
       settings: {
         // perfectscrollbar settings
         maxScrollbarLength: 60,
@@ -570,6 +535,12 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
+    notifications: function notifications() {
+      return this.$store.state.notifications;
+    },
+    totalNotifications: function totalNotifications() {
+      return this.$store.state.totalNotifications;
+    },
     // HELPER
     sidebarWidth: function sidebarWidth() {
       return this.$store.state.sidebarWidth;
@@ -608,8 +579,19 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.activeUser = this.$store.state.AppActiveUser.full_name;
     this.activeUserRole = this.$store.state.AppActiveUser.type;
+    this.$store.dispatch('getNotifications');
   },
   methods: {
+    clickMe: function clickMe(e) {
+      alert(e);
+    },
+    goToDestination: function goToDestination(notification) {
+      // alert(notification.click_action);
+      if (notification.click_action !== this.$route.path) {
+        this.$store.dispatch('markAsRead', notification);
+        this.$router.push(notification.click_action);
+      }
+    },
     changePasswordPopUp: function changePasswordPopUp(e, scope) {
       this.current_password = null;
       this.new_password = null;
@@ -662,6 +644,7 @@ __webpack_require__.r(__webpack_exports__);
           });
 
           localStorage.removeItem('admin');
+          localStorage.removeItem('tokenSentToServer');
 
           _this2.$store.commit('setLoginUser', {});
 
@@ -1932,16 +1915,14 @@ var render = function() {
               _c(
                 "vs-dropdown",
                 {
+                  ref: "notificationDropdown",
                   staticClass: "cursor-pointer ml-4",
                   attrs: { "vs-custom-content": "", "vs-trigger-click": "" }
                 },
                 [
                   _c("feather-icon", {
                     staticClass: "cursor-pointer mt-1 sm:mr-6 mr-2",
-                    attrs: {
-                      icon: "BellIcon",
-                      badge: _vm.unreadNotifications.length
-                    }
+                    attrs: { icon: "BellIcon", badge: _vm.totalNotifications }
                   }),
                   _vm._v(" "),
                   _c(
@@ -1959,9 +1940,7 @@ var render = function() {
                         },
                         [
                           _c("h3", { staticClass: "text-white" }, [
-                            _vm._v(
-                              _vm._s(_vm.unreadNotifications.length) + " New"
-                            )
+                            _vm._v(_vm._s(_vm.totalNotifications) + " New")
                           ]),
                           _vm._v(" "),
                           _c("p", { staticClass: "opacity-75" }, [
@@ -1982,13 +1961,18 @@ var render = function() {
                           _c(
                             "ul",
                             { staticClass: "bordered-items" },
-                            _vm._l(_vm.unreadNotifications, function(ntf) {
+                            _vm._l(_vm.notifications, function(ntf, index) {
                               return _c(
                                 "li",
                                 {
-                                  key: ntf.index,
+                                  key: index,
                                   staticClass:
-                                    "flex justify-between px-4 py-4 notification cursor-pointer"
+                                    "flex justify-between px-4 py-4 notification cursor-pointer",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.goToDestination(ntf)
+                                    }
+                                  }
                                 },
                                 [
                                   _c(
@@ -1997,9 +1981,9 @@ var render = function() {
                                     [
                                       _c("feather-icon", {
                                         attrs: {
-                                          icon: ntf.icon,
+                                          icon: "icon-message",
                                           svgClasses: [
-                                            "text-" + ntf.category,
+                                            "text-primary",
                                             "stroke-current mr-1 h-6 w-6"
                                           ]
                                         }
@@ -2011,12 +1995,14 @@ var render = function() {
                                           {
                                             staticClass:
                                               "font-medium block notification-title",
-                                            class: ["text-" + ntf.category]
+                                            class: ["text-primary"]
                                           },
-                                          [_vm._v(_vm._s(ntf.title))]
+                                          [_vm._v(_vm._s(ntf.notification))]
                                         ),
                                         _vm._v(" "),
-                                        _c("small", [_vm._v(_vm._s(ntf.msg))])
+                                        _c("small", [
+                                          _vm._v(_vm._s(ntf.description))
+                                        ])
                                       ])
                                     ],
                                     1
@@ -2025,7 +2011,11 @@ var render = function() {
                                   _c(
                                     "small",
                                     { staticClass: "mt-1 whitespace-no-wrap" },
-                                    [_vm._v(_vm._s(_vm.elapsedTime(ntf.time)))]
+                                    [
+                                      _vm._v(
+                                        _vm._s(_vm.elapsedTime(ntf.created_at))
+                                      )
+                                    ]
                                   )
                                 ]
                               )

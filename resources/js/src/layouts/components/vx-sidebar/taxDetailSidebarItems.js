@@ -45,6 +45,7 @@ export default [
             name: "Add Sale",
             slug: "add-sale",
             icon: "UserIcon",
+            target : '_blank',
         },{
             url: "/sales-list",
             name: "List Of Sales",
@@ -63,6 +64,7 @@ export default [
             name: "Add purchase",
             slug: "add-purchase",
             icon: "UserIcon",
+            target : '_blank',
         },{
             url: "/purchases-list",
             name: "List Of Purchases",
@@ -81,6 +83,7 @@ export default [
             name: "Add Payroll",
             slug: "add-payroll",
             icon: "UserIcon",
+            target : '_blank',
         },{
             url: "/employees-payrolls",
             name: "List Of Payroll",

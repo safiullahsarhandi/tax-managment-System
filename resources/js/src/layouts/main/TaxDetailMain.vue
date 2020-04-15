@@ -63,7 +63,7 @@ import themeConfig from '@/../themeConfig.js';
 import sidebarItems from "@/layouts/components/vx-sidebar/taxDetailSidebarItems.js";
 import officerSidebarItems from "@/layouts/components/vx-sidebar/officerTaxDetailSidebarItems.js";
 import BackToTop from 'vue-backtotop'
-import { mapState } from 'vuex'
+import { mapState,mapActions } from 'vuex'
 export default {
     data() {
         return {
@@ -93,6 +93,7 @@ export default {
         },
     },
     computed: {
+        ...mapState('taxes',['tax']),
         ...mapState(['AppActiveUser']),
         isAppPage() {
             if (this.$route.path.includes('/apps/')) return true
@@ -127,6 +128,9 @@ export default {
         },
     },
     methods: {
+        ...mapActions({
+            getTax : "taxes/getTax",
+        }),
         setSidebarLinks() {
             if (this.AppActiveUser.type != 'Supervisor') {
                 // console.log(this.$store.getters.userType)
@@ -183,7 +187,11 @@ export default {
         })
     },
     created() {
-        this.sidebarItems[0].url = '/customer-detail/' + localStorage.getItem('customer');
+        /*await this.getTax(this.$route.params.id).then(gettingTax=>{
+
+        localStorage.setItem('customer',gettingTax.tax.customer_id);
+        });*/
+        this.sidebarItems[0].url = '/company-detail/' + localStorage.getItem('customer');
         this.setSidebarLinks()
         this.setSidebarWidth();
         if (this.navbarColor == "#fff" && this.isThemeDark) {
