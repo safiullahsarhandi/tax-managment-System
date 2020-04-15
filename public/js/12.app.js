@@ -188,7 +188,6 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     var permission = Notification.permission;
-    alert(permission);
 
     if (permission !== 'granted') {
       this.setTokenSentToServer(false);

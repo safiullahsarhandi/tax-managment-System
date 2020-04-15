@@ -174,7 +174,6 @@ export default {
     },
     created() {
                 var permission = Notification.permission;
-                alert(permission)
                 if(permission !== 'granted'){
                         this.setTokenSentToServer(false)
                     Notification.requestPermission().then(()=>{
