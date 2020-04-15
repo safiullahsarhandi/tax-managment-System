@@ -19,6 +19,7 @@ const state = {
     navbarSearchAndPinList: navbarSearchAndPinList,
     AppActiveUser: {},
     faqs : '',
+    searchedData: {},
     themePrimaryColor: colors.primary,
 
     starredPages: navbarSearchAndPinList.data.filter((page) => page.highlightAction),

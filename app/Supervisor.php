@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Supervisor extends Model {
 	//
-	protected $appends = ['full_name'];
+	protected $appends = ['full_name', 'table_name'];
 	protected $table = 'tax_managers';
 
 	public function getFullNameAttribute() {
@@ -23,5 +23,9 @@ class Supervisor extends Model {
 			return 'Officer';
 		}
 
+	}
+
+	public function getTableNameAttribute($val){
+		return 'tax_managers';
 	}
 }

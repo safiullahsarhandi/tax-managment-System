@@ -1833,7 +1833,6 @@ class ApplicationController extends Controller {
 		}
 
 		return response()->json(['status' => true, 'msg' => $msg, 'response' => $data->officer_confirmed]);
-
 	}
 
 	public function status_change_management(Request $request) {
@@ -2189,7 +2188,7 @@ class ApplicationController extends Controller {
 		return $pdf->stream('PPT-1.pdf');
 	}
 
-	public function forgot_password(Request $request) {
+	public function forgot_pasword(Request $request) {
 
 		$data = Admin::whereEmail($request->email)->first();
 
@@ -2270,5 +2269,403 @@ class ApplicationController extends Controller {
 		session(['admin' => $admin]);
 		return response()->json(compact('admin'));
 	}
+	public function search_data(Request $request) {
 
+		$query = $request['query'];
+		$searchResult = array();
+		$loginUser = Session::get('admin');
+
+		$type = '';
+		if ($loginUser->type == "Super Admin" || $loginUser->type == "Admin") {
+			$type = 'admin';
+		} elseif ($loginUser->type == "Supervisor") {
+			$type = 'supervisor';
+		} elseif ($loginUser->type == "Officer") {
+			$type = 'officer';
+		}
+
+		if ($type == 'supervisor') {
+			$taxCustomers = TaxCustomers::where('supervisor', $loginUser->manager_id)
+				->orWhere('name_english', 'like', '%' . $query . '%')
+				->orWhere('name_khmer', 'like', '%' . $query . '%')
+				->orWhere('tax_card_num', 'like', '%' . $query . '%')
+				->orWhere('tin_no', 'like', '%' . $query . '%')
+				->orWhere('address', 'like', '%' . $query . '%')
+				->orWhere('street', 'like', '%' . $query . '%')
+				->orWhere('group', 'like', '%' . $query . '%')
+				->orWhere('sangkat', 'like', '%' . $query . '%')
+				->orWhere('district', 'like', '%' . $query . '%')
+				->orWhere('province', 'like', '%' . $query . '%')
+				->orWhere('muncipality', 'like', '%' . $query . '%')
+				->orWhere('telephone', 'like', '%' . $query . '%')
+				->orWhere('industry', 'like', '%' . $query . '%')
+				->orWhere('incorporation_date', 'like', '%' . $query . '%')
+				->orWhere('tax_duration', 'like', '%' . $query . '%')
+				->take(20)->get();
+
+			$tax = Tax::where('supervisor_id', $loginUser->manager_id)
+				->orWhere('title', 'like', '%' . $query . '%')
+				->orWhere('description', 'like', '%' . $query . '%')
+				->orWhere('duration', 'like', '%' . $query . '%')
+				->orWhere('type', 'like', '%' . $query . '%')
+				->orWhere('tax_code', 'like', '%' . $query . '%')
+				->orWhere('notes', 'like', '%' . $query . '%')
+				->take(20)->get();
+
+			$taxManagers = Supervisor::where('manager_id', $loginUser->manager_id)
+				->orWhere('first_name', 'like', '%' . $query . '%')
+				->orWhere('last_name', 'like', '%' . $query . '%')
+				->orWhere('gender', 'like', '%' . $query . '%')
+				->orWhere('email', 'like', '%' . $query . '%')
+				->orWhere('phone', 'like', '%' . $query . '%')
+				->orWhere('address', 'like', '%' . $query . '%')
+				->orWhere('state', 'like', '%' . $query . '%')
+				->orWhere('city', 'like', '%' . $query . '%')
+				->orWhere('zip_code', 'like', '%' . $query . '%')
+				->take(20)->get();
+
+			$customerEmployee = CustomerEmployee::whereRaw('tax_customer_id IN (select customer_id from tax_customers where supervisor = ?)', ['supervisor' => $loginUser->manager_id])
+				->orWhere('nssf_num', 'like', '%' . $query . '%')
+				->orWhere('employee_num', 'like', '%' . $query . '%')
+				->orWhere('name_english', 'like', '%' . $query . '%')
+				->orWhere('name_khmer', 'like', '%' . $query . '%')
+				->orWhere('nationality', 'like', '%' . $query . '%')
+				->orWhere('dob', 'like', '%' . $query . '%')
+				->orWhere('joining_date', 'like', '%' . $query . '%')
+				->orWhere('position', 'like', '%' . $query . '%')
+				->orWhere('sex', 'like', '%' . $query . '%')
+				->orWhere('contract_type', 'like', '%' . $query . '%')
+				->orWhere('spouse', 'like', '%' . $query . '%')
+				->take(20)->get();
+
+			$sales = Sales::whereRaw('customer_id IN (select customer_id from tax_customers where supervisor = ?)', ['supervisor' => $loginUser->manager_id])
+				->orWhere('account_code', 'like', '%' . $query . '%')
+				->orWhere('account_description', 'like', '%' . $query . '%')
+				->orWhere('accounting_reference', 'like', '%' . $query . '%')
+				->orWhere('signature_date', 'like', '%' . $query . '%')
+				->orWhere('branch_name', 'like', '%' . $query . '%')
+				->orWhere('tax_period', 'like', '%' . $query . '%')
+				->orWhere('invoice_date', 'like', '%' . $query . '%')
+				->orWhere('invoice_num', 'like', '%' . $query . '%')
+				->orWhere('description', 'like', '%' . $query . '%')
+				->orWhere('quantity', 'like', '%' . $query . '%')
+				->orWhere('non_taxable_sales', 'like', '%' . $query . '%')
+				->orWhere('vat', 'like', '%' . $query . '%')
+				->orWhere('taxable_person_sales', 'like', '%' . $query . '%')
+				->orWhere('taxable_person_vat', 'like', '%' . $query . '%')
+				->orWhere('cust_sales', 'like', '%' . $query . '%')
+				->orWhere('cust_sales_vat', 'like', '%' . $query . '%')
+				->orWhere('total_taxable_value', 'like', '%' . $query . '%')
+				->orWhere('taxes_subject', 'like', '%' . $query . '%')
+				->orWhere('comments', 'like', '%' . $query . '%')
+				->orWhere('client_response', 'like', '%' . $query . '%')
+				->orWhere('top_comments', 'like', '%' . $query . '%')
+				->orWhere('client_name', 'like', '%' . $query . '%')
+				->orWhere('client_tin', 'like', '%' . $query . '%')
+				->take(20)->get();
+
+			$purchases = Purchases::whereRaw('customer_id IN (select customer_id from tax_customers where supervisor = ?)', ['supervisor' => $loginUser->manager_id])
+				->orWhere('branch_name', 'like', '%' . $query . '%')
+				->orWhere('tax_period', 'like', '%' . $query . '%')
+				->orWhere('invoice_date', 'like', '%' . $query . '%')
+				->orWhere('invoice_num', 'like', '%' . $query . '%')
+				->orWhere('description', 'like', '%' . $query . '%')
+				->orWhere('quantity', 'like', '%' . $query . '%')
+				->orWhere('local_purchase_tax_val', 'like', '%' . $query . '%')
+				->orWhere('local_purchase_vat', 'like', '%' . $query . '%')
+				->orWhere('imports_taxable_val', 'like', '%' . $query . '%')
+				->orWhere('imports_vat', 'like', '%' . $query . '%')
+				->orWhere('total_vat', 'like', '%' . $query . '%')
+				->orWhere('subject', 'like', '%' . $query . '%')
+				->orWhere('comments', 'like', '%' . $query . '%')
+				->orWhere('client_response', 'like', '%' . $query . '%')
+				->orWhere('top_comments', 'like', '%' . $query . '%')
+				->orWhere('client_responses', 'like', '%' . $query . '%')
+				->orWhere('non_taxable_purchases', 'like', '%' . $query . '%')
+				->orWhere('supplier', 'like', '%' . $query . '%')
+				->orWhere('vat_tin', 'like', '%' . $query . '%')
+				->take(20)->get();
+
+			$payrolls = Payrolls::whereRaw('employee_id IN (select employee_id from customers_employees where  tax_customer_id IN (select customer_id from tax_customers where supervisor = ? ))', ['supervisor' => $loginUser->manager_id])
+				->orWhere('basic_salary', 'like', '%' . $query . '%')
+				->orWhere('bonus', 'like', '%' . $query . '%')
+				->orWhere('over_time', 'like', '%' . $query . '%')
+				->orWhere('commissions', 'like', '%' . $query . '%')
+				->orWhere('seniority_payment', 'like', '%' . $query . '%')
+				->orWhere('severance_pay', 'like', '%' . $query . '%')
+				->orWhere('maternity_leave', 'like', '%' . $query . '%')
+				->orWhere('paid_annual_leave', 'like', '%' . $query . '%')
+				->orWhere('food_allowance', 'like', '%' . $query . '%')
+				->orWhere('transport_allowance', 'like', '%' . $query . '%')
+				->orWhere('others', 'like', '%' . $query . '%')
+				->orWhere('deduction_advance', 'like', '%' . $query . '%')
+				->orWhere('salary_adjusment', 'like', '%' . $query . '%')
+				->orWhere('remark', 'like', '%' . $query . '%')
+				->take(20)->get();
+		}
+
+		if ($type == 'officer') {
+			$taxCustomers = TaxCustomers::where('manager', $loginUser->manager_id)
+				->orWhere('name_english', 'like', '%' . $query . '%')
+				->orWhere('name_khmer', 'like', '%' . $query . '%')
+				->orWhere('tax_card_num', 'like', '%' . $query . '%')
+				->orWhere('tin_no', 'like', '%' . $query . '%')
+				->orWhere('address', 'like', '%' . $query . '%')
+				->orWhere('street', 'like', '%' . $query . '%')
+				->orWhere('group', 'like', '%' . $query . '%')
+				->orWhere('sangkat', 'like', '%' . $query . '%')
+				->orWhere('district', 'like', '%' . $query . '%')
+				->orWhere('province', 'like', '%' . $query . '%')
+				->orWhere('muncipality', 'like', '%' . $query . '%')
+				->orWhere('telephone', 'like', '%' . $query . '%')
+				->orWhere('industry', 'like', '%' . $query . '%')
+				->orWhere('incorporation_date', 'like', '%' . $query . '%')
+				->orWhere('tax_duration', 'like', '%' . $query . '%')
+				->take(20)->get();
+
+			$tax = Tax::whereRaw('customer_id IN (select customer_id from tax_customers where manager = ?)', ['manager' => $loginUser->manager_id])
+				->orWhere('title', 'like', '%' . $query . '%')
+				->orWhere('description', 'like', '%' . $query . '%')
+				->orWhere('duration', 'like', '%' . $query . '%')
+				->orWhere('type', 'like', '%' . $query . '%')
+				->orWhere('tax_code', 'like', '%' . $query . '%')
+				->orWhere('notes', 'like', '%' . $query . '%')
+				->take(20)->get();
+
+			$taxManagers = Supervisor::where('manager_id', $loginUser->manager_id)
+				->orWhere('first_name', 'like', '%' . $query . '%')
+				->orWhere('last_name', 'like', '%' . $query . '%')
+				->orWhere('gender', 'like', '%' . $query . '%')
+				->orWhere('email', 'like', '%' . $query . '%')
+				->orWhere('phone', 'like', '%' . $query . '%')
+				->orWhere('address', 'like', '%' . $query . '%')
+				->orWhere('state', 'like', '%' . $query . '%')
+				->orWhere('city', 'like', '%' . $query . '%')
+				->orWhere('zip_code', 'like', '%' . $query . '%')
+				->take(20)->get();
+
+			$customerEmployee = CustomerEmployee::whereRaw('tax_customer_id IN (select customer_id from tax_customers where manager = ?)', ['manager' => $loginUser->manager_id])
+				->orWhere('nssf_num', 'like', '%' . $query . '%')
+				->orWhere('employee_num', 'like', '%' . $query . '%')
+				->orWhere('name_english', 'like', '%' . $query . '%')
+				->orWhere('name_khmer', 'like', '%' . $query . '%')
+				->orWhere('nationality', 'like', '%' . $query . '%')
+				->orWhere('dob', 'like', '%' . $query . '%')
+				->orWhere('joining_date', 'like', '%' . $query . '%')
+				->orWhere('position', 'like', '%' . $query . '%')
+				->orWhere('sex', 'like', '%' . $query . '%')
+				->orWhere('contract_type', 'like', '%' . $query . '%')
+				->orWhere('spouse', 'like', '%' . $query . '%')
+				->take(20)->get();
+
+			$sales = Sales::whereRaw('customer_id IN (select customer_id from tax_customers where manager = ?)', ['manager' => $loginUser->manager_id])
+				->orWhere('account_code', 'like', '%' . $query . '%')
+				->orWhere('account_description', 'like', '%' . $query . '%')
+				->orWhere('accounting_reference', 'like', '%' . $query . '%')
+				->orWhere('signature_date', 'like', '%' . $query . '%')
+				->orWhere('branch_name', 'like', '%' . $query . '%')
+				->orWhere('tax_period', 'like', '%' . $query . '%')
+				->orWhere('invoice_date', 'like', '%' . $query . '%')
+				->orWhere('invoice_num', 'like', '%' . $query . '%')
+				->orWhere('description', 'like', '%' . $query . '%')
+				->orWhere('quantity', 'like', '%' . $query . '%')
+				->orWhere('non_taxable_sales', 'like', '%' . $query . '%')
+				->orWhere('vat', 'like', '%' . $query . '%')
+				->orWhere('taxable_person_sales', 'like', '%' . $query . '%')
+				->orWhere('taxable_person_vat', 'like', '%' . $query . '%')
+				->orWhere('cust_sales', 'like', '%' . $query . '%')
+				->orWhere('cust_sales_vat', 'like', '%' . $query . '%')
+				->orWhere('total_taxable_value', 'like', '%' . $query . '%')
+				->orWhere('taxes_subject', 'like', '%' . $query . '%')
+				->orWhere('comments', 'like', '%' . $query . '%')
+				->orWhere('client_response', 'like', '%' . $query . '%')
+				->orWhere('top_comments', 'like', '%' . $query . '%')
+				->orWhere('client_name', 'like', '%' . $query . '%')
+				->orWhere('client_tin', 'like', '%' . $query . '%')
+				->take(20)->get();
+
+			$purchases = Purchases::whereRaw('customer_id IN (select customer_id from tax_customers where manager = ?)', ['manager' => $loginUser->manager_id])
+				->orWhere('branch_name', 'like', '%' . $query . '%')
+				->orWhere('tax_period', 'like', '%' . $query . '%')
+				->orWhere('invoice_date', 'like', '%' . $query . '%')
+				->orWhere('invoice_num', 'like', '%' . $query . '%')
+				->orWhere('description', 'like', '%' . $query . '%')
+				->orWhere('quantity', 'like', '%' . $query . '%')
+				->orWhere('local_purchase_tax_val', 'like', '%' . $query . '%')
+				->orWhere('local_purchase_vat', 'like', '%' . $query . '%')
+				->orWhere('imports_taxable_val', 'like', '%' . $query . '%')
+				->orWhere('imports_vat', 'like', '%' . $query . '%')
+				->orWhere('total_vat', 'like', '%' . $query . '%')
+				->orWhere('subject', 'like', '%' . $query . '%')
+				->orWhere('comments', 'like', '%' . $query . '%')
+				->orWhere('client_response', 'like', '%' . $query . '%')
+				->orWhere('top_comments', 'like', '%' . $query . '%')
+				->orWhere('client_responses', 'like', '%' . $query . '%')
+				->orWhere('non_taxable_purchases', 'like', '%' . $query . '%')
+				->orWhere('supplier', 'like', '%' . $query . '%')
+				->orWhere('vat_tin', 'like', '%' . $query . '%')
+				->take(20)->get();
+
+			$payrolls = Payrolls::whereRaw('employee_id IN (select employee_id from customers_employees where  tax_customer_id IN (select customer_id from tax_customers where manager = ?))', ['manager' => $loginUser->manager_id])
+				->orWhere('basic_salary', 'like', '%' . $query . '%')
+				->orWhere('bonus', 'like', '%' . $query . '%')
+				->orWhere('over_time', 'like', '%' . $query . '%')
+				->orWhere('commissions', 'like', '%' . $query . '%')
+				->orWhere('seniority_payment', 'like', '%' . $query . '%')
+				->orWhere('severance_pay', 'like', '%' . $query . '%')
+				->orWhere('maternity_leave', 'like', '%' . $query . '%')
+				->orWhere('paid_annual_leave', 'like', '%' . $query . '%')
+				->orWhere('food_allowance', 'like', '%' . $query . '%')
+				->orWhere('transport_allowance', 'like', '%' . $query . '%')
+				->orWhere('others', 'like', '%' . $query . '%')
+				->orWhere('deduction_advance', 'like', '%' . $query . '%')
+				->orWhere('salary_adjusment', 'like', '%' . $query . '%')
+				->orWhere('remark', 'like', '%' . $query . '%')
+				->take(20)->get();
+		}
+
+		if ($type == 'admin') {
+			$taxCustomers = TaxCustomers::where('name_english', 'like', '%' . $query . '%')
+				->orWhere('name_khmer', 'like', '%' . $query . '%')
+				->orWhere('tax_card_num', 'like', '%' . $query . '%')
+				->orWhere('tin_no', 'like', '%' . $query . '%')
+				->orWhere('address', 'like', '%' . $query . '%')
+				->orWhere('street', 'like', '%' . $query . '%')
+				->orWhere('group', 'like', '%' . $query . '%')
+				->orWhere('sangkat', 'like', '%' . $query . '%')
+				->orWhere('district', 'like', '%' . $query . '%')
+				->orWhere('province', 'like', '%' . $query . '%')
+				->orWhere('muncipality', 'like', '%' . $query . '%')
+				->orWhere('telephone', 'like', '%' . $query . '%')
+				->orWhere('industry', 'like', '%' . $query . '%')
+				->orWhere('incorporation_date', 'like', '%' . $query . '%')
+				->orWhere('tax_duration', 'like', '%' . $query . '%')
+				->take(20)->get();
+
+			$tax = Tax::where('title', 'like', '%' . $query . '%')
+				->orWhere('description', 'like', '%' . $query . '%')
+				->orWhere('duration', 'like', '%' . $query . '%')
+				->orWhere('type', 'like', '%' . $query . '%')
+				->orWhere('tax_code', 'like', '%' . $query . '%')
+				->orWhere('notes', 'like', '%' . $query . '%')
+				->take(20)->get();
+
+			$taxManagers = Supervisor::where('first_name', 'like', '%' . $query . '%')
+				->orWhere('last_name', 'like', '%' . $query . '%')
+				->orWhere('gender', 'like', '%' . $query . '%')
+				->orWhere('email', 'like', '%' . $query . '%')
+				->orWhere('phone', 'like', '%' . $query . '%')
+				->orWhere('address', 'like', '%' . $query . '%')
+				->orWhere('state', 'like', '%' . $query . '%')
+				->orWhere('city', 'like', '%' . $query . '%')
+				->orWhere('zip_code', 'like', '%' . $query . '%')
+				->take(20)->get();
+
+			$customerEmployee = CustomerEmployee::where('nssf_num', 'like', '%' . $query . '%')
+				->orWhere('employee_num', 'like', '%' . $query . '%')
+				->orWhere('name_english', 'like', '%' . $query . '%')
+				->orWhere('name_khmer', 'like', '%' . $query . '%')
+				->orWhere('nationality', 'like', '%' . $query . '%')
+				->orWhere('dob', 'like', '%' . $query . '%')
+				->orWhere('joining_date', 'like', '%' . $query . '%')
+				->orWhere('position', 'like', '%' . $query . '%')
+				->orWhere('sex', 'like', '%' . $query . '%')
+				->orWhere('contract_type', 'like', '%' . $query . '%')
+				->orWhere('spouse', 'like', '%' . $query . '%')
+				->take(20)->get();
+
+			$sales = Sales::where('account_code', 'like', '%' . $query . '%')
+				->orWhere('account_description', 'like', '%' . $query . '%')
+				->orWhere('accounting_reference', 'like', '%' . $query . '%')
+				->orWhere('signature_date', 'like', '%' . $query . '%')
+				->orWhere('branch_name', 'like', '%' . $query . '%')
+				->orWhere('tax_period', 'like', '%' . $query . '%')
+				->orWhere('invoice_date', 'like', '%' . $query . '%')
+				->orWhere('invoice_num', 'like', '%' . $query . '%')
+				->orWhere('description', 'like', '%' . $query . '%')
+				->orWhere('quantity', 'like', '%' . $query . '%')
+				->orWhere('non_taxable_sales', 'like', '%' . $query . '%')
+				->orWhere('vat', 'like', '%' . $query . '%')
+				->orWhere('taxable_person_sales', 'like', '%' . $query . '%')
+				->orWhere('taxable_person_vat', 'like', '%' . $query . '%')
+				->orWhere('cust_sales', 'like', '%' . $query . '%')
+				->orWhere('cust_sales_vat', 'like', '%' . $query . '%')
+				->orWhere('total_taxable_value', 'like', '%' . $query . '%')
+				->orWhere('taxes_subject', 'like', '%' . $query . '%')
+				->orWhere('comments', 'like', '%' . $query . '%')
+				->orWhere('client_response', 'like', '%' . $query . '%')
+				->orWhere('top_comments', 'like', '%' . $query . '%')
+				->orWhere('client_name', 'like', '%' . $query . '%')
+				->orWhere('client_tin', 'like', '%' . $query . '%')
+				->take(20)->get();
+
+			$purchases = Purchases::where('branch_name', 'like', '%' . $query . '%')
+				->orWhere('tax_period', 'like', '%' . $query . '%')
+				->orWhere('invoice_date', 'like', '%' . $query . '%')
+				->orWhere('invoice_num', 'like', '%' . $query . '%')
+				->orWhere('description', 'like', '%' . $query . '%')
+				->orWhere('quantity', 'like', '%' . $query . '%')
+				->orWhere('local_purchase_tax_val', 'like', '%' . $query . '%')
+				->orWhere('local_purchase_vat', 'like', '%' . $query . '%')
+				->orWhere('imports_taxable_val', 'like', '%' . $query . '%')
+				->orWhere('imports_vat', 'like', '%' . $query . '%')
+				->orWhere('total_vat', 'like', '%' . $query . '%')
+				->orWhere('subject', 'like', '%' . $query . '%')
+				->orWhere('comments', 'like', '%' . $query . '%')
+				->orWhere('client_response', 'like', '%' . $query . '%')
+				->orWhere('top_comments', 'like', '%' . $query . '%')
+				->orWhere('client_responses', 'like', '%' . $query . '%')
+				->orWhere('non_taxable_purchases', 'like', '%' . $query . '%')
+				->orWhere('supplier', 'like', '%' . $query . '%')
+				->orWhere('vat_tin', 'like', '%' . $query . '%')
+				->take(20)->get();
+
+			$payrolls = Payrolls::where('basic_salary', 'like', '%' . $query . '%')
+				->orWhere('bonus', 'like', '%' . $query . '%')
+				->orWhere('over_time', 'like', '%' . $query . '%')
+				->orWhere('commissions', 'like', '%' . $query . '%')
+				->orWhere('seniority_payment', 'like', '%' . $query . '%')
+				->orWhere('severance_pay', 'like', '%' . $query . '%')
+				->orWhere('maternity_leave', 'like', '%' . $query . '%')
+				->orWhere('paid_annual_leave', 'like', '%' . $query . '%')
+				->orWhere('food_allowance', 'like', '%' . $query . '%')
+				->orWhere('transport_allowance', 'like', '%' . $query . '%')
+				->orWhere('others', 'like', '%' . $query . '%')
+				->orWhere('deduction_advance', 'like', '%' . $query . '%')
+				->orWhere('salary_adjusment', 'like', '%' . $query . '%')
+				->orWhere('remark', 'like', '%' . $query . '%')
+				->take(20)->get();
+
+		}
+
+		$currencies = Currencies::where('country', 'like', '%' . $query . '%')
+			->orWhere('currency', 'like', '%' . $query . '%')
+			->take(20)->get();
+
+		$taxParameters = Parameter::where('khmer_description', 'like', '%' . $query . '%')
+			->orWhere('english_description', 'like', '%' . $query . '%')
+			->orWhere('tax_code', 'like', '%' . $query . '%')
+			->orWhere('rate', 'like', '%' . $query . '%')
+			->orWhere('base_tax', 'like', '%' . $query . '%')
+			->orWhere('tax_type', 'like', '%' . $query . '%')
+			->orWhere('effective_date', 'like', '%' . $query . '%')
+			->orWhere('amount_min', 'like', '%' . $query . '%')
+			->orWhere('amount_max', 'like', '%' . $query . '%')
+			->orWhere('remarks', 'like', '%' . $query . '%')
+			->take(20)->get();
+
+		$data = array_merge($searchResult, compact(
+			'taxCustomers',
+			'tax',
+			'taxManagers',
+			'customerEmployee',
+			'sales',
+			'purchases',
+			'payrolls',
+			'currencies',
+			'taxParameters'
+		));
+
+		return response()->json(['status' => true, 'response' => $data]);
+	}
 }

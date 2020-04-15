@@ -1,7 +1,8 @@
 <template>
 	<div class="vx-auto-suggest">
 		<div class="flex items-center relative">
-			<vs-input :placeholder="placeholder" ref="input" :class="inputClassses" class="z-50" icon-pack='feather' icon='icon-search' icon-no-border v-model="searchQuery" @keyup.esc="escPressed" @keyup.up="increaseIndex(false)" @keyup.down="increaseIndex" @keyup.enter="suggestionSelected" @focus="updateInputFocus" @blur="updateInputFocus(false)"></vs-input>
+			<!-- <vs-input :placeholder="placeholder" ref="input" :class="inputClassses" class="z-50" icon-pack='feather' icon='icon-search' icon-no-border v-model="searchQuery" @keyup.esc="escPressed" @keyup.up="increaseIndex(false)" @keyup.down="increaseIndex" @keyup.enter="suggestionSelected" @focus="updateInputFocus" @blur="updateInputFocus(false)"></vs-input> -->
+			<vs-input :placeholder="placeholder" ref="input" :class="inputClassses" class="z-50" icon-pack='feather' icon='icon-search' icon-no-border v-model="searchQuery" @keyup.esc="escPressed" v-on:keyup.enter="getSearchedData()"></vs-input>
 		</div>
 		<ul ref="scrollContainer" class="auto-suggest-suggestions-list z-50 rounded-lg mt-2 shadow-lg overflow-hidden" :class="{'hidden': !inputFocused}" @mouseenter="insideSuggestions = true" @mouseleave="insideSuggestions = false" @focus="updateInputFocus" @blur="updateInputFocus(false)" tabindex="-1">
 			<li
@@ -69,33 +70,56 @@ export default{
 	},
 	watch: {
 		// UPDATE SUGGESTIONS LIST
-		searchQuery(val) {
-			if(val == '') {
-				this.inputInit();
-				if(this.bodyOverlay) this.$store.commit('TOGGLE_CONTENT_OVERLAY', false);
-			}else {
-				if(this.backgroundOverlay && !this.bodyOverlay) this.$store.commit('TOGGLE_CONTENT_OVERLAY', true);
-				let exactEle = this.data.data.filter((item) => {
-					return item.label.toLowerCase().startsWith(this.searchQuery.toLowerCase())
-				});
-				let containEle = this.data.data.filter((item) => {
-					return !item.label.toLowerCase().startsWith(this.searchQuery.toLowerCase()) && item.label.toLowerCase().indexOf(this.searchQuery.toLowerCase()) > -1
-				});
-				this.filteredData = exactEle.concat(containEle).slice(0,this.searchLimit)
-				if(!this.filteredData[0]) this.currentSelected = -1
-			}
+		// searchQuery(val) {
+		// 	// console.log(val);
+		// 	// return false;
+		// 	if(val == '') {
+		// 		this.inputInit();
+		// 		if(this.bodyOverlay) this.$store.commit('TOGGLE_CONTENT_OVERLAY', false);
+		// 	}else {
+		// 		if(this.backgroundOverlay && !this.bodyOverlay) this.$store.commit('TOGGLE_CONTENT_OVERLAY', true);
+		// 		// let exactEle = this.data.data.filter((item) => {
+		// 		// 	return item.label.toLowerCase().startsWith(this.searchQuery.toLowerCase())
+		// 		// });
+		// 		// let containEle = this.data.data.filter((item) => {
+		// 		// 	return !item.label.toLowerCase().startsWith(this.searchQuery.toLowerCase()) && item.label.toLowerCase().indexOf(this.searchQuery.toLowerCase()) > -1
+		// 		// });
 
-			// ADD: No result found
-			if(!this.filteredData.length && this.searchQuery) {
-				this.filteredData = [{
-					highlightAction: false,
-					index: -1,
-					label: 'No results found.',
-					labelIcon: 'AlertCircleIcon',
-					url: null,
-				}]
-			}
-		},
+		// 		// this.filteredData = exactEle.concat(containEle).slice(0,this.searchLimit)
+		// 		if(val.length >= 3){
+		// 			axios.post('search-data', {query: val}).then(res=>{
+		// 				var response = res.data.response;
+						
+		// 				let self = this;
+		// 				_.forEach(response, function(value, keys) {
+		// 					_.forEach(value, function(val, key) {
+		// 						// if(val.table_name)
+		// 						console.log(val.table_name);
+		// 						var lbl = 'lebel';
+		// 						var url = '/';
+		// 						self.data.data.push({index: key, label: lbl, url: url, labelIcon: 'HomeIcon', highlightAction: false})
+		// 					});							
+		// 				});
+		// 				console.log(self.data.data);
+							
+		// 			});
+		// 		}
+				
+
+		// 		if(!this.filteredData[0]) this.currentSelected = -1
+		// 	}
+
+		// 	// ADD: No result found
+		// 	if(!this.filteredData.length && this.searchQuery) {
+		// 		this.filteredData = [{
+		// 			highlightAction: false,
+		// 			index: -1,
+		// 			label: 'No results found.',
+		// 			labelIcon: 'AlertCircleIcon',
+		// 			url: null,
+		// 		}]
+		// 	}
+		// },
 		autoFocus(val) {
 			if(val) this.focusInput();
 			else this.searchQuery = '';
@@ -122,6 +146,50 @@ export default{
 		}
 	},
 	methods: {
+		getSearchedData(){
+			
+			var val = this.searchQuery;
+			if(val == '') {
+				this.inputInit();
+				if(this.bodyOverlay) this.$store.commit('TOGGLE_CONTENT_OVERLAY', false);
+			}else {
+				// if(this.backgroundOverlay && !this.bodyOverlay) this.$store.commit('TOGGLE_CONTENT_OVERLAY', true);
+				
+				axios.post('search-data', {query: val}).then(res=>{
+					var response = res.data.response;
+					
+					let self = this;
+					self.data.data = [];
+					_.forEach(response, function(value, keys) {
+						_.forEach(value, function(val, key) {
+							self.data.data.push({index: key, result: val})
+						});							
+					});
+					self.$store.state.searchedData = [];
+					var data = _.shuffle(self.data.data);
+					self.$store.state.searchedData = data;
+					if(this.$route.path != '/searched-record'){
+						this.$router.push('/searched-record');
+					}
+					// console.log(self.$store.state.searchedData);
+						
+				});
+				
+				if(!this.filteredData[0]) this.currentSelected = -1
+			}
+
+			// ADD: No result found
+			if(!this.filteredData.length && this.searchQuery) {
+				this.filteredData = [{
+					highlightAction: false,
+					index: -1,
+					label: 'No results found.',
+					labelIcon: 'AlertCircleIcon',
+					url: null,
+				}]
+			}
+		},
+
 		escPressed() {
 			this.$emit('closeSearchbar')
 			this.searchQuery = '';

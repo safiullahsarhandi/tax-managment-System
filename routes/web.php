@@ -142,5 +142,7 @@ Route::group(['prefix' => ''], function () {
 	Route::post('mark-as-read', 'ApplicationController@mark_as_read');
 	Route::post('sendTokenToServer', 'ApplicationController@sendTokenToServer');
 	Route::get('testingGoogleAuth', 'ApplicationController@testingGoogleAuth');
+
+	Route::post('search-data', 'ApplicationController@search_data');
 });
 Route::get('/{any}', 'ApplicationController')->where('any', '.*');

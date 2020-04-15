@@ -10,6 +10,12 @@ class TaxCustomers extends Model {
 		'additional_fields' => 'array',
 	];
 
+	protected $appends = ['table_name'];
+
+	public function getTableNameAttribute($val){
+		return 'tax_customers';
+	}
+
 	public function taxes() {
 		return $this->hasMany(Tax::class, 'customer_id', 'customer_id');
 	}

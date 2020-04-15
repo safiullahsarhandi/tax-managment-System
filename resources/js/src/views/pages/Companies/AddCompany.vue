@@ -93,12 +93,14 @@
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('group')">{{errors.first('group')}}</span>
                     </vs-col>
+
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
                             <vs-input name="village" v-validate="`required`" :label-placeholder="lang=='english'?'Village':'ភូមិ'" v-model="village" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('village')">{{errors.first('village')}}</span>
                     </vs-col>
+
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
                             <vs-input name="sangkat" v-validate="`required`" :label-placeholder="lang=='english'?'Sangkat':'វិបត្តិ'" v-model="sangkat" />
@@ -149,7 +151,8 @@
                     </vs-col>
 
 
-                    <!-- <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                    <!-- 
+                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
 
                         <vx-input-group>
                             <vs-select autocomplete label="Select Tax Duration" v-model="taxDurationSelected" name="tax_duration" width="100%" v-validate="'excluded:`Monthly`,`Yearly`'">
@@ -158,7 +161,8 @@
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('tax_duration')">{{errors.first('tax_duration')}}</span>
 
-                    </vs-col> -->
+                    </vs-col>
+                     -->
 
 
 

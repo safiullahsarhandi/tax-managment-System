@@ -70,6 +70,16 @@ const router = new Router({
                     }
                 },
                 {
+                    path: '/add-customer-table-view',
+                    name: 'Add Customer',
+                    component: () => import('./views/pages/Customers/AddCustomerTableView.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+
+                    }
+                },
+                {
                     path: '/company-update/:id',
                     name: 'Company Update',
                     component: () => import('./views/pages/Companies/EditCompany.vue'),
@@ -192,6 +202,15 @@ const router = new Router({
                         requiresAuth: true,
                         requiresAdmin: false,
                         requiresSupervisor: true,
+                    }
+                },
+                {
+                    path: '/searched-record',
+                    name: 'Search Page',
+                    component: () => import('./views/SearchedRecords.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
                     }
                 },
             ],

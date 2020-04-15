@@ -10,7 +10,7 @@ class Sales extends Model {
 	protected $casts = [
 		'additional_fields' => 'array',
 	];
-	protected $appends = ['officer_confirmation'];
+	protected $appends = ['officer_confirmation', 'table_name'];
 	public function officer() {
 		return $this->belongsTo(Officer::class, 'tax_officer_id', 'manager_id');
 	}
@@ -36,5 +36,8 @@ class Sales extends Model {
 	}
 	public function created_by() {
 		return $this->belongsTo(Admin::class, 'created_by', 'manager_id');
+	}
+	public function getTableNameAttribute($val) {
+		return 'sales';
 	}
 }

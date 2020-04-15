@@ -1,5 +1,6 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[9],{
 
+<<<<<<< HEAD
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/components/statistics-cards/DashboardCard.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/components/statistics-cards/DashboardCard.vue?vue&type=script&lang=js& ***!
@@ -120,6 +121,8 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+=======
+>>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/Home.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/Home.vue?vue&type=script&lang=js& ***!
@@ -132,7 +135,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+<<<<<<< HEAD
 /* harmony import */ var _components_statistics_cards_DashboardCard_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/statistics-cards/DashboardCard.vue */ "./resources/js/src/components/statistics-cards/DashboardCard.vue");
+=======
+/* harmony import */ var _components_statistics_cards_StatisticsCardLine_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/statistics-cards/StatisticsCardLine.vue */ "./resources/js/src/components/statistics-cards/StatisticsCardLine.vue");
+>>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
 /* harmony import */ var _components_analyticsData_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/analyticsData.js */ "./resources/js/src/components/analyticsData.js");
 
 
@@ -173,7 +180,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
+<<<<<<< HEAD
             return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios.get('get-dashboard-data?manager=' + localStorage.getItem('admin')));
+=======
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios.get('get-dashboard-data'));
+>>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
 
           case 2:
             gettingDashboardData = _context.sent;
@@ -188,7 +199,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: {},
   components: {
+<<<<<<< HEAD
     StatisticsCardLine: _components_statistics_cards_DashboardCard_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+=======
+    StatisticsCardLine: _components_statistics_cards_StatisticsCardLine_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+>>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
   }
 });
 
@@ -243,6 +258,7 @@ if(false) {}
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/components/statistics-cards/DashboardCard.vue?vue&type=template&id=26b7766e&":
 /*!*************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/components/statistics-cards/DashboardCard.vue?vue&type=template&id=26b7766e& ***!
@@ -324,6 +340,8 @@ render._withStripped = true
 
 /***/ }),
 
+=======
+>>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/Home.vue?vue&type=template&id=e85b2cee&":
 /*!******************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/Home.vue?vue&type=template&id=e85b2cee& ***!
@@ -359,9 +377,15 @@ var render = function() {
             attrs: {
               iconRight: "",
               icon: "DollarSignIcon",
+<<<<<<< HEAD
               statisticTitle: "% of all customers: " + 10 + "%",
               title: "Monthly Tax",
               statisticSubTitle: "Total No. of Customers: " + 20,
+=======
+              statistic: 10 + "%",
+              statisticTitle: "Monthly Tax",
+              statisticSubTitle: "Total No. of Customers",
+>>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
               chartData: _vm.analyticsData.revenueGenerated,
               type: "area"
             }
@@ -386,9 +410,15 @@ var render = function() {
             attrs: {
               iconRight: "",
               icon: "DollarSignIcon",
+<<<<<<< HEAD
               title: "Annual Tax",
               statisticTitle: "% of all customers: " + 10 + "%",
               statisticSubTitle: "Total No. of Customers: " + 20,
+=======
+              statistic: 10 + "%",
+              statisticTitle: "Annual Tax",
+              statisticSubTitle: "Total No. of Customers",
+>>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
               chartData: _vm.analyticsData.revenueGenerated,
               type: "area"
             }
@@ -413,9 +443,15 @@ var render = function() {
             attrs: {
               iconRight: "",
               icon: "DollarSignIcon",
+<<<<<<< HEAD
               title: "Tax Resubmission",
               statisticTitle: "% of all customers: " + 10 + "%",
               statisticSubTitle: "Total No. of Customers: " + 20,
+=======
+              statistic: 20 + "%",
+              statisticTitle: "Tax Resubmission",
+              statisticSubTitle: "Total No. of Customers",
+>>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
               chartData: _vm.analyticsData.revenueGenerated,
               type: "area"
             }
@@ -434,6 +470,7 @@ render._withStripped = true
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ "./resources/js/src/components/statistics-cards/DashboardCard.vue":
 /*!************************************************************************!*\
   !*** ./resources/js/src/components/statistics-cards/DashboardCard.vue ***!
@@ -503,6 +540,8 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+=======
+>>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
 /***/ "./resources/js/src/views/Home.vue":
 /*!*****************************************!*\
   !*** ./resources/js/src/views/Home.vue ***!

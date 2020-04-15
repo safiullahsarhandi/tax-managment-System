@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Tax extends Model {
 	protected $table = 'tax_managment';
 
+	protected $appends =['table_name'];
+
+	public function getTableNameAttribute($val){
+		return 'tax_management';
+	}
+
 	/*public function supervisor() {
 		return $this->belongsTo(Supervisor::class, 'supervisor_id', 'manager_id');
 	}*/

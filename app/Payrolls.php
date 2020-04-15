@@ -10,7 +10,12 @@ class Payrolls extends Model {
 		'additional_fields' => 'array',
 	];
 
-	protected $appends = ['officer_confirmation'];
+	protected $appends = ['officer_confirmation','table_name'];
+
+
+    public function getTableNameAttribute($val){
+    	return 'employees_payrolls';
+    }
 	public function tax() {
 		return $this->belongsTo(Tax::class, 'tax_id', 'tax_id');
 	}
