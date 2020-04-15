@@ -1,22 +1,31 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[16],{
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Faqs.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Faqs.vue?vue&type=script&lang=js& ***!
   \********************************************************************************************************************************************************************/
+<<<<<<< HEAD
 =======
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Payrolls/PayrollDetail.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Payrolls/PayrollDetail.vue?vue&type=script&lang=js& ***!
   \**************************************************************************************************************************************************************************************/
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /* harmony import */ var quill_dist_quill_core_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! quill/dist/quill.core.css */ "./node_modules/quill/dist/quill.core.css");
 /* harmony import */ var quill_dist_quill_core_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(quill_dist_quill_core_css__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var quill_dist_quill_snow_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! quill/dist/quill.snow.css */ "./node_modules/quill/dist/quill.snow.css");
@@ -25,6 +34,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var quill_dist_quill_bubble_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(quill_dist_quill_bubble_css__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var vue_quill_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-quill-editor */ "./node_modules/vue-quill-editor/dist/vue-quill-editor.js");
 /* harmony import */ var vue_quill_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_quill_editor__WEBPACK_IMPORTED_MODULE_3__);
+<<<<<<< HEAD
 =======
 /* harmony import */ var _layouts_components_customizer_CommentDrawer_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/layouts/components/customizer/CommentDrawer.vue */ "./resources/js/src/layouts/components/customizer/CommentDrawer.vue");
 /* harmony import */ var vue_burger_menu__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-burger-menu */ "./node_modules/vue-burger-menu/dist/vue-burger-menu.common.js");
@@ -176,6 +186,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+//
+//
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 //
 //
 //
@@ -206,17 +220,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+<<<<<<< HEAD
 //
 //
 <<<<<<< HEAD
 
 =======
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
   data: function data() {
     return {
       ShowAddFaqsDialog: false,
@@ -261,6 +282,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     }
   }
+<<<<<<< HEAD
 =======
   components: {
     TheCustomizer: _layouts_components_customizer_CommentDrawer_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -353,11 +375,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   })
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 });
 
 /***/ }),
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Faqs.vue?vue&type=style&index=0&lang=css&":
 /*!***************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Faqs.vue?vue&type=style&index=0&lang=css& ***!
@@ -366,6 +393,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+<<<<<<< HEAD
 =======
 /***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Payrolls/PayrollDetail.vue?vue&type=style&index=0&lang=scss&":
 /*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
@@ -376,15 +404,21 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 exports = module.exports = __webpack_require__(/*! ../../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 // imports
 
 
 // module
 <<<<<<< HEAD
+<<<<<<< HEAD
 exports.push([module.i, "#faq-editor .ql-editor {\n  min-height: 380px;\n}\r\n\r\n", ""]);
 =======
 exports.push([module.i, ".bm-menu {\n  z-index: 99999;\n}\n.bm-burger-button {\n  position: fixed;\n  width: 36px;\n  height: 30px;\n  left: 36px;\n  top: 36px;\n  cursor: pointer;\n}\n.bm-burger-bars {\n  background-color: #373a47;\n}\n.line-style {\n  position: absolute;\n  height: 20%;\n  left: 0;\n  right: 0;\n}\n.cross-style {\n  position: absolute;\n  top: 12px;\n  right: 2px !important;\n  cursor: pointer;\n}\n.bm-cross {\n  background: #bdc3c7;\n}\n.bm-cross-button {\n  height: 24px;\n  width: 24px;\n}\n.bm-menu {\n  height: 100%;\n  /* 100% Full-height */\n  width: 0;\n  /* 0 width - change this with JavaScript */\n  position: fixed;\n  /* Stay in place */\n  top: 0;\n  left: 0;\n  background-color: #3f3f41;\n  /* Black*/\n  overflow-x: hidden;\n  /* Disable horizontal scroll */\n  padding-top: 60px;\n  /* Place content 60px from the top */\n  -webkit-transition: 0.5s;\n  transition: 0.5s;\n  /*0.5 second transition effect to slide in the sidenav*/\n}\n.bm-overlay {\n  background: rgba(0, 0, 0, 0.3);\n}\n.bm-item-list {\n  color: #b8b7ad;\n  margin-left: 10%;\n  font-size: 20px;\n}\n.bm-item-list > * {\n  display: -webkit-box;\n  display: flex;\n  text-decoration: none;\n  padding: 0.7em;\n}\n.bm-item-list > * > span {\n  margin-left: 10px;\n  font-weight: 700;\n  color: white;\n}", ""]);
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+exports.push([module.i, "#faq-editor .ql-editor {\n  min-height: 380px;\n}\r\n\r\n", ""]);
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 
 // exports
 
@@ -392,25 +426,35 @@ exports.push([module.i, ".bm-menu {\n  z-index: 99999;\n}\n.bm-burger-button {\n
 /***/ }),
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Faqs.vue?vue&type=style&index=0&lang=css&":
 /*!*******************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Faqs.vue?vue&type=style&index=0&lang=css& ***!
   \*******************************************************************************************************************************************************************************************************************************************************************************************************/
+<<<<<<< HEAD
 =======
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Payrolls/PayrollDetail.vue?vue&type=style&index=0&lang=scss&":
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--8-2!./node_modules/sass-loader/dist/cjs.js??ref--8-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Payrolls/PayrollDetail.vue?vue&type=style&index=0&lang=scss& ***!
   \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 var content = __webpack_require__(/*! !../../../../../node_modules/css-loader??ref--7-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Faqs.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Faqs.vue?vue&type=style&index=0&lang=css&");
 =======
 var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--8-2!../../../../../../node_modules/sass-loader/dist/cjs.js??ref--8-3!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./PayrollDetail.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Payrolls/PayrollDetail.vue?vue&type=style&index=0&lang=scss&");
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+var content = __webpack_require__(/*! !../../../../../node_modules/css-loader??ref--7-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Faqs.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Faqs.vue?vue&type=style&index=0&lang=css&");
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -425,10 +469,14 @@ options.transform = transform
 options.insertInto = undefined;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 var update = __webpack_require__(/*! ../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
 =======
 var update = __webpack_require__(/*! ../../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+var update = __webpack_require__(/*! ../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 
 if(content.locals) module.exports = content.locals;
 
@@ -437,16 +485,22 @@ if(false) {}
 /***/ }),
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Faqs.vue?vue&type=template&id=4f480e32&":
 /*!************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Faqs.vue?vue&type=template&id=4f480e32& ***!
   \************************************************************************************************************************************************************************************************************/
+<<<<<<< HEAD
 =======
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Payrolls/PayrollDetail.vue?vue&type=template&id=7bb06a2a&":
 /*!******************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Payrolls/PayrollDetail.vue?vue&type=template&id=7bb06a2a& ***!
   \******************************************************************************************************************************************************************************************************************************/
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -467,6 +521,9 @@ var render = function() {
           _c(
             "vs-col",
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
             [
               _c(
                 "vx-card",
@@ -502,6 +559,7 @@ var render = function() {
                         attrs: { "vs-md": "12", "vs-lg": "12", "vs-sm": "12" },
                         domProps: { innerHTML: _vm._s(_vm.faqs) }
                       })
+<<<<<<< HEAD
 =======
             { attrs: { "vs-lg": "9", "vs-md": "9", "vs-sm": "12" } },
             [
@@ -716,10 +774,13 @@ var render = function() {
                           _c("p", [_vm._v(_vm._s(_vm.payroll.others))])
                         ]
                       )
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
                     ],
                     1
                   )
                 ],
+<<<<<<< HEAD
                 1
               ),
               _vm._v(" "),
@@ -755,6 +816,8 @@ var render = function() {
                   )
                 ],
 <<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
                 2
               )
             ],
@@ -860,6 +923,7 @@ var render = function() {
                       ])
                     ],
                     1
+<<<<<<< HEAD
 =======
                 1
               )
@@ -1034,6 +1098,8 @@ var render = function() {
                     ],
                     2
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
                   )
                 ],
                 1
@@ -1041,6 +1107,7 @@ var render = function() {
             ],
             1
           )
+<<<<<<< HEAD
 <<<<<<< HEAD
         ]
       )
@@ -1058,6 +1125,10 @@ var render = function() {
         }
       })
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+        ]
+      )
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
     ],
     1
   )
@@ -1070,32 +1141,44 @@ render._withStripped = true
 /***/ }),
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /***/ "./resources/js/src/views/pages/Faqs.vue":
 /*!***********************************************!*\
   !*** ./resources/js/src/views/pages/Faqs.vue ***!
   \***********************************************/
+<<<<<<< HEAD
 =======
 /***/ "./resources/js/src/views/pages/Payrolls/PayrollDetail.vue":
 /*!*****************************************************************!*\
   !*** ./resources/js/src/views/pages/Payrolls/PayrollDetail.vue ***!
   \*****************************************************************/
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /* harmony import */ var _Faqs_vue_vue_type_template_id_4f480e32___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Faqs.vue?vue&type=template&id=4f480e32& */ "./resources/js/src/views/pages/Faqs.vue?vue&type=template&id=4f480e32&");
 /* harmony import */ var _Faqs_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Faqs.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/Faqs.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _Faqs_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Faqs.vue?vue&type=style&index=0&lang=css& */ "./resources/js/src/views/pages/Faqs.vue?vue&type=style&index=0&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+<<<<<<< HEAD
 =======
 /* harmony import */ var _PayrollDetail_vue_vue_type_template_id_7bb06a2a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PayrollDetail.vue?vue&type=template&id=7bb06a2a& */ "./resources/js/src/views/pages/Payrolls/PayrollDetail.vue?vue&type=template&id=7bb06a2a&");
 /* harmony import */ var _PayrollDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PayrollDetail.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/Payrolls/PayrollDetail.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _PayrollDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PayrollDetail.vue?vue&type=style&index=0&lang=scss& */ "./resources/js/src/views/pages/Payrolls/PayrollDetail.vue?vue&type=style&index=0&lang=scss&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 
 
 
@@ -1106,6 +1189,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
 <<<<<<< HEAD
+<<<<<<< HEAD
   _Faqs_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _Faqs_vue_vue_type_template_id_4f480e32___WEBPACK_IMPORTED_MODULE_0__["render"],
   _Faqs_vue_vue_type_template_id_4f480e32___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -1114,6 +1198,11 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
   _PayrollDetail_vue_vue_type_template_id_7bb06a2a___WEBPACK_IMPORTED_MODULE_0__["render"],
   _PayrollDetail_vue_vue_type_template_id_7bb06a2a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+  _Faqs_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Faqs_vue_vue_type_template_id_4f480e32___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Faqs_vue_vue_type_template_id_4f480e32___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
   false,
   null,
   null,
@@ -1124,31 +1213,44 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 /* hot reload */
 if (false) { var api; }
 <<<<<<< HEAD
+<<<<<<< HEAD
 component.options.__file = "resources/js/src/views/pages/Faqs.vue"
 =======
 component.options.__file = "resources/js/src/views/pages/Payrolls/PayrollDetail.vue"
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+component.options.__file = "resources/js/src/views/pages/Faqs.vue"
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /***/ "./resources/js/src/views/pages/Faqs.vue?vue&type=script&lang=js&":
 /*!************************************************************************!*\
   !*** ./resources/js/src/views/pages/Faqs.vue?vue&type=script&lang=js& ***!
   \************************************************************************/
+<<<<<<< HEAD
 =======
 /***/ "./resources/js/src/views/pages/Payrolls/PayrollDetail.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************!*\
   !*** ./resources/js/src/views/pages/Payrolls/PayrollDetail.vue?vue&type=script&lang=js& ***!
   \******************************************************************************************/
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Faqs_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Faqs.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Faqs.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Faqs_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
@@ -1158,6 +1260,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************************************************************!*\
   !*** ./resources/js/src/views/pages/Faqs.vue?vue&type=style&index=0&lang=css& ***!
   \********************************************************************************/
+<<<<<<< HEAD
 =======
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PayrollDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./PayrollDetail.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Payrolls/PayrollDetail.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PayrollDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
@@ -1169,12 +1272,17 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./resources/js/src/views/pages/Payrolls/PayrollDetail.vue?vue&type=style&index=0&lang=scss& ***!
   \***************************************************************************************************/
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Faqs_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader!../../../../../node_modules/css-loader??ref--7-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Faqs.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Faqs.vue?vue&type=style&index=0&lang=css&");
 /* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Faqs_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Faqs_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Faqs_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Faqs_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
@@ -1186,6 +1294,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************************************************!*\
   !*** ./resources/js/src/views/pages/Faqs.vue?vue&type=template&id=4f480e32& ***!
   \******************************************************************************/
+<<<<<<< HEAD
 =======
 /* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_PayrollDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/style-loader!../../../../../../node_modules/css-loader!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--8-2!../../../../../../node_modules/sass-loader/dist/cjs.js??ref--8-3!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./PayrollDetail.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Payrolls/PayrollDetail.vue?vue&type=style&index=0&lang=scss&");
 /* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_PayrollDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_PayrollDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
@@ -1199,22 +1308,30 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./resources/js/src/views/pages/Payrolls/PayrollDetail.vue?vue&type=template&id=7bb06a2a& ***!
   \************************************************************************************************/
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Faqs_vue_vue_type_template_id_4f480e32___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Faqs.vue?vue&type=template&id=4f480e32& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Faqs.vue?vue&type=template&id=4f480e32&");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Faqs_vue_vue_type_template_id_4f480e32___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Faqs_vue_vue_type_template_id_4f480e32___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+<<<<<<< HEAD
 =======
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PayrollDetail_vue_vue_type_template_id_7bb06a2a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./PayrollDetail.vue?vue&type=template&id=7bb06a2a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Payrolls/PayrollDetail.vue?vue&type=template&id=7bb06a2a&");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PayrollDetail_vue_vue_type_template_id_7bb06a2a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PayrollDetail_vue_vue_type_template_id_7bb06a2a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 
 
 

@@ -31,13 +31,14 @@ class Sales extends Model {
 		}
 
 	}
+
+	public function getTableNameAttribute($val) {
+		return 'sales';
+	}
 	public function customer() {
 		return $this->belongsTo(TaxCustomers::class, 'customer_id', 'customer_id');
 	}
 	public function created_by() {
 		return $this->belongsTo(Admin::class, 'created_by', 'manager_id');
-	}
-	public function getTableNameAttribute($val) {
-		return 'sales';
 	}
 }

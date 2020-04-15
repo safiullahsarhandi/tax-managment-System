@@ -1,31 +1,43 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[24],{
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=script&lang=js& ***!
   \****************************************************************************************************************************************************************************************/
+<<<<<<< HEAD
 =======
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Tax/TaxDetail.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Tax/TaxDetail.vue?vue&type=script&lang=js& ***!
   \*****************************************************************************************************************************************************************************/
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /* harmony import */ var _layouts_components_customizer_CommentDrawer_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/layouts/components/customizer/CommentDrawer.vue */ "./resources/js/src/layouts/components/customizer/CommentDrawer.vue");
 /* harmony import */ var vue_burger_menu__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-burger-menu */ "./node_modules/vue-burger-menu/dist/vue-burger-menu.common.js");
 /* harmony import */ var vue_burger_menu__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_burger_menu__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+<<<<<<< HEAD
 =======
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _components_analyticsData_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/analyticsData.js */ "./resources/js/src/components/analyticsData.js");
 /* harmony import */ var _components_statistics_cards_StatisticsCardLine_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/statistics-cards/StatisticsCardLine.vue */ "./resources/js/src/components/statistics-cards/StatisticsCardLine.vue");
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -233,6 +245,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 //
 //
@@ -261,11 +274,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
   components: {
     TheCustomizer: _layouts_components_customizer_CommentDrawer_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     Slide: vue_burger_menu__WEBPACK_IMPORTED_MODULE_1__["Slide"] // Register your component
@@ -346,6 +364,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         tax_type: 'purchase'
       };
       this.statusChangeManagment(data).then(function (res) {});
+<<<<<<< HEAD
 =======
   data: function data() {
     return {
@@ -439,6 +458,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       };
       this.statusUpdate(data);
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
     }
   })
 });
@@ -446,16 +467,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /***/ }),
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=style&index=0&lang=scss&":
 /*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--8-2!./node_modules/sass-loader/dist/cjs.js??ref--8-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=style&index=0&lang=scss& ***!
   \***************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+<<<<<<< HEAD
 =======
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Tax/TaxDetail.vue?vue&type=style&index=0&lang=css&":
 /*!************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Tax/TaxDetail.vue?vue&type=style&index=0&lang=css& ***!
   \************************************************************************************************************************************************************************************************************************************************************************************/
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -465,10 +492,14 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 // module
 <<<<<<< HEAD
+<<<<<<< HEAD
 exports.push([module.i, ".bm-menu {\n  z-index: 99999;\n}\n.bm-burger-button {\n  position: fixed;\n  width: 36px;\n  height: 30px;\n  left: 36px;\n  top: 36px;\n  cursor: pointer;\n}\n.bm-burger-bars {\n  background-color: #373a47;\n}\n.line-style {\n  position: absolute;\n  height: 20%;\n  left: 0;\n  right: 0;\n}\n.cross-style {\n  position: absolute;\n  top: 12px;\n  right: 2px !important;\n  cursor: pointer;\n}\n.bm-cross {\n  background: #bdc3c7;\n}\n.bm-cross-button {\n  height: 24px;\n  width: 24px;\n}\n.bm-menu {\n  height: 100%;\n  /* 100% Full-height */\n  width: 0;\n  /* 0 width - change this with JavaScript */\n  position: fixed;\n  /* Stay in place */\n  top: 0;\n  left: 0;\n  background-color: #3f3f41;\n  /* Black*/\n  overflow-x: hidden;\n  /* Disable horizontal scroll */\n  padding-top: 60px;\n  /* Place content 60px from the top */\n  -webkit-transition: 0.5s;\n  transition: 0.5s;\n  /*0.5 second transition effect to slide in the sidenav*/\n}\n.bm-overlay {\n  background: rgba(0, 0, 0, 0.3);\n}\n.bm-item-list {\n  color: #b8b7ad;\n  margin-left: 10%;\n  font-size: 20px;\n}\n.bm-item-list > * {\n  display: -webkit-box;\n  display: flex;\n  text-decoration: none;\n  padding: 0.7em;\n}\n.bm-item-list > * > span {\n  margin-left: 10px;\n  font-weight: 700;\n  color: white;\n}", ""]);
 =======
 exports.push([module.i, "#tax-detail .vx-card .vx-card__collapsible-content.vs-con-loading__container {\n  min-height: 250px !important;\n}\r\n\r\n", ""]);
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+exports.push([module.i, ".bm-menu {\n  z-index: 99999;\n}\n.bm-burger-button {\n  position: fixed;\n  width: 36px;\n  height: 30px;\n  left: 36px;\n  top: 36px;\n  cursor: pointer;\n}\n.bm-burger-bars {\n  background-color: #373a47;\n}\n.line-style {\n  position: absolute;\n  height: 20%;\n  left: 0;\n  right: 0;\n}\n.cross-style {\n  position: absolute;\n  top: 12px;\n  right: 2px !important;\n  cursor: pointer;\n}\n.bm-cross {\n  background: #bdc3c7;\n}\n.bm-cross-button {\n  height: 24px;\n  width: 24px;\n}\n.bm-menu {\n  height: 100%;\n  /* 100% Full-height */\n  width: 0;\n  /* 0 width - change this with JavaScript */\n  position: fixed;\n  /* Stay in place */\n  top: 0;\n  left: 0;\n  background-color: #3f3f41;\n  /* Black*/\n  overflow-x: hidden;\n  /* Disable horizontal scroll */\n  padding-top: 60px;\n  /* Place content 60px from the top */\n  -webkit-transition: 0.5s;\n  transition: 0.5s;\n  /*0.5 second transition effect to slide in the sidenav*/\n}\n.bm-overlay {\n  background: rgba(0, 0, 0, 0.3);\n}\n.bm-item-list {\n  color: #b8b7ad;\n  margin-left: 10%;\n  font-size: 20px;\n}\n.bm-item-list > * {\n  display: -webkit-box;\n  display: flex;\n  text-decoration: none;\n  padding: 0.7em;\n}\n.bm-item-list > * > span {\n  margin-left: 10px;\n  font-weight: 700;\n  color: white;\n}", ""]);
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 
 // exports
 
@@ -476,25 +507,35 @@ exports.push([module.i, "#tax-detail .vx-card .vx-card__collapsible-content.vs-c
 /***/ }),
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=style&index=0&lang=scss&":
 /*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--8-2!./node_modules/sass-loader/dist/cjs.js??ref--8-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=style&index=0&lang=scss& ***!
   \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+<<<<<<< HEAD
 =======
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Tax/TaxDetail.vue?vue&type=style&index=0&lang=css&":
 /*!****************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Tax/TaxDetail.vue?vue&type=style&index=0&lang=css& ***!
   \****************************************************************************************************************************************************************************************************************************************************************************************************************/
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--8-2!../../../../../../node_modules/sass-loader/dist/cjs.js??ref--8-3!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./PurchaseDetail.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=style&index=0&lang=scss&");
 =======
 var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader??ref--7-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./TaxDetail.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Tax/TaxDetail.vue?vue&type=style&index=0&lang=css&");
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--8-2!../../../../../../node_modules/sass-loader/dist/cjs.js??ref--8-3!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./PurchaseDetail.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=style&index=0&lang=scss&");
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -517,16 +558,22 @@ if(false) {}
 /***/ }),
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=template&id=20ecfd84&":
 /*!********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=template&id=20ecfd84& ***!
   \********************************************************************************************************************************************************************************************************************************/
+<<<<<<< HEAD
 =======
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Tax/TaxDetail.vue?vue&type=template&id=58313b93&":
 /*!*********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Tax/TaxDetail.vue?vue&type=template&id=58313b93& ***!
   \*********************************************************************************************************************************************************************************************************************/
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -541,9 +588,12 @@ var render = function() {
   return _c(
     "div",
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     { attrs: { id: "tax-detail" } },
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
     [
       _c(
         "vs-row",
@@ -551,11 +601,15 @@ var render = function() {
           _c(
             "vs-col",
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
             { attrs: { "vs-lg": "9", "vs-md": "9", "vs-sm": "12" } },
             [
               _c(
                 "vx-card",
                 { attrs: { title: "Purchases Detail" } },
+<<<<<<< HEAD
 =======
             {
               attrs: {
@@ -659,6 +713,8 @@ var render = function() {
                 "vx-card",
                 { staticClass: "mt-base", attrs: { title: "Tax Overview" } },
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
                 [
                   _c(
                     "vs-row",
@@ -667,6 +723,9 @@ var render = function() {
                         "vs-col",
                         {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
                           staticClass: "mt-5",
                           attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
                         },
@@ -674,6 +733,7 @@ var render = function() {
                           _c("h6", [_vm._v("Client TIN:")]),
                           _vm._v(" "),
                           _c("p", [_vm._v(_vm._s(_vm.customer.tin_no))])
+<<<<<<< HEAD
 =======
                           attrs: {
                             "vs-md": "4",
@@ -688,6 +748,8 @@ var render = function() {
                           _vm._v(" "),
                           _c("p")
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
                         ]
                       ),
                       _vm._v(" "),
@@ -695,6 +757,9 @@ var render = function() {
                         "vs-col",
                         {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
                           staticClass: "mt-5",
                           attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
                         },
@@ -702,6 +767,7 @@ var render = function() {
                           _c("h6", [_vm._v("Client Name:")]),
                           _vm._v(" "),
                           _c("p", [_vm._v(_vm._s(_vm.customer.name_english))])
+<<<<<<< HEAD
 =======
                           attrs: {
                             "vs-md": "4",
@@ -716,6 +782,8 @@ var render = function() {
                           _vm._v(" "),
                           _c("p")
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
                         ]
                       ),
                       _vm._v(" "),
@@ -723,6 +791,9 @@ var render = function() {
                         "vs-col",
                         {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
                           staticClass: "mt-5",
                           attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
                         },
@@ -743,6 +814,7 @@ var render = function() {
                           _c("h6", [_vm._v("Tax Period:")]),
                           _vm._v(" "),
                           _c("p", [_vm._v(_vm._s(_vm.purchase.tax_period))])
+<<<<<<< HEAD
 =======
                           attrs: {
                             "vs-md": "4",
@@ -784,6 +856,8 @@ var render = function() {
                           _vm._v(" "),
                           _c("p")
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
                         ]
                       ),
                       _vm._v(" "),
@@ -791,6 +865,9 @@ var render = function() {
                         "vs-col",
                         {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
                           staticClass: "mt-5",
                           attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
                         },
@@ -819,6 +896,7 @@ var render = function() {
                           _c("h6", [_vm._v("Invoice NO:")]),
                           _vm._v(" "),
                           _c("p", [_vm._v(_vm._s(_vm.purchase.invoice_num))])
+<<<<<<< HEAD
 =======
                           attrs: {
                             "vs-md": "4",
@@ -841,6 +919,8 @@ var render = function() {
                           _vm._v(" "),
                           _c("p")
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
                         ]
                       ),
                       _vm._v(" "),
@@ -848,6 +928,9 @@ var render = function() {
                         "vs-col",
                         {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
                           staticClass: "mt-5",
                           attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
                         },
@@ -909,6 +992,7 @@ var render = function() {
                           _c("p", [
                             _vm._v(_vm._s(_vm.purchase.client_response))
                           ])
+<<<<<<< HEAD
 =======
                           attrs: {
                             "vs-md": "4",
@@ -964,6 +1048,8 @@ var render = function() {
                           _vm._v(" "),
                           _c("p")
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
                         ]
                       ),
                       _vm._v(" "),
@@ -971,6 +1057,9 @@ var render = function() {
                         "vs-col",
                         {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
                           staticClass: "mt-5",
                           attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
                         },
@@ -978,6 +1067,7 @@ var render = function() {
                           _c("h6", [_vm._v("ToP Comments:")]),
                           _vm._v(" "),
                           _c("p", [_vm._v(_vm._s(_vm.purchase.top_comments))])
+<<<<<<< HEAD
 =======
                           attrs: {
                             "vs-md": "4",
@@ -1000,6 +1090,8 @@ var render = function() {
                           _vm._v(" "),
                           _c("p")
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
                         ]
                       ),
                       _vm._v(" "),
@@ -1007,6 +1099,9 @@ var render = function() {
                         "vs-col",
                         {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
                           staticClass: "mt-5",
                           attrs: { "vs-lg": "4", "vs-md": "4", "vs-sm": "12" }
                         },
@@ -1016,6 +1111,7 @@ var render = function() {
                           _c("p", [
                             _vm._v(_vm._s(_vm.purchase.client_responses))
                           ])
+<<<<<<< HEAD
 =======
                           attrs: {
                             "vs-md": "4",
@@ -1030,6 +1126,8 @@ var render = function() {
                           _vm._v(" "),
                           _c("p")
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
                         ]
                       )
                     ],
@@ -1040,6 +1138,9 @@ var render = function() {
               ),
               _vm._v(" "),
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
               _c(
                 "vx-card",
                 {
@@ -1373,6 +1474,7 @@ var render = function() {
                             },
                             on: { click: _vm.handleToggleDrawer }
                           })
+<<<<<<< HEAD
 =======
               [
                 _c(
@@ -1816,10 +1918,13 @@ var render = function() {
                             },
                             [_vm._v("Yearly")]
                           )
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
                         ],
                         1
                       )
                     ],
+<<<<<<< HEAD
                     1
                   ),
                   _vm._v(" "),
@@ -1940,6 +2045,9 @@ var render = function() {
                     ],
                     1
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+                    2
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
                   )
                 ],
                 1
@@ -1948,6 +2056,9 @@ var render = function() {
             1
           )
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
         ],
         1
       ),
@@ -1960,10 +2071,13 @@ var render = function() {
           "comments-url": "get-comments"
         }
       })
+<<<<<<< HEAD
 =======
         ]
       )
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
     ],
     1
   )
@@ -1976,21 +2090,28 @@ render._withStripped = true
 /***/ }),
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /***/ "./resources/js/src/views/pages/Purchases/PurchaseDetail.vue":
 /*!*******************************************************************!*\
   !*** ./resources/js/src/views/pages/Purchases/PurchaseDetail.vue ***!
   \*******************************************************************/
+<<<<<<< HEAD
 =======
 /***/ "./resources/js/src/views/pages/Tax/TaxDetail.vue":
 /*!********************************************************!*\
   !*** ./resources/js/src/views/pages/Tax/TaxDetail.vue ***!
   \********************************************************/
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+<<<<<<< HEAD
 <<<<<<< HEAD
 /* harmony import */ var _PurchaseDetail_vue_vue_type_template_id_20ecfd84___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PurchaseDetail.vue?vue&type=template&id=20ecfd84& */ "./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=template&id=20ecfd84&");
 /* harmony import */ var _PurchaseDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PurchaseDetail.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=script&lang=js&");
@@ -2000,6 +2121,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TaxDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TaxDetail.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/Tax/TaxDetail.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _TaxDetail_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TaxDetail.vue?vue&type=style&index=0&lang=css& */ "./resources/js/src/views/pages/Tax/TaxDetail.vue?vue&type=style&index=0&lang=css&");
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+/* harmony import */ var _PurchaseDetail_vue_vue_type_template_id_20ecfd84___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PurchaseDetail.vue?vue&type=template&id=20ecfd84& */ "./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=template&id=20ecfd84&");
+/* harmony import */ var _PurchaseDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PurchaseDetail.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _PurchaseDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PurchaseDetail.vue?vue&type=style&index=0&lang=scss& */ "./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=style&index=0&lang=scss&");
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -2011,6 +2137,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
 <<<<<<< HEAD
+<<<<<<< HEAD
   _PurchaseDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _PurchaseDetail_vue_vue_type_template_id_20ecfd84___WEBPACK_IMPORTED_MODULE_0__["render"],
   _PurchaseDetail_vue_vue_type_template_id_20ecfd84___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -2019,6 +2146,11 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
   _TaxDetail_vue_vue_type_template_id_58313b93___WEBPACK_IMPORTED_MODULE_0__["render"],
   _TaxDetail_vue_vue_type_template_id_58313b93___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+  _PurchaseDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PurchaseDetail_vue_vue_type_template_id_20ecfd84___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PurchaseDetail_vue_vue_type_template_id_20ecfd84___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
   false,
   null,
   null,
@@ -2029,31 +2161,44 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 /* hot reload */
 if (false) { var api; }
 <<<<<<< HEAD
+<<<<<<< HEAD
 component.options.__file = "resources/js/src/views/pages/Purchases/PurchaseDetail.vue"
 =======
 component.options.__file = "resources/js/src/views/pages/Tax/TaxDetail.vue"
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+component.options.__file = "resources/js/src/views/pages/Purchases/PurchaseDetail.vue"
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /***/ "./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************!*\
   !*** ./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=script&lang=js& ***!
   \********************************************************************************************/
+<<<<<<< HEAD
 =======
 /***/ "./resources/js/src/views/pages/Tax/TaxDetail.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************!*\
   !*** ./resources/js/src/views/pages/Tax/TaxDetail.vue?vue&type=script&lang=js& ***!
   \*********************************************************************************/
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PurchaseDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./PurchaseDetail.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PurchaseDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
@@ -2063,6 +2208,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!*****************************************************************************************************!*\
   !*** ./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=style&index=0&lang=scss& ***!
   \*****************************************************************************************************/
+<<<<<<< HEAD
 =======
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./TaxDetail.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Tax/TaxDetail.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
@@ -2074,12 +2220,17 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./resources/js/src/views/pages/Tax/TaxDetail.vue?vue&type=style&index=0&lang=css& ***!
   \*****************************************************************************************/
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_PurchaseDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/style-loader!../../../../../../node_modules/css-loader!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--8-2!../../../../../../node_modules/sass-loader/dist/cjs.js??ref--8-3!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./PurchaseDetail.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=style&index=0&lang=scss&");
 /* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_PurchaseDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_PurchaseDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_PurchaseDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_PurchaseDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
@@ -2091,6 +2242,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!**************************************************************************************************!*\
   !*** ./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=template&id=20ecfd84& ***!
   \**************************************************************************************************/
+<<<<<<< HEAD
 =======
 /* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxDetail_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/style-loader!../../../../../../node_modules/css-loader??ref--7-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./TaxDetail.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Tax/TaxDetail.vue?vue&type=style&index=0&lang=css&");
 /* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxDetail_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxDetail_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
@@ -2104,22 +2256,30 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./resources/js/src/views/pages/Tax/TaxDetail.vue?vue&type=template&id=58313b93& ***!
   \***************************************************************************************/
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PurchaseDetail_vue_vue_type_template_id_20ecfd84___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./PurchaseDetail.vue?vue&type=template&id=20ecfd84& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Purchases/PurchaseDetail.vue?vue&type=template&id=20ecfd84&");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PurchaseDetail_vue_vue_type_template_id_20ecfd84___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PurchaseDetail_vue_vue_type_template_id_20ecfd84___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+<<<<<<< HEAD
 =======
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxDetail_vue_vue_type_template_id_58313b93___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./TaxDetail.vue?vue&type=template&id=58313b93& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Tax/TaxDetail.vue?vue&type=template&id=58313b93&");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxDetail_vue_vue_type_template_id_58313b93___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TaxDetail_vue_vue_type_template_id_58313b93___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 
 
 

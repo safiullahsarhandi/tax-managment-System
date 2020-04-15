@@ -1,21 +1,28 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[22],{
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Payrolls/PendingPayrolls.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Payrolls/PendingPayrolls.vue?vue&type=script&lang=js& ***!
   \****************************************************************************************************************************************************************************************/
+<<<<<<< HEAD
 =======
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=script&lang=js& ***!
   \********************************************************************************************************************************************************************************/
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+<<<<<<< HEAD
 <<<<<<< HEAD
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 =======
@@ -24,6 +31,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_burger_menu__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_burger_menu__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -67,6 +77,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   inject: ['generatePassword'],
@@ -141,6 +154,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
         }
       });
+<<<<<<< HEAD
 =======
 //
 //
@@ -361,6 +375,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       };
       this.statusChangeManagment(data).then(function (res) {});
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
     }
   })
 });
@@ -368,16 +384,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /***/ }),
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Payrolls/PendingPayrolls.vue?vue&type=style&index=0&lang=css&":
 /*!***********************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Payrolls/PendingPayrolls.vue?vue&type=style&index=0&lang=css& ***!
   \***********************************************************************************************************************************************************************************************************************************************************************************************/
+<<<<<<< HEAD
 =======
 /***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=style&index=0&lang=scss&":
 /*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--8-2!./node_modules/sass-loader/dist/cjs.js??ref--8-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=style&index=0&lang=scss& ***!
   \*******************************************************************************************************************************************************************************************************************************************************************************************************************************/
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -387,10 +409,14 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 // module
 <<<<<<< HEAD
+<<<<<<< HEAD
 exports.push([module.i, ".con-vs-popup .vs-popup {\n  width: 1000px !important;\n}\r\n\r\n", ""]);
 =======
 exports.push([module.i, ".bm-menu {\n  z-index: 99999;\n}\n.bm-burger-button {\n  position: fixed;\n  width: 36px;\n  height: 30px;\n  left: 36px;\n  top: 36px;\n  cursor: pointer;\n}\n.bm-burger-bars {\n  background-color: #373a47;\n}\n.line-style {\n  position: absolute;\n  height: 20%;\n  left: 0;\n  right: 0;\n}\n.cross-style {\n  position: absolute;\n  top: 12px;\n  right: 2px !important;\n  cursor: pointer;\n}\n.bm-cross {\n  background: #bdc3c7;\n}\n.bm-cross-button {\n  height: 24px;\n  width: 24px;\n}\n.bm-menu {\n  height: 100%;\n  /* 100% Full-height */\n  width: 0;\n  /* 0 width - change this with JavaScript */\n  position: fixed;\n  /* Stay in place */\n  top: 0;\n  left: 0;\n  background-color: #3f3f41;\n  /* Black*/\n  overflow-x: hidden;\n  /* Disable horizontal scroll */\n  padding-top: 60px;\n  /* Place content 60px from the top */\n  -webkit-transition: 0.5s;\n  transition: 0.5s;\n  /*0.5 second transition effect to slide in the sidenav*/\n}\n.bm-overlay {\n  background: rgba(0, 0, 0, 0.3);\n}\n.bm-item-list {\n  color: #b8b7ad;\n  margin-left: 10%;\n  font-size: 20px;\n}\n.bm-item-list > * {\n  display: -webkit-box;\n  display: flex;\n  text-decoration: none;\n  padding: 0.7em;\n}\n.bm-item-list > * > span {\n  margin-left: 10px;\n  font-weight: 700;\n  color: white;\n}", ""]);
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+exports.push([module.i, ".con-vs-popup .vs-popup {\n  width: 1000px !important;\n}\r\n\r\n", ""]);
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 
 // exports
 
@@ -398,25 +424,35 @@ exports.push([module.i, ".bm-menu {\n  z-index: 99999;\n}\n.bm-burger-button {\n
 /***/ }),
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Payrolls/PendingPayrolls.vue?vue&type=style&index=0&lang=css&":
 /*!***************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Payrolls/PendingPayrolls.vue?vue&type=style&index=0&lang=css& ***!
   \***************************************************************************************************************************************************************************************************************************************************************************************************************************/
+<<<<<<< HEAD
 =======
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=style&index=0&lang=scss&":
 /*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--8-2!./node_modules/sass-loader/dist/cjs.js??ref--8-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=style&index=0&lang=scss& ***!
   \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader??ref--7-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./PendingPayrolls.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Payrolls/PendingPayrolls.vue?vue&type=style&index=0&lang=css&");
 =======
 var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--8-2!../../../../../../node_modules/sass-loader/dist/cjs.js??ref--8-3!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./SaleDetail.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=style&index=0&lang=scss&");
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader??ref--7-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./PendingPayrolls.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Payrolls/PendingPayrolls.vue?vue&type=style&index=0&lang=css&");
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -439,16 +475,22 @@ if(false) {}
 /***/ }),
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Payrolls/PendingPayrolls.vue?vue&type=template&id=15cc2879&":
 /*!********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Payrolls/PendingPayrolls.vue?vue&type=template&id=15cc2879& ***!
   \********************************************************************************************************************************************************************************************************************************/
+<<<<<<< HEAD
 =======
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=template&id=436c7c10&":
 /*!************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=template&id=436c7c10& ***!
   \************************************************************************************************************************************************************************************************************************/
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -465,6 +507,9 @@ var render = function() {
     [
       _c(
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
         "vx-card",
         {
           attrs: {
@@ -594,6 +639,7 @@ var render = function() {
         ],
         1
       )
+<<<<<<< HEAD
 =======
         "vs-row",
         [
@@ -1166,6 +1212,8 @@ var render = function() {
         }
       })
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
     ],
     1
   )
@@ -1178,21 +1226,28 @@ render._withStripped = true
 /***/ }),
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /***/ "./resources/js/src/views/pages/Payrolls/PendingPayrolls.vue":
 /*!*******************************************************************!*\
   !*** ./resources/js/src/views/pages/Payrolls/PendingPayrolls.vue ***!
   \*******************************************************************/
+<<<<<<< HEAD
 =======
 /***/ "./resources/js/src/views/pages/Sales/SaleDetail.vue":
 /*!***********************************************************!*\
   !*** ./resources/js/src/views/pages/Sales/SaleDetail.vue ***!
   \***********************************************************/
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+<<<<<<< HEAD
 <<<<<<< HEAD
 /* harmony import */ var _PendingPayrolls_vue_vue_type_template_id_15cc2879___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PendingPayrolls.vue?vue&type=template&id=15cc2879& */ "./resources/js/src/views/pages/Payrolls/PendingPayrolls.vue?vue&type=template&id=15cc2879&");
 /* harmony import */ var _PendingPayrolls_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PendingPayrolls.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/Payrolls/PendingPayrolls.vue?vue&type=script&lang=js&");
@@ -1202,6 +1257,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _SaleDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SaleDetail.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _SaleDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SaleDetail.vue?vue&type=style&index=0&lang=scss& */ "./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=style&index=0&lang=scss&");
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+/* harmony import */ var _PendingPayrolls_vue_vue_type_template_id_15cc2879___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PendingPayrolls.vue?vue&type=template&id=15cc2879& */ "./resources/js/src/views/pages/Payrolls/PendingPayrolls.vue?vue&type=template&id=15cc2879&");
+/* harmony import */ var _PendingPayrolls_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PendingPayrolls.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/Payrolls/PendingPayrolls.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _PendingPayrolls_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PendingPayrolls.vue?vue&type=style&index=0&lang=css& */ "./resources/js/src/views/pages/Payrolls/PendingPayrolls.vue?vue&type=style&index=0&lang=css&");
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -1213,6 +1273,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
 <<<<<<< HEAD
+<<<<<<< HEAD
   _PendingPayrolls_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _PendingPayrolls_vue_vue_type_template_id_15cc2879___WEBPACK_IMPORTED_MODULE_0__["render"],
   _PendingPayrolls_vue_vue_type_template_id_15cc2879___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -1221,6 +1282,11 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
   _SaleDetail_vue_vue_type_template_id_436c7c10___WEBPACK_IMPORTED_MODULE_0__["render"],
   _SaleDetail_vue_vue_type_template_id_436c7c10___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+  _PendingPayrolls_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PendingPayrolls_vue_vue_type_template_id_15cc2879___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PendingPayrolls_vue_vue_type_template_id_15cc2879___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
   false,
   null,
   null,
@@ -1231,31 +1297,44 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 /* hot reload */
 if (false) { var api; }
 <<<<<<< HEAD
+<<<<<<< HEAD
 component.options.__file = "resources/js/src/views/pages/Payrolls/PendingPayrolls.vue"
 =======
 component.options.__file = "resources/js/src/views/pages/Sales/SaleDetail.vue"
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+component.options.__file = "resources/js/src/views/pages/Payrolls/PendingPayrolls.vue"
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /***/ "./resources/js/src/views/pages/Payrolls/PendingPayrolls.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************!*\
   !*** ./resources/js/src/views/pages/Payrolls/PendingPayrolls.vue?vue&type=script&lang=js& ***!
   \********************************************************************************************/
+<<<<<<< HEAD
 =======
 /***/ "./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=script&lang=js&":
 /*!************************************************************************************!*\
   !*** ./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=script&lang=js& ***!
   \************************************************************************************/
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PendingPayrolls_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./PendingPayrolls.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Payrolls/PendingPayrolls.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PendingPayrolls_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
@@ -1265,6 +1344,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!****************************************************************************************************!*\
   !*** ./resources/js/src/views/pages/Payrolls/PendingPayrolls.vue?vue&type=style&index=0&lang=css& ***!
   \****************************************************************************************************/
+<<<<<<< HEAD
 =======
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SaleDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./SaleDetail.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SaleDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
@@ -1276,12 +1356,17 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=style&index=0&lang=scss& ***!
   \*********************************************************************************************/
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PendingPayrolls_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/style-loader!../../../../../../node_modules/css-loader??ref--7-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./PendingPayrolls.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Payrolls/PendingPayrolls.vue?vue&type=style&index=0&lang=css&");
 /* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PendingPayrolls_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PendingPayrolls_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PendingPayrolls_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PendingPayrolls_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
@@ -1293,6 +1378,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!**************************************************************************************************!*\
   !*** ./resources/js/src/views/pages/Payrolls/PendingPayrolls.vue?vue&type=template&id=15cc2879& ***!
   \**************************************************************************************************/
+<<<<<<< HEAD
 =======
 /* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_SaleDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/style-loader!../../../../../../node_modules/css-loader!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--8-2!../../../../../../node_modules/sass-loader/dist/cjs.js??ref--8-3!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./SaleDetail.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=style&index=0&lang=scss&");
 /* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_SaleDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_dist_cjs_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_SaleDetail_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
@@ -1306,22 +1392,30 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=template&id=436c7c10& ***!
   \******************************************************************************************/
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PendingPayrolls_vue_vue_type_template_id_15cc2879___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./PendingPayrolls.vue?vue&type=template&id=15cc2879& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Payrolls/PendingPayrolls.vue?vue&type=template&id=15cc2879&");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PendingPayrolls_vue_vue_type_template_id_15cc2879___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PendingPayrolls_vue_vue_type_template_id_15cc2879___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+<<<<<<< HEAD
 =======
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SaleDetail_vue_vue_type_template_id_436c7c10___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./SaleDetail.vue?vue&type=template&id=436c7c10& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Sales/SaleDetail.vue?vue&type=template&id=436c7c10&");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SaleDetail_vue_vue_type_template_id_436c7c10___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SaleDetail_vue_vue_type_template_id_436c7c10___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 
 
 

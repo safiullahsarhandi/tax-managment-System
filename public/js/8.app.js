@@ -1,22 +1,31 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[8],{
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /***/ "./resources/js/src/components/analyticsData.js":
 /*!******************************************************!*\
   !*** ./resources/js/src/components/analyticsData.js ***!
   \******************************************************/
+<<<<<<< HEAD
 =======
 /***/ "./node_modules/apexcharts/dist/apexcharts.esm.js":
 /*!********************************************************!*\
   !*** ./node_modules/apexcharts/dist/apexcharts.esm.js ***!
   \********************************************************/
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /*=========================================================================================
     File Name: analyticsData.vue
     Description: Data shown by charts
@@ -1151,6 +1160,7 @@ __webpack_require__.r(__webpack_exports__);
     comparedResult: '-450'
   }]
 });
+<<<<<<< HEAD
 =======
 /* WEBPACK VAR INJECTION */(function(setImmediate, module) {/*!
  * ApexCharts v3.10.1
@@ -1470,6 +1480,8 @@ module.exports = function(originalModule) {
 };
 
 >>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
+=======
+>>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 
 /***/ })
 

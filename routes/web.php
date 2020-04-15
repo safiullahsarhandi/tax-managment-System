@@ -129,6 +129,8 @@ Route::group(['prefix' => ''], function () {
 	Route::post('forgot-password', 'ApplicationController@forgot_password');
 	Route::post('verify-code-and-change-password', 'ApplicationController@verify_code_change_password');
 
+	Route::post('search-data', 'ApplicationController@search_data');
+
 	Route::get('export-customers', 'ExportController@export_customers');
 	Route::get('export-team-members', 'ExportController@export_team_members');
 	Route::get('export-payroll/{customer_id}/{tax_id}', 'ExportController@export_payroll');
@@ -143,6 +145,6 @@ Route::group(['prefix' => ''], function () {
 	Route::post('sendTokenToServer', 'ApplicationController@sendTokenToServer');
 	Route::get('testingGoogleAuth', 'ApplicationController@testingGoogleAuth');
 
-	Route::post('search-data', 'ApplicationController@search_data');
+	Route::post('delete-spp', 'ApplicationController@deleteSpp');
 });
 Route::get('/{any}', 'ApplicationController')->where('any', '.*');

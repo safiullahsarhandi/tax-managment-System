@@ -2188,7 +2188,7 @@ class ApplicationController extends Controller {
 		return $pdf->stream('PPT-1.pdf');
 	}
 
-	public function forgot_pasword(Request $request) {
+	public function forgot_password(Request $request) {
 
 		$data = Admin::whereEmail($request->email)->first();
 
@@ -2234,41 +2234,6 @@ class ApplicationController extends Controller {
 		return response()->json(['status' => true, 'msg' => 'Password changed successfully'], 200);
 	}
 
-	public function update_faqs(Request $request) {
-
-		$setting = Settings::firstOrNew(['key' => 'faqs']);
-		$setting->value = $request->content;
-		$setting->save();
-		return response()->json(['status' => true, 'faqs' => $setting->value]);
-	}
-	public function get_faqs() {
-		$faqs = Settings::where('key', 'faqs')->first();
-		return $faqs->value;
-	}
-
-	public function get_notifications() {
-		$notifications = Notification::where('transmitted_for', session('admin.manager_id'))->latest('id')->take(10)->get();
-		$totalNotifications = Notification::where('transmitted_for', session('admin.manager_id'))->latest('id')->where('is_checked', 0)->count();
-		return response()->json(compact('notifications', 'totalNotifications'));
-	}
-
-	public function mark_as_read(Request $request) {
-		$notification = Notification::find($request->id);
-		$notification->is_checked = 1;
-		$notification->save();
-		$notification = Notification::find($request->id);
-		$totalNotifications = Notification::where('transmitted_for', session('admin.manager_id'))->latest('id')->where('is_checked', 0)->count();
-		return response()->json(compact('notification', 'totalNotifications'));
-
-	}
-
-	public function sendTokenToServer(Request $request) {
-		$admin = Admin::where('manager_id', $request->manager_id)->first();
-		$admin->token = $request->token;
-		$admin->save();
-		session(['admin' => $admin]);
-		return response()->json(compact('admin'));
-	}
 	public function search_data(Request $request) {
 
 		$query = $request['query'];
@@ -2667,5 +2632,45 @@ class ApplicationController extends Controller {
 		));
 
 		return response()->json(['status' => true, 'response' => $data]);
+	}
+
+	public function update_faqs(Request $request) {
+
+		$setting = Settings::firstOrNew(['key' => 'faqs']);
+		$setting->value = $request->content;
+		$setting->save();
+		return response()->json(['status' => true, 'faqs' => $setting->value]);
+	}
+	public function get_faqs() {
+		$faqs = Settings::where('key', 'faqs')->first();
+		return $faqs->value;
+	}
+
+	public function get_notifications() {
+		$notifications = Notification::where('transmitted_for', session('admin.manager_id'))->latest('id')->take(10)->get();
+		$totalNotifications = Notification::where('transmitted_for', session('admin.manager_id'))->latest('id')->where('is_checked', 0)->count();
+		return response()->json(compact('notifications', 'totalNotifications'));
+	}
+
+	public function mark_as_read(Request $request) {
+		$notification = Notification::find($request->id);
+		$notification->is_checked = 1;
+		$notification->save();
+		$notification = Notification::find($request->id);
+		$totalNotifications = Notification::where('transmitted_for', session('admin.manager_id'))->latest('id')->where('is_checked', 0)->count();
+		return response()->json(compact('notification', 'totalNotifications'));
+
+	}
+
+	public function sendTokenToServer(Request $request) {
+		$admin = Admin::where('manager_id', $request->manager_id)->first();
+		$admin->token = $request->token;
+		$admin->save();
+		session(['admin' => $admin]);
+		return response()->json(compact('admin'));
+	}
+
+	public function deleteSpp(Request $request) {
+		return $request->all();
 	}
 }

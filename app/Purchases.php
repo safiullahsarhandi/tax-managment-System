@@ -31,13 +31,13 @@ class Purchases extends Model {
 		return $this->belongsTo(Officer::class, 'tax_officer_id', 'manager_id');
 	}
 
+	public function getTableNameAttribute($val) {
+		return 'purchases';
+	}
 	public function created_by() {
 		return $this->belongsTo(Admin::class, 'created_by', 'manager_id');
 	}
 	public function customer() {
 		return $this->belongsTo(TaxCustomers::class, 'customer_id', 'customer_id');
-	}
-	public function getTableNameAttribute($val) {
-		return 'purchases';
 	}
 }

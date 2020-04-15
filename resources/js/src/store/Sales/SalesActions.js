@@ -26,5 +26,10 @@ export default{
 		return axios.post('update-sale',fd).then(res=>{
 			return res;
 		});
-	}	
+	},
+	deleteRecord({commit},fd){
+		return axios.post('delete-spp',fd).then(res=>{
+			return res;
+		});
+	}
 }

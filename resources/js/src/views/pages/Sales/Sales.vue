@@ -73,6 +73,7 @@
                         <vs-td>
                             <vs-button :to="'sale-update/'+tr.sale_id" size="small" type="border" icon-pack="feather" icon="icon-edit"></vs-button>
                             <vs-button :to="'sale-detail/'+tr.sale_id" size="small" icon-pack="feather" icon="icon-maximize-2" type="border"></vs-button>
+                            <vs-button @click="deleteRecord(data[index])" size="small" type="border" icon-pack="feather" icon="icon-trash-2"></vs-button>
                         </vs-td>
                     </vs-tr>
                 </template>
@@ -129,6 +130,7 @@ export default {
             update: 'sales/updateSales',
             statusChange: 'taxes/statusUpdateSPP',
             statusChangeManagment: 'taxes/statusChangeManagment',
+            deleteRecord: 'sales/deleteRecord'
             
         }),
 
@@ -144,6 +146,16 @@ export default {
             };
             this.statusChangeManagment(data).then((res)=> {
                
+            });
+        },
+
+        deleteRecord(obj){
+            var fd = new FormData();
+            fd.append('sale_id', obj.sale_id);
+            fd.append('customer_id', obj.customer_id);
+            fd.append('type', 'Sale');
+            this.deleteRecord(fd).then(res=>{
+                alert('success')
             });
         },
 

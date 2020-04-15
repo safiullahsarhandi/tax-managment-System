@@ -18,8 +18,8 @@ const state = {
     theme: themeConfig.theme || 'light',
     navbarSearchAndPinList: navbarSearchAndPinList,
     AppActiveUser: {},
-    faqs : '',
     searchedData: {},
+    faqs : '',
     themePrimaryColor: colors.primary,
 
     starredPages: navbarSearchAndPinList.data.filter((page) => page.highlightAction),

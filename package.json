@@ -54,7 +54,7 @@
         "vue-i18n": "^8.17.0",
         "vue-instantsearch": "^2.7.0",
         "vue-perfect-scrollbar": "^0.1.0",
-        "vue-prism-component": "^1.1.1",
+        "vue-prism-component": "^1.2.0",
         "vue-property-decorator": "^8.4.1",
         "vue-quill-editor": "^3.0.6",
         "vue-router": "^3.1.6",
