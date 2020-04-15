@@ -4,7 +4,8 @@
 		<div v-for="item,indextr in searchedData">
 			
 			<vx-card v-if="item.result.table_name == 'tax_customers'" class="mt-3" style="width: 100%; height: 100px">
-				<a style="color: #1a0dab; font-weight: bold; font-size: 12px; letter-spacing: 2px" href="javascript:void(0)">
+				<a style="color: #1a0dab; font-weight: bold; font-size: 12px; letter-spacing: 2px" href="javascript:void(0)" @click="goFind(makeUrl(item.result))">
+
 				{{ item.result.name_english+ ' ' + item.result.name_khmer+ ' ' + item.result.address+ ' ' + '(Customer)' }}</a>
 
 				<p style="font-size: 12px">
@@ -13,13 +14,13 @@
 
 
 				<a style="color: #1a0dab; font-size: 11px; letter-spacing: 1px; margin-top: 15px" href="javascript:void(0)" @click="goFind(makeUrl(item.result))">
-					tax-managemet{{ makeUrl(item.result) }}
+					<vs-icon icon-pack="feather" icon="icon-map" color="primary"></vs-icon> tax-managemet{{ makeUrl(item.result) }}
 				</a>
 			</vx-card>
 
 			<vx-card v-if="item.result.table_name == 'tax_management'" class="mt-3" style="width: 100%; height: 100px">
 
-				<a style="color: #1a0dab; font-weight: bold; font-size: 12px; letter-spacing: 2px" href="javascript:void(0)">
+				<a style="color: #1a0dab; font-weight: bold; font-size: 12px; letter-spacing: 2px" href="javascript:void(0)" @click="goFind(makeUrl(item.result))">
 				{{ item.result.title+ ' ' + item.result.description+ ' ' + '(Tax)' }}</a>
 
 				<p style="font-size: 12px">
@@ -27,13 +28,13 @@
 				</p>
 
 				<a style="color: #1a0dab; font-size: 11px; letter-spacing: 1px; margin-top: 15px" href="javascript:void(0)" @click="goFind(makeUrl(item.result))">
-					tax-managemet{{ makeUrl(item.result) }}
+					<vs-icon icon-pack="feather" icon="icon-map" color="primary"></vs-icon> tax-managemet{{ makeUrl(item.result) }}
 				</a>	
 			</vx-card>
 
 			<vx-card v-if="item.result.table_name == 'tax_managers'" class="mt-3" style="width: 100%; height: 100px">
 
-				<a style="color: #1a0dab; font-weight: bold; font-size: 12px; letter-spacing: 2px" href="javascript:void(0)">
+				<a style="color: #1a0dab; font-weight: bold; font-size: 12px; letter-spacing: 2px" href="javascript:void(0)" @click="goFind(makeUrl(item.result))">
 				{{ item.result.full_name+ ' ' + item.result.email+ ' ' + '(Tax Manager '+ item.result.type +' )' }}</a>
 
 				<p style="font-size: 12px">
@@ -41,13 +42,13 @@
 				</p>
 
 				<a style="color: #1a0dab; font-size: 11px; letter-spacing: 1px; margin-top: 15px" href="javascript:void(0)" @click="goFind(makeUrl(item.result))">
-					tax-managemet{{ makeUrl(item.result) }}
+					<vs-icon icon-pack="feather" icon="icon-map" color="primary"></vs-icon> tax-managemet{{ makeUrl(item.result) }}
 				</a>
 			</vx-card>
 
 			<vx-card v-if="item.result.table_name == 'customers_employees'" class="mt-3" style="width: 100%; height: 100px">
 
-				<a style="color: #1a0dab; font-weight: bold; font-size: 12px; letter-spacing: 2px" href="javascript:void(0)" >
+				<a style="color: #1a0dab; font-weight: bold; font-size: 12px; letter-spacing: 2px" href="javascript:void(0)" @click="goFind(makeUrl(item.result))">
 				{{ item.result.name_english+ ' ' + item.result.name_khmer + ' ' + item.result.nationality}}</a>
 
 				<p style="font-size: 12px">
@@ -55,13 +56,13 @@
 				</p>
 
 				<a style="color: #1a0dab; font-size: 11px; letter-spacing: 1px; margin-top: 15px" href="javascript:void(0)" @click="goFind(makeUrl(item.result))">
-					tax-managemet{{ makeUrl(item.result) }}
+					<vs-icon icon-pack="feather" icon="icon-map" color="primary"></vs-icon> tax-managemet{{ makeUrl(item.result) }}
 				</a>
 			</vx-card>
 
 			<vx-card v-if="item.result.table_name == 'sales'" class="mt-3" style="width: 100%; height: 100px">
 
-				<a style="color: #1a0dab; font-weight: bold; font-size: 12px; letter-spacing: 2px" href="javascript:void(0)">
+				<a style="color: #1a0dab; font-weight: bold; font-size: 12px; letter-spacing: 2px" href="javascript:void(0)" @click="goFind(makeUrl(item.result))">
 				{{ item.result.account_description+ ' ' + item.result.accounting_reference + ' ' + item.result.account_code}} ( Sales )</a>
 
 				<p style="font-size: 12px">
@@ -89,13 +90,13 @@
 				</p>
 
 				<a style="color: #1a0dab; font-size: 11px; letter-spacing: 1px; margin-top: 15px" href="javascript:void(0)" @click="goFind(makeUrl(item.result))">
-					tax-managemet{{ makeUrl(item.result) }}
+					<vs-icon icon-pack="feather" icon="icon-map" color="primary"></vs-icon> tax-managemet{{ makeUrl(item.result) }}
 				</a>	
 			</vx-card>
 
 			<vx-card v-if="item.result.table_name == 'purchases'" class="mt-3" style="width: 100%; height: 100px">
 
-				<a style="color: #1a0dab; font-weight: bold; font-size: 12px; letter-spacing: 2px" href="javascript:void(0)">
+				<a style="color: #1a0dab; font-weight: bold; font-size: 12px; letter-spacing: 2px" href="javascript:void(0)" @click="goFind(makeUrl(item.result))">
 				{{ item.result.branch_name+ ' ' + item.result.description + ' ' + item.result.invoice_num }} ( Purchases ) </a>
 
 				<p style="font-size: 12px">
@@ -121,7 +122,7 @@
 			
 
 				<a style="color: #1a0dab; font-size: 11px; letter-spacing: 1px; margin-top: 15px" href="javascript:void(0)" @click="goFind(makeUrl(item.result))">
-					tax-managemet{{ makeUrl(item.result) }}
+					<vs-icon icon-pack="feather" icon="icon-map" color="primary"></vs-icon> tax-managemet{{ makeUrl(item.result) }}
 				</a>
 					
 			</vx-card>
@@ -129,7 +130,7 @@
 
 			<vx-card v-if="item.result.table_name == 'employees_payrolls'" class="mt-3" style="width: 100%; height: 100px">
 
-				<a style="color: #1a0dab; font-weight: bold; font-size: 12px; letter-spacing: 2px" href="javascript:void(0)">
+				<a style="color: #1a0dab; font-weight: bold; font-size: 12px; letter-spacing: 2px" href="javascript:void(0)" @click="goFind(makeUrl(item.result))">
 				{{ 'Basic Salary '+item.result.basic_salary+ ', Bonus ' + item.result.bonus + ', Overtime ' + item.result.over_time }} ( Payrols ) </a>
 
 				<p style="font-size: 12px">
@@ -151,14 +152,14 @@
 			
 
 				<a style="color: #1a0dab; font-size: 11px; letter-spacing: 1px; margin-top: 15px" href="javascript:void(0)" @click="goFind(makeUrl(item.result))">
-					tax-managemet{{ makeUrl(item.result) }}
+					<vs-icon icon-pack="feather" icon="icon-map" color="primary"></vs-icon> tax-managemet{{ makeUrl(item.result) }}
 				</a>
 					
 			</vx-card>
 
 			<vx-card v-if="item.result.table_name == 'currencies'" class="mt-3" style="width: 100%; height: 100px">
 
-				<a style="color: #1a0dab; font-weight: bold; font-size: 12px; letter-spacing: 2px" href="javascript:void(0)">
+				<a style="color: #1a0dab; font-weight: bold; font-size: 12px; letter-spacing: 2px" href="javascript:void(0)" @click="goFind(makeUrl(item.result))">
 				{{ item.result.country+ ' ' + item.result.currency }} ( Currency ) </a>
 
 				<p style="font-size: 12px">
@@ -169,15 +170,15 @@
 					{{ 'Currency: ' + item.result.currency }}
 				</p>
 
-				<a style="color: #1a0dab; font-size: 11px; letter-spacing: 1px; margin-top: 15px" :to="'/currencies'" href="javascript:void(0)" @click="goFind(makeUrl(item.result))">
-					tax-managemet{{ makeUrl(item.result) }}
+				<a style="color: #1a0dab; font-size: 11px; letter-spacing: 1px; margin-top: 15px" href="javascript:void(0)" @click="goFind(makeUrl(item.result))">
+					<vs-icon icon-pack="feather" icon="icon-map" color="primary"></vs-icon> tax-managemet{{ makeUrl(item.result) }}
 				</a>
 					
 			</vx-card>
 
 			<vx-card v-if="item.result.table_name == 'tax_parameters'" class="mt-3" style="width: 100%; height: 100px">
 
-				<a style="color: #1a0dab; font-weight: bold; font-size: 12px; letter-spacing: 2px" href="javascript:void(0)">
+				<a style="color: #1a0dab; font-weight: bold; font-size: 12px; letter-spacing: 2px" href="javascript:void(0)" @click="goFind(makeUrl(item.result))">
 				{{ 'Description: '+item.result.english_description }} ( Tax Parameters ) </a>
 
 				<p style="font-size: 12px">
@@ -194,7 +195,7 @@
 				</p>
 			
 				<a style="color: #1a0dab; font-size: 11px; letter-spacing: 1px; margin-top: 15px" href="javascript:void(0)" @click="goFind(makeUrl(item.result))">
-					tax-managemet{{ makeUrl(item.result) }}
+					<vs-icon icon-pack="feather" icon="icon-map" color="primary" ></vs-icon> tax-managemet{{ makeUrl(item.result) }}
 				</a>
 					
 			</vx-card>
@@ -254,7 +255,7 @@ export default{
 			
 				localStorage.setItem('customer', obj.tax_customer_id);
 				localStorage.setItem('currentDetail', '/customer-detail/'+obj.customer_id);
-				return '/';
+				return '/employees-list';
 			
 			}else if(obj.table_name == 'sales'){
 			
