@@ -72,7 +72,7 @@ const router = new Router({
                 {
                     path: '/add-customer-table-view',
                     name: 'Add Customer',
-                    component: () => import('./views/pages/Customers/AddCustomerTableView.vue'),
+                    component: () => import('./views/pages/Companies/AddCustomerTableView.vue'),
                     meta: {
                         requiresAuth: true,
                         requiresAdmin: true,

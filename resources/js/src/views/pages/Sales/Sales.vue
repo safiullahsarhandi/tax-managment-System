@@ -150,12 +150,22 @@ export default {
         },
 
         deleteRecord(obj){
+            this.$vs.loading();
             var fd = new FormData();
-            fd.append('sale_id', obj.sale_id);
+            fd.append('id', obj.sale_id);
             fd.append('customer_id', obj.customer_id);
             fd.append('type', 'Sale');
-            this.deleteRecord(fd).then(res=>{
-                alert('success')
+            axios.post('delete-spp', fd).then(res=>{
+                if(res.data.status == true){
+                    this.$vs.notify({
+                        title: "Success",
+                        text: res.data.msg,
+                        color: 'success',
+                        position: 'top-right'
+                    });
+                    this.$vs.loading.close();
+                    this.getSales(this.tax_id);
+                }
             });
         },
 

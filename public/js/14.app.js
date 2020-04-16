@@ -1,31 +1,14 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[14],{
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Companies/Companies.vue?vue&type=script&lang=js&":
-/*!***********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Companies/Companies.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************************************************************************************************************************/
-<<<<<<< HEAD
-=======
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/ForgotPassword.vue?vue&type=script&lang=js&":
-/*!******************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/ForgotPassword.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************************************************************************************************************/
->>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Companies/AddCustomerTableView.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Companies/AddCustomerTableView.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -66,11 +49,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-<<<<<<< HEAD
-=======
->>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 //
 //
 //
@@ -149,267 +127,266 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var multiUploads = function multiUploads() {
+  return __webpack_require__.e(/*! import() */ 0).then(__webpack_require__.bind(null, /*! @/components/MultiUploads.vue */ "./resources/js/src/components/MultiUploads.vue"));
+};
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  inject: ['generatePassword', 'loginUser'],
   data: function data() {
     return {
-      // switch1: true,
-      viewTaxTeamModal: false,
-      editCustomerModal: false,
-      customer_id: '',
-      name_english: '',
+      lang: 'english',
+      multipleUploadPopup: false,
+      customField: [],
       name_khmer: '',
-      industry: '',
-      tax_card_num: '',
-      tin_no: '',
-      email: '',
-      telephone: '',
+      name_eng: '',
+      tax_id: '',
+      tin_num: '',
+      incorporation_date: '',
       address: '',
       street: '',
+      group: '',
       village: '',
-      muncipality: '',
+      sangkat: '',
       district: '',
       province: '',
-      sangkat: '',
-      group: '',
-      incorporation_date: '',
-      customField: [],
-      taxes: [],
-      tableEntries: 10
-    };
-  },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('customers/', ['customers']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('customers/', ['findCustomer'])),
-  created: function created() {
-    this.getCustomers();
-  },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
-    getCustomers: 'customers/getCustomers',
-    updateStatus: 'customers/updateStatus'
-  }), {
-    getOfficer: function getOfficer(officer) {
-      if (officer != null) {
-        return officer.full_name;
-      } else {
-        return 'N/A';
-      }
-    },
-    getSupervisor: function getSupervisor(supervisor) {
-      if (supervisor != null) {
-        return supervisor.full_name;
-      } else {
-        return 'N/A';
-      }
-    },
-    statusUpdate: function statusUpdate(id) {
-      var _this = this;
-
-      this.$vs.loading();
-      axios.post('status-update-customer', {
-        id: id
-      }).then(function (res) {
-        _this.$vs.notify({
-          title: 'Updated!...',
-          text: res.data.msg,
-          color: 'success',
-          position: 'top-right'
-        });
-
-        _this.$vs.loading.close();
-      });
-    },
-    updateCustomerStatus: function updateCustomerStatus(customer_id, status) {
-      this.updateStatus({
-        customer_id: customer_id,
-        status: status,
-        notify: this.$vs.notify
-      });
-    },
-    viewTaxTeam: function viewTaxTeam(id) {
-      var customer = this.findCustomer(id);
-      console.log(customer);
-      console.log(customer.taxes);
-      this.taxes = customer.taxes;
-      this.viewTaxTeamModal = true;
-    }
-  })
-<<<<<<< HEAD
-=======
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
+      muncipality: '',
+      tel: '',
       email: '',
-      code: '',
-      password: '',
-      confirm_password: '',
-      forgotPassword: true
+      industry: '',
+      taxDurationSelected: 'Monthly Tax',
+      taxDuration: [{
+        text: 'Monthly Tax',
+        value: 'Monthly Tax'
+      }, {
+        text: 'Annual Tax ',
+        value: 'Annual Tax'
+      }],
+      manager: '',
+      createdby: ''
     };
   },
+  inject: ['loginUser'],
   created: function created() {
-    if (localStorage.getItem('admin')) {
-      this.$router.push('/dashboard');
+    if (this.$store.getters.userType == 'Supervisor') {
+      this.getMyOfficers(localStorage.getItem('admin'));
     }
+
+    this.manager = this.$store.getters.userType == 'Officer' ? localStorage.getItem('admin') : '';
+    this.createdby = localStorage.getItem('admin');
   },
-  methods: {
-    onSubmit: function onSubmit(e, scope) {
+  watch: {},
+  components: {
+    multiUploads: multiUploads
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('customers/', ['customers']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('officers/', ['myOfficers']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('customers/', ['findCustomer'])),
+  methods: _objectSpread({
+    onChangeWorker: function onChangeWorker(manager_id) {
+      // alert(manager_id)
+      this.manager = manager_id;
+    },
+    showUploader: function showUploader() {
+      this.$refs.multiUploads.isShown = true;
+    },
+    successMultipleUpload: function successMultipleUpload(res) {
+      this.$vs.notify({
+        color: 'success',
+        text: res.msg,
+        position: 'right-top',
+        fixed: true
+      });
+      this.$refs.multiUploads.isShown = false;
+    },
+    hasError: function hasError(res) {
+      this.$vs.notify({
+        color: 'danger',
+        text: res.msg,
+        position: 'right-top',
+        fixed: true
+      });
+    },
+    addMoreFeild: function addMoreFeild() {
+      this.customField.push({
+        name: 'additional_field[]',
+        value: '',
+        type: 'text'
+      });
+    }
+  }, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
+    submit: 'customers/addCustomer',
+    getMyOfficers: 'officers/getMyOfficers'
+  }), {
+    addCustomer: function addCustomer(e) {
       var _this = this;
 
-      self = this;
-      this.$validator.validateAll(scope).then(function (result) {
+      this.$validator.validateAll().then(function (result) {
         if (result) {
-          _this.$vs.loading({
-            text: 'Please wait...'
-          });
+          _this.$vs.loading();
 
-          var fd = new FormData(_this.$refs.loginForm);
-          axios.post('forgot-password', fd).then(function (res) {
-            _this.$vs.loading.close();
+          var fd = new FormData(_this.$refs.addCustomer);
+          fd.append('manager', _this.manager);
+          _this.createdBy = _this.$store.getters.userType != 'Officer' ? localStorage.getItem('admin') : _this.manager;
+          fd.append('created_by', _this.createdBy);
+
+          _this.submit(fd).then(function (res) {
+            if (res.data.status == 'success') {
+              e.target.reset();
+
+              _this.errors.clear();
+
+              _this.taxDurationSelected = 'Monthly';
+
+              _this.$vs.notify({
+                title: 'Success',
+                text: 'Customer Added Successfully',
+                color: 'success',
+                position: 'top-right'
+              });
+
+              _this.$vs.loading.close();
+            }
 
             if (res.data.status == 'error') {
               _this.$vs.notify({
-                'color': 'danger',
-                'text': res.data.msg,
-                'position': 'top-right',
-                'icon': 'warning'
+                title: 'Success',
+                text: res.data.msg,
+                color: 'success',
+                position: 'top-right'
               });
-            } else {
-              _this.forgotPassword = false;
-
-              _this.$vs.notify({
-                'color': 'success',
-                'text': res.data.msg,
-                'position': 'top-right',
-                'icon': 'check_box'
-              }); // this.$router.push('/');
-
-            }
-          });
-        }
-      });
-    },
-    verifyCode: function verifyCode(e, scope) {
-      var _this2 = this;
-
-      this.$validator.validateAll(scope).then(function (result) {
-        if (result) {
-          _this2.$vs.loading({
-            text: 'Please wait...'
-          });
-
-          var fd = new FormData(_this2.$refs.verifyForm);
-          fd.append('email', _this2.email);
-          axios.post('verify-code-and-change-password', fd).then(function (res) {
-            _this2.$vs.loading.close();
-
-            if (res.data.status == false) {
-              _this2.$vs.notify({
-                'color': 'danger',
-                'text': res.data.msg,
-                'position': 'top-right',
-                'icon': 'warning'
-              });
-            } else {
-              _this2.forgotPassword = false;
-
-              _this2.$vs.notify({
-                'color': 'success',
-                'text': res.data.msg,
-                'position': 'top-right',
-                'icon': 'check_box'
-              });
-
-              _this2.$router.push('/');
             }
           });
         }
       });
     }
-  }
->>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
+  })
 });
 
 /***/ }),
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Companies/Companies.vue?vue&type=style&index=0&lang=css&":
-/*!******************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Companies/Companies.vue?vue&type=style&index=0&lang=css& ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Companies/AddCustomerTableView.vue?vue&type=style&index=0&lang=css&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Companies/AddCustomerTableView.vue?vue&type=style&index=0&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(/*! ../../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-<<<<<<< HEAD
-=======
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/ForgotPassword.vue?vue&type=style&index=0&id=349af79a&scoped=true&lang=css&":
-/*!*************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/ForgotPassword.vue?vue&type=style&index=0&id=349af79a&scoped=true&lang=css& ***!
-  \*************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
->>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 // imports
 
 
 // module
-<<<<<<< HEAD
-<<<<<<< HEAD
-exports.push([module.i, ".con-vs-popup .vs-popup {\n  width: 1000px !important;\n}\n", ""]);
-=======
-exports.push([module.i, "/*.p-8 {\r\n    padding: 1.9rem !important;\r\n}\r\n*/\r\n", ""]);
->>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
-=======
-exports.push([module.i, ".con-vs-popup .vs-popup {\n  width: 1000px !important;\n}\n", ""]);
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
+exports.push([module.i, "#add_customer_table th .sort-th, th .vs-table-text {\n  width: 250px !important;\n}\n#add_customer_table  .vs-input--input.normal {\n  margin-bottom: 30px !important;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Companies/Companies.vue?vue&type=style&index=0&lang=css&":
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Companies/Companies.vue?vue&type=style&index=0&lang=css& ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************/
-<<<<<<< HEAD
-=======
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/ForgotPassword.vue?vue&type=style&index=0&id=349af79a&scoped=true&lang=css&":
-/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/ForgotPassword.vue?vue&type=style&index=0&id=349af79a&scoped=true&lang=css& ***!
-  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************/
->>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Companies/AddCustomerTableView.vue?vue&type=style&index=0&lang=css&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Companies/AddCustomerTableView.vue?vue&type=style&index=0&lang=css& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader??ref--7-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Companies.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Companies/Companies.vue?vue&type=style&index=0&lang=css&");
-=======
-var content = __webpack_require__(/*! !../../../../../node_modules/css-loader??ref--7-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ForgotPassword.vue?vue&type=style&index=0&id=349af79a&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/ForgotPassword.vue?vue&type=style&index=0&id=349af79a&scoped=true&lang=css&");
->>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
-=======
-var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader??ref--7-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Companies.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Companies/Companies.vue?vue&type=style&index=0&lang=css&");
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
+var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader??ref--7-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./AddCustomerTableView.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Companies/AddCustomerTableView.vue?vue&type=style&index=0&lang=css&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -423,15 +400,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 var update = __webpack_require__(/*! ../../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-=======
-var update = __webpack_require__(/*! ../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
->>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
-=======
-var update = __webpack_require__(/*! ../../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 
 if(content.locals) module.exports = content.locals;
 
@@ -439,23 +408,10 @@ if(false) {}
 
 /***/ }),
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Companies/Companies.vue?vue&type=template&id=199893fc&":
-/*!***************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Companies/Companies.vue?vue&type=template&id=199893fc& ***!
-  \***************************************************************************************************************************************************************************************************************************/
-<<<<<<< HEAD
-=======
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/ForgotPassword.vue?vue&type=template&id=349af79a&scoped=true&":
-/*!**********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/ForgotPassword.vue?vue&type=template&id=349af79a&scoped=true& ***!
-  \**********************************************************************************************************************************************************************************************************************************/
->>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Companies/AddCustomerTableView.vue?vue&type=template&id=e3942646&":
+/*!**************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/Companies/AddCustomerTableView.vue?vue&type=template&id=e3942646& ***!
+  \**************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -469,178 +425,1251 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
     [
       _c(
         "vx-card",
-        { attrs: { title: "List of Companies" } },
+        {
+          attrs: {
+            title: "Add Customer",
+            subtitle:
+              "Add Information Of Customer OR company which tax will be managed by system",
+            noShadow: "",
+            noRadius: ""
+          }
+        },
         [
           _c(
             "template",
             { slot: "actions" },
             [
-              _c("vs-button", {
-                attrs: {
-                  href: { url: "export-customers" },
-                  color: "primary",
-                  type: "border",
-                  "icon-pack": "feather",
-                  icon: "icon-download"
-                }
-              })
+              _c(
+                "vs-button",
+                {
+                  staticClass: "mt-5",
+                  attrs: { type: "gradient", button: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.showUploader()
+                    }
+                  }
+                },
+                [_vm._v("Upload Excel Sheet")]
+              )
             ],
             1
           ),
           _vm._v(" "),
           _c(
-            "vs-table",
-            {
-              attrs: {
-                search: "",
-                pagination: "",
-                "max-items": _vm.tableEntries,
-                data: _vm.customers
-              },
-              scopedSlots: _vm._u([
+            "vs-row",
+            [
+              _c(
+                "vs-col",
                 {
-                  key: "default",
-                  fn: function(ref) {
-                    var data = ref.data
-                    return _vm._l(data, function(tr, index) {
-                      return _c(
-                        "vs-tr",
-                        { key: index },
+                  attrs: {
+                    "vs-lg": "6",
+                    "vs-md": "6",
+                    "vs-sm": "12",
+                    "vs-xs": "12"
+                  }
+                },
+                [
+                  _c(
+                    "vs-button",
+                    {
+                      staticStyle: { width: "100%" },
+                      attrs: { color: "primary", type: "border" },
+                      on: {
+                        click: function($event) {
+                          _vm.lang = "english"
+                        }
+                      }
+                    },
+                    [_vm._v("English")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "vs-col",
+                {
+                  attrs: {
+                    "vs-lg": "6",
+                    "vs-md": "6",
+                    "vs-sm": "12",
+                    "vs-xs": "12"
+                  }
+                },
+                [
+                  _c(
+                    "vs-button",
+                    {
+                      staticStyle: { width: "100%" },
+                      attrs: { color: "primary", type: "border" },
+                      on: {
+                        click: function($event) {
+                          _vm.lang = "khmer"
+                        }
+                      }
+                    },
+                    [_vm._v("Khmer")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "form",
+            {
+              ref: "addCustomer",
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.addCustomer($event)
+                }
+              }
+            },
+            [
+              _c(
+                "vs-row",
+                [
+                  _c(
+                    "vs-col",
+                    [
+                      _c(
+                        "vs-table",
+                        {
+                          attrs: {
+                            stripe: "",
+                            id: "add_customer_table",
+                            noDataText: ""
+                          }
+                        },
                         [
-                          _c("vs-td", { attrs: { data: tr.id } }, [
-                            _vm._v(" " + _vm._s("C00000" + tr.id))
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", { attrs: { data: tr.name_english } }, [
-                            _vm._v(_vm._s(tr.name_english))
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", { attrs: { data: tr.name_khmer } }, [
-                            _vm._v(_vm._s(tr.name_khmer))
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", { attrs: { data: tr.industry } }, [
-                            _vm._v(_vm._s(tr.industry))
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", { attrs: { data: tr.id } }, [
-                            _vm._v(_vm._s(tr.tax_duration))
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", { attrs: { data: tr.tax_card_num } }, [
-                            _vm._v(_vm._s(tr.tax_card_num))
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", { attrs: { data: tr.tin_no } }, [
-                            _vm._v(_vm._s(tr.tin_no))
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", { attrs: { data: tr.email } }, [
-                            _vm._v(_vm._s(tr.email))
-                          ]),
-                          _vm._v(" "),
-                          _vm.$store.getters.userType == "Admin" ||
-                          _vm.$store.getters.userType == "Super Admin"
-                            ? _c(
-                                "vs-td",
-                                {
-                                  attrs: {
-                                    data: _vm.getSupervisor(tr.supervisor)
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    _vm._s(_vm.getSupervisor(tr.supervisor))
+                          _c(
+                            "template",
+                            { slot: "thead" },
+                            [
+                              _vm.$store.getters.userType == "Supervisor"
+                                ? _c("vs-th", [_vm._v("List Of Officers")])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _c("vs-th", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.lang == "english"
+                                      ? "Name (English)"
+                                      : "ឈ្មោះ (អង់គ្លេស)"
                                   )
-                                ]
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.$store.getters.userType != "Officer"
-                            ? _c(
-                                "vs-td",
-                                { attrs: { data: _vm.getOfficer(tr.officer) } },
-                                [_vm._v(_vm._s(_vm.getOfficer(tr.officer)))]
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.$store.getters.userType == "Admin" ||
-                          _vm.$store.getters.userType != "Super Admin"
-                            ? _c(
-                                "vs-td",
-                                { attrs: { data: tr.status } },
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-th", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.lang == "english"
+                                      ? "Name (Khmer)"
+                                      : "ឈ្មោះ (ខ្មែរ)"
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-th", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.lang == "english"
+                                      ? "Tax ID Card #"
+                                      : "អត្តសញ្ញាណប័ណ្ណពន្ធ #"
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-th", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.lang == "english" ? "TIN #" : "ធីន #"
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-th", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.lang == "english"
+                                      ? "Date of company incorporated"
+                                      : "កាលបរិច្ឆេទនៃការបញ្ចូលក្រុមហ៊ុន"
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-th", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.lang == "english"
+                                      ? "Address"
+                                      : "អាសយដ្ឋាន"
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-th", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.lang == "english" ? "Street" : "ផ្លូវ"
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-th", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.lang == "english" ? "Group" : "ក្រុម"
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-th", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.lang == "english" ? "Village" : "ភូមិ"
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-th", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.lang == "english"
+                                      ? "Sangkat"
+                                      : "វិបត្តិ"
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-th", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.lang == "english" ? "District" : "ស្រុក"
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-th", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.lang == "english" ? "Province" : "ខេត្ត"
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-th", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.lang == "english"
+                                      ? "Muncipality"
+                                      : "ក្រុង"
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-th", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.lang == "english" ? "Tel." : "ទូរស័ព្ទ"
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-th", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.lang == "english" ? "Email" : "អ៊ីមែល"
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-th", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.lang == "english"
+                                      ? "Industry / Sector"
+                                      : "ឧស្សាហកម្ម / វិស័យ"
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _vm._l(_vm.customField, function(field, indextr) {
+                                return _c("vs-th", { key: _vm.index }, [
+                                  _vm._v(
+                                    "\n                                " +
+                                      _vm._s(
+                                        _vm.lang == "english"
+                                          ? "Custom Field "
+                                          : "វាលផ្ទាល់ខ្លួន " + indextr + 1
+                                      ) +
+                                      "\n                            "
+                                  )
+                                ])
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "vs-th",
                                 [
                                   _c(
-                                    "vx-input-group",
-                                    [
-                                      _c(
-                                        "vs-select",
-                                        {
+                                    "vs-button",
+                                    {
+                                      staticClass: "mt-5",
+                                      staticStyle: { width: "250px" },
+                                      attrs: {
+                                        type: "gradient",
+                                        button: "button"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.addMoreFeild()
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Add More Custom Fields")]
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            2
+                          ),
+                          _vm._v(" "),
+                          [
+                            _c(
+                              "vs-tr",
+                              [
+                                _vm.$store.getters.userType == "Supervisor"
+                                  ? _c(
+                                      "vs-td",
+                                      [
+                                        _c(
+                                          "vx-input-group",
+                                          [
+                                            _c(
+                                              "vs-select",
+                                              {
+                                                attrs: {
+                                                  placeholder:
+                                                    "Select officer who work"
+                                                },
+                                                model: {
+                                                  value: _vm.manager,
+                                                  callback: function($$v) {
+                                                    _vm.manager = $$v
+                                                  },
+                                                  expression: "manager"
+                                                }
+                                              },
+                                              _vm._l(_vm.myOfficers, function(
+                                                officer,
+                                                index
+                                              ) {
+                                                return _c("vs-select-item", {
+                                                  key: index,
+                                                  attrs: {
+                                                    text: officer.full_name,
+                                                    value: officer.manager_id
+                                                  }
+                                                })
+                                              }),
+                                              1
+                                            )
+                                          ],
+                                          1
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            directives: [
+                                              {
+                                                name: "show",
+                                                rawName: "v-show",
+                                                value: _vm.errors.has(
+                                                  "name_eng"
+                                                ),
+                                                expression:
+                                                  "errors.has('name_eng')"
+                                              }
+                                            ],
+                                            staticClass: "text-danger"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.errors.first("name_eng")
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c(
+                                  "vs-td",
+                                  [
+                                    _c(
+                                      "vx-input-group",
+                                      [
+                                        _c("vs-input", {
                                           directives: [
                                             {
                                               name: "validate",
                                               rawName: "v-validate",
                                               value: "required",
-                                              expression: "'required'"
+                                              expression: "`required`"
+                                            }
+                                          ],
+                                          attrs: { name: "name_eng" },
+                                          model: {
+                                            value: _vm.name_eng,
+                                            callback: function($$v) {
+                                              _vm.name_eng = $$v
+                                            },
+                                            expression: "name_eng"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: _vm.errors.has("name_eng"),
+                                            expression: "errors.has('name_eng')"
+                                          }
+                                        ],
+                                        staticClass: "text-danger"
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(_vm.errors.first("name_eng"))
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "vs-td",
+                                  [
+                                    _c(
+                                      "vx-input-group",
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required",
+                                              expression: "`required`"
+                                            }
+                                          ],
+                                          attrs: { name: "name_khmer" },
+                                          model: {
+                                            value: _vm.name_khmer,
+                                            callback: function($$v) {
+                                              _vm.name_khmer = $$v
+                                            },
+                                            expression: "name_khmer"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: _vm.errors.has("name_khmer"),
+                                            expression:
+                                              "errors.has('name_khmer')"
+                                          }
+                                        ],
+                                        staticClass: "text-danger"
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(_vm.errors.first("name_khmer"))
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "vs-td",
+                                  [
+                                    _c(
+                                      "vx-input-group",
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required",
+                                              expression: "`required`"
+                                            }
+                                          ],
+                                          attrs: { name: "tax_id" },
+                                          model: {
+                                            value: _vm.tax_id,
+                                            callback: function($$v) {
+                                              _vm.tax_id = $$v
+                                            },
+                                            expression: "tax_id"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: _vm.errors.has("tax_id"),
+                                            expression: "errors.has('tax_id')"
+                                          }
+                                        ],
+                                        staticClass: "text-danger"
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(_vm.errors.first("tax_id"))
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "vs-td",
+                                  [
+                                    _c(
+                                      "vx-input-group",
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required",
+                                              expression: "`required`"
+                                            }
+                                          ],
+                                          attrs: { name: "tin_num" },
+                                          model: {
+                                            value: _vm.tin_num,
+                                            callback: function($$v) {
+                                              _vm.tin_num = $$v
+                                            },
+                                            expression: "tin_num"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: _vm.errors.has("tin_num"),
+                                            expression: "errors.has('tin_num')"
+                                          }
+                                        ],
+                                        staticClass: "text-danger"
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(_vm.errors.first("tin_num"))
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "vs-td",
+                                  [
+                                    _c(
+                                      "vx-input-group",
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required",
+                                              expression: "`required`"
+                                            }
+                                          ],
+                                          attrs: { name: "incorporation_date" },
+                                          model: {
+                                            value: _vm.incorporation_date,
+                                            callback: function($$v) {
+                                              _vm.incorporation_date = $$v
+                                            },
+                                            expression: "incorporation_date"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: _vm.errors.has(
+                                              "incorporation_date"
+                                            ),
+                                            expression:
+                                              "errors.has('incorporation_date')"
+                                          }
+                                        ],
+                                        staticClass: "text-danger"
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm.errors.first(
+                                              "incorporation_date"
+                                            )
+                                          )
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "vs-td",
+                                  [
+                                    _c(
+                                      "vx-input-group",
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required",
+                                              expression: "`required`"
+                                            }
+                                          ],
+                                          attrs: { name: "address" },
+                                          model: {
+                                            value: _vm.address,
+                                            callback: function($$v) {
+                                              _vm.address = $$v
+                                            },
+                                            expression: "address"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: _vm.errors.has("address"),
+                                            expression: "errors.has('address')"
+                                          }
+                                        ],
+                                        staticClass: "text-danger"
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(_vm.errors.first("address"))
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "vs-td",
+                                  [
+                                    _c(
+                                      "vx-input-group",
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required",
+                                              expression: "`required`"
+                                            }
+                                          ],
+                                          attrs: { name: "street" },
+                                          model: {
+                                            value: _vm.street,
+                                            callback: function($$v) {
+                                              _vm.street = $$v
+                                            },
+                                            expression: "street"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: _vm.errors.has("street"),
+                                            expression: "errors.has('street')"
+                                          }
+                                        ],
+                                        staticClass: "text-danger"
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(_vm.errors.first("street"))
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "vs-td",
+                                  [
+                                    _c(
+                                      "vx-input-group",
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required",
+                                              expression: "`required`"
+                                            }
+                                          ],
+                                          attrs: { name: "group" },
+                                          model: {
+                                            value: _vm.group,
+                                            callback: function($$v) {
+                                              _vm.group = $$v
+                                            },
+                                            expression: "group"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: _vm.errors.has("group"),
+                                            expression: "errors.has('group')"
+                                          }
+                                        ],
+                                        staticClass: "text-danger"
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(_vm.errors.first("group"))
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "vs-td",
+                                  [
+                                    _c(
+                                      "vx-input-group",
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required",
+                                              expression: "`required`"
+                                            }
+                                          ],
+                                          attrs: { name: "village" },
+                                          model: {
+                                            value: _vm.village,
+                                            callback: function($$v) {
+                                              _vm.village = $$v
+                                            },
+                                            expression: "village"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: _vm.errors.has("village"),
+                                            expression: "errors.has('village')"
+                                          }
+                                        ],
+                                        staticClass: "text-danger"
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(_vm.errors.first("village"))
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "vs-td",
+                                  [
+                                    _c(
+                                      "vx-input-group",
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required",
+                                              expression: "`required`"
+                                            }
+                                          ],
+                                          attrs: { name: "sangkat" },
+                                          model: {
+                                            value: _vm.sangkat,
+                                            callback: function($$v) {
+                                              _vm.sangkat = $$v
+                                            },
+                                            expression: "sangkat"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: _vm.errors.has("sangkat"),
+                                            expression: "errors.has('sangkat')"
+                                          }
+                                        ],
+                                        staticClass: "text-danger"
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(_vm.errors.first("sangkat"))
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "vs-td",
+                                  [
+                                    _c(
+                                      "vx-input-group",
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required",
+                                              expression: "`required`"
+                                            }
+                                          ],
+                                          attrs: { name: "district" },
+                                          model: {
+                                            value: _vm.district,
+                                            callback: function($$v) {
+                                              _vm.district = $$v
+                                            },
+                                            expression: "district"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: _vm.errors.has("district"),
+                                            expression: "errors.has('district')"
+                                          }
+                                        ],
+                                        staticClass: "text-danger"
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(_vm.errors.first("district"))
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "vs-td",
+                                  [
+                                    _c(
+                                      "vx-input-group",
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required",
+                                              expression: "`required`"
+                                            }
+                                          ],
+                                          attrs: { name: "province" },
+                                          model: {
+                                            value: _vm.province,
+                                            callback: function($$v) {
+                                              _vm.province = $$v
+                                            },
+                                            expression: "province"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: _vm.errors.has("province"),
+                                            expression: "errors.has('province')"
+                                          }
+                                        ],
+                                        staticClass: "text-danger"
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(_vm.errors.first("province"))
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "vs-td",
+                                  [
+                                    _c(
+                                      "vx-input-group",
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required",
+                                              expression: "`required`"
+                                            }
+                                          ],
+                                          attrs: { name: "muncipality" },
+                                          model: {
+                                            value: _vm.muncipality,
+                                            callback: function($$v) {
+                                              _vm.muncipality = $$v
+                                            },
+                                            expression: "muncipality"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: _vm.errors.has(
+                                              "muncipality"
+                                            ),
+                                            expression:
+                                              "errors.has('muncipality')"
+                                          }
+                                        ],
+                                        staticClass: "text-danger"
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm.errors.first("muncipality")
+                                          )
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "vs-td",
+                                  [
+                                    _c(
+                                      "vx-input-group",
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required",
+                                              expression: "`required`"
+                                            }
+                                          ],
+                                          attrs: { name: "tel" },
+                                          model: {
+                                            value: _vm.tel,
+                                            callback: function($$v) {
+                                              _vm.tel = $$v
+                                            },
+                                            expression: "tel"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: _vm.errors.has("tel"),
+                                            expression: "errors.has('tel')"
+                                          }
+                                        ],
+                                        staticClass: "text-danger"
+                                      },
+                                      [_vm._v(_vm._s(_vm.errors.first("tel")))]
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "vs-td",
+                                  [
+                                    _c(
+                                      "vx-input-group",
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required",
+                                              expression: "`required`"
                                             }
                                           ],
                                           attrs: {
-                                            placeholder:
-                                              "Select Customer Status"
-                                          },
-                                          on: {
-                                            input: function($event) {
-                                              return _vm.updateCustomerStatus(
-                                                tr.customer_id,
-                                                tr.customer_status
-                                              )
-                                            }
+                                            name: "email",
+                                            type: "email"
                                           },
                                           model: {
-                                            value: tr.customer_status,
+                                            value: _vm.email,
                                             callback: function($$v) {
-                                              _vm.$set(
-                                                tr,
-                                                "customer_status",
-                                                $$v
-                                              )
+                                              _vm.email = $$v
                                             },
-                                            expression: "tr.customer_status"
+                                            expression: "email"
                                           }
-                                        },
+                                        })
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: _vm.errors.has("email"),
+                                            expression: "errors.has('email')"
+                                          }
+                                        ],
+                                        staticClass: "text-danger"
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(_vm.errors.first("email"))
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "vs-td",
+                                  [
+                                    _c(
+                                      "vx-input-group",
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required",
+                                              expression: "`required`"
+                                            }
+                                          ],
+                                          attrs: { name: "industry" },
+                                          model: {
+                                            value: _vm.industry,
+                                            callback: function($$v) {
+                                              _vm.industry = $$v
+                                            },
+                                            expression: "industry"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: _vm.errors.has("industry"),
+                                            expression: "errors.has('industry')"
+                                          }
+                                        ],
+                                        staticClass: "text-danger"
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(_vm.errors.first("industry"))
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _vm._l(_vm.customField, function(field, index) {
+                                  return _c(
+                                    "vs-td",
+                                    { key: index },
+                                    [
+                                      _c(
+                                        "vx-input-group",
                                         [
-                                          _c("vs-select-item", {
+                                          _c("vs-input", {
+                                            directives: [
+                                              {
+                                                name: "validate",
+                                                rawName: "v-validate",
+                                                value: "required",
+                                                expression: "`required`"
+                                              }
+                                            ],
                                             attrs: {
-                                              value: "Prospect",
-                                              text: "Prospect"
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("vs-select-item", {
-                                            attrs: {
-                                              value: "Activate",
-                                              text: "Activate"
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("vs-select-item", {
-                                            attrs: {
-                                              value: "Deactivate",
-                                              text: "Deactivate"
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("vs-select-item", {
-                                            attrs: {
-                                              value: "Pending",
-                                              text: "Pending"
+                                              type: field.text,
+                                              name: field.name
+                                            },
+                                            model: {
+                                              value: field.value,
+                                              callback: function($$v) {
+                                                _vm.$set(field, "value", $$v)
+                                              },
+                                              expression: "field.value"
                                             }
                                           })
                                         ],
@@ -649,708 +1678,98 @@ var render = function() {
                                     ],
                                     1
                                   )
-                                ],
-                                1
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _c(
-                            "vs-td",
-                            [
-                              _vm.$store.getters.userType == "Admin" ||
-                              _vm.$store.getters.userType != "Super Admin"
-                                ? _c("vs-button", {
-                                    attrs: {
-                                      to: "company-update/" + tr.customer_id,
-                                      size: "small",
-                                      type: "border",
-                                      "icon-pack": "feather",
-                                      icon: "icon-edit"
-                                    }
-                                  })
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _c("vs-button", {
-                                attrs: {
-                                  to: "company-detail/" + tr.customer_id,
-                                  size: "small",
-                                  "icon-pack": "feather",
-                                  icon: "icon-maximize-2",
-                                  type: "border"
-                                }
-                              })
-                            ],
-                            1
-                          )
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "vs-td",
+                                  [
+                                    _c(
+                                      "vx-input-group",
+                                      [
+                                        _c("vs-input", {
+                                          attrs: { name: "", disabled: "" }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                )
+                              ],
+                              2
+                            )
+                          ]
                         ],
-                        1
+                        2
                       )
-                    })
-                  }
-                }
-              ])
-            },
-            [
-              _c(
-                "template",
-                { slot: "header" },
-                [
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
                   _c(
-                    "vs-row",
+                    "vs-col",
+                    {
+                      staticClass: "text-center",
+                      attrs: { "vs-lg": "12", "vs-md": "12" }
+                    },
                     [
                       _c(
                         "vs-col",
                         {
-                          attrs: {
-                            "vs-lg": "3",
-                            "vs-md": "3",
-                            "vs-sm": "12",
-                            "vs-xs": "12"
-                          }
+                          staticClass: "text-center",
+                          attrs: { "vs-md": "12", "vs-lg": "12" }
                         },
                         [
-                          _vm._v(
-                            "\n                        Show\n                        "
-                          ),
                           _c(
-                            "select",
+                            "vs-button",
                             {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.tableEntries,
-                                  expression: "tableEntries"
-                                }
-                              ],
-                              staticClass: "vs-select--input",
-                              staticStyle: { width: "100px" },
-                              on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.tableEntries = $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                }
-                              }
+                              staticClass: "mt-5",
+                              attrs: { button: "submit", type: "gradient" }
                             },
-                            [
-                              _c("option", {
-                                attrs: { value: "10" },
-                                domProps: { innerHTML: _vm._s(10) }
-                              }),
-                              _vm._v(" "),
-                              _c("option", {
-                                attrs: { value: "25" },
-                                domProps: { innerHTML: _vm._s(25) }
-                              }),
-                              _vm._v(" "),
-                              _c("option", {
-                                attrs: { value: "50" },
-                                domProps: { innerHTML: _vm._s(50) }
-                              }),
-                              _vm._v(" "),
-                              _c("option", {
-                                attrs: { value: "100" },
-                                domProps: { innerHTML: _vm._s(100) }
-                              })
-                            ]
-                          ),
-                          _vm._v(
-                            "\n                        Entries\n                    "
+                            [_vm._v("Save")]
                           )
-                        ]
-                      )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("vs-col", {
+                        staticClass: "text-center",
+                        attrs: { "vs-md": "12", "vs-lg": "12" }
+                      })
                     ],
                     1
                   )
                 ],
                 1
-              ),
-              _vm._v(" "),
-              _c(
-                "template",
-                { slot: "thead" },
-                [
-                  _c("vs-th", { attrs: { "sort-key": "id" } }, [
-                    _vm._v("Company ID")
-                  ]),
-                  _vm._v(" "),
-                  _c("vs-th", { attrs: { "sort-key": "name_english" } }, [
-                    _vm._v("Name(English)")
-                  ]),
-                  _vm._v(" "),
-                  _c("vs-th", { attrs: { "sort-key": "name_khmer" } }, [
-                    _vm._v("Name(Khmer)")
-                  ]),
-                  _vm._v(" "),
-                  _c("vs-th", { attrs: { "sort-key": "industry" } }, [
-                    _vm._v("Industy / Sector")
-                  ]),
-                  _vm._v(" "),
-                  _c("vs-th", { attrs: { "sort-key": "tax_duration" } }, [
-                    _vm._v("Tax Duration")
-                  ]),
-                  _vm._v(" "),
-                  _c("vs-th", { attrs: { "sort-key": "tax_card_num" } }, [
-                    _vm._v("Tax ID")
-                  ]),
-                  _vm._v(" "),
-                  _c("vs-th", { attrs: { "sort-key": "tin_no" } }, [
-                    _vm._v("TIN # ")
-                  ]),
-                  _vm._v(" "),
-                  _c("vs-th", { attrs: { "sort-key": "email" } }, [
-                    _vm._v("Email")
-                  ]),
-                  _vm._v(" "),
-                  _vm.$store.getters.userType == "Admin" ||
-                  _vm.$store.getters.userType == "Super Admin"
-                    ? _c(
-                        "vs-th",
-                        { attrs: { "sort-key": "supervisor.full_name" } },
-                        [_vm._v("Supervisor")]
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm.$store.getters.userType != "Officer"
-                    ? _c("vs-th", [_vm._v("Officer")])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm.$store.getters.userType == "Admin" ||
-                  _vm.$store.getters.userType != "Super Admin"
-                    ? _c("vs-th", [_vm._v("Status")])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c("vs-th", [_vm._v("Actions")])
-                ],
-                1
               )
             ],
-            2
+            1
           )
         ],
         2
-      )
+      ),
+      _vm._v(" "),
+      _c("multi-uploads", {
+        ref: "multiUploads",
+        attrs: {
+          "calling-from": "add-customer",
+          myOfficers: _vm.myOfficers,
+          action:
+            "add-multiple-customer?created_by=" +
+            _vm.createdby +
+            "&manager=" +
+            _vm.manager,
+          "sample-url": "./public/samples/company.xlsx",
+          active: _vm.multipleUploadPopup
+        },
+        on: {
+          "worker-changed": _vm.onChangeWorker,
+          error: _vm.hasError,
+          uploaded: _vm.successMultipleUpload
+        }
+      })
     ],
     1
-<<<<<<< HEAD
-=======
-    {
-      staticClass:
-        "h-screen flex w-full bg-img vx-row no-gutter items-center justify-center",
-      staticStyle: {
-        "background-image": "url(./public/images/bg.jpg) !important"
-      },
-      attrs: { id: "page-login" }
-    },
-    [
-      _c(
-        "div",
-        { staticClass: "vx-col sm:w-1/2 md:w-1/2 lg:w-auto sm:m-0 m-4" },
-        [
-          _vm.forgotPassword == true
-            ? _c("vx-card", [
-                _c(
-                  "div",
-                  {
-                    staticClass: "full-page-bg-color",
-                    staticStyle: {
-                      "box-shadow": "2px 4px 20px 5px !important"
-                    },
-                    attrs: { slot: "no-body" },
-                    slot: "no-body"
-                  },
-                  [
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "vx-row no-gutter justify-center items-center"
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "vx-col sm:w-full md:w-full lg:w-full"
-                          },
-                          [
-                            _c(
-                              "form",
-                              {
-                                ref: "loginForm",
-                                attrs: {
-                                  autocomplete: "off",
-                                  "data-vv-scope": "loginForm"
-                                },
-                                on: {
-                                  submit: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.onSubmit($event, "loginForm")
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "div",
-                                  { staticClass: "p-8" },
-                                  [
-                                    _c(
-                                      "div",
-                                      { staticClass: "vx-card__title mb-8" },
-                                      [
-                                        _c("img", {
-                                          staticClass: "m-auto w-2/5",
-                                          attrs: {
-                                            src: "./public/images/33i.png"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c("h4", { staticClass: "mb-4" }, [
-                                          _vm._v("Recover Password")
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("p", [
-                                          _vm._v(
-                                            "Put your registered email to recover your password."
-                                          )
-                                        ])
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("vs-input", {
-                                      directives: [
-                                        {
-                                          name: "validate",
-                                          rawName: "v-validate",
-                                          value: "required|email",
-                                          expression: "'required|email'"
-                                        }
-                                      ],
-                                      staticClass: "w-full no-icon-border",
-                                      attrs: {
-                                        icon: "icon icon-user",
-                                        name: "email",
-                                        "icon-pack": "feather",
-                                        "label-placeholder": "Email",
-                                        "data-vv-scope": "loginForm"
-                                      },
-                                      model: {
-                                        value: _vm.email,
-                                        callback: function($$v) {
-                                          _vm.email = $$v
-                                        },
-                                        expression: "email"
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("span", {
-                                      directives: [
-                                        {
-                                          name: "show",
-                                          rawName: "v-show",
-                                          value: _vm.errors.has(
-                                            "loginForm.email"
-                                          ),
-                                          expression:
-                                            "errors.has('loginForm.email')"
-                                        }
-                                      ],
-                                      staticClass: "text-danger",
-                                      domProps: {
-                                        innerHTML: _vm._s(
-                                          _vm.errors.first("loginForm.email")
-                                        )
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    _c(
-                                      "vs-row",
-                                      [
-                                        _c(
-                                          "vs-col",
-                                          {
-                                            staticClass: "mt-base",
-                                            attrs: { "vs-w": "12" }
-                                          },
-                                          [
-                                            _c(
-                                              "vs-button",
-                                              {
-                                                attrs: {
-                                                  to: "/",
-                                                  type: "border",
-                                                  color: "primary"
-                                                }
-                                              },
-                                              [_vm._v("Back to Login")]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "vs-button",
-                                              {
-                                                staticClass: "float-right",
-                                                attrs: {
-                                                  button: "submit",
-                                                  color: "#0b586a",
-                                                  "gradient-color-secondary":
-                                                    "#d08683",
-                                                  type: "gradient"
-                                                }
-                                              },
-                                              [_vm._v("Send code")]
-                                            )
-                                          ],
-                                          1
-                                        )
-                                      ],
-                                      1
-                                    )
-                                  ],
-                                  1
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ]
-                    )
-                  ]
-                )
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.forgotPassword == false
-            ? _c("vx-card", [
-                _c(
-                  "div",
-                  {
-                    staticClass: "full-page-bg-color",
-                    staticStyle: {
-                      "box-shadow": "2px 4px 20px 5px !important"
-                    },
-                    attrs: { slot: "no-body" },
-                    slot: "no-body"
-                  },
-                  [
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "vx-row no-gutter justify-center items-center"
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "vx-col sm:w-full md:w-full lg:w-full"
-                          },
-                          [
-                            _c(
-                              "form",
-                              {
-                                ref: "verifyForm",
-                                attrs: {
-                                  autocomplete: "off",
-                                  "data-vv-scope": "verifyForm"
-                                },
-                                on: {
-                                  submit: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.verifyCode($event, "verifyForm")
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "div",
-                                  { staticClass: "p-8" },
-                                  [
-                                    _c(
-                                      "div",
-                                      { staticClass: "vx-card__title mb-8" },
-                                      [
-                                        _c("img", {
-                                          staticClass: "m-auto w-2/5",
-                                          attrs: {
-                                            src: "./public/images/33i.png"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c("h4", { staticClass: "mb-4" }, [
-                                          _vm._v("Verify code")
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("p", [
-                                          _vm._v(
-                                            "Put your correct verification code and new password."
-                                          )
-                                        ])
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "vs-row",
-                                      [
-                                        _c(
-                                          "vs-col",
-                                          { attrs: { "vs-w": "12" } },
-                                          [
-                                            _c("vs-input", {
-                                              directives: [
-                                                {
-                                                  name: "validate",
-                                                  rawName: "v-validate",
-                                                  value: "required|digits:4",
-                                                  expression:
-                                                    "'required|digits:4'"
-                                                }
-                                              ],
-                                              staticClass:
-                                                "w-full no-icon-border",
-                                              attrs: {
-                                                icon:
-                                                  "icon icon-more-horizontal",
-                                                name: "code",
-                                                "icon-pack": "feather",
-                                                "label-placeholder":
-                                                  "Verification code",
-                                                "data-vv-scope": "verifyForm"
-                                              },
-                                              model: {
-                                                value: _vm.code,
-                                                callback: function($$v) {
-                                                  _vm.code = $$v
-                                                },
-                                                expression: "code"
-                                              }
-                                            }),
-                                            _vm._v(" "),
-                                            _c("span", {
-                                              directives: [
-                                                {
-                                                  name: "show",
-                                                  rawName: "v-show",
-                                                  value: _vm.errors.has(
-                                                    "verifyForm.code"
-                                                  ),
-                                                  expression:
-                                                    "errors.has('verifyForm.code')"
-                                                }
-                                              ],
-                                              staticClass: "text-danger",
-                                              domProps: {
-                                                innerHTML: _vm._s(
-                                                  _vm.errors.first(
-                                                    "verifyForm.code"
-                                                  )
-                                                )
-                                              }
-                                            })
-                                          ],
-                                          1
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "vs-row",
-                                      [
-                                        _c(
-                                          "vs-col",
-                                          {
-                                            staticClass: "mt-5",
-                                            attrs: { "vs-w": "12" }
-                                          },
-                                          [
-                                            _c("vs-input", {
-                                              directives: [
-                                                {
-                                                  name: "validate",
-                                                  rawName: "v-validate",
-                                                  value:
-                                                    "required|min:6|max:12",
-                                                  expression:
-                                                    "'required|min:6|max:12'"
-                                                }
-                                              ],
-                                              ref: "password",
-                                              staticClass:
-                                                "w-full no-icon-border",
-                                              attrs: {
-                                                type: "password",
-                                                icon: "icon icon-key",
-                                                name: "password",
-                                                "icon-pack": "feather",
-                                                "label-placeholder": "Password",
-                                                "data-vv-scope": "verifyForm"
-                                              },
-                                              model: {
-                                                value: _vm.password,
-                                                callback: function($$v) {
-                                                  _vm.password = $$v
-                                                },
-                                                expression: "password"
-                                              }
-                                            }),
-                                            _vm._v(" "),
-                                            _c("span", {
-                                              directives: [
-                                                {
-                                                  name: "show",
-                                                  rawName: "v-show",
-                                                  value: _vm.errors.has(
-                                                    "verifyForm.password"
-                                                  ),
-                                                  expression:
-                                                    "errors.has('verifyForm.password')"
-                                                }
-                                              ],
-                                              staticClass: "text-danger",
-                                              domProps: {
-                                                innerHTML: _vm._s(
-                                                  _vm.errors.first(
-                                                    "verifyForm.password"
-                                                  )
-                                                )
-                                              }
-                                            })
-                                          ],
-                                          1
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "vs-row",
-                                      [
-                                        _c(
-                                          "vs-col",
-                                          {
-                                            staticClass: "mt-5",
-                                            attrs: { "vs-w": "12" }
-                                          },
-                                          [
-                                            _c("vs-input", {
-                                              directives: [
-                                                {
-                                                  name: "validate",
-                                                  rawName: "v-validate",
-                                                  value:
-                                                    "required|confirmed:password",
-                                                  expression:
-                                                    "'required|confirmed:password'"
-                                                }
-                                              ],
-                                              staticClass:
-                                                "w-full no-icon-border",
-                                              attrs: {
-                                                type: "password",
-                                                icon: "icon icon-key",
-                                                name: "confirm_password",
-                                                "icon-pack": "feather",
-                                                "label-placeholder":
-                                                  "Confirm Password",
-                                                "data-vv-scope": "verifyForm",
-                                                "data-vv-as": "password"
-                                              },
-                                              model: {
-                                                value: _vm.confirm_password,
-                                                callback: function($$v) {
-                                                  _vm.confirm_password = $$v
-                                                },
-                                                expression: "confirm_password"
-                                              }
-                                            }),
-                                            _vm._v(" "),
-                                            _c("span", {
-                                              directives: [
-                                                {
-                                                  name: "show",
-                                                  rawName: "v-show",
-                                                  value: _vm.errors.has(
-                                                    "verifyForm.confirm_password"
-                                                  ),
-                                                  expression:
-                                                    "errors.has('verifyForm.confirm_password')"
-                                                }
-                                              ],
-                                              staticClass: "text-danger",
-                                              domProps: {
-                                                innerHTML: _vm._s(
-                                                  _vm.errors.first(
-                                                    "verifyForm.confirm_password"
-                                                  )
-                                                )
-                                              }
-                                            })
-                                          ],
-                                          1
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "vs-row",
-                                      [
-                                        _c(
-                                          "vs-col",
-                                          {
-                                            staticClass: "mt-base",
-                                            attrs: { "vs-w": "12" }
-                                          },
-                                          [
-                                            _c(
-                                              "vs-button",
-                                              {
-                                                staticClass: "float-right",
-                                                attrs: {
-                                                  button: "submit",
-                                                  color: "#0b586a",
-                                                  "gradient-color-secondary":
-                                                    "#d08683",
-                                                  type: "gradient"
-                                                }
-                                              },
-                                              [_vm._v("Save Changes")]
-                                            )
-                                          ],
-                                          1
-                                        )
-                                      ],
-                                      1
-                                    )
-                                  ],
-                                  1
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ]
-                    )
-                  ]
-                )
-              ])
-            : _vm._e()
-        ],
-        1
-      )
-    ]
->>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
   )
 }
 var staticRenderFns = []
@@ -1360,45 +1779,19 @@ render._withStripped = true
 
 /***/ }),
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
-/***/ "./resources/js/src/views/pages/Companies/Companies.vue":
-/*!**************************************************************!*\
-  !*** ./resources/js/src/views/pages/Companies/Companies.vue ***!
-  \**************************************************************/
-<<<<<<< HEAD
-=======
-/***/ "./resources/js/src/views/pages/ForgotPassword.vue":
-/*!*********************************************************!*\
-  !*** ./resources/js/src/views/pages/ForgotPassword.vue ***!
-  \*********************************************************/
->>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
+/***/ "./resources/js/src/views/pages/Companies/AddCustomerTableView.vue":
+/*!*************************************************************************!*\
+  !*** ./resources/js/src/views/pages/Companies/AddCustomerTableView.vue ***!
+  \*************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
-/* harmony import */ var _Companies_vue_vue_type_template_id_199893fc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Companies.vue?vue&type=template&id=199893fc& */ "./resources/js/src/views/pages/Companies/Companies.vue?vue&type=template&id=199893fc&");
-/* harmony import */ var _Companies_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Companies.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/Companies/Companies.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _Companies_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Companies.vue?vue&type=style&index=0&lang=css& */ "./resources/js/src/views/pages/Companies/Companies.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _AddCustomerTableView_vue_vue_type_template_id_e3942646___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AddCustomerTableView.vue?vue&type=template&id=e3942646& */ "./resources/js/src/views/pages/Companies/AddCustomerTableView.vue?vue&type=template&id=e3942646&");
+/* harmony import */ var _AddCustomerTableView_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AddCustomerTableView.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/Companies/AddCustomerTableView.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _AddCustomerTableView_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AddCustomerTableView.vue?vue&type=style&index=0&lang=css& */ "./resources/js/src/views/pages/Companies/AddCustomerTableView.vue?vue&type=style&index=0&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-<<<<<<< HEAD
-=======
-/* harmony import */ var _ForgotPassword_vue_vue_type_template_id_349af79a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ForgotPassword.vue?vue&type=template&id=349af79a&scoped=true& */ "./resources/js/src/views/pages/ForgotPassword.vue?vue&type=template&id=349af79a&scoped=true&");
-/* harmony import */ var _ForgotPassword_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ForgotPassword.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/ForgotPassword.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _ForgotPassword_vue_vue_type_style_index_0_id_349af79a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ForgotPassword.vue?vue&type=style&index=0&id=349af79a&scoped=true&lang=css& */ "./resources/js/src/views/pages/ForgotPassword.vue?vue&type=style&index=0&id=349af79a&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
->>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
 
 
 
@@ -1408,153 +1801,66 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
-  _Companies_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Companies_vue_vue_type_template_id_199893fc___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _Companies_vue_vue_type_template_id_199893fc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _AddCustomerTableView_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AddCustomerTableView_vue_vue_type_template_id_e3942646___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AddCustomerTableView_vue_vue_type_template_id_e3942646___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
-<<<<<<< HEAD
-=======
-  _ForgotPassword_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _ForgotPassword_vue_vue_type_template_id_349af79a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _ForgotPassword_vue_vue_type_template_id_349af79a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  "349af79a",
->>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-<<<<<<< HEAD
-<<<<<<< HEAD
-component.options.__file = "resources/js/src/views/pages/Companies/Companies.vue"
-=======
-component.options.__file = "resources/js/src/views/pages/ForgotPassword.vue"
->>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
-=======
-component.options.__file = "resources/js/src/views/pages/Companies/Companies.vue"
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
+component.options.__file = "resources/js/src/views/pages/Companies/AddCustomerTableView.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
-/***/ "./resources/js/src/views/pages/Companies/Companies.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************!*\
-  !*** ./resources/js/src/views/pages/Companies/Companies.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************/
-<<<<<<< HEAD
-=======
-/***/ "./resources/js/src/views/pages/ForgotPassword.vue?vue&type=script&lang=js&":
-/*!**********************************************************************************!*\
-  !*** ./resources/js/src/views/pages/ForgotPassword.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************************/
->>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
+/***/ "./resources/js/src/views/pages/Companies/AddCustomerTableView.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/Companies/AddCustomerTableView.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Companies_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Companies.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Companies/Companies.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Companies_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AddCustomerTableView_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./AddCustomerTableView.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Companies/AddCustomerTableView.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AddCustomerTableView_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/src/views/pages/Companies/Companies.vue?vue&type=style&index=0&lang=css&":
-/*!***********************************************************************************************!*\
-  !*** ./resources/js/src/views/pages/Companies/Companies.vue?vue&type=style&index=0&lang=css& ***!
-  \***********************************************************************************************/
-<<<<<<< HEAD
-=======
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ForgotPassword_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ForgotPassword.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/ForgotPassword.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ForgotPassword_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/src/views/pages/ForgotPassword.vue?vue&type=style&index=0&id=349af79a&scoped=true&lang=css&":
-/*!******************************************************************************************************************!*\
-  !*** ./resources/js/src/views/pages/ForgotPassword.vue?vue&type=style&index=0&id=349af79a&scoped=true&lang=css& ***!
-  \******************************************************************************************************************/
->>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
+/***/ "./resources/js/src/views/pages/Companies/AddCustomerTableView.vue?vue&type=style&index=0&lang=css&":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/Companies/AddCustomerTableView.vue?vue&type=style&index=0&lang=css& ***!
+  \**********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Companies_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/style-loader!../../../../../../node_modules/css-loader??ref--7-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Companies.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Companies/Companies.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Companies_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Companies_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Companies_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Companies_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Companies_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AddCustomerTableView_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/style-loader!../../../../../../node_modules/css-loader??ref--7-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./AddCustomerTableView.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Companies/AddCustomerTableView.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AddCustomerTableView_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AddCustomerTableView_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AddCustomerTableView_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AddCustomerTableView_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AddCustomerTableView_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
-/***/ "./resources/js/src/views/pages/Companies/Companies.vue?vue&type=template&id=199893fc&":
-/*!*********************************************************************************************!*\
-  !*** ./resources/js/src/views/pages/Companies/Companies.vue?vue&type=template&id=199893fc& ***!
-  \*********************************************************************************************/
-<<<<<<< HEAD
-=======
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ForgotPassword_vue_vue_type_style_index_0_id_349af79a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader!../../../../../node_modules/css-loader??ref--7-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ForgotPassword.vue?vue&type=style&index=0&id=349af79a&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/ForgotPassword.vue?vue&type=style&index=0&id=349af79a&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ForgotPassword_vue_vue_type_style_index_0_id_349af79a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ForgotPassword_vue_vue_type_style_index_0_id_349af79a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ForgotPassword_vue_vue_type_style_index_0_id_349af79a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ForgotPassword_vue_vue_type_style_index_0_id_349af79a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ForgotPassword_vue_vue_type_style_index_0_id_349af79a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
-
-/***/ }),
-
-/***/ "./resources/js/src/views/pages/ForgotPassword.vue?vue&type=template&id=349af79a&scoped=true&":
-/*!****************************************************************************************************!*\
-  !*** ./resources/js/src/views/pages/ForgotPassword.vue?vue&type=template&id=349af79a&scoped=true& ***!
-  \****************************************************************************************************/
->>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
+/***/ "./resources/js/src/views/pages/Companies/AddCustomerTableView.vue?vue&type=template&id=e3942646&":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/Companies/AddCustomerTableView.vue?vue&type=template&id=e3942646& ***!
+  \********************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Companies_vue_vue_type_template_id_199893fc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Companies.vue?vue&type=template&id=199893fc& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Companies/Companies.vue?vue&type=template&id=199893fc&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Companies_vue_vue_type_template_id_199893fc___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddCustomerTableView_vue_vue_type_template_id_e3942646___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./AddCustomerTableView.vue?vue&type=template&id=e3942646& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/Companies/AddCustomerTableView.vue?vue&type=template&id=e3942646&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddCustomerTableView_vue_vue_type_template_id_e3942646___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Companies_vue_vue_type_template_id_199893fc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-<<<<<<< HEAD
-=======
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ForgotPassword_vue_vue_type_template_id_349af79a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ForgotPassword.vue?vue&type=template&id=349af79a&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/ForgotPassword.vue?vue&type=template&id=349af79a&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ForgotPassword_vue_vue_type_template_id_349af79a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ForgotPassword_vue_vue_type_template_id_349af79a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
->>>>>>> 7bb2b9ffa89a7c5b6d7869ad33a537027aa2d2d1
-=======
->>>>>>> 44cc622efc8b861d51ebae73166ed7aa22363cd0
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddCustomerTableView_vue_vue_type_template_id_e3942646___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
