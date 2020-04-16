@@ -2869,6 +2869,20 @@ class ApplicationController extends Controller {
 	}
 
 	public function deleteSpp(Request $request) {
-		return $request->all();
+		$id = $request->id;
+		$customer_id = $request->customer_id;
+		$type = $request->type;
+
+		if($type == 'Sale'){
+			$data = Sales::where('customer_id', $customer_id)->where('sale_id', $id)->delete();
+		}elseif($type == 'Purchase'){
+			$data = Purchases::where('customer_id', $customer_id)->where('purchase_id', $id)->delete();
+		}elseif($type == 'Payroll'){
+			$data = Payrolls::where('employee_id', $customer_id)->where('payroll_id', $id)->delete();
+		}
+		$msg = $type . ' deleted successfully';
+		return response()->json(['status' => true, 'msg' => $msg]);
+
+
 	}
 }

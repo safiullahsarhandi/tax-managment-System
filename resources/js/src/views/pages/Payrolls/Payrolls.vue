@@ -44,6 +44,7 @@
                         <vs-td>
                             <vs-button :to="'edit-payroll/'+tr.payroll_id" size="small" type="border" icon-pack="feather" icon="icon-edit"></vs-button>
                             <vs-button :to="'payroll-detail/'+tr.payroll_id" size="small" icon-pack="feather" icon="icon-maximize-2" type="border"></vs-button>
+                            <vs-button @click="deleteRecord(data[index])" size="small" type="border" icon-pack="feather" icon="icon-trash-2"></vs-button>
                         </vs-td>
                     </vs-tr>
                 </template>
@@ -156,6 +157,27 @@ export default {
             });
 
         },
+
+        deleteRecord(obj){
+            this.$vs.loading();
+            var fd = new FormData();
+            fd.append('id', obj.payroll_id);
+            fd.append('customer_id', obj.employee_id);
+            fd.append('type', 'Payroll');
+            axios.post('delete-spp', fd).then(res=>{
+                if(res.data.status == true){
+                    this.$vs.notify({
+                        title: "Success",
+                        text: res.data.msg,
+                        color: 'success',
+                        position: 'top-right'
+                    });
+                    this.$vs.loading.close();
+                    this.getPayrolls(this.tax_id);
+                }
+            });
+        },
+
 
         addMoreFeild () {
             this.customField.push({name : 'additional_field[]',value : '',type: 'text'});

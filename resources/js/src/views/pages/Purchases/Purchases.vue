@@ -43,6 +43,7 @@
                         <vs-td>
                             <vs-button :to="'purchase-update/'+tr.purchase_id" size="small" type="border" icon-pack="feather" icon="icon-edit"></vs-button>
                             <vs-button :to="'purchase-detail/'+tr.purchase_id" size="small" icon-pack="feather" icon="icon-maximize-2" type="border"></vs-button>
+                            <vs-button @click="deleteRecord(data[index])" size="small" type="border" icon-pack="feather" icon="icon-trash-2"></vs-button>
                         </vs-td>
                     </vs-tr>
                 </template>
@@ -128,6 +129,26 @@ export default {
                     }else{
                         this.purchases[index].officer_confirmed = res.data.response; 
                     }
+            });
+        },
+
+        deleteRecord(obj){
+            this.$vs.loading();
+            var fd = new FormData();
+            fd.append('id', obj.purchase_id);
+            fd.append('customer_id', obj.customer_id);
+            fd.append('type', 'Purchase');
+            axios.post('delete-spp', fd).then(res=>{
+                if(res.data.status == true){
+                    this.$vs.notify({
+                        title: "Success",
+                        text: res.data.msg,
+                        color: 'success',
+                        position: 'top-right'
+                    });
+                    this.$vs.loading.close();
+                    this.getPurchases(this.tax_id);
+                }
             });
         },
 
