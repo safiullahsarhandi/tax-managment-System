@@ -788,11 +788,99 @@ class ApplicationController extends Controller {
 		}
 		$result = $admin->save();
 		$admins = Admin::all();
+		if ($admin->type == 'Officer') {
+
+			// sending notification to supervisor
+
+			// sending notification to officer
+			$notification = new Notification;
+			$notification->transmitted_for = $request->reports_to;
+			$notification->transmitted_by = session('admin.manager_id');
+			$notification->notification = 'New Officer Assigned';
+			$notification->description = 'new officer <strong>' . $admin->full_name . '</strong> has been added in your team by <strong>' . session('admin.full_name') . '</strong>:';
+			$notification->click_action = "/my-team";
+			$save = $notification->save();
+			$supervisor = Admin::where('manager_id', $request->reports_to)->first();
+			if ($save) {
+				$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
+
+				$fields = array(
+					// "content_available" => true,
+					"to" => $supervisor->token,
+					'priority' => 'high',
+					"data" => array(
+						"title" => $notification->notification,
+						"body" => $notification->description,
+						"icon" => "icon.png",
+						"click_action" => $notification->click_action,
+					),
+					"notification" => array(
+						"title" => $notification->notification,
+						"body" => $notification->description,
+						"icon" => "icon.png",
+						"click_action" => $notification->click_action,
+					),
+				);
+				$data_string = json_encode($fields);
+				$headers = array('Authorization: key=' . $serverKey, 'Content-Type: application/json');
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+				curl_setopt($ch, CURLOPT_POST, true);
+				curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+				$result = curl_exec($ch);
+				curl_close($ch);
+			}
+		} elseif ($admin->type == 'Supervisor' && session('admin.manager_id') != $admin->reports_to) {
+
+			// sending notification to admin
+			$notification = new Notification;
+			$notification->transmitted_for = $request->reports_to;
+			$notification->transmitted_by = session('admin.manager_id');
+			$notification->notification = 'New Supervisor Assigned';
+			$notification->description = 'new Supervisor <strong>' . $admin->full_name . '</strong> has been added in your team by <strong>' . session('admin.full_name') . '</strong>:';
+			$notification->click_action = "/my-team";
+			$save = $notification->save();
+			$admin = Admin::where('manager_id', $request->reports_to)->first();
+			if ($save) {
+				$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
+
+				$fields = array(
+					// "content_available" => true,
+					"to" => $admin->token,
+					'priority' => 'high',
+					"data" => array(
+						"title" => $notification->notification,
+						"body" => $notification->description,
+						"icon" => "icon.png",
+						"click_action" => $notification->click_action,
+					),
+					"notification" => array(
+						"title" => $notification->notification,
+						"body" => $notification->description,
+						"icon" => "icon.png",
+						"click_action" => $notification->click_action,
+					),
+				);
+				$data_string = json_encode($fields);
+				$headers = array('Authorization: key=' . $serverKey, 'Content-Type: application/json');
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+				curl_setopt($ch, CURLOPT_POST, true);
+				curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+				$result = curl_exec($ch);
+				curl_close($ch);
+			}
+		}
 		return response()->json(['status' => 'success', 'admins' => $admins], 200);
 	}
 
 	public function update_admin(Request $request) {
 		$admin = Admin::whereManagerId($request->id)->first();
+		$previousReportsTo = $admin->reports_to;
 		$admin->first_name = $request->first_name;
 		$admin->last_name = $request->last_name;
 		$admin->gender = $request->gender;
@@ -805,6 +893,7 @@ class ApplicationController extends Controller {
 			TaxCustomers::where('manager', $request->id)->update(['manager' => NULL]);
 		} elseif ($admin->type == 'Supervisor' && $request->role != 'Supervisor') {
 			TaxCustomers::where('supervisor', $request->id)->update(['supervisor' => NULL]);
+			Admin::where('reports_to', $request->id)->update(['reports_to' => NULL]);
 		}
 		if ($request->role == 'Admin') {
 			$admin->type = 1; // 1 means admin
@@ -818,6 +907,115 @@ class ApplicationController extends Controller {
 
 		}
 		$result = $admin->save();
+		if ($previousReportsTo != $request->reports_to) {
+			if ($admin->type == 'Officer') {
+
+				// sending notification to supervisor
+				$supervisors = Admin::whereIn('manager_id', [$request->reports_to, $previousReportsTo])->get();
+				foreach ($supervisors as $supervisor) {
+					$notification = new Notification;
+					$notification->transmitted_by = session('admin.manager_id');
+					if ($supervisor->manager_id == $previousReportsTo) {
+						$notification->transmitted_for = $supervisor->manager_id;
+						$notification->notification = 'Officer Removed';
+						$notification->description = 'Officer: <strong>' . $admin->full_name . '</strong> has been removed from your team by <strong>' . session('admin.full_name') . '</strong>:';
+					} else {
+						$notification->transmitted_for = $supervisor->manager_id;
+						$notification->notification = 'New Officer Assigned';
+						$notification->description = 'New officer <strong>' . $admin->full_name . '</strong> has been added in your team by <strong>' . session('admin.full_name') . '</strong>:';
+
+					}
+					$notification->click_action = "/my-team";
+					$save = $notification->save();
+
+					if ($save) {
+						$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
+
+						$fields = array(
+							// "content_available" => true,
+							"to" => $supervisor->token,
+							'priority' => 'high',
+							"data" => array(
+								"title" => $notification->notification,
+								"body" => $notification->description,
+								"icon" => "icon.png",
+								"click_action" => $notification->click_action,
+							),
+							"notification" => array(
+								"title" => $notification->notification,
+								"body" => $notification->description,
+								"icon" => "icon.png",
+								"click_action" => $notification->click_action,
+							),
+						);
+						$data_string = json_encode($fields);
+						$headers = array('Authorization: key=' . $serverKey, 'Content-Type: application/json');
+						$ch = curl_init();
+						curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+						curl_setopt($ch, CURLOPT_POST, true);
+						curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+						curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+						curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+						$result = curl_exec($ch);
+						curl_close($ch);
+					}
+
+				}
+			} elseif ($admin->type == 'Supervisor') {
+
+				// sending notification to admin
+				$admins = Admin::whereIn('manager_id', [$request->reports_to, $previousReportsTo])->get();
+				foreach ($admins as $admin) {
+					if ($admin->manager_id != session('admin.manager_id')) {
+						$notification = new Notification;
+						$notification->transmitted_by = session('admin.manager_id');
+						$notification->click_action = "/my-team";
+						if ($supervisor->manager_id == $previousReportsTo) {
+							$notification->transmitted_for = $supervisor->manager_id;
+							$notification->notification = 'Supervisor Removed';
+							$notification->description = 'Supervisor: <strong>' . $admin->full_name . '</strong> has been removed from your team by <strong>' . session('admin.full_name') . '</strong>:';
+						} else {
+							$notification->transmitted_for = $supervisor->manager_id;
+							$notification->notification = 'New Supervisor Assigned';
+							$notification->description = 'new Supervisor <strong>' . $admin->full_name . '</strong> has been added in your team by <strong>' . session('admin.full_name') . '</strong>:';
+						}
+						$save = $notification->save();
+						$admin = Admin::where('manager_id', $request->reports_to)->first();
+						if ($save) {
+							$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
+
+							$fields = array(
+								// "content_available" => true,
+								"to" => $admin->token,
+								'priority' => 'high',
+								"data" => array(
+									"title" => $notification->notification,
+									"body" => $notification->description,
+									"icon" => "icon.png",
+									"click_action" => $notification->click_action,
+								),
+								"notification" => array(
+									"title" => $notification->notification,
+									"body" => $notification->description,
+									"icon" => "icon.png",
+									"click_action" => $notification->click_action,
+								),
+							);
+							$data_string = json_encode($fields);
+							$headers = array('Authorization: key=' . $serverKey, 'Content-Type: application/json');
+							$ch = curl_init();
+							curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+							curl_setopt($ch, CURLOPT_POST, true);
+							curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+							curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+							curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+							$result = curl_exec($ch);
+							curl_close($ch);
+						}
+					}
+				}
+			}
+		}
 		$admin = Admin::with('reportingTo')->where('manager_id', $admin->manager_id)->latest('id')->first();
 		return response()->json(['status' => 'success', 'admin' => $admin], 200);
 	}

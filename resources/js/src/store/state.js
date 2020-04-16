@@ -18,7 +18,6 @@ const state = {
     theme: themeConfig.theme || 'light',
     navbarSearchAndPinList: navbarSearchAndPinList,
     AppActiveUser: {},
-    searchedData: {},
     faqs : '',
     themePrimaryColor: colors.primary,
 

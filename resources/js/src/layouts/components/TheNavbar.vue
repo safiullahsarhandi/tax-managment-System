@@ -78,10 +78,10 @@
                     <ul class="bordered-items">
                         <li @click="goToDestination(ntf)" v-for="(ntf,index) in notifications" :key="index" class="flex justify-between px-4 py-4 notification cursor-pointer">
                             <div class="flex items-start">
-                                <feather-icon :icon="'icon-message'" :svgClasses="[`text-primary`, 'stroke-current mr-1 h-6 w-6']"></feather-icon>
+                                <feather-icon :icon="ntf.is_checked?'EyeIcon':'EyeOffIcon'" :svgClasses="[ntf.is_checked?'text-primary':'text-dark', 'stroke-current mr-1 h-6 w-6']"></feather-icon>
                                 <div class="mx-2">
-                                    <span class="font-medium block notification-title" :class="[`text-primary`]">{{ ntf.notification }}</span>
-                                    <small>{{ ntf.description }}</small>
+                                    <span class="font-medium block notification-title" :class="[ntf.is_checked?'text-primary':'text-dark']">{{ ntf.notification }}</span>
+                                    <small :class="[{'text-dark':!ntf.is_checked}]">{{ ntf.description }}</small>
                                 </div>
                             </div>
                             <small class="mt-1 whitespace-no-wrap">{{ elapsedTime(ntf.created_at) }}</small>

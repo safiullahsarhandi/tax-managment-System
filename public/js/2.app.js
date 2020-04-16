@@ -1981,9 +1981,13 @@ var render = function() {
                                     [
                                       _c("feather-icon", {
                                         attrs: {
-                                          icon: "icon-message",
+                                          icon: ntf.is_checked
+                                            ? "EyeIcon"
+                                            : "EyeOffIcon",
                                           svgClasses: [
-                                            "text-primary",
+                                            ntf.is_checked
+                                              ? "text-primary"
+                                              : "text-dark",
                                             "stroke-current mr-1 h-6 w-6"
                                           ]
                                         }
@@ -1995,14 +1999,24 @@ var render = function() {
                                           {
                                             staticClass:
                                               "font-medium block notification-title",
-                                            class: ["text-primary"]
+                                            class: [
+                                              ntf.is_checked
+                                                ? "text-primary"
+                                                : "text-dark"
+                                            ]
                                           },
                                           [_vm._v(_vm._s(ntf.notification))]
                                         ),
                                         _vm._v(" "),
-                                        _c("small", [
-                                          _vm._v(_vm._s(ntf.description))
-                                        ])
+                                        _c(
+                                          "small",
+                                          {
+                                            class: [
+                                              { "text-dark": !ntf.is_checked }
+                                            ]
+                                          },
+                                          [_vm._v(_vm._s(ntf.description))]
+                                        )
                                       ])
                                     ],
                                     1
