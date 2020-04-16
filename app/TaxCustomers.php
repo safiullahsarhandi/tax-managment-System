@@ -36,4 +36,9 @@ class TaxCustomers extends Model {
 	public function officer() {
 		return $this->belongsTo(Admin::class, 'manager', 'manager_id');
 	}
+
+	public function owner()
+	{
+	    return $this->belongsTo(Owner::class, 'owner_id', 'owner_id');
+	}
 }

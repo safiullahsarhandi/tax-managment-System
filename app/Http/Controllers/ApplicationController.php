@@ -2250,7 +2250,7 @@ class ApplicationController extends Controller {
 		}
 
 		if ($type == 'supervisor') {
-			$taxCustomers = TaxCustomers::where('supervisor', $loginUser->manager_id)
+			$taxCustomers = TaxCustomers::with(['owner'])->where('supervisor', $loginUser->manager_id)
 				->orWhere('name_english', 'like', '%' . $query . '%')
 				->orWhere('name_khmer', 'like', '%' . $query . '%')
 				->orWhere('tax_card_num', 'like', '%' . $query . '%')
@@ -2370,7 +2370,7 @@ class ApplicationController extends Controller {
 		}
 
 		if ($type == 'officer') {
-			$taxCustomers = TaxCustomers::where('manager', $loginUser->manager_id)
+			$taxCustomers = TaxCustomers::with(['owner'])->where('manager', $loginUser->manager_id)
 				->orWhere('name_english', 'like', '%' . $query . '%')
 				->orWhere('name_khmer', 'like', '%' . $query . '%')
 				->orWhere('tax_card_num', 'like', '%' . $query . '%')
@@ -2490,7 +2490,7 @@ class ApplicationController extends Controller {
 		}
 
 		if ($type == 'admin') {
-			$taxCustomers = TaxCustomers::where('name_english', 'like', '%' . $query . '%')
+			$taxCustomers = TaxCustomers::with(['owner'])->where('name_english', 'like', '%' . $query . '%')
 				->orWhere('name_khmer', 'like', '%' . $query . '%')
 				->orWhere('tax_card_num', 'like', '%' . $query . '%')
 				->orWhere('tin_no', 'like', '%' . $query . '%')
