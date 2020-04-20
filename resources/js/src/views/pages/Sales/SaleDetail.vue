@@ -175,10 +175,12 @@ export default {
             openComments: false
         };
     },
-    created() {
+    async created() {
+        await this.getSale(this.$route.params.id);
+        localStorage.setItem('customer',this.sale.customer_id)
+        localStorage.setItem('currentDetail','/tax-collection/'+this.sale.tax_id);
         this.tax_id = this.$store.state.rootUrl.split('/')[2];
         this.getCustomer(localStorage.getItem('customer'));
-        this.getSale(this.$route.params.id);
         this.$store.dispatch('getAverageRate');
     },
     computed: {

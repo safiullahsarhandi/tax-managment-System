@@ -6,55 +6,55 @@
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
                             <input type="hidden" name="id" v-model="data.purchase_id" data-vv-scope="editform">
-                            <vs-input name="branch_name" v-validate="`required`" label-placeholder="Branch#/Name" v-model="data.branch_name" />
+                            <vs-input name="branch_name" data-vv-as="Branch Name" v-validate="`required`" label-placeholder="Branch#/Name" v-model="data.branch_name" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('branch_name')">{{errors.first('branch_name')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="tax_period" v-validate="`required`" label-placeholder="Tax Period" v-model="data.tax_period" />
+                            <vs-input name="tax_period" data-vv-as="Tax Period" v-validate="`required`" label-placeholder="Tax Period" v-model="data.tax_period" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('tax_period')">{{errors.first('tax_period')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="invoice_date" v-validate="`required`" label-placeholder="Invoice Date" v-model="data.invoice_date" />
+                            <vs-input name="invoice_date" data-vv-as="Invoice Date" v-validate="`required`" label-placeholder="Invoice Date" v-model="data.invoice_date" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('invoice_date')">{{errors.first('invoice_date')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="invoice_number" v-validate="`required`" label-placeholder="Invoice Number" v-model="data.invoice_num" />
+                            <vs-input name="invoice_num" data-vv-as="Invoice Number" v-validate="`required`" label-placeholder="Invoice Number" v-model="data.invoice_num" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('invoice_number')">{{errors.first('invoice_number')}}</span>
+                        <span class="text-danger" v-show="errors.has('invoice_num')">{{errors.first('invoice_num')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="supplier" v-validate="`required`" label-placeholder="Supplier" v-model="data.supplier" />
+                            <vs-input name="supplier"  data-vv-as="Supplier" v-validate="`required`" label-placeholder="Supplier" v-model="data.supplier" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('supplier')">{{errors.first('supplier')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="vat_tin" disabled label-placeholder="VAT-Tin" v-model="customer.tin_no" />
+                            <vs-input name="vat_tin" data-vv-as="VAT-TIN" disabled label-placeholder="VAT-Tin" v-model="customer.tin_no" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('vat_tin')">{{errors.first('vat_tin')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="good_desc" v-validate="`required`" label-placeholder="Description of good/services" v-model="data.description" />
+                            <vs-input name="description" data-vv-as="Description" v-validate="`required`" label-placeholder="Description of good/services" v-model="data.description" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('good_desc')">{{errors.first('good_desc')}}</span>
+                        <span class="text-danger" v-show="errors.has('description')">{{errors.first('description')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="quantity" v-validate="`required`" label-placeholder="Quantity" v-model="data.quantity" />
+                            <vs-input name="quantity" data-vv-as="Quantity" v-validate="`required`" label-placeholder="Quantity" v-model="data.quantity" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('quantity')">{{errors.first('quantity')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="non_taxable_purchases" v-validate="'decimal'" label-placeholder="Non-Taxable Purchases" v-model="non_taxable_purchases" />
+                            <vs-input name="non_taxable_purchases" data-vv-as="Non-Taxable Purchases" v-validate="'decimal'" label-placeholder="Non-Taxable Purchases" v-model="non_taxable_purchases" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('non_taxable_purchases')">{{errors.first('non_taxable_purchases')}}</span>
                     </vs-col>
@@ -64,7 +64,7 @@
                 <vs-row>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="taxable_value_local" v-validate="'decimal'" label-placeholder="Taxable Value" v-model="taxable_value_local" />
+                            <vs-input name="local_purchase_tax_val" v-validate="'decimal'" label-placeholder="Taxable Value" v-model="taxable_value_local" />
                         </vx-input-group>
                         <!-- <span class="text-danger" v-show="errors.has('taxable_value_local')">{{errors.first('taxable_value_local')}}</span> -->
                     </vs-col>
@@ -81,7 +81,7 @@
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <!-- <label>Imports</label> -->
                         <vx-input-group>
-                            <vs-input name="taxable_value_import" v-validate="'decimal'" label-placeholder="Taxable Value" v-model="taxable_value_import" />
+                            <vs-input name="imports_taxable_val" v-validate="'decimal'" label-placeholder="Taxable Value" v-model="taxable_value_import" />
                         </vx-input-group>
                         <!-- <span class="text-danger" v-show="errors.has('taxable_value_import')">{{errors.first('taxable_value_import')}}</span> -->
                     </vs-col>
@@ -101,15 +101,15 @@
                     </vs-col>
                 </vs-row>
                 <vs-row>
-                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                    <!-- <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="item_subject_taxes" v-validate="`required`" label-placeholder="Itesm subject to taxes:" v-model="data.subject" />
+                            <vs-input name="subject" v-validate="`required`" label-placeholder="Itesm subject to taxes:" v-model="data.subject" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('item_subject_taxes')">{{errors.first('item_subject_taxes')}}</span>
-                    </vs-col>
+                    </vs-col> -->
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="comments_3e_fii" label-placeholder="Comments (3E-Fii)" v-model="data.comments" />
+                            <vs-input name="comments" label-placeholder="Comments (3E-Fii)" v-model="data.comments" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('comments_3e_fii')">{{errors.first('comments_3e_fii')}}</span>
                     </vs-col>
@@ -121,9 +121,9 @@
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="comments_for_top" label-placeholder="Comments for ToP" v-model="data.top_comments" />
+                            <vs-input name="top_comments"  data-vv-as="Comments for ToP" label-placeholder="Comments for ToP" v-model="data.top_comments" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('comments_for_top')">{{errors.first('comments_for_top')}}</span>
+                        <span class="text-danger" v-show="errors.has('top_comments')">{{errors.first('top_comments')}}</span>
                     </vs-col>
                     <vs-col v-for="(field,index) in customField" :key="index" class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
@@ -206,7 +206,7 @@ export default {
 
         },
         addMoreFeild() {
-            this.customField.push({ name: 'additional_field[]', value: '', type: 'text' });
+            this.customField.push({ name: 'additional_fields[]', value: '', type: 'text' });
         },
         ...mapActions({
             update: 'purchases/updatePurchase',
@@ -227,7 +227,7 @@ export default {
                 if (purchase.additional_fields != null) {
                     if (purchase.additional_fields.length > 0) {
                         purchase.additional_fields.map(function(val, key) {
-                            self.customField.push({ name: 'additional_field[]', value: val, type: 'text' });
+                            self.customField.push({ name: 'additional_fields[]', value: val, type: 'text' });
                         });
                     }
                 }

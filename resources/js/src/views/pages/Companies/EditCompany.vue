@@ -14,9 +14,9 @@
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
             			<vx-input-group>
                         <input type="hidden" name="id" v-model="customer_id" data-vv-scope="editform">
-                        <vs-input name="name_eng" v-validate="`required`" label-placeholder="Name (English)" v-model="name_eng" />
+                        <vs-input name="name_english" v-validate="`required`" label-placeholder="Name (English)" v-model="name_eng" />
             			</vx-input-group>
-                        <span class="text-danger" v-show="errors.has('editform.name_eng')">{{errors.first('editform.name_eng')}}</span>
+                        <span class="text-danger" v-show="errors.has('editform.name_english')">{{errors.first('editform.name_english')}}</span>
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
@@ -26,15 +26,15 @@
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
             			<vx-input-group>
-                        <vs-input name="tax_id" v-validate="`required`" label-placeholder="Tax ID Card #" v-model="tax_id" />
+                        <vs-input name="tax_card_num" data-vv-as="Tax ID Card #" v-validate="`required`" label-placeholder="Tax ID Card #" v-model="tax_id" />
             			</vx-input-group>
-                        <span class="text-danger" v-show="errors.has('editform.tax_id')">{{errors.first('editform.tax_id')}}</span>
+                        <span class="text-danger" v-show="errors.has('editform.tax_card_num')">{{errors.first('editform.tax_card_num')}}</span>
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="tin_num" v-validate="`required`" label-placeholder="TIN #" v-model="tin_num" />
+                        <vs-input name="tin_no" data-vv-as="TIN #" v-validate="`required`" label-placeholder="TIN #" v-model="tin_num" />
             			</vx-input-group>
-                        <span class="text-danger" v-show="errors.has('editform.tin_num')">{{errors.first('editform.tin_num')}}</span>
+                        <span class="text-danger" v-show="errors.has('editform.tin_no')">{{errors.first('editform.tin_no')}}</span>
             		</vs-col>
             		<vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
             			<vx-input-group>
@@ -200,7 +200,7 @@
         },
 		methods: {
 		  addMoreFeild () {
-		    this.customField.push({name : 'additional_field[]',value : '',type: 'text'});
+		    this.customField.push({name : 'additional_fields[]',value : '',type: 'text'});
 		  },
                ...mapActions({
                   update: 'customers/updateCustomer',
@@ -237,7 +237,7 @@
                     if(customer.additional_fields != null){
                         if(customer.additional_fields.length > 0){
                             customer.additional_fields.map(function(val, key) {
-                                self.customField.push({name : 'additional_field[]',value : val,type: 'text'});
+                                self.customField.push({name : 'additional_fields[]',value : val,type: 'text'});
                            });
                         }            
                     }

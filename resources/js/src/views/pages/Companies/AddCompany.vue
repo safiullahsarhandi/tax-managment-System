@@ -39,7 +39,7 @@
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group >
-                            <vs-select style="width: 100%;" v-validate="'required'" name="owner" label="Customer" placeholder="Select Customer"  v-model="owner">
+                            <vs-select style="width: 100%;" v-validate="'required'" name="owner_id" label="Customer" placeholder="Select Customer"  v-model="owner">
                                 <vs-select-item v-for="(owner,index) in owners" :key="index"  :text="owner.name_english" :value="owner.owner_id"></vs-select-item>
                             </vs-select>
                             <span class="text-danger" v-show="errors.has('status')">{{errors.first('status')}}</span>
@@ -47,105 +47,105 @@
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="name_eng" v-validate="`required`" :label-placeholder="lang=='english'?'Name (English)':'ឈ្មោះ (អង់គ្លេស)'" v-model="name_eng" />
+                            <vs-input name="name_english" :data-vv-as="lang=='english'?'Name (English)':'ឈ្មោះ (អង់គ្លេស)'" v-validate="`required`" :label-placeholder="lang=='english'?'Name (English)':'ឈ្មោះ (អង់គ្លេស)'" v-model="name_eng" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('name_eng')">{{errors.first('name_eng')}}</span>
+                        <span class="text-danger" v-show="errors.has('name_english')">{{errors.first('name_english')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="name_khmer" v-validate="`required`" :label-placeholder="lang=='english'?'Name (Khmer)':'ឈ្មោះ (ខ្មែរ)'" v-model="name_khmer" />
+                            <vs-input name="name_khmer" :data-vv-as="lang=='english'?'Name (Khmer)':'ឈ្មោះ (ខ្មែរ)'" v-validate="`required`" :label-placeholder="lang=='english'?'Name (Khmer)':'ឈ្មោះ (ខ្មែរ)'" v-model="name_khmer" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('name_khmer')">{{errors.first('name_khmer')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="tax_id" v-validate="`required`" :label-placeholder="lang=='english'?'Tax ID Card #':'អត្តសញ្ញាណប័ណ្ណពន្ធ #'" v-model="tax_id" />
+                            <vs-input name="tax_card_num" :data-vv-as="lang=='english'?'Tax ID Card #':'អត្តសញ្ញាណប័ណ្ណពន្ធ #'" v-validate="`required`" :label-placeholder="lang=='english'?'Tax ID Card #':'អត្តសញ្ញាណប័ណ្ណពន្ធ #'" v-model="tax_id" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('tax_id')">{{errors.first('tax_id')}}</span>
+                        <span class="text-danger" v-show="errors.has('tax_card_num')">{{errors.first('tax_card_num')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="tin_num" v-validate="`required`" :label-placeholder="lang=='english'?'TIN #':'ធីន #'" v-model="tin_num" />
+                            <vs-input name="tin_no" :data-vv-as="lang=='english'?'TIN #':'ធីន #'" v-validate="`required`" :label-placeholder="lang=='english'?'TIN #':'ធីន #'" v-model="tin_num" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('tin_num')">{{errors.first('tin_num')}}</span>
+                        <span class="text-danger" v-show="errors.has('tin_no')">{{errors.first('tin_no')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="incorporation_date" v-validate="`required`" :label-placeholder="lang=='english'?'Date of company incorporated':'កាលបរិច្ឆេទនៃការបញ្ចូលក្រុមហ៊ុន'" v-model="incorporation_date" />
+                            <vs-input name="incorporation_date" :data-vv-as="lang=='english'?'Date of company incorporated':'កាលបរិច្ឆេទនៃការបញ្ចូលក្រុមហ៊ុន'" v-validate="`required`" :label-placeholder="lang=='english'?'Date of company incorporated':'កាលបរិច្ឆេទនៃការបញ្ចូលក្រុមហ៊ុន'" v-model="incorporation_date" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('incorporation_date')">{{errors.first('incorporation_date')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="address" v-validate="`required`" :label-placeholder="lang=='english'?'Address':'អាសយដ្ឋាន'" v-model="address" />
+                            <vs-input name="address" v-validate="`required`" :data-vv-as="lang=='english'?'Address':'អាសយដ្ឋាន'" :label-placeholder="lang=='english'?'Address':'អាសយដ្ឋាន'" v-model="address" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('address')">{{errors.first('address')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="street" v-validate="`required`" :label-placeholder="lang=='english'?'Street':'ផ្លូវ'" v-model="street" />
+                            <vs-input name="street" :data-vv-as="lang=='english'?'Street':'ផ្លូវ'" v-validate="`required`" :label-placeholder="lang=='english'?'Street':'ផ្លូវ'" v-model="street" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('street')">{{errors.first('street')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="group" v-validate="`required`" :label-placeholder="lang=='english'?'Group':'ក្រុម'" v-model="group" />
+                            <vs-input name="group" :data-vv-as="lang=='english'?'Group':'ក្រុម'" v-validate="`required`" :label-placeholder="lang=='english'?'Group':'ក្រុម'" v-model="group" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('group')">{{errors.first('group')}}</span>
                     </vs-col>
 
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="village" v-validate="`required`" :label-placeholder="lang=='english'?'Village':'ភូមិ'" v-model="village" />
+                            <vs-input name="village" :data-vv-as="lang=='english'?'Village':'ភូមិ'" v-validate="`required`" :label-placeholder="lang=='english'?'Village':'ភូមិ'" v-model="village" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('village')">{{errors.first('village')}}</span>
                     </vs-col>
 
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="sangkat" v-validate="`required`" :label-placeholder="lang=='english'?'Sangkat':'វិបត្តិ'" v-model="sangkat" />
+                            <vs-input name="sangkat" :data-vv-as="lang=='english'?'Sangkat':'វិបត្តិ'" v-validate="`required`" :label-placeholder="lang=='english'?'Sangkat':'វិបត្តិ'" v-model="sangkat" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('sangkat')">{{errors.first('sangkat')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="district" v-validate="`required`" :label-placeholder="lang=='english'?'District':'ស្រុក'" v-model="district" />
+                            <vs-input name="district" v-validate="`required`" :data-vv-as="lang=='english'?'District':'ស្រុក'" :label-placeholder="lang=='english'?'District':'ស្រុក'" v-model="district" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('district')">{{errors.first('district')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="province" v-validate="`required`" :label-placeholder="lang=='english'?'Province':'ខេត្ត'" v-model="province" />
+                            <vs-input name="province" v-validate="`required`" :data-vv-as="lang=='english'?'Province':'ខេត្ត'" :label-placeholder="lang=='english'?'Province':'ខេត្ត'" v-model="province" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('province')">{{errors.first('province')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="muncipality" v-validate="`required`" :label-placeholder="lang=='english'?'Muncipality':'ក្រុង'" v-model="muncipality" />
+                            <vs-input name="muncipality" v-validate="`required`" :data-vv-as="lang=='english'?'Muncipality':'ក្រុង'" :label-placeholder="lang=='english'?'Muncipality':'ក្រុង'" v-model="muncipality" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('muncipality')">{{errors.first('muncipality')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="tel" v-validate="`required`" :label-placeholder="lang=='english'?'Tel.':'ទូរស័ព្ទ'" v-model="tel" />
+                            <vs-input name="telephone" v-validate="`required`" :data-vv-as="lang=='english'?'Tel.':'ទូរស័ព្ទ'" :label-placeholder="lang=='english'?'Tel.':'ទូរស័ព្ទ'" v-model="tel" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('tel')">{{errors.first('tel')}}</span>
+                        <span class="text-danger" v-show="errors.has('telephone')">{{errors.first('telephone')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                             <vx-input-group>
-                                <vs-input name="e_phone" data-vv-as="ePhone" v-validate="`required`" :label-placeholder="lang=='english'?'ePhone':'ទូរស័ព្ទ'" v-model="ePhone" />
+                                <vs-input name="e_phone" :data-vv-as="lang=='english'?'ePhone':'ទូរស័ព្ទ'" v-validate="`required`" :label-placeholder="lang=='english'?'ePhone':'ទូរស័ព្ទ'" v-model="ePhone" />
                             </vx-input-group>
                             <span class="text-danger" v-show="errors.has('e_phone')">{{errors.first('e_phone')}}</span>
                         </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="email" type="email" v-validate="`required`" :label-placeholder="lang=='english'?'Email':'អ៊ីមែល'" v-model="email" />
+                            <vs-input name="email"  type="email" v-validate="`required`" :data-vv-as="lang=='english'?'Email':'អ៊ីមែល'" :label-placeholder="lang=='english'?'Email':'អ៊ីមែល'" v-model="email" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('email')">{{errors.first('email')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="industry" v-validate="`required`" :label-placeholder="lang=='english'?'Industry / Sector':'ឧស្សាហកម្ម / វិស័យ'" v-model="industry" />
+                            <vs-input name="industry" v-validate="`required`" :data-vv-as="lang=='english'?'Industry / Sector':'ឧស្សាហកម្ម / វិស័យ'" :label-placeholder="lang=='english'?'Industry / Sector':'ឧស្សាហកម្ម / វិស័យ'" v-model="industry" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('industry')">{{errors.first('industry')}}</span>
                     </vs-col>
@@ -276,7 +276,7 @@ export default {
             })
         },
         addMoreFeild() {
-            this.customField.push({ name: 'additional_field[]', value: '', type: 'text' });
+            this.customField.push({ name: 'additional_fields[]', value: '', type: 'text' });
         },
         ...mapActions({
             submit: 'customers/addCustomer',
@@ -290,7 +290,7 @@ export default {
                     var fd = new FormData(this.$refs.addCustomer);
                     fd.append('manager', this.manager);
                     fd.append('customer_status',this.customer_status);
-                    fd.append('owner',this.owner);
+                    fd.append('owner_id',this.owner);
                     this.createdBy = (this.$store.getters.userType != 'Officer') ? localStorage.getItem('admin') : this.manager;
                     fd.append('created_by', this.createdBy);
                     this.submit(fd).then(res => {

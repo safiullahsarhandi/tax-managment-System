@@ -22,8 +22,8 @@ export default{
 		});
 	},
 
-	getPurchase({commit},id){
-		axios.post('get-purchase',{id : id}).then(res=>{
+	async getPurchase({commit},id){
+		await axios.post('get-purchase',{id : id}).then(res=>{
 			commit('setPurchase',res.data.purchase)
 		});
 	},	

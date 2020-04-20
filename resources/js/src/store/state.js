@@ -6,6 +6,8 @@ import colors from '@/../themeConfig.js'
 const state = {
     comments : [],
     notifications : [],
+    allNotifications : [],
+    allNotificationsCount : 0,
     totalNotifications : 0,
     averageRate : 0,
     rootUrl : '/',

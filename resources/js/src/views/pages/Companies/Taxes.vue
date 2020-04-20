@@ -2,7 +2,9 @@
     <div>
         <vx-card title="List of tax services" subtitle="The List of Taxes contains currently assigned taxes of customer Or those which are delivered succesfully">
             <template slot="actions">
-                <vs-button type="border" v-if="$store.getters.userType != 'Admin' || $store.getters.userType != 'Super Admin'" @click="addTax()" icon-pack="feather" icon="icon-plus"></vs-button>
+                
+                <vs-button type="border" v-if="$store.getters.userType == 'Officer' || $store.getters.userType == 'Supervisor'" @click="addTax()" icon-pack="feather" icon="icon-plus"></vs-button>
+                
             </template>
             <vs-table search pagination :data="taxes">
                 <template slot="thead">
@@ -29,7 +31,7 @@
                         <!-- <vs-td>{{tr.officers_count}}</vs-td> -->
                         <vs-td>{{tr.status == 0? 'Work in progress':tr.status == 1?'Review':tr.status == 2?'Approve':tr.status == 3?'Client\'s Confirmation':tr.status == 4?'Tax Paid':tr.status == 5?'Submitted':tr.status == 6?'Scanned':'Released'}}</vs-td>
                         <vs-td>
-                            <vs-button v-if="$store.getters.userType != 'Admin' || $store.getters.userType != 'Super Admin'" size="small" type="border" icon-pack="feather" icon="icon-edit" @click="taxEdit(tr.tax_id)"></vs-button>
+                            <vs-button v-if="$store.getters.userType == 'Officer' || $store.getters.userType == 'Supervisor'" size="small" type="border" icon-pack="feather" icon="icon-edit" @click="taxEdit(tr.tax_id)"></vs-button>
                             <vs-button size="small" type="border" icon-pack="feather" icon="icon-maximize-2" :to="'/tax-collection/'+tr.tax_id"></vs-button>
                         </vs-td>
                     </vs-tr>

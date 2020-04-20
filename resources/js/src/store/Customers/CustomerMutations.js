@@ -15,5 +15,10 @@ export default {
 	updateOwner(state,data){
 		let index = _.findIndex(state.owners,(o)=>{ return data.owner_id == o.owner_id}); 
 		Vue.set(state.owners,index,data);
+	},
+	setLogs(state,data){
+
+		state.logs = data;
+
 	}
 }

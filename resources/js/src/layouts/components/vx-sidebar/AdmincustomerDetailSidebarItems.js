@@ -28,17 +28,17 @@ export default [
         icon: "UsersIcon",
         isMain : false,
         submenu: [{
-            url: "/add-employee",
-            name: "Add Employee",
-            slug: "add-employee",
-            icon: "UserIcon",
-            target : '_blank',
-        },{
             url: "/employees-list",
             name: "List Of Employees",
             slug: "employees-list",
             icon: "UserIcon",
         }],
+    },
+    {
+        url: "/company-log",
+        name: "Company Log",
+        slug: "CompanyLog",
+        icon: "ActivityIcon",
     },
     /*{
         url: "/",

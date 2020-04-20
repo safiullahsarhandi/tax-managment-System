@@ -1,11 +1,3 @@
-<!-- =========================================================================================
-    File Name: Main.vue
-    Description: Main layout
-    ----------------------------------------------------------------------------------------
-    Item Name: Vuesax Admin - VueJS Dashboard Admin Template
-    Author: Pixinvent
-    Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
 
 
 <template>
@@ -85,6 +77,7 @@ import TheNavbar from '../components/TheNavbar.vue';
 import TheFooter from '../components/TheFooter.vue';
 import themeConfig from '@/../themeConfig.js';
 import sidebarItems from "@/layouts/components/vx-sidebar/customerDetailSidebarItems.js";
+import adminSidebarItems from "@/layouts/components/vx-sidebar/AdmincustomerDetailSidebarItems.js";
 import BackToTop from 'vue-backtotop'
 
 export default {
@@ -97,7 +90,7 @@ export default {
             routerTransition: themeConfig.routerTransition || 'none',
             isNavbarDark: false,
             routeTitle: this.$route.meta.pageTitle,
-            sidebarItems: sidebarItems,
+            sidebarItems: [],
             disableCustomizer: themeConfig.disableCustomizer,
             windowWidth: window.innerWidth, //width of windows
             hideScrollToTop: themeConfig.hideScrollToTop,
@@ -190,11 +183,20 @@ export default {
     },
     created() {
          var self = this;
-        setTimeout(function(){
-            if (self.$store.getters.userType != 'Admin' || self.$store.getters.userType != 'Super Admin') {
-            self.sidebarItems.splice(3, 1);
-        }
-    })
+         if(this.$store.getters.userType == 'Officer' || this.$store.getters.userType == 'Supervisor'){
+            this.sidebarItems = sidebarItems;
+         }else{
+            this.sidebarItems = adminSidebarItems;
+
+         }
+    //     setTimeout(function(){
+    //         console.log(/*self.$store.getters.userType === 'Super Admin'*/);
+    //         if ($store.getters.userType == 'Officer' || $store.getters.userType == 'Supervisor') {
+    //         self.sidebarItems.splice(3, 1);
+    //     }else{
+
+    //     }
+    // },1)
         this.setSidebarWidth();
         if(this.navbarColor == "#fff" && this.isThemeDark) {
             this.updateNavbarColor("#10163a")

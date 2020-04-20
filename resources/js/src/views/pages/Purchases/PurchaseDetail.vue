@@ -213,10 +213,14 @@ export default {
             openComments: false
         };
     },
-    created() {
-        this.tax_id = this.$store.state.rootUrl.split('/')[2];
-        this.getCustomer(localStorage.getItem('customer'));
-        this.getPurchase(this.$route.params.id);
+    async created() {
+        await this.getPurchase(this.$route.params.id);
+
+        localStorage.setItem('customer',this.purchase.customer_id)
+        localStorage.setItem('currentDetail','/tax-collection/'+this.purchase.tax_id);
+
+        this.tax_id = this.purchase.tax_id;
+        this.getCustomer(this.purchase.customer_id);
         this.$store.dispatch('getAverageRate');
     },
     computed: {

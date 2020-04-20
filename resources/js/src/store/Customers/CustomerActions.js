@@ -83,5 +83,9 @@ export default{
 			})
 			commit('setCustomerStatus',{customer_id : data.customer_id,status : data.status});
 		});
-	},	
+	},
+	async getLogs({commit},data){
+        let gettingLogs = await axios.get('get-customer-logs',{params : {customer_id : data.customer_id} });
+        commit('setLogs',gettingLogs.data.logs);
+    }
 }
