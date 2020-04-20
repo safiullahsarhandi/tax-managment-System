@@ -11,6 +11,8 @@ use App\Tax;
 use App\TaxCustomers;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Parameter;
+use PHPExcel_Style_Alignment;
 
 class ExportController extends Controller {
 	//
@@ -67,12 +69,49 @@ class ExportController extends Controller {
 			return ['Employee Name (English)' => $payroll->employee->name_english, 'Employee Name (Khmer)' => $payroll->employee->name_khmer, 'NSSF NO' => $payroll->employee->nssf_num, 'Employee NO' => $payroll->employee->employee_num, 'Basic Salary' => $payroll->basic_salary, 'Basic Salary' => $payroll->bonus, 'Over Time' => $payroll->over_time, 'Commissions' => $payroll->commissions, 'Seniority Payment' => $payroll->seniority_payment, 'Severance Pay' => $payroll->severance_pay, 'Maternity' => $payroll->maternity_leave, 'Paid Annual Leave' => $payroll->paid_annual_leave, 'Food Allowance' => $payroll->food_allowance, 'Transport Allowance' => $payroll->transport_allowance, 'Other Allowance' => $payroll->others, 'Deduction Advance' => $payroll->deduction_advance, 'Salary Adjustment' => $payroll->salary_adjusment];
 		});
 
-		Excel::create($customer->name_english . '-tax-' . $tax->title . '-payrolls', function ($excel) use ($tax, $payrolls) {
-			$excel->sheet($tax->title . ' Payrolls', function ($sheet) use ($payrolls) {
+		Excel::create($customer->name_english . '-tax-' . $tax->title . '-payrolls', function ($excel) use ($tax, $payrolls, $customer) {
+			$excel->sheet($tax->title . ' Payrolls', function ($sheet) use ($payrolls, $customer) {
 				if (count($payrolls) == 0) {
 					$sheet->prependRow(['Employee Name (English)', 'Employee Name (Khmer)', 'NSSF NO', 'Employee NO', 'Basic Salary', 'Basic Salary', 'Over Time', 'Commissions', 'Seniority Payment', 'Severance Pay', 'Maternity', 'Paid Annual Leave', 'Food Allowance', 'Transport Allowance', 'Other Allowance', 'Deduction Advance', 'Salary Adjustment']);
 				}
+				$hr_centre = array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+				$adress = $customer->adress.', '.$customer->street.', '.$customer->muncipality.', '.$customer->sangkat.', '.$customer->district.', '.$customer->province.', '.$customer->group;
+				$eng_adress = 'Address:​​ '. $adress;
+				$khmr_adress = 'អាសយដ្ឋានៈ​​ '. $adress;
+
+				$tin = 'VAT TIN: '.$customer->tin_no;
+				$tin_khmer = 'លេខអត្តសញ្ញាណកម្មអតបៈ '.$customer->tin_no;
+
+				$com_name = $customer->owner!=null?$customer->owner['name_english']:'No Name';
+				$com_name_khmr = $customer->owner!=null?$customer->owner['name_khmer']:'គ្មាន​ឈ្មោះ';
+				
+				$company_name = 'Company Name: '.$com_name;
+				$company_name_khmer = 'នាមករណ៍សហគ្រាស: '.$com_name_khmr;
+				
 				$sheet->getStyle('A1:Q1')->getFont()->setBold(true);
+				$sheet->prependRow([]);
+
+				$sheet->prependRow([$eng_adress]);
+				$sheet->prependRow([$khmr_adress]);
+				$sheet->prependRow([$tin]);
+				$sheet->prependRow([$tin_khmer]);
+				$sheet->prependRow([$company_name]);
+				$sheet->prependRow([$company_name_khmer]);
+
+				$sheet->prependRow(['For Feburary 2019']);
+				$sheet->prependRow(['សំរាប់ ខែ កុម្ភៈ ឆ្នាំ 2019']);
+				$sheet->prependRow(['SALARY TAX']);
+				$sheet->prependRow(['ពន្ធកាត់ទុកលើប្រាក់បៀវត្ស']);
+
+				for ($i=1; $i <= 11; $i++) {
+					$val = 'A'.$i.':Q'.$i; 
+					$sheet->mergeCells($val);
+				}
+				for ($i=1; $i <= 4; $i++) {
+					$val = 'A'.$i.':Q'.$i; 
+					$sheet->getStyle($val)->getAlignment()->applyFromArray($hr_centre);
+				}
 				$sheet->fromArray($payrolls);
 			});
 		})->export('xlsx');
@@ -80,18 +119,55 @@ class ExportController extends Controller {
 	}
 
 	public function export_purchases($customer_id, $tax_id) {
-		$customer = TaxCustomers::whereCustomerId($customer_id)->first();
+		$customer = TaxCustomers::with(['owner'])->whereCustomerId($customer_id)->first();
 		$tax = Tax::whereTaxId($tax_id)->first();
 		$purchases = Purchases::with('created_by')->where('tax_id', $tax_id)->get()->map(function ($purchase) {
 			return ['Branch Name' => $purchase->branch_name, 'Tax Period' => $purchase->tax_period, 'Invoice Date' => $purchase->invoice_date, 'Invoice Number' => $purchase->invoice_num, 'Supplier' => $purchase->supplier, 'Goods Description' => $purchase->description, 'Quantity' => $purchase->quantity, 'Non Taxable Purchases' => $purchase->non_taxable_purchases, 'Local Purchase (Taxable Value)' => $purchase->local_purchase_tax_val, 'Imports (Taxable Value)' => $purchase->imports_taxable_val];
 		});
 
-		Excel::create($customer->name_english . '-tax-' . $tax->title . '-purchases', function ($excel) use ($tax, $purchases) {
-			$excel->sheet($tax->title . ' purchases', function ($sheet) use ($purchases) {
+		Excel::create($customer->name_english . '-tax-' . $tax->title . '-purchases', function ($excel) use ($tax, $purchases, $customer) {
+			$excel->sheet($tax->title . ' purchases', function ($sheet) use ($purchases, $customer) {
 				if (count($purchases) == 0) {
 					$sheet->prependRow(['Branch Name', 'Tax Period', 'Invoice Date', 'Invoice Number', 'Supplier', 'Goods Description', 'Quantity', 'Non Taxable Purchases', 'Local Purchase (Taxable Value)', 'Imports (Taxable Value)']);
 				}
+				$hr_centre = array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+				$adress = $customer->adress.', '.$customer->street.', '.$customer->muncipality.', '.$customer->sangkat.', '.$customer->district.', '.$customer->province.', '.$customer->group;
+				$eng_adress = 'Address:​​ '. $adress;
+				$khmr_adress = 'អាសយដ្ឋានៈ​​ '. $adress;
+
+				$tin = 'VAT TIN: '.$customer->tin_no;
+				$tin_khmer = 'លេខអត្តសញ្ញាណកម្មអតបៈ '.$customer->tin_no;
+
+				$com_name = $customer->owner!=null?$customer->owner['name_english']:'No Name';
+				$com_name_khmr = $customer->owner!=null?$customer->owner['name_khmer']:'គ្មាន​ឈ្មោះ';
+				
+				$company_name = 'Company Name: '.$com_name;
+				$company_name_khmer = 'នាមករណ៍សហគ្រាស: '.$com_name_khmr;
+				
 				$sheet->getStyle('A1:J1')->getFont()->setBold(true);
+				$sheet->prependRow([]);
+
+				$sheet->prependRow([$eng_adress]);
+				$sheet->prependRow([$khmr_adress]);
+				$sheet->prependRow([$tin]);
+				$sheet->prependRow([$tin_khmer]);
+				$sheet->prependRow([$company_name]);
+				$sheet->prependRow([$company_name_khmer]);
+
+				$sheet->prependRow(['For Feburary 2019']);
+				$sheet->prependRow(['សំរាប់ ខែ កុម្ភៈ ឆ្នាំ 2019']);
+				$sheet->prependRow(['PURCHASE JOURNAL']);
+				$sheet->prependRow(['ទិន្នានុប្បវត្តិទិញ']);
+
+				for ($i=1; $i <= 11; $i++) {
+					$val = 'A'.$i.':J'.$i; 
+					$sheet->mergeCells($val);
+				}
+				for ($i=1; $i <= 4; $i++) {
+					$val = 'A'.$i.':J'.$i; 
+					$sheet->getStyle($val)->getAlignment()->applyFromArray($hr_centre);
+				}
 				$sheet->fromArray($purchases);
 			});
 		})->export('xlsx');
@@ -105,12 +181,52 @@ class ExportController extends Controller {
 			return ['Account Code' => $sale->account_code, 'Account Description' => $sale->account_description, 'Account Reference' => $sale->accounting_reference, 'Signature Date' => $sale->signature_date, 'Branch Name' => $sale->branch_name, 'Tax Period' => $sale->tax_period, 'Invoice Date' => $sale->invoice_date, 'Invoice Number' => $sale->invoice_num, 'Description' => $sale->description, 'Quantity' => $sale->quantity, 'Non Taxable sales' => $sale->non_taxable_sales, 'Sales to taxable person (Value)' => $sale->taxable_person_sales, 'Sales to Consumer (Value)' => $sale->cust_sales];
 		});
 
-		Excel::create($customer->name_english . '-tax-' . $tax->title . '-sales', function ($excel) use ($tax, $sales) {
-			$excel->sheet($tax->title . ' sales', function ($sheet) use ($sales) {
+		Excel::create($customer->name_english . '-tax-' . $tax->title . '-sales', function ($excel) use ($tax, $sales, $customer) {
+			$excel->sheet($tax->title . ' sales', function ($sheet) use ($sales, $customer) {
 				if (count($sales) == 0) {
 					$sheet->prependRow(['Account Code', 'Account Description', 'Account Reference', 'Signature Date', 'Branch Name', 'Tax Period', 'Invoice Date', 'Invoice Number', 'Description', 'Quantity', 'Non Taxable sales', 'Sales to taxable person (Value)', 'Sales to Consumer (Value)']);
 				}
-				$sheet->getStyle('A1:M1')->getFont()->setBold(true);
+
+				$hr_centre = array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+				$adress = $customer->adress.', '.$customer->street.', '.$customer->muncipality.', '.$customer->sangkat.', '.$customer->district.', '.$customer->province.', '.$customer->group;
+				$eng_adress = 'Address:​​ '. $adress;
+				$khmr_adress = 'អាសយដ្ឋានៈ​​ '. $adress;
+
+				$tin = 'VAT TIN: '.$customer->tin_no;
+				$tin_khmer = 'លេខអត្តសញ្ញាណកម្មអតបៈ '.$customer->tin_no;
+
+				$com_name = $customer->owner!=null?$customer->owner['name_english']:'No Name';
+				$com_name_khmr = $customer->owner!=null?$customer->owner['name_khmer']:'គ្មាន​ឈ្មោះ';
+				
+				$company_name = 'Company Name: '.$com_name;
+				$company_name_khmer = 'នាមករណ៍សហគ្រាស: '.$com_name_khmr;
+				
+				$sheet->getStyle('A1:M1')->getFont()->setBold(true);				
+				$sheet->prependRow([]);
+
+				$sheet->prependRow([$eng_adress]);
+				$sheet->prependRow([$khmr_adress]);
+				$sheet->prependRow([$tin]);
+				$sheet->prependRow([$tin_khmer]);
+				$sheet->prependRow([$company_name]);
+				$sheet->prependRow([$company_name_khmer]);
+
+				$sheet->prependRow(['For Feburary 2019']);
+				$sheet->prependRow(['សំរាប់ ខែ កុម្ភៈ ឆ្នាំ 2019']);
+				$sheet->prependRow(['SALE JOURNAL']);
+				$sheet->prependRow(['ទិន្នានុប្បវត្តិលក់']);
+
+				for ($i=1; $i <= 11; $i++) {
+					$val = 'A'.$i.':M'.$i; 
+					$sheet->mergeCells($val);
+				}
+				for ($i=1; $i <= 4; $i++) {
+					$val = 'A'.$i.':M'.$i; 
+					$sheet->getStyle($val)->getAlignment()->applyFromArray($hr_centre);
+				}
+
+				
 				$sheet->fromArray($sales);
 			});
 		})->export('xlsx');
@@ -128,5 +244,23 @@ class ExportController extends Controller {
 				$sheet->fromArray($managers);
 			});
 		})->export('xlsx');
+	}
+
+	public function export_tax_parameters() {
+
+		$parameter = Parameter::latest('id')->get()->map(function ($params) {
+			return ['Khmer Description' => $params->khmer_description, 'English Description' => $params->english_description, 'Tax Code' => $params->tax_code, 'Rate' => $params->rate, 'Base Tax' => $params->base_tax, 'Tax Type' => $params->tax_type, 'Effective Date' => $params->effective_date, 'Minimum Amount' => $params->amount_min, 'Maximum Amount' => $params->amount_max, 'Remarks' => $params->remarks];
+		});
+		Excel::create('Tax Parameters', function ($excel) use ($parameter) {
+			$excel->sheet('Tax Parameters', function ($sheet) use ($parameter) {
+				if (count($parameter) == 0) {
+					$sheet->prependRow(['Khmer Description', 'English Description', 'Tax Code', 'Rate', 'Base Tax', 'Tax Type', 'Effective Date', 'Minimum Amount', 'Maximum Amount', 'Remarks']);
+				}
+
+				$sheet->getStyle('A1:J1')->getFont()->setBold(true);
+				$sheet->fromArray($parameter);
+			});
+		})->export('xlsx');
+
 	}
 }

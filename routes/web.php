@@ -146,5 +146,8 @@ Route::group(['prefix' => ''], function () {
 	Route::get('testingGoogleAuth', 'ApplicationController@testingGoogleAuth');
 
 	Route::post('delete-spp', 'ApplicationController@deleteSpp');
+
+	Route::get('export-tax-parameters', 'ExportController@export_tax_parameters');
+
 });
 Route::get('/{any}', 'ApplicationController')->where('any', '.*');
