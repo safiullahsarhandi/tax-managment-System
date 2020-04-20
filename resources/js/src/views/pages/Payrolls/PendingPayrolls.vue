@@ -21,7 +21,9 @@
                         <vs-td :data="tr.employee.nssf_num">{{tr.employee.nssf_num}}</vs-td>
                         <vs-td>
                                 {{tr.officer_confirmation}}
-                            <!-- {{tr.officer_confirmed?!tr.supervisor_confirmed?'submitted by Officer but not Approved by supervisor':!tr.management_confirmed?'Approved By supervisor But Not Approved By Admin':"Approved By Admin":'Not submitted By Officer' }} --></vs-td>
+                            <!-- {{tr.officer_confirmed?!tr.supervisor_confirmed?'submitted by Officer but not Approved by supervisor':!tr.management_confirmed?'Approved By supervisor But Not Approved By Admin':"Approved By Admin":'Not submitted By Officer' }} -->
+                                
+                        </vs-td>
                         <vs-td>
                             <vs-switch/>
                         </vs-td>
