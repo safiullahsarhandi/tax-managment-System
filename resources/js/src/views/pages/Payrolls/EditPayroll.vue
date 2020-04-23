@@ -79,28 +79,28 @@
                 <vs-row>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="basic_salary" v-validate="`required`" label-placeholder="Basic Salary" v-model="data.basic_salary" />
+                        <vs-input name="basic_salary" data-vv-as="Basic Salary" v-validate="`required`" label-placeholder="Basic Salary" v-model="data.basic_salary" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('basic_salary')">{{errors.first('basic_salary')}}</span>
                     </vs-col>
                     
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="bonus" v-validate="`required`" label-placeholder="Bonus" v-model="data.bonus" />
+                        <vs-input name="bonus" data-vv-as="Bonus" v-validate="`required`" label-placeholder="Bonus" v-model="data.bonus" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('bonus')">{{errors.first('bonus')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="overtime" v-validate="`required`" label-placeholder="Over Time" v-model="data.over_time" />
+                        <vs-input name="over_time" data-vv-as="Over Time" v-validate="`required`" label-placeholder="Over Time" v-model="data.over_time" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('overtime')">{{errors.first('overtime')}}</span>
+                        <span class="text-danger" v-show="errors.has('over_time')">{{errors.first('over_time')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="commission" v-validate="`required`" label-placeholder="Commission" v-model="data.commissions" />
+                        <vs-input name="commissions" v-validate="`required`" label-placeholder="Commission" v-model="data.commissions" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('commission')">{{errors.first('commission')}}</span>
+                        <span class="text-danger" v-show="errors.has('commissions')">{{errors.first('commissions')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
@@ -125,7 +125,7 @@
 
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="paid_annual_leave" v-validate="`required`" label-placeholder="Paid Annual Leave" v-model="data.paid_annual_leave" />
+                        <vs-input name="paid_annual_leave" data-vv-as="Paid Annual Allowance" v-validate="`required`" label-placeholder="Paid Annual Leave" v-model="data.paid_annual_leave" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('paid_annual_leave')">{{errors.first('paid_annual_leave')}}</span>
                     </vs-col>
@@ -133,23 +133,23 @@
 
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="food_allowance" v-validate="`required`" label-placeholder="Food Allowance" v-model="data.food_allowance" />
+                        <vs-input name="food_allowance" data-vv-as="Food Allowance" v-validate="`required`" label-placeholder="Food Allowance" v-model="data.food_allowance" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('food_allowance')">{{errors.first('food_allowance')}}</span>
                     </vs-col>
 
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="transport_allowance" v-validate="`required`" label-placeholder="Transport Allowance" v-model="data.transport_allowance" />
+                        <vs-input name="transport_allowance" data-vv-as="Transport Allowance" v-validate="`required`" label-placeholder="Transport Allowance" v-model="data.transport_allowance" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('transport_allowance')">{{errors.first('transport_allowance')}}</span>
                     </vs-col>
 
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="other_allowance" v-validate="`required`" label-placeholder="Other Allowance" v-model="data.others" />
+                        <vs-input name="others" data-vv-as="Other Allowance" v-validate="`required`" label-placeholder="Other Allowance" v-model="data.others" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('other_allowance')">{{errors.first('other_allowance')}}</span>
+                        <span class="text-danger" v-show="errors.has('others')">{{errors.first('others')}}</span>
                     </vs-col>
 
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
@@ -161,7 +161,7 @@
 
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                        <vs-input name="salary_adjustment" v-validate="`required`" label-placeholder="Salary Adjustment" v-model="data.salary_adjusment" />
+                        <vs-input name="salary_adjusment" data-vv-as="Salary Adjustment" v-validate="`required`" label-placeholder="Salary Adjustment" v-model="data.salary_adjusment" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('salary_adjustment')">{{errors.first('salary_adjustment')}}</span>
                     </vs-col>
@@ -251,7 +251,7 @@
                         if(this.data.additional_fields != null){
                             if(this.data.additional_fields.length > 0){
                                 this.data.additional_fields.map(function(val, key) {
-                                    self.customField.push({name : 'additional_field[]',value : val,type: 'text'});
+                                    self.customField.push({name : 'additional_fields[]',value : val,type: 'text'});
                                });
                             }            
                         }
@@ -259,7 +259,7 @@
             },
 
             addMoreFeild () {
-                this.customField.push({name : 'additional_field[]',value : '',type: 'text'});
+                this.customField.push({name : 'additional_fields[]',value : '',type: 'text'});
             },
 
             updatePayroll(e) {

@@ -180,6 +180,9 @@
                         <vs-list-item title="Edit Tax" subtitle="">
                         	<vs-button size="small" icon-pack="feather" @click="editTax()" icon="icon-edit"></vs-button>
                         </vs-list-item>
+                        <vs-list-item title="Activity Log" subtitle="">
+                            <vs-button size="small" icon-pack="feather" to="/activity-log" icon="icon-maximize"></vs-button>
+                        </vs-list-item>
                     </vs-list>
                 </vx-card>
             </vs-col>

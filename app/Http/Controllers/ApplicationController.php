@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Admin;
 use App\Currencies;
 use App\CustomerEmployee;
+use App\History;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\MyValueBinder;
 use App\Notification;
@@ -23,6 +24,7 @@ use App\TaxCustomers;
 use App\TaxOfficer;
 use Excel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -164,11 +166,11 @@ class ApplicationController extends Controller {
 		}
 		$customer = new TaxCustomers;
 		$customer->customer_id = (String) Str::uuid();
-		$customer->name_english = $request->name_eng;
-		$customer->owner_id = $request->owner;
+		$customer->name_english = $request->name_english;
 		$customer->name_khmer = $request->name_khmer;
-		$customer->tax_card_num = $request->tax_id;
-		$customer->tin_no = $request->tin_num;
+		$customer->owner_id = $request->owner_id;
+		$customer->tax_card_num = $request->tax_card_num;
+		$customer->tin_no = $request->tin_no;
 		$customer->address = $request->address;
 		$customer->street = $request->street;
 		$customer->group = $request->group;
@@ -176,14 +178,14 @@ class ApplicationController extends Controller {
 		$customer->district = $request->district;
 		$customer->province = $request->province;
 		$customer->muncipality = $request->muncipality;
-		$customer->telephone = $request->tel;
+		$customer->telephone = $request->telephone;
 		$customer->e_phone = $request->e_phone;
 		$customer->email = $request->email;
 		$customer->industry = $request->industry;
 		$customer->incorporation_date = $request->incorporation_date;
 		$customer->village = $request->village;
 		$customer->customer_status = $request->customer_status;
-		$customer->additional_fields = $request->additional_field;
+		$customer->additional_fields = $request->additional_fields;
 		// $customer->tax_duration = $request->tax_duration;
 
 		$created_by = Admin::where('manager_id', $request->created_by)->first();
@@ -198,6 +200,21 @@ class ApplicationController extends Controller {
 		}
 
 		$result = $customer->save();
+		// creating activity log that who created
+		$history = new History;
+		$history->history_id = (String) Str::uuid();
+		$history->object_id = $customer->customer_id;
+		$history->type = 'company';
+		$history->event = 'create';
+		$history->changes = $request->all();
+		$history->description = 'A company enititled as Name (English) ' . $customer->name_english . ', Name (Khmer): ' . $customer->name_khmer . ' is created by ' . session('admin.type') . ': ' . session('admin.full_name');
+
+		if ($created_by->type == 'Supervisor') {
+			$officer = Admin::where('manager_id', $request->manager)->first();
+			$history->description .= ' & assigned to Officer: ' . $officer->full_name;
+		}
+		$history->save();
+		// initiating notification for web to associated team members
 		if ($created_by->type == 'Supervisor') {
 
 			// sending notification to officer
@@ -453,6 +470,20 @@ class ApplicationController extends Controller {
 				}
 				$result = $customer->save();
 				$counter++;
+				// creating activity log that who created
+				$history = new History;
+				$history->history_id = (String) Str::uuid();
+				$history->object_id = $customer->customer_id;
+				$history->type = 'company';
+				$history->event = 'create';
+				$history->changes = $value;
+				$history->description = 'A company enititled as Name (English) ' . $customer->name_english . ', Name (Khmer): ' . $customer->name_khmer . ' is created by ' . session('admin.type') . ': ' . session('admin.full_name');
+
+				if ($created_by->type == 'Supervisor') {
+					$officer = Admin::where('manager_id', $request->manager)->first();
+					$history->description .= ' & assigned to Officer: ' . $officer->full_name;
+				}
+				$history->save();
 
 			}
 			$totalAddedCount = $counter;
@@ -620,15 +651,24 @@ class ApplicationController extends Controller {
 	public function update_customer(Request $request) {
 
 		$customer = TaxCustomers::whereCustomerId($request->id)->first();
-		$customer->name_english = $request->name_eng;
+		$differenceArray = [];
+		array_where($request->all(), function ($item, $key) use ($customer, &$differenceArray) {
+			// dd($item, $key);
+			if ($item != $customer[$key]) {
+
+				$differenceArray = Arr::add($differenceArray, $key, ['new_value' => $item, 'old_value' => $customer[$key]]);
+
+			}
+		});
+		$customer->name_english = $request->name_english;
 		$customer->name_khmer = $request->name_khmer;
 		$customer->owner_id = $request->owner;
 		$customer->email = $request->email;
 		$customer->telephone = $request->tel;
 		$customer->e_phone = $request->e_phone;
 		$customer->industry = $request->industry;
-		$customer->tax_card_num = $request->tax_id;
-		$customer->tin_no = $request->tin_num;
+		$customer->tax_card_num = $request->tax_card_num;
+		$customer->tin_no = $request->tin_no;
 		$customer->address = $request->address;
 		$customer->muncipality = $request->muncipality;
 		$customer->district = $request->district;
@@ -640,10 +680,10 @@ class ApplicationController extends Controller {
 		// $customer->tax_duration = $request->tax_duration;
 		$customer->incorporation_date = $request->incorporation_date;
 
-		if ($request->has('additional_field')) {
-			$customfields = $request->additional_field;
+		if ($request->has('additional_fields')) {
+			$customfields = $request->additional_fields;
 
-			for ($i = 1; $i <= count($request->additional_field); $i++) {
+			for ($i = 1; $i <= count($request->additional_fields); $i++) {
 				if (($key = array_search(null, $customfields)) !== false) {
 					unset($customfields[$key]);
 				}
@@ -653,6 +693,105 @@ class ApplicationController extends Controller {
 		}
 
 		$result = $customer->save();
+		// creating activity log that who created
+		$history = new History;
+		$history->history_id = (String) Str::uuid();
+		$history->object_id = $customer->customer_id;
+		$history->type = 'company';
+		$history->event = 'update';
+		$history->changes = $differenceArray;
+		$history->description = 'A Company were updated by ' . session('admin.type') . ': ' . session('admin.full_name');
+		$history->save();
+		if ($result) {
+
+			if (session('admin.type') == 'Supervisor') {
+
+				// sending notification to Admins
+				$admins = Admin::where('manager_id', session('admin.reports_to'))->orWhere('type', 1)->get();
+				foreach ($admins as $key => $admin) {
+					$notification = new Notification;
+					$notification->transmitted_for = $admin->manager_id;
+					$notification->transmitted_by = session('admin.manager_id');
+					$notification->notification = 'company update alert';
+					$notification->description = 'A detail of company named ' . $customer->name_english . ' has been updated by Supervisor: <strong>' . session('admin.full_name') . '</strong>';
+					$notification->click_action = "/company-detail/" . $customer->customer_id;
+					$save = $notification->save();
+					if ($save) {
+						$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
+
+						$fields = array(
+							"to" => $admin->token,
+							'priority' => 'high',
+							"data" => array(
+								"title" => $notification->notification,
+								"body" => $notification->description,
+								"icon" => "icon.png",
+								"click_action" => $notification->click_action,
+							),
+							"notification" => array(
+								"title" => $notification->notification,
+								"body" => $notification->description,
+								"icon" => "icon.png",
+								"click_action" => $notification->click_action,
+							),
+						);
+						$data_string = json_encode($fields);
+						$headers = array('Authorization: key=' . $serverKey, 'Content-Type: application/json');
+						$ch = curl_init();
+						curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+						curl_setopt($ch, CURLOPT_POST, true);
+						curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+						curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+						curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+						$result = curl_exec($ch);
+						curl_close($ch);
+					}
+				}
+			} elseif (session('admin.type') == 'Officer') {
+				$supervisor = Admin::where('manager_id', $customer->manager)->first();
+				// sending notification to Admins
+				$admins = Admin::where('manager_id', session('admin.reports_to'))->orWhere('type', 1)->orWhere('manager_id', $supervisor->reports_to)->get();
+				foreach ($admins as $key => $admin) {
+					$notification = new Notification;
+					$notification->transmitted_for = $admin->manager_id;
+					$notification->transmitted_by = $created_by->manager_id;
+					$notification->notification = 'company update alert';
+					$notification->description = 'A detail of company named ' . $customer->name_english . ' has been updated by  Officer: <strong>' . $created_by->full_name . '</strong>';
+					$notification->click_action = "/company-detail/" . $customer->customer_id;
+					$save = $notification->save();
+					if ($save) {
+						$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
+
+						$fields = array(
+							"to" => $admin->token,
+							'priority' => 'high',
+							"data" => array(
+								"title" => $notification->notification,
+								"body" => $notification->description,
+								"icon" => "icon.png",
+								"click_action" => $notification->click_action,
+							),
+							"notification" => array(
+								"title" => $notification->notification,
+								"body" => $notification->description,
+								"icon" => "icon.png",
+								"click_action" => $notification->click_action,
+							),
+						);
+						$data_string = json_encode($fields);
+						$headers = array('Authorization: key=' . $serverKey, 'Content-Type: application/json');
+						$ch = curl_init();
+						curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+						curl_setopt($ch, CURLOPT_POST, true);
+						curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+						curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+						curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+						$result = curl_exec($ch);
+						curl_close($ch);
+					}
+				}
+			}
+		}
 		return response()->json(['status' => 'success', 'customer' => $customer], 200);
 	}
 
@@ -788,11 +927,99 @@ class ApplicationController extends Controller {
 		}
 		$result = $admin->save();
 		$admins = Admin::all();
+		if ($admin->type == 'Officer') {
+
+			// sending notification to supervisor
+
+			// sending notification to officer
+			$notification = new Notification;
+			$notification->transmitted_for = $request->reports_to;
+			$notification->transmitted_by = session('admin.manager_id');
+			$notification->notification = 'New Officer Assigned';
+			$notification->description = 'new officer <strong>' . $admin->full_name . '</strong> has been added in your team by <strong>' . session('admin.full_name') . '</strong>:';
+			$notification->click_action = "/my-team";
+			$save = $notification->save();
+			$supervisor = Admin::where('manager_id', $request->reports_to)->first();
+			if ($save) {
+				$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
+
+				$fields = array(
+					// "content_available" => true,
+					"to" => $supervisor->token,
+					'priority' => 'high',
+					"data" => array(
+						"title" => $notification->notification,
+						"body" => $notification->description,
+						"icon" => "icon.png",
+						"click_action" => $notification->click_action,
+					),
+					"notification" => array(
+						"title" => $notification->notification,
+						"body" => $notification->description,
+						"icon" => "icon.png",
+						"click_action" => $notification->click_action,
+					),
+				);
+				$data_string = json_encode($fields);
+				$headers = array('Authorization: key=' . $serverKey, 'Content-Type: application/json');
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+				curl_setopt($ch, CURLOPT_POST, true);
+				curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+				$result = curl_exec($ch);
+				curl_close($ch);
+			}
+		} elseif ($admin->type == 'Supervisor' && session('admin.manager_id') != $admin->reports_to) {
+
+			// sending notification to admin
+			$notification = new Notification;
+			$notification->transmitted_for = $request->reports_to;
+			$notification->transmitted_by = session('admin.manager_id');
+			$notification->notification = 'New Supervisor Assigned';
+			$notification->description = 'new Supervisor <strong>' . $admin->full_name . '</strong> has been added in your team by <strong>' . session('admin.full_name') . '</strong>:';
+			$notification->click_action = "/my-team";
+			$save = $notification->save();
+			$admin = Admin::where('manager_id', $request->reports_to)->first();
+			if ($save) {
+				$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
+
+				$fields = array(
+					// "content_available" => true,
+					"to" => $admin->token,
+					'priority' => 'high',
+					"data" => array(
+						"title" => $notification->notification,
+						"body" => $notification->description,
+						"icon" => "icon.png",
+						"click_action" => $notification->click_action,
+					),
+					"notification" => array(
+						"title" => $notification->notification,
+						"body" => $notification->description,
+						"icon" => "icon.png",
+						"click_action" => $notification->click_action,
+					),
+				);
+				$data_string = json_encode($fields);
+				$headers = array('Authorization: key=' . $serverKey, 'Content-Type: application/json');
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+				curl_setopt($ch, CURLOPT_POST, true);
+				curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+				$result = curl_exec($ch);
+				curl_close($ch);
+			}
+		}
 		return response()->json(['status' => 'success', 'admins' => $admins], 200);
 	}
 
 	public function update_admin(Request $request) {
 		$admin = Admin::whereManagerId($request->id)->first();
+		$previousReportsTo = $admin->reports_to;
 		$admin->first_name = $request->first_name;
 		$admin->last_name = $request->last_name;
 		$admin->gender = $request->gender;
@@ -805,6 +1032,7 @@ class ApplicationController extends Controller {
 			TaxCustomers::where('manager', $request->id)->update(['manager' => NULL]);
 		} elseif ($admin->type == 'Supervisor' && $request->role != 'Supervisor') {
 			TaxCustomers::where('supervisor', $request->id)->update(['supervisor' => NULL]);
+			Admin::where('reports_to', $request->id)->update(['reports_to' => NULL]);
 		}
 		if ($request->role == 'Admin') {
 			$admin->type = 1; // 1 means admin
@@ -818,6 +1046,115 @@ class ApplicationController extends Controller {
 
 		}
 		$result = $admin->save();
+		if ($previousReportsTo != $request->reports_to) {
+			if ($admin->type == 'Officer') {
+
+				// sending notification to supervisor
+				$supervisors = Admin::whereIn('manager_id', [$request->reports_to, $previousReportsTo])->get();
+				foreach ($supervisors as $supervisor) {
+					$notification = new Notification;
+					$notification->transmitted_by = session('admin.manager_id');
+					if ($supervisor->manager_id == $previousReportsTo) {
+						$notification->transmitted_for = $supervisor->manager_id;
+						$notification->notification = 'Officer Removed';
+						$notification->description = 'Officer: <strong>' . $admin->full_name . '</strong> has been removed from your team by <strong>' . session('admin.full_name') . '</strong>:';
+					} else {
+						$notification->transmitted_for = $supervisor->manager_id;
+						$notification->notification = 'New Officer Assigned';
+						$notification->description = 'New officer <strong>' . $admin->full_name . '</strong> has been added in your team by <strong>' . session('admin.full_name') . '</strong>:';
+
+					}
+					$notification->click_action = "/my-team";
+					$save = $notification->save();
+
+					if ($save) {
+						$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
+
+						$fields = array(
+							// "content_available" => true,
+							"to" => $supervisor->token,
+							'priority' => 'high',
+							"data" => array(
+								"title" => $notification->notification,
+								"body" => $notification->description,
+								"icon" => "icon.png",
+								"click_action" => $notification->click_action,
+							),
+							"notification" => array(
+								"title" => $notification->notification,
+								"body" => $notification->description,
+								"icon" => "icon.png",
+								"click_action" => $notification->click_action,
+							),
+						);
+						$data_string = json_encode($fields);
+						$headers = array('Authorization: key=' . $serverKey, 'Content-Type: application/json');
+						$ch = curl_init();
+						curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+						curl_setopt($ch, CURLOPT_POST, true);
+						curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+						curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+						curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+						$result = curl_exec($ch);
+						curl_close($ch);
+					}
+
+				}
+			} elseif ($admin->type == 'Supervisor') {
+
+				// sending notification to admin
+				$admins = Admin::whereIn('manager_id', [$request->reports_to, $previousReportsTo])->get();
+				foreach ($admins as $admin) {
+					if ($admin->manager_id != session('admin.manager_id')) {
+						$notification = new Notification;
+						$notification->transmitted_by = session('admin.manager_id');
+						$notification->click_action = "/my-team";
+						if ($supervisor->manager_id == $previousReportsTo) {
+							$notification->transmitted_for = $supervisor->manager_id;
+							$notification->notification = 'Supervisor Removed';
+							$notification->description = 'Supervisor: <strong>' . $admin->full_name . '</strong> has been removed from your team by <strong>' . session('admin.full_name') . '</strong>:';
+						} else {
+							$notification->transmitted_for = $supervisor->manager_id;
+							$notification->notification = 'New Supervisor Assigned';
+							$notification->description = 'new Supervisor <strong>' . $admin->full_name . '</strong> has been added in your team by <strong>' . session('admin.full_name') . '</strong>:';
+						}
+						$save = $notification->save();
+						$admin = Admin::where('manager_id', $request->reports_to)->first();
+						if ($save) {
+							$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
+
+							$fields = array(
+								// "content_available" => true,
+								"to" => $admin->token,
+								'priority' => 'high',
+								"data" => array(
+									"title" => $notification->notification,
+									"body" => $notification->description,
+									"icon" => "icon.png",
+									"click_action" => $notification->click_action,
+								),
+								"notification" => array(
+									"title" => $notification->notification,
+									"body" => $notification->description,
+									"icon" => "icon.png",
+									"click_action" => $notification->click_action,
+								),
+							);
+							$data_string = json_encode($fields);
+							$headers = array('Authorization: key=' . $serverKey, 'Content-Type: application/json');
+							$ch = curl_init();
+							curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+							curl_setopt($ch, CURLOPT_POST, true);
+							curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+							curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+							curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+							$result = curl_exec($ch);
+							curl_close($ch);
+						}
+					}
+				}
+			}
+		}
 		$admin = Admin::with('reportingTo')->where('manager_id', $admin->manager_id)->latest('id')->first();
 		return response()->json(['status' => 'success', 'admin' => $admin], 200);
 	}
@@ -881,6 +1218,52 @@ class ApplicationController extends Controller {
 			$admin->status = 1;
 			$admin->save();
 			$msg = 'Enabled Successfully';
+		}
+
+		if ($admin->type == 'Officer') {
+
+			// sending notification to Admins
+			$supervisor = Admin::where('manager_id', $admin->reports_to)->first();
+			// sending notification to Admins
+			$notification = new Notification;
+			$notification->transmitted_for = $supervisor->manager_id;
+			$notification->transmitted_by = session('admin.manager_id');
+			$notification->notification = 'Officer Status change alert';
+			$status = $admin->status == 1 ? "Enabled" : 'Disabled';
+			$notification->description = 'Officer: <strong>' . $admin->full_name . '</strong> account has been ' . $status . ' by <strong>' . session('admin.full_name') . '</strong>' . ($status == 'Disabled' ? ' who is  no more available to work with you' : ' who is now available to work with you');
+			$notification->click_action = "/my-team";
+			$save = $notification->save();
+			if ($save) {
+				$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
+
+				$fields = array(
+					"to" => $supervisor->token,
+					'priority' => 'high',
+					"data" => array(
+						"title" => $notification->notification,
+						"body" => $notification->description,
+						"icon" => "icon.png",
+						"click_action" => $notification->click_action,
+					),
+					"notification" => array(
+						"title" => $notification->notification,
+						"body" => $notification->description,
+						"icon" => "icon.png",
+						"click_action" => $notification->click_action,
+					),
+				);
+				$data_string = json_encode($fields);
+				$headers = array('Authorization: key=' . $serverKey, 'Content-Type: application/json');
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+				curl_setopt($ch, CURLOPT_POST, true);
+				curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+				$result = curl_exec($ch);
+				curl_close($ch);
+			}
+
 		}
 		return response()->json(['status' => 'success', 'msg' => $msg], 200);
 
@@ -962,6 +1345,16 @@ class ApplicationController extends Controller {
 		$tax->created_by = $request->created_by;
 		// $tax->supervisor_id = $request->supervisor_id;
 		$save = $tax->save();
+
+		$history = new History;
+		$history->history_id = (String) Str::uuid();
+		$history->object_id = $tax->tax_id;
+		$history->type = 'tax';
+		$history->event = 'create';
+		$history->tax_id = $request->tax_id;
+		$history->changes = $request->except(['created_by', 'customer_id']);
+		$history->description = 'A new Tax Entitled ' . $tax->title . ' were created by ' . session('admin.type') . ': ' . session('admin.full_name');
+		$history->save();
 		if ($save) {
 			if (session('admin.type') == 'Supervisor') {
 
@@ -1021,12 +1414,33 @@ class ApplicationController extends Controller {
 	public function update_tax(Request $request) {
 
 		$tax = Tax::whereTaxId($request->tax_id)->first();
+		$differenceArray = [];
+		array_where($request->except('id'), function ($item, $key) use ($tax, &$differenceArray) {
+			// dd($item, $key);
+			if ($item != $tax[$key]) {
+
+				$differenceArray = Arr::add($differenceArray, $key, ['new_value' => $item, 'old_value' => $tax[$key]]);
+
+			}
+		});
 		$tax->title = $request->title;
 		$tax->description = $request->description;
 		$tax->notes = $request->notes;
 		$tax->type = $request->type;
 		$tax->tax_code = $request->tax_code;
 		$save = $tax->save();
+
+		if (count($differenceArray) > 0) {
+			$history = new History;
+			$history->history_id = (String) Str::uuid();
+			$history->object_id = $tax->tax_id;
+			$history->type = 'tax';
+			$history->event = 'update';
+			$history->tax_id = $tax->tax_id;
+			$history->changes = $request->except(['created_by', 'customer_id']);
+			$history->description = 'A Tax Entitled ' . $tax->title . ' were updated by ' . session('admin.type') . ': ' . session('admin.full_name');
+			$history->save();
+		}
 		$cust = TaxCustomers::whereCustomerId($tax->customer_id)->first();
 		if ($save) {
 			if (session('admin.type') == 'Supervisor') {
@@ -1163,20 +1577,20 @@ class ApplicationController extends Controller {
 		$purchase->branch_name = $request->branch_name;
 		$purchase->tax_period = $request->tax_period;
 		$purchase->invoice_date = $request->invoice_date;
-		$purchase->invoice_num = $request->invoice_number;
-		$purchase->description = $request->good_desc;
+		$purchase->invoice_num = $request->invoice_num;
+		$purchase->description = $request->description;
 		$purchase->quantity = $request->quantity;
-		$purchase->local_purchase_tax_val = $request->taxable_value_local;
+		$purchase->local_purchase_tax_val = $request->local_purchase_tax_val;
 		// $purchase->local_purchase_vat = $request->vat_local;
 		$purchase->imports_taxable_val = $request->taxable_value_import;
 		// $purchase->imports_vat = $request->vat_import;
-		$purchase->subject = $request->item_subject_taxes;
-		$purchase->comments = $request->comments_3e_fii;
-		$purchase->top_comments = $request->comments_for_top;
+		// $purchase->subject = $request->item_subject_taxes;
+		$purchase->comments = $request->comments;
+		$purchase->top_comments = $request->top_comments;
 		$purchase->client_responses = $request->client_responses;
 		$purchase->non_taxable_purchases = $request->non_taxable_purchases;
 		$purchase->supplier = $request->supplier;
-		$purchase->additional_fields = $request->additional_field;
+		$purchase->additional_fields = $request->additional_fields;
 		$purchase->status = 0;
 		$purchase->created_by = $request->created_by;
 		/*if ($request->has('supervisor_id')) {
@@ -1186,6 +1600,15 @@ class ApplicationController extends Controller {
 		*/
 		$purchase->save();
 
+		$history = new History;
+		$history->history_id = (String) Str::uuid();
+		$history->object_id = $purchase->purchase_id;
+		$history->type = 'purchase';
+		$history->event = 'create';
+		$history->tax_id = $request->tax_id;
+		$history->changes = $request->except(['created_by', 'customer_id', 'tax_id']);
+		$history->description = 'A purchase with invoice No : ' . $purchase->invoice_num . ' is created by ' . session('admin.type') . ': ' . session('admin.full_name');
+		$history->save();
 		return response()->json(['status' => 'success']);
 	}
 
@@ -1203,38 +1626,47 @@ class ApplicationController extends Controller {
 		$sale->customer_id = $request->customer_id;
 		$sale->account_code = $request->account_code;
 		$sale->account_description = $request->account_description;
-		$sale->accounting_reference = $request->account_ref;
-		$sale->signature_date = $request->sign_date;
+		$sale->accounting_reference = $request->accounting_reference;
+		$sale->signature_date = $request->signature_date;
 		$sale->branch_name = $request->branch_name;
 		$sale->tax_period = $request->tax_period;
 		$sale->invoice_date = $request->invoice_date;
-		$sale->invoice_num = $request->invoice_number;
+		$sale->invoice_num = $request->invoice_num;
 		$sale->description = $request->description;
 		$sale->quantity = $request->quantity;
 		$sale->taxes_subject = $request->item_subject_taxes;
-		$sale->comments = $request->comments_3e_fii;
-		$sale->top_comments = $request->comments_for_top;
-		$sale->client_response = $request->client_responses;
+		$sale->comments = $request->comments;
+		$sale->top_comments = $request->top_comments;
+		$sale->client_response = $request->client_response;
 		$sale->non_taxable_sales = $request->non_taxable_sales;
-		$sale->vat = $request->export_value;
+		$sale->vat = $request->vat;
 		$sale->created_by = $request->created_by;
 		if ($request->creator_type == 'Supervisor') {
 			$sale->officer_confirmed = 1;
 		}
 
-		if (!is_null($request->person_non_taxable_sales)) {
-			$sale->taxable_person_sales = $request->person_non_taxable_sales;
+		if (!is_null($request->taxable_person_sales)) {
+			$sale->taxable_person_sales = $request->taxable_person_sales;
 		}
 
-		if (!is_null($request->customer_non_taxable_sales)) {
-			$sale->cust_sales = $request->customer_non_taxable_sales;
+		if (!is_null($request->cust_sales)) {
+			$sale->cust_sales = $request->cust_sales;
 		}
 
-		$sale->additional_fields = $request->additional_field;
+		$sale->additional_fields = $request->additional_fields;
 		$sale->status = 0;
 
 		$sale->save();
 
+		$history = new History;
+		$history->history_id = (String) Str::uuid();
+		$history->object_id = $sale->sale_id;
+		$history->type = 'sale';
+		$history->event = 'create';
+		$history->tax_id = $request->tax_id;
+		$history->changes = $request->except(['customer_id', 'tax_id', 'created_by']);
+		$history->description = 'A sale with invoice No : ' . $sale->invoice_num . ' is created by ' . session('admin.type') . ': ' . session('admin.full_name');
+		$history->save();
 		return response()->json(['status' => 'success', 'data' => $sale]);
 	}
 
@@ -1260,47 +1692,46 @@ class ApplicationController extends Controller {
 
 		$sale = Sales::whereSaleId($request->id)->first();
 
+		$differenceArray = [];
+		array_where($request->except('id'), function ($item, $key) use ($sale, &$differenceArray) {
+			// dd($item, $key);
+			if ($item != $sale[$key]) {
+				$differenceArray = Arr::add($differenceArray, $key, ['new_value' => $item, 'old_value' => $sale[$key]]);
+				// array_push($differenceArray, [$key => ['new_value' => $item, 'old_value' => $sale[$key]]]);
+
+			}
+		});
 		$sale->account_code = $request->account_code;
 		$sale->account_description = $request->account_description;
-		$sale->accounting_reference = $request->account_ref;
-		$sale->signature_date = $request->sign_date;
+		$sale->accounting_reference = $request->accounting_reference;
+		$sale->signature_date = $request->signature_date;
 		$sale->branch_name = $request->branch_name;
 		$sale->tax_period = $request->tax_period;
 		$sale->invoice_date = $request->invoice_date;
-		$sale->invoice_num = $request->invoice_number;
+		$sale->invoice_num = $request->invoice_num;
 		$sale->client_name = $request->client_name;
 		$sale->client_tin = $request->client_tin;
 		$sale->description = $request->description;
 		$sale->quantity = $request->quantity;
-		$sale->taxes_subject = $request->item_subject_taxes;
 		$sale->comments = $request->comments_3e_fii;
 		$sale->top_comments = $request->comments_for_top;
 		$sale->client_response = $request->client_responses;
 		$sale->non_taxable_sales = $request->non_taxable_sales;
-		$sale->vat = $request->export_value;
+		$sale->vat = $request->vat;
 
-		if (!is_null($request->person_non_taxable_sales)) {
-			$sale->taxable_person_sales = $request->person_non_taxable_sales;
+		if (!is_null($request->taxable_person_sales)) {
+			$sale->taxable_person_sales = $request->taxable_person_sales;
 		}
 
-		if (!is_null($request->person_export_value)) {
-			$sale->taxable_person_vat = $request->person_export_value;
+		if (!is_null($request->cust_sales)) {
+			$sale->cust_sales = $request->cust_sales;
 		}
-
-		if (!is_null($request->customer_non_taxable_sales)) {
-			$sale->cust_sales = $request->customer_non_taxable_sales;
-		}
-
-		if (!is_null($request->customer_export_value)) {
-			$sale->cust_sales_vat = $request->customer_export_value;
-		}
-
 		$sale->total_taxable_value = $request->total_taxable_value;
 
-		$customfields = $request->additional_field;
-		if ($request->has('additional_field')) {
+		$customfields = $request->additional_fields;
+		if ($request->has('additional_fields')) {
 
-			for ($i = 1; $i <= count($request->additional_field); $i++) {
+			for ($i = 1; $i <= count($request->additional_fields); $i++) {
 				if (($key = array_search(null, $customfields)) !== false) {
 					unset($customfields[$key]);
 				}
@@ -1310,7 +1741,18 @@ class ApplicationController extends Controller {
 		}
 
 		$sale->save();
+		if (count($differenceArray) > 0) {
+			$history = new History;
+			$history->history_id = (String) Str::uuid();
+			$history->object_id = $request->id;
+			$history->type = 'sale';
+			$history->event = 'update';
+			$history->tax_id = $sale->tax_id;
+			$history->changes = $differenceArray;
+			$history->description = 'A sale with invoice No : ' . $sale->invoice_num . ' was updated by ' . session('admin.type') . ': ' . session('admin.full_name');
+			$history->save();
 
+		}
 		return response()->json(['status' => 'success', 'data' => $sale]);
 	}
 
@@ -1332,38 +1774,46 @@ class ApplicationController extends Controller {
 	public function update_purchase(Request $request) {
 
 		$purchase = Purchases::wherePurchaseId($request->id)->first();
+		$differenceArray = [];
+		array_where($request->except('id'), function ($item, $key) use ($purchase, &$differenceArray) {
+			// dd($item, $key);
+			if ($item != $purchase[$key]) {
 
+				$differenceArray = Arr::add($differenceArray, $key, ['new_value' => $item, 'old_value' => $purchase[$key]]);
+
+			}
+		});
 		$purchase->branch_name = $request->branch_name;
 		$purchase->tax_period = $request->tax_period;
 		$purchase->invoice_date = $request->invoice_date;
-		$purchase->invoice_num = $request->invoice_number;
-		$purchase->description = $request->good_desc;
+		$purchase->invoice_num = $request->invoice_num;
+		$purchase->description = $request->description;
 		$purchase->quantity = $request->quantity;
 
-		if (!is_null($request->taxable_value_local)) {
-			$purchase->local_purchase_tax_val = $request->taxable_value_local;
+		if (!is_null($request->local_purchase_tax_val)) {
+			$purchase->local_purchase_tax_val = $request->local_purchase_tax_val;
 		}
-		if (!is_null($request->vat_local)) {
+		/*if (!is_null($request->vat_local)) {
 			$purchase->local_purchase_vat = $request->vat_local;
-		}
+		}*/
 
-		if (!is_null($request->taxable_value_import)) {
-			$purchase->imports_taxable_val = $request->taxable_value_import;
+		if (!is_null($request->imports_taxable_val)) {
+			$purchase->imports_taxable_val = $request->imports_taxable_val;
 		}
-		if (!is_null($request->vat_import)) {
+		/*if (!is_null($request->vat_import)) {
 			$purchase->imports_vat = $request->vat_import;
-		}
+		}*/
 		$purchase->total_vat = $request->total_vat;
-		$purchase->subject = $request->item_subject_taxes;
-		$purchase->comments = $request->comments_3e_fii;
-		$purchase->top_comments = $request->comments_for_top;
+		// $purchase->subject = $request->item_subject_taxes;
+		$purchase->comments = $request->comments;
+		$purchase->top_comments = $request->top_comments;
 		$purchase->client_responses = $request->client_responses;
 		$purchase->non_taxable_purchases = $request->non_taxable_purchases;
 		$purchase->supplier = $request->supplier;
-		$purchase->vat_tin = $request->vat_tin;
+		// $purchase->vat_tin = $request->vat_tin;
 
-		$customfields = $request->additional_field;
-		for ($i = 1; $i <= count($request->additional_field); $i++) {
+		$customfields = $request->additional_fields;
+		for ($i = 1; $i <= count($request->additional_fields); $i++) {
 			if (($key = array_search(null, $customfields)) !== false) {
 				unset($customfields[$key]);
 			}
@@ -1371,7 +1821,18 @@ class ApplicationController extends Controller {
 
 		$purchase->additional_fields = $customfields;
 		$purchase->save();
+		if (count($differenceArray) > 0) {
+			$history = new History;
+			$history->history_id = (String) Str::uuid();
+			$history->object_id = $request->id;
+			$history->type = 'purchase';
+			$history->event = 'update';
+			$history->tax_id = $purchase->tax_id;
+			$history->changes = $differenceArray;
+			$history->description = 'A purchase with invoice No : ' . $purchase->invoice_num . ' was updated by ' . session('admin.type') . ': ' . session('admin.full_name');
+			$history->save();
 
+		}
 		return response()->json(['status' => 'success', 'data' => $purchase]);
 	}
 
@@ -1383,7 +1844,7 @@ class ApplicationController extends Controller {
 		$pr->employee_id = $request->employee_id;
 		$pr->basic_salary = $request->basic_salary;
 		$pr->bonus = $request->bonus;
-		$pr->over_time = $request->overtime;
+		$pr->over_time = $request->over_time;
 		$pr->commissions = $request->commission;
 		$pr->seniority_payment = $request->seniority_payment;
 		$pr->severance_pay = $request->severance_pay;
@@ -1395,7 +1856,7 @@ class ApplicationController extends Controller {
 		$pr->deduction_advance = $request->deduction_advance;
 		$pr->salary_adjusment = $request->salary_adjustment;
 		$pr->remark = $request->remark;
-		$pr->additional_fields = $request->additional_field;
+		$pr->additional_fields = $request->additional_fields;
 		$pr->created_by = $request->created_by;
 		/*if ($request->has('supervisor_id')) {
 				$pr->officer_confirmed = 1;
@@ -1404,7 +1865,16 @@ class ApplicationController extends Controller {
 				$pr->tax_officer_id = $request->officer_id;
 		*/
 		$pr->save();
-
+		// creating activity log that who created
+		$history = new History;
+		$history->history_id = (String) Str::uuid();
+		$history->object_id = $pr->payroll_id;
+		$history->type = 'payroll';
+		$history->event = 'create';
+		$history->tax_id = $pr->tax_id;
+		$history->changes = $request->except(['created_by', 'tax_id']);
+		$history->description = 'A payroll of employee: ' . $pr->employee->name_english . ' with Employee No. ' . $pr->employee->employee_num . ' were created by ' . session('admin.full_name');
+		$history->save();
 		return response()->json(['status' => 'success', 'data' => $pr, 'msg' => 'Payroll Added Successfully']);
 	}
 
@@ -1418,7 +1888,7 @@ class ApplicationController extends Controller {
 
 	public function get_payroll(Request $request) {
 
-		$data = Payrolls::with(['employee', 'officer'])->wherePayrollId($request->id)->first();
+		$data = Payrolls::with(['employee', 'officer', 'customer'])->wherePayrollId($request->id)->first();
 
 		return response()->json(['data' => $data]);
 
@@ -1426,33 +1896,60 @@ class ApplicationController extends Controller {
 
 	public function update_payroll(Request $request) {
 
-		$pr = Payrolls::wherePayrollId($request->payroll_id)->first();
+		$pr = Payrolls::with('employee')->wherePayrollId($request->payroll_id)->first();
+		$differenceArray = [];
+		array_where($request->all(), function ($item, $key) use ($pr, &$differenceArray) {
+			// dd($item, $key);
+			if ($item != $pr[$key]) {
 
+				$differenceArray = Arr::add($differenceArray, $key, ['new_value' => $item, 'old_value' => $pr[$key]]);
+
+			}
+		});
 		$pr->basic_salary = $request->basic_salary;
 		$pr->bonus = $request->bonus;
-		$pr->over_time = $request->overtime;
-		$pr->commissions = $request->commission;
+		$pr->over_time = $request->over_time;
+		$pr->commissions = $request->commissions;
 		$pr->seniority_payment = $request->seniority_payment;
 		$pr->severance_pay = $request->severance_pay;
 		$pr->maternity_leave = $request->maternity_leave;
 		$pr->paid_annual_leave = $request->paid_annual_leave;
 		$pr->food_allowance = $request->food_allowance;
 		$pr->transport_allowance = $request->transport_allowance;
-		$pr->others = $request->other_allowance;
+		$pr->others = $request->others;
 		$pr->deduction_advance = $request->deduction_advance;
-		$pr->salary_adjusment = $request->salary_adjustment;
+		$pr->salary_adjusment = $request->salary_adjusment;
 		$pr->remark = $request->remark;
-
-		$customfields = $request->additional_field;
-		for ($i = 1; $i <= count($request->additional_field); $i++) {
-			if (($key = array_search(null, $customfields)) !== false) {
-				unset($customfields[$key]);
+		if ($request->has('additional_fields')) {
+			$customfields = $request->additional_fields;
+			for ($i = 1; $i <= count($request->additional_fields); $i++) {
+				if (($key = array_search(null, $customfields)) !== false) {
+					unset($customfields[$key]);
+				}
 			}
+
+			/*if (count($customfields) > count($pr->additional_fields)) {
+				foreach ($customfields as $key => $field) {
+
+				}
+			}*/
+			$pr->additional_fields = $customfields;
+
 		}
 
-		$pr->additional_fields = $customfields;
-
 		$pr->save();
+		if (count($differenceArray) > 0) {
+			$history = new History;
+			$history->history_id = (String) Str::uuid();
+			$history->object_id = $request->payroll_id;
+			$history->type = 'payroll';
+			$history->event = 'update';
+			$history->tax_id = $pr->tax_id;
+			$history->changes = $differenceArray;
+			$history->description = 'A payroll of Employee: ' . $pr->employee->name_english . ' with Employee No. ' . $pr->employee->employee_num . ' were updated by ' . session('admin.full_name');
+			$history->save();
+
+		}
 
 		return response()->json(['status' => 'success', 'msg' => 'Payroll Updated Successfully']);
 
@@ -1574,6 +2071,15 @@ class ApplicationController extends Controller {
 
 				$sale->save();
 				$counter++;
+				$history = new History;
+				$history->history_id = (String) Str::uuid();
+				$history->object_id = $request->id;
+				$history->type = 'sale';
+				$history->event = 'create';
+				$history->tax_id = $request->tax_id;
+				$history->changes = $value;
+				$history->description = 'A sale with invoice No : ' . $sale->invoice_num . ' is created by ' . session('admin.type') . ': ' . session('admin.full_name');
+				$history->save();
 
 			}
 			$totalAddedCount = $data->count();
@@ -1631,6 +2137,16 @@ class ApplicationController extends Controller {
 
 				$pr->save();
 				$counter++;
+				// creating activity log that who created
+				$history = new History;
+				$history->history_id = (String) Str::uuid();
+				$history->object_id = $pr->payroll_id;
+				$history->type = 'payroll';
+				$history->event = 'create';
+				$history->tax_id = $pr->tax_id;
+				$history->changes = $value;
+				$history->description = 'A payroll of employee: ' . $pr->employee->name_english . ' with Employee No. ' . $pr->employee->employee_num . ' were created by ' . session('admin.full_name');
+				$history->save();
 			}
 			$totalAddedCount = $data->count();
 			return response()->json(['status' => 'success', 'msg' => "$counter new Payroll(s) added."]);
@@ -1681,6 +2197,15 @@ class ApplicationController extends Controller {
 				}
 				$purchase->save();
 				$counter++;
+				$history = new History;
+				$history->history_id = (String) Str::uuid();
+				$history->object_id = $request->id;
+				$history->type = 'purchase';
+				$history->event = 'create';
+				$history->tax_id = $tax_id;
+				$history->changes = $value;
+				$history->description = 'A purchase with invoice No : ' . $purchase->invoice_num . ' is created by ' . session('admin.type') . ': ' . session('admin.full_name');
+				$history->save();
 			}
 			$totalAddedCount = $data->count();
 			return response()->json(['status' => 'success', 'msg' => "$counter new Purchase(s) added."]);
@@ -2648,6 +3173,12 @@ class ApplicationController extends Controller {
 
 	public function get_notifications() {
 		$notifications = Notification::where('transmitted_for', session('admin.manager_id'))->latest('id')->take(10)->get();
+		$totalNotifications = Notification::where('transmitted_for', session('admin.manager_id'))->latest('id')->count();
+		return response()->json(compact('notifications', 'totalNotifications'));
+	}
+
+	public function get_all_notifications(Request $request) {
+		$notifications = Notification::where('transmitted_for', session('admin.manager_id'))->latest('id')->paginate(20);
 		$totalNotifications = Notification::where('transmitted_for', session('admin.manager_id'))->latest('id')->where('is_checked', 0)->count();
 		return response()->json(compact('notifications', 'totalNotifications'));
 	}
@@ -2675,16 +3206,24 @@ class ApplicationController extends Controller {
 		$customer_id = $request->customer_id;
 		$type = $request->type;
 
-		if($type == 'Sale'){
+		if ($type == 'Sale') {
 			$data = Sales::where('customer_id', $customer_id)->where('sale_id', $id)->delete();
-		}elseif($type == 'Purchase'){
+		} elseif ($type == 'Purchase') {
 			$data = Purchases::where('customer_id', $customer_id)->where('purchase_id', $id)->delete();
-		}elseif($type == 'Payroll'){
+		} elseif ($type == 'Payroll') {
 			$data = Payrolls::where('employee_id', $customer_id)->where('payroll_id', $id)->delete();
 		}
 		$msg = $type . ' deleted successfully';
 		return response()->json(['status' => true, 'msg' => $msg]);
 
+	}
 
+	public function get_tax_logs(Request $request) {
+		$logs = History::where('tax_id', $request->tax_id)->get();
+		return response()->json(compact('logs'));
+	}
+	public function get_customer_logs(Request $request) {
+		$logs = History::where('object_id', $request->customer_id)->get();
+		return response()->json(compact('logs'));
 	}
 }

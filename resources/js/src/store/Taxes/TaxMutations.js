@@ -32,4 +32,9 @@ export default {
 		state.tax.status = data.status
 		// Vue.set(state.taxs,index,tax);
 	},
+	setLogs(state,data){
+
+		state.logs = data;
+
+	}
 }

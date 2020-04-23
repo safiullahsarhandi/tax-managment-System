@@ -195,6 +195,24 @@ const router = new Router({
                     }
                 },
                 {
+                    path: '/notifications/',
+                    name: 'Notifications',
+                    component: () => import('./views/pages/Notifications.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+                {
+                    path: '/activity-log/',
+                    name: 'Activity Log',
+                    component: () => import('./views/pages/ActivityLog.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: false,
+                    }
+                },
+                {
                     path: '/my-team',
                     name: 'My Team',
                     component: () => import('./views/pages/MyTeam.vue'),
@@ -202,15 +220,6 @@ const router = new Router({
                         requiresAuth: true,
                         requiresAdmin: false,
                         requiresSupervisor: true,
-                    }
-                },
-                {
-                    path: '/searched-record',
-                    name: 'Search Page',
-                    component: () => import('./views/SearchedRecords.vue'),
-                    meta: {
-                        requiresAuth: true,
-                        requiresAdmin: true,
                     }
                 },
             ],
@@ -235,6 +244,15 @@ const router = new Router({
                     path: '/',
                     name: 'Company Detail',
                     component: () => import('./views/pages/Companies/CompanyDetail.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: true,
+                    }
+                },
+                {
+                    path: '/company-log',
+                    name: 'CompanyLog',
+                    component: () => import('./views/pages/Companies/CompanyLog.vue'),
                     meta: {
                         requiresAuth: true,
                         requiresAdmin: true,

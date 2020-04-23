@@ -172,4 +172,8 @@ export default {
             return res;
         });
     },
+    async getLogs({commit},data){
+        let gettingLogs = await axios.get('get-tax-logs',{params : {tax_id : data.tax_id} });
+        commit('setLogs',gettingLogs.data.logs);
+    }
 }

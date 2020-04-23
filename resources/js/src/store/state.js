@@ -6,6 +6,8 @@ import colors from '@/../themeConfig.js'
 const state = {
     comments : [],
     notifications : [],
+    allNotifications : [],
+    allNotificationsCount : 0,
     totalNotifications : 0,
     averageRate : 0,
     rootUrl : '/',
@@ -18,7 +20,6 @@ const state = {
     theme: themeConfig.theme || 'light',
     navbarSearchAndPinList: navbarSearchAndPinList,
     AppActiveUser: {},
-    searchedData: {},
     faqs : '',
     themePrimaryColor: colors.primary,
 

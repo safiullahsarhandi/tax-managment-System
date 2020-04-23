@@ -6,87 +6,87 @@
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
                             <input type="hidden" name="id" v-model="data.sale_id" data-vv-scope="editform">
-                            <vs-input name="account_code" v-validate="`required`" label-placeholder="Account Code" v-model="data.account_code" />
+                            <vs-input name="account_code" data-vv-as="Account Code" v-validate="`required`" label-placeholder="Account Code" v-model="data.account_code" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('account_code')">{{errors.first('account_code')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="account_description" v-validate="`required`" label-placeholder="Account Description" v-model="data.account_description" />
+                            <vs-input name="account_description" data-vv-as="Account Description" v-validate="`required`" label-placeholder="Account Description" v-model="data.account_description" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('account_description')">{{errors.first('account_description')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="account_ref" v-validate="`required`" label-placeholder="Account Reference" v-model="data.accounting_reference" />
+                            <vs-input name="accounting_reference" data-vv-as="Account Reference" v-validate="`required`" label-placeholder="Account Reference" v-model="data.accounting_reference" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('account_ref')">{{errors.first('account_ref')}}</span>
+                        <span class="text-danger" v-show="errors.has('accounting_reference')">{{errors.first('accounting_reference')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="sign_date" v-validate="`required`" label-placeholder="Signature Date" v-model="data.signature_date" />
+                            <vs-input name="signature_date" data-vv-as="Signature Date" v-validate="`required`" label-placeholder="Signature Date" v-model="data.signature_date" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('sign_date')">{{errors.first('sign_date')}}</span>
+                        <span class="text-danger" v-show="errors.has('signature_date')">{{errors.first('signature_date')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="branch_name" v-validate="`required`" label-placeholder="Branch#/Name" v-model="data.branch_name" />
+                            <vs-input name="branch_name" data-vv-as="Branch Name" v-validate="`required`" label-placeholder="Branch#/Name" v-model="data.branch_name" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('branch_name')">{{errors.first('branch_name')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="tax_period" v-validate="`required`" label-placeholder="Tax Period" v-model="data.tax_period" />
+                            <vs-input name="tax_period" data-vv-as="Tax Period" v-validate="`required`" label-placeholder="Tax Period" v-model="data.tax_period" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('tax_period')">{{errors.first('tax_period')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="invoice_date" v-validate="`required`" label-placeholder="Invoice Date" v-model="data.invoice_date" />
+                            <vs-input name="invoice_date" data-vv-as="Invoice Date" v-validate="`required`" label-placeholder="Invoice Date" v-model="data.invoice_date" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('invoice_date')">{{errors.first('invoice_date')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="invoice_number" v-validate="`required`" label-placeholder="Invoice No./ Credit Note No." v-model="data.invoice_num" />
+                            <vs-input name="invoice_num" data-vv-as="Invoice No. / Credit Note No." v-validate="`required`" label-placeholder="Invoice No./ Credit Note No." v-model="data.invoice_num" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('invoice_number')">{{errors.first('invoice_number')}}</span>
+                        <span class="text-danger" v-show="errors.has('invoice_num')">{{errors.first('invoice_num')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input disabled name="client_name" label-placeholder="Client Name" v-model="customer.name_english" />
+                            <vs-input disabled name="client_name" data-vv-as="Client Name" label-placeholder="Client Name" v-model="customer.name_english" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('client_name')">{{errors.first('client_name')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input disabled name="client_tin" label-placeholder="Client TIN" v-model="customer.tin_no" />
+                            <vs-input disabled name="client_tin" data-vv-as="Client TIN" label-placeholder="Client TIN" v-model="customer.tin_no" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('client_tin')">{{errors.first('client_tin')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="description" v-validate="`required`" label-placeholder="Description" v-model="data.description" />
+                            <vs-input name="description" data-vv-as="Description" v-validate="`required`" label-placeholder="Description" v-model="data.description" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('description')">{{errors.first('description')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="quantity" v-validate="`required`" label-placeholder="Quantity" v-model="data.quantity" />
+                            <vs-input name="quantity" data-vv-as="Quantity" v-validate="`required`" label-placeholder="Quantity" v-model="data.quantity" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('quantity')">{{errors.first('quantity')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="non_taxable_sales" v-validate="`decimal`" label-placeholder="Non-Taxable Sales" v-model="non_taxable_sales" />
+                            <vs-input name="non_taxable_sales" data-vv-as="Non-Taxable Sales" v-validate="`decimal`" label-placeholder="Non-Taxable Sales" v-model="data.non_taxable_sales" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('non_taxable_sales')">{{errors.first('non_taxable_sales')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="export_value" v-validate="`decimal`" label-placeholder="Value of Exports/ 0% VAT" v-model="export_value" />
+                            <vs-input name="vat" data-vv-as="Value Of Exports" v-validate="`decimal`" label-placeholder="Value of Exports/ 0% VAT" v-model="data.vat" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('export_value')">{{errors.first('export_value')}}</span>
+                        <span class="text-danger" v-show="errors.has('vat')">{{errors.first('vat')}}</span>
                     </vs-col>
                 </vs-row>
                 <br>
@@ -94,9 +94,9 @@
                 <vs-row>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="person_non_taxable_sales" v-validate="`decimal`" label-placeholder="Non-Taxable Sales" v-model="person_non_taxable_sales" />
+                            <vs-input name="taxable_person_sales" data-vv-as="Non-Taxable Sales" v-validate="`decimal`" label-placeholder="Non-Taxable Sales" v-model="person_non_taxable_sales" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('person_non_taxable_sales')">{{errors.first('person_non_taxable_sales')}}</span>
+                        <span class="text-danger" v-show="errors.has('taxable_person_sales')">{{errors.first('taxable_person_sales')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
@@ -110,7 +110,7 @@
                 <vs-row>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="customer_non_taxable_sales" label-placeholder="Non-Taxable Sales" v-model="customer_non_taxable_sales" />
+                            <vs-input name="cust_sales" data-vv-as="Non-Taxable Sales" label-placeholder="Non-Taxable Sales" v-model="customer_non_taxable_sales" />
                         </vx-input-group>
                         <!-- <span class="text-danger" v-show="errors.has('customer_non_taxable_sales')">{{errors.first('customer_non_taxable_sales')}}</span> -->
                     </vs-col>
@@ -124,7 +124,7 @@
                 <vs-row>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input disabled name="total_taxable_value" label-placeholder="Total Taxable Value" v-model="total_taxable_value" />
+                            <vs-input disabled name="total_taxable_value" data-vv-as="Total Taxable Value" label-placeholder="Total Taxable Value" v-model="total_taxable_value" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('total_taxable_value')">{{errors.first('total_taxable_value')}}</span>
                     </vs-col>
@@ -261,7 +261,7 @@ export default {
 
         },
         addMoreFeild() {
-            this.customField.push({ name: 'additional_field[]', value: '', type: 'text' });
+            this.customField.push({ name: 'additional_fields[]', value: '', type: 'text' });
         },
         ...mapActions({
             update: 'sales/updateSale',
@@ -281,7 +281,7 @@ export default {
                 if (sale.additional_fields != null) {
                     if (sale.additional_fields.length > 0) {
                         sale.additional_fields.map(function(val, key) {
-                            self.customField.push({ name: 'additional_field[]', value: val, type: 'text' });
+                            self.customField.push({ name: 'additional_fields[]', value: val, type: 'text' });
                         });
                     }
                 }

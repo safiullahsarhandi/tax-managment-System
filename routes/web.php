@@ -141,9 +141,12 @@ Route::group(['prefix' => ''], function () {
 	Route::post('update-faqs', 'ApplicationController@update_faqs');
 
 	Route::get('get-notifications', 'ApplicationController@get_notifications');
+	Route::get('get-all-notifications', 'ApplicationController@get_all_notifications');
 	Route::post('mark-as-read', 'ApplicationController@mark_as_read');
 	Route::post('sendTokenToServer', 'ApplicationController@sendTokenToServer');
 	Route::get('testingGoogleAuth', 'ApplicationController@testingGoogleAuth');
+	Route::get('get-tax-logs', 'ApplicationController@get_tax_logs');
+	Route::get('get-customer-logs', 'ApplicationController@get_customer_logs');
 
 	Route::post('delete-spp', 'ApplicationController@deleteSpp');
 

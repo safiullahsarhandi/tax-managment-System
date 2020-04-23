@@ -10,31 +10,31 @@
                 <vs-row>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="branch_name" v-validate="`required`" label-placeholder="Branch#/Name" v-model="branch_name" />
+                            <vs-input name="branch_name" data-vv-as="Branch Name" v-validate="`required`" label-placeholder="Branch#/Name" v-model="branch_name" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('branch_name')">{{errors.first('branch_name')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="tax_period" v-validate="`required`" label-placeholder="Tax Period" v-model="tax_period" />
+                            <vs-input name="tax_period" data-vv-as="Tax Period" v-validate="`required`" label-placeholder="Tax Period" v-model="tax_period" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('tax_period')">{{errors.first('tax_period')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="invoice_date" v-validate="`required`" label-placeholder="Invoice Date" v-model="invoice_date" />
+                            <vs-input name="invoice_date" data-vv-as="Invoice Date" v-validate="`required`" label-placeholder="Invoice Date" v-model="invoice_date" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('invoice_date')">{{errors.first('invoice_date')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="invoice_number" v-validate="`required`" label-placeholder="Invoice Number" v-model="invoice_number" />
+                            <vs-input name="invoice_num" data-vv-as="Invoice Number" v-validate="`required`" label-placeholder="Invoice Number" v-model="invoice_number" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('invoice_number')">{{errors.first('invoice_number')}}</span>
+                        <span class="text-danger" v-show="errors.has('invoice_num')">{{errors.first('invoice_num')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="supplier" v-validate="`required`" label-placeholder="Supplier" v-model="supplier" />
+                            <vs-input name="supplier" data-vv-as="Supplier" v-validate="`required`" label-placeholder="Supplier" v-model="supplier" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('supplier')">{{errors.first('supplier')}}</span>
                     </vs-col>
@@ -45,19 +45,19 @@
                     </vs-col> -->
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="good_desc" v-validate="`required`" label-placeholder="Description of good/services" v-model="good_desc" />
+                            <vs-input name="description" data-vv-as="Description of good/services" v-validate="`required`" label-placeholder="Description of good/services" v-model="good_desc" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('good_desc')">{{errors.first('good_desc')}}</span>
+                        <span class="text-danger" v-show="errors.has('description')">{{errors.first('description')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="quantity" v-validate="`required`" label-placeholder="Quantity" v-model="quantity" />
+                            <vs-input name="quantity" data-vv-as="Quantity" v-validate="`required`" label-placeholder="Quantity" v-model="quantity" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('quantity')">{{errors.first('quantity')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="non_taxable_purchases" label-placeholder="Non-Taxable Purchases" v-model="non_taxable_purchases" />
+                            <vs-input name="non_taxable_purchases" data-vv-as="Non-Taxable Purchases" label-placeholder="Non-Taxable Purchases" v-model="non_taxable_purchases" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('non_taxable_purchases')">{{errors.first('non_taxable_purchases')}}</span>
                     </vs-col>
@@ -67,14 +67,14 @@
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <label>Local Purchases</label>
                         <vx-input-group>
-                            <vs-input name="taxable_value_local" label-placeholder="Taxable Value" v-model="taxable_value_local" />
+                            <vs-input name="local_purchase_tax_val" data-vv-as="Taxable Value" label-placeholder="Taxable Value" v-model="taxable_value_local" />
                         </vx-input-group>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <!-- <label>Imports</label> -->
                         <label>Imports</label>
                         <vx-input-group>
-                            <vs-input name="taxable_value_import" label-placeholder="Taxable Value" v-model="taxable_value_import" />
+                            <vs-input name="imports_taxable_val" data-vv-as="Taxable Value (Imports)" label-placeholder="Taxable Value" v-model="taxable_value_import" />
                         </vx-input-group>
                     </vs-col>
                     <vs-col class="mt-5" vs-md="12" vs-lg="4" vs-sm="12">
@@ -111,7 +111,7 @@
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="comments_3e_fii" label-placeholder="Comments (3E-Fii)" v-model="comments_3e_fii" />
+                            <vs-input name="comments" label-placeholder="Comments (3E-Fii)" v-model="comments_3e_fii" />
                         </vx-input-group>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
@@ -121,7 +121,7 @@
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="comments_for_top" label-placeholder="Comments for ToP" v-model="comments_for_top" />
+                            <vs-input name="top_comments" label-placeholder="Comments for ToP" v-model="comments_for_top" />
                         </vx-input-group>
                     </vs-col>
                     <vs-col v-for="(field,index) in customField" :key="index" class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
@@ -243,7 +243,7 @@ export default {
             this.$refs.multiUploads.isShown = true;
         },
         addMoreFeild() {
-            this.customField.push({ name: 'additional_field[]', value: '', type: 'text' });
+            this.customField.push({ name: 'additional_fields[]', value: '', type: 'text' });
         },
         hasError(res) {
             this.$vs.notify({

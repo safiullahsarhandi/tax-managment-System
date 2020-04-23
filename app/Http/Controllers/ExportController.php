@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Admin;
 use App\CustomerEmployee;
+use App\Parameter;
 use App\Payrolls;
 use App\Purchases;
 use App\Sales;
@@ -11,7 +12,6 @@ use App\Tax;
 use App\TaxCustomers;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Parameter;
 use PHPExcel_Style_Alignment;
 
 class ExportController extends Controller {
@@ -70,25 +70,25 @@ class ExportController extends Controller {
 		});
 
 		Excel::create($customer->name_english . '-tax-' . $tax->title . '-payrolls', function ($excel) use ($tax, $payrolls, $customer) {
-			$excel->sheet($tax->title . ' Payrolls', function ($sheet) use ($payrolls, $customer) {
+			$excel->sheet('Payrolls', function ($sheet) use ($payrolls, $customer) {
 				if (count($payrolls) == 0) {
 					$sheet->prependRow(['Employee Name (English)', 'Employee Name (Khmer)', 'NSSF NO', 'Employee NO', 'Basic Salary', 'Basic Salary', 'Over Time', 'Commissions', 'Seniority Payment', 'Severance Pay', 'Maternity', 'Paid Annual Leave', 'Food Allowance', 'Transport Allowance', 'Other Allowance', 'Deduction Advance', 'Salary Adjustment']);
 				}
 				$hr_centre = array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-				$adress = $customer->adress.', '.$customer->street.', '.$customer->muncipality.', '.$customer->sangkat.', '.$customer->district.', '.$customer->province.', '.$customer->group;
-				$eng_adress = 'Address:​​ '. $adress;
-				$khmr_adress = 'អាសយដ្ឋានៈ​​ '. $adress;
+				$adress = $customer->adress . ', ' . $customer->street . ', ' . $customer->muncipality . ', ' . $customer->sangkat . ', ' . $customer->district . ', ' . $customer->province . ', ' . $customer->group;
+				$eng_adress = 'Address:​​ ' . $adress;
+				$khmr_adress = 'អាសយដ្ឋានៈ​​ ' . $adress;
 
-				$tin = 'VAT TIN: '.$customer->tin_no;
-				$tin_khmer = 'លេខអត្តសញ្ញាណកម្មអតបៈ '.$customer->tin_no;
+				$tin = 'VAT TIN: ' . $customer->tin_no;
+				$tin_khmer = 'លេខអត្តសញ្ញាណកម្មអតបៈ ' . $customer->tin_no;
 
-				$com_name = $customer->owner!=null?$customer->owner['name_english']:'No Name';
-				$com_name_khmr = $customer->owner!=null?$customer->owner['name_khmer']:'គ្មាន​ឈ្មោះ';
-				
-				$company_name = 'Company Name: '.$com_name;
-				$company_name_khmer = 'នាមករណ៍សហគ្រាស: '.$com_name_khmr;
-				
+				$com_name = $customer->owner != null ? $customer->owner['name_english'] : 'No Name';
+				$com_name_khmr = $customer->owner != null ? $customer->owner['name_khmer'] : 'គ្មាន​ឈ្មោះ';
+
+				$company_name = 'Company Name: ' . $com_name;
+				$company_name_khmer = 'នាមករណ៍សហគ្រាស: ' . $com_name_khmr;
+
 				$sheet->getStyle('A1:Q1')->getFont()->setBold(true);
 				$sheet->prependRow([]);
 
@@ -104,12 +104,12 @@ class ExportController extends Controller {
 				$sheet->prependRow(['SALARY TAX']);
 				$sheet->prependRow(['ពន្ធកាត់ទុកលើប្រាក់បៀវត្ស']);
 
-				for ($i=1; $i <= 11; $i++) {
-					$val = 'A'.$i.':Q'.$i; 
+				for ($i = 1; $i <= 11; $i++) {
+					$val = 'A' . $i . ':Q' . $i;
 					$sheet->mergeCells($val);
 				}
-				for ($i=1; $i <= 4; $i++) {
-					$val = 'A'.$i.':Q'.$i; 
+				for ($i = 1; $i <= 4; $i++) {
+					$val = 'A' . $i . ':Q' . $i;
 					$sheet->getStyle($val)->getAlignment()->applyFromArray($hr_centre);
 				}
 				$sheet->fromArray($payrolls);
@@ -126,25 +126,25 @@ class ExportController extends Controller {
 		});
 
 		Excel::create($customer->name_english . '-tax-' . $tax->title . '-purchases', function ($excel) use ($tax, $purchases, $customer) {
-			$excel->sheet($tax->title . ' purchases', function ($sheet) use ($purchases, $customer) {
+			$excel->sheet('purchases', function ($sheet) use ($purchases, $customer) {
 				if (count($purchases) == 0) {
 					$sheet->prependRow(['Branch Name', 'Tax Period', 'Invoice Date', 'Invoice Number', 'Supplier', 'Goods Description', 'Quantity', 'Non Taxable Purchases', 'Local Purchase (Taxable Value)', 'Imports (Taxable Value)']);
 				}
 				$hr_centre = array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-				$adress = $customer->adress.', '.$customer->street.', '.$customer->muncipality.', '.$customer->sangkat.', '.$customer->district.', '.$customer->province.', '.$customer->group;
-				$eng_adress = 'Address:​​ '. $adress;
-				$khmr_adress = 'អាសយដ្ឋានៈ​​ '. $adress;
+				$adress = $customer->adress . ', ' . $customer->street . ', ' . $customer->muncipality . ', ' . $customer->sangkat . ', ' . $customer->district . ', ' . $customer->province . ', ' . $customer->group;
+				$eng_adress = 'Address:​​ ' . $adress;
+				$khmr_adress = 'អាសយដ្ឋានៈ​​ ' . $adress;
 
-				$tin = 'VAT TIN: '.$customer->tin_no;
-				$tin_khmer = 'លេខអត្តសញ្ញាណកម្មអតបៈ '.$customer->tin_no;
+				$tin = 'VAT TIN: ' . $customer->tin_no;
+				$tin_khmer = 'លេខអត្តសញ្ញាណកម្មអតបៈ ' . $customer->tin_no;
 
-				$com_name = $customer->owner!=null?$customer->owner['name_english']:'No Name';
-				$com_name_khmr = $customer->owner!=null?$customer->owner['name_khmer']:'គ្មាន​ឈ្មោះ';
-				
-				$company_name = 'Company Name: '.$com_name;
-				$company_name_khmer = 'នាមករណ៍សហគ្រាស: '.$com_name_khmr;
-				
+				$com_name = $customer->owner != null ? $customer->owner['name_english'] : 'No Name';
+				$com_name_khmr = $customer->owner != null ? $customer->owner['name_khmer'] : 'គ្មាន​ឈ្មោះ';
+
+				$company_name = 'Company Name: ' . $com_name;
+				$company_name_khmer = 'នាមករណ៍សហគ្រាស: ' . $com_name_khmr;
+
 				$sheet->getStyle('A1:J1')->getFont()->setBold(true);
 				$sheet->prependRow([]);
 
@@ -160,12 +160,12 @@ class ExportController extends Controller {
 				$sheet->prependRow(['PURCHASE JOURNAL']);
 				$sheet->prependRow(['ទិន្នានុប្បវត្តិទិញ']);
 
-				for ($i=1; $i <= 11; $i++) {
-					$val = 'A'.$i.':J'.$i; 
+				for ($i = 1; $i <= 11; $i++) {
+					$val = 'A' . $i . ':J' . $i;
 					$sheet->mergeCells($val);
 				}
-				for ($i=1; $i <= 4; $i++) {
-					$val = 'A'.$i.':J'.$i; 
+				for ($i = 1; $i <= 4; $i++) {
+					$val = 'A' . $i . ':J' . $i;
 					$sheet->getStyle($val)->getAlignment()->applyFromArray($hr_centre);
 				}
 				$sheet->fromArray($purchases);
@@ -180,29 +180,24 @@ class ExportController extends Controller {
 		$sales = Sales::with('created_by')->where('tax_id', $tax_id)->get()->map(function ($sale) {
 			return ['Account Code' => $sale->account_code, 'Account Description' => $sale->account_description, 'Account Reference' => $sale->accounting_reference, 'Signature Date' => $sale->signature_date, 'Branch Name' => $sale->branch_name, 'Tax Period' => $sale->tax_period, 'Invoice Date' => $sale->invoice_date, 'Invoice Number' => $sale->invoice_num, 'Description' => $sale->description, 'Quantity' => $sale->quantity, 'Non Taxable sales' => $sale->non_taxable_sales, 'Sales to taxable person (Value)' => $sale->taxable_person_sales, 'Sales to Consumer (Value)' => $sale->cust_sales];
 		});
-
 		Excel::create($customer->name_english . '-tax-' . $tax->title . '-sales', function ($excel) use ($tax, $sales, $customer) {
-			$excel->sheet($tax->title . ' sales', function ($sheet) use ($sales, $customer) {
-				if (count($sales) == 0) {
-					$sheet->prependRow(['Account Code', 'Account Description', 'Account Reference', 'Signature Date', 'Branch Name', 'Tax Period', 'Invoice Date', 'Invoice Number', 'Description', 'Quantity', 'Non Taxable sales', 'Sales to taxable person (Value)', 'Sales to Consumer (Value)']);
-				}
+			$excel->sheet('sales', function ($sheet) use ($sales, $customer) {
 
 				$hr_centre = array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-				$adress = $customer->adress.', '.$customer->street.', '.$customer->muncipality.', '.$customer->sangkat.', '.$customer->district.', '.$customer->province.', '.$customer->group;
-				$eng_adress = 'Address:​​ '. $adress;
-				$khmr_adress = 'អាសយដ្ឋានៈ​​ '. $adress;
+				$adress = $customer->adress . ', ' . $customer->street . ', ' . $customer->muncipality . ', ' . $customer->sangkat . ', ' . $customer->district . ', ' . $customer->province . ', ' . $customer->group;
+				$eng_adress = 'Address:​​ ' . $adress;
+				$khmr_adress = 'អាសយដ្ឋានៈ​​ ' . $adress;
 
-				$tin = 'VAT TIN: '.$customer->tin_no;
-				$tin_khmer = 'លេខអត្តសញ្ញាណកម្មអតបៈ '.$customer->tin_no;
+				$tin = 'VAT TIN: ' . $customer->tin_no;
+				$tin_khmer = 'លេខអត្តសញ្ញាណកម្មអតបៈ ' . $customer->tin_no;
 
-				$com_name = $customer->owner!=null?$customer->owner['name_english']:'No Name';
-				$com_name_khmr = $customer->owner!=null?$customer->owner['name_khmer']:'គ្មាន​ឈ្មោះ';
-				
-				$company_name = 'Company Name: '.$com_name;
-				$company_name_khmer = 'នាមករណ៍សហគ្រាស: '.$com_name_khmr;
-				
-				$sheet->getStyle('A1:M1')->getFont()->setBold(true);				
+				$com_name = $customer->owner != null ? $customer->owner['name_english'] : 'No Name';
+				$com_name_khmr = $customer->owner != null ? $customer->owner['name_khmer'] : 'គ្មាន​ឈ្មោះ';
+
+				$company_name = 'Company Name: ' . $com_name;
+				$company_name_khmer = 'នាមករណ៍សហគ្រាស: ' . $com_name_khmr;
+
 				$sheet->prependRow([]);
 
 				$sheet->prependRow([$eng_adress]);
@@ -217,17 +212,22 @@ class ExportController extends Controller {
 				$sheet->prependRow(['SALE JOURNAL']);
 				$sheet->prependRow(['ទិន្នានុប្បវត្តិលក់']);
 
-				for ($i=1; $i <= 11; $i++) {
-					$val = 'A'.$i.':M'.$i; 
+				for ($i = 1; $i <= 11; $i++) {
+					$val = 'A' . $i . ':M' . $i;
 					$sheet->mergeCells($val);
 				}
-				for ($i=1; $i <= 4; $i++) {
-					$val = 'A'.$i.':M'.$i; 
+				for ($i = 1; $i <= 4; $i++) {
+					$val = 'A' . $i . ':M' . $i;
 					$sheet->getStyle($val)->getAlignment()->applyFromArray($hr_centre);
 				}
+				$sheet->appendRow(['Account Code', 'Account Description', 'Account Reference', 'Signature Date', 'Branch Name', 'Tax Period', 'Invoice Date', 'Invoice Number', 'Description', 'Quantity', 'Non Taxable sales', 'Sales to taxable person (Value)', 'Sales to Consumer (Value)']);
+				$sheet->rows($sales);
+				if (count($sales) == 0) {
 
-				
-				$sheet->fromArray($sales);
+					// dd($sales);
+				}
+				$sheet->getStyle('A12:M12')->getFont()->setBold(true);
+				// $sheet->fromArray($sales, false);
 			});
 		})->export('xlsx');
 

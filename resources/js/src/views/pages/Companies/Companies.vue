@@ -31,8 +31,8 @@
                     <vs-th sort-key="email">Email</vs-th>
                     <vs-th sort-key="supervisor.full_name" v-if="$store.getters.userType == 'Admin' || $store.getters.userType == 'Super Admin'">Supervisor</vs-th>
                     <vs-th v-if="$store.getters.userType != 'Officer'">Officer</vs-th>
-                    <!-- <vs-th v-if="$store.getters.userType != 'Admin' || $store.getters.userType != 'Super Admin'">Uncompleted Taxes</vs-th> -->
-                    <vs-th v-if="$store.getters.userType == 'Admin' || $store.getters.userType != 'Super Admin'">Status</vs-th>
+                    <!-- <vs-th v-if="$store.getters.userType == 'Officer' || $store.getters.userType == 'Supervisor'">Uncompleted Taxes</vs-th> -->
+                    <vs-th v-if="$store.getters.userType == 'Officer' || $store.getters.userType == 'Supervisor'">Status</vs-th>
                     <vs-th>Actions</vs-th>
                 </template>
                 <template slot-scope="{data}">
@@ -48,8 +48,8 @@
                         <vs-td :data="tr.email">{{tr.email}}</vs-td>
                         <vs-td v-if="$store.getters.userType == 'Admin' || $store.getters.userType == 'Super Admin'" :data="getSupervisor(tr.supervisor)">{{getSupervisor(tr.supervisor)}}</vs-td>
                         <vs-td v-if="$store.getters.userType != 'Officer'" :data="getOfficer(tr.officer)">{{ getOfficer(tr.officer) }}</vs-td>
-                        <!-- <vs-td v-if="$store.getters.userType != 'Admin' || $store.getters.userType != 'Super Admin'"  :data="0">{{0}}</vs-td> -->
-                        <vs-td v-if="$store.getters.userType == 'Admin' || $store.getters.userType != 'Super Admin'"  :data="tr.status">
+                        <!-- <vs-td v-if="$store.getters.userType == 'Officer' || $store.getters.userType == 'Supervisor'"  :data="0">{{0}}</vs-td> -->
+                        <vs-td v-if="$store.getters.userType == 'Officer' || $store.getters.userType == 'Supervisor'"  :data="tr.status">
                             <vx-input-group>
                                     <vs-select @input="updateCustomerStatus(tr.customer_id,tr.customer_status)" v-validate="'required'" placeholder="Select Customer Status"  v-model="tr.customer_status">
                                         <vs-select-item value="Prospect" text="Prospect"></vs-select-item>
@@ -61,7 +61,7 @@
                             <!-- <vs-switch @click="statusUpdate(tr.customer_id)" v-model="tr.status"/> --></vs-td>
                             
                         <vs-td>
-                            <vs-button v-if="$store.getters.userType == 'Admin' || $store.getters.userType != 'Super Admin'" :to="'company-update/'+tr.customer_id" size="small" type="border" icon-pack="feather" icon="icon-edit"></vs-button>
+                            <vs-button v-if="$store.getters.userType == 'Officer' || $store.getters.userType == 'Supervisor'" :to="'company-update/'+tr.customer_id" size="small" type="border" icon-pack="feather" icon="icon-edit"></vs-button>
                             <vs-button :to="'company-detail/'+tr.customer_id" size="small" icon-pack="feather" icon="icon-maximize-2" type="border"></vs-button>
                             <!-- <vs-button @click="viewTaxTeam(tr.id)" size="small" icon-pack="feather" icon="icon-users" type="border"></vs-button> -->
                         </vs-td>

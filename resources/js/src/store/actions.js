@@ -112,6 +112,11 @@ const actions = {
         let fetchedNotifications = gettingNotifications.data;
         commit('setNotifications',fetchedNotifications);
     },
+    async getAllNotifications({commit}){
+        let gettingNotifications =  await axios.get('get-all-notifications');
+        let fetchedNotifications = gettingNotifications.data;
+        commit('setAllNotifications',fetchedNotifications);
+    },
     async markAsRead({commit},notification){
         let markAsRead =  await axios.post('mark-as-read',{id : notification.id});
         let markedAsRead = markAsRead.data;
