@@ -377,6 +377,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -1087,7 +1088,10 @@ var render = function() {
                             {
                               staticClass: "p-0 ml-0",
                               staticStyle: { width: "170px" },
-                              attrs: { placeholder: "Select Status" },
+                              attrs: {
+                                autocomplete: "",
+                                placeholder: "Select Status"
+                              },
                               on: {
                                 input: function($event) {
                                   return _vm.changeTaxStatus(_vm.tax.tax_id)

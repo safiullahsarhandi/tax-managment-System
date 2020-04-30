@@ -164,7 +164,7 @@
                        <!--  <vs-list-item title="Tax Team" subtitle="">
                         </vs-list-item> -->
                         <vs-list-item  class="p-0 ml-0 status-list-item">
-                            <vs-select @input="changeTaxStatus(tax.tax_id)" v-model="tax.status" class="p-0 ml-0" placeholder="Select Status" style="width: 170px;" >
+                            <vs-select autocomplete @input="changeTaxStatus(tax.tax_id)" v-model="tax.status" class="p-0 ml-0" placeholder="Select Status" style="width: 170px;" >
                                 <vs-select-item value="0" text="Work In Progress"></vs-select-item>
                                 <vs-select-item value="1" text="Review"></vs-select-item>
                                 <vs-select-item value="2" text="Approve"></vs-select-item>
@@ -176,6 +176,7 @@
                             </vs-select>
 
                             <!-- <vs-switch color="warning" :disabled="activeUser.type != 'Admin' || activeUser.type != 'Super Admin'" @input="changeTaxStatus(tax.tax_id)" /> -->
+
                         </vs-list-item>
                         <vs-list-item title="Edit Tax" subtitle="">
                         	<vs-button size="small" icon-pack="feather" @click="editTax()" icon="icon-edit"></vs-button>
@@ -335,15 +336,15 @@ export default {
             })
         },
         changeTaxStatus(id) {
-        this.$vs.loading();
-        let data = {
-            status: this.tax.status,
-            id: this.tax.tax_id,
-            notify: this.$vs.notify,
-            close: this.$vs.loading.close
+            this.$vs.loading();
+            let data = {
+                status: this.tax.status,
+                id: this.tax.tax_id,
+                notify: this.$vs.notify,
+                close: this.$vs.loading.close
+            }
+            this.statusUpdate(data);
         }
-        this.statusUpdate(data);
-    }
     },
 }
 

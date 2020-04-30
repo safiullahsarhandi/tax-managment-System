@@ -1613,7 +1613,7 @@ class ApplicationController extends Controller {
 	}
 
 	public function get_purchases(Request $request) {
-		$purchases = Purchases::latest('id')->where('tax_id', $request->tax_id)->get();
+		$purchases = Purchases::with(['created_by'])->latest('id')->where('tax_id', $request->tax_id)->get();
 		return response()->json(compact('purchases'));
 	}
 
@@ -1671,7 +1671,7 @@ class ApplicationController extends Controller {
 	}
 
 	public function get_sales(Request $request) {
-		$sales = Sales::latest('id')->where('tax_id', $request->tax_id)->get();
+		$sales = Sales::with(['created_by'])->latest('id')->where('tax_id', $request->tax_id)->get();
 		return response()->json(compact('sales'));
 	}
 	public function get_pending_sales(Request $request) {
@@ -1880,7 +1880,7 @@ class ApplicationController extends Controller {
 
 	public function get_payrolls(Request $request) {
 
-		$data = Payrolls::with(['employee'])->whereTaxId($request->tax_id)->get();
+		$data = Payrolls::with(['created_by','employee'])->whereTaxId($request->tax_id)->get();
 
 		return response()->json(['data' => $data]);
 
@@ -2241,6 +2241,8 @@ class ApplicationController extends Controller {
 	}
 	public function status_updateSPP(Request $request) {
 
+		// dd($request->all());
+
 		$data = array();
 		if ($request->type == 'sale') {
 			$data = Sales::whereSaleId($request->id)->whereTaxId($request->tax_id)->first();
@@ -2258,7 +2260,12 @@ class ApplicationController extends Controller {
 
 		$msg = '';
 		$tax = Tax::with('customer')->whereTaxId($request->tax_id)->first();
-		if ($data->supervisor_confirmed == 0) {
+		if($data->supervisor_confirmed == 2){
+			return response()->json(['status' => false, 'msg' => 'You cannot change '.$request->type.' status, Current '.$request->type.' is under supervisor reviewing']);
+		}
+		if ($data->supervisor_confirmed == 0 || $data->supervisor_confirmed == 3) { // 0 = pending, 3 = rejected
+
+
 
 			if ($data->officer_confirmed == 1) {
 				$data->officer_confirmed = 0;
@@ -2266,7 +2273,7 @@ class ApplicationController extends Controller {
 				$msg = $request->type . ' submission revoked Successfully';
 			} else {
 				// $supervisor = Admin::whereManagerId(session('admin.reports_to'))->first();
-
+				$data->supervisor_confirmed = 0; // resumission status changed from rejected to submitted
 				$data->officer_confirmed = 1;
 				$data->save();
 				$msg = $request->type . ' Submitted Successfully';
@@ -2279,8 +2286,7 @@ class ApplicationController extends Controller {
 				$notification->click_action = '/' . $request->type . "-detail/" . $request->id;
 
 				if ($notification->save()) {
-					/*$fields = [];
-					$headers = [''];*/
+					
 					$tokens = Admin::where('manager_id', session('admin.reports_to'))->first();
 					// 	dd($tokens);
 					$url = "https://fcm.googleapis.com//v1/projects/taxportal-d57de/messages:send";
@@ -2315,41 +2321,6 @@ class ApplicationController extends Controller {
 					curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
 					$result = curl_exec($ch);
 					curl_close($ch);
-					// 		echo "<p>&nbsp;</p>";
-					// 		echo "The Result : ".$result;
-					/*$fields = [
-						'notification' => [
-							"title" => "testing",
-							"body" => "testing",
-						],
-						'data' => [
-							"title" => "testing",
-							"body" => "testing",
-						],
-						"priority" => "high",
-						'registeration_ids' => $tokens,
-					];*/
-					/*$title = $notification->notification;
-						$body = "Hello I am from Your php server";
-						$notification = array('title' => $title, 'text' => $body, 'sound' => 'default', 'badge' => '1');
-					*/
-					// 	$json = json_encode($fields);
-					// 	// $headers = array();
-					// 	$headers = ['Content-Type: application/json', 'Authorization: Bearer ' . $serverKey];
-					// 	$ch = curl_init();
-					// 	curl_setopt($ch, CURLOPT_URL, $url);
-					// 	curl_setopt($ch, CURLOPT_POST, true);
-					// 	curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
-					// 	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-					// 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-					// 	//Send the request
-					// 	$response = curl_exec($ch);
-					// 	//Close request
-					// 	/*if ($response === FALSE) {
-					// 		die('FCM Send Error: ' . curl_error($ch));
-					// 	}*/
-					// 	curl_close($ch);
-					// 	dd($response);
 				}
 			}
 		} else {
@@ -2379,11 +2350,17 @@ class ApplicationController extends Controller {
 
 		$msg = '';
 		$tax = Tax::with('customer')->whereTaxId($request->tax_id)->first();
+		$tax_type = $request->tax_type;
+		
 		if ($request->by == 'supervisor') {
 
 			if ($data->officer_confirmed == 1) {
 
-				if ($data->management_confirmed == 0) {
+				if($data->management_confirmed == 2){
+					return response()->json(['status' => false, 'msg' => 'You cannot change '.$tax_type.' status, Current '.$tax_type.' is under adminstration reviewing']);
+				}
+
+				if ($data->management_confirmed == 0 || $data->management_confirmed == 3) {
 					$data->supervisor_confirmed = $request->status;
 					$data->save();
 					if ($request->status == 1) {
@@ -2484,6 +2461,14 @@ class ApplicationController extends Controller {
 			}
 
 		} else if ($request->by == 'admin') {
+			if($data->supervisor_confirmed == 2){
+				return response()->json(['status' => false, 'msg' => 'You cannot change '.$tax_type.' status, Current '.$tax_type.' is under supervisor reviewing']);
+			}
+
+			if($data->supervisor_confirmed == 3){
+				return response()->json(['status' => false, 'msg' => 'You cannot change '.$tax_type.' status, Current '.$tax_type.' is rejected by supervisor']);
+			}
+
 			if ($data->supervisor_confirmed == 1) {
 				$data->management_confirmed = $request->status;
 				$data->save();
@@ -2622,6 +2607,7 @@ class ApplicationController extends Controller {
 			$tax->status = $request->status;
 			$tax->save();
 			return response()->json(['status' => true, 'msg' => 'tax has been completed successfully', 'tax' => $tax]);
+
 		} else {
 			return response()->json(['status' => false, 'msg' => 'all sales, purchases payrolls should be approved to mark as completed ', 'tax' => $tax]);
 		}
@@ -2643,11 +2629,9 @@ class ApplicationController extends Controller {
 		if (!$check = Hash::check($current_password, $getUser->password)) {
 			return response()->json(['status' => false, 'msg' => 'invalid current password']);
 		} else {
-
 			$getUser->password = bcrypt($new_password);
 			$getUser->save();
 			return response()->json(['status' => true, 'msg' => 'Password changed successfully']);
-
 		}
 
 	}
@@ -2671,8 +2655,8 @@ class ApplicationController extends Controller {
 		if ($save) {
 			return response()->json(['status' => 'success', 'msg' => 'Parameter Added Successfully'], 200);
 		}
-
 	}
+
 	public function update_parameter(Request $request) {
 		if (Parameter::where('tax_param_id', $request->tax_code . $request->tax_id)->where('effective_date', '<=', now())->where('id', '!=', $request->identifier)->exists()) {
 			return response()->json(['status' => 'error', 'msg' => 'You cannot add new Tax Parameter until previous added parameter exeeds effective date range']);

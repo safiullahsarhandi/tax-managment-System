@@ -148,8 +148,6 @@ class ExportController extends Controller {
 				$company_name = 'Company Name: ' . $com_name;
 				$company_name_khmer = 'នាមករណ៍សហគ្រាស: ' . $com_name_khmr;
 
-				// $sheet->getStyle('A1:J1')->getFont()->setBold(true);
-				// $sheet->prependRow([]);
 
 				$sheet->prependRow([$eng_adress]);
 				$sheet->prependRow([$khmr_adress]);
