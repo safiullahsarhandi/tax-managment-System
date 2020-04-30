@@ -9,6 +9,15 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+<<<<<<< HEAD
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+=======
+>>>>>>> 0cb312c535041d855c86a2bf980a2441c2e3baee
 //
 //
 //
@@ -153,6 +162,39 @@ __webpack_require__.r(__webpack_exports__);
     getSearchedData: function getSearchedData() {
       var _this2 = this;
 
+<<<<<<< HEAD
+      if (this.searchQuery != '') {
+        var val = this.searchQuery;
+      } else if (!_.isUndefined(this.$route.query.q) && this.$route.query.q) {
+        var val = this.$route.query.q;
+      }
+
+      if (!val) {
+        this.inputInit();
+        if (this.bodyOverlay) this.$store.commit('TOGGLE_CONTENT_OVERLAY', false);
+      } else {
+        var self = this;
+        this.$store.dispatch('get_search_data', {
+          query: val,
+          page: 1
+        }).then(function (res) {
+          if (self.$route.path != '/searched-record') {
+            self.$router.push({
+              path: '/searched-record',
+              query: {
+                q: val
+              }
+            });
+          } else {
+            _this2.$router.replace({
+              name: 'searched-record',
+              query: _objectSpread({}, _this2.$route.query, {
+                q: val
+              })
+            });
+          }
+        });
+=======
       var val = this.searchQuery;
 
       if (val == '') {
@@ -199,6 +241,7 @@ __webpack_require__.r(__webpack_exports__);
           labelIcon: 'AlertCircleIcon',
           url: null
         }];
+>>>>>>> 0cb312c535041d855c86a2bf980a2441c2e3baee
       }
     },
     escPressed: function escPressed() {
@@ -472,6 +515,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+<<<<<<< HEAD
+=======
 //
 //
 //
@@ -480,6 +525,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+>>>>>>> 0cb312c535041d855c86a2bf980a2441c2e3baee
 
 
 

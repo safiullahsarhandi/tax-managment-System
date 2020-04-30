@@ -3,7 +3,7 @@
         <vs-row>
             <vs-col vs-lg="12" vs-md="12" vs-sm="12">
                 <vx-card>
-                    <VuePerfectScrollbar ref="mainSidebarPs" class="scroll-area--nofications-dropdown p-0 mb-10" :settings="settings">
+                    <VuePerfectScrollbar v-if="allNotifications.length > 0" ref="mainSidebarPs" class="scroll-area--nofications-dropdown p-0 mb-10" :settings="settings">
                         <ul class="bordered-items">
                             <li @click="goToDestination(ntf)" v-for="(ntf,index) in allNotifications" :key="index" class="flex justify-between px-4 py-4 notification cursor-pointer">
                                 <div class="flex items-start">
@@ -17,8 +17,13 @@
                             </li>
                         </ul>
                     </VuePerfectScrollbar>
+                    <vs-pagination @input="changePage" v-model="currentPage" :total="totalPages"></vs-pagination>
+                    <vs-row>
+                        <vs-col class="flex justify-center">
+                            <h1>You dont have any notification yet!</h1>
+                        </vs-col>
+                    </vs-row>
                 </vx-card>
-                <vs-pagination></vs-pagination>
             </vs-col>
         </vs-row>
     </div>
@@ -27,20 +32,22 @@
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import { mapState, mapActions } from 'vuex';
 export default {
-	data () {
-	  return {
-	    settings: { // perfectscrollbar settings
+    data() {
+        return {
+            currentPage: 1,
+            totalPages: 0,
+            settings: { // perfectscrollbar settings
                 maxScrollbarLength: 60,
                 wheelSpeed: .60,
             },
-	  };
-	},
+        };
+    },
     computed: {
         allNotifications() {
             return this.$store.state.allNotifications;
         },
-        allNotificationsCount() {
-            return this.$store.state.allNotificationsCount;
+        allNotificationsDetail() {
+            return this.$store.state.allNotificationsDetail;
         }
         // ...mapState('rootState',['allNotifications','allNotificationsCount']),
     },
@@ -52,6 +59,11 @@ export default {
                 this.$store.dispatch('markAsRead', notification);
                 this.$router.push(notification.click_action);
             }
+        },
+       async changePage(){
+            var self = this;
+        await this.$store.dispatch('getAllNotifications',{page : this.currentPage}).then(function() {
+        });
         },
         elapsedTime(startTime) {
             let x = new Date(startTime);
@@ -88,8 +100,14 @@ export default {
             return 'Just Now'
         },
     },
-    created() {
-        this.$store.dispatch('getAllNotifications');
+    async created() {
+        var self = this;
+        await this.$store.dispatch('getAllNotifications',{page : 1}).then(function() {
+
+            self.currentPage = self.allNotificationsDetail.current
+            self.totalPages = self.allNotificationsDetail.total
+        });
+
 
     },
     components: {

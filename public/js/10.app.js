@@ -375,9 +375,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
 
 
 
@@ -416,6 +413,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.getSupervisors();
     this.getOfficers();
     this.getTax(this.$route.params.id);
+    localStorage.setItem('customer', this.tax.customer_id);
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
     getSupervisors: 'supervisors/getSupervisors',
@@ -633,15 +631,15 @@ var render = function() {
             {
               attrs: {
                 "vs-md":
-                  _vm.activeUser.type == "Admin" ||
-                  _vm.activeUser.type == "Super Admin"
+                  _vm.$store.getters.userType == "Admin" ||
+                  _vm.$store.getters.userType == "Super Admin"
                     ? "9"
-                    : "9",
+                    : "12",
                 "vs-lg":
-                  _vm.activeUser.type == "Admin" ||
-                  _vm.activeUser.type == "Super Admin"
+                  _vm.$store.getters.userType == "Admin" ||
+                  _vm.$store.getters.userType == "Super Admin"
                     ? "9"
-                    : "9",
+                    : "12",
                 "vs-sm": "12",
                 "vs-xs": "12"
               }
@@ -1049,136 +1047,133 @@ var render = function() {
             2
           ),
           _vm._v(" "),
-          _c(
-            "vs-col",
-            {
-              directives: [
+          _vm.$store.getters.userType == "Admin" ||
+          _vm.$store.getters.userType == "Super Admin"
+            ? _c(
+                "vs-col",
                 {
-                  name: "show",
-                  rawName: "v-show",
-                  value:
-                    _vm.activeUser.type == "Admin" ||
-                    _vm.activeUser.type == "Super Admin",
-                  expression:
-                    "activeUser.type == 'Admin' || activeUser.type == 'Super Admin'"
-                }
-              ],
-              staticClass: "mt-base",
-              attrs: {
-                "vs-md": "3",
-                "vs-lg": "3",
-                "vs-sm": "12",
-                "vs-xs": "12"
-              }
-            },
-            [
-              _c(
-                "vx-card",
-                { attrs: { title: "Actions" } },
+                  staticClass: "mt-base",
+                  attrs: {
+                    "vs-md": "3",
+                    "vs-lg": "3",
+                    "vs-sm": "12",
+                    "vs-xs": "12"
+                  }
+                },
                 [
                   _c(
-                    "vs-list",
+                    "vx-card",
+                    { attrs: { title: "Actions" } },
                     [
                       _c(
-                        "vs-list-item",
-                        { staticClass: "p-0 ml-0 status-list-item" },
+                        "vs-list",
                         [
                           _c(
-                            "vs-select",
-                            {
-                              staticClass: "p-0 ml-0",
-                              staticStyle: { width: "170px" },
-                              attrs: {
-                                autocomplete: "",
-                                placeholder: "Select Status"
-                              },
-                              on: {
-                                input: function($event) {
-                                  return _vm.changeTaxStatus(_vm.tax.tax_id)
-                                }
-                              },
-                              model: {
-                                value: _vm.tax.status,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.tax, "status", $$v)
-                                },
-                                expression: "tax.status"
-                              }
-                            },
+                            "vs-list-item",
+                            { staticClass: "p-0 ml-0 status-list-item" },
                             [
-                              _c("vs-select-item", {
-                                attrs: { value: "0", text: "Work In Progress" }
-                              }),
-                              _vm._v(" "),
-                              _c("vs-select-item", {
-                                attrs: { value: "1", text: "Review" }
-                              }),
-                              _vm._v(" "),
-                              _c("vs-select-item", {
-                                attrs: { value: "2", text: "Approve" }
-                              }),
-                              _vm._v(" "),
-                              _c("vs-select-item", {
+                              _c(
+                                "vs-select",
+                                {
+                                  staticClass: "p-0 ml-0",
+                                  staticStyle: { width: "170px" },
+                                  attrs: {
+                                    autocomplete: "",
+                                    placeholder: "Select Status"
+                                  },
+                                  on: {
+                                    input: function($event) {
+                                      return _vm.changeTaxStatus(_vm.tax.tax_id)
+                                    }
+                                  },
+                                  model: {
+                                    value: _vm.tax.status,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.tax, "status", $$v)
+                                    },
+                                    expression: "tax.status"
+                                  }
+                                },
+                                [
+                                  _c("vs-select-item", {
+                                    attrs: {
+                                      value: "0",
+                                      text: "Work In Progress"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("vs-select-item", {
+                                    attrs: { value: "1", text: "Review" }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("vs-select-item", {
+                                    attrs: { value: "2", text: "Approve" }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("vs-select-item", {
+                                    attrs: {
+                                      value: "3",
+                                      text: "Client Confirmation"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("vs-select-item", {
+                                    attrs: { value: "4", text: "Tax Paid" }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("vs-select-item", {
+                                    attrs: { value: "5", text: "Submitted" }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("vs-select-item", {
+                                    attrs: { value: "6", text: "Scanned" }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("vs-select-item", {
+                                    attrs: { value: "7", text: "Released" }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-list-item",
+                            { attrs: { title: "Edit Tax", subtitle: "" } },
+                            [
+                              _c("vs-button", {
                                 attrs: {
-                                  value: "3",
-                                  text: "Client Confirmation"
+                                  size: "small",
+                                  "icon-pack": "feather",
+                                  icon: "icon-edit"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.editTax()
+                                  }
                                 }
-                              }),
-                              _vm._v(" "),
-                              _c("vs-select-item", {
-                                attrs: { value: "4", text: "Tax Paid" }
-                              }),
-                              _vm._v(" "),
-                              _c("vs-select-item", {
-                                attrs: { value: "5", text: "Submitted" }
-                              }),
-                              _vm._v(" "),
-                              _c("vs-select-item", {
-                                attrs: { value: "6", text: "Scanned" }
-                              }),
-                              _vm._v(" "),
-                              _c("vs-select-item", {
-                                attrs: { value: "7", text: "Released" }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-list-item",
+                            { attrs: { title: "Activity Log", subtitle: "" } },
+                            [
+                              _c("vs-button", {
+                                attrs: {
+                                  size: "small",
+                                  "icon-pack": "feather",
+                                  to: "/activity-log",
+                                  icon: "icon-maximize"
+                                }
                               })
                             ],
                             1
                           )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vs-list-item",
-                        { attrs: { title: "Edit Tax", subtitle: "" } },
-                        [
-                          _c("vs-button", {
-                            attrs: {
-                              size: "small",
-                              "icon-pack": "feather",
-                              icon: "icon-edit"
-                            },
-                            on: {
-                              click: function($event) {
-                                return _vm.editTax()
-                              }
-                            }
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vs-list-item",
-                        { attrs: { title: "Activity Log", subtitle: "" } },
-                        [
-                          _c("vs-button", {
-                            attrs: {
-                              size: "small",
-                              "icon-pack": "feather",
-                              to: "/activity-log",
-                              icon: "icon-maximize"
-                            }
-                          })
                         ],
                         1
                       )
@@ -1188,9 +1183,7 @@ var render = function() {
                 ],
                 1
               )
-            ],
-            1
-          )
+            : _vm._e()
         ],
         1
       ),
