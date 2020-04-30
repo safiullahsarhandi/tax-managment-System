@@ -181,7 +181,7 @@ const router = new Router({
                     component: () => import('./views/pages/Faqs.vue'),
                     meta: {
                         requiresAuth: true,
-                        requiresAdmin: false,
+                        requiresAdmin: true,
                         
                     }
                 },
@@ -204,9 +204,10 @@ const router = new Router({
                     }
                 },
                 {
-                    path: '/activity-log/',
-                    name: 'Activity Log',
-                    component: () => import('./views/pages/ActivityLog.vue'),
+                    path: '/searched-record/',
+                    name: 'searched-record',
+                    props: true,
+                    component: () => import('./views/SearchedRecords.vue'),
                     meta: {
                         requiresAuth: true,
                         requiresAdmin: false,
@@ -444,6 +445,15 @@ const router = new Router({
                     meta: {
                         requiresAuth: true,
                         requiresAdmin: true,
+                    }
+                },
+                {
+                    path: '/activity-log/',
+                    name: 'Activity Log',
+                    component: () => import('./views/pages/ActivityLog.vue'),
+                    meta: {
+                        requiresAuth: true,
+                        requiresAdmin: false,
                     }
                 },
                 /*{

@@ -8,10 +8,6 @@
                 <vs-button type="border" :href="{url : `export-sales/${customer_id}/${tax_id}`}" icon-pack="feather" icon="icon-download"></vs-button>
             </template>
             <vs-table search pagination max-items="6" :data="sales">
-                
-                <template slot="header">
-                    <vs-button color="primary" type="border" icon="cloud_download">Export</vs-button>
-                </template>
                 <template slot="thead">
                     <vs-th>Branch#/ Name</vs-th>
                     <vs-th>Tax Period</vs-th>

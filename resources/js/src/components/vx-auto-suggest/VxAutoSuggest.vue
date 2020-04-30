@@ -147,46 +147,25 @@ export default{
 	},
 	methods: {
 		getSearchedData(){
-			
-			var val = this.searchQuery;
-			if(val == '') {
+
+			if(this.searchQuery != ''){
+				var val = this.searchQuery;
+			}else if(!_.isUndefined(this.$route.query.q) && this.$route.query.q){
+				var val = this.$route.query.q;
+			}
+			if(!val) {
 				this.inputInit();
 				if(this.bodyOverlay) this.$store.commit('TOGGLE_CONTENT_OVERLAY', false);
 			}else {
-				// if(this.backgroundOverlay && !this.bodyOverlay) this.$store.commit('TOGGLE_CONTENT_OVERLAY', true);
-				
-				axios.post('search-data', {query: val}).then(res=>{
-					var response = res.data.response;
-					
-					let self = this;
-					self.data.data = [];
-					_.forEach(response, function(value, keys) {
-						_.forEach(value, function(val, key) {
-							self.data.data.push({index: key, result: val})
-						});							
-					});
-					self.$store.state.searchedData = [];
-					var data = _.shuffle(self.data.data);
-					self.$store.state.searchedData = data;
-					if(this.$route.path != '/searched-record'){
-						this.$router.push('/searched-record');
+				var self = this;
+				this.$store.dispatch('get_search_data',{query: val,page : 1}).then(res=>{
+					if(self.$route.path != '/searched-record'){
+						self.$router.push({path :'/searched-record',query: { q :val} });
+					}else{
+						this.$router.replace({name: 'searched-record', query: {...this.$route.query, q: val}})
 					}
-					// console.log(self.$store.state.searchedData);
-						
 				});
 				
-				if(!this.filteredData[0]) this.currentSelected = -1
-			}
-
-			// ADD: No result found
-			if(!this.filteredData.length && this.searchQuery) {
-				this.filteredData = [{
-					highlightAction: false,
-					index: -1,
-					label: 'No results found.',
-					labelIcon: 'AlertCircleIcon',
-					url: null,
-				}]
 			}
 		},
 

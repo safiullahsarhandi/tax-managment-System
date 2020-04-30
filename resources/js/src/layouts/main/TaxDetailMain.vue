@@ -186,7 +186,7 @@ export default {
 
         })
     },
-    created() {
+    async created() {
         /*await this.getTax(this.$route.params.id).then(gettingTax=>{
 
         localStorage.setItem('customer',gettingTax.tax.customer_id);

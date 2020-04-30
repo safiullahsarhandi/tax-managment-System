@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-(window.webpackJsonp=window.webpackJsonp||[]).push([[13],{107:function(t,e,s){"use strict";var n=s(35);s.n(n).a},108:function(t,e,s){(t.exports=s(4)(!1)).push([t.i,'span.oldVal::before {\n  content: "Old Value:" !important;\n  display: block;\n  font-size: 12px;\n}\nspan.newVal::before {\n  content: "New Value:" !important;\n  display: block;\n  font-size: 12px;\n}\n',""])},180:function(t,e,s){"use strict";s.r(e);var n=s(1);function a(t,e){var s=Object.keys(t);if(Object.getOwnPropertySymbols){var n=Object.getOwnPropertySymbols(t);e&&(n=n.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),s.push.apply(s,n)}return s}function r(t){for(var e=1;e<arguments.length;e++){var s=null!=arguments[e]?arguments[e]:{};e%2?a(s,!0).forEach((function(e){o(t,e,s[e])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(s)):a(s).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(s,e))}))}return t}function o(t,e,s){return e in t?Object.defineProperty(t,e,{value:s,enumerable:!0,configurable:!0,writable:!0}):t[e]=s,t}var i={computed:r({},Object(n.e)("taxes",["logs"])),methods:r({},Object(n.b)({getLogs:"taxes/getLogs"})),data:function(){return{tax_id:""}},created:function(){this.tax_id=localStorage.getItem("currentDetail").split("/")[2];var t={tax_id:this.tax_id};this.getLogs(t)}},v=(s(107),s(2)),l=Object(v.a)(i,(function(){var t=this,e=t.$createElement,s=t._self._c||e;return s("div",[s("vx-card",{attrs:{title:"Activity Log"}},[s("vs-table",{attrs:{data:t.logs},scopedSlots:t._u([{key:"default",fn:function(e){var n=e.data;return t._l(n,(function(e,n){return s("vs-tr",{key:n,attrs:{data:e}},[s("vs-td",[t._v(t._s(e.type))]),t._v(" "),s("vs-td",[t._v(t._s(e.event))]),t._v(" "),s("vs-td",[t._v(t._s(e.description))]),t._v(" "),s("vs-td",[t._v(t._s(e.created_at))]),t._v(" "),s("template",{staticClass:"expand-user",slot:"expand"},[s("vs-row",[s("vs-col",{attrs:{"vs-lg":"12","vs-md":"12","vs-sm":"12","vs-xs":"12"}},[s("h4",[t._v(t._s("create"==e.event?"Created Data History":"Updated Data History"))])]),t._v(" "),["update"==e.event?s("vs-row",{staticClass:"mt-base"},t._l(e.changes,(function(e,n){return s("vs-col",{key:n,attrs:{"vs-lg":"4","vs-md":"4","vs-sm":"12","vs-xs":"12"}},[s("div",[s("h5",[t._v(t._s(n.split("_").join(" ")))]),t._v(" "),s("div",{staticClass:"bg-dark-gradient flex justify-around rounded-lg text-white"},[s("span",{staticClass:"oldVal"},[t._v(t._s(e.old_value))]),t._v("-> \n                                \t\t\t"),s("span",{staticClass:"newVal"},[t._v(t._s(e.new_value))])])])])})),1):s("vs-row",{staticClass:"mt-base"},t._l(e.changes,(function(e,n){return s("vs-col",{key:n,attrs:{"vs-lg":"4","vs-md":"4","vs-sm":"12","vs-xs":"12"}},[s("div",[s("h5",[t._v(t._s(n.split("_").join(" ")))]),t._v(" "),s("div",{staticClass:"rounded-lg"},[s("span",[t._v(t._s(e||"NA"))])])])])})),1)]],2)],1)],2)}))}}])},[s("template",{slot:"thead"},[s("vs-th",[t._v("Type")]),t._v(" "),s("vs-th",[t._v("Event")]),t._v(" "),s("vs-th",[t._v("Description")]),t._v(" "),s("vs-th",[t._v("created / updated at")])],1)],2)],1)],1)}),[],!1,null,null,null);e.default=l.exports},35:function(t,e,s){var n=s(108);"string"==typeof n&&(n=[[t.i,n,""]]);var a={hmr:!0,transform:void 0,insertInto:void 0};s(5)(n,a);n.locals&&(t.exports=n.locals)}}]);
-=======
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[13],{
 
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/SearchedRecords.vue?vue&type=script&lang=js&":
@@ -12,6 +9,10 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
 //
 //
 //
@@ -238,81 +239,95 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       searchedRecord: [],
       msg: true,
       activeUserRole: '',
-      objectLength: 0
+      objectLength: 0,
+      currentPage: 1,
+      perPage: 20
     };
   },
   created: function created() {
-    this.activeUserRole = this.$store.state.AppActiveUser.type;
+    var self;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function created$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            // await this.get_search_data({query: val,page : 0})
+            this.activeUserRole = this.$store.state.AppActiveUser.type;
+            self = this;
+
+            if (this.searchedData.length == 0) {
+              this.changePage();
+            }
+
+          case 3:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, null, this);
+  },
+  computed: {
+    searchedData: function searchedData() {
+      this.getData();
+      this.searchedDatalength = this.$store.state.searchedData;
+      return this.$store.state.searchedData;
+    },
+    totalSearchPages: function totalSearchPages() {
+      return this.$store.state.totalSearchPages;
+    }
   },
   methods: {
     getData: function getData() {
       var searchedDatalength = this.$store.state.searchedData;
       this.objectLength = Object.keys(searchedDatalength).length;
+    },
+    changePage: function changePage() {
+      var page,
+          val,
+          _page,
+          _args2 = arguments;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function changePage$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              page = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : 1;
+              val = this.$route.query.q;
+
+              if (!_.isUndefined(this.$route.query.page) && this.$route.query.page) {
+                // alert(this.$route.query.page)
+                _page = this.$route.query.page;
+              }
+
+              this.$route.query.page;
+              this.$store.dispatch('get_search_data', {
+                query: val,
+                page: this.currentPage
+              });
+
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, null, this);
+    },
+    records: function records() {
+      var _this = this;
+
+      var offset = Math.ceil((this.currentPage - 1) * this.perPage);
+
+      var records = _.filter(this.searchedData, function (value, index) {
+        return index >= offset && index < offset + _this.perPage;
+      });
+
+      return records;
     },
     makeUrl: function makeUrl(obj) {
       var activeUserRole = this.$store.state.AppActiveUser.type;
@@ -361,13 +376,6 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$router.push(path);
     }
-  },
-  computed: {
-    searchedData: function searchedData() {
-      this.getData();
-      this.searchedDatalength = this.$store.state.searchedData;
-      return this.$store.state.searchedData;
-    }
   }
 });
 
@@ -385,7 +393,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".card-dimension{\n  width: 100% !important;\n  min-height: 100px !important;\n}\n", ""]);
+exports.push([module.i, ".card-dimension {\n  width: 100% !important;\n  min-height: 100px !important;\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -440,7 +448,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _vm._l(_vm.searchedData, function(item, indextr) {
+      _vm._l(_vm.records(), function(item, indextr) {
         return _c(
           "div",
           [
@@ -468,7 +476,7 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n\n\t\t\t\t" +
+                        "\n                " +
                           _vm._s(
                             item.result.name_english != null
                               ? "Name(english): " +
@@ -476,28 +484,28 @@ var render = function() {
                                   " | "
                               : ""
                           ) +
-                          "\n\t\t\t\t" +
+                          "\n                " +
                           _vm._s(
                             item.result.name_khmer != null
                               ? "Name(Khmer): " + item.result.name_khmer + " | "
                               : ""
                           ) +
-                          "\n\t\t\t\t" +
+                          "\n                " +
                           _vm._s(
                             item.result.address != null
                               ? "Address: " + item.result.street
                               : ""
                           ) +
-                          "\n\t\t\t\t" +
+                          "\n                " +
                           _vm._s("(Company)") +
-                          "\n\n\t\t"
+                          "\n            "
                       )
                     ]
                   ),
                   _vm._v(" "),
                   _c("p", { staticStyle: { "font-size": "12px" } }, [
                     _vm._v(
-                      "\n\t\t\t\t" +
+                      "\n                " +
                         _vm._s(
                           item.result.owner != null
                             ? "Owner Name: " +
@@ -505,49 +513,49 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.owner != null
                             ? "Owner Email: " + item.result.owner.email + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.street != null
                             ? "Street: " + item.result.street + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.sangkat != null
                             ? "Sangkat: " + item.result.sangkat + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.district != null
                             ? "District: " + item.result.district + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.province != null
                             ? "Province: " + item.result.province + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.muncipality != null
                             ? "Muncipality: " + item.result.muncipality + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.industry != null
                             ? "Industry: " + item.result.industry + ", "
                             : ""
                         ) +
-                        "\t\t\t\t\t\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.incorporation_date != null
                             ? "Incorporation Date: " +
@@ -555,25 +563,25 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.village != null
                             ? "Village: " + item.result.village + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.telephone != null
                             ? "Telephone: " + item.result.telephone + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.tax_duration != null
                             ? "Tax Duration: " + item.result.tax_duration
                             : ""
                         ) +
-                        "\n\n\t\t\t"
+                        "\n            "
                     )
                   ]),
                   _vm._v(" "),
@@ -608,7 +616,7 @@ var render = function() {
                       _vm._v(
                         " tax-managemet" +
                           _vm._s(_vm.makeUrl(item.result)) +
-                          "\n\t\t\t"
+                          "\n            "
                       )
                     ],
                     1
@@ -640,52 +648,52 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n\n\t\t\t\t" +
+                        "\n                " +
                           _vm._s(
                             item.result.title != null
                               ? "Title: " + item.result.title + ", "
                               : ""
                           ) +
-                          "\n\t\t\t\t" +
+                          "\n                " +
                           _vm._s(
                             item.result.description != null
                               ? "Description: " + item.result.description
                               : ""
                           ) +
-                          "\n\t\t\t\t" +
+                          "\n                " +
                           _vm._s("(Tax)") +
-                          "\n\t\t\t"
+                          "\n            "
                       )
                     ]
                   ),
                   _vm._v(" "),
                   _c("p", { staticStyle: { "font-size": "12px" } }, [
                     _vm._v(
-                      "\n\t\t\t\t" +
+                      "\n                " +
                         _vm._s(
                           item.result.title != null
                             ? "Title: " + item.result.title + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.description != null
                             ? "Description: " + item.result.description + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.duration != null
                             ? "Duration: " + item.result.duration + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.type != null
                             ? "Tax Type: " + item.result.type
                             : ""
                         ) +
-                        "\n\t\t\t"
+                        "\n            "
                     )
                   ]),
                   _vm._v(" "),
@@ -720,7 +728,7 @@ var render = function() {
                       _vm._v(
                         " tax-managemet" +
                           _vm._s(_vm.makeUrl(item.result)) +
-                          "\n\t\t\t"
+                          "\n            "
                       )
                     ],
                     1
@@ -749,7 +757,7 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n\t\t\t\t\n\t\t\t\t" +
+                        "\n                " +
                           _vm._s(
                             item.result.full_name != null
                               ? "Tax Manager Name: " +
@@ -757,70 +765,70 @@ var render = function() {
                                   ", "
                               : ""
                           ) +
-                          "\n\t\t\t\t" +
+                          "\n                " +
                           _vm._s(
                             item.result.email != null
                               ? "Email: " + item.result.email
                               : ""
                           ) +
-                          "\n\t\t\t\t" +
+                          "\n                " +
                           _vm._s("(Team Member)") +
-                          "\n\t\t\t"
+                          "\n            "
                       )
                     ]
                   ),
                   _vm._v(" "),
                   _c("p", { staticStyle: { "font-size": "12px" } }, [
                     _vm._v(
-                      "\n\t\t\t\t" +
+                      "\n                " +
                         _vm._s(
                           item.result.full_name != null
                             ? "Full Name: " + item.result.full_name + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.email != null
                             ? "Email: " + item.result.email + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.gender != null
                             ? "Gender: " + item.result.gender + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.phone != null
                             ? "Phone: " + item.result.phone + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.address != null
                             ? "Address: " + item.result.address + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.state != null
                             ? "State: " + item.result.state + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.city != null
                             ? "City: " + item.result.city + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.zip_code != null
                             ? "Zip Code: " + item.result.zip_code
                             : ""
                         ) +
-                        "\n\t\t\t"
+                        "\n            "
                     )
                   ]),
                   _vm._v(" "),
@@ -851,7 +859,7 @@ var render = function() {
                       _vm._v(
                         " tax-managemet" +
                           _vm._s(_vm.makeUrl(item.result)) +
-                          "\n\t\t\t"
+                          "\n            "
                       )
                     ],
                     1
@@ -883,38 +891,38 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n\n\t\t\t\t" +
+                        "\n                " +
                           _vm._s(
                             item.result.name_english != null
                               ? "Name: " + item.result.name_english + ", "
                               : ""
                           ) +
-                          "\n\t\t\t\t" +
+                          "\n                " +
                           _vm._s(
                             item.result.name_khmer != null
                               ? "Name(Khmer): " + item.result.name_khmer + ", "
                               : ""
                           ) +
-                          "\n\t\t\t\t" +
+                          "\n                " +
                           _vm._s(
                             item.result.nationality != null
                               ? "Nationality: " + item.result.nationality
                               : ""
                           ) +
-                          "\n\n\t\t\t"
+                          "\n            "
                       )
                     ]
                   ),
                   _vm._v(" "),
                   _c("p", { staticStyle: { "font-size": "12px" } }, [
                     _vm._v(
-                      "\n\t\t\t\t" +
+                      "\n                " +
                         _vm._s(
                           item.result.name_english != null
                             ? "Name: " + item.result.name_english + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.employee_num != null
                             ? "Employee Number: " +
@@ -922,37 +930,37 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.nssf_num != null
                             ? "NSSF Number: " + item.result.nssf_num + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.dob != null
                             ? "Date of birth: " + item.result.dob + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.position != null
                             ? "Position: " + item.result.position + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.joining_date != null
                             ? "Joining Date: " + item.result.joining_date + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.sex != null
                             ? "Sex: " + item.result.sex + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.contract_type != null
                             ? "Contract Type: " +
@@ -960,13 +968,13 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.spouse != null
                             ? "Spouse: " + item.result.spouse
                             : ""
                         ) +
-                        "\n\t\t\t"
+                        "\n            "
                     )
                   ]),
                   _vm._v(" "),
@@ -1001,7 +1009,7 @@ var render = function() {
                       _vm._v(
                         " tax-managemet" +
                           _vm._s(_vm.makeUrl(item.result)) +
-                          "\n\t\t\t"
+                          "\n            "
                       )
                     ],
                     1
@@ -1033,7 +1041,7 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n\n\t\t\t\t" +
+                        "\n                " +
                           _vm._s(
                             item.result.account_description != null
                               ? "Account Description: " +
@@ -1041,7 +1049,7 @@ var render = function() {
                                   ", "
                               : ""
                           ) +
-                          "\n\t\t\t\t" +
+                          "\n                " +
                           _vm._s(
                             item.result.accounting_reference != null
                               ? "Accounting Reference: " +
@@ -1049,22 +1057,22 @@ var render = function() {
                                   ", "
                               : ""
                           ) +
-                          "\n\t\t\t\t" +
+                          "\n                " +
                           _vm._s(
                             item.result.account_code != null
                               ? "Account Code: " + item.result.account_code
                               : ""
                           ) +
-                          "\n\t\t\t\t" +
+                          "\n                " +
                           _vm._s("(Sales)") +
-                          "\n\t\t\t"
+                          "\n            "
                       )
                     ]
                   ),
                   _vm._v(" "),
                   _c("p", { staticStyle: { "font-size": "12px" } }, [
                     _vm._v(
-                      "\n\t\t\t\t" +
+                      "\n                " +
                         _vm._s(
                           item.result.account_description != null
                             ? "Account Description: " +
@@ -1072,7 +1080,7 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.accounting_reference != null
                             ? "Accounting Reference: " +
@@ -1080,13 +1088,13 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.account_code != null
                             ? "Account Code: " + item.result.account_code + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.signature_date != null
                             ? "Signature Date: " +
@@ -1094,25 +1102,25 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.branch_name != null
                             ? "Branch Bame: " + item.result.branch_name + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.tax_period != null
                             ? "Tax Period: " + item.result.tax_period + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.invoice_date != null
                             ? "Invoice Date: " + item.result.invoice_date + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.invoice_num != null
                             ? "Invoice Number: " +
@@ -1120,19 +1128,19 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.description != null
                             ? "Description: " + item.result.description + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.quantity != null
                             ? "Quantity: " + item.result.quantity + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.non_taxable_sales != null
                             ? "Non Taxable Sales: " +
@@ -1140,13 +1148,13 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.vat != null
                             ? "VAT: " + item.result.vat + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.taxable_person_sales != null
                             ? "Taxable Person Sales: " +
@@ -1154,7 +1162,7 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.taxable_person_vat != null
                             ? "Taxable Person VAT: " +
@@ -1162,7 +1170,7 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.cust_sales_vat != null
                             ? "Customer Sales VAT: " +
@@ -1170,7 +1178,7 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.total_taxable_value != null
                             ? "Total Taxable Value: " +
@@ -1178,7 +1186,7 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.taxes_subject != null
                             ? "Taxes Subject: " +
@@ -1186,13 +1194,13 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.comments != null
                             ? "Comments: " + item.result.comments + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.client_response != null
                             ? "Client Response: " +
@@ -1200,13 +1208,13 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.top_comments != null
                             ? "Top Comments: " + item.result.top_comments
                             : ""
                         ) +
-                        "\n\n\t\t\t"
+                        "\n            "
                     )
                   ]),
                   _vm._v(" "),
@@ -1241,7 +1249,7 @@ var render = function() {
                       _vm._v(
                         " tax-managemet" +
                           _vm._s(_vm.makeUrl(item.result)) +
-                          "\n\t\t\t"
+                          "\n            "
                       )
                     ],
                     1
@@ -1273,52 +1281,52 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n\t\t\t\t" +
+                        "\n                " +
                           _vm._s(
                             item.result.branch_name != null
                               ? "Branch Name: " + item.result.branch_name + ", "
                               : ""
                           ) +
-                          "\n\t\t\t\t" +
+                          "\n                " +
                           _vm._s(
                             item.result.description != null
                               ? "Description: " + item.result.description + ", "
                               : ""
                           ) +
-                          "\n\t\t\t\t" +
+                          "\n                " +
                           _vm._s(
                             item.result.invoice_num != null
                               ? "Invoice Number: " + item.result.invoice_num
                               : ""
                           ) +
-                          "\n\t\t\t\t" +
+                          "\n                " +
                           _vm._s("(Purchases)") +
-                          "\n\n\t\t\t "
+                          "\n            "
                       )
                     ]
                   ),
                   _vm._v(" "),
                   _c("p", { staticStyle: { "font-size": "12px" } }, [
                     _vm._v(
-                      "\n\t\t\t\t" +
+                      "\n                " +
                         _vm._s(
                           item.result.branch_name != null
                             ? "Branch Name: " + item.result.branch_name + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.tax_period != null
                             ? "Tax Period: " + item.result.tax_period + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.invoice_date != null
                             ? "Invoice Date: " + item.result.invoice_date + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.invoice_num != null
                             ? "Invoice Number: " +
@@ -1326,31 +1334,31 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.description != null
                             ? "Description: " + item.result.description + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.quantity != null
                             ? "Quantity: " + item.result.quantity + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.comments != null
                             ? "Comments: " + item.result.comments + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.top_comments != null
                             ? "Top Comments: " + item.result.top_comments + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.client_responses != null
                             ? "Client Responses: " +
@@ -1358,7 +1366,7 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.local_purchase_tax_val != null
                             ? "Local Purchase Tax Value: " +
@@ -1366,7 +1374,7 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.local_purchase_vat != null
                             ? "Local Purchase VAT: " +
@@ -1374,7 +1382,7 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.imports_taxable_val != null
                             ? "Imports Taxable Value: " +
@@ -1382,25 +1390,25 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.imports_vat != null
                             ? "Imports VAT: " + item.result.imports_vat + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.total_vat != null
                             ? "Total VAT: " + item.result.total_vat + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.subject != null
                             ? "Subject: " + item.result.subject + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.non_taxable_purchases != null
                             ? "Non Taxable Purchases: " +
@@ -1408,19 +1416,19 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.supplier != null
                             ? "Supplier: " + item.result.supplier + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.vat_tin != null
                             ? "VAT TIN: " + item.result.vat_tin
                             : ""
                         ) +
-                        "\n\t\t\t"
+                        "\n            "
                     )
                   ]),
                   _vm._v(" "),
@@ -1455,7 +1463,7 @@ var render = function() {
                       _vm._v(
                         " tax-managemet" +
                           _vm._s(_vm.makeUrl(item.result)) +
-                          "\n\t\t\t"
+                          "\n            "
                       )
                     ],
                     1
@@ -1487,7 +1495,7 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n\n\t\t\t\t" +
+                        "\n                " +
                           _vm._s(
                             item.result.basic_salary != null
                               ? "Basic Salary: " +
@@ -1495,52 +1503,52 @@ var render = function() {
                                   ", "
                               : ""
                           ) +
-                          "\n\t\t\t\t" +
+                          "\n                " +
                           _vm._s(
                             item.result.bonus != null
                               ? "Bonus: " + item.result.bonus + ", "
                               : ""
                           ) +
-                          "\n\t\t\t\t" +
+                          "\n                " +
                           _vm._s(
                             item.result.over_time != null
                               ? "Over Time: " + item.result.over_time
                               : ""
                           ) +
-                          "\n\t\t\t\t" +
+                          "\n                " +
                           _vm._s("(Payrolls)") +
-                          "\n\n\t\t\t"
+                          "\n            "
                       )
                     ]
                   ),
                   _vm._v(" "),
                   _c("p", { staticStyle: { "font-size": "12px" } }, [
                     _vm._v(
-                      "\n\n\t\t\t\t" +
+                      "\n                " +
                         _vm._s(
                           item.result.basic_salary != null
                             ? "Basic Salary: " + item.result.basic_salary + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.bonus != null
                             ? "Bonus: " + item.result.bonus + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.over_time != null
                             ? "Over Time: " + item.result.over_time + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.commissions != null
                             ? "Commissions: " + item.result.commissions + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.seniority_payment != null
                             ? "Seniority Payment: " +
@@ -1548,7 +1556,7 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.severance_pay != null
                             ? "Severance Pay: " +
@@ -1556,7 +1564,7 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.maternity_leave != null
                             ? "Maternity Leave: " +
@@ -1564,7 +1572,7 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.paid_annual_leave != null
                             ? "Paid Annual Leave: " +
@@ -1572,7 +1580,7 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.food_allowance != null
                             ? "Food Allowance: " +
@@ -1580,7 +1588,7 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.transport_allowance != null
                             ? "Transport Allowance: " +
@@ -1588,13 +1596,13 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.others != null
                             ? "Others: " + item.result.others + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.deduction_advance != null
                             ? "Deduction Advance: " +
@@ -1602,7 +1610,7 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.salary_adjusment != null
                             ? "Salary Adjusment: " +
@@ -1610,13 +1618,13 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.remark != null
                             ? "Remarks: " + item.result.remark
                             : ""
                         ) +
-                        "\n\n\t\t\t"
+                        "\n            "
                     )
                   ]),
                   _vm._v(" "),
@@ -1651,7 +1659,7 @@ var render = function() {
                       _vm._v(
                         " tax-managemet" +
                           _vm._s(_vm.makeUrl(item.result)) +
-                          "\n\t\t\t"
+                          "\n            "
                       )
                     ],
                     1
@@ -1679,38 +1687,38 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n\t\t\t\t" +
+                        "\n                " +
                           _vm._s(
                             item.result.country != null
                               ? "Country: " + item.result.country + ", "
                               : ""
                           ) +
-                          "\n\t\t\t\t" +
+                          "\n                " +
                           _vm._s(
                             item.result.currency != null
                               ? "Currency: " + item.result.currency
                               : ""
                           ) +
-                          "\n\t\t\t\t" +
+                          "\n                " +
                           _vm._s("(Currency)") +
-                          "\n\n\t\t\t"
+                          "\n            "
                       )
                     ]
                   ),
                   _vm._v(" "),
                   _c("p", { staticStyle: { "font-size": "12px" } }, [
                     _vm._v(
-                      "\n\t\t\t\t" +
-                        _vm._s("Country:  " + item.result.country) +
-                        "\n\t\t\t"
+                      "\n                " +
+                        _vm._s("Country: " + item.result.country) +
+                        "\n            "
                     )
                   ]),
                   _vm._v(" "),
                   _c("p", { staticStyle: { "font-size": "12px" } }, [
                     _vm._v(
-                      "\n\t\t\t\t" +
+                      "\n                " +
                         _vm._s("Currency: " + item.result.currency) +
-                        "\n\t\t\t"
+                        "\n            "
                     )
                   ]),
                   _vm._v(" "),
@@ -1741,7 +1749,7 @@ var render = function() {
                       _vm._v(
                         " tax-managemet" +
                           _vm._s(_vm.makeUrl(item.result)) +
-                          "\n\t\t\t"
+                          "\n            "
                       )
                     ],
                     1
@@ -1769,29 +1777,29 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n\t\t\t\t" +
+                        "\n                " +
                           _vm._s(
                             item.result.english_description != null
                               ? "Description: " +
                                   item.result.english_description
                               : ""
                           ) +
-                          "\n\t\t\t\t" +
+                          "\n                " +
                           _vm._s("(Tax Parameters)") +
-                          "\n\n\t\t\t"
+                          "\n            "
                       )
                     ]
                   ),
                   _vm._v(" "),
                   _c("p", { staticStyle: { "font-size": "12px" } }, [
                     _vm._v(
-                      "\n\n\t\t\t\t" +
+                      "\n                " +
                         _vm._s(
                           (item.result.english_description = null
                             ? undefined
                             : "")
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.khmer_description != null
                             ? "Khmer Description: " +
@@ -1799,31 +1807,31 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.tax_code != null
                             ? "Tax Code: " + item.result.tax_code + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.rate != null
                             ? "Rate: " + item.result.rate + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.base_tax != null
                             ? "Base Tax: " + item.result.base_tax + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.tax_type != null
                             ? "Tax Type: " + item.result.tax_type + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.effective_date != null
                             ? "Effective Date: " +
@@ -1831,25 +1839,25 @@ var render = function() {
                                 ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.amount_min != null
                             ? "Minimum Amount: " + item.result.amount_min + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.amount_max != null
                             ? "Maximum Amount: " + item.result.amount_max + ", "
                             : ""
                         ) +
-                        "\n\t\t\t\t" +
+                        "\n                " +
                         _vm._s(
                           item.result.remarks != null
                             ? "Remarks: " + item.result.remarks
                             : ""
                         ) +
-                        "\n\n\t\t\t"
+                        "\n            "
                     )
                   ]),
                   _vm._v(" "),
@@ -1880,7 +1888,7 @@ var render = function() {
                       _vm._v(
                         " tax-managemet" +
                           _vm._s(_vm.makeUrl(item.result)) +
-                          "\n\t\t\t"
+                          "\n            "
                       )
                     ],
                     1
@@ -1892,19 +1900,47 @@ var render = function() {
         )
       }),
       _vm._v(" "),
-      _vm.objectLength <= 0
-        ? _c(
-            "h1",
-            {
-              staticStyle: {
-                "margin-top": "10%",
-                "text-align": "center",
-                color: "#909090"
+      _c("br"),
+      _vm._v(" "),
+      _vm.objectLength > 0
+        ? _c("vs-pagination", {
+            attrs: { total: _vm.totalSearchPages },
+            on: {
+              input: function($event) {
+                return _vm.records()
               }
             },
-            [_vm._v("  No record found! ")]
-          )
-        : _vm._e()
+            model: {
+              value: _vm.currentPage,
+              callback: function($$v) {
+                _vm.currentPage = $$v
+              },
+              expression: "currentPage"
+            }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "vs-row",
+        [
+          _c("vs-col", [
+            _vm.objectLength <= 0
+              ? _c(
+                  "h1",
+                  {
+                    staticStyle: {
+                      "margin-top": "10%",
+                      "text-align": "center",
+                      color: "#909090"
+                    }
+                  },
+                  [_vm._v(" No record found! ")]
+                )
+              : _vm._e()
+          ])
+        ],
+        1
+      )
     ],
     2
   )
@@ -2004,4 +2040,3 @@ __webpack_require__.r(__webpack_exports__);
 /***/ })
 
 }]);
->>>>>>> 50cabf9877324c9d5bb57a99d5b6a1ae3c7f9feb

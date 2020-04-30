@@ -129,7 +129,7 @@ Route::group(['prefix' => ''], function () {
 	Route::post('forgot-password', 'ApplicationController@forgot_password');
 	Route::post('verify-code-and-change-password', 'ApplicationController@verify_code_change_password');
 
-	Route::post('search-data', 'ApplicationController@search_data');
+	Route::any('search-data', 'ApplicationController@search_data');
 
 	Route::get('export-customers', 'ExportController@export_customers');
 	Route::get('export-team-members', 'ExportController@export_team_members');
