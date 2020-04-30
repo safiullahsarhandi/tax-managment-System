@@ -69,7 +69,7 @@ class ExportController extends Controller {
 			return ['Employee Name (English)' => $payroll->employee->name_english, 'Employee Name (Khmer)' => $payroll->employee->name_khmer, 'NSSF NO' => $payroll->employee->nssf_num, 'Employee NO' => $payroll->employee->employee_num, 'Basic Salary' => $payroll->basic_salary, 'Basic Salary' => $payroll->bonus, 'Over Time' => $payroll->over_time, 'Commissions' => $payroll->commissions, 'Seniority Payment' => $payroll->seniority_payment, 'Severance Pay' => $payroll->severance_pay, 'Maternity' => $payroll->maternity_leave, 'Paid Annual Leave' => $payroll->paid_annual_leave, 'Food Allowance' => $payroll->food_allowance, 'Transport Allowance' => $payroll->transport_allowance, 'Other Allowance' => $payroll->others, 'Deduction Advance' => $payroll->deduction_advance, 'Salary Adjustment' => $payroll->salary_adjusment];
 		});
 
-		Excel::create($customer->name_english . '-tax-' . $tax->title . '-payrolls', function ($excel) use ($tax, $payrolls, $customer) {
+		Excel::create($customer->name_english . '-tax-' . $tax['title'] . '-payrolls', function ($excel) use ($tax, $payrolls, $customer) {
 			$excel->sheet('Payrolls', function ($sheet) use ($payrolls, $customer) {
 				if (count($payrolls) == 0) {
 					$sheet->prependRow(['Employee Name (English)', 'Employee Name (Khmer)', 'NSSF NO', 'Employee NO', 'Basic Salary', 'Basic Salary', 'Over Time', 'Commissions', 'Seniority Payment', 'Severance Pay', 'Maternity', 'Paid Annual Leave', 'Food Allowance', 'Transport Allowance', 'Other Allowance', 'Deduction Advance', 'Salary Adjustment']);
@@ -112,7 +112,10 @@ class ExportController extends Controller {
 					$val = 'A' . $i . ':Q' . $i;
 					$sheet->getStyle($val)->getAlignment()->applyFromArray($hr_centre);
 				}
-				$sheet->fromArray($payrolls);
+				$sheet->appendRow(['Employee Name (English)', 'Employee Name (Khmer)', 'NSSF NO', 'Employee NO', 'Basic Salary', 'Basic Salary', 'Over Time', 'Commissions', 'Seniority Payment', 'Severance Pay', 'Maternity', 'Paid Annual Leave', 'Food Allowance', 'Transport Allowance', 'Other Allowance', 'Deduction Advance', 'Salary Adjustment']);
+
+				$sheet->getStyle('A12:Q12')->getFont()->setBold(true);
+				// $sheet->fromArray($payrolls);
 			});
 		})->export('xlsx');
 
@@ -125,7 +128,7 @@ class ExportController extends Controller {
 			return ['Branch Name' => $purchase->branch_name, 'Tax Period' => $purchase->tax_period, 'Invoice Date' => $purchase->invoice_date, 'Invoice Number' => $purchase->invoice_num, 'Supplier' => $purchase->supplier, 'Goods Description' => $purchase->description, 'Quantity' => $purchase->quantity, 'Non Taxable Purchases' => $purchase->non_taxable_purchases, 'Local Purchase (Taxable Value)' => $purchase->local_purchase_tax_val, 'Imports (Taxable Value)' => $purchase->imports_taxable_val];
 		});
 
-		Excel::create($customer->name_english . '-tax-' . $tax->title . '-purchases', function ($excel) use ($tax, $purchases, $customer) {
+		Excel::create($customer->name_english . '-tax-' . $tax['title'] . '-purchases', function ($excel) use ($tax, $purchases, $customer) {
 			$excel->sheet('purchases', function ($sheet) use ($purchases, $customer) {
 				if (count($purchases) == 0) {
 					$sheet->prependRow(['Branch Name', 'Tax Period', 'Invoice Date', 'Invoice Number', 'Supplier', 'Goods Description', 'Quantity', 'Non Taxable Purchases', 'Local Purchase (Taxable Value)', 'Imports (Taxable Value)']);
@@ -145,8 +148,6 @@ class ExportController extends Controller {
 				$company_name = 'Company Name: ' . $com_name;
 				$company_name_khmer = 'នាមករណ៍សហគ្រាស: ' . $com_name_khmr;
 
-				$sheet->getStyle('A1:J1')->getFont()->setBold(true);
-				$sheet->prependRow([]);
 
 				$sheet->prependRow([$eng_adress]);
 				$sheet->prependRow([$khmr_adress]);
@@ -168,7 +169,12 @@ class ExportController extends Controller {
 					$val = 'A' . $i . ':J' . $i;
 					$sheet->getStyle($val)->getAlignment()->applyFromArray($hr_centre);
 				}
-				$sheet->fromArray($purchases);
+				$sheet->appendRow(['Branch Name', 'Tax Period', 'Invoice Date', 'Invoice Number', 'Supplier', 'Goods Description', 'Quantity', 'Non Taxable Purchases', 'Local Purchase (Taxable Value)', 'Imports (Taxable Value)']);
+				$sheet->rows($purchases);
+				if (count($purchases) == 0) {
+				}
+				$sheet->getStyle('A12:J12')->getFont()->setBold(true);
+				// $sheet->fromArray($purchases);
 			});
 		})->export('xlsx');
 
@@ -180,7 +186,7 @@ class ExportController extends Controller {
 		$sales = Sales::with('created_by')->where('tax_id', $tax_id)->get()->map(function ($sale) {
 			return ['Account Code' => $sale->account_code, 'Account Description' => $sale->account_description, 'Account Reference' => $sale->accounting_reference, 'Signature Date' => $sale->signature_date, 'Branch Name' => $sale->branch_name, 'Tax Period' => $sale->tax_period, 'Invoice Date' => $sale->invoice_date, 'Invoice Number' => $sale->invoice_num, 'Description' => $sale->description, 'Quantity' => $sale->quantity, 'Non Taxable sales' => $sale->non_taxable_sales, 'Sales to taxable person (Value)' => $sale->taxable_person_sales, 'Sales to Consumer (Value)' => $sale->cust_sales];
 		});
-		Excel::create($customer->name_english . '-tax-' . $tax->title . '-sales', function ($excel) use ($tax, $sales, $customer) {
+		Excel::create($customer->name_english . '-tax-' . $tax['title'] . '-sales', function ($excel) use ($tax, $sales, $customer) {
 			$excel->sheet('sales', function ($sheet) use ($sales, $customer) {
 
 				$hr_centre = array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER);

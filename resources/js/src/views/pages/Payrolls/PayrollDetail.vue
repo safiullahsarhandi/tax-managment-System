@@ -136,22 +136,37 @@
             </vs-col>
             <vs-col vs-lg="3" vs-md="3" vs-xl="3" vs-sm="12">
                 <vx-card title="Actions">
+                     <vs-select v-if="userType == 'Supervisor'" autocomplete 
+                    @input="changeManagementStatus(payroll.supervisor_confirmed, payroll.payroll_id, 'supervisor')" v-model="payroll.supervisor_confirmed" class="p-0 ml-0" placeholder="Select Status" style="width: 100%;" >
+                                    <vs-select-item value="0" text="Pending"></vs-select-item>
+                                    <vs-select-item value="1" text="Approve"></vs-select-item>
+                                    <vs-select-item value="2" text="Review"></vs-select-item>
+                                    <vs-select-item value="3" text="Reject"></vs-select-item>
+                                    
+                    </vs-select>
+
+                    <vs-select v-if="userType == 'Admin' || userType == 'Super Admin'" autocomplete 
+                    @input="changeManagementStatus(payroll.management_confirmed, payroll.payroll_id, 'admin')" v-model="payroll.management_confirmed" class="p-0 ml-0" placeholder="Select Status" style="width: 100%;" >
+                                    <vs-select-item value="0" text="Pending"></vs-select-item>
+                                    <vs-select-item value="1" text="Approve"></vs-select-item>
+                                    <vs-select-item value="2" text="Review"></vs-select-item>
+                                    <vs-select-item value="3" text="Reject"></vs-select-item>
+                                    
+                    </vs-select>
                     <vs-list>
-                        <vs-list-item title="Edit Purchase">
+                        <vs-list-item v-if="editPermissionAccess(tr)" title="Edit Purchase">
                             <vs-button :to="'/purchase-update/'+$route.params.id" icon-pack="feather" size="small" icon='icon-edit'></vs-button>
                         </vs-list-item>
+                        <vs-list-item v-else title="Edit Purchase">
+                            <vs-button @click="notAllowed('edit')" icon-pack="feather" size="small" icon='icon-edit'></vs-button>
+                        </vs-list-item>
                         <template>
-                            <vs-list-item v-if="userType == 'Admin' || userType == 'Super Admin'" title="Status">
-                                <vs-button icon-pack="feather" size="small" icon='icon-check-circle' @click="changeManagementStatus('1', payroll.payroll_id, 'admin')"></vs-button>
-                                <vs-button icon-pack="feather" size="small" icon='icon-x-circle' @click="changeManagementStatus('0', payroll.payroll_id, 'admin')"></vs-button>
-                            </vs-list-item>
-                            <vs-list-item v-if="userType == 'Supervisor'" title="Status">
-                                <vs-button icon-pack="feather" size="small" icon='icon-check-circle' @click="changeManagementStatus('1', payroll.payroll_id, 'supervisor')"></vs-button>
-                                <vs-button icon-pack="feather" size="small" icon='icon-x-circle' @click="changeManagementStatus('0', payroll.payroll_id, 'supervisor')"></vs-button>
-                            </vs-list-item>
+                        
                             <vs-list-item v-if="userType == 'Officer'" title="Status">
-                                <vs-switch icon-pack="feather" @click="statusUpdate(payroll.payroll_id, payroll.officer_confirmed)" v-model="payroll.officer_confirmed"></vs-switch>
+                                <vs-switch v-if="editPermissionAccess(tr)"  icon-pack="feather" @click="statusUpdate(payroll.payroll_id, payroll.officer_confirmed)" v-model="payroll.officer_confirmed"></vs-switch>
+                                 <vs-switch v-else icon-pack="feather" @click="notAllowed('status')" v-model="purchase.officer_confirmed"></vs-switch>
                             </vs-list-item>
+                            
                         </template>
                         <vs-list-item title="View Comments">
                                 <vs-button icon-pack="feather" size="small" icon='icon-maximize-2' @click="handleToggleDrawer"></vs-button>
@@ -269,7 +284,112 @@ export default {
                 tax_type: 'payroll'
             };
             this.statusChangeManagment(data).then((res)=> {
-               
+               var res = res.data;
+                if(by == 'supervisor'){
+                    this.purchase.supervisor_confirmed = res.response;
+                }else{
+                    this.purchase.management_confirmed = res.response; 
+                }
+            });
+        },
+
+        editPermissionAccess(tr){
+
+                if(this.is_officer){
+                    if(tr.officer_confirmed == 0 && tr.supervisor_confirmed == 0){
+                        return true;
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 0){
+                        return true;
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1){
+                        return false;
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 2){
+                        return false;
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 3){
+                        return true;
+                    }
+
+                    if(tr.officer_confirmed == 0 && tr.supervisor_confirmed == 3){
+                        return true;
+                    }
+                }
+
+                if(this.is_supervisor){
+                    if(tr.officer_confirmed == 0 && tr.supervisor_confirmed == 0){
+                        return false;
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 0){
+                        return true;
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1){
+                        return true;
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 2){
+                        return true;
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 3){
+                        return true;
+                    }
+                    if(tr.officer_confirmed == 0 && tr.supervisor_confirmed == 3){
+                        return false;
+                    }
+                }
+
+                if(this.is_admin){
+                    if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 0){
+                        return false;
+                    }
+
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 0){
+                        return true;
+                    }
+
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 1){
+                        return true;
+                    }
+
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 2){
+                        return true;
+                    }
+
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 3){
+                        return true;
+                    }
+
+                    if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 3){
+                        return false;
+                    }
+                }
+        },
+
+        notAllowed(opt){
+
+            var msg;
+            if(opt == 'status'){
+                msg = 'You cann\'t change payroll status, Payroll are approved or supervisor reviewing ';
+            }else if(opt == 'delete'){
+                msg = 'You cann\'t delete payroll, Payroll are approved or supervisor reviewing ';
+            }else if(opt == 'edit'){
+                msg = 'You cann\'t edit/update payroll, Payroll are approved or supervisor reviewing ';
+            }
+
+            this.$vs.notify({
+                text: msg,
+                color: 'danger',
+                position: 'top-right',
+                time: 8000,
+                icon: 'warning'
             });
         },
 

@@ -9,12 +9,15 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+<<<<<<< HEAD
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+=======
+>>>>>>> 0cb312c535041d855c86a2bf980a2441c2e3baee
 //
 //
 //
@@ -159,6 +162,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getSearchedData: function getSearchedData() {
       var _this2 = this;
 
+<<<<<<< HEAD
       if (this.searchQuery != '') {
         var val = this.searchQuery;
       } else if (!_.isUndefined(this.$route.query.q) && this.$route.query.q) {
@@ -190,6 +194,54 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             });
           }
         });
+=======
+      var val = this.searchQuery;
+
+      if (val == '') {
+        this.inputInit();
+        if (this.bodyOverlay) this.$store.commit('TOGGLE_CONTENT_OVERLAY', false);
+      } else {
+        // if(this.backgroundOverlay && !this.bodyOverlay) this.$store.commit('TOGGLE_CONTENT_OVERLAY', true);
+        axios.post('search-data', {
+          query: val
+        }).then(function (res) {
+          var response = res.data.response;
+          var self = _this2;
+          self.data.data = [];
+
+          _.forEach(response, function (value, keys) {
+            _.forEach(value, function (val, key) {
+              self.data.data.push({
+                index: key,
+                result: val
+              });
+            });
+          });
+
+          self.$store.state.searchedData = [];
+
+          var data = _.shuffle(self.data.data);
+
+          self.$store.state.searchedData = data;
+
+          if (_this2.$route.path != '/searched-record') {
+            _this2.$router.push('/searched-record');
+          } // console.log(self.$store.state.searchedData);
+
+        });
+        if (!this.filteredData[0]) this.currentSelected = -1;
+      } // ADD: No result found
+
+
+      if (!this.filteredData.length && this.searchQuery) {
+        this.filteredData = [{
+          highlightAction: false,
+          index: -1,
+          label: 'No results found.',
+          labelIcon: 'AlertCircleIcon',
+          url: null
+        }];
+>>>>>>> 0cb312c535041d855c86a2bf980a2441c2e3baee
       }
     },
     escPressed: function escPressed() {
@@ -463,6 +515,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+<<<<<<< HEAD
+=======
+//
+//
+//
+//
+//
+//
+//
+//
+>>>>>>> 0cb312c535041d855c86a2bf980a2441c2e3baee
 
 
 
