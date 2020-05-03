@@ -313,11 +313,11 @@ export default {
 
             var msg;
             if(opt == 'status'){
-                msg = 'You cann\'t change payroll status, Payroll are approved or supervisor reviewing ';
+                msg = 'You can\'t change payroll status, if Payroll is approved or supervisor reviewing it';
             }else if(opt == 'delete'){
-                msg = 'You cann\'t delete payroll, Payroll are approved or supervisor reviewing ';
+                msg = 'You can\'t delete payroll, if Payroll is approved or supervisor reviewing it';
             }else if(opt == 'edit'){
-                msg = 'You cann\'t edit/update payroll, Payroll are approved or supervisor reviewing ';
+                msg = 'You can\'t edit/update payroll, if Payroll is approved or supervisor reviewing it';
             }
 
             this.$vs.notify({

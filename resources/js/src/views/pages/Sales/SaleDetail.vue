@@ -2,7 +2,7 @@
     <div>
         <vs-row>
             <vs-col vs-lg="9" vs-md="9" vs-sm="12">
-                <vx-card title="Sales Detail GR">
+                <vx-card title="Sales Detail">
                     <vs-row>
                         <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
                             <h6>Client TIN:</h6>
@@ -344,11 +344,11 @@ export default {
 
             var msg;
             if(opt == 'status'){
-                msg = 'You cann\'t change sale status, Sale are approved or supervisor reviewing ';
+                msg = 'You can\'t change sale status, if Sale is approved or supervisor reviewing it';
             }else if(opt == 'delete'){
-                msg = 'You cann\'t delete sale, Sale are approved or supervisor reviewing ';
+                msg = 'You can\'t delete sale, if Sale is approved or supervisor reviewing it';
             }else if(opt == 'edit'){
-                msg = 'You cann\'t edit/update sale, Sale are approved or supervisor reviewing ';
+                msg = 'You can\'t edit/update sale, if Sale is approved or supervisor reviewing it';
             }
 
             this.$vs.notify({

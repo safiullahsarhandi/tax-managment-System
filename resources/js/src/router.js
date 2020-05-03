@@ -210,7 +210,7 @@ const router = new Router({
                     component: () => import('./views/SearchedRecords.vue'),
                     meta: {
                         requiresAuth: true,
-                        requiresAdmin: false,
+                        requiresAdmin: true,
                     }
                 },
                 {

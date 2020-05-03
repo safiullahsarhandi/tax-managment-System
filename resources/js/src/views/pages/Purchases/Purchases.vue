@@ -307,11 +307,11 @@ export default {
 
             var msg;
             if(opt == 'status'){
-                msg = 'You cann\'t change purchase status, Purchase are approved or supervisor reviewing ';
+                msg = 'You can\'t change purchase status, if Purchase is approved or supervisor reviewing it';
             }else if(opt == 'delete'){
-                msg = 'You cann\'t delete purchase, Purchase are approved or supervisor reviewing ';
+                msg = 'You can\'t delete purchase, if Purchase is approved or supervisor reviewing it';
             }else if(opt == 'edit'){
-                msg = 'You cann\'t edit/update purchase, Purchase are approved or supervisor reviewing ';
+                msg = 'You can\'t edit/update purchase, if Purchase is approved or supervisor reviewing it';
             }
 
             this.$vs.notify({

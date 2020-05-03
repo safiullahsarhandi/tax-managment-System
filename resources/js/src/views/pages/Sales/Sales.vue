@@ -330,11 +330,11 @@ export default {
 
             var msg;
             if(opt == 'status'){
-                msg = 'You cann\'t change sale status, Sale are approved or supervisor reviewing ';
+                msg = 'You can\'t change sale status, if Sale is approved or supervisor reviewing it';
             }else if(opt == 'delete'){
-                msg = 'You cann\'t delete sale, Sale are approved or supervisor reviewing ';
+                msg = 'You can\'t delete sale, if Sale is approved or supervisor reviewing it';
             }else if(opt == 'edit'){
-                msg = 'You cann\'t edit/update sale, Sale are approved or supervisor reviewing ';
+                msg = 'You can\'t edit/update sale, if Sale is approved or supervisor reviewing it';
             }
 
             this.$vs.notify({

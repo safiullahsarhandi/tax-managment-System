@@ -1880,7 +1880,7 @@ class ApplicationController extends Controller {
 
 	public function get_payrolls(Request $request) {
 
-		$data = Payrolls::with(['created_by','employee'])->whereTaxId($request->tax_id)->get();
+		$data = Payrolls::with(['created_by', 'employee'])->whereTaxId($request->tax_id)->get();
 
 		return response()->json(['data' => $data]);
 
@@ -2260,12 +2260,11 @@ class ApplicationController extends Controller {
 
 		$msg = '';
 		$tax = Tax::with('customer')->whereTaxId($request->tax_id)->first();
-		if($data->supervisor_confirmed == 2){
-			return response()->json(['status' => false, 'msg' => 'You cannot change '.$request->type.' status, Current '.$request->type.' is under supervisor reviewing']);
+		if ($data->supervisor_confirmed == 2) {
+			return response()->json(['status' => false, 'msg' => 'You cannot change ' . $request->type . ' status, Current ' . $request->type . ' is under supervisor reviewing']);
 		}
-		if ($data->supervisor_confirmed == 0 || $data->supervisor_confirmed == 3) { // 0 = pending, 3 = rejected
-
-
+		if ($data->supervisor_confirmed == 0 || $data->supervisor_confirmed == 3) {
+			// 0 = pending, 3 = rejected
 
 			if ($data->officer_confirmed == 1) {
 				$data->officer_confirmed = 0;
@@ -2286,7 +2285,7 @@ class ApplicationController extends Controller {
 				$notification->click_action = '/' . $request->type . "-detail/" . $request->id;
 
 				if ($notification->save()) {
-					
+
 					$tokens = Admin::where('manager_id', session('admin.reports_to'))->first();
 					// 	dd($tokens);
 					$url = "https://fcm.googleapis.com//v1/projects/taxportal-d57de/messages:send";
@@ -2351,31 +2350,84 @@ class ApplicationController extends Controller {
 		$msg = '';
 		$tax = Tax::with('customer')->whereTaxId($request->tax_id)->first();
 		$tax_type = $request->tax_type;
-		
+
 		if ($request->by == 'supervisor') {
 
 			if ($data->officer_confirmed == 1) {
 
-				if($data->management_confirmed == 2){
-					return response()->json(['status' => false, 'msg' => 'You cannot change '.$tax_type.' status, Current '.$tax_type.' is under adminstration reviewing']);
+				if ($data->management_confirmed == 2) {
+					return response()->json(['status' => false, 'msg' => 'You cannot change ' . $tax_type . ' status, Current ' . $tax_type . ' is under adminstration review']);
 				}
 
 				if ($data->management_confirmed == 0 || $data->management_confirmed == 3) {
 					$data->supervisor_confirmed = $request->status;
 					$data->save();
 					if ($request->status == 1) {
+						$admins = Admin::whereIn('manager_id', [$data->customer->manager, session('admin.reports_to')])->orWhere('status', 1)->get();
+
+						foreach ($admins as $key => $admin) {
+
+							$notification = new Notification;
+							$notification->transmitted_for = $admin->manager_id;
+							$notification->transmitted_by = session('admin.manager_id');
+							$notification->notification = 'new ' . $request->tax_type . ' submission alert';
+							if ($admin->type == 'Officer') {
+								$notification->description = 'your submitted ' . $request->tax_type . ' in ' . $tax->title . ' of company: ' . $tax->customer->name_english . ' has been approved by Supervisor:' . session('admin.full_name');
+							} else {
+								$notification->description = $supervisor->full_name . ' has submitted ' . $request->tax_type . ' in ' . $tax->title . ' of company: ' . $tax->customer->name_english . ' for Review';
+
+							}
+							$notification->click_action = '/' . $request->tax_type . "-detail/" . $request->id;
+
+							if ($notification->save()) {
+
+								$url = "https://fcm.googleapis.com//v1/projects/taxportal-d57de/messages:send";
+								// 	$token = "your device token";
+								$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
+
+								$fields = array(
+									// "content_available" => true,
+									"to" => $admin->token,
+									'priority' => 'high',
+									"data" => array(
+										"title" => $notification->notification,
+										"body" => $notification->description,
+										"icon" => "icon.png",
+										"click_action" => $notification->click_action,
+									),
+									"notification" => array(
+										"title" => $notification->notification,
+										"body" => $notification->description,
+										"icon" => "icon.png",
+										"click_action" => $notification->click_action,
+									),
+								);
+								$data_string = json_encode($fields);
+								// echo "The Json Data : " . $data_string;
+								$headers = array('Authorization: key=' . $serverKey, 'Content-Type: application/json');
+								$ch = curl_init();
+								curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+								curl_setopt($ch, CURLOPT_POST, true);
+								curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+								curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+								curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+								$result = curl_exec($ch);
+								curl_close($ch);
+							}
+						}
+					} elseif ($request->status == 2) {
 
 						$notification = new Notification;
-						$notification->transmitted_for = session('admin.reports_to');
+						$notification->transmitted_for = $data->created_by;
 						$notification->transmitted_by = session('admin.manager_id');
-						$notification->notification = 'new ' . $request->tax_type . ' submission alert';
-						$notification->description = 'new ' . $request->tax_type . ' in ' . $tax->title . ' with in company: ' . $tax->customer->name_english . ' has been submitted by supervisor: ' . session('admin.full_name');
+						$notification->notification = $request->tax_type . ' review alert';
+						$notification->description = 'A ' . $request->tax_type . ' in ' . $tax->title . ' of company: ' . $tax->customer->name_english . ' were marked for review by supervisor: ' . session('admin.full_name');
 						$notification->click_action = '/' . $request->tax_type . "-detail/" . $request->id;
 
 						if ($notification->save()) {
 							/*$fields = [];
 							$headers = [''];*/
-							$tokens = Admin::where('manager_id', session('admin.reports_to'))->first();
+							$tokens = Admin::where('manager_id', $notification->transmitted_for)->first();
 							// 	dd($tokens);
 							$url = "https://fcm.googleapis.com//v1/projects/taxportal-d57de/messages:send";
 							// 	$token = "your device token";
@@ -2410,22 +2462,27 @@ class ApplicationController extends Controller {
 							$result = curl_exec($ch);
 							curl_close($ch);
 						}
-					} else {
+					} elseif ($request->status == 3) {
+
 						$notification = new Notification;
 						$notification->transmitted_for = $data->created_by;
 						$notification->transmitted_by = session('admin.manager_id');
 						$notification->notification = $request->tax_type . ' submission revoke alert';
-						$notification->description = 'you submitted ' . $request->tax_type . ' in ' . $tax->title . ' with in company: ' . $tax->customer->name_english . ' has been revoked by supervisor: ' . session('admin.full_name');
+						$notification->description = 'your submitted ' . $request->tax_type . ' in ' . $tax->title . ' of company: ' . $tax->customer->name_english . ' has been revoked by supervisor: ' . session('admin.full_name') . ' please check comments';
 						$notification->click_action = '/' . $request->tax_type . "-detail/" . $request->id;
 
 						if ($notification->save()) {
-
-							$token = Admin::where('manager_id', $data->customer->manager)->first();
+							/*$fields = [];
+							$headers = [''];*/
+							$tokens = Admin::where('manager_id', $notification->transmitted_for)->first();
+							// 	dd($tokens);
+							$url = "https://fcm.googleapis.com//v1/projects/taxportal-d57de/messages:send";
+							// 	$token = "your device token";
 							$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
 
 							$fields = array(
 								// "content_available" => true,
-								"to" => $token->token,
+								"to" => $tokens->token,
 								'priority' => 'high',
 								"data" => array(
 									"title" => $notification->notification,
@@ -2461,12 +2518,12 @@ class ApplicationController extends Controller {
 			}
 
 		} else if ($request->by == 'admin') {
-			if($data->supervisor_confirmed == 2){
-				return response()->json(['status' => false, 'msg' => 'You cannot change '.$tax_type.' status, Current '.$tax_type.' is under supervisor reviewing']);
+			if ($data->supervisor_confirmed == 2) {
+				return response()->json(['status' => false, 'msg' => 'You cannot change ' . $tax_type . ' status, Current ' . $tax_type . ' is under supervisor reviewing']);
 			}
 
-			if($data->supervisor_confirmed == 3){
-				return response()->json(['status' => false, 'msg' => 'You cannot change '.$tax_type.' status, Current '.$tax_type.' is rejected by supervisor']);
+			if ($data->supervisor_confirmed == 3) {
+				return response()->json(['status' => false, 'msg' => 'You cannot change ' . $tax_type . ' status, Current ' . $tax_type . ' is rejected by supervisor']);
 			}
 
 			if ($data->supervisor_confirmed == 1) {
@@ -2528,23 +2585,83 @@ class ApplicationController extends Controller {
 							}
 						}
 					}
-				} else {
+				} elseif ($request->status == 2) {
+
 					foreach ($admins as $key => $admin) {
 						if ($admin->manager_id != session('admin.manager_id')) {
+
 							$notification = new Notification;
 							$notification->transmitted_for = $admin->manager_id;
 							$notification->transmitted_by = session('admin.manager_id');
-							$notification->notification = 'new ' . $request->tax_type . ' submission alert';
-							if ($admin->manager_id == $data->customer->supervisor) {
-
-								$notification->description = 'your submitted ' . $request->tax_type . ' in ' . $tax->title . ' of company: ' . $tax->customer->name_english . ' has been revoked by Admin:' . session('admin.full_name') . ' . please check comments section of ' . $request->tax_type . ' for further detail.';
+							if ($admin->manager_id == $supervisor->manager_id) {
+								$notification->notification = $request->tax_type . ' review alert';
+								$notification->description = 'A ' . $request->tax_type . ' in ' . $tax->title . ' of company: ' . $tax->customer->name_english . ' were marked for review by Admin: ' . session('admin.full_name');
 							} else {
-								$notification->description = $supervisor->full_name . ' has submitted ' . $request->tax_type . ' in ' . $tax->title . ' of company: ' . $tax->customer->name_english . ' which has been revoked by Admin:' . session('admin.full_name') . ' . please check comments section of ' . $request->tax_type . ' for further detail.';
+								$notification->notification = $request->tax_type . ' review alert';
+								$notification->description = $supervisor->full_name . ' submitted ' . $request->tax_type . ' in ' . $tax->title . ' of company: ' . $tax->customer->name_english . ' has been approved by Admin:' . session('admin.full_name');
 
 							}
 							$notification->click_action = '/' . $request->tax_type . "-detail/" . $request->id;
 
 							if ($notification->save()) {
+
+								$url = "https://fcm.googleapis.com//v1/projects/taxportal-d57de/messages:send";
+								// 	$token = "your device token";
+								$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
+
+								$fields = array(
+									// "content_available" => true,
+									"to" => $admin->token,
+									'priority' => 'high',
+									"data" => array(
+										"title" => $notification->notification,
+										"body" => $notification->description,
+										"icon" => "icon.png",
+										"click_action" => $notification->click_action,
+									),
+									"notification" => array(
+										"title" => $notification->notification,
+										"body" => $notification->description,
+										"icon" => "icon.png",
+										"click_action" => $notification->click_action,
+									),
+								);
+								$data_string = json_encode($fields);
+								// echo "The Json Data : " . $data_string;
+								$headers = array('Authorization: key=' . $serverKey, 'Content-Type: application/json');
+								$ch = curl_init();
+								curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+								curl_setopt($ch, CURLOPT_POST, true);
+								curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+								curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+								curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+								$result = curl_exec($ch);
+								curl_close($ch);
+							}
+						}
+					}
+				} elseif ($request->status == 3) {
+
+					foreach ($admins as $key => $admin) {
+						if ($admin->manager_id != session('admin.manager_id')) {
+
+							$notification = new Notification;
+							$notification->transmitted_for = $admin->manager_id;
+							$notification->transmitted_by = session('admin.manager_id');
+							if ($admin->manager_id == $supervisor->manager_id) {
+								$notification->notification = $request->tax_type . ' submission revoke alert';
+								$notification->description = 'your submitted ' . $request->tax_type . ' in ' . $tax->title . ' of company: ' . $tax->customer->name_english . ' has been revoked by Admin: ' . session('admin.full_name') . ' please check comments';
+							} else {
+								$notification->notification = $request->tax_type . ' submission revoke alert';
+								$notification->description = $supervisor->full_name . '\'s submitted ' . $request->tax_type . ' in ' . $tax->title . ' of company: ' . $tax->customer->name_english . ' has been revoked by Admin: ' . session('admin.full_name') . ' please check comments';
+
+							}
+							$notification->click_action = '/' . $request->tax_type . "-detail/" . $request->id;
+
+							if ($notification->save()) {
+
+								$url = "https://fcm.googleapis.com//v1/projects/taxportal-d57de/messages:send";
+								// 	$token = "your device token";
 								$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
 
 								$fields = array(
