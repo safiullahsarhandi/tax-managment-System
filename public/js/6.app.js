@@ -443,11 +443,7 @@ var render = function() {
                           _vm._v(" "),
                           _c("vs-td", [_vm._v(_vm._s(tr.type))]),
                           _vm._v(" "),
-<<<<<<< HEAD
                           _c("vs-td", [_vm._v(_vm._s(tr.rivision))]),
-=======
-                          _c("vs-td", [_vm._v(_vm._s(0))]),
->>>>>>> 0cb312c535041d855c86a2bf980a2441c2e3baee
                           _vm._v(" "),
                           _c("vs-td", [
                             _vm._v(

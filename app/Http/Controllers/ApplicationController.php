@@ -1762,12 +1762,12 @@ class ApplicationController extends Controller {
 	}
 
 	public function get_sale(Request $request) {
-		$sale = Sales::with('officer')->whereSaleId($request->id)->first();
+		$sale = Sales::with(['officer', 'created_by'])->whereSaleId($request->id)->first();
 		return response()->json(compact('sale'));
 	}
 
 	public function get_purchase(Request $request) {
-		$purchase = Purchases::with(['officer'])->wherePurchaseId($request->id)->first();
+		$purchase = Purchases::with(['officer', 'created_by'])->wherePurchaseId($request->id)->first();
 		return response()->json(compact('purchase'));
 	}
 
@@ -1888,7 +1888,7 @@ class ApplicationController extends Controller {
 
 	public function get_payroll(Request $request) {
 
-		$data = Payrolls::with(['employee', 'officer', 'customer'])->wherePayrollId($request->id)->first();
+		$data = Payrolls::with(['employee', 'officer', 'customer', 'created_by'])->wherePayrollId($request->id)->first();
 
 		return response()->json(['data' => $data]);
 

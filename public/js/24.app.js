@@ -209,6 +209,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -221,16 +227,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       tax_id: '',
-      openComments: false
+      openComments: false,
+      is_saleCreatedByLoginUser: false
     };
   },
   created: function created() {
+    var _this = this;
+
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function created$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
-            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.getPayroll(this.$route.params.id));
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.getPayroll(this.$route.params.id).then(function (res) {
+              var created_by = res.data.data.created_by;
+
+              if (_this.$store.state.AppActiveUser.type == 'Supervisor') {
+                if (_this.$store.state.AppActiveUser.manager_id == created_by.manager_id) {
+                  _this.is_saleCreatedByLoginUser = true;
+                }
+              }
+            }));
 
           case 2:
             localStorage.setItem('customer', this.payroll.customer.customer_id);
@@ -289,7 +306,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     statusChangeManagment: 'taxes/statusChangeManagment'
   }), {
     statusUpdate: function statusUpdate(id, status) {
-      var _this = this;
+      var _this2 = this;
 
       var data = {
         id: id,
@@ -300,15 +317,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.statusChange(data).then(function (res) {
         if (res.data.status != true) {
           if (res.data.response == 'undefined') {
-            _this.payroll.officer_confirmed = status;
+            _this2.payroll.officer_confirmed = status;
           } else {
-            _this.payroll.officer_confirmed = res.data.response;
+            _this2.payroll.officer_confirmed = res.data.response;
           }
         }
       });
     },
     changeManagementStatus: function changeManagementStatus(status, id, by) {
-      var _this2 = this;
+      var _this3 = this;
 
       var data = {
         id: id,
@@ -322,9 +339,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var res = res.data;
 
         if (by == 'supervisor') {
-          _this2.purchase.supervisor_confirmed = res.response;
+          _this3.purchase.supervisor_confirmed = res.response;
         } else {
-          _this2.purchase.management_confirmed = res.response;
+          _this3.purchase.management_confirmed = res.response;
         }
       });
     },
@@ -355,7 +372,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       }
 
-      if (this.is_supervisor) {
+      if (this.is_supervisor && is_saleCreatedByLoginUser == false) {
         if (tr.officer_confirmed == 0 && tr.supervisor_confirmed == 0) {
           return false;
         }
@@ -378,6 +395,32 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         if (tr.officer_confirmed == 0 && tr.supervisor_confirmed == 3) {
           return false;
+        }
+      }
+
+      if (this.is_supervisor && is_saleCreatedByLoginUser == true) {
+        if (tr.supervisor_confirmed == 0 && tr.management_confirmed == 0) {
+          return true;
+        }
+
+        if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 0) {
+          return true;
+        }
+
+        if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 1) {
+          return false;
+        }
+
+        if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 2) {
+          return false;
+        }
+
+        if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 3) {
+          return false;
+        }
+
+        if (tr.supervisor_confirmed == 0 && tr.management_confirmed == 3) {
+          return true;
         }
       }
 
@@ -769,7 +812,8 @@ var render = function() {
                 "vx-card",
                 { attrs: { title: "Actions" } },
                 [
-                  _vm.userType == "Supervisor"
+                  _vm.userType == "Supervisor" &&
+                  _vm.is_saleCreatedByLoginUser == false
                     ? _c(
                         "vs-select",
                         {
@@ -811,6 +855,47 @@ var render = function() {
                           _vm._v(" "),
                           _c("vs-select-item", {
                             attrs: { value: "3", text: "Reject" }
+                          })
+                        ],
+                        1
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.userType == "Supervisor" &&
+                  _vm.is_saleCreatedByLoginUser == true
+                    ? _c(
+                        "vs-select",
+                        {
+                          staticClass: "p-0 ml-0",
+                          staticStyle: { width: "100%" },
+                          attrs: {
+                            autocomplete: "",
+                            placeholder: "Select Status"
+                          },
+                          on: {
+                            input: function($event) {
+                              return _vm.changeManagementStatus(
+                                _vm.payroll.supervisor_confirmed,
+                                _vm.payroll.payroll_id,
+                                "supervisor"
+                              )
+                            }
+                          },
+                          model: {
+                            value: _vm.payroll.supervisor_confirmed,
+                            callback: function($$v) {
+                              _vm.$set(_vm.payroll, "supervisor_confirmed", $$v)
+                            },
+                            expression: "payroll.supervisor_confirmed"
+                          }
+                        },
+                        [
+                          _c("vs-select-item", {
+                            attrs: { value: "0", text: "Work In Progress" }
+                          }),
+                          _vm._v(" "),
+                          _c("vs-select-item", {
+                            attrs: { value: "1", text: "Submit" }
                           })
                         ],
                         1
@@ -868,7 +953,7 @@ var render = function() {
                   _c(
                     "vs-list",
                     [
-                      _vm.editPermissionAccess(_vm.tr)
+                      _vm.editPermissionAccess(_vm.payroll)
                         ? _c(
                             "vs-list-item",
                             { attrs: { title: "Edit Purchase" } },
@@ -911,7 +996,7 @@ var render = function() {
                               "vs-list-item",
                               { attrs: { title: "Status" } },
                               [
-                                _vm.editPermissionAccess(_vm.tr)
+                                _vm.editPermissionAccess(_vm.payroll)
                                   ? _c("vs-switch", {
                                       attrs: { "icon-pack": "feather" },
                                       on: {

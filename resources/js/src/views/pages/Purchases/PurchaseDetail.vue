@@ -170,13 +170,19 @@
             </vs-col>
             <vs-col vs-lg="3" vs-md="3" vs-xl="3" vs-sm="12">
                 <vx-card title="Actions">
-                    <vs-select v-if="userType == 'Supervisor'" autocomplete 
+                    <vs-select v-if="userType == 'Supervisor' && is_saleCreatedByLoginUser == false" autocomplete 
                     @input="changeManagementStatus(purchase.supervisor_confirmed, purchase.purchase_id, 'supervisor')" v-model="purchase.supervisor_confirmed" class="p-0 ml-0" placeholder="Select Status" style="width: 100%;" >
                                     <vs-select-item value="0" text="Pending"></vs-select-item>
                                     <vs-select-item value="1" text="Approve"></vs-select-item>
                                     <vs-select-item value="2" text="Review"></vs-select-item>
                                     <vs-select-item value="3" text="Reject"></vs-select-item>
                                     
+                    </vs-select>
+
+                    <vs-select v-if="userType == 'Supervisor' && is_saleCreatedByLoginUser == true" autocomplete
+                     @input="changeManagementStatus(purchase.supervisor_confirmed, purchase.purchase_id, 'supervisor')" v-model="purchase.supervisor_confirmed" class="p-0 ml-0" placeholder="Select Status" style="width: 100%;" >
+                                    <vs-select-item value="0" text="Work In Progress"></vs-select-item>
+                                    <vs-select-item value="1" text="Submit"></vs-select-item>
                     </vs-select>
 
                     <vs-select v-if="userType == 'Admin' || userType == 'Super Admin'" autocomplete 
@@ -189,7 +195,7 @@
                     </vs-select>
                     
                     <vs-list>
-                        <vs-list-item v-if="editPermissionAccess(tr)" title="Edit Purchase">
+                        <vs-list-item v-if="editPermissionAccess(purchase)" title="Edit Purchase">
                             <vs-button :to="'/purchase-update/'+$route.params.id" icon-pack="feather" size="small" icon='icon-edit'></vs-button>
                         </vs-list-item>
                         <vs-list-item title="Edit Sale" v-else>
@@ -198,7 +204,7 @@
                         <template>
                         
                             <vs-list-item v-if="userType == 'Officer'" title="Status">
-                                <vs-switch v-if="editPermissionAccess(tr)" icon-pack="feather" @click="statusUpdate(purchase.purchase_id, purchase.officer_confirmed)" v-model="purchase.officer_confirmed"></vs-switch>
+                                <vs-switch v-if="editPermissionAccess(purchase)" icon-pack="feather" @click="statusUpdate(purchase.purchase_id, purchase.officer_confirmed)" v-model="purchase.officer_confirmed"></vs-switch>
                                 <vs-switch v-else icon-pack="feather" @click="notAllowed('status')" v-model="purchase.officer_confirmed"></vs-switch>
                             </vs-list-item>
                         </template> 
@@ -225,11 +231,19 @@ export default {
     data() {
         return {
             tax_id: '',
-            openComments: false
+            openComments: false,
+            is_saleCreatedByLoginUser: false
         };
     },
     async created() {
-        await this.getPurchase(this.$route.params.id);
+        await this.getPurchase(this.$route.params.id).then(res=>{
+            var created_by = res.data.purchase.created_by;
+            if (this.$store.state.AppActiveUser.type == 'Supervisor') {
+                if(this.$store.state.AppActiveUser.manager_id == created_by.manager_id){
+                    this.is_saleCreatedByLoginUser = true;
+                }
+            }
+        });
 
         localStorage.setItem('customer',this.purchase.customer_id)
         localStorage.setItem('currentDetail','/tax-collection/'+this.purchase.tax_id);
@@ -322,7 +336,7 @@ export default {
                     }
                 }
 
-                if(this.is_supervisor){
+                if(this.is_supervisor && is_saleCreatedByLoginUser == false){
                     if(tr.officer_confirmed == 0 && tr.supervisor_confirmed == 0){
                         return false;
                     }
@@ -344,6 +358,31 @@ export default {
                     }
                     if(tr.officer_confirmed == 0 && tr.supervisor_confirmed == 3){
                         return false;
+                    }
+                }
+
+                if(this.is_supervisor && is_saleCreatedByLoginUser == true){
+                    if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 0){
+                        return true;
+                    }
+
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 0){
+                        return true;
+                    }
+
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 1){
+                        return false;
+                    }
+
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 2){
+                        return false;
+                    }
+
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 3){
+                        return false;
+                    }
+                    if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 3){
+                        return true;
                     }
                 }
 
