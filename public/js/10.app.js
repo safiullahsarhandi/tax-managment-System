@@ -133,9 +133,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _components_analyticsData_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/analyticsData.js */ "./resources/js/src/components/analyticsData.js");
-/* harmony import */ var _components_statistics_cards_StatisticsCardLine_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/statistics-cards/StatisticsCardLine.vue */ "./resources/js/src/components/statistics-cards/StatisticsCardLine.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _components_analyticsData_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/analyticsData.js */ "./resources/js/src/components/analyticsData.js");
+/* harmony import */ var _components_statistics_cards_StatisticsCardLine_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/statistics-cards/StatisticsCardLine.vue */ "./resources/js/src/components/statistics-cards/StatisticsCardLine.vue");
+
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -381,7 +385,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      analyticsData: _components_analyticsData_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+      analyticsData: _components_analyticsData_js__WEBPACK_IMPORTED_MODULE_2__["default"],
       editTaxManagmentModal: false,
       title: "",
       tax_code: "",
@@ -398,24 +402,39 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   components: {
-    StatisticsCardLine: _components_statistics_cards_StatisticsCardLine_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    StatisticsCardLine: _components_statistics_cards_StatisticsCardLine_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   beforeCreate: function beforeCreate() {},
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('taxes/', ['tax', 'purchases_approval', 'payrolls_approval', 'sales_approval']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('supervisors/', ['supervisors']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('officers/', ['officers']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('taxes/', ['supervisor']), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])('taxes/', ['tax', 'purchases_approval', 'payrolls_approval', 'sales_approval']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])('supervisors/', ['supervisors']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])('officers/', ['officers']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])('taxes/', ['supervisor']), {
     activeUser: function activeUser() {
       return this.$store.state.AppActiveUser;
     }
   }),
   created: function created() {
-    localStorage.setItem('currentDetail', this.$route.fullPath);
-    this.$store.commit('setRootUrl', this.$route.fullPath);
-    this.tax_customer_id = localStorage.getItem('customer');
-    this.getSupervisors();
-    this.getOfficers();
-    this.getTax(this.$route.params.id);
-    localStorage.setItem('customer', this.tax.customer_id);
+    var _this = this;
+
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function created$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            localStorage.setItem('currentDetail', this.$route.fullPath);
+            this.$store.commit('setRootUrl', this.$route.fullPath);
+            this.getSupervisors();
+            this.getOfficers();
+            _context.next = 6;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.getTax(this.$route.params.id).then(function (res) {
+              localStorage.setItem('customer', res.tax.customer_id);
+              _this.tax_customer_id = res.tax.customer_id;
+            }));
+
+          case 6:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, null, this);
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
     getSupervisors: 'supervisors/getSupervisors',
     getOfficers: 'officers/getOfficers',
     getTax: 'taxes/getTax',
@@ -434,24 +453,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.description = this.tax.description; // this.$data.editedTax = this.tax;
     },
     editTaxManagment: function editTaxManagment(e) {
-      var _this = this;
+      var _this2 = this;
 
       this.$validator.validateAll().then(function (result) {
         if (result) {
-          self = _this;
+          self = _this2;
           var fd = new FormData(self.$refs.editTaxManagmentForm);
-          fd.append('customer_id', _this.tax_customer_id);
-          fd.append('tax_id', _this.$route.params.id);
+          fd.append('customer_id', _this2.tax_customer_id);
+          fd.append('tax_id', _this2.$route.params.id);
           fd.append('officers', self.officer);
           fd.append('supervisor_id', self.editSupervisor);
           fd.append('tax_code', self.tax_code);
           var data = {
             fd: fd,
-            close: _this.$vs.loading.close,
-            notify: _this.$vs.notify
+            close: _this2.$vs.loading.close,
+            notify: _this2.$vs.notify
           };
 
-          _this.update(data).then(function (res) {
+          _this2.update(data).then(function (res) {
             if (res.data.status == 'success') {
               self.title = self.description = self.duration = self.editSupervisor = '';
               self.officer = [];
@@ -459,9 +478,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               self.$validator.reset();
 
-              _this.getTax(self.$route.params.id);
+              _this2.getTax(self.$route.params.id);
 
-              _this.editTaxManagmentModal = false;
+              _this2.editTaxManagmentModal = false;
             }
           });
         }

@@ -273,14 +273,17 @@ export default {
             return this.$store.state.AppActiveUser
         }
     },
-    created() {
+    async created() {
+        
     	localStorage.setItem('currentDetail', this.$route.fullPath);
         this.$store.commit('setRootUrl', this.$route.fullPath);
-        this.tax_customer_id = localStorage.getItem('customer')
         this.getSupervisors();
         this.getOfficers();
-        this.getTax(this.$route.params.id);
-        localStorage.setItem('customer',this.tax.customer_id);
+        await this.getTax(this.$route.params.id).then(res=>{
+            localStorage.setItem('customer',res.tax.customer_id);
+            this.tax_customer_id = res.tax.customer_id;
+        });
+        
     },
     methods: {
         ...mapActions({
