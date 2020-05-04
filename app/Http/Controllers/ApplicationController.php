@@ -797,15 +797,15 @@ class ApplicationController extends Controller {
 
 	// Customer Employees method
 	public function add_employee(Request $request) {
-		if ($res = CustomerEmployee::whereNssfNum($request->nssf_num)->where('tax_customer_id', $request->tax_customer_id)->first()) {
+		if ($res = CustomerEmployee::whereNssfNum($request->nssf_num)->where('tax_customer_id', $request->customer_id)->first()) {
 			return response()->json(['status' => "error", 'msg' => "Employee with this NSSF No already exists"]);
 		}
-		if ($res = CustomerEmployee::where('employee_num', '=', $request->employee_num)->where('tax_customer_id', $request->tax_customer_id)->first()) {
+		if ($res = CustomerEmployee::where('employee_num', '=', $request->employee_num)->where('tax_customer_id', $request->customer_id)->first()) {
 			return response()->json(['status' => "error", 'msg' => "Employee with this Employee No already exists"]);
 		}
 		$employee = new CustomerEmployee;
 		$employee->employee_id = (String) Str::uuid();
-		$employee->tax_customer_id = $request->tax_customer_id;
+		$employee->tax_customer_id = $request->customer_id;
 		$employee->nssf_num = $request->nssf_num;
 		$employee->employee_num = $request->employee_num;
 		$employee->name_english = $request->name_eng;
