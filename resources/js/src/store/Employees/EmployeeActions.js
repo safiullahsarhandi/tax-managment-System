@@ -5,7 +5,7 @@ export default{
 		});
 	},
 	getActiveEmployees({commit},customer_id){
-		axios.get('get-active-employees',{customer_id: customer_id}).then(res=>{
+		axios.post('get-active-employees',{customer_id: customer_id}).then(res=>{
 			commit('setEmployees',res.data.employees)
 		});
 	},

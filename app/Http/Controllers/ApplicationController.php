@@ -797,15 +797,15 @@ class ApplicationController extends Controller {
 
 	// Customer Employees method
 	public function add_employee(Request $request) {
-		if ($res = CustomerEmployee::whereNssfNum($request->nssf_num)->where('tax_customer_id', $request->tax_customer_id)->first()) {
+		if ($res = CustomerEmployee::whereNssfNum($request->nssf_num)->where('tax_customer_id', $request->customer_id)->first()) {
 			return response()->json(['status' => "error", 'msg' => "Employee with this NSSF No already exists"]);
 		}
-		if ($res = CustomerEmployee::where('employee_num', '=', $request->employee_num)->where('tax_customer_id', $request->tax_customer_id)->first()) {
+		if ($res = CustomerEmployee::where('employee_num', '=', $request->employee_num)->where('tax_customer_id', $request->customer_id)->first()) {
 			return response()->json(['status' => "error", 'msg' => "Employee with this Employee No already exists"]);
 		}
 		$employee = new CustomerEmployee;
 		$employee->employee_id = (String) Str::uuid();
-		$employee->tax_customer_id = $request->tax_customer_id;
+		$employee->tax_customer_id = $request->customer_id;
 		$employee->nssf_num = $request->nssf_num;
 		$employee->employee_num = $request->employee_num;
 		$employee->name_english = $request->name_eng;
@@ -831,7 +831,7 @@ class ApplicationController extends Controller {
 		return response()->json(compact('data'));
 	}
 	public function get_active_employees(Request $request) {
-		$employees = CustomerEmployee::whereTaxCustomerId($request->tax_customer_id)->where('status', 1)->get();
+		$employees = CustomerEmployee::whereTaxCustomerId($request->customer_id)->where('status', 1)->get();
 		return response()->json(compact('employees'));
 	}
 	public function update_employee(Request $request) {
@@ -1762,12 +1762,12 @@ class ApplicationController extends Controller {
 	}
 
 	public function get_sale(Request $request) {
-		$sale = Sales::with('officer')->whereSaleId($request->id)->first();
+		$sale = Sales::with(['officer', 'created_by'])->whereSaleId($request->id)->first();
 		return response()->json(compact('sale'));
 	}
 
 	public function get_purchase(Request $request) {
-		$purchase = Purchases::with(['officer'])->wherePurchaseId($request->id)->first();
+		$purchase = Purchases::with(['officer', 'created_by'])->wherePurchaseId($request->id)->first();
 		return response()->json(compact('purchase'));
 	}
 
@@ -1888,7 +1888,7 @@ class ApplicationController extends Controller {
 
 	public function get_payroll(Request $request) {
 
-		$data = Payrolls::with(['employee', 'officer', 'customer'])->wherePayrollId($request->id)->first();
+		$data = Payrolls::with(['employee', 'officer', 'customer', 'created_by'])->wherePayrollId($request->id)->first();
 
 		return response()->json(['data' => $data]);
 

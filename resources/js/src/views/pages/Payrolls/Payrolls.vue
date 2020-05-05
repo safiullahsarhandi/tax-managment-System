@@ -36,7 +36,7 @@
                         </vs-td>
 
                        
-                        <vs-td>{{ currentTaxStatusForOfficer(tr) }}</vs-td>
+                        <vs-td>{{ currentTaxStatus(tr) }}</vs-td>
 
                         <vs-td v-if="editPermissionAccess(tr)">
                             <vs-button :to="'edit-payroll/'+tr.payroll_id" size="small" type="border" icon-pack="feather" icon="icon-edit"></vs-button>
@@ -63,6 +63,7 @@ export default {
     data() {
         return {
             // switch1: true,
+            managerId: null,
             editCustomerModal: false,
             customer_id: '',
             name_english: '',
@@ -101,6 +102,7 @@ export default {
     },
     
     created() {
+        this.managerId = this.$store.state.AppActiveUser.manager_id;
     	this.tax_id = this.$store.state.rootUrl.split('/')[2];
         this.getPayrolls(this.tax_id);
         this.customer_id = localStorage.getItem('customer');
@@ -160,7 +162,7 @@ export default {
 
         },
 
-        currentTaxStatusForOfficer(tr){
+        currentTaxStatus(tr){
 
                 if(this.is_officer){
                     if(tr.officer_confirmed == 0 && tr.supervisor_confirmed == 0){
@@ -185,6 +187,36 @@ export default {
                 }
 
                 if(this.is_supervisor){
+
+                    var created_by = tr.created_by.manager_id;
+                    
+                    if(this.managerId == created_by){
+
+                        if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 0){
+                            return 'Work In Progress';
+                        }
+
+                        if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 0){
+                            return 'Submit';
+                        }
+
+                        if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 1){
+                            return 'Approved';
+                        }
+
+                        if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 2){
+                            return 'Management Reviewing';
+                        }
+
+                        if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 3){
+                            return 'Rejected';
+                        }
+                        if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 3){
+                            return 'Submit';
+                        }
+
+                    }
+
                     if(tr.officer_confirmed == 0 && tr.supervisor_confirmed == 0){
                         return 'Pending';
                     }
@@ -258,6 +290,36 @@ export default {
                 }
 
                 if(this.is_supervisor){
+
+                    var created_by = tr.created_by.manager_id;
+                    
+                    if(this.managerId == created_by){
+
+                        if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 0){
+                            return true;
+                        }
+
+                        if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 0){
+                            return true;
+                        }
+
+                        if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 1){
+                            return false;
+                        }
+
+                        if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 2){
+                            return false;
+                        }
+
+                        if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 3){
+                            return true;
+                        }
+                        if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 3){
+                            return true;
+                        }
+
+                    }
+
                     if(tr.officer_confirmed == 0 && tr.supervisor_confirmed == 0){
                         return false;
                     }

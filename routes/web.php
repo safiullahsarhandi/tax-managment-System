@@ -58,7 +58,7 @@ Route::group(['prefix' => ''], function () {
 	Route::post('add-employee', 'ApplicationController@add_employee');
 	Route::get('get-employees', 'ApplicationController@get_employees');
 	Route::post('get-employee', 'ApplicationController@get_employee');
-	Route::get('get-active-employees', 'ApplicationController@get_active_employees');
+	Route::post('get-active-employees', 'ApplicationController@get_active_employees');
 	Route::post('update-employee', 'ApplicationController@update_employee');
 	Route::post('status-update-employee', 'ApplicationController@status_update_employee');
 	Route::post('add-multiple-employees/{id}', 'ApplicationController@add_multiple_employee');

@@ -36,49 +36,6 @@
                             
                         </vs-td>
 
-                        <!-- <vs-td v-show='is_officer != true'>
-                            <vs-select autocomplete @input="statusUpdate(tr.sale_id, tr.supervisor_confirmed, 'supervisor')" v-model="tr.supervisor_confirmed" class="p-0 ml-0" placeholder="Select Status" style="width: 170px;" >
-                                <vs-select-item value="0" text="Work In Progress"></vs-select-item>
-                                <vs-select-item value="1" text="Approve"></vs-select-item>
-                                <vs-select-item value="2" text="Review"></vs-select-item>
-                                
-                            </vs-select>
-                        </vs-td> -->
-
-                       <!-- <vs-td v-show='is_admin == true' :data="tr.management_confirmed"> 
-                        <template>
-                            <span v-if="tr.officer_confirmed == 0">
-                                Not Submitted yet
-                            </span>
-                            <span v-else-if="tr.officer_confirmed == 1 && tr.supervisor_confirmed == 0">
-                                Under Supervisor Review
-                            </span>
-                            <span v-else-if="tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1 && tr.management_confirmed == 0">
-                                Under Administration Review
-                            </span>
-                            <span v-else-if="tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1 && tr.management_confirmed == 1">
-                                Approved
-                            </span>
-                        </template>
-                          
-                        </vs-td> -->
-
-                        <!-- <vs-td v-show='is_supervisor == true' :data="tr.supervisor_confirmed"> 
-                            <template>
-                                <span v-if="tr.officer_confirmed == 0">
-                                    Not Submitted yet
-                                </span>
-                                <span v-else-if="tr.officer_confirmed == 1 && tr.supervisor_confirmed == 0">
-                                    Under Supervisor Review
-                                </span>
-                                <span v-else-if="tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1 && tr.management_confirmed == 0">
-                                    Under Administration Review
-                                </span>
-                                <span v-else-if="tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1 && tr.management_confirmed == 1">
-                                    Approved
-                                </span>
-                            </template>
-                        </vs-td> -->
 
                         <vs-td :data="tr.quantity">{{ currentTaxStatus(tr) }}</vs-td>
 
@@ -105,6 +62,7 @@ export default {
     inject : ['generatePassword'],
     data() {
         return {
+            managerId: null,
             tax_id : '',
             customer_id : '',
             is_admin: false,
@@ -124,9 +82,11 @@ export default {
       
     },
     created() {
+        this.managerId = this.$store.state.AppActiveUser.manager_id;
         this.tax_id = this.$store.state.rootUrl.split('/')[2];
         this.customer_id = localStorage.getItem('customer');
-        this.getSales(this.tax_id);
+        this.getSales(this.tax_id).then(res=>{
+        });
         
         
         if (this.$store.state.AppActiveUser.type == 'Admin' || this.$store.state.AppActiveUser.type == 'Super Admin' ) {
@@ -195,6 +155,36 @@ export default {
                 }
 
                 if(this.is_supervisor){
+
+                    var created_by = tr.created_by.manager_id;
+                    
+                    if(this.managerId == created_by){
+
+                        if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 0){
+                            return 'Work In Progress';
+                        }
+
+                        if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 0){
+                            return 'Submit';
+                        }
+
+                        if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 1){
+                            return 'Approved';
+                        }
+
+                        if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 2){
+                            return 'Management Reviewing';
+                        }
+
+                        if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 3){
+                            return 'Rejected';
+                        }
+                        if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 3){
+                            return 'Submit';
+                        }
+
+                    }
+
                     if(tr.officer_confirmed == 0 && tr.supervisor_confirmed == 0){
                         return 'Pending';
                     }
@@ -275,6 +265,36 @@ export default {
                 }
 
                 if(this.is_supervisor){
+
+                    var created_by = tr.created_by.manager_id;
+                    
+                    if(this.managerId == created_by){
+
+                        if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 0){
+                            return true;
+                        }
+
+                        if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 0){
+                            return true;
+                        }
+
+                        if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 1){
+                            return false;
+                        }
+
+                        if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 2){
+                            return false;
+                        }
+
+                        if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 3){
+                            return true;
+                        }
+                        if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 3){
+                            return true;
+                        }
+
+                    }
+
                     if(tr.officer_confirmed == 0 && tr.supervisor_confirmed == 0){
                         return false;
                     }

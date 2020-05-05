@@ -76,9 +76,9 @@ class ExportController extends Controller {
 				}
 				$hr_centre = array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-				$adress = $customer->adress . ', ' . $customer->street . ', ' . $customer->muncipality . ', ' . $customer->sangkat . ', ' . $customer->district . ', ' . $customer->province . ', ' . $customer->group;
-				$eng_adress = 'Address:​​ ' . $adress;
-				$khmr_adress = 'អាសយដ្ឋានៈ​​ ' . $adress;
+				$address = $customer->address . ', ' . $customer->street . ', ' . $customer->muncipality . ', ' . $customer->sangkat . ', ' . $customer->district . ', ' . $customer->province . ', ' . $customer->group;
+				$eng_address = 'Address:​​ ' . $address;
+				$khmr_address = 'អាសយដ្ឋានៈ​​ ' . $address;
 
 				$tin = 'VAT TIN: ' . $customer->tin_no;
 				$tin_khmer = 'លេខអត្តសញ្ញាណកម្មអតបៈ ' . $customer->tin_no;
@@ -92,8 +92,8 @@ class ExportController extends Controller {
 				$sheet->getStyle('A1:Q1')->getFont()->setBold(true);
 				$sheet->prependRow([]);
 
-				$sheet->prependRow([$eng_adress]);
-				$sheet->prependRow([$khmr_adress]);
+				$sheet->prependRow([$eng_address]);
+				$sheet->prependRow([$khmr_address]);
 				$sheet->prependRow([$tin]);
 				$sheet->prependRow([$tin_khmer]);
 				$sheet->prependRow([$company_name]);
@@ -135,9 +135,9 @@ class ExportController extends Controller {
 				}
 				$hr_centre = array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-				$adress = $customer->adress . ', ' . $customer->street . ', ' . $customer->muncipality . ', ' . $customer->sangkat . ', ' . $customer->district . ', ' . $customer->province . ', ' . $customer->group;
-				$eng_adress = 'Address:​​ ' . $adress;
-				$khmr_adress = 'អាសយដ្ឋានៈ​​ ' . $adress;
+				$address = $customer->address . ', ' . $customer->street . ', ' . $customer->muncipality . ', ' . $customer->sangkat . ', ' . $customer->district . ', ' . $customer->province . ', ' . $customer->group;
+				$eng_address = 'Address:​​ ' . $address;
+				$khmr_address = 'អាសយដ្ឋានៈ​​ ' . $address;
 
 				$tin = 'VAT TIN: ' . $customer->tin_no;
 				$tin_khmer = 'លេខអត្តសញ្ញាណកម្មអតបៈ ' . $customer->tin_no;
@@ -149,8 +149,8 @@ class ExportController extends Controller {
 				$company_name_khmer = 'នាមករណ៍សហគ្រាស: ' . $com_name_khmr;
 
 
-				$sheet->prependRow([$eng_adress]);
-				$sheet->prependRow([$khmr_adress]);
+				$sheet->prependRow([$eng_address]);
+				$sheet->prependRow([$khmr_address]);
 				$sheet->prependRow([$tin]);
 				$sheet->prependRow([$tin_khmer]);
 				$sheet->prependRow([$company_name]);
@@ -191,9 +191,9 @@ class ExportController extends Controller {
 
 				$hr_centre = array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-				$adress = $customer->adress . ', ' . $customer->street . ', ' . $customer->muncipality . ', ' . $customer->sangkat . ', ' . $customer->district . ', ' . $customer->province . ', ' . $customer->group;
-				$eng_adress = 'Address:​​ ' . $adress;
-				$khmr_adress = 'អាសយដ្ឋានៈ​​ ' . $adress;
+				$address = $customer->address . ', ' . $customer->street . ', ' . $customer->muncipality . ', ' . $customer->sangkat . ', ' . $customer->district . ', ' . $customer->province . ', ' . $customer->group;
+				$eng_address = 'Address:​​ ' . $address;
+				$khmr_address = 'អាសយដ្ឋានៈ​​ ' . $address;
 
 				$tin = 'VAT TIN: ' . $customer->tin_no;
 				$tin_khmer = 'លេខអត្តសញ្ញាណកម្មអតបៈ ' . $customer->tin_no;
@@ -206,8 +206,8 @@ class ExportController extends Controller {
 
 				$sheet->prependRow([]);
 
-				$sheet->prependRow([$eng_adress]);
-				$sheet->prependRow([$khmr_adress]);
+				$sheet->prependRow([$eng_address]);
+				$sheet->prependRow([$khmr_address]);
 				$sheet->prependRow([$tin]);
 				$sheet->prependRow([$tin_khmer]);
 				$sheet->prependRow([$company_name]);

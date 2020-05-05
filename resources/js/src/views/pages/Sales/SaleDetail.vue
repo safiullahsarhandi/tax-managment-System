@@ -123,13 +123,18 @@
             </vs-col>
             <vs-col vs-lg="3" vs-md="3" vs-xl="3" vs-sm="12">
                 <vx-card title="Actions">
-                    <vs-select v-if="userType == 'Supervisor'" autocomplete
+                    <vs-select v-if="userType == 'Supervisor' && is_saleCreatedByLoginUser == false" autocomplete
                      @input="changeManagementStatus(sale.supervisor_confirmed, sale.sale_id, 'supervisor')" v-model="sale.supervisor_confirmed" class="p-0 ml-0" placeholder="Select Status" style="width: 100%;" >
                                     <vs-select-item value="0" text="Pending"></vs-select-item>
                                     <vs-select-item value="1" text="Approve"></vs-select-item>
                                     <vs-select-item value="2" text="Review"></vs-select-item>
                                     <vs-select-item value="3" text="Reject"></vs-select-item>
                                     
+                    </vs-select>
+                    <vs-select v-if="userType == 'Supervisor' && is_saleCreatedByLoginUser == true" autocomplete
+                     @input="changeManagementStatus(sale.supervisor_confirmed, sale.sale_id, 'supervisor')" v-model="sale.supervisor_confirmed" class="p-0 ml-0" placeholder="Select Status" style="width: 100%;" >
+                                    <vs-select-item value="0" text="Work In Progress"></vs-select-item>
+                                    <vs-select-item value="1" text="Submit"></vs-select-item>
                     </vs-select>
                     <vs-select v-if="userType == 'Admin' || userType == 'Super Admin'" autocomplete
                      @input="changeManagementStatus(sale.management_confirmed, sale.sale_id, 'admin')" v-model="sale.management_confirmed" class="p-0 ml-0" placeholder="Select Status" style="width: 100%;" >
@@ -140,7 +145,7 @@
                                     
                     </vs-select>
                     <vs-list>
-                        <vs-list-item title="Edit Sale" v-if="editPermissionAccess(tr)">
+                        <vs-list-item title="Edit Sale" v-if="editPermissionAccess(sale)">
                             <vs-button :to="'/sale-update/'+$route.params.id" icon-pack="feather" size="small" icon='icon-edit'></vs-button>
                         </vs-list-item>
                         <vs-list-item title="Edit Sale" v-else>
@@ -150,9 +155,10 @@
 
 
                             <vs-list-item v-if="userType == 'Officer'" title="Status">
-                                <vs-switch v-if="editPermissionAccess(tr)" icon-pack="feather" @click="statusUpdate(sale.sale_id, sale.officer_confirmed)" v-model="sale.officer_confirmed"></vs-switch>
+                                <vs-switch v-if="editPermissionAccess(sale)" icon-pack="feather" @click="statusUpdate(sale.sale_id, sale.officer_confirmed)" v-model="sale.officer_confirmed"></vs-switch>
                                 <vs-switch v-else icon-pack="feather" @click="notAllowed('status')" v-model="sale.officer_confirmed"></vs-switch>
                             </vs-list-item>
+
 
                         </template>
                         <vs-list-item title="View Comments">
@@ -184,15 +190,25 @@ export default {
     data() {
         return {
             tax_id: '',
-            openComments: false
+            openComments: false,
+            is_saleCreatedByLoginUser: false
         };
     },
     async created() {
-        await this.getSale(this.$route.params.id);
+        await this.getSale(this.$route.params.id).then(res=>{
+            var created_by = res.data.sale.created_by;
+            if (this.$store.state.AppActiveUser.type == 'Supervisor') {
+                if(this.$store.state.AppActiveUser.manager_id == created_by.manager_id){
+                    this.is_saleCreatedByLoginUser = true;
+                }
+            }
+        });
         localStorage.setItem('customer',this.sale.customer_id)
         localStorage.setItem('currentDetail','/tax-collection/'+this.sale.tax_id);
         this.tax_id = this.$store.state.rootUrl.split('/')[2];
-        this.getCustomer(localStorage.getItem('customer'));
+        this.getCustomer(localStorage.getItem('customer')).then(res=>{
+            // console.log(res.data);
+        });
         this.$store.dispatch('getAverageRate');
     },
     computed: {
@@ -360,7 +376,7 @@ export default {
             });
         },
 
-        changeManagementStatus(status, id, by){        
+        changeManagementStatus(status, id, by){     
             let data = {
                 id: id,
                 status: status,
@@ -369,7 +385,7 @@ export default {
                 notify: this.$vs.notify,
                 tax_type: 'sale'
             };
-            this.statusChangeManagment(data).then((res)=> {
+            this.statusChangeManagment(data).then(res=> {
                 var res = res.data;
                 if(by == 'supervisor'){
                     this.sale.supervisor_confirmed = res.response;

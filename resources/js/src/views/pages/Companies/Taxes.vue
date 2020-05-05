@@ -14,7 +14,7 @@
                     <vs-th>Description</vs-th>
                     <!-- <vs-th>Supervisor</vs-th> -->
                     <vs-th>Type</vs-th>
-                    <vs-th>revision</vs-th>
+                    <vs-th>Revision</vs-th>
                     <!-- <vs-th>No. of Officers</vs-th> -->
                     <vs-th>Status</vs-th>
                     <vs-th>Actions</vs-th>
