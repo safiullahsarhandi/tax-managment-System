@@ -522,7 +522,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("vs-th", [_vm._v("Type")]),
                   _vm._v(" "),
-                  _c("vs-th", [_vm._v("revision")]),
+                  _c("vs-th", [_vm._v("Revision")]),
                   _vm._v(" "),
                   _c("vs-th", [_vm._v("Status")]),
                   _vm._v(" "),

@@ -831,7 +831,7 @@ class ApplicationController extends Controller {
 		return response()->json(compact('data'));
 	}
 	public function get_active_employees(Request $request) {
-		$employees = CustomerEmployee::whereTaxCustomerId($request->tax_customer_id)->where('status', 1)->get();
+		$employees = CustomerEmployee::whereTaxCustomerId($request->customer_id)->where('status', 1)->get();
 		return response()->json(compact('employees'));
 	}
 	public function update_employee(Request $request) {
