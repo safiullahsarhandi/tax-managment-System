@@ -114,6 +114,7 @@ const mutations = {
         state.allNotificationsDetail = {total: data.notifications.total, current : data.notifications.current_page}; 
     },
     setNotification(state,data){
+        console.log(state.notifications);
         var index = _.findIndex(state.notifications,(o)=>{return o.id == data.notification.id});
         state.notifications[index].is_checked = 1;
         state.totalNotifications = data.totalNotifications; 

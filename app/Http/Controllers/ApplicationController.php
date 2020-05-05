@@ -222,7 +222,7 @@ class ApplicationController extends Controller {
 			$notification->transmitted_for = $customer->manager;
 			$notification->transmitted_by = $created_by->manager_id;
 			$notification->notification = 'new company alert';
-			$notification->description = 'new company ' . $customer->name_english . ' has been created by  <strong>' . $created_by->full_name . '</strong>: which were assigned to you';
+			$notification->description = 'new company ' . $customer->name_english . ' has been created by  ' . $created_by->full_name . ': which were assigned to you';
 			$notification->click_action = "/company-detail/" . $customer->customer_id;
 			$save = $notification->save();
 			$officer = Admin::where('manager_id', $customer->manager)->first();
@@ -265,7 +265,7 @@ class ApplicationController extends Controller {
 				$notification->transmitted_for = $admin->manager_id;
 				$notification->transmitted_by = $created_by->manager_id;
 				$notification->notification = 'new company alert';
-				$notification->description = 'new company ' . $customer->name_english . ' has been created by  Supervisor: <strong>' . $created_by->full_name . '</strong>: which were assigned to ' . $officer->full_name;
+				$notification->description = 'new company ' . $customer->name_english . ' has been created by  Supervisor: ' . $created_by->full_name . ': which were assigned to ' . $officer->full_name;
 				$notification->click_action = "/company-detail/" . $customer->customer_id;
 				$save = $notification->save();
 				if ($save) {
@@ -309,7 +309,7 @@ class ApplicationController extends Controller {
 				$notification->transmitted_for = $admin->manager_id;
 				$notification->transmitted_by = $created_by->manager_id;
 				$notification->notification = 'new company alert';
-				$notification->description = 'new company ' . $customer->name_english . ' has been created by  Officer: <strong>' . $created_by->full_name . '</strong>';
+				$notification->description = 'new company ' . $customer->name_english . ' has been created by  Officer: ' . $created_by->full_name . '';
 				$notification->click_action = "/company-detail/" . $customer->customer_id;
 				$save = $notification->save();
 				if ($save) {
@@ -495,7 +495,7 @@ class ApplicationController extends Controller {
 					$notification->transmitted_for = $customer->manager;
 					$notification->transmitted_by = $created_by->manager_id;
 					$notification->notification = 'new company alert';
-					$notification->description = $totalAddedCount . ' new companies has been created by  <strong>' . $created_by->full_name . '</strong>: which were assigned to you';
+					$notification->description = $totalAddedCount . ' new companies has been created by  ' . $created_by->full_name . ': which were assigned to you';
 					$notification->click_action = "/companies";
 					$save = $notification->save();
 					$officer = Admin::where('manager_id', $request->manager)->first();
@@ -538,7 +538,7 @@ class ApplicationController extends Controller {
 						$notification->transmitted_for = $admin->manager_id;
 						$notification->transmitted_by = $created_by->manager_id;
 						$notification->notification = 'new company alert';
-						$notification->description = $totalAddedCount . ' new companies has been created by  Supervisor: <strong>' . $created_by->full_name . '</strong>: which were assigned to ' . $officer->full_name;
+						$notification->description = $totalAddedCount . ' new companies has been created by  Supervisor: ' . $created_by->full_name . ': which were assigned to ' . $officer->full_name;
 						$notification->click_action = "/companies";
 						$save = $notification->save();
 						if ($save) {
@@ -582,7 +582,7 @@ class ApplicationController extends Controller {
 						$notification->transmitted_for = $admin->manager_id;
 						$notification->transmitted_by = $created_by->manager_id;
 						$notification->notification = 'new company alert';
-						$notification->description = $totalAddedCount . ' new companies has been created by  Officer: <strong>' . $created_by->full_name . '</strong>';
+						$notification->description = $totalAddedCount . ' new companies has been created by  Officer: ' . $created_by->full_name . '';
 						$notification->click_action = "/companies";
 						$save = $notification->save();
 						if ($save) {
@@ -713,7 +713,7 @@ class ApplicationController extends Controller {
 					$notification->transmitted_for = $admin->manager_id;
 					$notification->transmitted_by = session('admin.manager_id');
 					$notification->notification = 'company update alert';
-					$notification->description = 'A detail of company named ' . $customer->name_english . ' has been updated by Supervisor: <strong>' . session('admin.full_name') . '</strong>';
+					$notification->description = 'A detail of company named ' . $customer->name_english . ' has been updated by Supervisor: ' . session('admin.full_name') . '';
 					$notification->click_action = "/company-detail/" . $customer->customer_id;
 					$save = $notification->save();
 					if ($save) {
@@ -756,7 +756,7 @@ class ApplicationController extends Controller {
 					$notification->transmitted_for = $admin->manager_id;
 					$notification->transmitted_by = $created_by->manager_id;
 					$notification->notification = 'company update alert';
-					$notification->description = 'A detail of company named ' . $customer->name_english . ' has been updated by  Officer: <strong>' . $created_by->full_name . '</strong>';
+					$notification->description = 'A detail of company named ' . $customer->name_english . ' has been updated by  Officer: ' . $created_by->full_name . '';
 					$notification->click_action = "/company-detail/" . $customer->customer_id;
 					$save = $notification->save();
 					if ($save) {
@@ -936,7 +936,7 @@ class ApplicationController extends Controller {
 			$notification->transmitted_for = $request->reports_to;
 			$notification->transmitted_by = session('admin.manager_id');
 			$notification->notification = 'New Officer Assigned';
-			$notification->description = 'new officer <strong>' . $admin->full_name . '</strong> has been added in your team by <strong>' . session('admin.full_name') . '</strong>:';
+			$notification->description = 'new officer ' . $admin->full_name . ' has been added in your team by ' . session('admin.full_name') . ':';
 			$notification->click_action = "/my-team";
 			$save = $notification->save();
 			$supervisor = Admin::where('manager_id', $request->reports_to)->first();
@@ -978,7 +978,7 @@ class ApplicationController extends Controller {
 			$notification->transmitted_for = $request->reports_to;
 			$notification->transmitted_by = session('admin.manager_id');
 			$notification->notification = 'New Supervisor Assigned';
-			$notification->description = 'new Supervisor <strong>' . $admin->full_name . '</strong> has been added in your team by <strong>' . session('admin.full_name') . '</strong>:';
+			$notification->description = 'new Supervisor ' . $admin->full_name . ' has been added in your team by ' . session('admin.full_name') . ':';
 			$notification->click_action = "/my-team";
 			$save = $notification->save();
 			$admin = Admin::where('manager_id', $request->reports_to)->first();
@@ -1057,11 +1057,11 @@ class ApplicationController extends Controller {
 					if ($supervisor->manager_id == $previousReportsTo) {
 						$notification->transmitted_for = $supervisor->manager_id;
 						$notification->notification = 'Officer Removed';
-						$notification->description = 'Officer: <strong>' . $admin->full_name . '</strong> has been removed from your team by <strong>' . session('admin.full_name') . '</strong>:';
+						$notification->description = 'Officer: ' . $admin->full_name . ' has been removed from your team by ' . session('admin.full_name') . ':';
 					} else {
 						$notification->transmitted_for = $supervisor->manager_id;
 						$notification->notification = 'New Officer Assigned';
-						$notification->description = 'New officer <strong>' . $admin->full_name . '</strong> has been added in your team by <strong>' . session('admin.full_name') . '</strong>:';
+						$notification->description = 'New officer ' . $admin->full_name . ' has been added in your team by ' . session('admin.full_name') . ':';
 
 					}
 					$notification->click_action = "/my-team";
@@ -1112,11 +1112,11 @@ class ApplicationController extends Controller {
 						if ($supervisor->manager_id == $previousReportsTo) {
 							$notification->transmitted_for = $supervisor->manager_id;
 							$notification->notification = 'Supervisor Removed';
-							$notification->description = 'Supervisor: <strong>' . $admin->full_name . '</strong> has been removed from your team by <strong>' . session('admin.full_name') . '</strong>:';
+							$notification->description = 'Supervisor: ' . $admin->full_name . ' has been removed from your team by ' . session('admin.full_name') . ':';
 						} else {
 							$notification->transmitted_for = $supervisor->manager_id;
 							$notification->notification = 'New Supervisor Assigned';
-							$notification->description = 'new Supervisor <strong>' . $admin->full_name . '</strong> has been added in your team by <strong>' . session('admin.full_name') . '</strong>:';
+							$notification->description = 'new Supervisor ' . $admin->full_name . ' has been added in your team by ' . session('admin.full_name') . ':';
 						}
 						$save = $notification->save();
 						$admin = Admin::where('manager_id', $request->reports_to)->first();
@@ -1230,7 +1230,7 @@ class ApplicationController extends Controller {
 			$notification->transmitted_by = session('admin.manager_id');
 			$notification->notification = 'Officer Status change alert';
 			$status = $admin->status == 1 ? "Enabled" : 'Disabled';
-			$notification->description = 'Officer: <strong>' . $admin->full_name . '</strong> account has been ' . $status . ' by <strong>' . session('admin.full_name') . '</strong>' . ($status == 'Disabled' ? ' who is  no more available to work with you' : ' who is now available to work with you');
+			$notification->description = 'Officer: ' . $admin->full_name . ' account has been ' . $status . ' by ' . session('admin.full_name') . '' . ($status == 'Disabled' ? ' who is  no more available to work with you' : ' who is now available to work with you');
 			$notification->click_action = "/my-team";
 			$save = $notification->save();
 			if ($save) {
@@ -1371,7 +1371,7 @@ class ApplicationController extends Controller {
 				$notification->transmitted_for = $manager->manager_id;
 				$notification->transmitted_by = session('admin.manager_id');
 				$notification->notification = 'new tax creation alert';
-				$notification->description = 'new tax collection of company ' . $cust->name_english . ' has been created by  <strong>' . session('admin.full_name') . '</strong>:';
+				$notification->description = 'new tax collection of company ' . $cust->name_english . ' has been created by ' . session('admin.full_name') . ':';
 				$notification->click_action = "/tax-collection/" . $tax->tax_id;
 				$save = $notification->save();
 				if ($save) {
@@ -1458,7 +1458,7 @@ class ApplicationController extends Controller {
 				$notification->transmitted_for = $manager->manager_id;
 				$notification->transmitted_by = session('admin.manager_id');
 				$notification->notification = 'tax update alert';
-				$notification->description = 'Tax collection detail' . ' of company ' . $cust->name_english . ' entitled ' . $tax->title . ' has been updated by  <strong>' . session('admin.type') . ': ' . session('admin.full_name') . '</strong>';
+				$notification->description = 'Tax collection detail' . ' of company ' . $cust->name_english . ' entitled ' . $tax->title . ' has been updated by ' . session('admin.type') . ': ' . session('admin.full_name') . '';
 				$notification->click_action = "/tax-collection/" . $tax->tax_id;
 				$save = $notification->save();
 				if ($save) {
