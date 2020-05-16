@@ -47,8 +47,9 @@ export default{
 
 
 	async getPayroll({commit},id){
-		await axios.post('get-payroll',{id : id}).then(res=>{
+		return await axios.post('get-payroll',{id : id}).then(res=>{
 			commit('setPayroll',res.data.data);
+			return res;
 		});
 	},
 	

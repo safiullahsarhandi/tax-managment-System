@@ -234,18 +234,20 @@ var render = function() {
             "template",
             { slot: "actions" },
             [
-              _c("vs-button", {
-                attrs: {
-                  type: "border",
-                  "icon-pack": "feather",
-                  icon: "icon-edit"
-                },
-                on: {
-                  click: function($event) {
-                    return _vm.editRates()
-                  }
-                }
-              })
+              _vm.$store.getters.userType != "Officer"
+                ? _c("vs-button", {
+                    attrs: {
+                      type: "border",
+                      "icon-pack": "feather",
+                      icon: "icon-edit"
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.editRates()
+                      }
+                    }
+                  })
+                : _vm._e()
             ],
             1
           ),

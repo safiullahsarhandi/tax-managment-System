@@ -14,7 +14,7 @@
                     <vs-th>Description</vs-th>
                     <!-- <vs-th>Supervisor</vs-th> -->
                     <vs-th>Type</vs-th>
-                    <vs-th>revision</vs-th>
+                    <vs-th>Revision</vs-th>
                     <!-- <vs-th>No. of Officers</vs-th> -->
                     <vs-th>Status</vs-th>
                     <vs-th>Actions</vs-th>
@@ -27,7 +27,7 @@
                         <vs-td>{{tr.description}}</vs-td>
                         <!-- <vs-td>{{tr.supervisor.full_name}}</vs-td> -->
                         <vs-td>{{tr.type}}</vs-td>
-                        <vs-td>{{0}}</vs-td>
+                        <vs-td>{{tr.rivision}}</vs-td>
                         <!-- <vs-td>{{tr.officers_count}}</vs-td> -->
                         <vs-td>{{tr.status == 0? 'Work in progress':tr.status == 1?'Review':tr.status == 2?'Approve':tr.status == 3?'Client\'s Confirmation':tr.status == 4?'Tax Paid':tr.status == 5?'Submitted':tr.status == 6?'Scanned':'Released'}}</vs-td>
                         <vs-td>

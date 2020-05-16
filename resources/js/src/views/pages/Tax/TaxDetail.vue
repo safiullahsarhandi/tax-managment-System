@@ -1,7 +1,7 @@
 <template>
     <div id="tax-detail">
         <vs-row>
-            <vs-col :vs-md="activeUser.type == 'Admin' || activeUser.type == 'Super Admin'?'9':'9'" :vs-lg="activeUser.type == 'Admin' || activeUser.type == 'Super Admin'?'9':'9'" vs-sm="12" vs-xs="12">
+            <vs-col :vs-md="$store.getters.userType == 'Admin' || $store.getters.userType == 'Super Admin'?'9':'12'" :vs-lg="$store.getters.userType == 'Admin' || $store.getters.userType == 'Super Admin'?'9':'12'" vs-sm="12" vs-xs="12">
             	<vs-row class="mt-base p-0">
                     <vs-col vs-lg="4" vs-md="4" vs-sm="12" vs-xs="12">
                         <statistics-card-line icon="DollarSignIcon" :statistic="tax.purchases_count || 0" statisticTitle="No of Purchases Added" :chartData="analyticsData.revenueGenerated" type='area'></statistics-card-line>
@@ -87,7 +87,7 @@
 	                        <statistics-card-line icon="DollarSignIcon" :statistic="payrolls_approval || 0" statisticTitle="Pending Approvals Payroll" :chartData="analyticsData.revenueGenerated" color='danger' type='area'></statistics-card-line>
 	                    </vs-col>
 	                </vs-row>
-                   <!--  <vx-card v-if="activeUser.type == 'Supervisor'" class="mt-base" title="Pending Task Approvals" subtitle="listed below Purchases, Payrolls & sales need your approval">
+                   <!--  <vx-card v-if="$store.getters.userType == 'Supervisor'" class="mt-base" title="Pending Task Approvals" subtitle="listed below Purchases, Payrolls & sales need your approval">
                         <vs-table search pagination max-items="6" :data="purchases_approval	">
                             <template slot="header">
                                 <h4>Pending Purchases Approvals</h4>
@@ -158,13 +158,13 @@
                     </vx-card> -->
                 </template>
             </vs-col>
-            <vs-col v-show="activeUser.type == 'Admin' || activeUser.type == 'Super Admin'" class="mt-base" vs-md="3" vs-lg="3" vs-sm="12" vs-xs="12">
+            <vs-col v-if="$store.getters.userType == 'Admin' || $store.getters.userType == 'Super Admin'" class="mt-base" vs-md="3" vs-lg="3" vs-sm="12" vs-xs="12">
                 <vx-card title="Actions">
                     <vs-list>
                        <!--  <vs-list-item title="Tax Team" subtitle="">
                         </vs-list-item> -->
                         <vs-list-item  class="p-0 ml-0 status-list-item">
-                            <vs-select @input="changeTaxStatus(tax.tax_id)" v-model="tax.status" class="p-0 ml-0" placeholder="Select Status" style="width: 170px;" >
+                            <vs-select autocomplete @input="changeTaxStatus(tax.tax_id)" v-model="tax.status" class="p-0 ml-0" placeholder="Select Status" style="width: 170px;" >
                                 <vs-select-item value="0" text="Work In Progress"></vs-select-item>
                                 <vs-select-item value="1" text="Review"></vs-select-item>
                                 <vs-select-item value="2" text="Approve"></vs-select-item>
@@ -174,8 +174,6 @@
                                 <vs-select-item value="6" text="Scanned"></vs-select-item>
                                 <vs-select-item value="7" text="Released"></vs-select-item>
                             </vs-select>
-
-                            <!-- <vs-switch color="warning" :disabled="activeUser.type != 'Admin' || activeUser.type != 'Super Admin'" @input="changeTaxStatus(tax.tax_id)" /> -->
                         </vs-list-item>
                         <vs-list-item title="Edit Tax" subtitle="">
                         	<vs-button size="small" icon-pack="feather" @click="editTax()" icon="icon-edit"></vs-button>
@@ -275,13 +273,17 @@ export default {
             return this.$store.state.AppActiveUser
         }
     },
-    created() {
+    async created() {
+        
     	localStorage.setItem('currentDetail', this.$route.fullPath);
         this.$store.commit('setRootUrl', this.$route.fullPath);
-        this.tax_customer_id = localStorage.getItem('customer')
         this.getSupervisors();
         this.getOfficers();
-        this.getTax(this.$route.params.id);
+        await this.getTax(this.$route.params.id).then(res=>{
+            localStorage.setItem('customer',res.tax.customer_id);
+            this.tax_customer_id = res.tax.customer_id;
+        });
+        
     },
     methods: {
         ...mapActions({
@@ -335,15 +337,15 @@ export default {
             })
         },
         changeTaxStatus(id) {
-        this.$vs.loading();
-        let data = {
-            status: this.tax.status,
-            id: this.tax.tax_id,
-            notify: this.$vs.notify,
-            close: this.$vs.loading.close
+            this.$vs.loading();
+            let data = {
+                status: this.tax.status,
+                id: this.tax.tax_id,
+                notify: this.$vs.notify,
+                close: this.$vs.loading.close
+            }
+            this.statusUpdate(data);
         }
-        this.statusUpdate(data);
-    }
     },
 }
 

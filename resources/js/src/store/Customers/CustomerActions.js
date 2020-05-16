@@ -10,8 +10,9 @@ export default{
 		});
 	},
 	getCustomer({commit},customer_id){
-		axios.get('get-customer?customer_id='+customer_id,).then(res=>{
-			commit('setCustomer',res.data.customer)
+		return axios.get('get-customer?customer_id='+customer_id,).then(res=>{
+			commit('setCustomer',res.data.customer);
+			return res;
 		});
 	},
 	addCustomer({commit},fd){

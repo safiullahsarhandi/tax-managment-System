@@ -222,7 +222,7 @@ class ApplicationController extends Controller {
 			$notification->transmitted_for = $customer->manager;
 			$notification->transmitted_by = $created_by->manager_id;
 			$notification->notification = 'new company alert';
-			$notification->description = 'new company ' . $customer->name_english . ' has been created by  <strong>' . $created_by->full_name . '</strong>: which were assigned to you';
+			$notification->description = 'new company ' . $customer->name_english . ' has been created by  ' . $created_by->full_name . ': which were assigned to you';
 			$notification->click_action = "/company-detail/" . $customer->customer_id;
 			$save = $notification->save();
 			$officer = Admin::where('manager_id', $customer->manager)->first();
@@ -265,7 +265,7 @@ class ApplicationController extends Controller {
 				$notification->transmitted_for = $admin->manager_id;
 				$notification->transmitted_by = $created_by->manager_id;
 				$notification->notification = 'new company alert';
-				$notification->description = 'new company ' . $customer->name_english . ' has been created by  Supervisor: <strong>' . $created_by->full_name . '</strong>: which were assigned to ' . $officer->full_name;
+				$notification->description = 'new company ' . $customer->name_english . ' has been created by  Supervisor: ' . $created_by->full_name . ': which were assigned to ' . $officer->full_name;
 				$notification->click_action = "/company-detail/" . $customer->customer_id;
 				$save = $notification->save();
 				if ($save) {
@@ -309,7 +309,7 @@ class ApplicationController extends Controller {
 				$notification->transmitted_for = $admin->manager_id;
 				$notification->transmitted_by = $created_by->manager_id;
 				$notification->notification = 'new company alert';
-				$notification->description = 'new company ' . $customer->name_english . ' has been created by  Officer: <strong>' . $created_by->full_name . '</strong>';
+				$notification->description = 'new company ' . $customer->name_english . ' has been created by  Officer: ' . $created_by->full_name . '';
 				$notification->click_action = "/company-detail/" . $customer->customer_id;
 				$save = $notification->save();
 				if ($save) {
@@ -495,7 +495,7 @@ class ApplicationController extends Controller {
 					$notification->transmitted_for = $customer->manager;
 					$notification->transmitted_by = $created_by->manager_id;
 					$notification->notification = 'new company alert';
-					$notification->description = $totalAddedCount . ' new companies has been created by  <strong>' . $created_by->full_name . '</strong>: which were assigned to you';
+					$notification->description = $totalAddedCount . ' new companies has been created by  ' . $created_by->full_name . ': which were assigned to you';
 					$notification->click_action = "/companies";
 					$save = $notification->save();
 					$officer = Admin::where('manager_id', $request->manager)->first();
@@ -538,7 +538,7 @@ class ApplicationController extends Controller {
 						$notification->transmitted_for = $admin->manager_id;
 						$notification->transmitted_by = $created_by->manager_id;
 						$notification->notification = 'new company alert';
-						$notification->description = $totalAddedCount . ' new companies has been created by  Supervisor: <strong>' . $created_by->full_name . '</strong>: which were assigned to ' . $officer->full_name;
+						$notification->description = $totalAddedCount . ' new companies has been created by  Supervisor: ' . $created_by->full_name . ': which were assigned to ' . $officer->full_name;
 						$notification->click_action = "/companies";
 						$save = $notification->save();
 						if ($save) {
@@ -582,7 +582,7 @@ class ApplicationController extends Controller {
 						$notification->transmitted_for = $admin->manager_id;
 						$notification->transmitted_by = $created_by->manager_id;
 						$notification->notification = 'new company alert';
-						$notification->description = $totalAddedCount . ' new companies has been created by  Officer: <strong>' . $created_by->full_name . '</strong>';
+						$notification->description = $totalAddedCount . ' new companies has been created by  Officer: ' . $created_by->full_name . '';
 						$notification->click_action = "/companies";
 						$save = $notification->save();
 						if ($save) {
@@ -713,7 +713,7 @@ class ApplicationController extends Controller {
 					$notification->transmitted_for = $admin->manager_id;
 					$notification->transmitted_by = session('admin.manager_id');
 					$notification->notification = 'company update alert';
-					$notification->description = 'A detail of company named ' . $customer->name_english . ' has been updated by Supervisor: <strong>' . session('admin.full_name') . '</strong>';
+					$notification->description = 'A detail of company named ' . $customer->name_english . ' has been updated by Supervisor: ' . session('admin.full_name') . '';
 					$notification->click_action = "/company-detail/" . $customer->customer_id;
 					$save = $notification->save();
 					if ($save) {
@@ -756,7 +756,7 @@ class ApplicationController extends Controller {
 					$notification->transmitted_for = $admin->manager_id;
 					$notification->transmitted_by = $created_by->manager_id;
 					$notification->notification = 'company update alert';
-					$notification->description = 'A detail of company named ' . $customer->name_english . ' has been updated by  Officer: <strong>' . $created_by->full_name . '</strong>';
+					$notification->description = 'A detail of company named ' . $customer->name_english . ' has been updated by  Officer: ' . $created_by->full_name . '';
 					$notification->click_action = "/company-detail/" . $customer->customer_id;
 					$save = $notification->save();
 					if ($save) {
@@ -797,15 +797,15 @@ class ApplicationController extends Controller {
 
 	// Customer Employees method
 	public function add_employee(Request $request) {
-		if ($res = CustomerEmployee::whereNssfNum($request->nssf_num)->where('tax_customer_id', $request->tax_customer_id)->first()) {
+		if ($res = CustomerEmployee::whereNssfNum($request->nssf_num)->where('tax_customer_id', $request->customer_id)->first()) {
 			return response()->json(['status' => "error", 'msg' => "Employee with this NSSF No already exists"]);
 		}
-		if ($res = CustomerEmployee::where('employee_num', '=', $request->employee_num)->where('tax_customer_id', $request->tax_customer_id)->first()) {
+		if ($res = CustomerEmployee::where('employee_num', '=', $request->employee_num)->where('tax_customer_id', $request->customer_id)->first()) {
 			return response()->json(['status' => "error", 'msg' => "Employee with this Employee No already exists"]);
 		}
 		$employee = new CustomerEmployee;
 		$employee->employee_id = (String) Str::uuid();
-		$employee->tax_customer_id = $request->tax_customer_id;
+		$employee->tax_customer_id = $request->customer_id;
 		$employee->nssf_num = $request->nssf_num;
 		$employee->employee_num = $request->employee_num;
 		$employee->name_english = $request->name_eng;
@@ -831,7 +831,7 @@ class ApplicationController extends Controller {
 		return response()->json(compact('data'));
 	}
 	public function get_active_employees(Request $request) {
-		$employees = CustomerEmployee::whereTaxCustomerId($request->tax_customer_id)->where('status', 1)->get();
+		$employees = CustomerEmployee::whereTaxCustomerId($request->customer_id)->where('status', 1)->get();
 		return response()->json(compact('employees'));
 	}
 	public function update_employee(Request $request) {
@@ -936,7 +936,7 @@ class ApplicationController extends Controller {
 			$notification->transmitted_for = $request->reports_to;
 			$notification->transmitted_by = session('admin.manager_id');
 			$notification->notification = 'New Officer Assigned';
-			$notification->description = 'new officer <strong>' . $admin->full_name . '</strong> has been added in your team by <strong>' . session('admin.full_name') . '</strong>:';
+			$notification->description = 'new officer ' . $admin->full_name . ' has been added in your team by ' . session('admin.full_name') . ':';
 			$notification->click_action = "/my-team";
 			$save = $notification->save();
 			$supervisor = Admin::where('manager_id', $request->reports_to)->first();
@@ -978,7 +978,7 @@ class ApplicationController extends Controller {
 			$notification->transmitted_for = $request->reports_to;
 			$notification->transmitted_by = session('admin.manager_id');
 			$notification->notification = 'New Supervisor Assigned';
-			$notification->description = 'new Supervisor <strong>' . $admin->full_name . '</strong> has been added in your team by <strong>' . session('admin.full_name') . '</strong>:';
+			$notification->description = 'new Supervisor ' . $admin->full_name . ' has been added in your team by ' . session('admin.full_name') . ':';
 			$notification->click_action = "/my-team";
 			$save = $notification->save();
 			$admin = Admin::where('manager_id', $request->reports_to)->first();
@@ -1057,11 +1057,11 @@ class ApplicationController extends Controller {
 					if ($supervisor->manager_id == $previousReportsTo) {
 						$notification->transmitted_for = $supervisor->manager_id;
 						$notification->notification = 'Officer Removed';
-						$notification->description = 'Officer: <strong>' . $admin->full_name . '</strong> has been removed from your team by <strong>' . session('admin.full_name') . '</strong>:';
+						$notification->description = 'Officer: ' . $admin->full_name . ' has been removed from your team by ' . session('admin.full_name') . ':';
 					} else {
 						$notification->transmitted_for = $supervisor->manager_id;
 						$notification->notification = 'New Officer Assigned';
-						$notification->description = 'New officer <strong>' . $admin->full_name . '</strong> has been added in your team by <strong>' . session('admin.full_name') . '</strong>:';
+						$notification->description = 'New officer ' . $admin->full_name . ' has been added in your team by ' . session('admin.full_name') . ':';
 
 					}
 					$notification->click_action = "/my-team";
@@ -1112,11 +1112,11 @@ class ApplicationController extends Controller {
 						if ($supervisor->manager_id == $previousReportsTo) {
 							$notification->transmitted_for = $supervisor->manager_id;
 							$notification->notification = 'Supervisor Removed';
-							$notification->description = 'Supervisor: <strong>' . $admin->full_name . '</strong> has been removed from your team by <strong>' . session('admin.full_name') . '</strong>:';
+							$notification->description = 'Supervisor: ' . $admin->full_name . ' has been removed from your team by ' . session('admin.full_name') . ':';
 						} else {
 							$notification->transmitted_for = $supervisor->manager_id;
 							$notification->notification = 'New Supervisor Assigned';
-							$notification->description = 'new Supervisor <strong>' . $admin->full_name . '</strong> has been added in your team by <strong>' . session('admin.full_name') . '</strong>:';
+							$notification->description = 'new Supervisor ' . $admin->full_name . ' has been added in your team by ' . session('admin.full_name') . ':';
 						}
 						$save = $notification->save();
 						$admin = Admin::where('manager_id', $request->reports_to)->first();
@@ -1230,7 +1230,7 @@ class ApplicationController extends Controller {
 			$notification->transmitted_by = session('admin.manager_id');
 			$notification->notification = 'Officer Status change alert';
 			$status = $admin->status == 1 ? "Enabled" : 'Disabled';
-			$notification->description = 'Officer: <strong>' . $admin->full_name . '</strong> account has been ' . $status . ' by <strong>' . session('admin.full_name') . '</strong>' . ($status == 'Disabled' ? ' who is  no more available to work with you' : ' who is now available to work with you');
+			$notification->description = 'Officer: ' . $admin->full_name . ' account has been ' . $status . ' by ' . session('admin.full_name') . '' . ($status == 'Disabled' ? ' who is  no more available to work with you' : ' who is now available to work with you');
 			$notification->click_action = "/my-team";
 			$save = $notification->save();
 			if ($save) {
@@ -1371,7 +1371,7 @@ class ApplicationController extends Controller {
 				$notification->transmitted_for = $manager->manager_id;
 				$notification->transmitted_by = session('admin.manager_id');
 				$notification->notification = 'new tax creation alert';
-				$notification->description = 'new tax collection of company ' . $cust->name_english . ' has been created by  <strong>' . session('admin.full_name') . '</strong>:';
+				$notification->description = 'new tax collection of company ' . $cust->name_english . ' has been created by ' . session('admin.full_name') . ':';
 				$notification->click_action = "/tax-collection/" . $tax->tax_id;
 				$save = $notification->save();
 				if ($save) {
@@ -1458,7 +1458,7 @@ class ApplicationController extends Controller {
 				$notification->transmitted_for = $manager->manager_id;
 				$notification->transmitted_by = session('admin.manager_id');
 				$notification->notification = 'tax update alert';
-				$notification->description = 'Tax collection detail' . ' of company ' . $cust->name_english . ' entitled ' . $tax->title . ' has been updated by  <strong>' . session('admin.type') . ': ' . session('admin.full_name') . '</strong>';
+				$notification->description = 'Tax collection detail' . ' of company ' . $cust->name_english . ' entitled ' . $tax->title . ' has been updated by ' . session('admin.type') . ': ' . session('admin.full_name') . '';
 				$notification->click_action = "/tax-collection/" . $tax->tax_id;
 				$save = $notification->save();
 				if ($save) {
@@ -1613,7 +1613,7 @@ class ApplicationController extends Controller {
 	}
 
 	public function get_purchases(Request $request) {
-		$purchases = Purchases::latest('id')->where('tax_id', $request->tax_id)->get();
+		$purchases = Purchases::with(['created_by'])->latest('id')->where('tax_id', $request->tax_id)->get();
 		return response()->json(compact('purchases'));
 	}
 
@@ -1671,7 +1671,7 @@ class ApplicationController extends Controller {
 	}
 
 	public function get_sales(Request $request) {
-		$sales = Sales::latest('id')->where('tax_id', $request->tax_id)->get();
+		$sales = Sales::with(['created_by'])->latest('id')->where('tax_id', $request->tax_id)->get();
 		return response()->json(compact('sales'));
 	}
 	public function get_pending_sales(Request $request) {
@@ -1762,12 +1762,12 @@ class ApplicationController extends Controller {
 	}
 
 	public function get_sale(Request $request) {
-		$sale = Sales::with('officer')->whereSaleId($request->id)->first();
+		$sale = Sales::with(['officer', 'created_by'])->whereSaleId($request->id)->first();
 		return response()->json(compact('sale'));
 	}
 
 	public function get_purchase(Request $request) {
-		$purchase = Purchases::with(['officer'])->wherePurchaseId($request->id)->first();
+		$purchase = Purchases::with(['officer', 'created_by'])->wherePurchaseId($request->id)->first();
 		return response()->json(compact('purchase'));
 	}
 
@@ -1880,7 +1880,7 @@ class ApplicationController extends Controller {
 
 	public function get_payrolls(Request $request) {
 
-		$data = Payrolls::with(['employee'])->whereTaxId($request->tax_id)->get();
+		$data = Payrolls::with(['created_by', 'employee'])->whereTaxId($request->tax_id)->get();
 
 		return response()->json(['data' => $data]);
 
@@ -1888,7 +1888,7 @@ class ApplicationController extends Controller {
 
 	public function get_payroll(Request $request) {
 
-		$data = Payrolls::with(['employee', 'officer', 'customer'])->wherePayrollId($request->id)->first();
+		$data = Payrolls::with(['employee', 'officer', 'customer', 'created_by'])->wherePayrollId($request->id)->first();
 
 		return response()->json(['data' => $data]);
 
@@ -2241,6 +2241,8 @@ class ApplicationController extends Controller {
 	}
 	public function status_updateSPP(Request $request) {
 
+		// dd($request->all());
+
 		$data = array();
 		if ($request->type == 'sale') {
 			$data = Sales::whereSaleId($request->id)->whereTaxId($request->tax_id)->first();
@@ -2258,7 +2260,11 @@ class ApplicationController extends Controller {
 
 		$msg = '';
 		$tax = Tax::with('customer')->whereTaxId($request->tax_id)->first();
-		if ($data->supervisor_confirmed == 0) {
+		if ($data->supervisor_confirmed == 2) {
+			return response()->json(['status' => false, 'msg' => 'You cannot change ' . $request->type . ' status, Current ' . $request->type . ' is under supervisor reviewing']);
+		}
+		if ($data->supervisor_confirmed == 0 || $data->supervisor_confirmed == 3) {
+			// 0 = pending, 3 = rejected
 
 			if ($data->officer_confirmed == 1) {
 				$data->officer_confirmed = 0;
@@ -2266,7 +2272,7 @@ class ApplicationController extends Controller {
 				$msg = $request->type . ' submission revoked Successfully';
 			} else {
 				// $supervisor = Admin::whereManagerId(session('admin.reports_to'))->first();
-
+				$data->supervisor_confirmed = 0; // resumission status changed from rejected to submitted
 				$data->officer_confirmed = 1;
 				$data->save();
 				$msg = $request->type . ' Submitted Successfully';
@@ -2279,8 +2285,7 @@ class ApplicationController extends Controller {
 				$notification->click_action = '/' . $request->type . "-detail/" . $request->id;
 
 				if ($notification->save()) {
-					/*$fields = [];
-					$headers = [''];*/
+
 					$tokens = Admin::where('manager_id', session('admin.reports_to'))->first();
 					// 	dd($tokens);
 					$url = "https://fcm.googleapis.com//v1/projects/taxportal-d57de/messages:send";
@@ -2315,41 +2320,6 @@ class ApplicationController extends Controller {
 					curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
 					$result = curl_exec($ch);
 					curl_close($ch);
-					// 		echo "<p>&nbsp;</p>";
-					// 		echo "The Result : ".$result;
-					/*$fields = [
-						'notification' => [
-							"title" => "testing",
-							"body" => "testing",
-						],
-						'data' => [
-							"title" => "testing",
-							"body" => "testing",
-						],
-						"priority" => "high",
-						'registeration_ids' => $tokens,
-					];*/
-					/*$title = $notification->notification;
-						$body = "Hello I am from Your php server";
-						$notification = array('title' => $title, 'text' => $body, 'sound' => 'default', 'badge' => '1');
-					*/
-					// 	$json = json_encode($fields);
-					// 	// $headers = array();
-					// 	$headers = ['Content-Type: application/json', 'Authorization: Bearer ' . $serverKey];
-					// 	$ch = curl_init();
-					// 	curl_setopt($ch, CURLOPT_URL, $url);
-					// 	curl_setopt($ch, CURLOPT_POST, true);
-					// 	curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
-					// 	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-					// 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-					// 	//Send the request
-					// 	$response = curl_exec($ch);
-					// 	//Close request
-					// 	/*if ($response === FALSE) {
-					// 		die('FCM Send Error: ' . curl_error($ch));
-					// 	}*/
-					// 	curl_close($ch);
-					// 	dd($response);
 				}
 			}
 		} else {
@@ -2379,26 +2349,85 @@ class ApplicationController extends Controller {
 
 		$msg = '';
 		$tax = Tax::with('customer')->whereTaxId($request->tax_id)->first();
+		$tax_type = $request->tax_type;
+
 		if ($request->by == 'supervisor') {
 
 			if ($data->officer_confirmed == 1) {
 
-				if ($data->management_confirmed == 0) {
+				if ($data->management_confirmed == 2) {
+					return response()->json(['status' => false, 'msg' => 'You cannot change ' . $tax_type . ' status, Current ' . $tax_type . ' is under adminstration review']);
+				}
+
+				if ($data->management_confirmed == 0 || $data->management_confirmed == 3) {
 					$data->supervisor_confirmed = $request->status;
 					$data->save();
 					if ($request->status == 1) {
+						$admins = Admin::whereIn('manager_id', [$data->customer->manager, session('admin.reports_to')])->orWhere('status', 1)->get();
+
+						foreach ($admins as $key => $admin) {
+
+							$notification = new Notification;
+							$notification->transmitted_for = $admin->manager_id;
+							$notification->transmitted_by = session('admin.manager_id');
+							$notification->notification = 'new ' . $request->tax_type . ' submission alert';
+							if ($admin->type == 'Officer') {
+								$notification->description = 'your submitted ' . $request->tax_type . ' in ' . $tax->title . ' of company: ' . $tax->customer->name_english . ' has been approved by Supervisor:' . session('admin.full_name');
+							} else {
+								$notification->description = $supervisor->full_name . ' has submitted ' . $request->tax_type . ' in ' . $tax->title . ' of company: ' . $tax->customer->name_english . ' for Review';
+
+							}
+							$notification->click_action = '/' . $request->tax_type . "-detail/" . $request->id;
+
+							if ($notification->save()) {
+
+								$url = "https://fcm.googleapis.com//v1/projects/taxportal-d57de/messages:send";
+								// 	$token = "your device token";
+								$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
+
+								$fields = array(
+									// "content_available" => true,
+									"to" => $admin->token,
+									'priority' => 'high',
+									"data" => array(
+										"title" => $notification->notification,
+										"body" => $notification->description,
+										"icon" => "icon.png",
+										"click_action" => $notification->click_action,
+									),
+									"notification" => array(
+										"title" => $notification->notification,
+										"body" => $notification->description,
+										"icon" => "icon.png",
+										"click_action" => $notification->click_action,
+									),
+								);
+								$data_string = json_encode($fields);
+								// echo "The Json Data : " . $data_string;
+								$headers = array('Authorization: key=' . $serverKey, 'Content-Type: application/json');
+								$ch = curl_init();
+								curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+								curl_setopt($ch, CURLOPT_POST, true);
+								curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+								curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+								curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+								$result = curl_exec($ch);
+								curl_close($ch);
+							}
+						}
+					} elseif ($request->status == 2) {
 
 						$notification = new Notification;
-						$notification->transmitted_for = session('admin.reports_to');
+						$notification->transmitted_for = $data->created_by;
 						$notification->transmitted_by = session('admin.manager_id');
-						$notification->notification = 'new ' . $request->tax_type . ' submission alert';
-						$notification->description = 'new ' . $request->tax_type . ' in ' . $tax->title . ' with in company: ' . $tax->customer->name_english . ' has been submitted by supervisor: ' . session('admin.full_name');
+						$notification->notification = $request->tax_type . ' review alert';
+						$notification->description = 'A ' . $request->tax_type . ' in ' . $tax->title . ' of company: ' . $tax->customer->name_english . ' were marked for review by supervisor: ' . session('admin.full_name');
 						$notification->click_action = '/' . $request->tax_type . "-detail/" . $request->id;
 
 						if ($notification->save()) {
 							/*$fields = [];
 							$headers = [''];*/
-							$tokens = Admin::where('manager_id', session('admin.reports_to'))->first();
+							$tokens = Admin::where('manager_id', $notification->transmitted_for)->first();
 							// 	dd($tokens);
 							$url = "https://fcm.googleapis.com//v1/projects/taxportal-d57de/messages:send";
 							// 	$token = "your device token";
@@ -2433,22 +2462,27 @@ class ApplicationController extends Controller {
 							$result = curl_exec($ch);
 							curl_close($ch);
 						}
-					} else {
+					} elseif ($request->status == 3) {
+
 						$notification = new Notification;
-						$notification->transmitted_for = session('admin.reports_to');
+						$notification->transmitted_for = $data->created_by;
 						$notification->transmitted_by = session('admin.manager_id');
 						$notification->notification = $request->tax_type . ' submission revoke alert';
-						$notification->description = 'you submitted ' . $request->tax_type . ' in ' . $tax->title . ' with in company: ' . $tax->customer->name_english . ' has been revoked by supervisor: ' . session('admin.full_name');
+						$notification->description = 'your submitted ' . $request->tax_type . ' in ' . $tax->title . ' of company: ' . $tax->customer->name_english . ' has been revoked by supervisor: ' . session('admin.full_name') . ' please check comments';
 						$notification->click_action = '/' . $request->tax_type . "-detail/" . $request->id;
 
 						if ($notification->save()) {
-
-							$token = Admin::where('manager_id', $data->customer->manager)->first();
+							/*$fields = [];
+							$headers = [''];*/
+							$tokens = Admin::where('manager_id', $notification->transmitted_for)->first();
+							// 	dd($tokens);
+							$url = "https://fcm.googleapis.com//v1/projects/taxportal-d57de/messages:send";
+							// 	$token = "your device token";
 							$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
 
 							$fields = array(
 								// "content_available" => true,
-								"to" => $token->token,
+								"to" => $tokens->token,
 								'priority' => 'high',
 								"data" => array(
 									"title" => $notification->notification,
@@ -2484,6 +2518,14 @@ class ApplicationController extends Controller {
 			}
 
 		} else if ($request->by == 'admin') {
+			if ($data->supervisor_confirmed == 2) {
+				return response()->json(['status' => false, 'msg' => 'You cannot change ' . $tax_type . ' status, Current ' . $tax_type . ' is under supervisor reviewing']);
+			}
+
+			if ($data->supervisor_confirmed == 3) {
+				return response()->json(['status' => false, 'msg' => 'You cannot change ' . $tax_type . ' status, Current ' . $tax_type . ' is rejected by supervisor']);
+			}
+
 			if ($data->supervisor_confirmed == 1) {
 				$data->management_confirmed = $request->status;
 				$data->save();
@@ -2543,23 +2585,83 @@ class ApplicationController extends Controller {
 							}
 						}
 					}
-				} else {
+				} elseif ($request->status == 2) {
+
 					foreach ($admins as $key => $admin) {
 						if ($admin->manager_id != session('admin.manager_id')) {
+
 							$notification = new Notification;
 							$notification->transmitted_for = $admin->manager_id;
 							$notification->transmitted_by = session('admin.manager_id');
-							$notification->notification = 'new ' . $request->tax_type . ' submission alert';
-							if ($admin->manager_id == $data->customer->supervisor) {
-
-								$notification->description = 'your submitted ' . $request->tax_type . ' in ' . $tax->title . ' of company: ' . $tax->customer->name_english . ' has been revoked by Admin:' . session('admin.full_name') . ' . please check comments section of ' . $request->tax_type . ' for further detail.';
+							if ($admin->manager_id == $supervisor->manager_id) {
+								$notification->notification = $request->tax_type . ' review alert';
+								$notification->description = 'A ' . $request->tax_type . ' in ' . $tax->title . ' of company: ' . $tax->customer->name_english . ' were marked for review by Admin: ' . session('admin.full_name');
 							} else {
-								$notification->description = $supervisor->full_name . ' has submitted ' . $request->tax_type . ' in ' . $tax->title . ' of company: ' . $tax->customer->name_english . ' which has been revoked by Admin:' . session('admin.full_name') . ' . please check comments section of ' . $request->tax_type . ' for further detail.';
+								$notification->notification = $request->tax_type . ' review alert';
+								$notification->description = $supervisor->full_name . ' submitted ' . $request->tax_type . ' in ' . $tax->title . ' of company: ' . $tax->customer->name_english . ' has been approved by Admin:' . session('admin.full_name');
 
 							}
 							$notification->click_action = '/' . $request->tax_type . "-detail/" . $request->id;
 
 							if ($notification->save()) {
+
+								$url = "https://fcm.googleapis.com//v1/projects/taxportal-d57de/messages:send";
+								// 	$token = "your device token";
+								$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
+
+								$fields = array(
+									// "content_available" => true,
+									"to" => $admin->token,
+									'priority' => 'high',
+									"data" => array(
+										"title" => $notification->notification,
+										"body" => $notification->description,
+										"icon" => "icon.png",
+										"click_action" => $notification->click_action,
+									),
+									"notification" => array(
+										"title" => $notification->notification,
+										"body" => $notification->description,
+										"icon" => "icon.png",
+										"click_action" => $notification->click_action,
+									),
+								);
+								$data_string = json_encode($fields);
+								// echo "The Json Data : " . $data_string;
+								$headers = array('Authorization: key=' . $serverKey, 'Content-Type: application/json');
+								$ch = curl_init();
+								curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+								curl_setopt($ch, CURLOPT_POST, true);
+								curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+								curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+								curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+								$result = curl_exec($ch);
+								curl_close($ch);
+							}
+						}
+					}
+				} elseif ($request->status == 3) {
+
+					foreach ($admins as $key => $admin) {
+						if ($admin->manager_id != session('admin.manager_id')) {
+
+							$notification = new Notification;
+							$notification->transmitted_for = $admin->manager_id;
+							$notification->transmitted_by = session('admin.manager_id');
+							if ($admin->manager_id == $supervisor->manager_id) {
+								$notification->notification = $request->tax_type . ' submission revoke alert';
+								$notification->description = 'your submitted ' . $request->tax_type . ' in ' . $tax->title . ' of company: ' . $tax->customer->name_english . ' has been revoked by Admin: ' . session('admin.full_name') . ' please check comments';
+							} else {
+								$notification->notification = $request->tax_type . ' submission revoke alert';
+								$notification->description = $supervisor->full_name . '\'s submitted ' . $request->tax_type . ' in ' . $tax->title . ' of company: ' . $tax->customer->name_english . ' has been revoked by Admin: ' . session('admin.full_name') . ' please check comments';
+
+							}
+							$notification->click_action = '/' . $request->tax_type . "-detail/" . $request->id;
+
+							if ($notification->save()) {
+
+								$url = "https://fcm.googleapis.com//v1/projects/taxportal-d57de/messages:send";
+								// 	$token = "your device token";
 								$serverKey = 'AAAAgeVzr0Y:APA91bEmWlwJYVm0AvnjccKdnomUmn_zMQ9_tQIpO6VUMp0hP-VdvtrrGxrPoCdTd2fzwIPp-kD14rrpCsuiVC0pKKEb_EoP4kZWfUhMH9HYseeM-NX2ehhREmQwmBZOMBc2ZF--79Wp';
 
 								$fields = array(
@@ -2619,9 +2721,13 @@ class ApplicationController extends Controller {
 
 		$tax = Tax::where('tax_id', $request->id)->first();
 		if ($totalTaxApprovedChilds >= $totalTaxChilds && $totalTaxChilds != 0) {
+			if ($request->status <= 1 && $tax->status > 1) {
+				$tax->rivision += $tax->rivision;
+			}
 			$tax->status = $request->status;
 			$tax->save();
 			return response()->json(['status' => true, 'msg' => 'tax has been completed successfully', 'tax' => $tax]);
+
 		} else {
 			return response()->json(['status' => false, 'msg' => 'all sales, purchases payrolls should be approved to mark as completed ', 'tax' => $tax]);
 		}
@@ -2643,11 +2749,9 @@ class ApplicationController extends Controller {
 		if (!$check = Hash::check($current_password, $getUser->password)) {
 			return response()->json(['status' => false, 'msg' => 'invalid current password']);
 		} else {
-
 			$getUser->password = bcrypt($new_password);
 			$getUser->save();
 			return response()->json(['status' => true, 'msg' => 'Password changed successfully']);
-
 		}
 
 	}
@@ -2671,8 +2775,8 @@ class ApplicationController extends Controller {
 		if ($save) {
 			return response()->json(['status' => 'success', 'msg' => 'Parameter Added Successfully'], 200);
 		}
-
 	}
+
 	public function update_parameter(Request $request) {
 		if (Parameter::where('tax_param_id', $request->tax_code . $request->tax_id)->where('effective_date', '<=', now())->where('id', '!=', $request->identifier)->exists()) {
 			return response()->json(['status' => 'error', 'msg' => 'You cannot add new Tax Parameter until previous added parameter exeeds effective date range']);
@@ -2764,7 +2868,8 @@ class ApplicationController extends Controller {
 		$query = $request['query'];
 		$searchResult = array();
 		$loginUser = Session::get('admin');
-
+		$perPage = 10;
+		$offset = ($request->page - 1) * $perPage;
 		$type = '';
 		if ($loginUser->type == "Super Admin" || $loginUser->type == "Admin") {
 			$type = 'admin';
@@ -2775,6 +2880,25 @@ class ApplicationController extends Controller {
 		}
 
 		if ($type == 'supervisor') {
+
+			$taxCustomersCount = TaxCustomers::with(['owner'])->where('supervisor', $loginUser->manager_id)
+				->orWhere('name_english', 'like', '%' . $query . '%')
+				->orWhere('name_khmer', 'like', '%' . $query . '%')
+				->orWhere('tax_card_num', 'like', '%' . $query . '%')
+				->orWhere('tin_no', 'like', '%' . $query . '%')
+				->orWhere('address', 'like', '%' . $query . '%')
+				->orWhere('street', 'like', '%' . $query . '%')
+				->orWhere('group', 'like', '%' . $query . '%')
+				->orWhere('sangkat', 'like', '%' . $query . '%')
+				->orWhere('district', 'like', '%' . $query . '%')
+				->orWhere('province', 'like', '%' . $query . '%')
+				->orWhere('muncipality', 'like', '%' . $query . '%')
+				->orWhere('telephone', 'like', '%' . $query . '%')
+				->orWhere('industry', 'like', '%' . $query . '%')
+				->orWhere('incorporation_date', 'like', '%' . $query . '%')
+				->orWhere('tax_duration', 'like', '%' . $query . '%')
+				->count();
+
 			$taxCustomers = TaxCustomers::with(['owner'])->where('supervisor', $loginUser->manager_id)
 				->orWhere('name_english', 'like', '%' . $query . '%')
 				->orWhere('name_khmer', 'like', '%' . $query . '%')
@@ -2791,8 +2915,17 @@ class ApplicationController extends Controller {
 				->orWhere('industry', 'like', '%' . $query . '%')
 				->orWhere('incorporation_date', 'like', '%' . $query . '%')
 				->orWhere('tax_duration', 'like', '%' . $query . '%')
-				->take(20)->get();
+			/*->skip($offset)
+				->take($perPage)*/	->get();
 
+			$taxCount = Tax::where('supervisor_id', $loginUser->manager_id)
+				->orWhere('title', 'like', '%' . $query . '%')
+				->orWhere('description', 'like', '%' . $query . '%')
+				->orWhere('duration', 'like', '%' . $query . '%')
+				->orWhere('type', 'like', '%' . $query . '%')
+				->orWhere('tax_code', 'like', '%' . $query . '%')
+				->orWhere('notes', 'like', '%' . $query . '%')
+				->count();
 			$tax = Tax::where('supervisor_id', $loginUser->manager_id)
 				->orWhere('title', 'like', '%' . $query . '%')
 				->orWhere('description', 'like', '%' . $query . '%')
@@ -2800,9 +2933,10 @@ class ApplicationController extends Controller {
 				->orWhere('type', 'like', '%' . $query . '%')
 				->orWhere('tax_code', 'like', '%' . $query . '%')
 				->orWhere('notes', 'like', '%' . $query . '%')
-				->take(20)->get();
+			/*->skip($offset)
+				->take($perPage)*/	->get();
 
-			$taxManagers = Supervisor::where('manager_id', $loginUser->manager_id)
+			$taxManagersCount = Admin::where('reports_to', $loginUser->manager_id)
 				->orWhere('first_name', 'like', '%' . $query . '%')
 				->orWhere('last_name', 'like', '%' . $query . '%')
 				->orWhere('gender', 'like', '%' . $query . '%')
@@ -2812,7 +2946,34 @@ class ApplicationController extends Controller {
 				->orWhere('state', 'like', '%' . $query . '%')
 				->orWhere('city', 'like', '%' . $query . '%')
 				->orWhere('zip_code', 'like', '%' . $query . '%')
-				->take(20)->get();
+				->count();
+
+			$taxManagers = Admin::where('reports_to', $loginUser->manager_id)
+				->orWhere('first_name', 'like', '%' . $query . '%')
+				->orWhere('last_name', 'like', '%' . $query . '%')
+				->orWhere('gender', 'like', '%' . $query . '%')
+				->orWhere('email', 'like', '%' . $query . '%')
+				->orWhere('phone', 'like', '%' . $query . '%')
+				->orWhere('address', 'like', '%' . $query . '%')
+				->orWhere('state', 'like', '%' . $query . '%')
+				->orWhere('city', 'like', '%' . $query . '%')
+				->orWhere('zip_code', 'like', '%' . $query . '%')
+			/*->skip($offset)
+				->take($perPage)*/	->get();
+
+			$customerEmployeeCount = CustomerEmployee::whereRaw('tax_customer_id IN (select customer_id from tax_customers where supervisor = ?)', ['supervisor' => $loginUser->manager_id])
+				->orWhere('nssf_num', 'like', '%' . $query . '%')
+				->orWhere('employee_num', 'like', '%' . $query . '%')
+				->orWhere('name_english', 'like', '%' . $query . '%')
+				->orWhere('name_khmer', 'like', '%' . $query . '%')
+				->orWhere('nationality', 'like', '%' . $query . '%')
+				->orWhere('dob', 'like', '%' . $query . '%')
+				->orWhere('joining_date', 'like', '%' . $query . '%')
+				->orWhere('position', 'like', '%' . $query . '%')
+				->orWhere('sex', 'like', '%' . $query . '%')
+				->orWhere('contract_type', 'like', '%' . $query . '%')
+				->orWhere('spouse', 'like', '%' . $query . '%')
+				->count();
 
 			$customerEmployee = CustomerEmployee::whereRaw('tax_customer_id IN (select customer_id from tax_customers where supervisor = ?)', ['supervisor' => $loginUser->manager_id])
 				->orWhere('nssf_num', 'like', '%' . $query . '%')
@@ -2826,7 +2987,34 @@ class ApplicationController extends Controller {
 				->orWhere('sex', 'like', '%' . $query . '%')
 				->orWhere('contract_type', 'like', '%' . $query . '%')
 				->orWhere('spouse', 'like', '%' . $query . '%')
-				->take(20)->get();
+			/*->skip($offset)
+				->take($perPage)*/	->get();
+
+			$salesCount = Sales::whereRaw('customer_id IN (select customer_id from tax_customers where supervisor = ?)', ['supervisor' => $loginUser->manager_id])
+				->orWhere('account_code', 'like', '%' . $query . '%')
+				->orWhere('account_description', 'like', '%' . $query . '%')
+				->orWhere('accounting_reference', 'like', '%' . $query . '%')
+				->orWhere('signature_date', 'like', '%' . $query . '%')
+				->orWhere('branch_name', 'like', '%' . $query . '%')
+				->orWhere('tax_period', 'like', '%' . $query . '%')
+				->orWhere('invoice_date', 'like', '%' . $query . '%')
+				->orWhere('invoice_num', 'like', '%' . $query . '%')
+				->orWhere('description', 'like', '%' . $query . '%')
+				->orWhere('quantity', 'like', '%' . $query . '%')
+				->orWhere('non_taxable_sales', 'like', '%' . $query . '%')
+				->orWhere('vat', 'like', '%' . $query . '%')
+				->orWhere('taxable_person_sales', 'like', '%' . $query . '%')
+				->orWhere('taxable_person_vat', 'like', '%' . $query . '%')
+				->orWhere('cust_sales', 'like', '%' . $query . '%')
+				->orWhere('cust_sales_vat', 'like', '%' . $query . '%')
+				->orWhere('total_taxable_value', 'like', '%' . $query . '%')
+				->orWhere('taxes_subject', 'like', '%' . $query . '%')
+				->orWhere('comments', 'like', '%' . $query . '%')
+				->orWhere('client_response', 'like', '%' . $query . '%')
+				->orWhere('top_comments', 'like', '%' . $query . '%')
+				->orWhere('client_name', 'like', '%' . $query . '%')
+				->orWhere('client_tin', 'like', '%' . $query . '%')
+				->count();
 
 			$sales = Sales::whereRaw('customer_id IN (select customer_id from tax_customers where supervisor = ?)', ['supervisor' => $loginUser->manager_id])
 				->orWhere('account_code', 'like', '%' . $query . '%')
@@ -2852,7 +3040,30 @@ class ApplicationController extends Controller {
 				->orWhere('top_comments', 'like', '%' . $query . '%')
 				->orWhere('client_name', 'like', '%' . $query . '%')
 				->orWhere('client_tin', 'like', '%' . $query . '%')
-				->take(20)->get();
+			/*->skip($offset)
+				->take($perPage)*/	->get();
+
+			$purchasesCount = Purchases::whereRaw('customer_id IN (select customer_id from tax_customers where supervisor = ?)', ['supervisor' => $loginUser->manager_id])
+				->orWhere('branch_name', 'like', '%' . $query . '%')
+				->orWhere('tax_period', 'like', '%' . $query . '%')
+				->orWhere('invoice_date', 'like', '%' . $query . '%')
+				->orWhere('invoice_num', 'like', '%' . $query . '%')
+				->orWhere('description', 'like', '%' . $query . '%')
+				->orWhere('quantity', 'like', '%' . $query . '%')
+				->orWhere('local_purchase_tax_val', 'like', '%' . $query . '%')
+				->orWhere('local_purchase_vat', 'like', '%' . $query . '%')
+				->orWhere('imports_taxable_val', 'like', '%' . $query . '%')
+				->orWhere('imports_vat', 'like', '%' . $query . '%')
+				->orWhere('total_vat', 'like', '%' . $query . '%')
+				->orWhere('subject', 'like', '%' . $query . '%')
+				->orWhere('comments', 'like', '%' . $query . '%')
+				->orWhere('client_response', 'like', '%' . $query . '%')
+				->orWhere('top_comments', 'like', '%' . $query . '%')
+				->orWhere('client_responses', 'like', '%' . $query . '%')
+				->orWhere('non_taxable_purchases', 'like', '%' . $query . '%')
+				->orWhere('supplier', 'like', '%' . $query . '%')
+				->orWhere('vat_tin', 'like', '%' . $query . '%')
+				->count();
 
 			$purchases = Purchases::whereRaw('customer_id IN (select customer_id from tax_customers where supervisor = ?)', ['supervisor' => $loginUser->manager_id])
 				->orWhere('branch_name', 'like', '%' . $query . '%')
@@ -2874,7 +3085,25 @@ class ApplicationController extends Controller {
 				->orWhere('non_taxable_purchases', 'like', '%' . $query . '%')
 				->orWhere('supplier', 'like', '%' . $query . '%')
 				->orWhere('vat_tin', 'like', '%' . $query . '%')
-				->take(20)->get();
+			/*->skip($offset)
+				->take($perPage)*/	->get();
+
+			$payrollsCount = Payrolls::whereRaw('employee_id IN (select employee_id from customers_employees where  tax_customer_id IN (select customer_id from tax_customers where supervisor = ? ))', ['supervisor' => $loginUser->manager_id])
+				->orWhere('basic_salary', 'like', '%' . $query . '%')
+				->orWhere('bonus', 'like', '%' . $query . '%')
+				->orWhere('over_time', 'like', '%' . $query . '%')
+				->orWhere('commissions', 'like', '%' . $query . '%')
+				->orWhere('seniority_payment', 'like', '%' . $query . '%')
+				->orWhere('severance_pay', 'like', '%' . $query . '%')
+				->orWhere('maternity_leave', 'like', '%' . $query . '%')
+				->orWhere('paid_annual_leave', 'like', '%' . $query . '%')
+				->orWhere('food_allowance', 'like', '%' . $query . '%')
+				->orWhere('transport_allowance', 'like', '%' . $query . '%')
+				->orWhere('others', 'like', '%' . $query . '%')
+				->orWhere('deduction_advance', 'like', '%' . $query . '%')
+				->orWhere('salary_adjusment', 'like', '%' . $query . '%')
+				->orWhere('remark', 'like', '%' . $query . '%')
+				->count();
 
 			$payrolls = Payrolls::whereRaw('employee_id IN (select employee_id from customers_employees where  tax_customer_id IN (select customer_id from tax_customers where supervisor = ? ))', ['supervisor' => $loginUser->manager_id])
 				->orWhere('basic_salary', 'like', '%' . $query . '%')
@@ -2891,10 +3120,29 @@ class ApplicationController extends Controller {
 				->orWhere('deduction_advance', 'like', '%' . $query . '%')
 				->orWhere('salary_adjusment', 'like', '%' . $query . '%')
 				->orWhere('remark', 'like', '%' . $query . '%')
-				->take(20)->get();
+			/*->skip($offset)
+				->take($perPage)*/	->get();
 		}
 
 		if ($type == 'officer') {
+
+			$taxCustomersCount = TaxCustomers::with(['owner'])->where('manager', $loginUser->manager_id)
+				->orWhere('name_english', 'like', '%' . $query . '%')
+				->orWhere('name_khmer', 'like', '%' . $query . '%')
+				->orWhere('tax_card_num', 'like', '%' . $query . '%')
+				->orWhere('tin_no', 'like', '%' . $query . '%')
+				->orWhere('address', 'like', '%' . $query . '%')
+				->orWhere('street', 'like', '%' . $query . '%')
+				->orWhere('group', 'like', '%' . $query . '%')
+				->orWhere('sangkat', 'like', '%' . $query . '%')
+				->orWhere('district', 'like', '%' . $query . '%')
+				->orWhere('province', 'like', '%' . $query . '%')
+				->orWhere('muncipality', 'like', '%' . $query . '%')
+				->orWhere('telephone', 'like', '%' . $query . '%')
+				->orWhere('industry', 'like', '%' . $query . '%')
+				->orWhere('incorporation_date', 'like', '%' . $query . '%')
+				->orWhere('tax_duration', 'like', '%' . $query . '%')
+				->count();
 			$taxCustomers = TaxCustomers::with(['owner'])->where('manager', $loginUser->manager_id)
 				->orWhere('name_english', 'like', '%' . $query . '%')
 				->orWhere('name_khmer', 'like', '%' . $query . '%')
@@ -2911,7 +3159,17 @@ class ApplicationController extends Controller {
 				->orWhere('industry', 'like', '%' . $query . '%')
 				->orWhere('incorporation_date', 'like', '%' . $query . '%')
 				->orWhere('tax_duration', 'like', '%' . $query . '%')
-				->take(20)->get();
+			/*->skip($offset)
+				->take($perPage)*/	->get();
+
+			$taxCount = Tax::whereRaw('customer_id IN (select customer_id from tax_customers where manager = ?)', ['manager' => $loginUser->manager_id])
+				->orWhere('title', 'like', '%' . $query . '%')
+				->orWhere('description', 'like', '%' . $query . '%')
+				->orWhere('duration', 'like', '%' . $query . '%')
+				->orWhere('type', 'like', '%' . $query . '%')
+				->orWhere('tax_code', 'like', '%' . $query . '%')
+				->orWhere('notes', 'like', '%' . $query . '%')
+				->count();
 
 			$tax = Tax::whereRaw('customer_id IN (select customer_id from tax_customers where manager = ?)', ['manager' => $loginUser->manager_id])
 				->orWhere('title', 'like', '%' . $query . '%')
@@ -2920,7 +3178,20 @@ class ApplicationController extends Controller {
 				->orWhere('type', 'like', '%' . $query . '%')
 				->orWhere('tax_code', 'like', '%' . $query . '%')
 				->orWhere('notes', 'like', '%' . $query . '%')
-				->take(20)->get();
+			/*->skip($offset)
+				->take($perPage)*/	->get();
+
+			$taxManagersCount = Supervisor::where('manager_id', $loginUser->manager_id)
+				->orWhere('first_name', 'like', '%' . $query . '%')
+				->orWhere('last_name', 'like', '%' . $query . '%')
+				->orWhere('gender', 'like', '%' . $query . '%')
+				->orWhere('email', 'like', '%' . $query . '%')
+				->orWhere('phone', 'like', '%' . $query . '%')
+				->orWhere('address', 'like', '%' . $query . '%')
+				->orWhere('state', 'like', '%' . $query . '%')
+				->orWhere('city', 'like', '%' . $query . '%')
+				->orWhere('zip_code', 'like', '%' . $query . '%')
+				->count();
 
 			$taxManagers = Supervisor::where('manager_id', $loginUser->manager_id)
 				->orWhere('first_name', 'like', '%' . $query . '%')
@@ -2932,7 +3203,22 @@ class ApplicationController extends Controller {
 				->orWhere('state', 'like', '%' . $query . '%')
 				->orWhere('city', 'like', '%' . $query . '%')
 				->orWhere('zip_code', 'like', '%' . $query . '%')
-				->take(20)->get();
+			/*->skip($offset)
+				->take($perPage)*/	->get();
+
+			$customerEmployeeCount = CustomerEmployee::whereRaw('tax_customer_id IN (select customer_id from tax_customers where manager = ?)', ['manager' => $loginUser->manager_id])
+				->orWhere('nssf_num', 'like', '%' . $query . '%')
+				->orWhere('employee_num', 'like', '%' . $query . '%')
+				->orWhere('name_english', 'like', '%' . $query . '%')
+				->orWhere('name_khmer', 'like', '%' . $query . '%')
+				->orWhere('nationality', 'like', '%' . $query . '%')
+				->orWhere('dob', 'like', '%' . $query . '%')
+				->orWhere('joining_date', 'like', '%' . $query . '%')
+				->orWhere('position', 'like', '%' . $query . '%')
+				->orWhere('sex', 'like', '%' . $query . '%')
+				->orWhere('contract_type', 'like', '%' . $query . '%')
+				->orWhere('spouse', 'like', '%' . $query . '%')
+				->count();
 
 			$customerEmployee = CustomerEmployee::whereRaw('tax_customer_id IN (select customer_id from tax_customers where manager = ?)', ['manager' => $loginUser->manager_id])
 				->orWhere('nssf_num', 'like', '%' . $query . '%')
@@ -2946,7 +3232,34 @@ class ApplicationController extends Controller {
 				->orWhere('sex', 'like', '%' . $query . '%')
 				->orWhere('contract_type', 'like', '%' . $query . '%')
 				->orWhere('spouse', 'like', '%' . $query . '%')
-				->take(20)->get();
+			/*->skip($offset)
+				->take($perPage)*/	->get();
+
+			$salesCount = Sales::whereRaw('customer_id IN (select customer_id from tax_customers where manager = ?)', ['manager' => $loginUser->manager_id])
+				->orWhere('account_code', 'like', '%' . $query . '%')
+				->orWhere('account_description', 'like', '%' . $query . '%')
+				->orWhere('accounting_reference', 'like', '%' . $query . '%')
+				->orWhere('signature_date', 'like', '%' . $query . '%')
+				->orWhere('branch_name', 'like', '%' . $query . '%')
+				->orWhere('tax_period', 'like', '%' . $query . '%')
+				->orWhere('invoice_date', 'like', '%' . $query . '%')
+				->orWhere('invoice_num', 'like', '%' . $query . '%')
+				->orWhere('description', 'like', '%' . $query . '%')
+				->orWhere('quantity', 'like', '%' . $query . '%')
+				->orWhere('non_taxable_sales', 'like', '%' . $query . '%')
+				->orWhere('vat', 'like', '%' . $query . '%')
+				->orWhere('taxable_person_sales', 'like', '%' . $query . '%')
+				->orWhere('taxable_person_vat', 'like', '%' . $query . '%')
+				->orWhere('cust_sales', 'like', '%' . $query . '%')
+				->orWhere('cust_sales_vat', 'like', '%' . $query . '%')
+				->orWhere('total_taxable_value', 'like', '%' . $query . '%')
+				->orWhere('taxes_subject', 'like', '%' . $query . '%')
+				->orWhere('comments', 'like', '%' . $query . '%')
+				->orWhere('client_response', 'like', '%' . $query . '%')
+				->orWhere('top_comments', 'like', '%' . $query . '%')
+				->orWhere('client_name', 'like', '%' . $query . '%')
+				->orWhere('client_tin', 'like', '%' . $query . '%')
+				->count();
 
 			$sales = Sales::whereRaw('customer_id IN (select customer_id from tax_customers where manager = ?)', ['manager' => $loginUser->manager_id])
 				->orWhere('account_code', 'like', '%' . $query . '%')
@@ -2972,7 +3285,30 @@ class ApplicationController extends Controller {
 				->orWhere('top_comments', 'like', '%' . $query . '%')
 				->orWhere('client_name', 'like', '%' . $query . '%')
 				->orWhere('client_tin', 'like', '%' . $query . '%')
-				->take(20)->get();
+			/*->skip($offset)
+				->take($perPage)*/	->get();
+
+			$purchasesCount = Purchases::whereRaw('customer_id IN (select customer_id from tax_customers where manager = ?)', ['manager' => $loginUser->manager_id])
+				->orWhere('branch_name', 'like', '%' . $query . '%')
+				->orWhere('tax_period', 'like', '%' . $query . '%')
+				->orWhere('invoice_date', 'like', '%' . $query . '%')
+				->orWhere('invoice_num', 'like', '%' . $query . '%')
+				->orWhere('description', 'like', '%' . $query . '%')
+				->orWhere('quantity', 'like', '%' . $query . '%')
+				->orWhere('local_purchase_tax_val', 'like', '%' . $query . '%')
+				->orWhere('local_purchase_vat', 'like', '%' . $query . '%')
+				->orWhere('imports_taxable_val', 'like', '%' . $query . '%')
+				->orWhere('imports_vat', 'like', '%' . $query . '%')
+				->orWhere('total_vat', 'like', '%' . $query . '%')
+				->orWhere('subject', 'like', '%' . $query . '%')
+				->orWhere('comments', 'like', '%' . $query . '%')
+				->orWhere('client_response', 'like', '%' . $query . '%')
+				->orWhere('top_comments', 'like', '%' . $query . '%')
+				->orWhere('client_responses', 'like', '%' . $query . '%')
+				->orWhere('non_taxable_purchases', 'like', '%' . $query . '%')
+				->orWhere('supplier', 'like', '%' . $query . '%')
+				->orWhere('vat_tin', 'like', '%' . $query . '%')
+				->count();
 
 			$purchases = Purchases::whereRaw('customer_id IN (select customer_id from tax_customers where manager = ?)', ['manager' => $loginUser->manager_id])
 				->orWhere('branch_name', 'like', '%' . $query . '%')
@@ -2994,8 +3330,25 @@ class ApplicationController extends Controller {
 				->orWhere('non_taxable_purchases', 'like', '%' . $query . '%')
 				->orWhere('supplier', 'like', '%' . $query . '%')
 				->orWhere('vat_tin', 'like', '%' . $query . '%')
-				->take(20)->get();
+			/*->skip($offset)
+				->take($perPage)*/	->get();
 
+			$payrollsCount = Payrolls::whereRaw('employee_id IN (select employee_id from customers_employees where  tax_customer_id IN (select customer_id from tax_customers where manager = ?))', ['manager' => $loginUser->manager_id])
+				->orWhere('basic_salary', 'like', '%' . $query . '%')
+				->orWhere('bonus', 'like', '%' . $query . '%')
+				->orWhere('over_time', 'like', '%' . $query . '%')
+				->orWhere('commissions', 'like', '%' . $query . '%')
+				->orWhere('seniority_payment', 'like', '%' . $query . '%')
+				->orWhere('severance_pay', 'like', '%' . $query . '%')
+				->orWhere('maternity_leave', 'like', '%' . $query . '%')
+				->orWhere('paid_annual_leave', 'like', '%' . $query . '%')
+				->orWhere('food_allowance', 'like', '%' . $query . '%')
+				->orWhere('transport_allowance', 'like', '%' . $query . '%')
+				->orWhere('others', 'like', '%' . $query . '%')
+				->orWhere('deduction_advance', 'like', '%' . $query . '%')
+				->orWhere('salary_adjusment', 'like', '%' . $query . '%')
+				->orWhere('remark', 'like', '%' . $query . '%')
+				->count();
 			$payrolls = Payrolls::whereRaw('employee_id IN (select employee_id from customers_employees where  tax_customer_id IN (select customer_id from tax_customers where manager = ?))', ['manager' => $loginUser->manager_id])
 				->orWhere('basic_salary', 'like', '%' . $query . '%')
 				->orWhere('bonus', 'like', '%' . $query . '%')
@@ -3011,10 +3364,28 @@ class ApplicationController extends Controller {
 				->orWhere('deduction_advance', 'like', '%' . $query . '%')
 				->orWhere('salary_adjusment', 'like', '%' . $query . '%')
 				->orWhere('remark', 'like', '%' . $query . '%')
-				->take(20)->get();
+			/*->skip($offset)
+				->take($perPage)*/	->get();
 		}
 
 		if ($type == 'admin') {
+
+			$taxCustomersCount = TaxCustomers::with(['owner'])->where('name_english', 'like', '%' . $query . '%')
+				->orWhere('name_khmer', 'like', '%' . $query . '%')
+				->orWhere('tax_card_num', 'like', '%' . $query . '%')
+				->orWhere('tin_no', 'like', '%' . $query . '%')
+				->orWhere('address', 'like', '%' . $query . '%')
+				->orWhere('street', 'like', '%' . $query . '%')
+				->orWhere('group', 'like', '%' . $query . '%')
+				->orWhere('sangkat', 'like', '%' . $query . '%')
+				->orWhere('district', 'like', '%' . $query . '%')
+				->orWhere('province', 'like', '%' . $query . '%')
+				->orWhere('muncipality', 'like', '%' . $query . '%')
+				->orWhere('telephone', 'like', '%' . $query . '%')
+				->orWhere('industry', 'like', '%' . $query . '%')
+				->orWhere('incorporation_date', 'like', '%' . $query . '%')
+				->orWhere('tax_duration', 'like', '%' . $query . '%')
+				->count();
 			$taxCustomers = TaxCustomers::with(['owner'])->where('name_english', 'like', '%' . $query . '%')
 				->orWhere('name_khmer', 'like', '%' . $query . '%')
 				->orWhere('tax_card_num', 'like', '%' . $query . '%')
@@ -3030,7 +3401,16 @@ class ApplicationController extends Controller {
 				->orWhere('industry', 'like', '%' . $query . '%')
 				->orWhere('incorporation_date', 'like', '%' . $query . '%')
 				->orWhere('tax_duration', 'like', '%' . $query . '%')
-				->take(20)->get();
+			/*->skip($offset)
+				->take($perPage)*/	->get();
+
+			$taxCount = Tax::where('title', 'like', '%' . $query . '%')
+				->orWhere('description', 'like', '%' . $query . '%')
+				->orWhere('duration', 'like', '%' . $query . '%')
+				->orWhere('type', 'like', '%' . $query . '%')
+				->orWhere('tax_code', 'like', '%' . $query . '%')
+				->orWhere('notes', 'like', '%' . $query . '%')
+				->count();
 
 			$tax = Tax::where('title', 'like', '%' . $query . '%')
 				->orWhere('description', 'like', '%' . $query . '%')
@@ -3038,7 +3418,19 @@ class ApplicationController extends Controller {
 				->orWhere('type', 'like', '%' . $query . '%')
 				->orWhere('tax_code', 'like', '%' . $query . '%')
 				->orWhere('notes', 'like', '%' . $query . '%')
-				->take(20)->get();
+			/*->skip($offset)
+				->take($perPage)*/	->get();
+
+			$taxManagersCount = Supervisor::where('first_name', 'like', '%' . $query . '%')
+				->orWhere('last_name', 'like', '%' . $query . '%')
+				->orWhere('gender', 'like', '%' . $query . '%')
+				->orWhere('email', 'like', '%' . $query . '%')
+				->orWhere('phone', 'like', '%' . $query . '%')
+				->orWhere('address', 'like', '%' . $query . '%')
+				->orWhere('state', 'like', '%' . $query . '%')
+				->orWhere('city', 'like', '%' . $query . '%')
+				->orWhere('zip_code', 'like', '%' . $query . '%')
+				->count();
 
 			$taxManagers = Supervisor::where('first_name', 'like', '%' . $query . '%')
 				->orWhere('last_name', 'like', '%' . $query . '%')
@@ -3049,7 +3441,21 @@ class ApplicationController extends Controller {
 				->orWhere('state', 'like', '%' . $query . '%')
 				->orWhere('city', 'like', '%' . $query . '%')
 				->orWhere('zip_code', 'like', '%' . $query . '%')
-				->take(20)->get();
+			/*->skip($offset)
+				->take($perPage)*/	->get();
+
+			$customerEmployeeCount = CustomerEmployee::where('nssf_num', 'like', '%' . $query . '%')
+				->orWhere('employee_num', 'like', '%' . $query . '%')
+				->orWhere('name_english', 'like', '%' . $query . '%')
+				->orWhere('name_khmer', 'like', '%' . $query . '%')
+				->orWhere('nationality', 'like', '%' . $query . '%')
+				->orWhere('dob', 'like', '%' . $query . '%')
+				->orWhere('joining_date', 'like', '%' . $query . '%')
+				->orWhere('position', 'like', '%' . $query . '%')
+				->orWhere('sex', 'like', '%' . $query . '%')
+				->orWhere('contract_type', 'like', '%' . $query . '%')
+				->orWhere('spouse', 'like', '%' . $query . '%')
+				->count();
 
 			$customerEmployee = CustomerEmployee::where('nssf_num', 'like', '%' . $query . '%')
 				->orWhere('employee_num', 'like', '%' . $query . '%')
@@ -3062,7 +3468,33 @@ class ApplicationController extends Controller {
 				->orWhere('sex', 'like', '%' . $query . '%')
 				->orWhere('contract_type', 'like', '%' . $query . '%')
 				->orWhere('spouse', 'like', '%' . $query . '%')
-				->take(20)->get();
+			/*->skip($offset)
+				->take($perPage)*/	->get();
+
+			$salesCount = Sales::where('account_code', 'like', '%' . $query . '%')
+				->orWhere('account_description', 'like', '%' . $query . '%')
+				->orWhere('accounting_reference', 'like', '%' . $query . '%')
+				->orWhere('signature_date', 'like', '%' . $query . '%')
+				->orWhere('branch_name', 'like', '%' . $query . '%')
+				->orWhere('tax_period', 'like', '%' . $query . '%')
+				->orWhere('invoice_date', 'like', '%' . $query . '%')
+				->orWhere('invoice_num', 'like', '%' . $query . '%')
+				->orWhere('description', 'like', '%' . $query . '%')
+				->orWhere('quantity', 'like', '%' . $query . '%')
+				->orWhere('non_taxable_sales', 'like', '%' . $query . '%')
+				->orWhere('vat', 'like', '%' . $query . '%')
+				->orWhere('taxable_person_sales', 'like', '%' . $query . '%')
+				->orWhere('taxable_person_vat', 'like', '%' . $query . '%')
+				->orWhere('cust_sales', 'like', '%' . $query . '%')
+				->orWhere('cust_sales_vat', 'like', '%' . $query . '%')
+				->orWhere('total_taxable_value', 'like', '%' . $query . '%')
+				->orWhere('taxes_subject', 'like', '%' . $query . '%')
+				->orWhere('comments', 'like', '%' . $query . '%')
+				->orWhere('client_response', 'like', '%' . $query . '%')
+				->orWhere('top_comments', 'like', '%' . $query . '%')
+				->orWhere('client_name', 'like', '%' . $query . '%')
+				->orWhere('client_tin', 'like', '%' . $query . '%')
+				->count();
 
 			$sales = Sales::where('account_code', 'like', '%' . $query . '%')
 				->orWhere('account_description', 'like', '%' . $query . '%')
@@ -3087,7 +3519,29 @@ class ApplicationController extends Controller {
 				->orWhere('top_comments', 'like', '%' . $query . '%')
 				->orWhere('client_name', 'like', '%' . $query . '%')
 				->orWhere('client_tin', 'like', '%' . $query . '%')
-				->take(20)->get();
+			/*->skip($offset)
+				->take($perPage)*/	->get();
+
+			$purchasesCount = Purchases::where('branch_name', 'like', '%' . $query . '%')
+				->orWhere('tax_period', 'like', '%' . $query . '%')
+				->orWhere('invoice_date', 'like', '%' . $query . '%')
+				->orWhere('invoice_num', 'like', '%' . $query . '%')
+				->orWhere('description', 'like', '%' . $query . '%')
+				->orWhere('quantity', 'like', '%' . $query . '%')
+				->orWhere('local_purchase_tax_val', 'like', '%' . $query . '%')
+				->orWhere('local_purchase_vat', 'like', '%' . $query . '%')
+				->orWhere('imports_taxable_val', 'like', '%' . $query . '%')
+				->orWhere('imports_vat', 'like', '%' . $query . '%')
+				->orWhere('total_vat', 'like', '%' . $query . '%')
+				->orWhere('subject', 'like', '%' . $query . '%')
+				->orWhere('comments', 'like', '%' . $query . '%')
+				->orWhere('client_response', 'like', '%' . $query . '%')
+				->orWhere('top_comments', 'like', '%' . $query . '%')
+				->orWhere('client_responses', 'like', '%' . $query . '%')
+				->orWhere('non_taxable_purchases', 'like', '%' . $query . '%')
+				->orWhere('supplier', 'like', '%' . $query . '%')
+				->orWhere('vat_tin', 'like', '%' . $query . '%')
+				->count();
 
 			$purchases = Purchases::where('branch_name', 'like', '%' . $query . '%')
 				->orWhere('tax_period', 'like', '%' . $query . '%')
@@ -3108,7 +3562,24 @@ class ApplicationController extends Controller {
 				->orWhere('non_taxable_purchases', 'like', '%' . $query . '%')
 				->orWhere('supplier', 'like', '%' . $query . '%')
 				->orWhere('vat_tin', 'like', '%' . $query . '%')
-				->take(20)->get();
+			/*->skip($offset)
+				->take($perPage)*/	->get();
+
+			$payrollsCount = Payrolls::where('basic_salary', 'like', '%' . $query . '%')
+				->orWhere('bonus', 'like', '%' . $query . '%')
+				->orWhere('over_time', 'like', '%' . $query . '%')
+				->orWhere('commissions', 'like', '%' . $query . '%')
+				->orWhere('seniority_payment', 'like', '%' . $query . '%')
+				->orWhere('severance_pay', 'like', '%' . $query . '%')
+				->orWhere('maternity_leave', 'like', '%' . $query . '%')
+				->orWhere('paid_annual_leave', 'like', '%' . $query . '%')
+				->orWhere('food_allowance', 'like', '%' . $query . '%')
+				->orWhere('transport_allowance', 'like', '%' . $query . '%')
+				->orWhere('others', 'like', '%' . $query . '%')
+				->orWhere('deduction_advance', 'like', '%' . $query . '%')
+				->orWhere('salary_adjusment', 'like', '%' . $query . '%')
+				->orWhere('remark', 'like', '%' . $query . '%')
+				->count();
 
 			$payrolls = Payrolls::where('basic_salary', 'like', '%' . $query . '%')
 				->orWhere('bonus', 'like', '%' . $query . '%')
@@ -3124,13 +3595,31 @@ class ApplicationController extends Controller {
 				->orWhere('deduction_advance', 'like', '%' . $query . '%')
 				->orWhere('salary_adjusment', 'like', '%' . $query . '%')
 				->orWhere('remark', 'like', '%' . $query . '%')
-				->take(20)->get();
+			/*->skip($offset)
+				->take($perPage)*/	->get();
 
 		}
 
+		$currenciesCount = Currencies::where('country', 'like', '%' . $query . '%')
+			->orWhere('currency', 'like', '%' . $query . '%')
+			->count();
+
 		$currencies = Currencies::where('country', 'like', '%' . $query . '%')
 			->orWhere('currency', 'like', '%' . $query . '%')
-			->take(20)->get();
+		/*->skip($offset)
+				->take($perPage)*/	->get();
+
+		$taxParametersCount = Parameter::where('khmer_description', 'like', '%' . $query . '%')
+			->orWhere('english_description', 'like', '%' . $query . '%')
+			->orWhere('tax_code', 'like', '%' . $query . '%')
+			->orWhere('rate', 'like', '%' . $query . '%')
+			->orWhere('base_tax', 'like', '%' . $query . '%')
+			->orWhere('tax_type', 'like', '%' . $query . '%')
+			->orWhere('effective_date', 'like', '%' . $query . '%')
+			->orWhere('amount_min', 'like', '%' . $query . '%')
+			->orWhere('amount_max', 'like', '%' . $query . '%')
+			->orWhere('remarks', 'like', '%' . $query . '%')
+			->count();
 
 		$taxParameters = Parameter::where('khmer_description', 'like', '%' . $query . '%')
 			->orWhere('english_description', 'like', '%' . $query . '%')
@@ -3142,7 +3631,8 @@ class ApplicationController extends Controller {
 			->orWhere('amount_min', 'like', '%' . $query . '%')
 			->orWhere('amount_max', 'like', '%' . $query . '%')
 			->orWhere('remarks', 'like', '%' . $query . '%')
-			->take(20)->get();
+		/*->skip($offset)
+			->take($perPage)*/	->get();
 
 		$data = array_merge($searchResult, compact(
 			'taxCustomers',
@@ -3156,7 +3646,33 @@ class ApplicationController extends Controller {
 			'taxParameters'
 		));
 
-		return response()->json(['status' => true, 'response' => $data]);
+		$totalRecords = array_sum(array(
+			$taxCustomersCount,
+			$taxCount,
+			$taxManagersCount,
+			$customerEmployeeCount,
+			$salesCount,
+			$purchasesCount,
+			$payrollsCount,
+			$currenciesCount,
+			$taxParametersCount));
+		/*$totalSearchedCount = array_sum(array(
+			count($taxCustomers),
+			count($tax),
+			count($taxManagers),
+			count($customerEmployee),
+			count($sales),
+			count($purchases),
+			count($payrolls),
+			count($currencies),
+			count($taxParameters)));*/
+		$totalPages = (Integer) ceil($totalRecords / 20);
+		// dd($totalPages);
+		/*$data = new Paginator($data, $totalRecords, 20, $request->page, [
+			'path' => $request->url(),
+			'query' => $request->query(),
+		]);*/
+		return response()->json(['status' => true, 'response' => $data, 'totalPages' => $totalPages]);
 	}
 
 	public function update_faqs(Request $request) {

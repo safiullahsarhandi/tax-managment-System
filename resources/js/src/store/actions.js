@@ -112,8 +112,8 @@ const actions = {
         let fetchedNotifications = gettingNotifications.data;
         commit('setNotifications',fetchedNotifications);
     },
-    async getAllNotifications({commit}){
-        let gettingNotifications =  await axios.get('get-all-notifications');
+    async getAllNotifications({commit},data){
+        let gettingNotifications =  await axios.get('get-all-notifications?page='+data.page);
         let fetchedNotifications = gettingNotifications.data;
         commit('setAllNotifications',fetchedNotifications);
     },
@@ -127,6 +127,27 @@ const actions = {
         let manager_id = state.AppActiveUser.manager_id;
         let sendToken = await axios.post('sendTokenToServer',{token: data.token, manager_id : manager_id})
         commit('setLoginUser', sendToken.data.admin);
+    },
+    async get_search_data({commit},data){
+       let res = await axios.post('search-data', {query: data.query,page : data.page})/*.then(res=>{*/
+                    var response = res.data.response;
+                    let self = this;
+                    let dataArray = [];
+                    // commit('setSearchedData',[]);
+                    _.forEach(response, function(value, keys) {
+                        _.forEach(value, function(val, key) {
+                            dataArray.push({index: key, result: val})
+                        });                         
+                    });
+                    // var data = _.shuffle(dataArray);
+                    commit('setSearchedData',dataArray);
+                    commit('setSearchedPages',res.data.totalPages);
+                    // self.$store.state.searchedData = data;
+                    // console.log(self.$store.state.searchedData);
+                    // console.log(data)
+                    return data;    
+                // });
+
     }
 }
 

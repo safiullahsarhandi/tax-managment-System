@@ -116,7 +116,7 @@ export default {
     },
 
     statusUpdateSPP({ commit }, data){
-        return axios.post('status-update-spp',{id: data.id, tax_id:data.tax_id, type:data.type}).then(res=>{
+        return axios.post('status-update-spp',{id: data.id, tax_id:data.tax_id, type:data.type, actionBy:data.actionBy, status:data.status}).then(res=>{
             if(res.data.status == true){
                 data.notify({title:'Updated!...',text:res.data.msg,color:'success',position:'top-right'});
             }else{

@@ -58,7 +58,7 @@ Route::group(['prefix' => ''], function () {
 	Route::post('add-employee', 'ApplicationController@add_employee');
 	Route::get('get-employees', 'ApplicationController@get_employees');
 	Route::post('get-employee', 'ApplicationController@get_employee');
-	Route::get('get-active-employees', 'ApplicationController@get_active_employees');
+	Route::post('get-active-employees', 'ApplicationController@get_active_employees');
 	Route::post('update-employee', 'ApplicationController@update_employee');
 	Route::post('status-update-employee', 'ApplicationController@status_update_employee');
 	Route::post('add-multiple-employees/{id}', 'ApplicationController@add_multiple_employee');
@@ -129,7 +129,7 @@ Route::group(['prefix' => ''], function () {
 	Route::post('forgot-password', 'ApplicationController@forgot_password');
 	Route::post('verify-code-and-change-password', 'ApplicationController@verify_code_change_password');
 
-	Route::post('search-data', 'ApplicationController@search_data');
+	Route::any('search-data', 'ApplicationController@search_data');
 
 	Route::get('export-customers', 'ExportController@export_customers');
 	Route::get('export-team-members', 'ExportController@export_team_members');
@@ -151,6 +151,5 @@ Route::group(['prefix' => ''], function () {
 	Route::post('delete-spp', 'ApplicationController@deleteSpp');
 
 	Route::get('export-tax-parameters', 'ExportController@export_tax_parameters');
-
 });
 Route::get('/{any}', 'ApplicationController')->where('any', '.*');

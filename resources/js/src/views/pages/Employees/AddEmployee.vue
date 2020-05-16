@@ -38,7 +38,7 @@
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="dob" v-validate="`required`" label-placeholder="dob" v-model="dob" />
+                            <vs-input name="dob" v-validate="`required`" label-placeholder="DOB" v-model="dob" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('dob')">{{errors.first('dob')}}</span>
                     </vs-col>
@@ -74,7 +74,7 @@
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="children" v-validate="`required`" label-placeholder="children" v-model="children" />
+                            <vs-input name="children" v-validate="`required|numeric|min:1|max:2`" label-placeholder="children" v-model="children" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('children')">{{errors.first('children')}}</span>
                     </vs-col>

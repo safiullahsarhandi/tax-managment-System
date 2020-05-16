@@ -198,6 +198,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -210,7 +231,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       tax_id: '',
-      openComments: false
+      openComments: false,
+      is_saleCreatedByLoginUser: false
     };
   },
   created: function created() {
@@ -222,7 +244,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return _this.getPayroll(_this.$route.params.id);
+              return _this.getPayroll(_this.$route.params.id).then(function (res) {
+                var created_by = res.data.data.created_by;
+
+                if (_this.$store.state.AppActiveUser.type == 'Supervisor') {
+                  if (_this.$store.state.AppActiveUser.manager_id == created_by.manager_id) {
+                    _this.is_saleCreatedByLoginUser = true;
+                  }
+                }
+              });
 
             case 2:
               localStorage.setItem('customer', _this.payroll.customer.customer_id);
@@ -303,6 +333,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       });
     },
     changeManagementStatus: function changeManagementStatus(status, id, by) {
+      var _this3 = this;
+
       var data = {
         id: id,
         status: status,
@@ -311,7 +343,139 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         notify: this.$vs.notify,
         tax_type: 'payroll'
       };
-      this.statusChangeManagment(data).then(function (res) {});
+      this.statusChangeManagment(data).then(function (res) {
+        var res = res.data;
+
+        if (by == 'supervisor') {
+          _this3.purchase.supervisor_confirmed = res.response;
+        } else {
+          _this3.purchase.management_confirmed = res.response;
+        }
+      });
+    },
+    editPermissionAccess: function editPermissionAccess(tr) {
+      if (this.is_officer) {
+        if (tr.officer_confirmed == 0 && tr.supervisor_confirmed == 0) {
+          return true;
+        }
+
+        if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 0) {
+          return true;
+        }
+
+        if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1) {
+          return false;
+        }
+
+        if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 2) {
+          return false;
+        }
+
+        if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 3) {
+          return true;
+        }
+
+        if (tr.officer_confirmed == 0 && tr.supervisor_confirmed == 3) {
+          return true;
+        }
+      }
+
+      if (this.is_supervisor && is_saleCreatedByLoginUser == false) {
+        if (tr.officer_confirmed == 0 && tr.supervisor_confirmed == 0) {
+          return false;
+        }
+
+        if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 0) {
+          return true;
+        }
+
+        if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1) {
+          return true;
+        }
+
+        if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 2) {
+          return true;
+        }
+
+        if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 3) {
+          return true;
+        }
+
+        if (tr.officer_confirmed == 0 && tr.supervisor_confirmed == 3) {
+          return false;
+        }
+      }
+
+      if (this.is_supervisor && is_saleCreatedByLoginUser == true) {
+        if (tr.supervisor_confirmed == 0 && tr.management_confirmed == 0) {
+          return true;
+        }
+
+        if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 0) {
+          return true;
+        }
+
+        if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 1) {
+          return false;
+        }
+
+        if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 2) {
+          return false;
+        }
+
+        if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 3) {
+          return false;
+        }
+
+        if (tr.supervisor_confirmed == 0 && tr.management_confirmed == 3) {
+          return true;
+        }
+      }
+
+      if (this.is_admin) {
+        if (tr.supervisor_confirmed == 0 && tr.management_confirmed == 0) {
+          return false;
+        }
+
+        if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 0) {
+          return true;
+        }
+
+        if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 1) {
+          return true;
+        }
+
+        if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 2) {
+          return true;
+        }
+
+        if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 3) {
+          return true;
+        }
+
+        if (tr.supervisor_confirmed == 0 && tr.management_confirmed == 3) {
+          return false;
+        }
+      }
+    },
+    notAllowed: function notAllowed(opt) {
+      var msg;
+
+      if (opt == 'status') {
+        msg = 'You can\'t change payroll status, if Payroll is approved or supervisor reviewing it';
+      } else if (opt == 'delete') {
+        msg = 'You can\'t delete payroll, if Payroll is approved or supervisor reviewing it';
+      } else if (opt == 'edit') {
+        msg = 'You can\'t edit/update payroll, if Payroll is approved or supervisor reviewing it';
+      }
+
+      this.$vs.notify({
+        text: msg,
+        color: 'danger',
+        position: 'top-right',
+        time: 8000,
+        icon: 'warning'
+      });
     }
   })
 });
@@ -656,139 +820,232 @@ var render = function() {
                 "vx-card",
                 { attrs: { title: "Actions" } },
                 [
-                  _c(
-                    "vs-list",
-                    [
-                      _c(
-                        "vs-list-item",
-                        { attrs: { title: "Edit Purchase" } },
-                        [
-                          _c("vs-button", {
-                            attrs: {
-                              to: "/purchase-update/" + _vm.$route.params.id,
-                              "icon-pack": "feather",
-                              size: "small",
-                              icon: "icon-edit"
+                  _vm.userType == "Supervisor" &&
+                  _vm.is_saleCreatedByLoginUser == false
+                    ? _c(
+                        "vs-select",
+                        {
+                          staticClass: "p-0 ml-0",
+                          staticStyle: { width: "100%" },
+                          attrs: {
+                            autocomplete: "",
+                            placeholder: "Select Status"
+                          },
+                          on: {
+                            input: function($event) {
+                              return _vm.changeManagementStatus(
+                                _vm.payroll.supervisor_confirmed,
+                                _vm.payroll.payroll_id,
+                                "supervisor"
+                              )
                             }
+                          },
+                          model: {
+                            value: _vm.payroll.supervisor_confirmed,
+                            callback: function($$v) {
+                              _vm.$set(_vm.payroll, "supervisor_confirmed", $$v)
+                            },
+                            expression: "payroll.supervisor_confirmed"
+                          }
+                        },
+                        [
+                          _c("vs-select-item", {
+                            attrs: { value: "0", text: "Pending" }
+                          }),
+                          _vm._v(" "),
+                          _c("vs-select-item", {
+                            attrs: { value: "1", text: "Approve" }
+                          }),
+                          _vm._v(" "),
+                          _c("vs-select-item", {
+                            attrs: { value: "2", text: "Review" }
+                          }),
+                          _vm._v(" "),
+                          _c("vs-select-item", {
+                            attrs: { value: "3", text: "Reject" }
                           })
                         ],
                         1
-                      ),
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.userType == "Supervisor" &&
+                  _vm.is_saleCreatedByLoginUser == true
+                    ? _c(
+                        "vs-select",
+                        {
+                          staticClass: "p-0 ml-0",
+                          staticStyle: { width: "100%" },
+                          attrs: {
+                            autocomplete: "",
+                            placeholder: "Select Status"
+                          },
+                          on: {
+                            input: function($event) {
+                              return _vm.changeManagementStatus(
+                                _vm.payroll.supervisor_confirmed,
+                                _vm.payroll.payroll_id,
+                                "supervisor"
+                              )
+                            }
+                          },
+                          model: {
+                            value: _vm.payroll.supervisor_confirmed,
+                            callback: function($$v) {
+                              _vm.$set(_vm.payroll, "supervisor_confirmed", $$v)
+                            },
+                            expression: "payroll.supervisor_confirmed"
+                          }
+                        },
+                        [
+                          _c("vs-select-item", {
+                            attrs: { value: "0", text: "Work In Progress" }
+                          }),
+                          _vm._v(" "),
+                          _c("vs-select-item", {
+                            attrs: { value: "1", text: "Submit" }
+                          })
+                        ],
+                        1
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.userType == "Admin" || _vm.userType == "Super Admin"
+                    ? _c(
+                        "vs-select",
+                        {
+                          staticClass: "p-0 ml-0",
+                          staticStyle: { width: "100%" },
+                          attrs: {
+                            autocomplete: "",
+                            placeholder: "Select Status"
+                          },
+                          on: {
+                            input: function($event) {
+                              return _vm.changeManagementStatus(
+                                _vm.payroll.management_confirmed,
+                                _vm.payroll.payroll_id,
+                                "admin"
+                              )
+                            }
+                          },
+                          model: {
+                            value: _vm.payroll.management_confirmed,
+                            callback: function($$v) {
+                              _vm.$set(_vm.payroll, "management_confirmed", $$v)
+                            },
+                            expression: "payroll.management_confirmed"
+                          }
+                        },
+                        [
+                          _c("vs-select-item", {
+                            attrs: { value: "0", text: "Pending" }
+                          }),
+                          _vm._v(" "),
+                          _c("vs-select-item", {
+                            attrs: { value: "1", text: "Approve" }
+                          }),
+                          _vm._v(" "),
+                          _c("vs-select-item", {
+                            attrs: { value: "2", text: "Review" }
+                          }),
+                          _vm._v(" "),
+                          _c("vs-select-item", {
+                            attrs: { value: "3", text: "Reject" }
+                          })
+                        ],
+                        1
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "vs-list",
+                    [
+                      _vm.editPermissionAccess(_vm.payroll)
+                        ? _c(
+                            "vs-list-item",
+                            { attrs: { title: "Edit Purchase" } },
+                            [
+                              _c("vs-button", {
+                                attrs: {
+                                  to:
+                                    "/purchase-update/" + _vm.$route.params.id,
+                                  "icon-pack": "feather",
+                                  size: "small",
+                                  icon: "icon-edit"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        : _c(
+                            "vs-list-item",
+                            { attrs: { title: "Edit Purchase" } },
+                            [
+                              _c("vs-button", {
+                                attrs: {
+                                  "icon-pack": "feather",
+                                  size: "small",
+                                  icon: "icon-edit"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.notAllowed("edit")
+                                  }
+                                }
+                              })
+                            ],
+                            1
+                          ),
                       _vm._v(" "),
                       [
-                        _vm.userType == "Admin" || _vm.userType == "Super Admin"
-                          ? _c(
-                              "vs-list-item",
-                              { attrs: { title: "Status" } },
-                              [
-                                _c("vs-button", {
-                                  attrs: {
-                                    "icon-pack": "feather",
-                                    size: "small",
-                                    icon: "icon-check-circle"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.changeManagementStatus(
-                                        "1",
-                                        _vm.payroll.payroll_id,
-                                        "admin"
-                                      )
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("vs-button", {
-                                  attrs: {
-                                    "icon-pack": "feather",
-                                    size: "small",
-                                    icon: "icon-x-circle"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.changeManagementStatus(
-                                        "0",
-                                        _vm.payroll.payroll_id,
-                                        "admin"
-                                      )
-                                    }
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.userType == "Supervisor"
-                          ? _c(
-                              "vs-list-item",
-                              { attrs: { title: "Status" } },
-                              [
-                                _c("vs-button", {
-                                  attrs: {
-                                    "icon-pack": "feather",
-                                    size: "small",
-                                    icon: "icon-check-circle"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.changeManagementStatus(
-                                        "1",
-                                        _vm.payroll.payroll_id,
-                                        "supervisor"
-                                      )
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("vs-button", {
-                                  attrs: {
-                                    "icon-pack": "feather",
-                                    size: "small",
-                                    icon: "icon-x-circle"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.changeManagementStatus(
-                                        "0",
-                                        _vm.payroll.payroll_id,
-                                        "supervisor"
-                                      )
-                                    }
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
                         _vm.userType == "Officer"
                           ? _c(
                               "vs-list-item",
                               { attrs: { title: "Status" } },
                               [
-                                _c("vs-switch", {
-                                  attrs: { "icon-pack": "feather" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.statusUpdate(
-                                        _vm.payroll.payroll_id,
-                                        _vm.payroll.officer_confirmed
-                                      )
-                                    }
-                                  },
-                                  model: {
-                                    value: _vm.payroll.officer_confirmed,
-                                    callback: function($$v) {
-                                      _vm.$set(
-                                        _vm.payroll,
-                                        "officer_confirmed",
-                                        $$v
-                                      )
-                                    },
-                                    expression: "payroll.officer_confirmed"
-                                  }
-                                })
+                                _vm.editPermissionAccess(_vm.payroll)
+                                  ? _c("vs-switch", {
+                                      attrs: { "icon-pack": "feather" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.statusUpdate(
+                                            _vm.payroll.payroll_id,
+                                            _vm.payroll.officer_confirmed
+                                          )
+                                        }
+                                      },
+                                      model: {
+                                        value: _vm.payroll.officer_confirmed,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.payroll,
+                                            "officer_confirmed",
+                                            $$v
+                                          )
+                                        },
+                                        expression: "payroll.officer_confirmed"
+                                      }
+                                    })
+                                  : _c("vs-switch", {
+                                      attrs: { "icon-pack": "feather" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.notAllowed("status")
+                                        }
+                                      },
+                                      model: {
+                                        value: _vm.purchase.officer_confirmed,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.purchase,
+                                            "officer_confirmed",
+                                            $$v
+                                          )
+                                        },
+                                        expression: "purchase.officer_confirmed"
+                                      }
+                                    })
                               ],
                               1
                             )

@@ -680,6 +680,12 @@ __webpack_require__.r(__webpack_exports__);
   slug: "faqs",
   icon: "HelpCircleIcon",
   isMain: false
+}, {
+  url: "/",
+  name: "Reports",
+  slug: "Reports",
+  icon: "BookOpenIcon",
+  isMain: false
 } // {
 //     url: "/manage-team",
 //     name: "Our Team",

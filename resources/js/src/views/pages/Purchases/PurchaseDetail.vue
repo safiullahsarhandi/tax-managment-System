@@ -170,23 +170,44 @@
             </vs-col>
             <vs-col vs-lg="3" vs-md="3" vs-xl="3" vs-sm="12">
                 <vx-card title="Actions">
+                    <vs-select v-if="userType == 'Supervisor' && is_saleCreatedByLoginUser == false" autocomplete 
+                    @input="changeManagementStatus(purchase.supervisor_confirmed, purchase.purchase_id, 'supervisor')" v-model="purchase.supervisor_confirmed" class="p-0 ml-0" placeholder="Select Status" style="width: 100%;" >
+                                    <vs-select-item value="0" text="Pending"></vs-select-item>
+                                    <vs-select-item value="1" text="Approve"></vs-select-item>
+                                    <vs-select-item value="2" text="Review"></vs-select-item>
+                                    <vs-select-item value="3" text="Reject"></vs-select-item>
+                                    
+                    </vs-select>
+
+                    <vs-select v-if="userType == 'Supervisor' && is_saleCreatedByLoginUser == true" autocomplete
+                     @input="changeManagementStatus(purchase.supervisor_confirmed, purchase.purchase_id, 'supervisor')" v-model="purchase.supervisor_confirmed" class="p-0 ml-0" placeholder="Select Status" style="width: 100%;" >
+                                    <vs-select-item value="0" text="Work In Progress"></vs-select-item>
+                                    <vs-select-item value="1" text="Submit"></vs-select-item>
+                    </vs-select>
+
+                    <vs-select v-if="userType == 'Admin' || userType == 'Super Admin'" autocomplete 
+                    @input="changeManagementStatus(purchase.management_confirmed, purchase.purchase_id, 'admin')" v-model="purchase.management_confirmed" class="p-0 ml-0" placeholder="Select Status" style="width: 100%;" >
+                                    <vs-select-item value="0" text="Pending"></vs-select-item>
+                                    <vs-select-item value="1" text="Approve"></vs-select-item>
+                                    <vs-select-item value="2" text="Review"></vs-select-item>
+                                    <vs-select-item value="3" text="Reject"></vs-select-item>
+                                    
+                    </vs-select>
+                    
                     <vs-list>
-                        <vs-list-item title="Edit Purchase">
+                        <vs-list-item v-if="editPermissionAccess(purchase)" title="Edit Purchase">
                             <vs-button :to="'/purchase-update/'+$route.params.id" icon-pack="feather" size="small" icon='icon-edit'></vs-button>
                         </vs-list-item>
+                        <vs-list-item title="Edit Sale" v-else>
+                            <vs-button @click="notAllowed('edit')" icon-pack="feather" size="small" icon='icon-edit'></vs-button>
+                        </vs-list-item>
                         <template>
-                            <vs-list-item v-if="userType == 'Admin' || userType == 'Super Admin'" title="Status">
-                                <vs-button icon-pack="feather" size="small" icon='icon-check-circle' @click="changeManagementStatus('1', purchase.purchase_id, 'admin')"></vs-button>
-                                <vs-button icon-pack="feather" size="small" icon='icon-x-circle' @click="changeManagementStatus('0', purchase.purchase_id, 'admin')"></vs-button>
+                        
+                            <vs-list-item v-if="userType == 'Officer'" title="Status">
+                                <vs-switch v-if="editPermissionAccess(purchase)" icon-pack="feather" @click="statusUpdate(purchase.purchase_id, purchase.officer_confirmed)" v-model="purchase.officer_confirmed"></vs-switch>
+                                <vs-switch v-else icon-pack="feather" @click="notAllowed('status')" v-model="purchase.officer_confirmed"></vs-switch>
                             </vs-list-item>
-                            <vs-list-item v-else-if="userType == 'Supervisor'" title="Status">
-                                <vs-button icon-pack="feather" size="small" icon='icon-check-circle' @click="changeManagementStatus('1', purchase.purchase_id, 'supervisor')"></vs-button>
-                                <vs-button icon-pack="feather" size="small" icon='icon-x-circle' @click="changeManagementStatus('0', purchase.purchase_id, 'supervisor')"></vs-button>
-                            </vs-list-item>
-                            <vs-list-item v-else title="Status">
-                                <vs-switch icon-pack="feather" @click="statusUpdate(purchase.purchase_id, purchase.officer_confirmed)" v-model="purchase.officer_confirmed"></vs-switch>
-                            </vs-list-item>
-                        </template>
+                        </template> 
                         <vs-list-item title="View Comments">
                             <vs-button icon-pack="feather" size="small" icon='icon-maximize-2' @click="handleToggleDrawer"></vs-button>
                         </vs-list-item>
@@ -210,11 +231,19 @@ export default {
     data() {
         return {
             tax_id: '',
-            openComments: false
+            openComments: false,
+            is_saleCreatedByLoginUser: false
         };
     },
     async created() {
-        await this.getPurchase(this.$route.params.id);
+        await this.getPurchase(this.$route.params.id).then(res=>{
+            var created_by = res.data.purchase.created_by;
+            if (this.$store.state.AppActiveUser.type == 'Supervisor') {
+                if(this.$store.state.AppActiveUser.manager_id == created_by.manager_id){
+                    this.is_saleCreatedByLoginUser = true;
+                }
+            }
+        });
 
         localStorage.setItem('customer',this.purchase.customer_id)
         localStorage.setItem('currentDetail','/tax-collection/'+this.purchase.tax_id);
@@ -279,6 +308,131 @@ export default {
             });
         },
 
+        editPermissionAccess(tr){
+
+                if(this.is_officer){
+                    if(tr.officer_confirmed == 0 && tr.supervisor_confirmed == 0){
+                        return true;
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 0){
+                        return true;
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1){
+                        return false;
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 2){
+                        return false;
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 3){
+                        return true;
+                    }
+
+                    if(tr.officer_confirmed == 0 && tr.supervisor_confirmed == 3){
+                        return true;
+                    }
+                }
+
+                if(this.is_supervisor && is_saleCreatedByLoginUser == false){
+                    if(tr.officer_confirmed == 0 && tr.supervisor_confirmed == 0){
+                        return false;
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 0){
+                        return true;
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1){
+                        return true;
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 2){
+                        return true;
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 3){
+                        return true;
+                    }
+                    if(tr.officer_confirmed == 0 && tr.supervisor_confirmed == 3){
+                        return false;
+                    }
+                }
+
+                if(this.is_supervisor && is_saleCreatedByLoginUser == true){
+                    if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 0){
+                        return true;
+                    }
+
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 0){
+                        return true;
+                    }
+
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 1){
+                        return false;
+                    }
+
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 2){
+                        return false;
+                    }
+
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 3){
+                        return false;
+                    }
+                    if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 3){
+                        return true;
+                    }
+                }
+
+                if(this.is_admin){
+                    if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 0){
+                        return false;
+                    }
+
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 0){
+                        return true;
+                    }
+
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 1){
+                        return true;
+                    }
+
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 2){
+                        return true;
+                    }
+
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 3){
+                        return true;
+                    }
+
+                    if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 3){
+                        return false;
+                    }
+                }
+        },
+
+        notAllowed(opt){
+
+            var msg;
+            if(opt == 'status'){
+                msg = 'You can\'t change purchase status, if Purchase is approved or supervisor reviewing it';
+            }else if(opt == 'delete'){
+                msg = 'You can\'t delete purchase, if Purchase is approved or supervisor reviewing it';
+            }else if(opt == 'edit'){
+                msg = 'You can\'t edit/update purchase, if Purchase is approved or supervisor reviewing it';
+            }
+
+            this.$vs.notify({
+                text: msg,
+                color: 'danger',
+                position: 'top-right',
+                time: 8000,
+                icon: 'warning'
+            });
+        },
+
         changeManagementStatus(status, id, by) {
 
             let data = {
@@ -290,7 +444,12 @@ export default {
                 tax_type: 'purchase'
             };
             this.statusChangeManagment(data).then((res) => {
-
+                var res = res.data;
+                if(by == 'supervisor'){
+                    this.purchase.supervisor_confirmed = res.response;
+                }else{
+                    this.purchase.management_confirmed = res.response; 
+                }
             });
         },
 

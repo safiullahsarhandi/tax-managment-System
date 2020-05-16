@@ -443,7 +443,7 @@ var render = function() {
                           _vm._v(" "),
                           _c("vs-td", [_vm._v(_vm._s(tr.type))]),
                           _vm._v(" "),
-                          _c("vs-td", [_vm._v(_vm._s(0))]),
+                          _c("vs-td", [_vm._v(_vm._s(tr.rivision))]),
                           _vm._v(" "),
                           _c("vs-td", [
                             _vm._v(
@@ -522,7 +522,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("vs-th", [_vm._v("Type")]),
                   _vm._v(" "),
-                  _c("vs-th", [_vm._v("revision")]),
+                  _c("vs-th", [_vm._v("Revision")]),
                   _vm._v(" "),
                   _c("vs-th", [_vm._v("Status")]),
                   _vm._v(" "),

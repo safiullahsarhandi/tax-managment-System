@@ -136,6 +136,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_analyticsData_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/analyticsData.js */ "./resources/js/src/components/analyticsData.js");
 
 
+<<<<<<< HEAD
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -143,6 +144,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+=======
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+>>>>>>> e449aba40b71df0cd7663f318a2d07e25e319614
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -171,6 +177,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])('customers', ['monthlyCustomers', 'yearlyCustomers', 'resubmitted'])),
   created: function created() {
+<<<<<<< HEAD
     var _this = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -193,6 +200,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       }, _callee);
     }))();
+=======
+    var gettingDashboardData;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function created$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios.get('get-dashboard-data?manager=' + localStorage.getItem('admin')));
+
+          case 2:
+            gettingDashboardData = _context.sent;
+            this.dashboard = gettingDashboardData.data;
+
+          case 4:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, null, this);
+>>>>>>> e449aba40b71df0cd7663f318a2d07e25e319614
   },
   methods: {},
   components: {
@@ -214,7 +241,11 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
+<<<<<<< HEAD
 exports.push([module.i, "#card-1 .vx-card {\n  background: linear-gradient(to right, #ffbf96, #fe7096) !important;\n  color: #fff;\n}\n#card-2\t .vx-card {\n  background: linear-gradient(-90deg, #90caf9, #047edf 99%) !important;\n  color: #fff;\n}\n#card-3\t .vx-card {\n  background: linear-gradient(-90deg, #84d9d2, #07cdae) !important;\n  color: #fff;\n}\n#home .vx-card .text-primary {\n  color: rgba(var(--vs-dark), 1) !important;\n}\r\n", ""]);
+=======
+exports.push([module.i, "#card-1 .vx-card {\n  background: -webkit-gradient(linear, left top, right top, from(#ffbf96), to(#fe7096)) !important;\n  background: linear-gradient(to right, #ffbf96, #fe7096) !important;\n  color: #fff;\n}\n#card-2\t .vx-card {\n  background: -webkit-gradient(linear, right top, left top, from(#90caf9), color-stop(99%, #047edf)) !important;\n  background: linear-gradient(-90deg, #90caf9, #047edf 99%) !important;\n  color: #fff;\n}\n#card-3\t .vx-card {\n  background: -webkit-gradient(linear, right top, left top, from(#84d9d2), to(#07cdae)) !important;\n  background: linear-gradient(-90deg, #84d9d2, #07cdae) !important;\n  color: #fff;\n}\n#home .vx-card .text-primary {\n  color: rgba(var(--vs-dark), 1) !important;\n}\r\n", ""]);
+>>>>>>> e449aba40b71df0cd7663f318a2d07e25e319614
 
 // exports
 

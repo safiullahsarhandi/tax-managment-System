@@ -67,6 +67,13 @@ export default [{
         icon: "HelpCircleIcon",
         isMain : false,
     },
+    {
+        url: "/",
+        name: "Reports",
+        slug: "Reports",
+        icon: "BookOpenIcon",
+        isMain : false,
+    },
     // {
     //     url: "/manage-team",
     //     name: "Our Team",

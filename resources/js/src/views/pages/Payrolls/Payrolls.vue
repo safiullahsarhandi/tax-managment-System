@@ -6,6 +6,7 @@
             </template>
             <vs-table search pagination max-items="6" :data="payrolls">
                 <template slot="thead">
+                    <vs-th>Created by</vs-th>
                     <vs-th>Employee Name</vs-th>
                     <vs-th>Employee No.</vs-th>
                     <vs-th>NSSF No.</vs-th>
@@ -13,12 +14,14 @@
                     <vs-th>Basic Salary</vs-th>
                     <vs-th>Bonus</vs-th>
                     <!-- <vs-th>Remarks</vs-th> -->
-                    <vs-th>Status</vs-th>
+                    <vs-th v-show='is_officer == true'>Status</vs-th>
+                    <vs-th>Current Status</vs-th>
 
                     <vs-th>Actions</vs-th>
                 </template>
                 <template slot-scope="{data}">
                     <vs-tr v-for="(tr,index) in data" :key="index">
+                        <vs-td :data="tr.created_by.full_name">{{tr.created_by.full_name}}</vs-td>
                         <vs-td :data="tr.employee.name_english">{{tr.employee.name_english}}</vs-td>
                         <vs-td :data="tr.employee.employee_num">{{tr.employee.employee_num}}</vs-td>
                         <vs-td :data="tr.employee.nssf_num">{{tr.employee.nssf_num}}</vs-td>
@@ -27,24 +30,23 @@
                         <vs-td :data="tr.bonus">{{tr.bonus}}</vs-td>
                         <!-- <vs-td :data="tr.remark">{{tr.remark}}</vs-td> -->
                         
-                        <vs-td v-show='is_officer == true' :data="tr.officer_confirmed"><vs-switch @click="statusUpdate(tr.payroll_id, tr.officer_confirmed)" v-model="tr.officer_confirmed"/></vs-td>
-
-                        <vs-td v-show='is_admin == true' :data="tr.management_confirmed" > 
-                            <vs-select v-model="tr.management_confirmed" width="120px" @input="changeManagementStatus(tr.management_confirmed, tr.id, 'admin')">
-                                  <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="item,index in statusList" />
-                            </vs-select>
+                        <vs-td v-show='is_officer == true' :data="tr.officer_confirmed">
+                            <vs-switch v-if="editPermissionAccess(tr)" @click="statusUpdate(tr.payroll_id, tr.officer_confirmed)" v-model="tr.officer_confirmed"></vs-switch>
+                            <vs-switch v-else @click="notAllowed('status')" v-model="tr.officer_confirmed == 1?true:false"> </vs-switch>
                         </vs-td>
 
-                        <vs-td v-show='is_supervisor == true' :data="tr.supervisor_confirmed"> 
-                            <vs-select v-model="tr.supervisor_confirmed" width="120px" @input="changeManagementStatus(tr.supervisor_confirmed, tr.id, 'supervisor')">
-                                  <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="item,index in statusList" />
-                            </vs-select>
-                        </vs-td>
+                       
+                        <vs-td>{{ currentTaxStatus(tr) }}</vs-td>
 
-                        <vs-td>
+                        <vs-td v-if="editPermissionAccess(tr)">
                             <vs-button :to="'edit-payroll/'+tr.payroll_id" size="small" type="border" icon-pack="feather" icon="icon-edit"></vs-button>
                             <vs-button :to="'payroll-detail/'+tr.payroll_id" size="small" icon-pack="feather" icon="icon-maximize-2" type="border"></vs-button>
                             <vs-button @click="deleteRecord(data[index])" size="small" type="border" icon-pack="feather" icon="icon-trash-2"></vs-button>
+                        </vs-td>
+                        <vs-td v-else>
+                            <vs-button @click="notAllowed('edit')" size="small" type="border" icon-pack="feather" icon="icon-edit"></vs-button>
+                            <vs-button :to="'payroll-detail/'+tr.payroll_id" size="small" icon-pack="feather" icon="icon-maximize-2" type="border"></vs-button>
+                            <vs-button @click="notAllowed('delete')" size="small" type="border" icon-pack="feather" icon="icon-trash-2"></vs-button>
                         </vs-td>
                     </vs-tr>
                 </template>
@@ -61,6 +63,7 @@ export default {
     data() {
         return {
             // switch1: true,
+            managerId: null,
             editCustomerModal: false,
             customer_id: '',
             name_english: '',
@@ -99,6 +102,7 @@ export default {
     },
     
     created() {
+        this.managerId = this.$store.state.AppActiveUser.manager_id;
     	this.tax_id = this.$store.state.rootUrl.split('/')[2];
         this.getPayrolls(this.tax_id);
         this.customer_id = localStorage.getItem('customer');
@@ -156,6 +160,235 @@ export default {
                }
             });
 
+        },
+
+        currentTaxStatus(tr){
+
+                if(this.is_officer){
+                    if(tr.officer_confirmed == 0 && tr.supervisor_confirmed == 0){
+                        return 'Working In Progress';
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 0){
+                        return 'Submitted';
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1){
+                        return 'Approved';
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 2){
+                        return 'Supervisor Reviewing';
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 2){
+                        return 'Rejected';
+                    }
+                }
+
+                if(this.is_supervisor){
+
+                    var created_by = tr.created_by.manager_id;
+                    
+                    if(this.managerId == created_by){
+
+                        if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 0){
+                            return 'Work In Progress';
+                        }
+
+                        if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 0){
+                            return 'Submit';
+                        }
+
+                        if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 1){
+                            return 'Approved';
+                        }
+
+                        if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 2){
+                            return 'Management Reviewing';
+                        }
+
+                        if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 3){
+                            return 'Rejected';
+                        }
+                        if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 3){
+                            return 'Submit';
+                        }
+
+                    }
+
+                    if(tr.officer_confirmed == 0 && tr.supervisor_confirmed == 0){
+                        return 'Pending';
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 0){
+                        return 'Working In Progress';
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1){
+                        return 'Approved';
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 2){
+                        return 'Review';
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 3){
+                        return 'Rejected';
+                    }
+                }
+
+                if(this.is_admin){
+                    if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 0){
+                        return 'Pending';
+                    }
+
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 0){
+                        return 'Approved by Supervisor';
+                    }
+
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 1){
+                        return 'Approved';
+                    }
+
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 2){
+                        return 'Review';
+                    }
+
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 3){
+                        return 'Rejected';
+                    }
+                }
+        },
+
+        editPermissionAccess(tr){
+
+                if(this.is_officer){
+                    if(tr.officer_confirmed == 0 && tr.supervisor_confirmed == 0){
+                        return true;
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 0){
+                        return true;
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1){
+                        return false;
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 2){
+                        return false;
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 3){
+                        return true;
+                    }
+
+                    if(tr.officer_confirmed == 0 && tr.supervisor_confirmed == 3){
+                        return true;
+                    }
+                }
+
+                if(this.is_supervisor){
+
+                    var created_by = tr.created_by.manager_id;
+                    
+                    if(this.managerId == created_by){
+
+                        if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 0){
+                            return true;
+                        }
+
+                        if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 0){
+                            return true;
+                        }
+
+                        if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 1){
+                            return false;
+                        }
+
+                        if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 2){
+                            return false;
+                        }
+
+                        if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 3){
+                            return true;
+                        }
+                        if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 3){
+                            return true;
+                        }
+
+                    }
+
+                    if(tr.officer_confirmed == 0 && tr.supervisor_confirmed == 0){
+                        return false;
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 0){
+                        return true;
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1){
+                        return true;
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 2){
+                        return true;
+                    }
+
+                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 3){
+                        return true;
+                    }
+                    if(tr.officer_confirmed == 0 && tr.supervisor_confirmed == 3){
+                        return false;
+                    }
+                }
+
+                if(this.is_admin){
+                    if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 0){
+                        return false;
+                    }
+
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 0){
+                        return true;
+                    }
+
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 1){
+                        return true;
+                    }
+
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 2){
+                        return true;
+                    }
+
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 3){
+                        return true;
+                    }
+
+                    if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 3){
+                        return false;
+                    }
+                }
+        },
+
+        notAllowed(opt){
+
+            var msg;
+            if(opt == 'status'){
+                msg = 'You can\'t change payroll status, if Payroll is approved or supervisor reviewing it';
+            }else if(opt == 'delete'){
+                msg = 'You can\'t delete payroll, if Payroll is approved or supervisor reviewing it';
+            }else if(opt == 'edit'){
+                msg = 'You can\'t edit/update payroll, if Payroll is approved or supervisor reviewing it';
+            }
+
+            this.$vs.notify({
+                text: msg,
+                color: 'danger',
+                position: 'top-right',
+                time: 8000,
+                icon: 'warning'
+            });
         },
 
         deleteRecord(obj){

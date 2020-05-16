@@ -72,12 +72,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   inject: ['generatePassword'],
   data: function data() {
     return {
       // switch1: true,
+      managerId: null,
       editCustomerModal: false,
       customer_id: '',
       name_english: '',
@@ -116,6 +119,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('payrolls/', ['payrolls'])),
   created: function created() {
+    this.managerId = this.$store.state.AppActiveUser.manager_id;
     this.tax_id = this.$store.state.rootUrl.split('/')[2];
     this.getPayrolls(this.tax_id);
     this.customer_id = localStorage.getItem('customer');
@@ -169,6 +173,227 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _this.payrolls[index].officer_confirmed = res.data.response;
           }
         }
+      });
+    },
+    currentTaxStatus: function currentTaxStatus(tr) {
+      if (this.is_officer) {
+        if (tr.officer_confirmed == 0 && tr.supervisor_confirmed == 0) {
+          return 'Working In Progress';
+        }
+
+        if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 0) {
+          return 'Submitted';
+        }
+
+        if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1) {
+          return 'Approved';
+        }
+
+        if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 2) {
+          return 'Supervisor Reviewing';
+        }
+
+        if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 2) {
+          return 'Rejected';
+        }
+      }
+
+      if (this.is_supervisor) {
+        var created_by = tr.created_by.manager_id;
+
+        if (this.managerId == created_by) {
+          if (tr.supervisor_confirmed == 0 && tr.management_confirmed == 0) {
+            return 'Work In Progress';
+          }
+
+          if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 0) {
+            return 'Submit';
+          }
+
+          if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 1) {
+            return 'Approved';
+          }
+
+          if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 2) {
+            return 'Management Reviewing';
+          }
+
+          if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 3) {
+            return 'Rejected';
+          }
+
+          if (tr.supervisor_confirmed == 0 && tr.management_confirmed == 3) {
+            return 'Submit';
+          }
+        }
+
+        if (tr.officer_confirmed == 0 && tr.supervisor_confirmed == 0) {
+          return 'Pending';
+        }
+
+        if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 0) {
+          return 'Working In Progress';
+        }
+
+        if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1) {
+          return 'Approved';
+        }
+
+        if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 2) {
+          return 'Review';
+        }
+
+        if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 3) {
+          return 'Rejected';
+        }
+      }
+
+      if (this.is_admin) {
+        if (tr.supervisor_confirmed == 0 && tr.management_confirmed == 0) {
+          return 'Pending';
+        }
+
+        if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 0) {
+          return 'Approved by Supervisor';
+        }
+
+        if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 1) {
+          return 'Approved';
+        }
+
+        if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 2) {
+          return 'Review';
+        }
+
+        if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 3) {
+          return 'Rejected';
+        }
+      }
+    },
+    editPermissionAccess: function editPermissionAccess(tr) {
+      if (this.is_officer) {
+        if (tr.officer_confirmed == 0 && tr.supervisor_confirmed == 0) {
+          return true;
+        }
+
+        if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 0) {
+          return true;
+        }
+
+        if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1) {
+          return false;
+        }
+
+        if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 2) {
+          return false;
+        }
+
+        if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 3) {
+          return true;
+        }
+
+        if (tr.officer_confirmed == 0 && tr.supervisor_confirmed == 3) {
+          return true;
+        }
+      }
+
+      if (this.is_supervisor) {
+        var created_by = tr.created_by.manager_id;
+
+        if (this.managerId == created_by) {
+          if (tr.supervisor_confirmed == 0 && tr.management_confirmed == 0) {
+            return true;
+          }
+
+          if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 0) {
+            return true;
+          }
+
+          if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 1) {
+            return false;
+          }
+
+          if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 2) {
+            return false;
+          }
+
+          if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 3) {
+            return true;
+          }
+
+          if (tr.supervisor_confirmed == 0 && tr.management_confirmed == 3) {
+            return true;
+          }
+        }
+
+        if (tr.officer_confirmed == 0 && tr.supervisor_confirmed == 0) {
+          return false;
+        }
+
+        if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 0) {
+          return true;
+        }
+
+        if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1) {
+          return true;
+        }
+
+        if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 2) {
+          return true;
+        }
+
+        if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 3) {
+          return true;
+        }
+
+        if (tr.officer_confirmed == 0 && tr.supervisor_confirmed == 3) {
+          return false;
+        }
+      }
+
+      if (this.is_admin) {
+        if (tr.supervisor_confirmed == 0 && tr.management_confirmed == 0) {
+          return false;
+        }
+
+        if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 0) {
+          return true;
+        }
+
+        if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 1) {
+          return true;
+        }
+
+        if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 2) {
+          return true;
+        }
+
+        if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 3) {
+          return true;
+        }
+
+        if (tr.supervisor_confirmed == 0 && tr.management_confirmed == 3) {
+          return false;
+        }
+      }
+    },
+    notAllowed: function notAllowed(opt) {
+      var msg;
+
+      if (opt == 'status') {
+        msg = 'You can\'t change payroll status, if Payroll is approved or supervisor reviewing it';
+      } else if (opt == 'delete') {
+        msg = 'You can\'t delete payroll, if Payroll is approved or supervisor reviewing it';
+      } else if (opt == 'edit') {
+        msg = 'You can\'t edit/update payroll, if Payroll is approved or supervisor reviewing it';
+      }
+
+      this.$vs.notify({
+        text: msg,
+        color: 'danger',
+        position: 'top-right',
+        time: 8000,
+        icon: 'warning'
       });
     },
     deleteRecord: function deleteRecord(obj) {
@@ -348,6 +573,12 @@ var render = function() {
                         [
                           _c(
                             "vs-td",
+                            { attrs: { data: tr.created_by.full_name } },
+                            [_vm._v(_vm._s(tr.created_by.full_name))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
                             { attrs: { data: tr.employee.name_english } },
                             [_vm._v(_vm._s(tr.employee.name_english))]
                           ),
@@ -392,166 +623,137 @@ var render = function() {
                               attrs: { data: tr.officer_confirmed }
                             },
                             [
-                              _c("vs-switch", {
-                                on: {
-                                  click: function($event) {
-                                    return _vm.statusUpdate(
-                                      tr.payroll_id,
-                                      tr.officer_confirmed
-                                    )
-                                  }
-                                },
-                                model: {
-                                  value: tr.officer_confirmed,
-                                  callback: function($$v) {
-                                    _vm.$set(tr, "officer_confirmed", $$v)
-                                  },
-                                  expression: "tr.officer_confirmed"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "vs-td",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.is_admin == true,
-                                  expression: "is_admin == true"
-                                }
-                              ],
-                              attrs: { data: tr.management_confirmed }
-                            },
-                            [
-                              _c(
-                                "vs-select",
-                                {
-                                  attrs: { width: "120px" },
-                                  on: {
-                                    input: function($event) {
-                                      return _vm.changeManagementStatus(
-                                        tr.management_confirmed,
-                                        tr.id,
-                                        "admin"
-                                      )
-                                    }
-                                  },
-                                  model: {
-                                    value: tr.management_confirmed,
-                                    callback: function($$v) {
-                                      _vm.$set(tr, "management_confirmed", $$v)
+                              _vm.editPermissionAccess(tr)
+                                ? _c("vs-switch", {
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.statusUpdate(
+                                          tr.payroll_id,
+                                          tr.officer_confirmed
+                                        )
+                                      }
                                     },
-                                    expression: "tr.management_confirmed"
-                                  }
-                                },
-                                _vm._l(_vm.statusList, function(item, index) {
-                                  return _c("vs-select-item", {
-                                    key: index,
-                                    attrs: {
-                                      value: item.value,
-                                      text: item.text
+                                    model: {
+                                      value: tr.officer_confirmed,
+                                      callback: function($$v) {
+                                        _vm.$set(tr, "officer_confirmed", $$v)
+                                      },
+                                      expression: "tr.officer_confirmed"
                                     }
                                   })
-                                }),
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "vs-td",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.is_supervisor == true,
-                                  expression: "is_supervisor == true"
-                                }
-                              ],
-                              attrs: { data: tr.supervisor_confirmed }
-                            },
-                            [
-                              _c(
-                                "vs-select",
-                                {
-                                  attrs: { width: "120px" },
-                                  on: {
-                                    input: function($event) {
-                                      return _vm.changeManagementStatus(
-                                        tr.supervisor_confirmed,
-                                        tr.id,
-                                        "supervisor"
-                                      )
-                                    }
-                                  },
-                                  model: {
-                                    value: tr.supervisor_confirmed,
-                                    callback: function($$v) {
-                                      _vm.$set(tr, "supervisor_confirmed", $$v)
+                                : _c("vs-switch", {
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.notAllowed("status")
+                                      }
                                     },
-                                    expression: "tr.supervisor_confirmed"
-                                  }
-                                },
-                                _vm._l(_vm.statusList, function(item, index) {
-                                  return _c("vs-select-item", {
-                                    key: index,
-                                    attrs: {
-                                      value: item.value,
-                                      text: item.text
+                                    model: {
+                                      value:
+                                        tr.officer_confirmed == 1
+                                          ? true
+                                          : false,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          tr,
+                                          "officer_confirmed == 1?true:false",
+                                          $$v
+                                        )
+                                      },
+                                      expression:
+                                        "tr.officer_confirmed == 1?true:false"
                                     }
                                   })
-                                }),
-                                1
-                              )
                             ],
                             1
                           ),
                           _vm._v(" "),
-                          _c(
-                            "vs-td",
-                            [
-                              _c("vs-button", {
-                                attrs: {
-                                  to: "edit-payroll/" + tr.payroll_id,
-                                  size: "small",
-                                  type: "border",
-                                  "icon-pack": "feather",
-                                  icon: "icon-edit"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("vs-button", {
-                                attrs: {
-                                  to: "payroll-detail/" + tr.payroll_id,
-                                  size: "small",
-                                  "icon-pack": "feather",
-                                  icon: "icon-maximize-2",
-                                  type: "border"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("vs-button", {
-                                attrs: {
-                                  size: "small",
-                                  type: "border",
-                                  "icon-pack": "feather",
-                                  icon: "icon-trash-2"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.deleteRecord(data[index])
-                                  }
-                                }
-                              })
-                            ],
-                            1
-                          )
+                          _c("vs-td", [
+                            _vm._v(_vm._s(_vm.currentTaxStatus(tr)))
+                          ]),
+                          _vm._v(" "),
+                          _vm.editPermissionAccess(tr)
+                            ? _c(
+                                "vs-td",
+                                [
+                                  _c("vs-button", {
+                                    attrs: {
+                                      to: "edit-payroll/" + tr.payroll_id,
+                                      size: "small",
+                                      type: "border",
+                                      "icon-pack": "feather",
+                                      icon: "icon-edit"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("vs-button", {
+                                    attrs: {
+                                      to: "payroll-detail/" + tr.payroll_id,
+                                      size: "small",
+                                      "icon-pack": "feather",
+                                      icon: "icon-maximize-2",
+                                      type: "border"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("vs-button", {
+                                    attrs: {
+                                      size: "small",
+                                      type: "border",
+                                      "icon-pack": "feather",
+                                      icon: "icon-trash-2"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.deleteRecord(data[index])
+                                      }
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            : _c(
+                                "vs-td",
+                                [
+                                  _c("vs-button", {
+                                    attrs: {
+                                      size: "small",
+                                      type: "border",
+                                      "icon-pack": "feather",
+                                      icon: "icon-edit"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.notAllowed("edit")
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("vs-button", {
+                                    attrs: {
+                                      to: "payroll-detail/" + tr.payroll_id,
+                                      size: "small",
+                                      "icon-pack": "feather",
+                                      icon: "icon-maximize-2",
+                                      type: "border"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("vs-button", {
+                                    attrs: {
+                                      size: "small",
+                                      type: "border",
+                                      "icon-pack": "feather",
+                                      icon: "icon-trash-2"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.notAllowed("delete")
+                                      }
+                                    }
+                                  })
+                                ],
+                                1
+                              )
                         ],
                         1
                       )
@@ -565,6 +767,8 @@ var render = function() {
                 "template",
                 { slot: "thead" },
                 [
+                  _c("vs-th", [_vm._v("Created by")]),
+                  _vm._v(" "),
                   _c("vs-th", [_vm._v("Employee Name")]),
                   _vm._v(" "),
                   _c("vs-th", [_vm._v("Employee No.")]),
@@ -577,7 +781,22 @@ var render = function() {
                   _vm._v(" "),
                   _c("vs-th", [_vm._v("Bonus")]),
                   _vm._v(" "),
-                  _c("vs-th", [_vm._v("Status")]),
+                  _c(
+                    "vs-th",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.is_officer == true,
+                          expression: "is_officer == true"
+                        }
+                      ]
+                    },
+                    [_vm._v("Status")]
+                  ),
+                  _vm._v(" "),
+                  _c("vs-th", [_vm._v("Current Status")]),
                   _vm._v(" "),
                   _c("vs-th", [_vm._v("Actions")])
                 ],

@@ -133,9 +133,17 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _components_analyticsData_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/analyticsData.js */ "./resources/js/src/components/analyticsData.js");
-/* harmony import */ var _components_statistics_cards_StatisticsCardLine_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/statistics-cards/StatisticsCardLine.vue */ "./resources/js/src/components/statistics-cards/StatisticsCardLine.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _components_analyticsData_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/analyticsData.js */ "./resources/js/src/components/analyticsData.js");
+/* harmony import */ var _components_statistics_cards_StatisticsCardLine_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/statistics-cards/StatisticsCardLine.vue */ "./resources/js/src/components/statistics-cards/StatisticsCardLine.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -375,15 +383,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      analyticsData: _components_analyticsData_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+      analyticsData: _components_analyticsData_js__WEBPACK_IMPORTED_MODULE_2__["default"],
       editTaxManagmentModal: false,
       title: "",
       tax_code: "",
@@ -400,23 +406,45 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   components: {
-    StatisticsCardLine: _components_statistics_cards_StatisticsCardLine_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    StatisticsCardLine: _components_statistics_cards_StatisticsCardLine_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   beforeCreate: function beforeCreate() {},
-  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('taxes/', ['tax', 'purchases_approval', 'payrolls_approval', 'sales_approval'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('supervisors/', ['supervisors'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('officers/', ['officers'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('taxes/', ['supervisor'])), {}, {
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])('taxes/', ['tax', 'purchases_approval', 'payrolls_approval', 'sales_approval'])), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])('supervisors/', ['supervisors'])), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])('officers/', ['officers'])), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])('taxes/', ['supervisor'])), {}, {
     activeUser: function activeUser() {
       return this.$store.state.AppActiveUser;
     }
   }),
   created: function created() {
-    localStorage.setItem('currentDetail', this.$route.fullPath);
-    this.$store.commit('setRootUrl', this.$route.fullPath);
-    this.tax_customer_id = localStorage.getItem('customer');
-    this.getSupervisors();
-    this.getOfficers();
-    this.getTax(this.$route.params.id);
+    var _this = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              localStorage.setItem('currentDetail', _this.$route.fullPath);
+
+              _this.$store.commit('setRootUrl', _this.$route.fullPath);
+
+              _this.getSupervisors();
+
+              _this.getOfficers();
+
+              _context.next = 6;
+              return _this.getTax(_this.$route.params.id).then(function (res) {
+                localStorage.setItem('customer', res.tax.customer_id);
+                _this.tax_customer_id = res.tax.customer_id;
+              });
+
+            case 6:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
   },
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
     getSupervisors: 'supervisors/getSupervisors',
     getOfficers: 'officers/getOfficers',
     getTax: 'taxes/getTax',
@@ -435,24 +463,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.description = this.tax.description; // this.$data.editedTax = this.tax;
     },
     editTaxManagment: function editTaxManagment(e) {
-      var _this = this;
+      var _this2 = this;
 
       this.$validator.validateAll().then(function (result) {
         if (result) {
-          self = _this;
+          self = _this2;
           var fd = new FormData(self.$refs.editTaxManagmentForm);
-          fd.append('customer_id', _this.tax_customer_id);
-          fd.append('tax_id', _this.$route.params.id);
+          fd.append('customer_id', _this2.tax_customer_id);
+          fd.append('tax_id', _this2.$route.params.id);
           fd.append('officers', self.officer);
           fd.append('supervisor_id', self.editSupervisor);
           fd.append('tax_code', self.tax_code);
           var data = {
             fd: fd,
-            close: _this.$vs.loading.close,
-            notify: _this.$vs.notify
+            close: _this2.$vs.loading.close,
+            notify: _this2.$vs.notify
           };
 
-          _this.update(data).then(function (res) {
+          _this2.update(data).then(function (res) {
             if (res.data.status == 'success') {
               self.title = self.description = self.duration = self.editSupervisor = '';
               self.officer = [];
@@ -460,9 +488,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               self.$validator.reset();
 
-              _this.getTax(self.$route.params.id);
+              _this2.getTax(self.$route.params.id);
 
-              _this.editTaxManagmentModal = false;
+              _this2.editTaxManagmentModal = false;
             }
           });
         }
@@ -632,15 +660,15 @@ var render = function() {
             {
               attrs: {
                 "vs-md":
-                  _vm.activeUser.type == "Admin" ||
-                  _vm.activeUser.type == "Super Admin"
+                  _vm.$store.getters.userType == "Admin" ||
+                  _vm.$store.getters.userType == "Super Admin"
                     ? "9"
-                    : "9",
+                    : "12",
                 "vs-lg":
-                  _vm.activeUser.type == "Admin" ||
-                  _vm.activeUser.type == "Super Admin"
+                  _vm.$store.getters.userType == "Admin" ||
+                  _vm.$store.getters.userType == "Super Admin"
                     ? "9"
-                    : "9",
+                    : "12",
                 "vs-sm": "12",
                 "vs-xs": "12"
               }
@@ -1048,133 +1076,133 @@ var render = function() {
             2
           ),
           _vm._v(" "),
-          _c(
-            "vs-col",
-            {
-              directives: [
+          _vm.$store.getters.userType == "Admin" ||
+          _vm.$store.getters.userType == "Super Admin"
+            ? _c(
+                "vs-col",
                 {
-                  name: "show",
-                  rawName: "v-show",
-                  value:
-                    _vm.activeUser.type == "Admin" ||
-                    _vm.activeUser.type == "Super Admin",
-                  expression:
-                    "activeUser.type == 'Admin' || activeUser.type == 'Super Admin'"
-                }
-              ],
-              staticClass: "mt-base",
-              attrs: {
-                "vs-md": "3",
-                "vs-lg": "3",
-                "vs-sm": "12",
-                "vs-xs": "12"
-              }
-            },
-            [
-              _c(
-                "vx-card",
-                { attrs: { title: "Actions" } },
+                  staticClass: "mt-base",
+                  attrs: {
+                    "vs-md": "3",
+                    "vs-lg": "3",
+                    "vs-sm": "12",
+                    "vs-xs": "12"
+                  }
+                },
                 [
                   _c(
-                    "vs-list",
+                    "vx-card",
+                    { attrs: { title: "Actions" } },
                     [
                       _c(
-                        "vs-list-item",
-                        { staticClass: "p-0 ml-0 status-list-item" },
+                        "vs-list",
                         [
                           _c(
-                            "vs-select",
-                            {
-                              staticClass: "p-0 ml-0",
-                              staticStyle: { width: "170px" },
-                              attrs: { placeholder: "Select Status" },
-                              on: {
-                                input: function($event) {
-                                  return _vm.changeTaxStatus(_vm.tax.tax_id)
-                                }
-                              },
-                              model: {
-                                value: _vm.tax.status,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.tax, "status", $$v)
-                                },
-                                expression: "tax.status"
-                              }
-                            },
+                            "vs-list-item",
+                            { staticClass: "p-0 ml-0 status-list-item" },
                             [
-                              _c("vs-select-item", {
-                                attrs: { value: "0", text: "Work In Progress" }
-                              }),
-                              _vm._v(" "),
-                              _c("vs-select-item", {
-                                attrs: { value: "1", text: "Review" }
-                              }),
-                              _vm._v(" "),
-                              _c("vs-select-item", {
-                                attrs: { value: "2", text: "Approve" }
-                              }),
-                              _vm._v(" "),
-                              _c("vs-select-item", {
+                              _c(
+                                "vs-select",
+                                {
+                                  staticClass: "p-0 ml-0",
+                                  staticStyle: { width: "170px" },
+                                  attrs: {
+                                    autocomplete: "",
+                                    placeholder: "Select Status"
+                                  },
+                                  on: {
+                                    input: function($event) {
+                                      return _vm.changeTaxStatus(_vm.tax.tax_id)
+                                    }
+                                  },
+                                  model: {
+                                    value: _vm.tax.status,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.tax, "status", $$v)
+                                    },
+                                    expression: "tax.status"
+                                  }
+                                },
+                                [
+                                  _c("vs-select-item", {
+                                    attrs: {
+                                      value: "0",
+                                      text: "Work In Progress"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("vs-select-item", {
+                                    attrs: { value: "1", text: "Review" }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("vs-select-item", {
+                                    attrs: { value: "2", text: "Approve" }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("vs-select-item", {
+                                    attrs: {
+                                      value: "3",
+                                      text: "Client Confirmation"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("vs-select-item", {
+                                    attrs: { value: "4", text: "Tax Paid" }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("vs-select-item", {
+                                    attrs: { value: "5", text: "Submitted" }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("vs-select-item", {
+                                    attrs: { value: "6", text: "Scanned" }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("vs-select-item", {
+                                    attrs: { value: "7", text: "Released" }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-list-item",
+                            { attrs: { title: "Edit Tax", subtitle: "" } },
+                            [
+                              _c("vs-button", {
                                 attrs: {
-                                  value: "3",
-                                  text: "Client Confirmation"
+                                  size: "small",
+                                  "icon-pack": "feather",
+                                  icon: "icon-edit"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.editTax()
+                                  }
                                 }
-                              }),
-                              _vm._v(" "),
-                              _c("vs-select-item", {
-                                attrs: { value: "4", text: "Tax Paid" }
-                              }),
-                              _vm._v(" "),
-                              _c("vs-select-item", {
-                                attrs: { value: "5", text: "Submitted" }
-                              }),
-                              _vm._v(" "),
-                              _c("vs-select-item", {
-                                attrs: { value: "6", text: "Scanned" }
-                              }),
-                              _vm._v(" "),
-                              _c("vs-select-item", {
-                                attrs: { value: "7", text: "Released" }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-list-item",
+                            { attrs: { title: "Activity Log", subtitle: "" } },
+                            [
+                              _c("vs-button", {
+                                attrs: {
+                                  size: "small",
+                                  "icon-pack": "feather",
+                                  to: "/activity-log",
+                                  icon: "icon-maximize"
+                                }
                               })
                             ],
                             1
                           )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vs-list-item",
-                        { attrs: { title: "Edit Tax", subtitle: "" } },
-                        [
-                          _c("vs-button", {
-                            attrs: {
-                              size: "small",
-                              "icon-pack": "feather",
-                              icon: "icon-edit"
-                            },
-                            on: {
-                              click: function($event) {
-                                return _vm.editTax()
-                              }
-                            }
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vs-list-item",
-                        { attrs: { title: "Activity Log", subtitle: "" } },
-                        [
-                          _c("vs-button", {
-                            attrs: {
-                              size: "small",
-                              "icon-pack": "feather",
-                              to: "/activity-log",
-                              icon: "icon-maximize"
-                            }
-                          })
                         ],
                         1
                       )
@@ -1184,9 +1212,7 @@ var render = function() {
                 ],
                 1
               )
-            ],
-            1
-          )
+            : _vm._e()
         ],
         1
       ),
