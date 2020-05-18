@@ -47,7 +47,7 @@ Route::group(['prefix' => ''], function () {
 	Route::post('add-customer', 'ApplicationController@add_customer');
 	Route::post('add-multiple-customer', 'ApplicationController@add_multiple_customer');
 
-	Route::get('get-customers', 'ApplicationController@get_customers');
+	Route::post('get-customers', 'ApplicationController@get_customers');
 	Route::get('get-customer', 'ApplicationController@get_customer');
 	Route::post('get-customer-profile', 'ApplicationController@get_customer_profile');
 	Route::post('update-customer', 'ApplicationController@update_customer');
@@ -77,6 +77,8 @@ Route::group(['prefix' => ''], function () {
 
 	Route::post('update-tax', 'ApplicationController@update_tax');
 	Route::post('status-update-tax', 'ApplicationController@status_update_tax');
+
+	Route::get('get-recall-taxes', 'ApplicationController@get_recall_taxes');
 
 	// Exchange Rates
 	Route::get('get-exchange-rates', 'ApplicationController@get_exchange_rates');

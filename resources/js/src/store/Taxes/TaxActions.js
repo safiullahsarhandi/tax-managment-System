@@ -1,6 +1,6 @@
 export default {
-    getTaxes({ commit }, customer_id) {
-        axios.get('get-taxes', { params: { customer_id: customer_id } }).then(res => {
+    getTaxes({ commit }, data) {
+        axios.get('get-taxes', { params: { customer_id: data.id, status: data.status } }).then(res => {
             commit('setTaxes', res.data.taxes)
         });
     },
@@ -175,5 +175,15 @@ export default {
     async getLogs({commit},data){
         let gettingLogs = await axios.get('get-tax-logs',{params : {tax_id : data.tax_id} });
         commit('setLogs',gettingLogs.data.logs);
-    }
+    },
+
+    getRecallTaxes({ commit }, data) {
+        axios.get('get-recall-taxes', { params: { customer_id: data.id, type: data.type } }).then(res => {
+            commit('setRecallTaxes', res.data.taxes);
+        });
+    },
+
+    clearRecallTaxes({ commit }, data) {
+            commit('clearRecallTaxes', [])
+    },
 }

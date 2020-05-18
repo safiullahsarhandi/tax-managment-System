@@ -7,4 +7,5 @@ export default {
 	payrolls_approval : 0,
 	tax_team : [],
 	parameters : [],
+	recallTaxes: []
 }

@@ -36,5 +36,13 @@ export default {
 
 		state.logs = data;
 
-	}
+	},
+
+	setRecallTaxes(state,taxes){
+		state.recallTaxes = taxes;
+	},
+
+	clearRecallTaxes(state,data){
+		state.recallTaxes = [];
+	},
 }

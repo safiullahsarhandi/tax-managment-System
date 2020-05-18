@@ -20,11 +20,33 @@
         </vs-row>
        
         
-        <vs-row>
-            <vs-col>
+        <!-- <vs-row>
+            <vs-col vs-xl="9" vs-lg="9" vs-md="9" vs-sm="12"> -->
                 <taxes class="mt-5"></taxes>
+            <!-- </vs-col> -->
+
+            <!-- <vs-col vs-xl="3" vs-lg="3" vs-md="3" vs-sm="12">
+                <vx-card title="Actions" class="mt-5">
+                    <vs-list>
+                        <vs-list-item class="mt-2" title="Monthly Tax" subtitle="">
+                            <vs-button size="small" icon-pack="feather" @click="getData(1)" icon="icon-list"></vs-button>
+                        </vs-list-item>
+
+                        <vs-list-item class="mt-2" title="Monthly Resubmission Tax" subtitle="">
+                            <vs-button size="small" icon-pack="feather" @click="getData(2)" icon="icon-list"></vs-button>
+                        </vs-list-item>
+
+                        <vs-list-item class="mt-2" title="Yearly Tax" subtitle="">
+                            <vs-button size="small" icon-pack="feather" @click="getData(3)" icon="icon-list"></vs-button>
+                        </vs-list-item>
+
+                        <vs-list-item class="mt-2" title="Yearly Resubmission Tax" subtitle="">
+                            <vs-button size="small" icon-pack="feather" @click="getData(4)" icon="icon-list"></vs-button>
+                        </vs-list-item>
+                    </vs-list>
+                </vx-card>
             </vs-col>
-        </vs-row>
+        </vs-row> -->
     </div>
 </template>
 <script>
@@ -59,6 +81,7 @@ export default {
             }
 
         },
+
         getAddress(customer) {
             return customer.address + ' ' + customer.street + ' ' + customer.group + ' ' + customer.sangkat + ' ' + customer.village + ' ' + customer.district + ' ' + customer.province + ' ' + ' ' + customer.muncipality;
         }

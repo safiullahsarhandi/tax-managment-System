@@ -12,11 +12,7 @@ exports = module.exports = __webpack_require__(/*! ../../css-loader/lib/css-base
 
 
 // module
-<<<<<<< HEAD
 exports.push([module.i, ".back-to-top-fade-enter-active, \n.back-to-top-fade-leave-active {\n  transition: opacity .7s;\n}\n.back-to-top-fade-enter, \n.back-to-top-fade-leave-to {\n  opacity: 0;\n}\n.vue-back-to-top {\n  cursor:pointer;\n  position: fixed;\n  z-index: 1000;\n}\n.vue-back-to-top .default {\n  background-color: #f5c85c;\n  border-radius: 3px;\n  color: #ffffff;\n  height: 30px;\n  line-height: 30px;\n  text-align: center;\n  width: 160px;\n}\n.vue-back-to-top .default span{\n  color:#ffffff;\n}\n.vue-back-to-top--is-footer {\n  bottom: 50% !important;\n  position: absolute;\n  transform: translateY(50%);\n}", ""]);
-=======
-exports.push([module.i, ".back-to-top-fade-enter-active, \n.back-to-top-fade-leave-active {\n  -webkit-transition: opacity .7s;\n  transition: opacity .7s;\n}\n.back-to-top-fade-enter, \n.back-to-top-fade-leave-to {\n  opacity: 0;\n}\n.vue-back-to-top {\n  cursor:pointer;\n  position: fixed;\n  z-index: 1000;\n}\n.vue-back-to-top .default {\n  background-color: #f5c85c;\n  border-radius: 3px;\n  color: #ffffff;\n  height: 30px;\n  line-height: 30px;\n  text-align: center;\n  width: 160px;\n}\n.vue-back-to-top .default span{\n  color:#ffffff;\n}\n.vue-back-to-top--is-footer {\n  bottom: 50% !important;\n  position: absolute;\n  -webkit-transform: translateY(50%);\n          transform: translateY(50%);\n}", ""]);
->>>>>>> e449aba40b71df0cd7663f318a2d07e25e319614
 
 // exports
 
@@ -36,11 +32,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Sortable", function() { return Sortable; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Swap", function() { return SwapPlugin; });
 /**!
-<<<<<<< HEAD
  * Sortable 1.10.2
-=======
- * Sortable 1.10.1
->>>>>>> e449aba40b71df0cd7663f318a2d07e25e319614
  * @author	RubaXa   <trash@rubaxa.org>
  * @author	owenm    <owen23355@gmail.com>
  * @license MIT
@@ -167,11 +159,7 @@ function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance");
 }
 
-<<<<<<< HEAD
 var version = "1.10.2";
-=======
-var version = "1.10.1";
->>>>>>> e449aba40b71df0cd7663f318a2d07e25e319614
 
 function userAgent(pattern) {
   if (typeof window !== 'undefined' && window.navigator) {
@@ -305,11 +293,7 @@ function matrix(el, selfOnly) {
     } while (!selfOnly && (el = el.parentNode));
   }
 
-<<<<<<< HEAD
   var matrixFn = window.DOMMatrix || window.WebKitCSSMatrix || window.CSSMatrix || window.MSCSSMatrix;
-=======
-  var matrixFn = window.DOMMatrix || window.WebKitCSSMatrix || window.CSSMatrix;
->>>>>>> e449aba40b71df0cd7663f318a2d07e25e319614
   /*jshint -W056 */
 
   return matrixFn && new matrixFn(appliedTransforms);
@@ -334,19 +318,12 @@ function find(ctx, tagName, iterator) {
 }
 
 function getWindowScrollingElement() {
-<<<<<<< HEAD
   var scrollingElement = document.scrollingElement;
 
   if (scrollingElement) {
     return scrollingElement;
   } else {
     return document.documentElement;
-=======
-  if (IE11OrLess) {
-    return document.documentElement;
-  } else {
-    return document.scrollingElement;
->>>>>>> e449aba40b71df0cd7663f318a2d07e25e319614
   }
 }
 /**
@@ -1683,11 +1660,7 @@ Sortable.prototype =
           fallbackTolerance = options.fallbackTolerance,
           fallbackOffset = options.fallbackOffset,
           touch = evt.touches ? evt.touches[0] : evt,
-<<<<<<< HEAD
           ghostMatrix = ghostEl && matrix(ghostEl, true),
-=======
-          ghostMatrix = ghostEl && matrix(ghostEl),
->>>>>>> e449aba40b71df0cd7663f318a2d07e25e319614
           scaleX = ghostEl && ghostMatrix && ghostMatrix.a,
           scaleY = ghostEl && ghostMatrix && ghostMatrix.d,
           relativeScrollOffset = PositionGhostAbsolutely && ghostRelativeParent && getRelativeScrollOffset(ghostRelativeParent),
@@ -2192,11 +2165,8 @@ Sortable.prototype =
       css(document.body, 'user-select', '');
     }
 
-<<<<<<< HEAD
     css(dragEl, 'transform', '');
 
-=======
->>>>>>> e449aba40b71df0cd7663f318a2d07e25e319614
     if (evt) {
       if (moved) {
         evt.cancelable && evt.preventDefault();
@@ -2461,11 +2431,8 @@ Sortable.prototype =
 
     this._onDrop();
 
-<<<<<<< HEAD
     this._disableDelayedDragEvents();
 
-=======
->>>>>>> e449aba40b71df0cd7663f318a2d07e25e319614
     sortables.splice(sortables.indexOf(this.el), 1);
     this.el = el = null;
   },
@@ -3606,11 +3573,7 @@ function MultiDragPlugin() {
       off(document, 'keyup', this._checkKeyUp);
     },
     _deselectMultiDrag: function _deselectMultiDrag(evt) {
-<<<<<<< HEAD
       if (typeof dragStarted !== "undefined" && dragStarted) return; // Only deselect if selection is in this sortable
-=======
-      if (dragStarted) return; // Only deselect if selection is in this sortable
->>>>>>> e449aba40b71df0cd7663f318a2d07e25e319614
 
       if (multiDragSortable !== this.sortable) return; // Only deselect if target is not item in this sortable
 
