@@ -70,8 +70,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-<<<<<<< HEAD
-=======
 //
 //
 //
@@ -91,7 +89,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
->>>>>>> bbd5ac8e8d0a91a234a59136eedd962f3c39b892
 //
 //
 //
@@ -188,13 +185,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getCustomers: 'customers/getCustomers',
     updateStatus: 'customers/updateStatus'
   })), {}, {
-<<<<<<< HEAD
-=======
     getCompaniesStatuswise: function getCompaniesStatuswise(status) {
       this.currentStatus = status;
       this.getCustomers(this.currentStatus);
     },
->>>>>>> bbd5ac8e8d0a91a234a59136eedd962f3c39b892
     getOfficer: function getOfficer(officer) {
       if (officer != null) {
         return officer.full_name;
@@ -314,11 +308,7 @@ var render = function() {
     [
       _c(
         "vx-card",
-<<<<<<< HEAD
-        { attrs: { title: "List of Companies" } },
-=======
         { attrs: { title: "List of " + _vm.currentStatus + " Companies" } },
->>>>>>> bbd5ac8e8d0a91a234a59136eedd962f3c39b892
         [
           _c(
             "template",
