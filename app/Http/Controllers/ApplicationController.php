@@ -1571,8 +1571,15 @@ class ApplicationController extends Controller {
 		return response()->json(compact('taxes'));
 	}
 	public function get_recall_taxes(Request $request) {
+		$type = 'not found';
+		if ($request->type == 'Monthly Resubmission Tax') {
+			$type = 'Monthly Tax';
+		}
+		if ($request->type == 'Annual Resubmission Tax') {
+			$type = 'Annual Tax';
+		}
 		$taxes = Tax::with('created_by')->where('customer_id', $request->customer_id)
-			->where('type', $request->type)
+			->where('type', $type)
 			->latest('id')->get();
 		return response()->json(compact('taxes'));
 	}

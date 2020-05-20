@@ -9,13 +9,22 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -227,14 +236,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       months: ['Jan', 'Feb', 'Mar', 'Apr', 'Ma', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       getTaxStatus: 'Monthly Tax',
       resubmissionTypeShow: false,
-      resubmissionType: '',
-      recallTax: ''
+      resubmissionType: 'New',
+      recallTax: '',
+      showTaxesDd: false
     };
   },
-  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('supervisors/', ['supervisors'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('taxes/', ['taxes'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('taxes/', ['recallTaxes'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('officers/', ['officers'])),
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])('supervisors/', ['supervisors'])), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])('taxes/', ['taxes'])), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])('taxes/', ['recallTaxes'])), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])('officers/', ['officers'])),
   watch: {
     type: function type(val, oldVal) {
       this.resetType();
+      this.resubmissionType = 'New';
 
       if (val == 'Monthly Resubmission Tax' || val == 'Annual Resubmission Tax') {
         this.resubmissionTypeShow = true;
@@ -251,6 +262,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           type: this.type
         };
         this.getRecallTaxes(data);
+        this.showTaxesDd = true;
+      } else {
+        this.showTaxesDd = false;
       }
     }
   },
@@ -265,7 +279,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
     this.getTaxes(data);
   },
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
     getSupervisors: 'supervisors/getSupervisors',
     getOfficers: 'officers/getOfficers',
     create: 'taxes/addTax',
@@ -275,8 +289,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     clearRecallTaxes: 'taxes/clearRecallTaxes'
   })), {}, {
     resetType: function resetType() {
-      this.resubmissionTypeShow = false;
-      this.resetResubmissionType();
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this.showTaxesDd = false;
+                _this.resubmissionTypeShow = false;
+                _context.next = 4;
+                return _this.resetResubmissionType();
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     },
     resetResubmissionType: function resetResubmissionType() {
       this.clearRecallTaxes();
@@ -327,35 +358,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.addTaxManagmentModal = true;
     },
     addTaxManagment: function addTaxManagment(e) {
-      var _this = this;
+      var _this2 = this;
 
       this.$validator.validateAll('addform').then(function (result) {
         if (result) {
-          _this.$vs.loading();
+          _this2.$vs.loading();
 
-          self = _this;
+          self = _this2;
           var fd = new FormData(self.$refs.addTaxManagmentForm);
-          fd.append('customer_id', _this.tax_customer_id);
-          fd.append('tax_code', _this.tax_identifier);
+          fd.append('customer_id', _this2.tax_customer_id);
+          fd.append('tax_code', _this2.tax_identifier);
           fd.append('created_by', localStorage.getItem('admin'));
-          fd.append('resubmission_type', _this.resubmissionType);
-          fd.append('recall_tax_id', _this.recallTax);
+          fd.append('resubmission_type', _this2.resubmissionType);
+          fd.append('recall_tax_id', _this2.recallTax);
           var data = {
             fd: fd,
-            close: _this.$vs.loading.close,
-            notify: _this.$vs.notify
+            close: _this2.$vs.loading.close,
+            notify: _this2.$vs.notify
           };
 
-          _this.create(data).then(function (res) {
+          _this2.create(data).then(function (res) {
             if (res.data.status == 'success') {
               self.title = self.description = self.duration = self.supervisor = '';
               self.officer = [];
               e.target.reset();
               self.$validator.reset();
 
-              _this.getTaxes(self.tax_customer_id);
+              _this2.getTaxes(self.tax_customer_id);
 
-              _this.addTaxManagmentModal = false;
+              _this2.addTaxManagmentModal = false;
             }
           });
         }
@@ -363,16 +394,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     //  edit tax
     taxEdit: function taxEdit(taxId) {
-      var _this2 = this;
+      var _this3 = this;
 
       this.$vs.loading.close();
       axios.post('tax/get-tax', {
         id: taxId
       }).then(function (res) {
         var date = new Date();
-        _this2.editTax = res.data.tax; // this.editTax.tax_code = res.data.tax_code;
+        _this3.editTax = res.data.tax; // this.editTax.tax_code = res.data.tax_code;
 
-        _this2.editTaxManagmentModal = true; // this.officer = _.map(this.editTax,'officer_id');
+        _this3.editTaxManagmentModal = true; // this.officer = _.map(this.editTax,'officer_id');
 
         /*if (this.editTax.type == 'Monthly Tax') {
         } else if (this.editTax.type == 'Annual Tax') {
@@ -384,24 +415,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     editTaxManagment: function editTaxManagment(e) {
-      var _this3 = this;
+      var _this4 = this;
 
       this.$validator.validateAll('editform').then(function (result) {
         if (result) {
-          self = _this3;
+          self = _this4;
           var fd = new FormData(self.$refs.editTaxManagmentForm);
-          fd.append('customer_id', _this3.tax_customer_id);
+          fd.append('customer_id', _this4.tax_customer_id);
           fd.append('tax_id', self.editTax.tax_id);
-          fd.append('tax_code', _this3.editTax.tax_code);
+          fd.append('tax_code', _this4.editTax.tax_code);
           var data = {
             fd: fd,
-            close: _this3.$vs.loading.close,
-            notify: _this3.$vs.notify
+            close: _this4.$vs.loading.close,
+            notify: _this4.$vs.notify
           };
 
-          _this3.update(data).then(function (res) {
+          _this4.update(data).then(function (res) {
             if (res.data.status == 'success') {
-              self.getTaxes(_this3.tax_customer_id);
+              self.getTaxes(_this4.tax_customer_id);
               self.officer = [];
               self.$validator.reset();
               self.editTaxManagmentModal = false;
@@ -1139,7 +1170,7 @@ var render = function() {
                           )
                         : _vm._e(),
                       _vm._v(" "),
-                      _vm.recallTaxes.length > 0
+                      _vm.showTaxesDd && _vm.resubmissionTypeShow
                         ? _c(
                             "vx-input-group",
                             { staticClass: "mt-2" },

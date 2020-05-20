@@ -111,7 +111,7 @@
                             <span class="text-danger" v-show="errors.has('addform.resubmission_type')">{{errors.first('addform.resubmission_type')}}</span>
                         </vx-input-group>
 
-                        <vx-input-group class="mt-2" v-if="recallTaxes.length > 0">
+                        <vx-input-group class="mt-2" v-if="showTaxesDd && resubmissionTypeShow">
                             <vs-select v-validate="'required'" placeholder="Select Resubmission Tax" style="width: 100%;" label="Resubmission Taxes" v-model="recallTax" name="resubmission_taxes">
                                 <div v-for="item,indextr in recallTaxes" :key="indextr">
                                     <vs-select-item :text="item.title" :value="item.tax_id"></vs-select-item>
@@ -119,6 +119,7 @@
                             </vs-select>
                             <span class="text-danger" v-show="errors.has('addform.resubmission_taxes')">{{errors.first('addform.resubmission_taxes')}}</span>
                         </vx-input-group>
+                       
 
                         <vx-input-group>
                             <br>
@@ -223,8 +224,9 @@ export default {
             ],
             getTaxStatus: 'Monthly Tax',
             resubmissionTypeShow: false,
-            resubmissionType: '',
-            recallTax: ''
+            resubmissionType: 'New',
+            recallTax: '',
+            showTaxesDd: false
         };
     },
     computed: {
@@ -236,6 +238,7 @@ export default {
     watch: {
         type: function (val, oldVal){
             this.resetType();
+            this.resubmissionType = 'New';
             if(val == 'Monthly Resubmission Tax' || val == 'Annual Resubmission Tax'){
                 this.resubmissionTypeShow = true;
             }else{
@@ -251,6 +254,9 @@ export default {
                     type : this.type
                 };
                 this.getRecallTaxes(data);
+                this.showTaxesDd = true;
+            }else{
+                this.showTaxesDd = false;
             }
         }
     },
@@ -275,9 +281,10 @@ export default {
             getRecallTaxes: 'taxes/getRecallTaxes',
             clearRecallTaxes: 'taxes/clearRecallTaxes',
         }),
-        resetType(){
+        async resetType(){
+            this.showTaxesDd = false;
             this.resubmissionTypeShow = false;
-            this.resetResubmissionType();
+            await this.resetResubmissionType();
         },
         resetResubmissionType(){
             this.clearRecallTaxes();
