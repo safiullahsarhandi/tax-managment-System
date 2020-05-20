@@ -153,6 +153,57 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   inject: ['loginUser'],
@@ -173,24 +224,63 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       tax_identifier: '',
       edit_tax_identifier: '',
       notes: '',
-      months: ['Jan', 'Feb', 'Mar', 'Apr', 'Ma', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      months: ['Jan', 'Feb', 'Mar', 'Apr', 'Ma', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      getTaxStatus: 'Monthly Tax',
+      resubmissionTypeShow: false,
+      resubmissionType: '',
+      recallTax: ''
     };
   },
-  computed: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('supervisors/', ['supervisors'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('taxes/', ['taxes'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('officers/', ['officers'])),
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('supervisors/', ['supervisors'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('taxes/', ['taxes'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('taxes/', ['recallTaxes'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('officers/', ['officers'])),
+  watch: {
+    type: function type(val, oldVal) {
+      this.resetType();
+
+      if (val == 'Monthly Resubmission Tax' || val == 'Annual Resubmission Tax') {
+        this.resubmissionTypeShow = true;
+      } else {
+        this.resubmissionTypeShow = false;
+      }
+    },
+    resubmissionType: function resubmissionType(val, oldVal) {
+      this.resetResubmissionType();
+
+      if (val == 'Recall') {
+        var data = {
+          id: this.tax_customer_id,
+          type: this.type
+        };
+        this.getRecallTaxes(data);
+      }
+    }
+  },
   beforeCreate: function beforeCreate() {},
   created: function created() {
     this.tax_customer_id = localStorage.getItem('customer');
     this.getSupervisors();
     this.getOfficers();
-    this.getTaxes(this.tax_customer_id);
+    var data = {
+      id: this.tax_customer_id,
+      status: this.getTaxStatus
+    };
+    this.getTaxes(data);
   },
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
     getSupervisors: 'supervisors/getSupervisors',
     getOfficers: 'officers/getOfficers',
     create: 'taxes/addTax',
     getTaxes: 'taxes/getTaxes',
-    update: 'taxes/editTax'
+    update: 'taxes/editTax',
+    getRecallTaxes: 'taxes/getRecallTaxes',
+    clearRecallTaxes: 'taxes/clearRecallTaxes'
   })), {}, {
+    resetType: function resetType() {
+      this.resubmissionTypeShow = false;
+      this.resetResubmissionType();
+    },
+    resetResubmissionType: function resetResubmissionType() {
+      this.clearRecallTaxes();
+    },
     getFullName: function getFullName(obj) {
       // alert(obj);
       if (obj !== null) {
@@ -198,6 +288,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       } else {
         return 'N/A';
       }
+    },
+    getData: function getData(status) {
+      if (this.getTaxStatus == status) {
+        return false;
+      }
+
+      this.getTaxStatus = status;
+      var data = {
+        id: this.tax_customer_id,
+        status: status
+      };
+      this.getTaxes(data);
     },
 
     /*changeType(type) {
@@ -235,9 +337,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           var fd = new FormData(self.$refs.addTaxManagmentForm);
           fd.append('customer_id', _this.tax_customer_id);
           fd.append('tax_code', _this.tax_identifier);
-          fd.append('created_by', localStorage.getItem('admin')); // fd.append('officers', self.officer)
-          // fd.append('supervisor_id',self.supervisor)
-
+          fd.append('created_by', localStorage.getItem('admin'));
+          fd.append('resubmission_type', _this.resubmissionType);
+          fd.append('recall_tax_id', _this.recallTax);
           var data = {
             fd: fd,
             close: _this.$vs.loading.close,
@@ -290,9 +392,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           var fd = new FormData(self.$refs.editTaxManagmentForm);
           fd.append('customer_id', _this3.tax_customer_id);
           fd.append('tax_id', self.editTax.tax_id);
-          fd.append('tax_code', _this3.editTax.tax_code); // fd.append('officers', self.officer)
-          // fd.append('supervisor_id',self.editTax.supervisor_id)
-
+          fd.append('tax_code', _this3.editTax.tax_code);
           var data = {
             fd: fd,
             close: _this3.$vs.loading.close,
@@ -383,158 +483,299 @@ var render = function() {
     "div",
     [
       _c(
-        "vx-card",
-        {
-          attrs: {
-            title: "List of tax services",
-            subtitle:
-              "The List of Taxes contains currently assigned taxes of customer Or those which are delivered succesfully"
-          }
-        },
+        "vs-row",
         [
           _c(
-            "template",
-            { slot: "actions" },
+            "vs-col",
+            {
+              attrs: { "vs-xl": "9", "vs-lg": "9", "vs-md": "9", "vs-sm": "12" }
+            },
             [
-              _vm.$store.getters.userType == "Officer" ||
-              _vm.$store.getters.userType == "Supervisor"
-                ? _c("vs-button", {
-                    attrs: {
-                      type: "border",
-                      "icon-pack": "feather",
-                      icon: "icon-plus"
+              _c(
+                "vx-card",
+                {
+                  attrs: {
+                    title: "List of " + _vm.getTaxStatus + " services",
+                    subtitle:
+                      "The List of Taxes contains currently assigned taxes of customer Or those which are delivered succesfully"
+                  }
+                },
+                [
+                  _c(
+                    "template",
+                    { slot: "actions" },
+                    [
+                      _vm.$store.getters.userType == "Officer" ||
+                      _vm.$store.getters.userType == "Supervisor"
+                        ? _c("vs-button", {
+                            attrs: {
+                              type: "border",
+                              "icon-pack": "feather",
+                              icon: "icon-plus"
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.addTax()
+                              }
+                            }
+                          })
+                        : _vm._e()
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-table",
+                    {
+                      attrs: { search: "", pagination: "", data: _vm.taxes },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function(ref) {
+                            var data = ref.data
+                            return _vm._l(data, function(tr, index) {
+                              return _c(
+                                "vs-tr",
+                                { key: index },
+                                [
+                                  _c("vs-td", [
+                                    _vm._v(
+                                      _vm._s(_vm.getFullName(tr.created_by))
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("vs-td", [_vm._v(_vm._s(tr.tax_code))]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "vs-td",
+                                    { staticStyle: { width: "200px" } },
+                                    [_vm._v(_vm._s(tr.title))]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("vs-td", [_vm._v(_vm._s(tr.description))]),
+                                  _vm._v(" "),
+                                  _c("vs-td", [_vm._v(_vm._s(tr.type))]),
+                                  _vm._v(" "),
+                                  _c("vs-td", [_vm._v(_vm._s(tr.rivision))]),
+                                  _vm._v(" "),
+                                  _c("vs-td", [
+                                    _vm._v(
+                                      _vm._s(
+                                        tr.status == 0
+                                          ? "Work in progress"
+                                          : tr.status == 1
+                                          ? "Review"
+                                          : tr.status == 2
+                                          ? "Approve"
+                                          : tr.status == 3
+                                          ? "Client's Confirmation"
+                                          : tr.status == 4
+                                          ? "Tax Paid"
+                                          : tr.status == 5
+                                          ? "Submitted"
+                                          : tr.status == 6
+                                          ? "Scanned"
+                                          : "Released"
+                                      )
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "vs-td",
+                                    [
+                                      _vm.$store.getters.userType ==
+                                        "Officer" ||
+                                      _vm.$store.getters.userType ==
+                                        "Supervisor"
+                                        ? _c("vs-button", {
+                                            attrs: {
+                                              size: "small",
+                                              type: "border",
+                                              "icon-pack": "feather",
+                                              icon: "icon-edit"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.taxEdit(tr.tax_id)
+                                              }
+                                            }
+                                          })
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      _c("vs-button", {
+                                        attrs: {
+                                          size: "small",
+                                          type: "border",
+                                          "icon-pack": "feather",
+                                          icon: "icon-maximize-2",
+                                          to: "/tax-collection/" + tr.tax_id
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            })
+                          }
+                        }
+                      ])
                     },
-                    on: {
-                      click: function($event) {
-                        return _vm.addTax()
-                      }
-                    }
-                  })
-                : _vm._e()
+                    [
+                      _c(
+                        "template",
+                        { slot: "thead" },
+                        [
+                          _c("vs-th", [_vm._v("Created by")]),
+                          _vm._v(" "),
+                          _c("vs-th", [_vm._v("Code")]),
+                          _vm._v(" "),
+                          _c("vs-th", [_vm._v("Title")]),
+                          _vm._v(" "),
+                          _c("vs-th", [_vm._v("Description")]),
+                          _vm._v(" "),
+                          _c("vs-th", [_vm._v("Type")]),
+                          _vm._v(" "),
+                          _c("vs-th", [_vm._v("Revision")]),
+                          _vm._v(" "),
+                          _c("vs-th", [_vm._v("Status")]),
+                          _vm._v(" "),
+                          _c("vs-th", [_vm._v("Actions")])
+                        ],
+                        1
+                      )
+                    ],
+                    2
+                  )
+                ],
+                2
+              )
             ],
             1
           ),
           _vm._v(" "),
           _c(
-            "vs-table",
+            "vs-col",
             {
-              attrs: { search: "", pagination: "", data: _vm.taxes },
-              scopedSlots: _vm._u([
-                {
-                  key: "default",
-                  fn: function(ref) {
-                    var data = ref.data
-                    return _vm._l(data, function(tr, index) {
-                      return _c(
-                        "vs-tr",
-                        { key: index },
-                        [
-                          _c("vs-td", [
-                            _vm._v(_vm._s(_vm.getFullName(tr.created_by)))
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [_vm._v(_vm._s(tr.tax_code))]),
-                          _vm._v(" "),
-                          _c("vs-td", { staticStyle: { width: "200px" } }, [
-                            _vm._v(_vm._s(tr.title))
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [_vm._v(_vm._s(tr.description))]),
-                          _vm._v(" "),
-                          _c("vs-td", [_vm._v(_vm._s(tr.type))]),
-                          _vm._v(" "),
-                          _c("vs-td", [_vm._v(_vm._s(tr.rivision))]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _vm._v(
-                              _vm._s(
-                                tr.status == 0
-                                  ? "Work in progress"
-                                  : tr.status == 1
-                                  ? "Review"
-                                  : tr.status == 2
-                                  ? "Approve"
-                                  : tr.status == 3
-                                  ? "Client's Confirmation"
-                                  : tr.status == 4
-                                  ? "Tax Paid"
-                                  : tr.status == 5
-                                  ? "Submitted"
-                                  : tr.status == 6
-                                  ? "Scanned"
-                                  : "Released"
-                              )
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "vs-td",
-                            [
-                              _vm.$store.getters.userType == "Officer" ||
-                              _vm.$store.getters.userType == "Supervisor"
-                                ? _c("vs-button", {
-                                    attrs: {
-                                      size: "small",
-                                      type: "border",
-                                      "icon-pack": "feather",
-                                      icon: "icon-edit"
-                                    },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.taxEdit(tr.tax_id)
-                                      }
-                                    }
-                                  })
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _c("vs-button", {
-                                attrs: {
-                                  size: "small",
-                                  type: "border",
-                                  "icon-pack": "feather",
-                                  icon: "icon-maximize-2",
-                                  to: "/tax-collection/" + tr.tax_id
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    })
-                  }
-                }
-              ])
+              attrs: { "vs-xl": "3", "vs-lg": "3", "vs-md": "3", "vs-sm": "12" }
             },
             [
               _c(
-                "template",
-                { slot: "thead" },
+                "vx-card",
+                { attrs: { title: "Actions" } },
                 [
-                  _c("vs-th", [_vm._v("created by")]),
-                  _vm._v(" "),
-                  _c("vs-th", [_vm._v("Code")]),
-                  _vm._v(" "),
-                  _c("vs-th", [_vm._v("Title")]),
-                  _vm._v(" "),
-                  _c("vs-th", [_vm._v("Description")]),
-                  _vm._v(" "),
-                  _c("vs-th", [_vm._v("Type")]),
-                  _vm._v(" "),
-                  _c("vs-th", [_vm._v("Revision")]),
-                  _vm._v(" "),
-                  _c("vs-th", [_vm._v("Status")]),
-                  _vm._v(" "),
-                  _c("vs-th", [_vm._v("Actions")])
+                  _c(
+                    "vs-list",
+                    [
+                      _c(
+                        "vs-list-item",
+                        {
+                          staticClass: "mt-2",
+                          attrs: { title: "Monthly Tax", subtitle: "" }
+                        },
+                        [
+                          _c("vs-button", {
+                            attrs: {
+                              size: "small",
+                              "icon-pack": "feather",
+                              icon: "icon-list"
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.getData("Monthly Tax")
+                              }
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-list-item",
+                        {
+                          staticClass: "mt-2",
+                          attrs: {
+                            title: "Monthly Resubmission Tax",
+                            subtitle: ""
+                          }
+                        },
+                        [
+                          _c("vs-button", {
+                            attrs: {
+                              size: "small",
+                              "icon-pack": "feather",
+                              icon: "icon-list"
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.getData("Monthly Resubmission Tax")
+                              }
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-list-item",
+                        {
+                          staticClass: "mt-2",
+                          attrs: { title: "Annual Tax", subtitle: "" }
+                        },
+                        [
+                          _c("vs-button", {
+                            attrs: {
+                              size: "small",
+                              "icon-pack": "feather",
+                              icon: "icon-list"
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.getData("Annual Tax")
+                              }
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-list-item",
+                        {
+                          staticClass: "mt-2",
+                          attrs: {
+                            title: "Annual Resubmission Tax",
+                            subtitle: ""
+                          }
+                        },
+                        [
+                          _c("vs-button", {
+                            attrs: {
+                              size: "small",
+                              "icon-pack": "feather",
+                              icon: "icon-list"
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.getData("Annual Resubmission Tax")
+                              }
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
                 ],
                 1
               )
             ],
-            2
+            1
           )
         ],
-        2
+        1
       ),
       _vm._v(" "),
       _c(
@@ -708,7 +949,7 @@ var render = function() {
                             ],
                             attrs: {
                               name: "description",
-                              counter: 20,
+                              counter: 100,
                               label: "Description",
                               "data-vv-scope": "addform"
                             },
@@ -784,15 +1025,22 @@ var render = function() {
                               _vm._v(" "),
                               _c("vs-select-item", {
                                 attrs: {
-                                  text: "Annual Tax",
-                                  value: "Yearly Tax"
+                                  text: "Monthly Resubmission Tax",
+                                  value: "Monthly Resubmission Tax"
                                 }
                               }),
                               _vm._v(" "),
                               _c("vs-select-item", {
                                 attrs: {
-                                  text: "Resubmission Tax",
-                                  value: "Resubmission Tax"
+                                  text: "Annual Tax",
+                                  value: "Annual Tax"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("vs-select-item", {
+                                attrs: {
+                                  text: "Annual Resubmission Tax",
+                                  value: "Annual Resubmission Tax"
                                 }
                               })
                             ],
@@ -817,6 +1065,161 @@ var render = function() {
                         ],
                         1
                       ),
+                      _vm._v(" "),
+                      _vm.resubmissionTypeShow
+                        ? _c(
+                            "vx-input-group",
+                            { staticClass: "mt-2" },
+                            [
+                              _c(
+                                "vs-select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "validate",
+                                      rawName: "v-validate",
+                                      value: "required",
+                                      expression: "'required'"
+                                    }
+                                  ],
+                                  staticStyle: { width: "100%" },
+                                  attrs: {
+                                    placeholder: "Select Resubmission Type",
+                                    label: "Resubmission Type",
+                                    name: "resubmission_type"
+                                  },
+                                  model: {
+                                    value: _vm.resubmissionType,
+                                    callback: function($$v) {
+                                      _vm.resubmissionType = $$v
+                                    },
+                                    expression: "resubmissionType"
+                                  }
+                                },
+                                [
+                                  _c("vs-select-item", {
+                                    attrs: { text: "New", value: "New" }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("vs-select-item", {
+                                    attrs: { text: "Recall", value: "Recall" }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value: _vm.errors.has(
+                                        "addform.resubmission_type"
+                                      ),
+                                      expression:
+                                        "errors.has('addform.resubmission_type')"
+                                    }
+                                  ],
+                                  staticClass: "text-danger"
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.errors.first(
+                                        "addform.resubmission_type"
+                                      )
+                                    )
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.recallTaxes.length > 0
+                        ? _c(
+                            "vx-input-group",
+                            { staticClass: "mt-2" },
+                            [
+                              _c(
+                                "vs-select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "validate",
+                                      rawName: "v-validate",
+                                      value: "required",
+                                      expression: "'required'"
+                                    }
+                                  ],
+                                  staticStyle: { width: "100%" },
+                                  attrs: {
+                                    placeholder: "Select Resubmission Tax",
+                                    label: "Resubmission Taxes",
+                                    name: "resubmission_taxes"
+                                  },
+                                  model: {
+                                    value: _vm.recallTax,
+                                    callback: function($$v) {
+                                      _vm.recallTax = $$v
+                                    },
+                                    expression: "recallTax"
+                                  }
+                                },
+                                _vm._l(_vm.recallTaxes, function(
+                                  item,
+                                  indextr
+                                ) {
+                                  return _c(
+                                    "div",
+                                    { key: indextr },
+                                    [
+                                      _c("vs-select-item", {
+                                        attrs: {
+                                          text: item.title,
+                                          value: item.tax_id
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                }),
+                                0
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value: _vm.errors.has(
+                                        "addform.resubmission_taxes"
+                                      ),
+                                      expression:
+                                        "errors.has('addform.resubmission_taxes')"
+                                    }
+                                  ],
+                                  staticClass: "text-danger"
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.errors.first(
+                                        "addform.resubmission_taxes"
+                                      )
+                                    )
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        : _vm._e(),
                       _vm._v(" "),
                       _c(
                         "vx-input-group",

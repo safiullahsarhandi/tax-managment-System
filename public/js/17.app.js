@@ -70,6 +70,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+<<<<<<< HEAD
+=======
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+>>>>>>> bbd5ac8e8d0a91a234a59136eedd962f3c39b892
 //
 //
 //
@@ -154,17 +176,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       incorporation_date: '',
       customField: [],
       taxes: [],
-      tableEntries: 10
+      tableEntries: 10,
+      currentStatus: 'Activate'
     };
   },
   computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('customers/', ['customers'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('customers/', ['findCustomer'])),
   created: function created() {
-    this.getCustomers();
+    this.getCustomers(this.currentStatus);
   },
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
     getCustomers: 'customers/getCustomers',
     updateStatus: 'customers/updateStatus'
   })), {}, {
+<<<<<<< HEAD
+=======
+    getCompaniesStatuswise: function getCompaniesStatuswise(status) {
+      this.currentStatus = status;
+      this.getCustomers(this.currentStatus);
+    },
+>>>>>>> bbd5ac8e8d0a91a234a59136eedd962f3c39b892
     getOfficer: function getOfficer(officer) {
       if (officer != null) {
         return officer.full_name;
@@ -284,21 +314,115 @@ var render = function() {
     [
       _c(
         "vx-card",
+<<<<<<< HEAD
         { attrs: { title: "List of Companies" } },
+=======
+        { attrs: { title: "List of " + _vm.currentStatus + " Companies" } },
+>>>>>>> bbd5ac8e8d0a91a234a59136eedd962f3c39b892
         [
           _c(
             "template",
             { slot: "actions" },
             [
-              _c("vs-button", {
-                attrs: {
-                  href: { url: "export-customers" },
-                  color: "primary",
-                  type: "border",
-                  "icon-pack": "feather",
-                  icon: "icon-download"
-                }
-              })
+              _c(
+                "vs-row",
+                [
+                  _c(
+                    "vs-col",
+                    {
+                      attrs: {
+                        "vs-xl": "10",
+                        "vs-lg": "10",
+                        "vs-md": "10",
+                        "vs-sm": "12"
+                      }
+                    },
+                    [
+                      _c(
+                        "vx-input-group",
+                        [
+                          _c(
+                            "vs-select",
+                            {
+                              directives: [
+                                {
+                                  name: "validate",
+                                  rawName: "v-validate",
+                                  value: "required",
+                                  expression: "'required'"
+                                }
+                              ],
+                              attrs: { placeholder: "Select Customer Status" },
+                              on: {
+                                input: function($event) {
+                                  return _vm.getCompaniesStatuswise(
+                                    _vm.currentStatus
+                                  )
+                                }
+                              },
+                              model: {
+                                value: _vm.currentStatus,
+                                callback: function($$v) {
+                                  _vm.currentStatus = $$v
+                                },
+                                expression: "currentStatus"
+                              }
+                            },
+                            [
+                              _c("vs-select-item", {
+                                attrs: { value: "Prospect", text: "Prospect" }
+                              }),
+                              _vm._v(" "),
+                              _c("vs-select-item", {
+                                attrs: { value: "Activate", text: "Activate" }
+                              }),
+                              _vm._v(" "),
+                              _c("vs-select-item", {
+                                attrs: {
+                                  value: "Deactivate",
+                                  text: "Deactivate"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("vs-select-item", {
+                                attrs: { value: "Pending", text: "Pending" }
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-col",
+                    {
+                      attrs: {
+                        "vs-xl": "2",
+                        "vs-lg": "2",
+                        "vs-md": "2",
+                        "vs-sm": "12"
+                      }
+                    },
+                    [
+                      _c("vs-button", {
+                        attrs: {
+                          href: { url: "export-customers" },
+                          color: "primary",
+                          type: "border",
+                          "icon-pack": "feather",
+                          icon: "icon-download"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
             ],
             1
           ),

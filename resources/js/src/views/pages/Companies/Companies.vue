@@ -1,9 +1,28 @@
 <template>
     <div>
-        <vx-card title="List of Companies">
+        <vx-card :title="'List of '+currentStatus+' Companies'">
             <template slot="actions">
-                <vs-button  :href="{url : 'export-customers'}" color="primary" type="border" icon-pack=
-            "feather" icon="icon-download"></vs-button>
+
+                <vs-row>
+                    <vs-col vs-xl="10" vs-lg="10" vs-md="10" vs-sm="12">
+                        <vx-input-group>
+                            <vs-select @input="getCompaniesStatuswise(currentStatus)" v-validate="'required'" placeholder="Select Customer Status"  v-model="currentStatus">
+                                <vs-select-item value="Prospect" text="Prospect"></vs-select-item>
+                                <vs-select-item value="Activate" text="Activate"></vs-select-item>
+                                <vs-select-item value="Deactivate" text="Deactivate"></vs-select-item>
+                                <vs-select-item value="Pending" text="Pending"></vs-select-item>
+                            </vs-select>
+                        </vx-input-group>
+                    </vs-col>
+                    <vs-col vs-xl="2" vs-lg="2" vs-md="2" vs-sm="12">
+                        <vs-button  :href="{url : 'export-customers'}" color="primary" type="border" 
+                        icon-pack="feather" icon="icon-download"></vs-button>
+                    </vs-col>
+                </vs-row>
+
+                
+
+                
             </template>
             <vs-table search pagination :max-items="tableEntries" :data="customers">
                 <template slot="header">
@@ -138,6 +157,7 @@ export default {
             customField:[],
             taxes : [],
             tableEntries : 10,
+            currentStatus: 'Activate'
 
         };
     },
@@ -146,13 +166,18 @@ export default {
         ...mapGetters('customers/',['findCustomer']),
     },
     created() {
-        this.getCustomers();
+        this.getCustomers(this.currentStatus);
     },
     methods: {
         ...mapActions({
             getCustomers: 'customers/getCustomers',
             updateStatus : 'customers/updateStatus'
         }),
+
+        getCompaniesStatuswise(status){
+            this.currentStatus = status;
+            this.getCustomers(this.currentStatus);
+        },
         
         getOfficer(officer){
             if(officer != null){

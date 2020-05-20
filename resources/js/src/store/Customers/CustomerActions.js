@@ -1,6 +1,6 @@
 export default{
-	getCustomers({commit}){
-		axios.get('get-customers').then(res=>{
+	getCustomers({commit}, status){
+		axios.post('get-customers',{status: status}).then(res=>{
 			commit('setCustomers',res.data.customers)
 		});
 	},

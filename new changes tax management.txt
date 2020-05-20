@@ -1,0 +1,16 @@
+monthly tax
+yearly tax
+monthly resubmission tax
+yearly resubmission tax
+
+
+
+select from dropdown
+
+add tax > if select resubmission then apear new dropdown with options > 
+1. recall
+2. new
+
+if select recall
+add new dropdown with option
+if monthly select then all monthly taxes in drop down other wise yearly taxes

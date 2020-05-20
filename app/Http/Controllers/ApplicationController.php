@@ -623,14 +623,15 @@ class ApplicationController extends Controller {
 	}
 
 	public function get_customers(Request $request) {
+
 		if (session('admin.type') == 'Admin' || session('admin.type') == 'Super Admin') {
 
-			$customers = TaxCustomers::with('supervisor', 'officer', 'created_by')->orderBy('created_at', 'desc')->get();
+			$customers = TaxCustomers::with('supervisor', 'officer', 'created_by')->whereCustomerStatus($request->status)->orderBy('created_at', 'desc')->get();
 
 		} else if (session('admin.type') == 'Supervisor') {
-			$customers = TaxCustomers::with('supervisor', 'officer', 'created_by')->where('supervisor', session('admin.manager_id'))->get();
+			$customers = TaxCustomers::with('supervisor', 'officer', 'created_by')->whereCustomerStatus($request->status)->where('supervisor', session('admin.manager_id'))->get();
 		} else {
-			$customers = TaxCustomers::where(['manager' => session('admin.manager_id')])->get();
+			$customers = TaxCustomers::where(['manager' => session('admin.manager_id')])->whereCustomerStatus($request->status)->get();
 
 		}
 
@@ -1344,7 +1345,45 @@ class ApplicationController extends Controller {
 		$tax->notes = $request->notes;
 		$tax->created_by = $request->created_by;
 		// $tax->supervisor_id = $request->supervisor_id;
+		if ($request->resubmission_type == 'Recall') {
+			$tax->is_recall = 1;
+		}
 		$save = $tax->save();
+
+		if ($save && $request->resubmission_type == 'Recall') {
+			$recall_tax_id = $request->recall_tax_id;
+
+			$getSales = Sales::where('tax_id', $recall_tax_id)->get();
+			if (!empty($getSales)) {
+				foreach ($getSales as $key => $sale) {
+					$sale->replicate();
+					$sale->tax_id = $tax->tax_id;
+					$sale->sale_id = (String) Str::uuid();
+					$sale->save();
+				}
+			}
+
+			$getPurchases = Purchases::where('tax_id', $recall_tax_id)->get();
+			if (!empty($getPurchases)) {
+				foreach ($getPurchases as $key => $purchase) {
+					$purchase->replicate();
+					$purchase->tax_id = $tax->tax_id;
+					$purchase->purchase_id = (String) Str::uuid();
+					$purchase->save();
+				}
+			}
+
+			$getPayrolls = Payrolls::where('tax_id', $recall_tax_id)->get();
+			if (!empty($getPayrolls)) {
+				foreach ($getPayrolls as $key => $payroll) {
+					$payroll->replicate();
+					$payroll->tax_id = $tax->tax_id;
+					$payroll->payroll_id = (String) Str::uuid();
+					$payroll->save();
+				}
+			}
+
+		}
 
 		$history = new History;
 		$history->history_id = (String) Str::uuid();
@@ -1420,7 +1459,6 @@ class ApplicationController extends Controller {
 			if ($item != $tax[$key]) {
 
 				$differenceArray = Arr::add($differenceArray, $key, ['new_value' => $item, 'old_value' => $tax[$key]]);
-
 			}
 		});
 		$tax->title = $request->title;
@@ -1518,7 +1556,9 @@ class ApplicationController extends Controller {
 	}
 
 	public function get_taxes(Request $request) {
-		$taxes = Tax::with('created_by')->where('customer_id', $request->customer_id)->latest('id')->get();
+		$taxes = Tax::with('created_by')->where('customer_id', $request->customer_id)
+			->where('type', $request->status)
+			->latest('id')->get();
 		/*if (session('admin.type') == 'Admin') {
 
 				$taxes = Tax::with('supervisor')->withCount('officers')->where('customer_id', $request->customer_id)->get();
@@ -1528,6 +1568,12 @@ class ApplicationController extends Controller {
 				$taxes = Tax::with('supervisor')->withCount('officers')->where('customer_id', $request->customer_id)->whereRaw('tax_id IN (SELECT tax_id from tax_officers where officer_id = ?)', ['officer_id' => session('admin.manager_id')])->get();
 
 		*/
+		return response()->json(compact('taxes'));
+	}
+	public function get_recall_taxes(Request $request) {
+		$taxes = Tax::with('created_by')->where('customer_id', $request->customer_id)
+			->where('type', $request->type)
+			->latest('id')->get();
 		return response()->json(compact('taxes'));
 	}
 	public function get_parameters(Parameter $parameter) {
