@@ -121,12 +121,12 @@
                 </vs-row>
                 <vs-divider>Tax Parameters</vs-divider>
                 <vs-row>
-                    <vs-col vs-lg="12" vs-md="12" vs-sm="12" vs-xs="12" class="flex justify-end">
-                        <vs-button @click="calculateTaxParams" type="border" icon="icon-refresh-ccw" icon-pack="feather"></vs-button>
+                    <vs-col v-if="params.length > 0" vs-lg="12" vs-md="12" vs-sm="12" vs-xs="12" class="flex justify-end">
+                        <vs-button button="button" @click="calculateTaxParams" type="border" icon="icon-refresh-ccw" icon-pack="feather"></vs-button>
                     </vs-col>
                     <vs-col v-for="(param,index) in params" :key="index" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input disabled name="param" :label-placeholder="param.tax_param_id" v-model="param.calculated_val" />
+                            <vs-input disabled name="param" :label="param.tax_param_id" :placeholder="param.tax_param_id" v-model="param.calculated_val" />
                         </vx-input-group>
                         <!-- <span class="text-danger" v-show="errors.has('total_taxable_value')">{{errors.first('total_taxable_value')}}</span> -->
                     </vs-col>
@@ -134,8 +134,8 @@
                 <vs-row>
                     <vs-col class="mt-5" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-select width="100%" label-placeholder="Item subject to taxes" multiple v-model='params' @input="getSelected" name="params">
-                                <vs-select-item :disabled="param.tax_code == 'PPT' || param.tax_code == 'VAT'"  v-for="(param,index) in parameters" :key="index" :text="param.tax_param_id" :value="param"></vs-select-item>
+                            <vs-select width="100%"  placeholder="Item subject to taxes" multiple v-model='params' @input="getSelected" name="params">
+                                <vs-select-item v-for="(param,index) in parameters" :key="index" :text="param.tax_param_id" :value="param"></vs-select-item>
                             </vs-select>
                             <!-- <vs-input name="item_subject_taxes" v-validate="`required`" label-placeholder="Item subject to taxes:" v-model="item_subject_taxes" /> -->
                         </vx-input-group>
@@ -266,11 +266,11 @@ export default {
         this.multipleRoute = 'add-multiple-sales/' + this.customer_id + '/' + this.tax_id + '/' + loginUsertype + '/' + loginUserId;
         var self = this;
         this.getParameters().then(function(){
-        _.each(self.parameters,(o)=>{
+        /*_.each(self.parameters,(o)=>{
             if(o.tax_code == 'PPT' || o.tax_code == 'VAT'){
-                self.params.push(o)
+                // self.params.push(o)
             }
-        });
+        });*/
         });
     },
     methods: {
