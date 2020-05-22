@@ -70,7 +70,7 @@
                         <!-- <vs-td v-if="$store.getters.userType == 'Officer' || $store.getters.userType == 'Supervisor'"  :data="0">{{0}}</vs-td> -->
                         <vs-td v-if="$store.getters.userType == 'Officer' || $store.getters.userType == 'Supervisor'"  :data="tr.status">
                             <vx-input-group>
-                                    <vs-select @input="updateCustomerStatus(tr.customer_id,tr.customer_status)" v-validate="'required'" placeholder="Select Customer Status"  v-model="tr.customer_status">
+                                    <vs-select @input="updateCustomerStatus(tr.customer_id,tr.customer_status, index)" v-validate="'required'" placeholder="Select Customer Status"  v-model="tr.customer_status">
                                         <vs-select-item value="Prospect" text="Prospect"></vs-select-item>
                                         <vs-select-item value="Activate" text="Activate"></vs-select-item>
                                         <vs-select-item value="Deactivate" text="Deactivate"></vs-select-item>
@@ -200,14 +200,16 @@ export default {
                 this.$vs.loading.close();
             });
         },
-        updateCustomerStatus(customer_id,status){
+        updateCustomerStatus(customer_id,status, index){
 
-            this.updateStatus({customer_id:customer_id,status:status,notify : this.$vs.notify});
+            this.updateStatus({customer_id:customer_id,status:status,notify : this.$vs.notify}).then(res=>{
+                if(status != this.currentStatus){
+                    this.customers.splice(index, 1);
+                }
+            });
         },       
         viewTaxTeam(id){
             var customer = this.findCustomer(id);
-            console.log(customer);
-            console.log(customer.taxes);
             this.taxes = customer.taxes;
             this.viewTaxTeamModal = true;
         }

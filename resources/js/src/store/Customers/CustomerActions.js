@@ -76,13 +76,14 @@ export default{
 		});
 	},
 	updateStatus({commit},data){
-		axios.post('update-customer-status',{customer_id : data.customer_id,status : data.status}).then(res=>{
+		return axios.post('update-customer-status',{customer_id : data.customer_id,status : data.status}).then(res=>{
 			data.notify({
 				position : 'right-top',
 				text : 'Status updated successfully',
 				color : 'success', 
-			})
+			});
 			commit('setCustomerStatus',{customer_id : data.customer_id,status : data.status});
+			return res;
 		});
 	},
 	async getLogs({commit},data){
