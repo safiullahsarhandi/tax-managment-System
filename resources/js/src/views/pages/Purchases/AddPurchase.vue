@@ -98,32 +98,40 @@
                     </vs-col> -->
                 </vs-row>
                 <vs-row>
-                </vs-row>
-                <vs-row>
-                    <vs-col class="mt-5" vs-md="12" vs-lg="4" vs-sm="12">
+                    <vs-col class="mt-5 flex justify-end" vs-md="12" vs-lg="12" vs-sm="12">
                         <vx-input-group>
-                            <vs-select width="100%" placeholder="Item subject to taxes" multiple v-model='params' name="params">
-                                <vs-select-item :disabled="param.tax_code == 'PPT' || param.tax_code == 'VAT'"  v-for="(param,index) in parameters" :key="index" :text="param.tax_param_id" :value="param"></vs-select-item>
+                            <vs-select width="100%" @input="getSelected" autocomplete placeholder="Item subject to taxes" multiple v-model='params' name="params">
+                                <vs-select-item v-for="(param,index) in parameters" :key="index" :text="`${param.tax_param_id}${param.expiry_date}`" :value="param"></vs-select-item>
                             </vs-select>
                             <!-- <vs-input name="item_subject_taxes" v-validate="`required`" label-placeholder="Item subject to taxes:" v-model="item_subject_taxes" /> -->
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('item_subject_taxes')">{{errors.first('item_subject_taxes')}}</span>
                     </vs-col>
-                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
-                        <vx-input-group>
-                            <vs-input name="comments" label-placeholder="Comments (3E-Fii)" v-model="comments_3e_fii" />
-                        </vx-input-group>
+                </vs-row>
+                 <vs-divider>Tax Parameters</vs-divider>
+                <vs-row>
+                    <vs-col v-if="params.length > 0" vs-lg="12" vs-md="12" vs-sm="12" vs-xs="12" class="flex justify-end">
+                        <vs-button button="button" @click="calculateTaxParams" type="border" icon="icon-refresh-ccw" icon-pack="feather"></vs-button>
                     </vs-col>
-                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                    <vs-col v-for="(param,index) in params" :key="index" vs-md="12" :vs-lg="param.tax_code == 'VAT'?'8':'4'" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="client_responses" label-placeholder="Client Responses" v-model="client_responses" />
+                            <template>
+                                
+                            <vs-input v-if="param.tax_code != 'VAT'" disabled name="param" :label="param.tax_param_id" :placeholder="param.tax_param_id" v-model="param.calculated_val" />
+                            <vs-row v-else>
+                            <vs-col vs-md="12" vs-lg="4" vs-sm="12">
+                                <vs-input disabled name="param" :label="`Local purchase (${param.tax_code})`" :placeholder="param.tax_param_id" v-model="vat_local_purchase" />
+                            </vs-col>
+                            <vs-col vs-md="12" vs-lg="4" vs-sm="12">
+                                <vs-input disabled name="param" :label="`Overseas purchase (${param.tax_code})`" :placeholder="`Overseas purchase (${param.tax_code})`" v-model="vat_overseas_purchase" />
+                            </vs-col>
+                            </vs-row>
+                            </template>
                         </vx-input-group>
+                        <!-- <span class="text-danger" v-show="errors.has('total_taxable_value')">{{errors.first('total_taxable_value')}}</span> -->
                     </vs-col>
-                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
-                        <vx-input-group>
-                            <vs-input name="top_comments" label-placeholder="Comments for ToP" v-model="comments_for_top" />
-                        </vx-input-group>
-                    </vs-col>
+                </vs-row>
+                <vs-row>
                     <vs-col v-for="(field,index) in customField" :key="index" class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
                             <vs-input :type="field.text" :name="field.name" v-validate="`required`" :label-placeholder="'Custom Field '+(index + 1)" v-model="field.value" />
@@ -175,6 +183,8 @@ export default {
             customer_id: '',
             multipleRoute: '',
             params : [],
+            vat_overseas_purchase : 0,
+            vat_local_purchase : 0
         };
     },
     components: {
@@ -217,13 +227,7 @@ export default {
         }
         loginUserId = this.$store.state.AppActiveUser.manager_id;
         this.multipleRoute = 'add-multiple-purchases/' + this.customer_id + '/' + this.tax_id + '/' + loginUsertype + '/' + loginUserId;
-        this.getParameters().then(function(){
-        _.each(self.parameters,(o)=>{
-            if(o.tax_code == 'PPT' || o.tax_code == 'VAT'){
-                self.params.push(o)
-            }
-        });
-        });
+        this.getParameters('Purchases');
     },
     methods: {
         setTotalVat(){
@@ -238,6 +242,40 @@ export default {
             this.total_vat = non_taxable_purchase_val + taxable_value_local_val + taxable_value_import_val;
 
 
+        },
+        calculateTaxParams() {
+            _.each(this.params, (o, index) => {
+
+                if (o.tax_code == 'VAT') {
+                    /*
+                     *   (Sales to taxable person + Sales to Consumer ) * Exchange Rate * VAT Rate
+                     */
+                     if(this.taxable_value_local > 0){
+
+                    o.calculated_val = (parseFloat(this.taxable_value_local) * this.rateToPercent(o.rate)).toFixed(2)
+                     }
+                }
+                if (o.tax_code == 'VAT') {
+                    /*
+                     *   (Sales to taxable person + Sales to Consumer ) * Exchange Rate * VAT Rate
+                     */
+                     if(this.taxable_value_local > 0){
+
+                        o.calculated_val = (parseFloat(this.taxable_value_local) * this.rateToPercent(o.rate)).toFixed(2)
+                     }
+                }
+                Vue.set(this.params, index, o);
+            })
+        },
+        rateToPercent(rate) {
+            return (rate / 100)
+        },
+        getSelected(values) {
+            /*_.each(values,(o,i)=>{
+                if(o.tax_code == 'VAT'){
+
+                }
+            })*/
         },
         showUploader() {
             this.$refs.multiUploads.isShown = true;
@@ -275,11 +313,10 @@ export default {
                     var fd = new FormData(this.$refs.addForm);
                     fd.append('tax_id', this.tax_id)
                     fd.append('customer_id', this.customer_id)
-                        fd.append('created_by', this.$store.state.AppActiveUser.manager_id);
-                    /*if (this.$store.state.AppActiveUser.type == 'Supervisor') {
-                    } else {
-                        fd.append('officer_id', this.$store.state.AppActiveUser.manager_id);
-                    }*/
+                    fd.append('created_by', this.$store.state.AppActiveUser.manager_id);
+                    _.each(this.params,(obj,key)=>{
+                        fd.append(`tax_params[${key}]`,obj.id);
+                    });
                     this.submit(fd).then(res => {
                         if (res.data.status == 'success') {
                             e.target.reset();

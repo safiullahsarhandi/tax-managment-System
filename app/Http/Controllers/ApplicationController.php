@@ -22,6 +22,7 @@ use App\Tax;
 use App\TaxComments;
 use App\TaxCustomers;
 use App\TaxOfficer;
+use App\TaxSubject;
 use Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -1583,8 +1584,12 @@ class ApplicationController extends Controller {
 			->latest('id')->get();
 		return response()->json(compact('taxes'));
 	}
-	public function get_parameters(Parameter $parameter) {
-		$parameters = $parameter->orderBy('status', 'desc')->orderBy('effective_date', 'asc')->get();
+	public function get_parameters(Request $request,Parameter $parameter) {
+		$parameters = $parameter->orderBy('status', 'desc')->orderBy('id', 'desc');
+		if($request->has('where') && !empty($request->where)){
+			$parameters->where('tax_type',$request->where);
+		}
+		$parameters = $parameters->get();
 		return response()->json(compact('parameters'));
 	}
 	public function get_tax(Request $request) {
@@ -1709,17 +1714,26 @@ class ApplicationController extends Controller {
 		$sale->additional_fields = $request->additional_fields;
 		$sale->status = 0;
 
-		$sale->save();
+		if($sale->save()){
+			foreach ($request->tax_params as $key => $param) {
+				$taxSubject = new TaxSubject;
+				$taxSubject->subject_id = (String) Str::uuid();
+				$taxSubject->param_id = $param;
+				$taxSubject->object_id = $sale->sale_id;
+				$taxSubject->type = 'sales';
+				$taxSubject->save();
+			}
 
-		$history = new History;
-		$history->history_id = (String) Str::uuid();
-		$history->object_id = $sale->sale_id;
-		$history->type = 'sale';
-		$history->event = 'create';
-		$history->tax_id = $request->tax_id;
-		$history->changes = $request->except(['customer_id', 'tax_id', 'created_by']);
-		$history->description = 'A sale with invoice No : ' . $sale->invoice_num . ' is created by ' . session('admin.type') . ': ' . session('admin.full_name');
-		$history->save();
+			$history = new History;
+			$history->history_id = (String) Str::uuid();
+			$history->object_id = $sale->sale_id;
+			$history->type = 'sale';
+			$history->event = 'create';
+			$history->tax_id = $request->tax_id;
+			$history->changes = $request->except(['customer_id', 'tax_id', 'created_by']);
+			$history->description = 'A sale with invoice No : ' . $sale->invoice_num . ' is created by ' . session('admin.type') . ': ' . session('admin.full_name');
+			$history->save();
+		}
 		return response()->json(['status' => 'success', 'data' => $sale]);
 	}
 
@@ -1794,6 +1808,17 @@ class ApplicationController extends Controller {
 		}
 
 		$sale->save();
+		if( $request->has('tax_params') && count($request->tax_params) ){
+			TaxSubject::where('object_id',$sale->sale_id)->delete();
+			foreach ($request->tax_params as $key => $param) {
+				$taxSubject = new TaxSubject;
+				$taxSubject->subject_id = (String) Str::uuid();
+				$taxSubject->param_id = $param;
+				$taxSubject->object_id = $sale->sale_id;
+				$taxSubject->type = 'sales';
+				$taxSubject->save();
+			}
+		}
 		if (count($differenceArray) > 0) {
 			$history = new History;
 			$history->history_id = (String) Str::uuid();
@@ -1815,7 +1840,7 @@ class ApplicationController extends Controller {
 	}
 
 	public function get_sale(Request $request) {
-		$sale = Sales::with(['officer', 'created_by'])->whereSaleId($request->id)->first();
+		$sale = Sales::with(['officer', 'created_by','taxes_subject'])->whereSaleId($request->id)->first();
 		return response()->json(compact('sale'));
 	}
 
@@ -2809,8 +2834,8 @@ class ApplicationController extends Controller {
 
 	}
 	public function add_parameter(Request $request) {
-		if (Parameter::where('tax_param_id', $request->tax_code . $request->tax_id)->where('effective_date', '<=', now())->where('status', 1)->exists()) {
-			return response()->json(['status' => 'error', 'msg' => 'You cannot add new Tax Parameter until previous added parameter exeeds effective date range']);
+		if (Parameter::where('tax_param_id', $request->tax_code . $request->tax_id)->where('tax_type',$request->tax_type)->where('status', 1)->exists()) {
+			return response()->json(['status' => 'error', 'msg' => 'You cannot add new Tax Parameter until previous added parameter has not been expired']);
 		}
 		$tax = new Parameter;
 		$tax->tax_param_id = $request->tax_code . $request->tax_id;
@@ -2831,8 +2856,8 @@ class ApplicationController extends Controller {
 	}
 
 	public function update_parameter(Request $request) {
-		if (Parameter::where('tax_param_id', $request->tax_code . $request->tax_id)->where('effective_date', '<=', now())->where('id', '!=', $request->identifier)->exists()) {
-			return response()->json(['status' => 'error', 'msg' => 'You cannot add new Tax Parameter until previous added parameter exeeds effective date range']);
+		if (Parameter::where('tax_param_id', $request->tax_code . $request->tax_id)->where('id', '!=', $request->identifier)->whereType('tax_type',$request->tax_type)->exists()) {
+			return response()->json(['status' => 'error', 'msg' => 'You cannot add new Tax Parameter until previous added parameter has not been expired']);
 		}
 		$parameter = Parameter::find($request->identifier);
 		$parameter->tax_param_id = $request->tax_code . $request->tax_id;

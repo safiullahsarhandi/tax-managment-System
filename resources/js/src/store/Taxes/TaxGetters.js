@@ -7,6 +7,7 @@ export default {
         return state.tax.supervisor;
     },
     getParameter: state => (param, paramType = 'index') => {
+        
         if (paramType == 'index') {
             return state.parameters[param];
         } else {

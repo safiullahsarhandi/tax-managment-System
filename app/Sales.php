@@ -41,4 +41,10 @@ class Sales extends Model {
 	public function created_by() {
 		return $this->belongsTo(Admin::class, 'created_by', 'manager_id');
 	}
+
+	public function taxes_subject()
+	{
+	    return $this->hasMany(TaxSubject::class, 'object_id', 'sale_id');
+	}
+	
 }
