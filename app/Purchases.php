@@ -40,4 +40,8 @@ class Purchases extends Model {
 	public function customer() {
 		return $this->belongsTo(TaxCustomers::class, 'customer_id', 'customer_id');
 	}
+	public function taxes_subject()
+	{
+	    return $this->hasMany(TaxSubject::class, 'object_id', 'purchase_id');
+	}
 }

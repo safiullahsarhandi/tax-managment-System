@@ -38,11 +38,12 @@
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('supplier')">{{errors.first('supplier')}}</span>
                     </vs-col>
-                   <!--  <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input disabled name="vat_tin" label-placeholder="VAT-Tin" v-model="vat_tin" />
+                            <vs-input name="vat_tin" data-vv-as="VAT-TIN" disabled label-placeholder="VAT-Tin" v-model="customer.tin_no" />
                         </vx-input-group>
-                    </vs-col> -->
+                        <span class="text-danger" v-show="errors.has('vat_tin')">{{errors.first('vat_tin')}}</span>
+                    </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
                             <vs-input name="description" data-vv-as="Description of good/services" v-validate="`required`" label-placeholder="Description of good/services" v-model="good_desc" />
@@ -83,20 +84,8 @@
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('total_vat')">{{errors.first('total_vat')}}</span>
                     </vs-col>
-                    <!-- <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
-                        <vx-input-group>
-                            <vs-input disabled name="vat_local" label-placeholder="VAT" v-model="vat_local" />
-                        </vx-input-group>
-                    </vs-col> -->
                 </vs-row>
                 <br>
-                <vs-row>
-                    <!-- <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
-                        <vx-input-group>
-                            <vs-input disabled name="vat_import" label-placeholder="VAT" v-model="vat_import" />
-                        </vx-input-group>
-                    </vs-col> -->
-                </vs-row>
                 <vs-row>
                     <vs-col class="mt-5 flex justify-end" vs-md="12" vs-lg="12" vs-sm="12">
                         <vx-input-group>
@@ -108,26 +97,25 @@
                         <span class="text-danger" v-show="errors.has('item_subject_taxes')">{{errors.first('item_subject_taxes')}}</span>
                     </vs-col>
                 </vs-row>
-                 <vs-divider>Tax Parameters</vs-divider>
+                <vs-divider>Tax Parameters</vs-divider>
                 <vs-row>
                     <vs-col v-if="params.length > 0" vs-lg="12" vs-md="12" vs-sm="12" vs-xs="12" class="flex justify-end">
                         <vs-button button="button" @click="calculateTaxParams" type="border" icon="icon-refresh-ccw" icon-pack="feather"></vs-button>
                     </vs-col>
                     <vs-col v-for="(param,index) in params" :key="index" vs-md="12" :vs-lg="param.tax_code == 'VAT'?'8':'4'" vs-sm="12">
-                        <vx-input-group>
-                            <template>
-                                
-                            <vs-input v-if="param.tax_code != 'VAT'" disabled name="param" :label="param.tax_param_id" :placeholder="param.tax_param_id" v-model="param.calculated_val" />
-                            <vs-row v-else>
-                            <vs-col vs-md="12" vs-lg="4" vs-sm="12">
-                                <vs-input disabled name="param" :label="`Local purchase (${param.tax_code})`" :placeholder="param.tax_param_id" v-model="vat_local_purchase" />
-                            </vs-col>
-                            <vs-col vs-md="12" vs-lg="4" vs-sm="12">
-                                <vs-input disabled name="param" :label="`Overseas purchase (${param.tax_code})`" :placeholder="`Overseas purchase (${param.tax_code})`" v-model="vat_overseas_purchase" />
-                            </vs-col>
-                            </vs-row>
-                            </template>
-                        </vx-input-group>
+                        <template>
+                            <vx-input-group v-if="param.tax_code != 'VAT'">
+                                <vs-input disabled name="param" :label="param.tax_param_id" :placeholder="param.tax_param_id" v-model="param.calculated_val" />
+                            </vx-input-group>
+                            <vx-input-group v-else>
+                                <vs-col class="pl-0" vs-md="12" vs-lg="6" vs-sm="12">
+                                    <vs-input class="w-full" disabled name="param" :label="`Local purchase (${param.tax_code})`" :placeholder="param.tax_param_id" v-model="vat_local_purchase" />
+                                </vs-col>
+                                <vs-col class="pr-0" vs-md="12" vs-lg="6" vs-sm="12">
+                                    <vs-input class="w-full" disabled name="param" :label="`Overseas purchase (${param.tax_code})`" :placeholder="`Overseas purchase (${param.tax_code})`" v-model="vat_overseas_purchase" />
+                                </vs-col>
+                            </vx-input-group>
+                        </template>
                         <!-- <span class="text-danger" v-show="errors.has('total_taxable_value')">{{errors.first('total_taxable_value')}}</span> -->
                     </vs-col>
                 </vs-row>
@@ -168,12 +156,10 @@ export default {
             supplier: '',
             vat_tin: '',
             good_desc: '',
-            quantity: '',
-            non_taxable_purchases: '',
+            quantity: 0,
+            non_taxable_purchases: 0,
             taxable_value_local: 0,
-            vat_local: 0,
             taxable_value_import: 0,
-            vat_import: 0,
             total_vat: 0,
             item_subject_taxes: '',
             comments_3e_fii: '',
@@ -182,34 +168,39 @@ export default {
             tax_id: '',
             customer_id: '',
             multipleRoute: '',
-            params : [],
-            vat_overseas_purchase : 0,
-            vat_local_purchase : 0
+            params: [],
+            vat_overseas_purchase: 0,
+            vat_local_purchase: 0
         };
     },
     components: {
         multiUploads
     },
     watch: {
-      non_taxable_purchases(val, oldVal){
-        this.setTotalVat()
+        non_taxable_purchases(val, oldVal) {
+            this.setTotalVat()
+            if(val == ''){
+            this.non_taxable_purchases = 0;        
+            }
 
-      },
-      taxable_value_local(val, oldVal){
-        this.vat_local = parseFloat(Math.abs(val) * 0.1).toFixed(2)
-        this.setTotalVat()
-
-      },
-      taxable_value_import(val, oldVal){
-        this.vat_import = parseFloat(Math.abs(val) * 0.1).toFixed(2)
-        this.setTotalVat()
-
-      },
+        },
+        taxable_value_local(val, oldVal) {
+            this.setTotalVat()
+            if(val == ''){
+            this.taxable_value_local = 0;        
+            }
+        },
+        taxable_value_import(val, oldVal) {
+            this.setTotalVat()
+            if(val == ''){
+            this.taxable_value_import = 0;        
+            }
+        },
     },
-    computed : {
-        ...mapState('customers',['customer']),
+    computed: {
+        ...mapState('customers', ['customer']),
         ...mapState('taxes', ['parameters']),
-        averageRate(){
+        averageRate() {
             return this.$store.state.averageRate;
         }
     },
@@ -230,7 +221,7 @@ export default {
         this.getParameters('Purchases');
     },
     methods: {
-        setTotalVat(){
+        setTotalVat() {
             var non_taxable_purchase_val = (this.non_taxable_purchases * this.averageRate);
 
             var taxable_value = (this.taxable_value_local * this.averageRate);
@@ -238,7 +229,7 @@ export default {
 
             var taxable_value = (this.taxable_value_import * this.averageRate);
             var taxable_value_import_val = (taxable_value + (taxable_value * 0.1));
-            
+
             this.total_vat = non_taxable_purchase_val + taxable_value_local_val + taxable_value_import_val;
 
 
@@ -246,23 +237,38 @@ export default {
         calculateTaxParams() {
             _.each(this.params, (o, index) => {
 
-                if (o.tax_code == 'VAT') {
+                if (o.tax_code == 'WHT') {
                     /*
-                     *   (Sales to taxable person + Sales to Consumer ) * Exchange Rate * VAT Rate
+                     *   (Non Taxable Purchases * WHT Rate ) + (Local Purchases Taxable Value * WHT Rate)
                      */
-                     if(this.taxable_value_local > 0){
-
-                    o.calculated_val = (parseFloat(this.taxable_value_local) * this.rateToPercent(o.rate)).toFixed(2)
-                     }
+                     o.calculated_val = ((parseFloat(this.non_taxable_purchases) * this.rateToPercent(o.rate)) + (parseFloat(this.taxable_value_local) * this.rateToPercent(o.rate))).toFixed(2);
+                }
+                if (o.tax_code == 'FBT') {
+                    /*
+                     *   (Non Taxable Purchases * FBT Rate )
+                     */
+                     o.calculated_val = (parseFloat(this.non_taxable_purchases) * this.rateToPercent(o.rate)).toFixed(2);
                 }
                 if (o.tax_code == 'VAT') {
+                    if (this.taxable_value_local > 0) {
                     /*
-                     *   (Sales to taxable person + Sales to Consumer ) * Exchange Rate * VAT Rate
+                     *   (Local Purchace Taxable Value  * VAT Rate) for local purchase
                      */
-                     if(this.taxable_value_local > 0){
+                        this.vat_local_purchase = (this.taxable_value_local * this.rateToPercent(o.rate)).toFixed(2);
+                        // o.calculated_val = (parseFloat(this.taxable_value_local) * this.rateToPercent(o.rate)).toFixed(2)
+                    }else{
+                        this.vat_local_purchase = 0;
+                    }
 
-                        o.calculated_val = (parseFloat(this.taxable_value_local) * this.rateToPercent(o.rate)).toFixed(2)
-                     }
+                    if (this.taxable_value_import > 0) {
+                    /*
+                     *   (Imports Taxable Value * VAT Rate) for overseas purchase
+                     */
+                        this.vat_overseas_purchase = (this.taxable_value_import * this.rateToPercent(o.rate)).toFixed(2);
+                        // o.calculated_val = (parseFloat(this.taxable_value_local) * this.rateToPercent(o.rate)).toFixed(2)
+                    }else{
+                        this.vat_overseas_purchase = 0;
+                    }
                 }
                 Vue.set(this.params, index, o);
             })
@@ -302,8 +308,8 @@ export default {
         },
         ...mapActions({
             submit: 'purchases/addPurchase',
-            getCustomer : 'customers/getCustomer',
-            getParameters : 'taxes/getParameters',
+            getCustomer: 'customers/getCustomer',
+            getParameters: 'taxes/getParameters',
         }),
 
         addForm(e) {
@@ -314,8 +320,8 @@ export default {
                     fd.append('tax_id', this.tax_id)
                     fd.append('customer_id', this.customer_id)
                     fd.append('created_by', this.$store.state.AppActiveUser.manager_id);
-                    _.each(this.params,(obj,key)=>{
-                        fd.append(`tax_params[${key}]`,obj.id);
+                    _.each(this.params, (obj, key) => {
+                        fd.append(`tax_params[${key}]`, obj.id);
                     });
                     this.submit(fd).then(res => {
                         if (res.data.status == 'success') {

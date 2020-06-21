@@ -1656,7 +1656,15 @@ class ApplicationController extends Controller {
 			} else {
 				$purchase->tax_officer_id = $request->officer_id;
 		*/
-		$purchase->save();
+		if($purchase->save()){
+			foreach ($request->tax_params as $key => $param) {
+				$taxSubject = new TaxSubject;
+				$taxSubject->subject_id = (String) Str::uuid();
+				$taxSubject->param_id = $param;
+				$taxSubject->object_id = $purchase->purchase_id;
+				$taxSubject->type = 'purchases';
+				$taxSubject->save();
+			}
 
 		$history = new History;
 		$history->history_id = (String) Str::uuid();
@@ -1667,6 +1675,7 @@ class ApplicationController extends Controller {
 		$history->changes = $request->except(['created_by', 'customer_id', 'tax_id']);
 		$history->description = 'A purchase with invoice No : ' . $purchase->invoice_num . ' is created by ' . session('admin.type') . ': ' . session('admin.full_name');
 		$history->save();
+		}
 		return response()->json(['status' => 'success']);
 	}
 
@@ -1845,7 +1854,7 @@ class ApplicationController extends Controller {
 	}
 
 	public function get_purchase(Request $request) {
-		$purchase = Purchases::with(['officer', 'created_by'])->wherePurchaseId($request->id)->first();
+		$purchase = Purchases::with(['officer', 'created_by','taxes_subject'])->wherePurchaseId($request->id)->first();
 		return response()->json(compact('purchase'));
 	}
 
@@ -1889,6 +1898,7 @@ class ApplicationController extends Controller {
 		$purchase->non_taxable_purchases = $request->non_taxable_purchases;
 		$purchase->supplier = $request->supplier;
 		// $purchase->vat_tin = $request->vat_tin;
+		if($request->has('additional_fields')){
 
 		$customfields = $request->additional_fields;
 		for ($i = 1; $i <= count($request->additional_fields); $i++) {
@@ -1898,7 +1908,19 @@ class ApplicationController extends Controller {
 		}
 
 		$purchase->additional_fields = $customfields;
+		}
 		$purchase->save();
+		if( $request->has('tax_params') && count($request->tax_params) ){
+			TaxSubject::where('object_id',$purchase->purchase_id)->delete();
+			foreach ($request->tax_params as $key => $param) {
+				$taxSubject = new TaxSubject;
+				$taxSubject->subject_id = (String) Str::uuid();
+				$taxSubject->param_id = $param;
+				$taxSubject->object_id = $purchase->purchase_id;
+				$taxSubject->type = 'purchases';
+				$taxSubject->save();
+			}
+		}
 		if (count($differenceArray) > 0) {
 			$history = new History;
 			$history->history_id = (String) Str::uuid();
