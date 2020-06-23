@@ -8,6 +8,7 @@ use App\Parameter;
 use App\Payrolls;
 use App\Purchases;
 use App\Sales;
+use App\Settings;
 use App\Tax;
 use App\TaxCustomers;
 use Illuminate\Http\Request;
@@ -122,19 +123,59 @@ class ExportController extends Controller {
 	}
 
 	public function export_purchases($customer_id, $tax_id) {
+		$headings = ['Branch Name', 'Tax Period', 'Invoice Date', 'Invoice Number', 'Supplier', 'Goods Description', 'Quantity', 'Non Taxable Purchases', 'Local Purchase (Taxable Value)', 'Imports (Taxable Value)','Item Subject To Taxes'];
 		$customer = TaxCustomers::with(['owner'])->whereCustomerId($customer_id)->first();
 		$tax = Tax::whereTaxId($tax_id)->first();
-		$purchases = Purchases::with('created_by')->where('tax_id', $tax_id)->get()->map(function ($purchase) {
-			return ['Branch Name' => $purchase->branch_name, 'Tax Period' => $purchase->tax_period, 'Invoice Date' => $purchase->invoice_date, 'Invoice Number' => $purchase->invoice_num, 'Supplier' => $purchase->supplier, 'Goods Description' => $purchase->description, 'Quantity' => $purchase->quantity, 'Non Taxable Purchases' => $purchase->non_taxable_purchases, 'Local Purchase (Taxable Value)' => $purchase->local_purchase_tax_val, 'Imports (Taxable Value)' => $purchase->imports_taxable_val];
-		});
+		$purchases = Purchases::with(['created_by','taxes_subject.parameter'])->where('tax_id', $tax_id)->get()->toArray();
+		$exchange_rate = Settings::where('key','average_rate')->pluck('value')->first();
+		$purchases = collect($purchases)->map(function ($purchase) use(&$headings,$exchange_rate) {
+			
+			$purchase = (Object) $purchase;
+			$subjects = [];
+			if(count($purchase->taxes_subject)){
 
-		Excel::create($customer->name_english . '-tax-' . $tax['title'] . '-purchases', function ($excel) use ($tax, $purchases, $customer) {
-			$excel->sheet('purchases', function ($sheet) use ($purchases, $customer) {
+				foreach ($purchase->taxes_subject as $key => $subject) {
+					if($subject['parameter']['tax_code'] == 'FBT'){
+
+						$subjects[$subject['parameter']['tax_code']] = ($purchase->non_taxable_purchases * $this->rateToPercent($subject['parameter']['rate'])); 
+						$headings[] = $subject['parameter']['tax_code'];
+					}
+
+					if($subject['parameter']['tax_code'] == 'VAT'){
+						//Vat local purchase
+						$subjects[$subject['parameter']['tax_code'].' (Local Purchase)'] = ($purchase->local_purchase_tax_val * $this->rateToPercent($subject['parameter']['rate'])); 
+						$headings[] = $subject['parameter']['tax_code'].' (Local Purchase )';
+						
+						//Vat for overseas purchase
+						$subjects[$subject['parameter']['tax_code'].' (Overseas purchase)'] = ($purchase->imports_taxable_val * $this->rateToPercent($subject['parameter']['rate'])); 
+						$headings[] = $subject['parameter']['tax_code'].' (Overseas purchase )';
+
+					}	
+
+					if($subject['parameter']['tax_code'] == 'WHT'){
+
+						$subjects[$subject['parameter']['english_description'].'('.$subject['parameter']['tax_code'].')'] = ($purchase->non_taxable_purchases * $this->rateToPercent($subject['parameter']['rate'])) + ($purchase->local_purchase_tax_val * $this->rateToPercent($subject['parameter']['rate']));
+						$headings[] = $subject['parameter']['english_description'].'('.$subject['parameter']['tax_code'].')';
+
+					}
+
+				}
+				$item_subject_to_taxes = implode(', ', array_unique(array_pluck($purchase->taxes_subject,'parameter.tax_code') ) );
+			}else{
+				$item_subject_to_taxes = '';
+			}
+
+			$columns =  ['Branch Name' => $purchase->branch_name, 'Tax Period' => $purchase->tax_period, 'Invoice Date' => $purchase->invoice_date, 'Invoice Number' => $purchase->invoice_num, 'Supplier' => $purchase->supplier, 'Goods Description' => $purchase->description, 'Quantity' => $purchase->quantity, 'Non Taxable Purchases' => $purchase->non_taxable_purchases, 'Local Purchase (Taxable Value)' => $purchase->local_purchase_tax_val, 'Imports (Taxable Value)' => $purchase->imports_taxable_val,'Item Subject To Taxes'=>$item_subject_to_taxes];
+			return array_merge($columns,$subjects);
+		});
+		Excel::create($customer->name_english . '-tax-' . $tax['title'] . '-purchases', function ($excel) use ($headings,$tax, $purchases, $customer) {
+			$excel->sheet('purchases', function ($sheet) use ($headings,$purchases, $customer) {
 				if (count($purchases) == 0) {
 					$sheet->prependRow(['Branch Name', 'Tax Period', 'Invoice Date', 'Invoice Number', 'Supplier', 'Goods Description', 'Quantity', 'Non Taxable Purchases', 'Local Purchase (Taxable Value)', 'Imports (Taxable Value)']);
 				}
 				$hr_centre = array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-
+				$alphabets = range('A', 'Z');
+				$columnIndex = count($headings) - 1;
 				$address = $customer->address . ', ' . $customer->street . ', ' . $customer->muncipality . ', ' . $customer->sangkat . ', ' . $customer->district . ', ' . $customer->province . ', ' . $customer->group;
 				$eng_address = 'Address:​​ ' . $address;
 				$khmr_address = 'អាសយដ្ឋានៈ​​ ' . $address;
@@ -157,37 +198,93 @@ class ExportController extends Controller {
 				$sheet->prependRow([$company_name_khmer]);
 
 				$sheet->prependRow(['For Feburary 2019']);
-				$sheet->prependRow(['សំរាប់ ខែ កុម្ភៈ ឆ្នាំ 2019']);
+				// $sheet->prependRow(['សំរាប់ ខែ កុម្ភៈ ឆ្នាំ 2019']);
 				$sheet->prependRow(['PURCHASE JOURNAL']);
 				$sheet->prependRow(['ទិន្នានុប្បវត្តិទិញ']);
 
 				for ($i = 1; $i <= 11; $i++) {
-					$val = 'A' . $i . ':J' . $i;
+					$val = 'A' . $i . ':'.$alphabets[$columnIndex] . $i;
 					$sheet->mergeCells($val);
 				}
 				for ($i = 1; $i <= 4; $i++) {
-					$val = 'A' . $i . ':J' . $i;
+					$val = 'A' . $i . ':'.$alphabets[$columnIndex] . $i;
 					$sheet->getStyle($val)->getAlignment()->applyFromArray($hr_centre);
 				}
-				$sheet->appendRow(['Branch Name', 'Tax Period', 'Invoice Date', 'Invoice Number', 'Supplier', 'Goods Description', 'Quantity', 'Non Taxable Purchases', 'Local Purchase (Taxable Value)', 'Imports (Taxable Value)']);
+				$sheet->appendRow($headings);
 				$sheet->rows($purchases);
 				if (count($purchases) == 0) {
 				}
-				$sheet->getStyle('A12:J12')->getFont()->setBold(true);
+				$sheet->getStyle('A12:'.$alphabets[$columnIndex].'12')->getFont()->setBold(true);
 				// $sheet->fromArray($purchases);
 			});
 		})->export('xlsx');
 
 	}
-
+	private function rateToPercent($rate){
+		return ($rate / 100); 
+	}
 	public function export_sales($customer_id, $tax_id) {
+
+		$headings = ['Account Code', 'Account Description', 'Account Reference', 'Signature Date', 'Branch Name', 'Tax Period', 'Invoice Date', 'Invoice Number', 'Description', 'Quantity', 'Non Taxable sales','Value Of Exports', 'Sales to taxable person (Value)', 'Sales to Consumer (Value)','Item Subject To Taxes','TOTAL (KHM)','Exchange Rate','Total (KHR)'];
 		$customer = TaxCustomers::whereCustomerId($customer_id)->first();
 		$tax = Tax::whereTaxId($tax_id)->first();
-		$sales = Sales::with('created_by')->where('tax_id', $tax_id)->get()->map(function ($sale) {
-			return ['Account Code' => $sale->account_code, 'Account Description' => $sale->account_description, 'Account Reference' => $sale->accounting_reference, 'Signature Date' => $sale->signature_date, 'Branch Name' => $sale->branch_name, 'Tax Period' => $sale->tax_period, 'Invoice Date' => $sale->invoice_date, 'Invoice Number' => $sale->invoice_num, 'Description' => $sale->description, 'Quantity' => $sale->quantity, 'Non Taxable sales' => $sale->non_taxable_sales, 'Sales to taxable person (Value)' => $sale->taxable_person_sales, 'Sales to Consumer (Value)' => $sale->cust_sales];
+		$exchange_rate = Settings::where('key','average_rate')->pluck('value')->first();
+		$sales = Sales::with(['created_by','taxes_subject.parameter'])->where('tax_id', $tax_id)->get()->toArray();
+		$sales = collect($sales);
+		$sales = $sales->map(function ($sale) use(&$headings,$exchange_rate) {
+		
+			$sale = (Object) $sale;
+			$total_in_khmer = ($sale->non_taxable_sales + $sale->vat + $sale->taxable_person_sales + $sale->cust_sales) * $exchange_rate;
+			$subjects = [];
+			if(count($sale->taxes_subject)){
+				foreach ($sale->taxes_subject as $key => $subject) {
+					if($subject['parameter']['tax_code'] == 'PPT'){
+
+						$subjects[ $subject['parameter']['tax_code'].'('.$subject['parameter']['rate'].'%)' ] = $total_in_khmer * $this->rateToPercent($subject['parameter']['rate']);
+						$headings[] = $subject['parameter']['tax_code'].'('.$subject['parameter']['rate'].'%)';
+					}
+					if($subject['parameter']['tax_code'] == 'VAT'){
+
+						$subjects[ $subject['parameter']['tax_code'].'('.$subject['parameter']['rate'].'%)' ] = ($sale->taxable_person_sales + $sale->cust_sales) * $exchange_rate * $this->rateToPercent($subject['parameter']['rate']);
+						$headings[] = $subject['parameter']['tax_code'].'('.$subject['parameter']['rate'].'%)';
+					}
+
+					if($subject['parameter']['tax_code'] == 'ACT'){
+
+						$subjects[ $subject['parameter']['tax_code'] ] = ( ( $sale->taxable_person_sales + $sale->cust_sales) * $exchange_rate / (1 + $this->rateToPercent($subject['parameter']['rate']) ) ) * $this->rateToPercent($subject['parameter']['rate']);
+						$headings[] = $subject['parameter']['tax_code'];
+					}
+
+					if($subject['parameter']['tax_code'] == 'PLT'){
+						
+						if($subject['parameter']['tax_param_id'] == 'PLT001'){
+							
+						$subjects[ $subject['parameter']['tax_code'] ] = ( ( $sale->taxable_person_sales + $sale->cust_sales) * $exchange_rate / (1 + $this->rateToPercent($subject['parameter']['rate']) ) ) * $this->rateToPercent($subject['parameter']['rate']);
+						$headings[] = 'Importer & producer ('.$subject['parameter']['tax_code'].')';
+						}
+						if($subject['parameter']['tax_param_id'] == 'PLT002'){
+
+						$subjects[ 'Distributors ('.$subject['parameter']['tax_code'].')' ] = ( ( $sale->taxable_person_sales + $sale->cust_sales) * $exchange_rate / (1 + $this->rateToPercent($subject['parameter']['base_tax']) * $this->rateToPercent( $subject['parameter']['rate'] ) ) ) * $this->rateToPercent($subject['parameter']['base_tax']) * $this->rateToPercent($subject['parameter']['rate']);
+						$headings[] = 'Distributors ('.$subject['parameter']['tax_code'].')';
+						}
+					}
+					if($subject['parameter']['tax_code'] == 'SPT'){
+
+						$subjects[ $subject['parameter']['tax_code'] ] = ( ( $sale->taxable_person_sales + $sale->cust_sales) * $exchange_rate / (1 + $this->rateToPercent($subject['parameter']['base_tax']) * $this->rateToPercent( $subject['parameter']['rate'] ) ) ) * $this->rateToPercent($subject['parameter']['base_tax']) * $this->rateToPercent($subject['parameter']['rate']);
+						$headings[] = $subject['parameter']['tax_code'];
+						}
+				}	
+			$item_subject_to_taxes = implode(', ',array_unique(array_pluck($sale->taxes_subject,'parameter.tax_code')));
+			}else{
+				$item_subject_to_taxes = '';
+			}
+			$total_dollars = ($sale->non_taxable_sales + $sale->vat + $sale->taxable_person_sales + $sale->cust_sales);
+
+			$columns = ['Account Code' => $sale->account_code, 'Account Description' => $sale->account_description, 'Account Reference' => $sale->accounting_reference, 'Signature Date' => $sale->signature_date, 'Branch Name' => $sale->branch_name, 'Tax Period' => $sale->tax_period, 'Invoice Date' => $sale->invoice_date, 'Invoice Number' => $sale->invoice_num, 'Description' => $sale->description, 'Quantity' => $sale->quantity, 'Non Taxable sales' => $sale->non_taxable_sales,'Value Of Exports'=>$sale->vat, 'Sales to taxable person (Value)' => $sale->taxable_person_sales, 'Sales to Consumer (Value)' => $sale->cust_sales,'Item Subject To Taxes'=>$item_subject_to_taxes,'TOTAL (KHM)'=>$total_dollars,'Exchange Rate'=>$exchange_rate,'Total (KHR)'=>$total_in_khmer];
+			return array_merge($columns,$subjects);
 		});
-		Excel::create($customer->name_english . '-tax-' . $tax['title'] . '-sales', function ($excel) use ($tax, $sales, $customer) {
-			$excel->sheet('sales', function ($sheet) use ($sales, $customer) {
+		Excel::create($customer->name_english . '-tax-' . $tax['title'] . '-sales', function ($excel) use ($headings,$tax, $sales, $customer) {
+			$excel->sheet('sales', function ($sheet) use ($headings,$sales, $customer,$tax) {
 
 				$hr_centre = array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
@@ -213,26 +310,27 @@ class ExportController extends Controller {
 				$sheet->prependRow([$company_name]);
 				$sheet->prependRow([$company_name_khmer]);
 
-				$sheet->prependRow(['For Feburary 2019']);
-				$sheet->prependRow(['សំរាប់ ខែ កុម្ភៈ ឆ្នាំ 2019']);
+				$sheet->prependRow([$tax->title]);
+				// $sheet->prependRow(['សំរាប់ ខែ កុម្ភៈ ឆ្នាំ 2019']);
 				$sheet->prependRow(['SALE JOURNAL']);
 				$sheet->prependRow(['ទិន្នានុប្បវត្តិលក់']);
 
+				$columns = range('A', 'Z');
 				for ($i = 1; $i <= 11; $i++) {
-					$val = 'A' . $i . ':M' . $i;
+					$val = 'A' . $i . ':'.$columns[ count($headings) - 1 ] . $i;
 					$sheet->mergeCells($val);
 				}
 				for ($i = 1; $i <= 4; $i++) {
-					$val = 'A' . $i . ':M' . $i;
+					$val = 'A' . $i . ':'.$columns[ count($headings) - 1 ] . $i;
 					$sheet->getStyle($val)->getAlignment()->applyFromArray($hr_centre);
 				}
-				$sheet->appendRow(['Account Code', 'Account Description', 'Account Reference', 'Signature Date', 'Branch Name', 'Tax Period', 'Invoice Date', 'Invoice Number', 'Description', 'Quantity', 'Non Taxable sales', 'Sales to taxable person (Value)', 'Sales to Consumer (Value)']);
+				$sheet->appendRow($headings);
 				$sheet->rows($sales);
 				if (count($sales) == 0) {
 
 					// dd($sales);
 				}
-				$sheet->getStyle('A12:M12')->getFont()->setBold(true);
+				$sheet->getStyle('A12:'.$columns[ count($headings) - 1 ].'12' )->getFont()->setBold(true);
 				// $sheet->fromArray($sales, false);
 			});
 		})->export('xlsx');

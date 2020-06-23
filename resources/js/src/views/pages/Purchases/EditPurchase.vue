@@ -106,7 +106,7 @@
                             </vx-input-group>
                             <vx-input-group v-else>
                                 <vs-col class="pl-0" vs-md="12" vs-lg="6" vs-sm="12">
-                                    <vs-input class="w-full" disabled name="param"  :label-placeholder="`Local Purchases ${param.tax_code}`" v-model="vat_local_purchase" />
+                                    <vs-input class="w-full" disabled name="param" :label-placeholder="`Local Purchases ${param.tax_code}`" v-model="vat_local_purchase" />
                                 </vs-col>
                                 <vs-col class="pr-0" vs-md="12" vs-lg="6" vs-sm="12">
                                     <vs-input class="w-full" disabled name="param" :label-placeholder="`Overseas purchase (${param.tax_code})`" v-model="vat_overseas_purchase" />
@@ -173,15 +173,21 @@ export default {
     watch: {
         non_taxable_purchases(val, oldVal) {
             this.setTotalVat()
-
+            if (val == '') {
+                this.non_taxable_purchases = 0;
+            }
         },
         taxable_value_local(val, oldVal) {
             this.setTotalVat()
-
+            if (val == '') {
+                this.taxable_value_local = 0;
+            }
         },
         taxable_value_import(val, oldVal) {
             this.setTotalVat()
-
+            if (val == '') {
+                this.taxable_value_import = 0;
+            }
         },
     },
     methods: {
@@ -264,9 +270,9 @@ export default {
                 this.taxable_value_local = (this.data.local_purchase_tax_val);
                 this.non_taxable_purchases = (this.data.non_taxable_purchases || 0);
                 self = this;
-                if(self.data.taxes_subject.length > 0){
-                    _.each(self.data.taxes_subject,(selectedParameter,i)=>{
-                        let filteredParam = _.find(self.parameters,(parameter,key)=>{ return parameter.id == selectedParameter.param_id });
+                if (self.data.taxes_subject.length > 0) {
+                    _.each(self.data.taxes_subject, (selectedParameter, i) => {
+                        let filteredParam = _.find(self.parameters, (parameter, key) => { return parameter.id == selectedParameter.param_id });
                         self.params.push(filteredParam);
                     });
                     self.calculateTaxParams()
