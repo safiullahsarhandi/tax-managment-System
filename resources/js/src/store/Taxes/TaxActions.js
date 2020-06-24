@@ -4,8 +4,8 @@ export default {
             commit('setTaxes', res.data.taxes)
         });
     },
-    async getParameters({ commit }) {
-        return await axios.get('get-parameters').then(res => {
+    async getParameters({ commit },type = '') {
+        return await axios.get('get-parameters',{params: { where : type } }).then(res => {
             commit('setParameters', res.data.parameters)
         });
     },

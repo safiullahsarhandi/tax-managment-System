@@ -30,7 +30,7 @@
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="supplier"  data-vv-as="Supplier" v-validate="`required`" label-placeholder="Supplier" v-model="data.supplier" />
+                            <vs-input name="supplier" data-vv-as="Supplier" v-validate="`required`" label-placeholder="Supplier" v-model="data.supplier" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('supplier')">{{errors.first('supplier')}}</span>
                     </vs-col>
@@ -59,72 +59,64 @@
                         <span class="text-danger" v-show="errors.has('non_taxable_purchases')">{{errors.first('non_taxable_purchases')}}</span>
                     </vs-col>
                 </vs-row>
-                <br>
-                <label>Local Purchases</label><br>
                 <vs-row>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                        <label>Local Purchases</label><br>
                         <vx-input-group>
-                            <vs-input name="local_purchase_tax_val" v-validate="'decimal'" label-placeholder="Taxable Value" v-model="taxable_value_local" />
+                            <vs-input name="local_purchase_tax_val" data-vv-as="Local Purchases (Taxable Value)" v-validate="'decimal'" label-placeholder="Taxable Value" v-model="taxable_value_local" />
                         </vx-input-group>
-                        <!-- <span class="text-danger" v-show="errors.has('taxable_value_local')">{{errors.first('taxable_value_local')}}</span> -->
+                        <span class="text-danger" v-show="errors.has('taxable_value_local')">{{errors.first('taxable_value_local')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                        <label>Imports</label><br>
                         <vx-input-group>
-                            <vs-input name="vat_local" disabled label-placeholder="VAT" v-model="vat_local" />
+                            <vs-input name="imports_taxable_val" data-vv-as="Imports (Taxable Value)" v-validate="'decimal'" label-placeholder="Taxable Value" v-model="taxable_value_import" />
                         </vx-input-group>
-                        <!-- <span class="text-danger" v-show="errors.has('vat_local')">{{errors.first('vat_local')}}</span> -->
-                    </vs-col>
-                </vs-row>
-                <br>
-                <label>Imports</label><br>
-                <vs-row>
-                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
-                        <!-- <label>Imports</label> -->
-                        <vx-input-group>
-                            <vs-input name="imports_taxable_val" v-validate="'decimal'" label-placeholder="Taxable Value" v-model="taxable_value_import" />
-                        </vx-input-group>
-                        <!-- <span class="text-danger" v-show="errors.has('taxable_value_import')">{{errors.first('taxable_value_import')}}</span> -->
+                        <span class="text-danger" v-show="errors.has('taxable_value_import')">{{errors.first('taxable_value_import')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
-                        <vx-input-group>
-                            <vs-input name="vat_import"  disabled label-placeholder="VAT" v-model="vat_import" />
-                        </vx-input-group>
-                        <!-- <span class="text-danger" v-show="errors.has('vat_import')">{{errors.first('vat_import')}}</span> -->
-                    </vs-col>
-                </vs-row>
-                <vs-row>
-                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                        <br>
                         <vx-input-group>
                             <vs-input name="total_vat" disabled label-placeholder="Total VAT" v-model="total_vat" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('total_vat')">{{errors.first('total_vat')}}</span>
                     </vs-col>
                 </vs-row>
+                <br>
                 <vs-row>
-                    <!-- <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                    <vs-col class="mt-5 flex justify-end" vs-md="12" vs-lg="12" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="subject" v-validate="`required`" label-placeholder="Itesm subject to taxes:" v-model="data.subject" />
+                            <vs-select width="100%" @input="getSelected" autocomplete placeholder="Item subject to taxes" multiple v-model='params' name="params">
+                                <vs-select-item v-for="(param,index) in parameters" :key="index" :text="`${param.tax_param_id}${param.expiry_date}`" :value="param"></vs-select-item>
+                            </vs-select>
+                            <!-- <vs-input name="item_subject_taxes" v-validate="`required`" label-placeholder="Item subject to taxes:" v-model="item_subject_taxes" /> -->
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('item_subject_taxes')">{{errors.first('item_subject_taxes')}}</span>
-                    </vs-col> -->
-                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
-                        <vx-input-group>
-                            <vs-input name="comments" label-placeholder="Comments (3E-Fii)" v-model="data.comments" />
-                        </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('comments_3e_fii')">{{errors.first('comments_3e_fii')}}</span>
                     </vs-col>
-                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
-                        <vx-input-group>
-                            <vs-input name="client_responses" label-placeholder="Client Responses" v-model="data.client_responses" />
-                        </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('client_responses')">{{errors.first('client_responses')}}</span>
+                </vs-row>
+                <vs-divider>Tax Parameters</vs-divider>
+                <vs-row>
+                    <vs-col v-if="params.length > 0" vs-lg="12" vs-md="12" vs-sm="12" vs-xs="12" class="flex justify-end">
+                        <vs-button button="button" @click="calculateTaxParams" type="border" icon="icon-refresh-ccw" icon-pack="feather"></vs-button>
                     </vs-col>
-                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
-                        <vx-input-group>
-                            <vs-input name="top_comments"  data-vv-as="Comments for ToP" label-placeholder="Comments for ToP" v-model="data.top_comments" />
-                        </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('top_comments')">{{errors.first('top_comments')}}</span>
+                    <vs-col v-for="(param,index) in params" :key="index" vs-md="12" :vs-lg="param.tax_code == 'VAT'?'8':'4'" vs-sm="12">
+                        <template>
+                            <vx-input-group v-if="param.tax_code != 'VAT'">
+                                <vs-input disabled name="param" :label="param.tax_param_id" :placeholder="param.tax_param_id" v-model="param.calculated_val" />
+                            </vx-input-group>
+                            <vx-input-group v-else>
+                                <vs-col class="pl-0" vs-md="12" vs-lg="6" vs-sm="12">
+                                    <vs-input class="w-full" disabled name="param" :label-placeholder="`Local Purchases ${param.tax_code}`" v-model="vat_local_purchase" />
+                                </vs-col>
+                                <vs-col class="pr-0" vs-md="12" vs-lg="6" vs-sm="12">
+                                    <vs-input class="w-full" disabled name="param" :label-placeholder="`Overseas purchase (${param.tax_code})`" v-model="vat_overseas_purchase" />
+                                </vs-col>
+                            </vx-input-group>
+                        </template>
+                        <!-- <span class="text-danger" v-show="errors.has('total_taxable_value')">{{errors.first('total_taxable_value')}}</span> -->
                     </vs-col>
+                </vs-row>
+                <vs-row>
                     <vs-col v-for="(field,index) in customField" :key="index" class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
                             <vs-input :type="field.text" :name="field.name" v-validate="`required`" :label-placeholder="'Custom Field '+(index + 1)" v-model="field.value" />
@@ -139,7 +131,6 @@
                         <vs-col class="text-center" vs-md="12" vs-lg="12">
                             <vs-button button="submit" class="mt-5" type="gradient">Save changes</vs-button>
                         </vs-col>
-                        
                     </vs-col>
                 </vs-row>
             </form>
@@ -153,46 +144,107 @@ export default {
         return {
             data: {},
             customField: [],
-            total_vat : 0,
-            non_taxable_purchases : 0,
-            taxable_value_local : 0,
-            taxable_value_import : 0,
-            vat_local : 0,
-            vat_import : 0,
+            total_vat: 0,
+            non_taxable_purchases: 0,
+            taxable_value_local: 0,
+            taxable_value_import: 0,
+            params: [],
+            vat_overseas_purchase: 0,
+            vat_local_purchase: 0
         };
     },
     computed: {
         ...mapState('customers/', ['customer']),
-        averageRate(){
+        ...mapState('taxes', ['parameters']),
+        averageRate() {
             return this.$store.state.averageRate;
         }
 
     },
-    created() {
+    async created() {
         this.tax_customer_id = localStorage.getItem('customer');
         this.$store.dispatch('getAverageRate');
         this.getCustomer(this.tax_customer_id);
+        await this.getParameters('Purchases');
         this.editForm(this.$route.params.id);
 
 
     },
     watch: {
-      non_taxable_purchases(val, oldVal){
-        this.setTotalVat()
-
-      },
-      taxable_value_local(val, oldVal){
-        this.vat_local = parseFloat(Math.abs(val) * 0.1).toFixed(2)
-        this.setTotalVat()
-
-      },
-      taxable_value_import(val, oldVal){
-        this.vat_import = parseFloat(Math.abs(val) * 0.1).toFixed(2)
-        this.setTotalVat()
-
-      },
+        non_taxable_purchases(val, oldVal) {
+            this.setTotalVat()
+            if (val == '') {
+                this.non_taxable_purchases = 0;
+            }
+        },
+        taxable_value_local(val, oldVal) {
+            this.setTotalVat()
+            if (val == '') {
+                this.taxable_value_local = 0;
+            }
+        },
+        taxable_value_import(val, oldVal) {
+            this.setTotalVat()
+            if (val == '') {
+                this.taxable_value_import = 0;
+            }
+        },
     },
     methods: {
+        ...mapActions({
+            update: 'purchases/updatePurchase',
+            getCustomer: 'customers/getCustomer',
+            getParameters: 'taxes/getParameters',
+        }),
+        calculateTaxParams() {
+            _.each(this.params, (o, index) => {
+
+                if (o.tax_code == 'WHT') {
+                    /*
+                     *   (Non Taxable Purchases * WHT Rate ) + (Local Purchases Taxable Value * WHT Rate)
+                     */
+                    o.calculated_val = ((parseFloat(this.non_taxable_purchases) * this.rateToPercent(o.rate)) + (parseFloat(this.taxable_value_local) * this.rateToPercent(o.rate))).toFixed(2);
+                }
+                if (o.tax_code == 'FBT') {
+                    /*
+                     *   (Non Taxable Purchases * FBT Rate )
+                     */
+                    o.calculated_val = (parseFloat(this.non_taxable_purchases) * this.rateToPercent(o.rate)).toFixed(2);
+                }
+                if (o.tax_code == 'VAT') {
+                    if (this.taxable_value_local > 0) {
+                        /*
+                         *   (Local Purchace Taxable Value  * VAT Rate) for local purchase
+                         */
+                        this.vat_local_purchase = (this.taxable_value_local * this.rateToPercent(o.rate)).toFixed(2);
+                        // o.calculated_val = (parseFloat(this.taxable_value_local) * this.rateToPercent(o.rate)).toFixed(2)
+                    } else {
+                        this.vat_local_purchase = 0;
+                    }
+
+                    if (this.taxable_value_import > 0) {
+                        /*
+                         *   (Imports Taxable Value * VAT Rate) for overseas purchase
+                         */
+                        this.vat_overseas_purchase = (this.taxable_value_import * this.rateToPercent(o.rate)).toFixed(2);
+                        // o.calculated_val = (parseFloat(this.taxable_value_local) * this.rateToPercent(o.rate)).toFixed(2)
+                    } else {
+                        this.vat_overseas_purchase = 0;
+                    }
+                }
+                Vue.set(this.params, index, o);
+            })
+        },
+        rateToPercent(rate) {
+            return (rate / 100)
+        },
+        getSelected(values) {
+            /*_.each(values,(o,i)=>{
+                if(o.tax_code == 'VAT'){
+
+                }
+            })*/
+        },
         setTotalVat() {
             var non_taxable_purchase_val = (this.non_taxable_purchases * this.averageRate);
 
@@ -208,21 +260,23 @@ export default {
         addMoreFeild() {
             this.customField.push({ name: 'additional_fields[]', value: '', type: 'text' });
         },
-        ...mapActions({
-            update: 'purchases/updatePurchase',
-            getCustomer: 'customers/getCustomer'
-        }),
-
         editForm(routeId) {
             // var customer = this.findCustomer(id);
             axios.post('get-single-purchase', { id: routeId }).then(res => {
                 var purchase = res.data.purchase;
-                
+
                 this.data = purchase;
-                this.taxable_value_import =  (this.data.imports_taxable_val);
+                this.taxable_value_import = (this.data.imports_taxable_val);
                 this.taxable_value_local = (this.data.local_purchase_tax_val);
                 this.non_taxable_purchases = (this.data.non_taxable_purchases || 0);
                 self = this;
+                if (self.data.taxes_subject.length > 0) {
+                    _.each(self.data.taxes_subject, (selectedParameter, i) => {
+                        let filteredParam = _.find(self.parameters, (parameter, key) => { return parameter.id == selectedParameter.param_id });
+                        self.params.push(filteredParam);
+                    });
+                    self.calculateTaxParams()
+                }
                 self.customField = [];
                 if (purchase.additional_fields != null) {
                     if (purchase.additional_fields.length > 0) {
@@ -241,6 +295,10 @@ export default {
                 if (result) {
                     this.$vs.loading();
                     var fd = new FormData(this.$refs.editform);
+                    _.each(this.params, (obj, key) => {
+
+                        fd.append(`tax_params[${key}]`, obj.id);
+                    });
                     this.update(fd).then((res) => {
                         // console.log(res.data);
                         if (res.data.status == 'success') {

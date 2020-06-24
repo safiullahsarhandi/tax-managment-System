@@ -12,22 +12,18 @@
                     <vs-th>Rate (%)</vs-th>
                     <vs-th>Base Tax Percentage</vs-th>
                     <vs-th>Tax Type</vs-th>
-                    <vs-th>Amount Min</vs-th>
-                    <vs-th>Amount Max</vs-th>
-                     <vs-th>Effective Date</vs-th>
+                    <vs-th>Effective Date</vs-th>
                     <vs-th>Remarks</vs-th>
                     <vs-th>Action</vs-th>
                 </template>
                 <template slot-scope="{data}">
                     <vs-tr :key="index" v-for="(tr,index) in data">
-                        <vs-td>{{taxParam(index)}}</vs-td>
+                        <vs-td>{{taxParam(tr.id)}}</vs-td>
                         <vs-td>{{tr.khmer_description}}</vs-td>
                         <vs-td>{{tr.english_description}}</vs-td>
                         <vs-td>{{tr.rate}}</vs-td>
                         <vs-td>{{tr.base_tax}}</vs-td>
                         <vs-td>{{tr.tax_type || 'NA'}}</vs-td>
-                        <vs-td>{{tr.amount_min || 'NA'}}</vs-td>
-                        <vs-td>{{tr.amount_max || 'NA' }}</vs-td>
                         <vs-td>{{tr.effective_date}}</vs-td>
                         <vs-td>{{tr.remarks || 'NA' }}</vs-td>
                         <vs-td><vs-button size="small" type="border" icon-pack="feather" icon="icon-edit" @click="showEditPopup(tr.id)"></vs-button></vs-td>
@@ -44,12 +40,12 @@
             </vs-table>
         </vx-card>
         <vs-popup :active.sync="addTaxParameterModal" title="Add Tax Parameter">
-            <form ref="addTaxParameterForm" @submit.prevent="add($event,'addform')" data-vv-scope="addform">
+            <form autocomplete="off" ref="addTaxParameterForm" @submit.prevent="add($event,'addform')" data-vv-scope="addform">
                 <vs-row>
                     <vs-col vs-lg="6" vs-md="6" vs-sm="12">
                         <vx-input-group>
                             <vx-input-group class="mt-2">
-                            <vs-select name="tax_code" v-validate="'required'" placeholder="Search and select" class="selectExample" label="Tax Code" v-model="tax_code" data-vv-as="Tax Code" data-vv-scope="addform">
+                            <vs-select class="w-full" name="tax_code" v-validate="'required'" placeholder="Search and select" label="Tax Code" v-model="tax_code" data-vv-as="Tax Code" data-vv-scope="addform">
                                 <vs-select-item value="ACT" text="ACT" ></vs-select-item>
                                 <vs-select-item value="PPT" text="PPT"></vs-select-item>
                                 <vs-select-item value="VAT" text="VAT"></vs-select-item>
@@ -79,8 +75,12 @@
                         </vx-input-group>
                         <vx-input-group class="mt-2">
                             <label>Tax Type:</label><br>
-                            <vs-radio v-model="type" name="type" vs-value="Monthly">Monthly</vs-radio>
-                            <vs-radio v-model="type" name="type" vs-value="Yearly">Yearly</vs-radio>
+                            <vs-select class="w-full" v-validate="'required'" name="type" v-model="type">
+                                <vs-select-item value="sale" text="Sales"></vs-select-item>
+                                <vs-select-item value="purchases" text="Purchases"></vs-select-item>
+                                <vs-select-item value="payroll" text="Payrolls"></vs-select-item>
+                            </vs-select>
+                            <span v-show="errors.has('addform.type')">{{errors.first('addform.type')}}</span>
                         </vx-input-group>
                     </vs-col>
                     <vs-col vs-lg="6" vs-md="12" vs-sm="12">
@@ -96,14 +96,14 @@
                     		<vs-input v-validate="'required'" type="date" data-vv-as="Effective Date" name="effective_date" v-model="effective_date" label	="Effective Date" data-vv-scope="addform" />
                             <span class="text-danger" v-show="errors.has('addform.effective_date')">{{errors.first('addform.effective_date')}}</span>
                     	</vx-input-group>
-                    	<vx-input-group class="mt-2">
+                    	<!-- <vx-input-group class="mt-2">
                     		<vs-input name="amount_min" data-vv-as="Amount Min" v-model="amount_min" label-placeholder="Amount Min" data-vv-scope="addform" />
                             <span class="text-danger" v-show="errors.has('addform.amount_min')">{{errors.first('addform.amount_min')}}</span>
                     	</vx-input-group>
                     	<vx-input-group class="mt-2">
                     		<vs-input  name="amount_max" data-vv-as="Amount Max" v-model="amount_max" label-placeholder="Amount Max" data-vv-scope="addform" />
                             <span class="text-danger" v-show="errors.has('addform.amount_max')">{{errors.first('addform.amount_max')}}</span>
-                    	</vx-input-group>
+                    	</vx-input-group> -->
                     	<vx-input-group class="mt-2">
                             <vs-textarea  name="remarks" data-vv-as="Remarks" v-model="remarks" :counter="50" label="Remarks" data-vv-scope="addform" />
                             <span class="text-danger" v-show="errors.has('addform.remarks')">{{errors.first('addform.remarks')}}</span>
@@ -119,13 +119,13 @@
             </form>
         </vs-popup>
         <vs-popup :active.sync="editTaxParameterModal" title="Edit Tax Parameter">
-            <form ref="editTaxParameterForm" @submit.prevent="edit($event,'editform')" data-vv-scope="editform">
+            <form autocomplete="off" ref="editTaxParameterForm" @submit.prevent="edit($event,'editform')" data-vv-scope="editform">
                 <vs-row>
                 	<input type="hidden" name="identifier" v-model="identifier">
                     <vs-col vs-lg="6" vs-md="6" vs-sm="12">
                         <vx-input-group>
                             <vx-input-group class="mt-2">
-                            <vs-select name="tax_code" v-validate="'required'" placeholder="Search and select" class="selectExample" label="Tax Code" v-model="edit_tax_code" data-vv-as="Tax Code" data-vv-scope="editform">
+                            <vs-select name="tax_code" v-validate="'required'" placeholder="Search and select" class="w-full" label="Tax Code" v-model="edit_tax_code" data-vv-as="Tax Code" data-vv-scope="editform">
                                 <vs-select-item value="ACT" text="ACT" ></vs-select-item>
                                 <vs-select-item value="PPT" text="PPT"></vs-select-item>
                                 <vs-select-item value="VAT" text="VAT"></vs-select-item>
@@ -155,8 +155,12 @@
                         </vx-input-group>
                         <vx-input-group class="mt-2">
                             <label>Tax Type:</label><br>
-                            <vs-radio v-model="edit_type" name="type" vs-value="Monthly">Monthly</vs-radio>
-                            <vs-radio v-model="edit_type" name="type" vs-value="Yearly">Yearly</vs-radio>
+                            <vs-select class="w-full" placeholder="Select Tax Type" v-validate="'required'" name="type" v-model="edit_type">
+                                <vs-select-item value="sale" text="Sales"></vs-select-item>
+                                <vs-select-item value="purchases" text="Purchases"></vs-select-item>
+                                <vs-select-item value="payroll" text="Payrolls"></vs-select-item>
+                            </vs-select>
+                            <span v-show="errors.has('editform.type')">{{errors.first('type')}}</span>
                         </vx-input-group>
                     </vs-col>
                     <vs-col vs-lg="6" vs-md="12" vs-sm="12">
@@ -172,25 +176,25 @@
                     		<vs-input v-validate="'required'" type="date" data-vv-as="Effective Date" name="effective_date" v-model="edit_effective_date" label	="Effective Date" data-vv-scope="editform" />
                             <span class="text-danger" v-show="errors.has('editform.effective_date')">{{errors.first('editform.effective_date')}}</span>
                     	</vx-input-group>
-                    	<vx-input-group class="mt-2">
+                    	<!-- <vx-input-group class="mt-2">
                     		<vs-input name="amount_min" data-vv-as="Amount Min" v-model="edit_amount_min" label-placeholder="Amount Min" data-vv-scope="editform" />
                             <span class="text-danger" v-show="errors.has('editform.amount_min')">{{errors.first('editform.amount_min')}}</span>
                     	</vx-input-group>
                     	<vx-input-group class="mt-2">
                     		<vs-input  name="amount_max" data-vv-as="Amount Max" v-model="edit_amount_max" label-placeholder="Amount Max" data-vv-scope="editform" />
                             <span class="text-danger" v-show="errors.has('editform.amount_max')">{{errors.first('editform.amount_max')}}</span>
-                    	</vx-input-group>
-                    </vs-col>
-                    <vs-col vs-lg="12" vs-md="12" vs-sm="12">
+                    	</vx-input-group> -->
                     	<vx-input-group>
                             <br>
                             <vs-textarea  name="remarks" data-vv-as="Remarks" v-model="edit_remarks" :counter="50" label="Remarks" data-vv-scope="editform" />
                             <span class="text-danger" v-show="errors.has('editform.remarks')">{{errors.first('editform.remarks')}}</span>
                         </vx-input-group>
                     </vs-col>
+                    <vs-col vs-lg="6" vs-md="6" vs-sm="6">
+                    </vs-col>
                     <vs-col vs-lg="12" vs-md="12" vs-sm="12">
                         <br>
-                        <vs-button button="submit" class="float-right" type="gradient">Add Tax Parameter</vs-button>
+                        <vs-button button="submit" class="float-right" type="gradient">Update</vs-button>
                     </vs-col>
                 </vs-row>
             </form>
@@ -208,7 +212,7 @@ export default {
             editTax: {},
             addTaxParameterModal: false,
             editTaxParameterModal: false,
-            type: 'Monthly',
+            type: 'sale',
             tax_id : '',
             tax_code : '',
             description_khmer : '',
@@ -221,7 +225,7 @@ export default {
             remarks : '',
 
             identifier : 0,
-            edit_type: 'Monthly',
+            edit_type: '',
             edit_tax_id : '',
             edit_tax_code : '',
             edit_description_khmer : '',
@@ -250,9 +254,9 @@ export default {
             fetchParameters: 'taxes/getParameters',
             update: 'taxes/editParameter',
         }),
-        taxParam(index){
+        taxParam(id){
 
-        		var parameter = this.getParameter(index)
+        		var parameter = this.getParameter(id,'column');
         		return parameter.tax_param_id+''+parameter.expiry_date;
         },
         addTax() {
