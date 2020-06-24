@@ -136,7 +136,7 @@
                                     <vs-select-item value="0" text="Work In Progress"></vs-select-item>
                                     <vs-select-item value="1" text="Submit"></vs-select-item>
                     </vs-select>
-                    <vs-select v-if="userType == 'Admin' || userType == 'Super Admin'" autocomplete
+                    <vs-select v-if="userType == 'Admin' || userType == 'Super Admin' && show_status_dropdown == true" autocomplete
                      @input="changeManagementStatus(sale.management_confirmed, sale.sale_id, 'admin')" v-model="sale.management_confirmed" class="p-0 ml-0" placeholder="Select Status" style="width: 100%;" >
                                     <vs-select-item value="0" text="Pending"></vs-select-item>
                                     <vs-select-item value="1" text="Approve"></vs-select-item>
@@ -144,6 +144,7 @@
                                     <vs-select-item value="3" text="Reject"></vs-select-item>
                                     
                     </vs-select>
+                    
                     <vs-list>
                         <vs-list-item title="Edit Sale" v-if="editPermissionAccess(sale)">
                             <vs-button :to="'/sale-update/'+$route.params.id" icon-pack="feather" size="small" icon='icon-edit'></vs-button>
@@ -189,12 +190,18 @@ export default {
     },
     data() {
         return {
+            managerId: null,
             tax_id: '',
             openComments: false,
-            is_saleCreatedByLoginUser: false
+            is_saleCreatedByLoginUser: false,
+            is_admin: false,
+            is_supervisor: false,
+            is_officer: false,
+            show_status_dropdown: true,
         };
     },
     async created() {
+        this.managerId = this.$store.state.AppActiveUser.manager_id;
         await this.getSale(this.$route.params.id).then(res=>{
             var created_by = res.data.sale.created_by;
             if (this.$store.state.AppActiveUser.type == 'Supervisor') {
@@ -210,6 +217,17 @@ export default {
             // console.log(res.data);
         });
         this.$store.dispatch('getAverageRate');
+        if (this.$store.state.AppActiveUser.type == 'Admin' || this.$store.state.AppActiveUser.type == 'Super Admin' ) {
+            this.is_admin = true;
+        }
+
+        if (this.$store.state.AppActiveUser.type == 'Supervisor') {
+            this.is_supervisor = true;
+        }
+
+        if (this.$store.state.AppActiveUser.type == 'Officer') {
+            this.is_officer = true;
+        }   
     },
     computed: {
         ...mapState('sales', ['sale']),
@@ -330,6 +348,16 @@ export default {
                 }
 
                 if(this.is_admin){
+
+
+                    var created_by = tr.created_by.manager_id;
+                    
+                    if(this.managerId == created_by){ // means current sale added by super admin it has every access 
+                        this.show_status_dropdown = false;
+                        return true;
+                    }
+
+
                     if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 0){
                         return false;
                     }

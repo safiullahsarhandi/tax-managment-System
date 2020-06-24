@@ -3851,4 +3851,12 @@ class ApplicationController extends Controller {
 		$logs = History::where('object_id', $request->customer_id)->get();
 		return response()->json(compact('logs'));
 	}
+
+	public function pdf_one() {
+		$data = array();
+		$pdf = PDF::loadView('pdf.ppt-1', $data);
+		$customPaper = array(0, 0, 800, 1300);
+		$pdf->setPaper($customPaper);
+		return $pdf->stream('PPT-1.pdf');
+	}
 }

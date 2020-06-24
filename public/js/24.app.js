@@ -230,9 +230,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
+      managerId: null,
       tax_id: '',
       openComments: false,
-      is_saleCreatedByLoginUser: false
+      is_saleCreatedByLoginUser: false,
+      is_admin: false,
+      is_supervisor: false,
+      is_officer: false,
+      show_status_dropdown: true
     };
   },
   created: function created() {
@@ -243,7 +248,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
+              if (_this.$store.state.AppActiveUser.type == 'Admin' || _this.$store.state.AppActiveUser.type == 'Super Admin') {
+                _this.is_admin = true;
+              }
+
+              if (_this.$store.state.AppActiveUser.type == 'Supervisor') {
+                _this.is_supervisor = true;
+              }
+
+              if (_this.$store.state.AppActiveUser.type == 'Officer') {
+                _this.is_officer = true;
+              }
+
+              _this.managerId = _this.$store.state.AppActiveUser.manager_id;
+              _context.next = 6;
               return _this.getPayroll(_this.$route.params.id).then(function (res) {
                 var created_by = res.data.data.created_by;
 
@@ -252,9 +270,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     _this.is_saleCreatedByLoginUser = true;
                   }
                 }
+
+                if (_this.$store.state.AppActiveUser.type == 'Admin' || _this.$store.state.AppActiveUser.type == 'Super Admin') {
+                  if (_this.$store.state.AppActiveUser.manager_id == created_by.manager_id) {
+                    if (_this.is_admin == true) {
+                      _this.show_status_dropdown = false;
+                    }
+                  }
+                }
               });
 
-            case 2:
+            case 6:
               localStorage.setItem('customer', _this.payroll.customer.customer_id);
               localStorage.setItem('currentDetail', '/tax-collection/' + _this.payroll.tax_id);
               _this.tax_id = _this.payroll.tax_id;
@@ -263,7 +289,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               _this.$store.dispatch('getAverageRate');
 
-            case 7:
+            case 11:
             case "end":
               return _context.stop();
           }
@@ -347,9 +373,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         var res = res.data;
 
         if (by == 'supervisor') {
-          _this3.purchase.supervisor_confirmed = res.response;
+          _this3.payroll.supervisor_confirmed = res.response;
         } else {
-          _this3.purchase.management_confirmed = res.response;
+          _this3.payroll.management_confirmed = res.response;
         }
       });
     },
@@ -433,6 +459,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       if (this.is_admin) {
+        var created_by = tr.created_by.manager_id;
+
+        if (this.managerId == created_by) {
+          // means current sale added by super admin it has every access 
+          return true;
+        }
+
         if (tr.supervisor_confirmed == 0 && tr.management_confirmed == 0) {
           return false;
         }
@@ -910,7 +943,9 @@ var render = function() {
                       )
                     : _vm._e(),
                   _vm._v(" "),
-                  _vm.userType == "Admin" || _vm.userType == "Super Admin"
+                  _vm.userType == "Admin" ||
+                  (_vm.userType == "Super Admin" &&
+                    _vm.show_status_dropdown == true)
                     ? _c(
                         "vs-select",
                         {
@@ -964,12 +999,11 @@ var render = function() {
                       _vm.editPermissionAccess(_vm.payroll)
                         ? _c(
                             "vs-list-item",
-                            { attrs: { title: "Edit Purchase" } },
+                            { attrs: { title: "Edit Payroll" } },
                             [
                               _c("vs-button", {
                                 attrs: {
-                                  to:
-                                    "/purchase-update/" + _vm.$route.params.id,
+                                  to: "/edit-payroll/" + _vm.$route.params.id,
                                   "icon-pack": "feather",
                                   size: "small",
                                   icon: "icon-edit"
@@ -980,7 +1014,7 @@ var render = function() {
                           )
                         : _c(
                             "vs-list-item",
-                            { attrs: { title: "Edit Purchase" } },
+                            { attrs: { title: "Edit Payroll" } },
                             [
                               _c("vs-button", {
                                 attrs: {
@@ -1035,15 +1069,15 @@ var render = function() {
                                         }
                                       },
                                       model: {
-                                        value: _vm.purchase.officer_confirmed,
+                                        value: _vm.payroll.officer_confirmed,
                                         callback: function($$v) {
                                           _vm.$set(
-                                            _vm.purchase,
+                                            _vm.payroll,
                                             "officer_confirmed",
                                             $$v
                                           )
                                         },
-                                        expression: "purchase.officer_confirmed"
+                                        expression: "payroll.officer_confirmed"
                                       }
                                     })
                               ],

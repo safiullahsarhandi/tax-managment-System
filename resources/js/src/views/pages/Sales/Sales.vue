@@ -320,6 +320,14 @@ export default {
                 }
 
                 if(this.is_admin){
+
+
+                    var created_by = tr.created_by.manager_id;
+                    
+                    if(this.managerId == created_by){ // means current sale added by super admin it has every access 
+                        return true;
+                    }
+
                     if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 0){
                         return false;
                     }

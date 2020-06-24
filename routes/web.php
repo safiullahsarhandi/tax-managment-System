@@ -10,6 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
+Route::get('soccer-markets', 'ExportController@export_soccer_markets');
+
 Route::group(['prefix' => ''], function () {
 
 	Route::get('get-dashboard-data', 'ApplicationController@get_dashboard_data');
@@ -153,5 +155,7 @@ Route::group(['prefix' => ''], function () {
 	Route::post('delete-spp', 'ApplicationController@deleteSpp');
 
 	Route::get('export-tax-parameters', 'ExportController@export_tax_parameters');
+
+	Route::get('pdf-one', 'ApplicationController@pdf_one');
 });
 Route::get('/{any}', 'ApplicationController')->where('any', '.*');

@@ -19,9 +19,6 @@
                         icon-pack="feather" icon="icon-download"></vs-button>
                     </vs-col>
                 </vs-row>
-
-                
-
                 
             </template>
             <vs-table search pagination :max-items="tableEntries" :data="customers">

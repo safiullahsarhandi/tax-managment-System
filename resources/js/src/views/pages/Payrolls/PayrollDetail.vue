@@ -151,7 +151,7 @@
                                     <vs-select-item value="1" text="Submit"></vs-select-item>
                     </vs-select>
 
-                    <vs-select v-if="userType == 'Admin' || userType == 'Super Admin'" autocomplete 
+                    <vs-select v-if="userType == 'Admin' || userType == 'Super Admin'  && show_status_dropdown == true" autocomplete 
                     @input="changeManagementStatus(payroll.management_confirmed, payroll.payroll_id, 'admin')" v-model="payroll.management_confirmed" class="p-0 ml-0" placeholder="Select Status" style="width: 100%;" >
                                     <vs-select-item value="0" text="Pending"></vs-select-item>
                                     <vs-select-item value="1" text="Approve"></vs-select-item>
@@ -160,17 +160,17 @@
                                     
                     </vs-select>
                     <vs-list>
-                        <vs-list-item v-if="editPermissionAccess(payroll)" title="Edit Purchase">
-                            <vs-button :to="'/purchase-update/'+$route.params.id" icon-pack="feather" size="small" icon='icon-edit'></vs-button>
+                        <vs-list-item v-if="editPermissionAccess(payroll)" title="Edit Payroll">
+                            <vs-button :to="'/edit-payroll/'+$route.params.id" icon-pack="feather" size="small" icon='icon-edit'></vs-button>
                         </vs-list-item>
-                        <vs-list-item v-else title="Edit Purchase">
+                        <vs-list-item v-else title="Edit Payroll">
                             <vs-button @click="notAllowed('edit')" icon-pack="feather" size="small" icon='icon-edit'></vs-button>
                         </vs-list-item>
                         <template>
                         
                             <vs-list-item v-if="userType == 'Officer'" title="Status">
                                 <vs-switch v-if="editPermissionAccess(payroll)"  icon-pack="feather" @click="statusUpdate(payroll.payroll_id, payroll.officer_confirmed)" v-model="payroll.officer_confirmed"></vs-switch>
-                                 <vs-switch v-else icon-pack="feather" @click="notAllowed('status')" v-model="purchase.officer_confirmed"></vs-switch>
+                                 <vs-switch v-else icon-pack="feather" @click="notAllowed('status')" v-model="payroll.officer_confirmed"></vs-switch>
                             </vs-list-item>
                             
                         </template>
@@ -201,12 +201,29 @@ export default {
     },
     data() {
         return {
+            managerId: null,
             tax_id: '',
             openComments: false,
-            is_saleCreatedByLoginUser: false
+            is_saleCreatedByLoginUser: false,
+            is_admin: false,
+            is_supervisor: false,
+            is_officer: false,
+            show_status_dropdown: true,
         };
     },
     async created() {
+        if (this.$store.state.AppActiveUser.type == 'Admin' || this.$store.state.AppActiveUser.type == 'Super Admin' ) {
+            this.is_admin = true;
+        }
+
+        if (this.$store.state.AppActiveUser.type == 'Supervisor') {
+            this.is_supervisor = true;
+        }
+
+        if (this.$store.state.AppActiveUser.type == 'Officer') {
+            this.is_officer = true;
+        } 
+        this.managerId = this.$store.state.AppActiveUser.manager_id;
         await this.getPayroll(this.$route.params.id).then(res=>{
             var created_by = res.data.data.created_by;
             if (this.$store.state.AppActiveUser.type == 'Supervisor') {
@@ -214,7 +231,15 @@ export default {
                     this.is_saleCreatedByLoginUser = true;
                 }
             }
+            if (this.$store.state.AppActiveUser.type == 'Admin' || this.$store.state.AppActiveUser.type == 'Super Admin') {
+                if(this.$store.state.AppActiveUser.manager_id == created_by.manager_id){
+                    if(this.is_admin == true){
+                        this.show_status_dropdown = false;
+                    }
+                }
+            }
         });
+
 
         localStorage.setItem('customer',this.payroll.customer.customer_id);
         localStorage.setItem('currentDetail','/tax-collection/'+this.payroll.tax_id);
@@ -300,9 +325,9 @@ export default {
             this.statusChangeManagment(data).then((res)=> {
                var res = res.data;
                 if(by == 'supervisor'){
-                    this.purchase.supervisor_confirmed = res.response;
+                    this.payroll.supervisor_confirmed = res.response;
                 }else{
-                    this.purchase.management_confirmed = res.response; 
+                    this.payroll.management_confirmed = res.response; 
                 }
             });
         },
@@ -386,6 +411,13 @@ export default {
                 }
 
                 if(this.is_admin){
+
+                    var created_by = tr.created_by.manager_id;
+
+                    if(this.managerId == created_by){ // means current sale added by super admin it has every access 
+                        return true;
+                    }
+
                     if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 0){
                         return false;
                     }
