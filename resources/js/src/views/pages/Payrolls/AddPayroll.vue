@@ -71,7 +71,16 @@
                         <vx-input-group>
                             <vs-input name="spouse" v-validate="`required`" label-placeholder="spouse" :disabled="true" :value="employeeVal.spouse" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('spouse')">{{errors.first('spouse')}}</span>
+                    </vs-col>
+                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                        <vx-input-group>
+                            <vs-input label-placeholder="Children" :disabled="true" :value="employeeVal.children" />
+                        </vx-input-group>
+                    </vs-col>
+                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                        <vx-input-group>
+                            <vs-input label-placeholder="Employee Type" :disabled="true" :value="Object.keys(employeeVal).length > 0?employeeVal.employee_type == 'RD'?'Resident':'Non Resident':''" />
+                        </vx-input-group>
                     </vs-col>
                 </vs-row>
                 <vs-row style="padding-left: 20px; color: gray">
@@ -82,7 +91,7 @@
                 <vs-row>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="basic_salary" data-vv-as="Basic Salary" v-validate="`required`" label-placeholder="Basic Salary" v-model="basic_salary" />
+                            <vs-input name="basic_salary" data-vv-as="Basic Salary" v-validate="`required|decimal:2|min_value:1`" label-placeholder="Basic Salary" v-model="basic_salary" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('basic_salary')">{{errors.first('basic_salary')}}</span>
                     </vs-col>
@@ -100,7 +109,7 @@
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="commissions" data-vv-as="Commission"  v-validate="`required`" label-placeholder="Commission" v-model="commission" />
+                            <vs-input name="commissions" data-vv-as="Commission" v-validate="`required`" label-placeholder="Commission" v-model="commission" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('commissions')">{{errors.first('commissions')}}</span>
                     </vs-col>
@@ -154,16 +163,50 @@
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="salary_adjusment" data-vv-as="Salary Adjustment"  v-validate="`required`" label-placeholder="Salary Adjustment" v-model="salary_adjustment" />
+                            <vs-input name="salary_adjusment" data-vv-as="Salary Adjustment" v-validate="`required`" label-placeholder="Salary Adjustment" v-model="salary_adjustment" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('salary_adjusment')">{{errors.first('salary_adjusment')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="remark"  v-validate="`required`" label-placeholder="Remarks" v-model="remark" />
+                            <vs-input name="remark" label-placeholder="Remarks" v-model="remark" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('remark')">{{errors.first('remark')}}</span>
                     </vs-col>
+                </vs-row>
+                <vs-row style="padding-left: 20px; color: gray">
+                    <br>
+                    Tax Detail
+                </vs-row>
+                <br>
+                <vs-row>
+                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                        <vx-input-group>
+                            <vs-input disabled label-placeholder="Salary to be paid (Riel)" v-model="basic_salary_riel" />
+                        </vx-input-group>
+                    </vs-col>
+                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                        <vx-input-group>
+                            <vs-input disabled label-placeholder="Allowance" v-model="allowance" />
+                        </vx-input-group>
+                    </vs-col>
+                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                        <vx-input-group>
+                            <vs-input disabled label-placeholder="Salary Tax Calculation  Base" v-model="salary_tax_calculation_base" />
+                        </vx-input-group>
+                    </vs-col>
+                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                        <vx-input-group>
+                            <vs-input disabled label-placeholder="Tax Rate" v-model="parameter_rate" />
+                        </vx-input-group>
+                    </vs-col>
+                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                        <vx-input-group>
+                            <vs-input disabled label-placeholder="Tax on Salary" v-model="tax_on_salary" />
+                        </vx-input-group>
+                    </vs-col>
+                </vs-row>
+                <vs-row>
                     <!-- <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12"> -->
                     <vs-col v-for="(field,index) in customField" :key="index" class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
@@ -184,7 +227,7 @@
         </vx-card>
         <vs-popup :active.sync="selectEmployeeModal" title="Select Employee">
             <vx-input-group>
-                <vs-select width="100%" placeholder="Search and select" class="selectExample" label="Employees" label-placeholder="Select Employee" v-model="employee">
+                <vs-select width="100%" placeholder="Search and select" autocomplete class="selectExample" label="Employees" label-placeholder="Select Employee" v-model="employee">
                     <vs-select-item value="" :disabled="true" text="Select Employee"></vs-select-item>
                     <vs-select-item :key="index" :value="item.employee_id" :text="item.name_english" v-for="(item,index) in employees" />
                 </vs-select>
@@ -209,7 +252,7 @@ export default {
             employee: '',
             buttonClicked: false,
             employeeVal: {},
-            basic_salary: '',
+            basic_salary: 0,
             bonus: '',
             overtime: '',
             commission: '',
@@ -224,12 +267,20 @@ export default {
             salary_adjustment: '',
             remark: '',
             employee_id: '',
-            multipleRoute : ''
+            multipleRoute: '',
+            basic_salary_riel: 0,
+            allowance: 0,
+            salary_tax_calculation_base: 0,
+            parameter: {},
+            parameter_rate: '0%',
+            tax_on_salary: 0,
         };
     },
     created() {
         this.tax_id = this.$store.state.rootUrl.split('/')[2];
         this.tax_customer_id = localStorage.getItem('customer');
+        this.$store.dispatch('getSalaryRate');
+        this.getParameters('Payrolls');
         this.getEmployees(this.tax_customer_id);
 
     },
@@ -240,28 +291,64 @@ export default {
 
     computed: {
         ...mapState('employees/', ['employees']),
+        ...mapState('taxes', ['parameters']),
         ...mapGetters('employees/', ['findEmployee']),
+        salaryRate() {
+            return this.$store.state.salaryRate;
+        },
     },
     watch: {
-        /*selectEmployeeModal(val, oldVal) {
-            if ((this.buttonClicked == false && this.employee == '') || (this.buttonClicked == false && this.employee != '')) {
-                this.selectEmployeeModal = true;
+        basic_salary(val, oldVal) {
+            this.basic_salary_riel = parseFloat(parseFloat(val) * this.salaryRate).toFixed(2);
+        },
+        basic_salary_riel(val, oldVal) {
+            this.salary_tax_calculation_base = Math.abs(parseFloat(val) - this.allowance);
+        },
+        salary_tax_calculation_base() {
+            if (Object.keys(this.employeeVal).length == 0) {
+                this.$vs.notify({
+                    position: 'right-top',
+                    text: 'please select employee first',
+                    color: 'danger',
+                });
             } else {
-                this.selectEmployeeModal = false;
-            }
-        },*/
+                this.parameter = {};
+                if (this.employeeVal.employee_type === 'NRD') {
 
+                    this.parameter = _.find(this.parameters, (o) => { return o.tax_param_id == "TOSNRD" });
+                    this.tax_on_salary = (this.salary_tax_calculation_base * this.rateToPercent(this.parameter.rate));
+                } else if (this.employeeVal.employee_type === 'RD') {
+
+                    this.parameter = _.find(this.parameters, (o) => {
+                        if (o.tax_param_id != "TOSNRD" && (this.salary_tax_calculation_base >= Number(o.amount_min) && this.salary_tax_calculation_base <= Number(o.amount_max))) {
+
+                            return o;
+                        } else if (o.tax_param_id != "TOSNRD" && (this.salary_tax_calculation_base >= Number(o.amount_min) && o.amount_max == null)) {
+                            return o;
+
+                        }
+                    });
+                    this.tax_on_salary = (this.salary_tax_calculation_base * this.rateToPercent(this.parameter.rate)) - this.parameter.tax_bracket;
+                }
+                this.parameter_rate = this.parameter.rate + '%';
+            }
+
+        }
     },
     methods: {
         ...mapActions({
             create: 'payrolls/create',
             getEmployees: 'employees/getActiveEmployees',
+            getParameters: 'taxes/getParameters',
         }),
         showUploader() {
             this.$refs.multiUploads.isShown = true;
         },
         addMoreFeild() {
             this.customField.push({ name: 'additional_fields[]', value: '', type: 'text' });
+        },
+        rateToPercent(rate) {
+            return (rate / 100)
         },
         hasError(res) {
             this.$vs.notify({
@@ -286,7 +373,7 @@ export default {
                 axios.post('get-employee', { id: this.employee }).then(res => {
                     // var employee = this.findEmployee(this.employee);
                     var employee = res.data.data;
-
+                    this.allowance = (Number(employee.spouse) + Number(employee.children)) * 150000
                     this.employeeVal = employee;
                     let loginUserId;
                     let loginUsertype;
@@ -315,12 +402,12 @@ export default {
             // alert('test');
             this.$validator.validateAll().then(result => {
                 if (result) {
-                    if(this.employee == ''){
+                    if (this.employee == '') {
                         this.$vs.notify({
-                            position : 'right-top',
-                            text : 'Please select employee',
-                            title : 'Missing Information',
-                            icon : 'warning',
+                            position: 'right-top',
+                            text: 'Please select employee',
+                            title: 'Missing Information',
+                            icon: 'warning',
                         });
                         return false;
                     }
@@ -328,7 +415,8 @@ export default {
                     let fd = new FormData(this.$refs.addPayrollForm);
                     fd.append('employee_id', this.employee);
                     fd.append('tax_id', this.tax_id);
-                        fd.append('created_by', this.$store.state.AppActiveUser.manager_id);
+                    fd.append('created_by', this.$store.state.AppActiveUser.manager_id);
+                    fd.append('tax_param',this.parameter.id)
                     /*if (this.$store.state.AppActiveUser.type == 'Supervisor') {
                     } else {
                         fd.append('officer_id', this.$store.state.AppActiveUser.manager_id);
@@ -341,7 +429,8 @@ export default {
                     self = this;
                     this.create(data).then(function(res) {
                         if (res.data.status == 'success') {
-                            self.nssf_num = self.employee_num = self.name_khmer = self.name_eng = self.nationality = self.joining_date = self.position = self.sex = self.contract_type = self.spouse = '';
+                            self.basic_salary = self.bonus = self.over_time = self.commission = self.seniority_payment = self.severance_pay = self.maternity_leave = self.paid_annual_leave = m,
+                            /*self.nssf_num = self.employee_num = self.name_khmer = self.name_eng = self.nationality = self.joining_date = self.position = self.sex = self.contract_type = self.spouse = '';*/
                             e.target.reset();
                             self.$validator.reset();
                         }

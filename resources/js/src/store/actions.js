@@ -1,12 +1,3 @@
-/*=========================================================================================
-  File Name: actions.js
-  Description: Vuex Store - actions
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuesax Admin - VueJS Dashboard Admin Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
-
 
 const actions = {
 
@@ -53,6 +44,12 @@ const actions = {
     async getAverageRate({ commit }) {
         await axios.get('get-average-rate').then((res) => {
             commit('setAverageRate', res.data)
+            return res;
+        })
+    },
+    async getSalaryRate({ commit }) {
+        await axios.get('get-salary-rate').then((res) => {
+            commit('setSalaryRate', res.data);
             return res;
         })
     },
