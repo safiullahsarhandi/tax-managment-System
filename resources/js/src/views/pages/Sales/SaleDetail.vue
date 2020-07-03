@@ -48,52 +48,61 @@
                             <h6>Description:</h6>
                             <p>{{sale.description}}</p>
                         </vs-col>
-                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
-                            <h6>Quantity:</h6>
-                            <p>{{sale.quantity}}</p>
-                        </vs-col>
+                        
                     </vs-row>
                 </vx-card>
                 <vx-card class="mt-base" title="Sales Summary">
                     <vs-row>
+                        <vs-col class="mt-5" vs-lg="12" vs-md="12" vs-sm="12">
+                            <h6>Quantity:</h6>
+                            <p>{{sale.quantity}}</p>
+                        </vs-col>
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>Non Taxable Sale:</h6>
                             <p>{{customer.non_taxable_sales || 'NA'}}</p>
                         </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
+                        <!-- <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>Non taxable sale x Average rate:</h6>
                             <p>{{non_taxable_sales}}</p>
-                        </vs-col>
+                        </vs-col> -->
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>Value Of Exports:</h6>
                             <p>{{sale.vat || 'NA'}}</p>
                         </vs-col>
+
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>Value Of Exports:</h6>
                             <p>{{value_of_exports}}</p>
                         </vs-col>
-                        <vs-divider position="left">
+
+                       <!--  <vs-divider position="left">
                             <h5>Sales to Taxable Persons</h5>
-                        </vs-divider>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
+                        </vs-divider> -->
+
+                        <!-- <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>Taxable Value:</h6>
                             <p>{{sale.taxable_person_sales}}</p>
                         </vs-col>
+
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>VAT:</h6>
                             <p>{{person_vat}}</p>
                         </vs-col>
+
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>Taxable Value x Average Rate:</h6>
                             <p>{{person_taxable}}</p>
                         </vs-col>
+
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>VAT:</h6>
                             <p>{{person_taxable_vat}}</p>
                         </vs-col>
+
                         <vs-divider position="left">
                             <h5>Sales to Customers</h5>
                         </vs-divider>
+                        
                         <vs-col class="mt-5" vs-lg="12" vs-md="12" vs-sm="12">
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
@@ -117,7 +126,7 @@
                         </vs-divider>
                         <vs-col class="mt-5 text-center" vs-lg="12" vs-md="12" vs-sm="12">
                             <p>{{customer_taxable_vat}}</p>
-                        </vs-col>
+                        </vs-col> -->
                     </vs-row>
                 </vx-card>
             </vs-col>
