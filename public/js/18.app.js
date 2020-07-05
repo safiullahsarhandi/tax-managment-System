@@ -143,9 +143,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   inject: ['generatePassword', 'loginUser'],
@@ -220,17 +217,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.$vs.loading.close();
       });
     },
-    updateCustomerStatus: function updateCustomerStatus(customer_id, status) {
+    updateCustomerStatus: function updateCustomerStatus(customer_id, status, index) {
+      var _this2 = this;
+
       this.updateStatus({
         customer_id: customer_id,
         status: status,
         notify: this.$vs.notify
+      }).then(function (res) {
+        if (status != _this2.currentStatus) {
+          _this2.customers.splice(index, 1);
+        }
       });
     },
     viewTaxTeam: function viewTaxTeam(id) {
       var customer = this.findCustomer(id);
-      console.log(customer);
-      console.log(customer.taxes);
       this.taxes = customer.taxes;
       this.viewTaxTeamModal = true;
     }
@@ -521,7 +522,8 @@ var render = function() {
                                             input: function($event) {
                                               return _vm.updateCustomerStatus(
                                                 tr.customer_id,
-                                                tr.customer_status
+                                                tr.customer_status,
+                                                index
                                               )
                                             }
                                           },

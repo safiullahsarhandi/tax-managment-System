@@ -143,6 +143,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+<<<<<<< HEAD
 //
 //
 //
@@ -227,6 +228,8 @@ var multiUploads = function multiUploads() {
   return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! @/components/MultiUploads.vue */ "./resources/js/src/components/MultiUploads.vue"));
 };
 
+=======
+>>>>>>> 2b6e85517cf935e6ee52b4a38db951a00d397e5f
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -293,6 +296,7 @@ var multiUploads = function multiUploads() {
       });
       this.$refs.multiUploads.isShown = false;
     },
+<<<<<<< HEAD
     hasError: function hasError(res) {
       this.$vs.notify({
         color: 'danger',
@@ -353,6 +357,25 @@ var multiUploads = function multiUploads() {
           });
         }
       });
+=======
+    updateCustomerStatus: function updateCustomerStatus(customer_id, status, index) {
+      var _this2 = this;
+
+      this.updateStatus({
+        customer_id: customer_id,
+        status: status,
+        notify: this.$vs.notify
+      }).then(function (res) {
+        if (status != _this2.currentStatus) {
+          _this2.customers.splice(index, 1);
+        }
+      });
+    },
+    viewTaxTeam: function viewTaxTeam(id) {
+      var customer = this.findCustomer(id);
+      this.taxes = customer.taxes;
+      this.viewTaxTeamModal = true;
+>>>>>>> 2b6e85517cf935e6ee52b4a38db951a00d397e5f
     }
   })
 });
@@ -524,11 +547,204 @@ var render = function() {
           _c(
             "form",
             {
+<<<<<<< HEAD
               ref: "addCustomer",
               on: {
                 submit: function($event) {
                   $event.preventDefault()
                   return _vm.addCustomer($event)
+=======
+              attrs: {
+                search: "",
+                pagination: "",
+                "max-items": _vm.tableEntries,
+                data: _vm.customers
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "default",
+                  fn: function(ref) {
+                    var data = ref.data
+                    return _vm._l(data, function(tr, index) {
+                      return _c(
+                        "vs-tr",
+                        { key: index },
+                        [
+                          _c("vs-td", { attrs: { data: tr.id } }, [
+                            _vm._v(" " + _vm._s("C00000" + tr.id))
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", { attrs: { data: tr.name_english } }, [
+                            _vm._v(_vm._s(tr.name_english))
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", { attrs: { data: tr.name_khmer } }, [
+                            _vm._v(_vm._s(tr.name_khmer))
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", { attrs: { data: tr.industry } }, [
+                            _vm._v(_vm._s(tr.industry))
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", { attrs: { data: tr.id } }, [
+                            _vm._v(_vm._s(tr.tax_duration))
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", { attrs: { data: tr.tax_card_num } }, [
+                            _vm._v(_vm._s(tr.tax_card_num))
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", { attrs: { data: tr.tin_no } }, [
+                            _vm._v(_vm._s(tr.tin_no))
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", { attrs: { data: tr.email } }, [
+                            _vm._v(_vm._s(tr.email))
+                          ]),
+                          _vm._v(" "),
+                          _vm.$store.getters.userType == "Admin" ||
+                          _vm.$store.getters.userType == "Super Admin"
+                            ? _c(
+                                "vs-td",
+                                {
+                                  attrs: {
+                                    data: _vm.getSupervisor(tr.supervisor)
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.getSupervisor(tr.supervisor))
+                                  )
+                                ]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.$store.getters.userType != "Officer"
+                            ? _c(
+                                "vs-td",
+                                { attrs: { data: _vm.getOfficer(tr.officer) } },
+                                [_vm._v(_vm._s(_vm.getOfficer(tr.officer)))]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.$store.getters.userType == "Officer" ||
+                          _vm.$store.getters.userType == "Supervisor"
+                            ? _c(
+                                "vs-td",
+                                { attrs: { data: tr.status } },
+                                [
+                                  _c(
+                                    "vx-input-group",
+                                    [
+                                      _c(
+                                        "vs-select",
+                                        {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required",
+                                              expression: "'required'"
+                                            }
+                                          ],
+                                          attrs: {
+                                            placeholder:
+                                              "Select Customer Status"
+                                          },
+                                          on: {
+                                            input: function($event) {
+                                              return _vm.updateCustomerStatus(
+                                                tr.customer_id,
+                                                tr.customer_status,
+                                                index
+                                              )
+                                            }
+                                          },
+                                          model: {
+                                            value: tr.customer_status,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                tr,
+                                                "customer_status",
+                                                $$v
+                                              )
+                                            },
+                                            expression: "tr.customer_status"
+                                          }
+                                        },
+                                        [
+                                          _c("vs-select-item", {
+                                            attrs: {
+                                              value: "Prospect",
+                                              text: "Prospect"
+                                            }
+                                          }),
+                                          _vm._v(" "),
+                                          _c("vs-select-item", {
+                                            attrs: {
+                                              value: "Activate",
+                                              text: "Activate"
+                                            }
+                                          }),
+                                          _vm._v(" "),
+                                          _c("vs-select-item", {
+                                            attrs: {
+                                              value: "Deactivate",
+                                              text: "Deactivate"
+                                            }
+                                          }),
+                                          _vm._v(" "),
+                                          _c("vs-select-item", {
+                                            attrs: {
+                                              value: "Pending",
+                                              text: "Pending"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            [
+                              _vm.$store.getters.userType == "Officer" ||
+                              _vm.$store.getters.userType == "Supervisor"
+                                ? _c("vs-button", {
+                                    attrs: {
+                                      to: "company-update/" + tr.customer_id,
+                                      size: "small",
+                                      type: "border",
+                                      "icon-pack": "feather",
+                                      icon: "icon-edit"
+                                    }
+                                  })
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _c("vs-button", {
+                                attrs: {
+                                  to: "company-detail/" + tr.customer_id,
+                                  size: "small",
+                                  "icon-pack": "feather",
+                                  icon: "icon-maximize-2",
+                                  type: "border"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    })
+                  }
+>>>>>>> 2b6e85517cf935e6ee52b4a38db951a00d397e5f
                 }
               }
             },

@@ -47,6 +47,13 @@ export default [{
         isMain : false,
     },
     {
+        url: "/",
+        name: "Reports",
+        slug: "Reports",
+        icon: "BookOpenIcon",
+        isMain : false,
+    },
+    {
         url: "/faqs",
         name: "Faqs",
         slug: "faqs",

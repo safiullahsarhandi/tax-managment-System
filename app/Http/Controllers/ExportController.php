@@ -189,7 +189,6 @@ class ExportController extends Controller {
 				$company_name = 'Company Name: ' . $com_name;
 				$company_name_khmer = 'នាមករណ៍សហគ្រាស: ' . $com_name_khmr;
 
-
 				$sheet->prependRow([$eng_address]);
 				$sheet->prependRow([$khmr_address]);
 				$sheet->prependRow([$tin]);
@@ -367,4 +366,48 @@ class ExportController extends Controller {
 		})->export('xlsx');
 
 	}
+
+	// public function export_soccer_markets() {
+
+	// 	$url = "https://soccer.sportmonks.com/api/v2.0/markets?api_token=dxX0XmyrvgedIuA9xjvtAORr280Ayx2fqYyBppYzYxLtdaM7tCd2wkhXinlY";
+
+	// 	//  Initiate curl
+	// 	$ch = curl_init();
+	// 	// Will return the response, if false it print the response
+	// 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	// 	// Set the url
+	// 	curl_setopt($ch, CURLOPT_URL, $url);
+	// 	// Execute
+	// 	$result = curl_exec($ch);
+	// 	// Closing
+	// 	curl_close($ch);
+
+	// 	// Will dump a beauty json :3
+	// 	$result = json_decode($result, true);
+	// 	$data = $result['data'];
+	// 	$meta = $result['meta'];
+
+	// 	$sportsName = 'Sport: ' . $meta['sports'][0]['name'];
+
+	// 	$excelData = array();
+	// 	foreach ($data as $key => $value) {
+	// 		$excelData[$key]['Id'] = $value['id'];
+	// 		$excelData[$key]['Name'] = $value['name'];
+	// 	}
+
+	// 	$hr_left = array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+
+	// 	Excel::create('soccer-market', function ($excel) use ($excelData, $hr_left, $sportsName) {
+	// 		$excel->sheet('Soccer Market', function ($sheet) use ($excelData, $hr_left, $sportsName) {
+
+	// 			$sheet->fromArray($excelData);
+	// 			$sheet->getStyle("A1:A3000")->getAlignment()->applyFromArray($hr_left);
+	// 			$sheet->prependRow([$sportsName]);
+	// 			$sheet->mergeCells('A1:B1');
+	// 			$sheet->getStyle('A1:B1')->getFont()->setBold(true);
+
+	// 		});
+	// 	})->export('xlsx');
+
+	// }
 }

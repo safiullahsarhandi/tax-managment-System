@@ -48,52 +48,61 @@
                             <h6>Description:</h6>
                             <p>{{sale.description}}</p>
                         </vs-col>
-                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
-                            <h6>Quantity:</h6>
-                            <p>{{sale.quantity}}</p>
-                        </vs-col>
+                        
                     </vs-row>
                 </vx-card>
                 <vx-card class="mt-base" title="Sales Summary">
                     <vs-row>
+                        <vs-col class="mt-5" vs-lg="12" vs-md="12" vs-sm="12">
+                            <h6>Quantity:</h6>
+                            <p>{{sale.quantity}}</p>
+                        </vs-col>
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>Non Taxable Sale:</h6>
                             <p>{{customer.non_taxable_sales || 'NA'}}</p>
                         </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
+                        <!-- <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>Non taxable sale x Average rate:</h6>
                             <p>{{non_taxable_sales}}</p>
-                        </vs-col>
+                        </vs-col> -->
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>Value Of Exports:</h6>
                             <p>{{sale.vat || 'NA'}}</p>
                         </vs-col>
+
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>Value Of Exports:</h6>
                             <p>{{value_of_exports}}</p>
                         </vs-col>
-                        <vs-divider position="left">
+
+                       <!--  <vs-divider position="left">
                             <h5>Sales to Taxable Persons</h5>
-                        </vs-divider>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
+                        </vs-divider> -->
+
+                        <!-- <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>Taxable Value:</h6>
                             <p>{{sale.taxable_person_sales}}</p>
                         </vs-col>
+
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>VAT:</h6>
                             <p>{{person_vat}}</p>
                         </vs-col>
+
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>Taxable Value x Average Rate:</h6>
                             <p>{{person_taxable}}</p>
                         </vs-col>
+
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>VAT:</h6>
                             <p>{{person_taxable_vat}}</p>
                         </vs-col>
+
                         <vs-divider position="left">
                             <h5>Sales to Customers</h5>
                         </vs-divider>
+                        
                         <vs-col class="mt-5" vs-lg="12" vs-md="12" vs-sm="12">
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
@@ -117,7 +126,7 @@
                         </vs-divider>
                         <vs-col class="mt-5 text-center" vs-lg="12" vs-md="12" vs-sm="12">
                             <p>{{customer_taxable_vat}}</p>
-                        </vs-col>
+                        </vs-col> -->
                     </vs-row>
                 </vx-card>
             </vs-col>
@@ -136,7 +145,7 @@
                                     <vs-select-item value="0" text="Work In Progress"></vs-select-item>
                                     <vs-select-item value="1" text="Submit"></vs-select-item>
                     </vs-select>
-                    <vs-select v-if="userType == 'Admin' || userType == 'Super Admin'" autocomplete
+                    <vs-select v-if="userType == 'Admin' || userType == 'Super Admin' && show_status_dropdown == true" autocomplete
                      @input="changeManagementStatus(sale.management_confirmed, sale.sale_id, 'admin')" v-model="sale.management_confirmed" class="p-0 ml-0" placeholder="Select Status" style="width: 100%;" >
                                     <vs-select-item value="0" text="Pending"></vs-select-item>
                                     <vs-select-item value="1" text="Approve"></vs-select-item>
@@ -144,6 +153,7 @@
                                     <vs-select-item value="3" text="Reject"></vs-select-item>
                                     
                     </vs-select>
+                    
                     <vs-list>
                         <vs-list-item title="Edit Sale" v-if="editPermissionAccess(sale)">
                             <vs-button :to="'/sale-update/'+$route.params.id" icon-pack="feather" size="small" icon='icon-edit'></vs-button>
@@ -189,12 +199,18 @@ export default {
     },
     data() {
         return {
+            managerId: null,
             tax_id: '',
             openComments: false,
-            is_saleCreatedByLoginUser: false
+            is_saleCreatedByLoginUser: false,
+            is_admin: false,
+            is_supervisor: false,
+            is_officer: false,
+            show_status_dropdown: true,
         };
     },
     async created() {
+        this.managerId = this.$store.state.AppActiveUser.manager_id;
         await this.getSale(this.$route.params.id).then(res=>{
             var created_by = res.data.sale.created_by;
             if (this.$store.state.AppActiveUser.type == 'Supervisor') {
@@ -210,6 +226,17 @@ export default {
             // console.log(res.data);
         });
         this.$store.dispatch('getAverageRate');
+        if (this.$store.state.AppActiveUser.type == 'Admin' || this.$store.state.AppActiveUser.type == 'Super Admin' ) {
+            this.is_admin = true;
+        }
+
+        if (this.$store.state.AppActiveUser.type == 'Supervisor') {
+            this.is_supervisor = true;
+        }
+
+        if (this.$store.state.AppActiveUser.type == 'Officer') {
+            this.is_officer = true;
+        }   
     },
     computed: {
         ...mapState('sales', ['sale']),
@@ -330,6 +357,16 @@ export default {
                 }
 
                 if(this.is_admin){
+
+
+                    var created_by = tr.created_by.manager_id;
+                    
+                    if(this.managerId == created_by){ // means current sale added by super admin it has every access 
+                        this.show_status_dropdown = false;
+                        return true;
+                    }
+
+
                     if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 0){
                         return false;
                     }

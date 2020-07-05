@@ -601,6 +601,12 @@ __webpack_require__.r(__webpack_exports__);
   icon: "ActivityIcon",
   isMain: false
 }, {
+  url: "/",
+  name: "Reports",
+  slug: "Reports",
+  icon: "BookOpenIcon",
+  isMain: false
+}, {
   url: "/faqs",
   name: "Faqs",
   slug: "faqs",
@@ -769,6 +775,12 @@ __webpack_require__.r(__webpack_exports__);
   name: "My Team",
   slug: "team-members",
   icon: "UsersIcon",
+  isMain: false
+}, {
+  url: "/",
+  name: "Reports",
+  slug: "Reports",
+  icon: "BookOpenIcon",
   isMain: false
 }, {
   url: "/faqs",

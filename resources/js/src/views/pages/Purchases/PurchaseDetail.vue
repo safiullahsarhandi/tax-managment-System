@@ -185,7 +185,7 @@
                                     <vs-select-item value="1" text="Submit"></vs-select-item>
                     </vs-select>
 
-                    <vs-select v-if="userType == 'Admin' || userType == 'Super Admin'" autocomplete 
+                    <vs-select v-if="userType == 'Admin' || userType == 'Super Admin' && show_status_dropdown == true" autocomplete 
                     @input="changeManagementStatus(purchase.management_confirmed, purchase.purchase_id, 'admin')" v-model="purchase.management_confirmed" class="p-0 ml-0" placeholder="Select Status" style="width: 100%;" >
                                     <vs-select-item value="0" text="Pending"></vs-select-item>
                                     <vs-select-item value="1" text="Approve"></vs-select-item>
@@ -230,12 +230,31 @@ export default {
     },
     data() {
         return {
+            managerId: null,
             tax_id: '',
             openComments: false,
-            is_saleCreatedByLoginUser: false
+            is_saleCreatedByLoginUser: false,
+            is_admin: false,
+            is_supervisor: false,
+            is_officer: false,
+            show_status_dropdown: true,
         };
     },
     async created() {
+
+
+        if (this.$store.state.AppActiveUser.type == 'Admin' || this.$store.state.AppActiveUser.type == 'Super Admin' ) {
+            this.is_admin = true;
+        }
+
+        if (this.$store.state.AppActiveUser.type == 'Supervisor') {
+            this.is_supervisor = true;
+        }
+
+        if (this.$store.state.AppActiveUser.type == 'Officer') {
+            this.is_officer = true;
+        } 
+        this.managerId = this.$store.state.AppActiveUser.manager_id;
         await this.getPurchase(this.$route.params.id).then(res=>{
             var created_by = res.data.purchase.created_by;
             if (this.$store.state.AppActiveUser.type == 'Supervisor') {
@@ -243,7 +262,17 @@ export default {
                     this.is_saleCreatedByLoginUser = true;
                 }
             }
+
+            if (this.$store.state.AppActiveUser.type == 'Admin' || this.$store.state.AppActiveUser.type == 'Super Admin') {
+                if(this.$store.state.AppActiveUser.manager_id == created_by.manager_id){
+                    if(this.is_admin == true){
+                        this.show_status_dropdown = false;
+                    }
+                }
+            }
         });
+
+        
 
         localStorage.setItem('customer',this.purchase.customer_id)
         localStorage.setItem('currentDetail','/tax-collection/'+this.purchase.tax_id);
@@ -309,6 +338,7 @@ export default {
         },
 
         editPermissionAccess(tr){
+
 
                 if(this.is_officer){
                     if(tr.officer_confirmed == 0 && tr.supervisor_confirmed == 0){
@@ -387,6 +417,13 @@ export default {
                 }
 
                 if(this.is_admin){
+
+                    var created_by = tr.created_by.manager_id;
+
+                    if(this.managerId == created_by){ // means current sale added by super admin it has every access 
+                        return true;
+                    }
+
                     if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 0){
                         return false;
                     }
