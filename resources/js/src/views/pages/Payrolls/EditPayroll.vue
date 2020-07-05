@@ -68,6 +68,16 @@
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('spouse')">{{errors.first('spouse')}}</span>
                     </vs-col>
+                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                        <vx-input-group>
+                            <vs-input label-placeholder="Children" :disabled="true" :value="employeeVal.children" />
+                        </vx-input-group>
+                    </vs-col>
+                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                        <vx-input-group>
+                            <vs-input label-placeholder="Employee Type" :disabled="true" :value="Object.keys(employeeVal).length > 0?employeeVal.employee_type == 'RD'?'Resident':'Non Resident':''" />
+                        </vx-input-group>
+                    </vs-col>
                 </vs-row>
                 <vs-row style="padding-left: 20px; color: gray">
                     <br>
@@ -151,7 +161,7 @@
                         <vx-input-group>
                             <vs-input name="salary_adjusment" data-vv-as="Salary Adjustment" v-validate="`required`" label-placeholder="Salary Adjustment" v-model="salary_adjustment" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('salary_adjustment')">{{errors.first('salary_adjustment')}}</span>
+                        <span class="text-danger" v-show="errors.has('salary_adjusment')">{{errors.first('salary_adjusment')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
@@ -227,7 +237,7 @@ export default {
             employeeVal: {},
             basic_salary: 0,
             bonus: '',
-            overtime: '',
+            over_time: '',
             commissions: '',
             seniority_payment: '',
             severance_pay: '',
@@ -313,9 +323,10 @@ export default {
                 this.transport_allowance = this.data.transport_allowance;
                 this.other_allowance = this.data.others;
                 this.deduction_advance = this.data.deduction_advance;
-                this.salary_adjustment = this.data.salary_adjustment;
+                this.salary_adjustment = this.data.salary_adjusment;
                 this.remark = this.data.remark;
                 self = this;
+                this.setAllowance()
                 self.customField = [];
                 if (this.data.additional_fields != null) {
                     if (this.data.additional_fields.length > 0) {
@@ -339,6 +350,9 @@ export default {
         },
         addMoreFeild() {
             this.customField.push({ name: 'additional_fields[]', value: '', type: 'text' });
+        },
+        setAllowance(){
+            this.allowance = (this.employeeVal.spouse + this.employeeVal.children) * 150000
         },
         rateToPercent(rate) {
             return (rate / 100)

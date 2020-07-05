@@ -2050,7 +2050,8 @@ class ApplicationController extends Controller {
 
 		}
 			$pr->save();
-			$subject_id = array_keys($request->tax_param);
+			$subject_id = array_first(array_keys($request->tax_param));
+			// dd($subject_id);
 			$taxSubject = TaxSubject::find($subject_id);
 			$taxSubject->param_id = $request->tax_param[$subject_id];
 			$taxSubject->save();

@@ -9,7 +9,9 @@ class CustomerEmployee extends Model {
 	protected $table = 'customers_employees';
 
 	protected $appends =['table_name'];
-
+	protected $casts = [
+		'spouse' => 'integer',
+	];
 	public function getTableNameAttribute(){
 		return 'customers_employees';
 	}

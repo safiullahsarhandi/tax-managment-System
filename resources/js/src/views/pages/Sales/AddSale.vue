@@ -282,8 +282,6 @@ export default {
             var export_value = ( * this.averageRate);*/
 
             this.total_taxable_value = ((this.person_non_taxable_sales + this.customer_non_taxable_sales + this.non_taxable_sales + this.export_value) * this.averageRate);
-
-
         },
         calculateTaxParams() {
             _.each(this.params, (o, index) => {
