@@ -32,10 +32,10 @@
                             <h6>Description:</h6>
                             <p>{{purchase.description}}</p>
                         </vs-col>
-                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                        <!-- <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
                             <h6>Quantity:</h6>
                             <p>{{purchase.quantity}}</p>
-                        </vs-col>
+                        </vs-col> -->
                         <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
                             <h6>Subject:</h6>
                             <p>{{purchase.subject}}</p>
@@ -61,110 +61,59 @@
                 <vx-card class="mt-base" title="Purchases Summary">
                     <vs-row>
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
+                            <h6>Quantity:</h6>
+                            <p>{{purchase.quantity}}</p>
+                        </vs-col>
+                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>Non Taxable Purchase (USD):</h6>
-                            <p>{{customer.non_taxable_purchases || 0}}</p>
+                            <p>{{purchase.non_taxable_purchases || 0}}</p>
                         </vs-col>
+                        
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Non taxable Purchases (RIEL):</h6>
-                            <p>{{non_taxable_purchases_riel}}</p>
-                        </vs-col>
-                        <vs-divider position="left">
-                            <h5>Local Purchases</h5>
-                        </vs-divider>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Taxable Value (USD):</h6>
+                            <h6>Taxable Value: <small>(Local Purchases)</small></h6>
                             <p>{{purchase.local_purchase_tax_val || 0}}</p>
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>VAT (USD):</h6>
-                            <p>{{vat_local_usd}}</p>
-                        </vs-col>
-                        <vs-divider position="left">
-                            <h5>Taxable Purchases</h5>
-                        </vs-divider>
-                        <vs-col class="mt-5" vs-lg="12" vs-md="12" vs-sm="12">
-                            <h6>Imports:</h6>
-                        </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Taxable Value (RIEL):</h6>
+                            <h6>Taxable Value: <small>(Imports)</small></h6>
                             <p>{{purchase.imports_taxable_val}}</p>
                         </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>VAT (RIEL):</h6>
-                            <p>{{vat_import_riel}}</p>
+
+                        <vs-divider position="left">
+                            <h5>Tax Parameters:</h5>
+                        </vs-divider>
+                        <vs-col v-for="(param,index) in params" :key="index" vs-md="12" :vs-lg="param.tax_code == 'VAT'?'8':'4'" vs-sm="12">
+
+                            <div v-if="param.tax_code != 'VAT'">
+                                <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
+                                    <h6 style="margin: 0px; padding: 0px">{{ param.tax_param_id }}</h6>
+                                    <p>{{ param.calculated_val }}</p>
+                                </vs-col>
+                            </div>
+                            <div v-else>
+
+                                <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
+                                    <h6 style="margin: 0px; padding: 0px">Local purchase ( {{ param.tax_code }} )</h6>
+                                    <p style="font-weight: bold;">{{ param.tax_param_id }}</p>
+                                    <p>{{purchase.imports_taxable_val}}</p>
+                                </vs-col>
+
+                                <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
+                                    <h6 style="margin: 0px; padding: 0px">Overseas purchase ( {{ param.tax_code }} )</h6>
+                                    <p style="font-weight: bold;">{{ param.tax_param_id }}</p>
+                                    <p>{{ vat_overseas_purchase }}</p>
+                                </vs-col>
+
+                            </div>
+
                         </vs-col>
-                        <vs-col class="mt-5" vs-lg="12" vs-md="12" vs-sm="12">
-                            <h6>Local Purchases:</h6>
-                        </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Taxable Value (RIEL):</h6>
-                            <p>{{local_purchase_tax_val_reil}}</p>
-                        </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>VAT (RIEL):</h6>
-                            <p>{{local_purchase_tax_vat_reil}}</p>
-                        </vs-col>
+                       
                         <vs-divider position="center">
                             <h5>Total Taxable Value:</h5>
                         </vs-divider>
                         <vs-col class="mt-5 text-center" vs-lg="12" vs-md="12" vs-sm="12">
                             <p>{{total_vat}}</p>
-                        </vs-col>
-                        
-                        <!--  <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Total VAT:</h6>
-                            <p>{{purchase.total_vat || 'NA'}}</p>
-                        </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Value Of Exports:</h6>
-                            <p>{{value_of_exports}}</p>
-                        </vs-col>
-                        <vs-divider position="left">
-                            <h5>Purchase to Taxable Persons</h5>
-                        </vs-divider>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Taxable Value:</h6>
-                            <p>{{sale.taxable_person_sales}}</p>
-                        </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>VAT:</h6>
-                            <p>{{person_vat}}</p>
-                        </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Taxable Value x Average Rate:</h6>
-                            <p>{{person_taxable}}</p>
-                        </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>VAT:</h6>
-                            <p>{{person_taxable_vat}}</p>
-                        </vs-col>
-                        <vs-divider position="left">
-                            <h5>Sales to Customers</h5>
-                        </vs-divider>
-                        <vs-col class="mt-5" vs-lg="12" vs-md="12" vs-sm="12">
-                        </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Taxable Value:</h6>
-                            <p>{{sale.cust_sales}}</p>
-                        </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>VAT:</h6>
-                            <p>{{customer_vat}}</p>
-                        </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Taxable Value x Average Rate:</h6>
-                            <p>{{customer_taxable}}</p>
-                        </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>VAT:</h6>
-                            <p>{{customer_taxable_vat}}</p>
-                        </vs-col>
-                        <vs-divider position="center">
-                            <h5>Total Taxable Value:</h5>
-                        </vs-divider>
-                        <vs-col class="mt-5 text-center" vs-lg="12" vs-md="12" vs-sm="12">
-                            <p>{{customer_taxable_vat}}</p>
-                        </vs-col> -->
+                        </vs-col>                        
+                       
                     </vs-row>
                 </vx-card>
             </vs-col>
@@ -237,12 +186,16 @@ export default {
             is_admin: false,
             is_supervisor: false,
             is_officer: false,
+            params: [],
             show_status_dropdown: true,
+            non_taxable_purchases: 0,
+            taxable_value_local: 0,
+            taxable_value_import: 0,
         };
     },
     async created() {
 
-
+        this.$store.dispatch('getAverageRate');
         if (this.$store.state.AppActiveUser.type == 'Admin' || this.$store.state.AppActiveUser.type == 'Super Admin' ) {
             this.is_admin = true;
         }
@@ -257,6 +210,7 @@ export default {
         this.managerId = this.$store.state.AppActiveUser.manager_id;
         await this.getPurchase(this.$route.params.id).then(res=>{
             var created_by = res.data.purchase.created_by;
+            this.params = res.data.purchase.taxes_subject;
             if (this.$store.state.AppActiveUser.type == 'Supervisor') {
                 if(this.$store.state.AppActiveUser.manager_id == created_by.manager_id){
                     this.is_saleCreatedByLoginUser = true;
@@ -272,18 +226,39 @@ export default {
             }
         });
 
-        
+        this.calculateTaxParams();
 
         localStorage.setItem('customer',this.purchase.customer_id)
         localStorage.setItem('currentDetail','/tax-collection/'+this.purchase.tax_id);
 
         this.tax_id = this.purchase.tax_id;
         this.getCustomer(this.purchase.customer_id);
-        this.$store.dispatch('getAverageRate');
+    },
+    watch: {
+        non_taxable_purchases(val, oldVal) {
+            this.setTotalVat()
+            if(val == ''){
+            this.non_taxable_purchases = 0;        
+            }
+
+        },
+        taxable_value_local(val, oldVal) {
+            this.setTotalVat()
+            if(val == ''){
+            this.taxable_value_local = 0;        
+            }
+        },
+        taxable_value_import(val, oldVal) {
+            this.setTotalVat()
+            if(val == ''){
+            this.taxable_value_import = 0;        
+            }
+        },
     },
     computed: {
         ...mapState('purchases', ['purchase']),
         ...mapState('customers', ['customer']),
+        ...mapState('taxes', ['parameters']),
         userType() {
             return this.$store.getters.userType;
         },
@@ -319,6 +294,68 @@ export default {
             statusChange: 'taxes/statusUpdateSPP',
             statusChangeManagment: 'taxes/statusChangeManagment'
         }),
+
+        setTotalVat() {
+            var non_taxable_purchase_val = (this.non_taxable_purchases * this.averageRate);
+
+            var taxable_value = (this.taxable_value_local * this.averageRate);
+            var taxable_value_local_val = (taxable_value + (taxable_value * 0.1));
+
+            var taxable_value = (this.taxable_value_import * this.averageRate);
+            var taxable_value_import_val = (taxable_value + (taxable_value * 0.1));
+
+            this.total_vat = non_taxable_purchase_val + taxable_value_local_val + taxable_value_import_val;
+        },
+
+        calculateTaxParams() {
+            var p = this.purchase;
+            this.non_taxable_purchases = p.non_taxable_purchases;
+            this.taxable_value_local = p.local_purchase_tax_val;
+            this.taxable_value_import = p.imports_taxable_val;
+            _.each(this.params, (o, index) => {
+
+                var o = o.parameter;
+
+                if (o.tax_code == 'WHT') {
+                    /*
+                     *   (Non Taxable Purchases * WHT Rate ) + (Local Purchases Taxable Value * WHT Rate)
+                     */
+                     o.calculated_val = ((parseFloat(this.non_taxable_purchases) * this.rateToPercent(o.rate)) + (parseFloat(this.taxable_value_local) * this.rateToPercent(o.rate))).toFixed(2);
+                }
+                if (o.tax_code == 'FBT') {
+                    /*
+                     *   (Non Taxable Purchases * FBT Rate )
+                     */
+                     o.calculated_val = (parseFloat(this.non_taxable_purchases) * this.rateToPercent(o.rate)).toFixed(2);
+                }
+                if (o.tax_code == 'VAT') {
+
+                    if (this.taxable_value_local > 0) {
+                    /*
+                     *   (Local Purchace Taxable Value  * VAT Rate) for local purchase
+                     */
+                        this.vat_local_purchase = (this.taxable_value_local * this.rateToPercent(o.rate)).toFixed(2);
+                        // o.calculated_val = (parseFloat(this.taxable_value_local) * this.rateToPercent(o.rate)).toFixed(2)
+                    }else{
+                        this.vat_local_purchase = 0;
+                    }
+
+                    if (this.taxable_value_import > 0) {
+                    /*
+                     *   (Imports Taxable Value * VAT Rate) for overseas purchase
+                     */
+                        this.vat_overseas_purchase = (this.taxable_value_import * this.rateToPercent(o.rate)).toFixed(2);
+                        // o.calculated_val = (parseFloat(this.taxable_value_local) * this.rateToPercent(o.rate)).toFixed(2)
+                    }else{
+                        this.vat_overseas_purchase = 0;
+                    }
+                }
+                Vue.set(this.params, index, o);
+            })
+        },
+        rateToPercent(rate) {
+            return (rate / 100)
+        },
 
         statusUpdate(id, status) {
 

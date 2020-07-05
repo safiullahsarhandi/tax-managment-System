@@ -16,6 +16,7 @@ Route::group(['prefix' => ''], function () {
 
 	Route::get('get-dashboard-data', 'ApplicationController@get_dashboard_data');
 	Route::get('get-average-rate', 'ApplicationController@get_average_rate');
+	Route::get('get-salary-rate', 'ApplicationController@get_salary_rate');
 	Route::get('login-user', 'ApplicationController@get_login_user');
 	Route::post('login', 'ApplicationController@login');
 

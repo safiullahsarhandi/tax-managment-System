@@ -13,6 +13,7 @@ const state = {
     allNotificationsDetail : {},
     totalNotifications : 0,
     averageRate : 0,
+    salaryRate : 0,
     rootUrl : '/',
     isSidebarActive: true,
     breakpoint: null,

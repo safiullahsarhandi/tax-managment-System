@@ -40,6 +40,10 @@ class ApplicationController extends Controller {
 		$rate = Settings::where('key', 'average_rate')->first();
 		return $rate->value;
 	}
+	public function get_salary_rate() {
+		$rate = Settings::where('key', 'salary_rate')->first();
+		return $rate->value;
+	}
 	public function get_dashboard_data(Request $request) {
 		$manager = Admin::where('manager_id', $request->manager)->first();
 		// return TaxCustomers::where()->get();
@@ -820,6 +824,7 @@ class ApplicationController extends Controller {
 		$employee->contract_type = $request->contract_type;
 		$employee->spouse = $request->spouse;
 		$employee->children = $request->children;
+		$employee->employee_type = $request->employee_type;
 		$result = $employee->save();
 		return response()->json(['status' => 'success', 'msg' => 'Employee added successfully']);
 	}
@@ -857,6 +862,7 @@ class ApplicationController extends Controller {
 		$employee->sex = $request->sex;
 		$employee->contract_type = $request->contract_type;
 		$employee->spouse = $request->spouse;
+		$employee->employee_type = $request->employee_type;
 		$result = $employee->save();
 		return response()->json(['status' => 'success', 'msg' => 'Employee added successfully', 'employee' => $employee]);
 	}
@@ -1584,10 +1590,10 @@ class ApplicationController extends Controller {
 			->latest('id')->get();
 		return response()->json(compact('taxes'));
 	}
-	public function get_parameters(Request $request,Parameter $parameter) {
+	public function get_parameters(Request $request, Parameter $parameter) {
 		$parameters = $parameter->orderBy('status', 'desc')->orderBy('id', 'desc');
-		if($request->has('where') && !empty($request->where)){
-			$parameters->where('tax_type',$request->where);
+		if ($request->has('where') && !empty($request->where)) {
+			$parameters->where('tax_type', $request->where);
 		}
 		$parameters = $parameters->get();
 		return response()->json(compact('parameters'));
@@ -1656,7 +1662,7 @@ class ApplicationController extends Controller {
 			} else {
 				$purchase->tax_officer_id = $request->officer_id;
 		*/
-		if($purchase->save()){
+		if ($purchase->save()) {
 			foreach ($request->tax_params as $key => $param) {
 				$taxSubject = new TaxSubject;
 				$taxSubject->subject_id = (String) Str::uuid();
@@ -1666,15 +1672,15 @@ class ApplicationController extends Controller {
 				$taxSubject->save();
 			}
 
-		$history = new History;
-		$history->history_id = (String) Str::uuid();
-		$history->object_id = $purchase->purchase_id;
-		$history->type = 'purchase';
-		$history->event = 'create';
-		$history->tax_id = $request->tax_id;
-		$history->changes = $request->except(['created_by', 'customer_id', 'tax_id']);
-		$history->description = 'A purchase with invoice No : ' . $purchase->invoice_num . ' is created by ' . session('admin.type') . ': ' . session('admin.full_name');
-		$history->save();
+			$history = new History;
+			$history->history_id = (String) Str::uuid();
+			$history->object_id = $purchase->purchase_id;
+			$history->type = 'purchase';
+			$history->event = 'create';
+			$history->tax_id = $request->tax_id;
+			$history->changes = $request->except(['created_by', 'customer_id', 'tax_id']);
+			$history->description = 'A purchase with invoice No : ' . $purchase->invoice_num . ' is created by ' . session('admin.type') . ': ' . session('admin.full_name');
+			$history->save();
 		}
 		return response()->json(['status' => 'success']);
 	}
@@ -1723,7 +1729,7 @@ class ApplicationController extends Controller {
 		$sale->additional_fields = $request->additional_fields;
 		$sale->status = 0;
 
-		if($sale->save()){
+		if ($sale->save()) {
 			foreach ($request->tax_params as $key => $param) {
 				$taxSubject = new TaxSubject;
 				$taxSubject->subject_id = (String) Str::uuid();
@@ -1817,8 +1823,8 @@ class ApplicationController extends Controller {
 		}
 
 		$sale->save();
-		if( $request->has('tax_params') && count($request->tax_params) ){
-			TaxSubject::where('object_id',$sale->sale_id)->delete();
+		if ($request->has('tax_params') && count($request->tax_params)) {
+			TaxSubject::where('object_id', $sale->sale_id)->delete();
 			foreach ($request->tax_params as $key => $param) {
 				$taxSubject = new TaxSubject;
 				$taxSubject->subject_id = (String) Str::uuid();
@@ -1849,12 +1855,12 @@ class ApplicationController extends Controller {
 	}
 
 	public function get_sale(Request $request) {
-		$sale = Sales::with(['officer', 'created_by','taxes_subject'])->whereSaleId($request->id)->first();
+		$sale = Sales::with(['officer', 'created_by', 'taxes_subject.parameter'])->whereSaleId($request->id)->first();
 		return response()->json(compact('sale'));
 	}
 
 	public function get_purchase(Request $request) {
-		$purchase = Purchases::with(['officer', 'created_by','taxes_subject'])->wherePurchaseId($request->id)->first();
+		$purchase = Purchases::with(['officer', 'created_by', 'taxes_subject.parameter'])->wherePurchaseId($request->id)->first();
 		return response()->json(compact('purchase'));
 	}
 
@@ -1898,20 +1904,20 @@ class ApplicationController extends Controller {
 		$purchase->non_taxable_purchases = $request->non_taxable_purchases;
 		$purchase->supplier = $request->supplier;
 		// $purchase->vat_tin = $request->vat_tin;
-		if($request->has('additional_fields')){
+		if ($request->has('additional_fields')) {
 
-		$customfields = $request->additional_fields;
-		for ($i = 1; $i <= count($request->additional_fields); $i++) {
-			if (($key = array_search(null, $customfields)) !== false) {
-				unset($customfields[$key]);
+			$customfields = $request->additional_fields;
+			for ($i = 1; $i <= count($request->additional_fields); $i++) {
+				if (($key = array_search(null, $customfields)) !== false) {
+					unset($customfields[$key]);
+				}
 			}
-		}
 
-		$purchase->additional_fields = $customfields;
+			$purchase->additional_fields = $customfields;
 		}
 		$purchase->save();
-		if( $request->has('tax_params') && count($request->tax_params) ){
-			TaxSubject::where('object_id',$purchase->purchase_id)->delete();
+		if ($request->has('tax_params') && count($request->tax_params)) {
+			TaxSubject::where('object_id', $purchase->purchase_id)->delete();
 			foreach ($request->tax_params as $key => $param) {
 				$taxSubject = new TaxSubject;
 				$taxSubject->subject_id = (String) Str::uuid();
@@ -1964,18 +1970,25 @@ class ApplicationController extends Controller {
 			} else {
 				$pr->tax_officer_id = $request->officer_id;
 		*/
-		$pr->save();
-		// creating activity log that who created
-		$history = new History;
-		$history->history_id = (String) Str::uuid();
-		$history->object_id = $pr->payroll_id;
-		$history->type = 'payroll';
-		$history->event = 'create';
-		$history->tax_id = $pr->tax_id;
-		$history->changes = $request->except(['created_by', 'tax_id']);
-		$history->description = 'A payroll of employee: ' . $pr->employee->name_english . ' with Employee No. ' . $pr->employee->employee_num . ' were created by ' . session('admin.full_name');
-		$history->save();
-		return response()->json(['status' => 'success', 'data' => $pr, 'msg' => 'Payroll Added Successfully']);
+		if ($pr->save()) {
+			$taxSubject = new TaxSubject;
+			$taxSubject->subject_id = (String) Str::uuid();
+			$taxSubject->param_id = $request->tax_param;
+			$taxSubject->object_id = $pr->payroll_id;
+			$taxSubject->type = 'payrolls';
+			$taxSubject->save();
+			// creating activity log that who created
+			$history = new History;
+			$history->history_id = (String) Str::uuid();
+			$history->object_id = $pr->payroll_id;
+			$history->type = 'payroll';
+			$history->event = 'create';
+			$history->tax_id = $pr->tax_id;
+			$history->changes = $request->except(['created_by', 'tax_id']);
+			$history->description = 'A payroll of employee: ' . $pr->employee->name_english . ' with Employee No. ' . $pr->employee->employee_num . ' were created by ' . session('admin.full_name');
+			$history->save();
+			return response()->json(['status' => 'success', 'data' => $pr, 'msg' => 'Payroll Added Successfully']);
+		}
 	}
 
 	public function get_payrolls(Request $request) {
@@ -1988,7 +2001,7 @@ class ApplicationController extends Controller {
 
 	public function get_payroll(Request $request) {
 
-		$data = Payrolls::with(['employee', 'officer', 'customer', 'created_by'])->wherePayrollId($request->id)->first();
+		$data = Payrolls::with(['employee', 'officer', 'customer', 'created_by', 'tax_subject.parameter'])->wherePayrollId($request->id)->first();
 
 		return response()->json(['data' => $data]);
 
@@ -2036,8 +2049,11 @@ class ApplicationController extends Controller {
 			$pr->additional_fields = $customfields;
 
 		}
-
 		$pr->save();
+		$subject_id = array_keys($request->tax_param);
+		$taxSubject = TaxSubject::find($subject_id);
+		$taxSubject->param_id = $request->tax_param[$subject_id];
+		$taxSubject->save();
 		if (count($differenceArray) > 0) {
 			$history = new History;
 			$history->history_id = (String) Str::uuid();
@@ -2856,7 +2872,7 @@ class ApplicationController extends Controller {
 
 	}
 	public function add_parameter(Request $request) {
-		if (Parameter::where('tax_param_id', $request->tax_code . $request->tax_id)->where('tax_type',$request->tax_type)->where('status', 1)->exists()) {
+		if (Parameter::where('tax_param_id', $request->tax_code . $request->tax_id)->where('tax_type', $request->tax_type)->where('status', 1)->exists()) {
 			return response()->json(['status' => 'error', 'msg' => 'You cannot add new Tax Parameter until previous added parameter has not been expired']);
 		}
 		$tax = new Parameter;
@@ -2870,7 +2886,8 @@ class ApplicationController extends Controller {
 		$tax->effective_date = $request->effective_date;
 		$tax->amount_min = $request->amount_min;
 		$tax->amount_max = $request->amount_max;
-		$tax->remarks = $request->amount_max;
+		$tax->tax_bracket = $request->tax_bracket;
+		$tax->remarks = $request->remarks;
 		$save = $tax->save();
 		if ($save) {
 			return response()->json(['status' => 'success', 'msg' => 'Parameter Added Successfully'], 200);
@@ -2878,7 +2895,7 @@ class ApplicationController extends Controller {
 	}
 
 	public function update_parameter(Request $request) {
-		if (Parameter::where('tax_param_id', $request->tax_code . $request->tax_id)->where('id', '!=', $request->identifier)->whereType('tax_type',$request->tax_type)->exists()) {
+		if (Parameter::where('tax_param_id', $request->tax_code . $request->tax_id)->where('id', '!=', $request->identifier)->where('tax_type', $request->tax_type)->exists()) {
 			return response()->json(['status' => 'error', 'msg' => 'You cannot add new Tax Parameter until previous added parameter has not been expired']);
 		}
 		$parameter = Parameter::find($request->identifier);
@@ -2892,7 +2909,8 @@ class ApplicationController extends Controller {
 		$parameter->effective_date = $request->effective_date;
 		$parameter->amount_min = $request->amount_min;
 		$parameter->amount_max = $request->amount_max;
-		$parameter->remarks = $request->amount_max;
+		$parameter->tax_bracket = $request->tax_bracket;
+		$parameter->remarks = $request->remarks;
 		$save = $parameter->save();
 		if ($save) {
 			return response()->json(['status' => 'success', 'msg' => 'Parameter updated successfully', 'parameter' => $parameter], 200);

@@ -109,7 +109,7 @@
                     </vs-col>
                     <vs-col class="mt-5" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input disabled name="total_taxable_value" data-vv-as="Total Taxable Value" label-placeholder="Total Taxable Value" v-model="total_taxable_value" />
+                            <vs-input disabled name="total_taxable_value" data-vv-as="Total Taxable Value" label-placeholder="Total Taxable Value" v-model="total_in_khmer" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('total_taxable_value')">{{errors.first('total_taxable_value')}}</span>
                     </vs-col>

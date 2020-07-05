@@ -59,75 +59,74 @@
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>Non Taxable Sale:</h6>
-                            <p>{{customer.non_taxable_sales || 'NA'}}</p>
+                            <p>{{sale.non_taxable_sales || 'NA'}}</p>
                         </vs-col>
-                        <!-- <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Non taxable sale x Average rate:</h6>
-                            <p>{{non_taxable_sales}}</p>
-                        </vs-col> -->
+                       
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>Value Of Exports:</h6>
-                            <p>{{sale.vat || 'NA'}}</p>
+                            <p>{{sale.vat}}</p>
                         </vs-col>
 
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Value Of Exports:</h6>
-                            <p>{{value_of_exports}}</p>
-                        </vs-col>
-
-                       <!--  <vs-divider position="left">
+<!--                         <vs-divider position="left">
                             <h5>Sales to Taxable Persons</h5>
                         </vs-divider> -->
 
-                        <!-- <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Taxable Value:</h6>
+                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
+                            <h6>Sales to Persons Taxable Value:</h6>
                             <p>{{sale.taxable_person_sales}}</p>
                         </vs-col>
 
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>VAT:</h6>
-                            <p>{{person_vat}}</p>
-                        </vs-col>
 
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Taxable Value x Average Rate:</h6>
-                            <p>{{person_taxable}}</p>
-                        </vs-col>
-
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
+                        <!-- <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>VAT:</h6>
                             <p>{{person_taxable_vat}}</p>
-                        </vs-col>
+                        </vs-col> -->
 
-                        <vs-divider position="left">
+<!--                         <vs-divider position="left">
                             <h5>Sales to Customers</h5>
-                        </vs-divider>
+                        </vs-divider> -->
                         
-                        <vs-col class="mt-5" vs-lg="12" vs-md="12" vs-sm="12">
-                        </vs-col>
+                       <!--  <vs-col class="mt-5" vs-lg="12" vs-md="12" vs-sm="12">
+                        </vs-col> -->
                         <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Taxable Value:</h6>
-                            <p>{{sale.cust_sales}}</p>
+                            <h6>Sales to Customers Taxable Value:</h6>
+                            <p>{{sale.cust_sales || 'N/A'}}</p>
                         </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
+                        <!-- <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>VAT:</h6>
                             <p>{{customer_vat}}</p>
-                        </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Taxable Value x Average Rate:</h6>
-                            <p>{{customer_taxable}}</p>
-                        </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
+                        </vs-col> -->
+                        
+                        <!-- <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
                             <h6>VAT:</h6>
-                            <p>{{customer_taxable_vat}}</p>
+                             <p>{{customer_taxable_vat}}</p>
+                        </vs-col> -->
+
+
+                        <vs-divider position="left">
+                            <h5>Tax Parameters</h5>
+                        </vs-divider>
+
+                        <vs-col v-for="(param,index) in params" :key="index" class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
+                            <h6>{{ param.tax_param_id }}</h6>
+                            <p>{{ param.calculated_val }}</p> 
                         </vs-col>
+
+                        <!-- {{ params }} -->
+
+
                         <vs-divider position="center">
                             <h5>Total Taxable Value:</h5>
                         </vs-divider>
                         <vs-col class="mt-5 text-center" vs-lg="12" vs-md="12" vs-sm="12">
-                            <p>{{customer_taxable_vat}}</p>
-                        </vs-col> -->
+                            <!-- <p>{{customer_taxable_vat}}</p> -->
+                            <p>{{total_in_khmer}}</p>
+
+                        </vs-col>
+
                     </vs-row>
+
+
                 </vx-card>
             </vs-col>
             <vs-col vs-lg="3" vs-md="3" vs-xl="3" vs-sm="12">
@@ -191,7 +190,8 @@
 <script>
 	import TheCustomizer from "@/layouts/components/customizer/CommentDrawer.vue";
 import { Slide } from 'vue-burger-menu';
-import { mapState, mapActions } from 'vuex';
+// import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
 export default {
     components: {
     	TheCustomizer,
@@ -207,17 +207,33 @@ export default {
             is_supervisor: false,
             is_officer: false,
             show_status_dropdown: true,
+            params: [],
+            person_export_value: 0,
+            customer_export_value: 0,
+            total_taxable_value: 0,
+            totalVat: 0,
+            person_non_taxable_sales:0,
+            customer_non_taxable_sales:0,
+            non_taxable_sales:0,
+            export_value: 0,
         };
     },
     async created() {
+
         this.managerId = this.$store.state.AppActiveUser.manager_id;
+        await this.$store.dispatch('getAverageRate');
         await this.getSale(this.$route.params.id).then(res=>{
+            // console.log(res.data.sale.taxes_subject);
+            // this.params = res.data.sale.taxes_subject[0].parameter;
+            this.params = res.data.sale.taxes_subject;
             var created_by = res.data.sale.created_by;
             if (this.$store.state.AppActiveUser.type == 'Supervisor') {
                 if(this.$store.state.AppActiveUser.manager_id == created_by.manager_id){
                     this.is_saleCreatedByLoginUser = true;
                 }
             }
+            
+
         });
         localStorage.setItem('customer',this.sale.customer_id)
         localStorage.setItem('currentDetail','/tax-collection/'+this.sale.tax_id);
@@ -225,7 +241,6 @@ export default {
         this.getCustomer(localStorage.getItem('customer')).then(res=>{
             // console.log(res.data);
         });
-        this.$store.dispatch('getAverageRate');
         if (this.$store.state.AppActiveUser.type == 'Admin' || this.$store.state.AppActiveUser.type == 'Super Admin' ) {
             this.is_admin = true;
         }
@@ -237,42 +252,64 @@ export default {
         if (this.$store.state.AppActiveUser.type == 'Officer') {
             this.is_officer = true;
         }   
+        this.calculateTaxParams();
     },
     computed: {
         ...mapState('sales', ['sale']),
         ...mapState('customers', ['customer']),
-        userType() {
-            return this.$store.getters.userType;
+        ...mapState('taxes', ['parameters']),
+
+        
+        total_in_khmer() {
+            //(Non Taxable Sales + Value Of Exports + Sales to taxable person + Sales to Consumer) x Exchange Rate
+            return (parseFloat(this.non_taxable_sales) + parseFloat(this.export_value) + parseFloat(this.person_non_taxable_sales) + parseFloat(this.customer_non_taxable_sales)) * this.averageRate;
         },
+
         averageRate() {
+            // return 4025;
             return this.$store.state.averageRate;
         },
-        non_taxable_sales() {
-            return (this.sale.non_taxable_sales * this.averageRate);
+
+        userType() {
+            return this.$store.getters.userType;
+        }, 
+        
+        
+    },
+    watch: {
+        person_non_taxable_sales(val, oldVal) {
+            this.setTotalVat();
+            this.setTotalTaxableValue()
+            if(val == ''){
+            this.person_non_taxable_sales = 0;        
+            }
+
         },
-        value_of_exports() {
-            return (this.sale.vat * this.averageRate);
+        customer_non_taxable_sales(val, oldVal) {
+
+            this.setTotalVat();
+            this.setTotalTaxableValue()
+            if(val == ''){
+            this.customer_non_taxable_sales = 0;        
+            }
         },
-        person_vat() {
-            return parseFloat(this.sale.taxable_person_sales * 0.1).toFixed(2);
+        non_taxable_sales(val, oldVal) {
+
+            this.setTotalTaxableValue()
+            if(val == ''){
+            this.non_taxable_sales = 0;        
+            }
         },
-        person_taxable() {
-            return parseFloat(this.sale.taxable_person_sales * this.averageRate);
-        },
-        person_taxable_vat() {
-            return parseFloat(this.person_taxable * 0.1).toFixed(2);
-        },
-        customer_vat() {
-            return parseFloat(this.sale.cust_sales * 0.1).toFixed(2);
-        },
-        customer_taxable() {
-            return parseFloat(this.sale.cust_sales * this.averageRate);
-        },
-        customer_taxable_vat() {
-            return parseFloat(this.customer_taxable * 0.1).toFixed(2);
+        export_value(val, oldVal) {
+
+            this.setTotalTaxableValue()
+            if(val == ''){
+            this.export_value = 0;        
+            }
         },
     },
     methods: {
+
         handleToggleDrawer() {
         	this.$refs.commentsView.active = !this.$refs.commentsView.active;
         },
@@ -282,6 +319,105 @@ export default {
             statusChange: 'taxes/statusUpdateSPP',
             statusChangeManagment: 'taxes/statusChangeManagment'
         }),
+
+        setTotalVat() {
+            this.totalVat = this.customer_non_taxable_sales + this.person_non_taxable_sales;
+        },
+        setTotalTaxableValue() {
+            /*var taxable_value = (this.person_non_taxable_sales * this.averageRate);
+            var person_non_taxable_val = (taxable_value + (taxable_value * 0.1));
+
+            var taxable_value = (this.customer_non_taxable_sales * this.averageRate);
+            var customer_non_taxable_val = (taxable_value + (taxable_value * 0.1));
+
+            var non_taxable_sale = (this.non_taxable_sales * this.averageRate);
+            var export_value = (this.export_value * this.averageRate);*/
+
+            // end
+
+            /*var person_non_taxable_val = ();
+            var person_non_taxable_val = (taxable_value + (taxable_value * 0.1));
+
+            var taxable_value = ( * this.averageRate);
+            var customer_non_taxable_val = (taxable_value + (taxable_value * 0.1));
+
+            var non_taxable_sale = ( * this.averageRate);
+            var export_value = ( * this.averageRate);*/
+
+            this.total_taxable_value = ((this.person_non_taxable_sales + this.customer_non_taxable_sales + this.non_taxable_sales + this.export_value) * this.averageRate);
+        },
+
+        calculateTaxParams() {
+
+            this.person_non_taxable_sales = this.sale.taxable_person_sales;
+            this.customer_non_taxable_sales = this.sale.cust_sales;
+            this.non_taxable_sales = this.sale.non_taxable_sales;
+            this.export_value = this.sale.vat;
+
+
+            _.each(this.params, (o, index) => {
+                var o = o.parameter;
+
+                if (o.tax_code == 'PPT') {
+
+                    /*
+                    PPT Formula
+                    Round ( Total Khmer * PPT Rate )
+                    */
+                    o.calculated_val = Math.round(this.total_in_khmer * this.rateToPercent(o.rate));
+                }
+                if (o.tax_code == 'VAT') {
+                    /*
+                     *   (Sales to taxable person + Sales to Consumer ) * Exchange Rate * VAT Rate
+                     */
+
+                    o.calculated_val = ((parseFloat(this.person_non_taxable_sales) + parseFloat(this.customer_non_taxable_sales)) * this.averageRate * this.rateToPercent(o.rate)).toFixed(2)
+                }
+
+                if (o.tax_code == 'ACT') {
+                    /*
+                     *  ACT Formula 
+                        ((Sales to taxable person  + Sales to Consumer) * Exchange Rate / ( 1 + ACT Rate ) ) * ACT Rate
+                     */
+                    o.calculated_val = ( ( ( parseFloat(this.person_non_taxable_sales) + parseFloat(this.customer_non_taxable_sales) ) * this.averageRate / (1 + this.rateToPercent(o.rate) ) ) * this.rateToPercent(o.rate) ).toFixed(2)
+                }
+
+                if (o.tax_code == 'SPT') {
+                    /*
+                     *  SPT FORMULA
+                        ((Sales to taxable person + Sales to Consumer) * Exchange Rate / ( 1 + SPT Base Rate * SPT Rate ) * SPT Base Rate * SPT Rate
+                     */
+                    o.calculated_val = ( ( parseFloat(this.person_non_taxable_sales) + parseFloat(this.customer_non_taxable_sales) ) * this.averageRate / (1 + this.rateToPercent(o.base_tax) * this.rateToPercent(o.rate) ) * this.rateToPercent(o.base_tax) * this.rateToPercent(o.rate) ).toFixed(2)
+                }
+
+                if (o.tax_code == 'PLT') {
+                    /*
+                     *  SPT FORMULA
+                        ((Sales to taxable person + Sales to Consumer) * Exchange Rate / ( 1 + SPT Base Rate * SPT Rate ) * SPT Base Rate * SPT Rate
+                     */
+                     if(o.tax_param_id == 'PLT001'){
+                        /*
+                        * PLT IMPORTER & PRODUCER FORMULA
+                          ((Sales to taxable person + Sales to Consumer) * Exchange Rate / ( 1 + PLT Rate ) * PLT Rate
+                        */  
+                         o.calculated_val = ( ( ( parseFloat(this.person_non_taxable_sales) + parseFloat(this.customer_non_taxable_sales) ) * this.averageRate / (1 + this.rateToPercent(o.rate) ) ) * this.rateToPercent(o.rate) ).toFixed(2)
+                     }
+                     if(o.tax_param_id == 'PLT002'){
+                        /*
+                        * PLT DISTRIBUTOR FORMULA
+                          ((Sales to taxable person + Sales to Consumer) * Exchange Rate / ( 1 + PLT Base Rate * PLT Rate ) * PLT Base Rate * PLT Rate
+                        */
+                        o.calculated_val = ( ( parseFloat(this.person_non_taxable_sales) + parseFloat(this.customer_non_taxable_sales) ) * this.averageRate / (1 + this.rateToPercent(o.base_tax) * this.rateToPercent(o.rate) ) * this.rateToPercent(o.base_tax) * this.rateToPercent(o.rate) ).toFixed(2)
+                     }
+                }
+                Vue.set(this.params, index, o);
+            })
+        },
+
+        
+        rateToPercent(rate) {
+            return (rate / 100)
+        },
 
         statusUpdate(id, status){
 
@@ -432,6 +568,30 @@ export default {
                 
             });
         },
+
+        value_of_exports() {
+            return (this.sale.vat * this.averageRate);
+        },
+        person_vat() {
+            return parseFloat(this.sale.taxable_person_sales * 0.1).toFixed(2);
+        },
+        person_taxable() {
+            return parseFloat(this.sale.taxable_person_sales * this.averageRate);
+        },
+        person_taxable_vat() {
+            return parseFloat(this.person_taxable * 0.1).toFixed(2);
+        },
+        customer_vat() {
+            return parseFloat(this.sale.cust_sales * 0.1).toFixed(2);
+        },
+        customer_taxable() {
+            return parseFloat(this.sale.cust_sales * this.averageRate);
+        },
+        
+        customer_taxable_vat() {
+            return parseFloat(this.customer_taxable * 0.1).toFixed(2);
+        },
+               
 
     },
 }

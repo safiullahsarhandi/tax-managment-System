@@ -8,75 +8,86 @@
                 <vs-row>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="nssf_num" v-validate="`required`" label-placeholder="NSSF NO." v-model="nssf_num" />
+                            <vs-input name="nssf_num" v-validate="`required`" label-placeholder="NSSF NO." data-vv-as="NSSF NO." v-model="nssf_num" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('nssf_num')">{{errors.first('nssf_num')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="employee_num" v-validate="`required`" label-placeholder="Employee NO." v-model="employee_num" />
+                            <vs-input name="employee_num" v-validate="`required`" label-placeholder="Employee NO." data-vv-as="Employee NO." v-model="employee_num" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('employee_num')">{{errors.first('employee_num')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="name_eng" v-validate="`required`" label-placeholder="Name (English)" v-model="name_eng" />
+                            <vs-input name="name_eng" v-validate="`required`" label-placeholder="Name (English)" data-vv-as="Name (English)" v-model="name_eng" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('name_eng')">{{errors.first('name_eng')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="name_khmer" v-validate="`required`" label-placeholder="Name (Khmer)" v-model="name_khmer" />
+                            <vs-input name="name_khmer" v-validate="`required`" label-placeholder="Name (Khmer)" data-vv-as="Name (English)" v-model="name_khmer" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('name_khmer')">{{errors.first('name_khmer')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="nationality" v-validate="`required`" label-placeholder="Nationality" v-model="nationality" />
+                            <vs-input name="nationality" v-validate="`required`" label-placeholder="Nationality" data-vv-as="Nationality" v-model="nationality" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('nationality')">{{errors.first('nationality')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="dob" v-validate="`required`" label-placeholder="DOB" v-model="dob" />
+                            <label class="text-sm" v-if="dob != ''">Date of Birth</label>
+                            <datepicker name="dob" v-validate="`required`" input-class="vs-inputx vs-input--input normal" v-model="dob" :wrapper-class="dob == ''?'mt-5':''" placeholder="Date of Birth" data-vv-as="Date of Birth"  :format="format"></datepicker>
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('dob')">{{errors.first('dob')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="joining_date" v-validate="`required`" label-placeholder="Joining Date" v-model="joining_date" />
+                            <label class="text-sm" v-if="joining_date != ''">Joining Date</label>
+                            <datepicker name="joining_date" v-validate="`required`" input-class="vs-inputx vs-input--input normal" v-model="joining_date" :wrapper-class="joining_date == ''?'mt-5':''" placeholder="Joining Date" data-vv-as="Joining Date"  :format="format"></datepicker>
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('joining_date')">{{errors.first('joining_date')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="position" v-validate="`required`" label-placeholder="Position" v-model="position" />
+                            <vs-input name="position" v-validate="`required`" label-placeholder="Position" data-vv-as="Position" v-model="position" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('position')">{{errors.first('position')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="sex" v-validate="`required`" label-placeholder="Sex" v-model="sex" />
+                            <vs-input name="sex" v-validate="`required`" label-placeholder="Sex" data-vv-as="Sex" v-model="sex" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('sex')">{{errors.first('sex')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="contract_type" v-validate="`required`" label-placeholder="Contract Type" v-model="contract_type" />
+                            <vs-input name="contract_type" v-validate="`required`" label-placeholder="Contract Type" data-vv-as="Contract Type" v-model="contract_type" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('contract_type')">{{errors.first('contract_type')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="spouse" v-validate="`required`" label-placeholder="spouse" v-model="spouse" />
+                            <vs-input name="spouse" v-validate="`required|numeric|min:1|max:2`" label-placeholder="spouse" data-vv-as="spouse" v-model="spouse" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('spouse')">{{errors.first('spouse')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input name="children" v-validate="`required|numeric|min:1|max:2`" label-placeholder="children" v-model="children" />
+                            <vs-input name="children" v-validate="`required|numeric|min:1|max:2`"  label-placeholder="Children" data-vv-as="Children" v-model="children" />
                         </vx-input-group>
                         <span class="text-danger" v-show="errors.has('children')">{{errors.first('children')}}</span>
+                    </vs-col>
+                    <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
+                        <vx-input-group>
+                            <vs-select autocomplete class="w-full" v-validate="'required'" v-model="employeeType" name="employeeType" data-vv-as="Employee Type" label="Employee Type" placeholder="Select Employee Type">
+                                <vs-select-item value="RD" text="Resident"></vs-select-item>
+                                <vs-select-item value="NRD" text="Non Resident"></vs-select-item>
+                            </vs-select>
+                        </vx-input-group>
+                        <span class="text-danger" v-show="errors.has('employeeType')">{{errors.first('employeeType')}}</span>
                     </vs-col>
                 </vs-row>
                 <vs-row>
@@ -92,11 +103,13 @@
     </div>
 </template>
 <script>
+import Datepicker from 'vuejs-datepicker';
 const multiUploads = () => import('@/components/MultiUploads.vue')
 import { mapState, mapActions, mapGetters } from 'vuex';
 export default {
     data() {
         return {
+            format: "d MMMM yyyy",
             multipleUploadPopup: false,
             tax_customer_id: '',
             nssf_num: '',
@@ -109,13 +122,15 @@ export default {
             position: '',
             sex: '',
             contract_type: '',
-            spouse: '',
-            children: '',
-            multipleRoute: ''
+            spouse: 0,
+            children: 0,
+            multipleRoute: '',
+            employeeType : '',
         };
     },
     components: {
-        multiUploads
+        multiUploads,
+        datepicker : Datepicker,
     },
     created() {
         let self = this;
@@ -152,6 +167,7 @@ export default {
                     this.$vs.loading();
                     let fd = new FormData(this.$refs.addEmployeeForm);
                     fd.append('customer_id', this.tax_customer_id);
+                    fd.append('employee_type', this.employeeType);
                     let data = {
                         fd: fd,
                         close: this.$vs.loading.close,
@@ -160,8 +176,11 @@ export default {
                     self = this;
                     this.create(data).then(function(res) {
                         if (res.data.status == 'success') {
-                            self.nssf_num = self.employee_num = self.name_khmer = self.name_eng = self.nationality = self.joining_date = self.position = self.sex = self.contract_type = self.spouse = '';
+                            self.nssf_num = self.employee_num = self.name_khmer = self.name_eng = self.nationality = self.joining_date = self.position = self.sex = self.contract_type = self.employeeType =  '';
+                            self.spouse = self.children = 0;
                             e.target.reset();
+                            self.getEmployees(self.tax_customer_id);
+
                             self.$validator.reset();
                         }
                     });

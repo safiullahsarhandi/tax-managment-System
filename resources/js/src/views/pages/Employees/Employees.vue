@@ -67,14 +67,18 @@
                         </vx-input-group>
                         
                         <vx-input-group class="mt-2">
-                            <vs-input v-validate="'required'" name="dob" v-model="dob" label-placeholder="dob" data-vv-scope="editform" />
+                            <!-- <vs-input v-validate="'required'" name="dob" v-model="dob" label-placeholder="dob" data-vv-scope="editform" /> -->
+                            <label class="text-sm" v-if="dob != ''">Date of Birth</label>
+                            <datepicker name="dob" v-validate="`required`" input-class="vs-inputx vs-input--input normal" v-model="dob" :wrapper-class="dob == ''?'mt-5':''" placeholder="Date of Birth" data-vv-as="Date of Birth" calendar-class="w-auto" :format="format"></datepicker>
                             <span class="text-danger" v-show="errors.has('editform.dob')">{{errors.first('editform.dob')}}</span>
                         </vx-input-group>
 
                     </vs-col>
                     <vs-col vs-lg="6" vs-md="6" vs-sm="12">
                     	<vx-input-group class="mt-2">
-                            <vs-input v-validate="'required'" name="joining_date" v-model="joining_date" label-placeholder="Joining Date" data-vv-scope="editform" />
+                            <label class="text-sm" v-if="joining_date != ''">Joining Date</label>
+                            <datepicker name="joining_date" v-validate="`required`" input-class="vs-inputx vs-input--input normal" v-model="joining_date" calendar-class="w-auto" :wrapper-class="joining_date == ''?'mt-5':''" placeholder="Joining Date" data-vv-as="Joining Date"  :format="format"></datepicker>
+                            <!-- <vs-input v-validate="'required'" name="joining_date" v-model="joining_date" label-placeholder="Joining Date" data-vv-scope="editform" /> -->
                             <span class="text-danger" v-show="errors.has('editform.joining_date')">{{errors.first('editform.joining_date')}}</span>
                         </vx-input-group>
                     	<vx-input-group class="mt-2">
@@ -91,15 +95,25 @@
                             <span class="text-danger" v-show="errors.has('editform.contract_type')">{{errors.first('editform.contract_type')}}</span>
                         </vx-input-group>
                         <vx-input-group class="mt-2">
-                            <vs-input v-validate="'required'" name="spouse" v-model="spouse" label-placeholder="Spouse" ata-vv-scope="editform" data-vv-scope="editform" />
+                            <vs-input v-validate="`required|numeric|min:1|max:2`" name="spouse" v-model="spouse" label-placeholder="Spouse" ata-vv-scope="editform" data-vv-scope="editform" />
                             <span class="text-danger" v-show="errors.has('editform.spouse')">{{errors.first('editform.spouse')}}</span>
                         </vx-input-group>
                         <vx-input-group>
-                            <vs-input name="children" v-validate="`required`" label-placeholder="children" v-model="children" />
+                            <vs-input name="children" v-validate="`required|numeric|min:1|max:2`" label-placeholder="children" v-model="children" />
                         </vx-input-group>
-                        <span class="text-danger" v-show="errors.has('children')">{{errors.first('children')}}</span>
+                        <span class="text-danger" v-show="errors.has('editform.children')">{{errors.first('editform.children')}}</span>
+                    </vs-col>
+                    <vs-col>
+                        <vx-input-group>
+                            <vs-select autocomplete class="w-full" v-validate="'required'" v-model="employeeType" name="employeeType" data-vv-as="Employee Type" label="Employee Type" placeholder="Select Employee Type">
+                                <vs-select-item value="RD" text="Resident"></vs-select-item>
+                                <vs-select-item value="NRD" text="Non Resident"></vs-select-item>
+                            </vs-select>
+                        </vx-input-group>
+                        <span class="text-danger" v-show="errors.has('employeeType')">{{errors.first('employeeType')}}</span>
                     </vs-col>
                     <vs-col vs-lg="12" vs-md="12" vs-sm="12">
+                    <br>
                         <vs-button button="submit" class="float-right" type="gradient">Update Information</vs-button>
                     </vs-col>
                 </vs-row>
@@ -109,10 +123,12 @@
     </div>
 </template>
 <script>
+    import Datepicker from 'vuejs-datepicker';
 	import { mapState , mapActions, mapGetters} from 'vuex';
 	export default{
 		data () {
 		  return {
+            format: "d MMMM yyyy",
 		  	editEmployeeModal : false,
 		    tax_customer_id:'',
 		    employee_id:'',
@@ -126,10 +142,14 @@
 		    position:'',
 		    contract_type:'',
 		    sex:'',
-            spouse : '',
-		    children : ''
+            spouse : 0,
+		    children : 0,
+            employeeType : '',
 		  };
 		},
+        components : {
+            Datepicker,
+        },
 		computed: {
 		  ...mapState('employees',['employees']),
 		  ...mapGetters('employees',['findEmployee']),
@@ -174,6 +194,7 @@
             this.contract_type = employee.contract_type;
             this.spouse = employee.spouse;
             this.children = employee.children;
+            this.employeeType = employee.employee_type;
             this.editEmployeeModal = true;
         },
         updateEmployee(e) {
@@ -181,6 +202,7 @@
                 if (result) {
                     this.$vs.loading();
                     var fd = new FormData(this.$refs.editEmployeeForm);
+                    fd.append('employee_type', this.employeeType);
                     this.update(fd).then( (res) => {
                         if (res.data.status == 'success') {
                             e.target.reset();

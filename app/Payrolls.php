@@ -57,4 +57,9 @@ class Payrolls extends Model {
 			'customer_id'
 		);
 	}
+
+	public function tax_subject()
+	{
+	    return $this->belongsTo(TaxSubject::class, 'payroll_id','object_id');
+	}
 }
