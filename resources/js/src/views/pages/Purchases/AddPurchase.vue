@@ -47,7 +47,7 @@
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
                             <vs-input name="description" data-vv-as="Description of good/services" v-validate="`required`" label-placeholder="Description of good/services" v-model="good_desc" />
-                        </vx-input-group>
+                        </vx-input-group> 
                         <span class="text-danger" v-show="errors.has('description')">{{errors.first('description')}}</span>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
@@ -74,8 +74,8 @@
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <!-- <label>Imports</label> -->
                         <label>Imports</label>
-                        <vx-input-group>
-                            <vs-input name="imports_taxable_val" data-vv-as="Taxable Value (Imports)" label-placeholder="Taxable Value" v-model="taxable_value_import" />
+                        <vx-input-group> <!-- imports_taxable_val -->
+                            <vs-input name="taxable_value_import" data-vv-as="Taxable Value (Imports)" label-placeholder="Taxable Value" v-model="taxable_value_import" />
                         </vx-input-group>
                     </vs-col>
                     <vs-col class="mt-5" vs-md="12" vs-lg="4" vs-sm="12">

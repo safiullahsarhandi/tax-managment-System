@@ -42,7 +42,8 @@
                         <vs-td v-if="editPermissionAccess(tr)">
                             <vs-button :to="'sale-update/'+tr.sale_id" size="small" type="border" icon-pack="feather" icon="icon-edit"></vs-button>
                             <vs-button :to="'sale-detail/'+tr.sale_id" size="small" icon-pack="feather" icon="icon-maximize-2" type="border"></vs-button>
-                            <vs-button @click="deleteRecord(data[index])" size="small" type="border" icon-pack="feather" icon="icon-trash-2"></vs-button>
+                            <!-- <vs-button @click="deleteRecord(data[index])" size="small" type="border" icon-pack="feather" icon="icon-trash-2"></vs-button> -->
+                            <vs-button @click="openConfirm(data[index])" size="small" type="border" icon-pack="feather" icon="icon-trash-2"></vs-button>
                         </vs-td>
                         <vs-td v-else>
                             <vs-button @click="notAllowed('edit')" size="small" type="border" icon-pack="feather" icon="icon-edit"></vs-button>
@@ -74,7 +75,7 @@ export default {
                 {text:'Approve',value:1},
                 {text:'Un approve',value:2},
               ],
-
+            obj_for_delete: [],
         };
     },
     computed: {
@@ -374,7 +375,20 @@ export default {
             });
         },
 
-        deleteRecord(obj){
+        openConfirm(obj){
+          this.obj_for_delete = obj;
+          this.$vs.dialog({
+            type:'confirm',
+            color: 'danger',
+            title: `Delete Confirmation!`,
+            text: 'Are you sure! want to delete record.',
+            accept:this.delete_record,
+            acceptText: 'Yes Sure!',
+          })
+        },
+
+        delete_record(){
+            var obj = this.obj_for_delete;
             this.$vs.loading();
             var fd = new FormData();
             fd.append('id', obj.sale_id);
