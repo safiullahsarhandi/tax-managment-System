@@ -2,7 +2,63 @@
     <div>
         <vs-row>
             <vs-col vs-lg="9" vs-md="9" vs-sm="12">
-                <vx-card title="Payroll Detail">
+                <vx-card title="Employee Detail">
+                    <vs-row>
+                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                            <h6>NSSF No:</h6>
+                            <p>{{employeeVal.nssf_num}}</p>
+                        </vs-col>
+                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                            <h6>Employee No:</h6>
+                            <p>{{employeeVal.employee_num}}</p>
+                        </vs-col>
+                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                            <h6>Name (English):</h6>
+                            <p>{{employeeVal.name_english}}</p>
+                        </vs-col>
+                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                            <h6>Name (Khmer):</h6>
+                            <p>{{employeeVal.name_khmer}}</p>
+                        </vs-col>
+                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                            <h6>Nationality:</h6>
+                            <p>{{employeeVal.nationality}}</p>
+                        </vs-col>
+                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                            <h6>Date Of Birth:</h6>
+                            <p>{{employeeVal.dob}}</p>
+                        </vs-col>
+                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                            <h6>Joining Date:</h6>
+                            <p>{{employeeVal.joining_date}}</p>
+                        </vs-col>
+                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                            <h6>Position:</h6>
+                            <p>{{employeeVal.position}}</p>
+                        </vs-col>
+                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                            <h6>Sex:</h6>
+                            <p>{{employeeVal.sex}}</p>
+                        </vs-col>
+                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                            <h6>Contract Type:</h6>
+                            <p>{{employeeVal.contract_type}}</p>
+                        </vs-col>
+                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                            <h6>Spouse:</h6>
+                            <p>{{employeeVal.spouse}}</p>
+                        </vs-col>
+                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                            <h6>Children (Minor):</h6>
+                            <p>{{employeeVal.children}}</p>
+                        </vs-col>
+                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                            <h6>Residency Type:</h6>
+                            <p>{{Object.keys(employeeVal).length > 0?employeeVal.employee_type == 'RD'?'Resident':'Non Resident':''}}</p>
+                        </vs-col>
+                    </vs-row>
+                </vx-card>
+                <vx-card class="mt-base" title="Payroll Detail">
                     <vs-row>
                         <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
                             <h6>Client TIN:</h6>
@@ -11,10 +67,6 @@
                         <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
                             <h6>Client Name:</h6>
                             <p>{{customer.name_english}}</p>
-                        </vs-col>
-                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
-                            <h6>Basic Salary:</h6>
-                            <p>{{payroll.basic_salary}}</p>
                         </vs-col>
                         <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
                             <h6>Seniority Payment:</h6>
@@ -64,100 +116,54 @@
                             <h6>Others:</h6>
                             <p>{{payroll.others}}</p>
                         </vs-col>
-                        
                     </vs-row>
                 </vx-card>
                 <vx-card class="mt-base" title="Payrolls Summary">
                     <vs-row>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Non Taxable Sale:</h6>
-                            <p>{{customer.non_taxable_sales || 'NA'}}</p>
+                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                            <h6>Basic Salary (USD):</h6>
+                            <p>{{payroll.basic_salary}}</p>
                         </vs-col>
-                        <!-- <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Non taxable sale x Average rate:</h6>
-                            <p>{{non_taxable_sales}}</p>
+                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                            <h6>Salary to be paid (Riel):</h6>
+                            <p>{{basic_salary_riel}}</p>
                         </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Value Of Exports:</h6>
-                            <p>{{payroll.vat || 'NA'}}</p>
+                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                            <h6>allowance:</h6>
+                            <p>{{allowance}}</p>
                         </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Value Of Exports:</h6>
-                            <p>{{value_of_exports}}</p>
+                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                            <h6>Salary Tax Calculation Base:</h6>
+                            <p>{{salary_tax_calculation_base}}</p>
                         </vs-col>
-                        <vs-divider position="left">
-                            <h5>Sales to Taxable Persons</h5>
-                        </vs-divider>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Taxable Value:</h6>
-                            <p>{{payroll.taxable_person_sales}}</p>
+                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                            <h6>Tax Rate:</h6>
+                            <p>{{parameter_rate}}</p>
                         </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>VAT:</h6>
-                            <p>{{person_vat}}</p>
+                        <vs-col class="mt-5" vs-lg="4" vs-md="4" vs-sm="12">
+                            <h6>Tax on salary:</h6>
+                            <p>{{tax_on_salary}}</p>
                         </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Taxable Value x Average Rate:</h6>
-                            <p>{{person_taxable}}</p>
-                        </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>VAT:</h6>
-                            <p>{{person_taxable_vat}}</p>
-                        </vs-col>
-                        <vs-divider position="left">
-                            <h5>Sales to Customers</h5>
-                        </vs-divider>
-                        <vs-col class="mt-5" vs-lg="12" vs-md="12" vs-sm="12">
-                        </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Taxable Value:</h6>
-                            <p>{{payroll.cust_sales}}</p>
-                        </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>VAT:</h6>
-                            <p>{{customer_vat}}</p>
-                        </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>Taxable Value x Average Rate:</h6>
-                            <p>{{customer_taxable}}</p>
-                        </vs-col>
-                        <vs-col class="mt-5" vs-lg="6" vs-md="6" vs-sm="12">
-                            <h6>VAT:</h6>
-                            <p>{{customer_taxable_vat}}</p>
-                        </vs-col>
-                        <vs-divider position="center">
-                            <h5>Total Taxable Value:</h5>
-                        </vs-divider>
-                        <vs-col class="mt-5 text-center" vs-lg="12" vs-md="12" vs-sm="12">
-                            <p>{{customer_taxable_vat}}</p>
-                        </vs-col> -->
                     </vs-row>
                 </vx-card>
             </vs-col>
             <vs-col vs-lg="3" vs-md="3" vs-xl="3" vs-sm="12">
                 <vx-card title="Actions">
-                     <vs-select v-if="userType == 'Supervisor' && is_saleCreatedByLoginUser == false" autocomplete 
-                    @input="changeManagementStatus(payroll.supervisor_confirmed, payroll.payroll_id, 'supervisor')" v-model="payroll.supervisor_confirmed" class="p-0 ml-0" placeholder="Select Status" style="width: 100%;" >
-                                    <vs-select-item value="0" text="Pending"></vs-select-item>
-                                    <vs-select-item value="1" text="Approve"></vs-select-item>
-                                    <vs-select-item value="2" text="Review"></vs-select-item>
-                                    <vs-select-item value="3" text="Reject"></vs-select-item>
-                                    
+                    <vs-select v-if="userType == 'Supervisor' && is_saleCreatedByLoginUser == false" autocomplete @input="changeManagementStatus(payroll.supervisor_confirmed, payroll.payroll_id, 'supervisor')" v-model="payroll.supervisor_confirmed" class="p-0 ml-0" placeholder="Select Status" style="width: 100%;">
+                        <vs-select-item value="0" text="Pending"></vs-select-item>
+                        <vs-select-item value="1" text="Approve"></vs-select-item>
+                        <vs-select-item value="2" text="Review"></vs-select-item>
+                        <vs-select-item value="3" text="Reject"></vs-select-item>
                     </vs-select>
-
-                    <vs-select v-if="userType == 'Supervisor' && is_saleCreatedByLoginUser == true" autocomplete
-                     @input="changeManagementStatus(payroll.supervisor_confirmed, payroll.payroll_id, 'supervisor')" v-model="payroll.supervisor_confirmed" class="p-0 ml-0" placeholder="Select Status" style="width: 100%;" >
-                                    <vs-select-item value="0" text="Work In Progress"></vs-select-item>
-                                    <vs-select-item value="1" text="Submit"></vs-select-item>
+                    <vs-select v-if="userType == 'Supervisor' && is_saleCreatedByLoginUser == true" autocomplete @input="changeManagementStatus(payroll.supervisor_confirmed, payroll.payroll_id, 'supervisor')" v-model="payroll.supervisor_confirmed" class="p-0 ml-0" placeholder="Select Status" style="width: 100%;">
+                        <vs-select-item value="0" text="Work In Progress"></vs-select-item>
+                        <vs-select-item value="1" text="Submit"></vs-select-item>
                     </vs-select>
-
-                    <vs-select v-if="userType == 'Admin' || userType == 'Super Admin'  && show_status_dropdown == true" autocomplete 
-                    @input="changeManagementStatus(payroll.management_confirmed, payroll.payroll_id, 'admin')" v-model="payroll.management_confirmed" class="p-0 ml-0" placeholder="Select Status" style="width: 100%;" >
-                                    <vs-select-item value="0" text="Pending"></vs-select-item>
-                                    <vs-select-item value="1" text="Approve"></vs-select-item>
-                                    <vs-select-item value="2" text="Review"></vs-select-item>
-                                    <vs-select-item value="3" text="Reject"></vs-select-item>
-                                    
+                    <vs-select v-if="userType == 'Admin' || userType == 'Super Admin'  && show_status_dropdown == true" autocomplete @input="changeManagementStatus(payroll.management_confirmed, payroll.payroll_id, 'admin')" v-model="payroll.management_confirmed" class="p-0 ml-0" placeholder="Select Status" style="width: 100%;">
+                        <vs-select-item value="0" text="Pending"></vs-select-item>
+                        <vs-select-item value="1" text="Approve"></vs-select-item>
+                        <vs-select-item value="2" text="Review"></vs-select-item>
+                        <vs-select-item value="3" text="Reject"></vs-select-item>
                     </vs-select>
                     <vs-list>
                         <vs-list-item v-if="editPermissionAccess(payroll)" title="Edit Payroll">
@@ -167,36 +173,29 @@
                             <vs-button @click="notAllowed('edit')" icon-pack="feather" size="small" icon='icon-edit'></vs-button>
                         </vs-list-item>
                         <template>
-                        
                             <vs-list-item v-if="userType == 'Officer'" title="Status">
-                                <vs-switch v-if="editPermissionAccess(payroll)"  icon-pack="feather" @click="statusUpdate(payroll.payroll_id, payroll.officer_confirmed)" v-model="payroll.officer_confirmed"></vs-switch>
-                                 <vs-switch v-else icon-pack="feather" @click="notAllowed('status')" v-model="payroll.officer_confirmed"></vs-switch>
+                                <vs-switch v-if="editPermissionAccess(payroll)" icon-pack="feather" @click="statusUpdate(payroll.payroll_id, payroll.officer_confirmed)" v-model="payroll.officer_confirmed"></vs-switch>
+                                <vs-switch v-else icon-pack="feather" @click="notAllowed('status')" v-model="payroll.officer_confirmed"></vs-switch>
                             </vs-list-item>
-                            
                         </template>
                         <vs-list-item title="View Comments">
-                                <vs-button icon-pack="feather" size="small" icon='icon-maximize-2' @click="handleToggleDrawer"></vs-button>
+                            <vs-button icon-pack="feather" size="small" icon='icon-maximize-2' @click="handleToggleDrawer"></vs-button>
                         </vs-list-item>
                     </vs-list>
                 </vx-card>
             </vs-col>
         </vs-row>
-        <the-customizer
-           ref="commentsView"
-           :object_id="$route.params.id"
-           type="Payroll"
-           comments-url="get-comments"
-            />
+        <the-customizer ref="commentsView" :object_id="$route.params.id" type="Payroll" comments-url="get-comments" />
     </div>
     <!-- <div>Testing Payroll detail Page</div> -->
 </template>
 <script>
-	import TheCustomizer from "@/layouts/components/customizer/CommentDrawer.vue";
+import TheCustomizer from "@/layouts/components/customizer/CommentDrawer.vue";
 import { Slide } from 'vue-burger-menu';
 import { mapState, mapActions } from 'vuex';
 export default {
     components: {
-    	TheCustomizer,
+        TheCustomizer,
         Slide, // Register your component
     },
     data() {
@@ -209,10 +208,17 @@ export default {
             is_supervisor: false,
             is_officer: false,
             show_status_dropdown: true,
+            employeeVal: {},
+            allowance: 0,
+            parameter : {},
+            tax_on_salary : 0,
+            parameter_rate : '0%',
+            salary_tax_calculation_base : 0,
+
         };
     },
     async created() {
-        if (this.$store.state.AppActiveUser.type == 'Admin' || this.$store.state.AppActiveUser.type == 'Super Admin' ) {
+        if (this.$store.state.AppActiveUser.type == 'Admin' || this.$store.state.AppActiveUser.type == 'Super Admin') {
             this.is_admin = true;
         }
 
@@ -222,18 +228,22 @@ export default {
 
         if (this.$store.state.AppActiveUser.type == 'Officer') {
             this.is_officer = true;
-        } 
+        }
         this.managerId = this.$store.state.AppActiveUser.manager_id;
-        await this.getPayroll(this.$route.params.id).then(res=>{
+        await this.getPayroll(this.$route.params.id).then(res => {
+            this.employeeVal = res.data.data.employee;
+            this.setAllowance();
+            this.parameter = res.data.data.tax_subject.parameter;
+            this.parameter_rate = this.parameter.rate + '%';
             var created_by = res.data.data.created_by;
             if (this.$store.state.AppActiveUser.type == 'Supervisor') {
-                if(this.$store.state.AppActiveUser.manager_id == created_by.manager_id){
+                if (this.$store.state.AppActiveUser.manager_id == created_by.manager_id) {
                     this.is_saleCreatedByLoginUser = true;
                 }
             }
             if (this.$store.state.AppActiveUser.type == 'Admin' || this.$store.state.AppActiveUser.type == 'Super Admin') {
-                if(this.$store.state.AppActiveUser.manager_id == created_by.manager_id){
-                    if(this.is_admin == true){
+                if (this.$store.state.AppActiveUser.manager_id == created_by.manager_id) {
+                    if (this.is_admin == true) {
                         this.show_status_dropdown = false;
                     }
                 }
@@ -241,50 +251,45 @@ export default {
         });
 
 
-        localStorage.setItem('customer',this.payroll.customer.customer_id);
-        localStorage.setItem('currentDetail','/tax-collection/'+this.payroll.tax_id);
+        localStorage.setItem('customer', this.payroll.customer.customer_id);
+        localStorage.setItem('currentDetail', '/tax-collection/' + this.payroll.tax_id);
 
         this.tax_id = this.payroll.tax_id;
         this.getCustomer(this.payroll.customer.customer_id);
-        this.$store.dispatch('getAverageRate');
+        this.$store.dispatch('getSalaryRate');
+    },
+    watch: {
+        salary_tax_calculation_base() {
+                if (this.employeeVal.employee_type === 'NRD') {
+                    this.tax_on_salary = (this.salary_tax_calculation_base * this.rateToPercent(this.parameter.rate));
+                } else if (this.employeeVal.employee_type === 'RD') {
+
+                    this.tax_on_salary = (this.salary_tax_calculation_base * this.rateToPercent(this.parameter.rate)) - this.parameter.tax_bracket;
+                }
+        },
+        basic_salary_riel(val, oldVal) {
+            this.salary_tax_calculation_base = Math.abs(parseFloat(val) - this.allowance);
+        },
     },
     computed: {
         ...mapState('payrolls', ['payroll']),
         ...mapState('customers', ['customer']),
+        basic_salary_riel(){
+            return parseFloat(this.payroll.basic_salary * this.salaryRate).toFixed(2);
+        },
         userType() {
             return this.$store.getters.userType;
         },
-        averageRate() {
-            return this.$store.state.averageRate;
-        },
-        non_taxable_sales() {
-            return (this.sale.non_taxable_sales * this.averageRate);
-        },
-        value_of_exports() {
-            return (this.sale.vat * this.averageRate);
-        },
-        person_vat() {
-            return parseFloat(this.sale.taxable_person_sales * 0.1).toFixed(2);
-        },
-        person_taxable() {
-            return parseFloat(this.sale.taxable_person_sales * this.averageRate);
-        },
-        person_taxable_vat() {
-            return parseFloat(this.person_taxable * 0.1).toFixed(2);
-        },
-        customer_vat() {
-            return parseFloat(this.sale.cust_sales * 0.1).toFixed(2);
-        },
-        customer_taxable() {
-            return parseFloat(this.sale.cust_sales * this.averageRate);
-        },
-        customer_taxable_vat() {
-            return parseFloat(this.customer_taxable * 0.1).toFixed(2);
+        salaryRate() {
+            return this.$store.state.salaryRate;
         },
     },
     methods: {
+        rateToPercent(rate) {
+            return (rate / 100)
+        },
         handleToggleDrawer() {
-        	this.$refs.commentsView.active = !this.$refs.commentsView.active;
+            this.$refs.commentsView.active = !this.$refs.commentsView.active;
         },
         ...mapActions({
             getPayroll: 'payrolls/getPayroll',
@@ -292,7 +297,10 @@ export default {
             statusChange: 'taxes/statusUpdateSPP',
             statusChangeManagment: 'taxes/statusChangeManagment'
         }),
-        statusUpdate(id, status){
+        setAllowance() {
+            this.allowance = (this.employeeVal.spouse + this.employeeVal.children) * 150000
+        },
+        statusUpdate(id, status) {
 
             let data = {
                 id: id,
@@ -300,20 +308,20 @@ export default {
                 notify: this.$vs.notify,
                 type: 'payroll'
             };
-            this.statusChange(data).then((res)=> {
-               if(res.data.status != true){
-                    if(res.data.response == 'undefined'){
-                        this.payroll.officer_confirmed = status; 
-                    }else{
-                        this.payroll.officer_confirmed = res.data.response; 
+            this.statusChange(data).then((res) => {
+                if (res.data.status != true) {
+                    if (res.data.response == 'undefined') {
+                        this.payroll.officer_confirmed = status;
+                    } else {
+                        this.payroll.officer_confirmed = res.data.response;
                     }
-               }
+                }
             });
 
         },
 
-        changeManagementStatus(status, id, by){
-            
+        changeManagementStatus(status, id, by) {
+
             let data = {
                 id: id,
                 status: status,
@@ -322,136 +330,136 @@ export default {
                 notify: this.$vs.notify,
                 tax_type: 'payroll'
             };
-            this.statusChangeManagment(data).then((res)=> {
-               var res = res.data;
-                if(by == 'supervisor'){
+            this.statusChangeManagment(data).then((res) => {
+                var res = res.data;
+                if (by == 'supervisor') {
                     this.payroll.supervisor_confirmed = res.response;
-                }else{
-                    this.payroll.management_confirmed = res.response; 
+                } else {
+                    this.payroll.management_confirmed = res.response;
                 }
             });
         },
 
-        editPermissionAccess(tr){
+        editPermissionAccess(tr) {
 
-                if(this.is_officer){
-                    if(tr.officer_confirmed == 0 && tr.supervisor_confirmed == 0){
-                        return true;
-                    }
-
-                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 0){
-                        return true;
-                    }
-
-                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1){
-                        return false;
-                    }
-
-                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 2){
-                        return false;
-                    }
-
-                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 3){
-                        return true;
-                    }
-
-                    if(tr.officer_confirmed == 0 && tr.supervisor_confirmed == 3){
-                        return true;
-                    }
+            if (this.is_officer) {
+                if (tr.officer_confirmed == 0 && tr.supervisor_confirmed == 0) {
+                    return true;
                 }
 
-                if(this.is_supervisor && is_saleCreatedByLoginUser == false){
-                    if(tr.officer_confirmed == 0 && tr.supervisor_confirmed == 0){
-                        return false;
-                    }
-
-                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 0){
-                        return true;
-                    }
-
-                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1){
-                        return true;
-                    }
-
-                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 2){
-                        return true;
-                    }
-
-                    if(tr.officer_confirmed == 1 && tr.supervisor_confirmed == 3){
-                        return true;
-                    }
-                    if(tr.officer_confirmed == 0 && tr.supervisor_confirmed == 3){
-                        return false;
-                    }
+                if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 0) {
+                    return true;
                 }
 
-                if(this.is_supervisor && is_saleCreatedByLoginUser == true){
-                    if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 0){
-                        return true;
-                    }
-
-                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 0){
-                        return true;
-                    }
-
-                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 1){
-                        return false;
-                    }
-
-                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 2){
-                        return false;
-                    }
-
-                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 3){
-                        return false;
-                    }
-                    if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 3){
-                        return true;
-                    }
+                if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1) {
+                    return false;
                 }
 
-                if(this.is_admin){
-
-                    var created_by = tr.created_by.manager_id;
-
-                    if(this.managerId == created_by){ // means current sale added by super admin it has every access 
-                        return true;
-                    }
-
-                    if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 0){
-                        return false;
-                    }
-
-                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 0){
-                        return true;
-                    }
-
-                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 1){
-                        return true;
-                    }
-
-                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 2){
-                        return true;
-                    }
-
-                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 3){
-                        return true;
-                    }
-
-                    if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 3){
-                        return false;
-                    }
+                if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 2) {
+                    return false;
                 }
+
+                if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 3) {
+                    return true;
+                }
+
+                if (tr.officer_confirmed == 0 && tr.supervisor_confirmed == 3) {
+                    return true;
+                }
+            }
+
+            if (this.is_supervisor && this.is_saleCreatedByLoginUser == false) {
+                if (tr.officer_confirmed == 0 && tr.supervisor_confirmed == 0) {
+                    return false;
+                }
+
+                if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 0) {
+                    return true;
+                }
+
+                if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 1) {
+                    return true;
+                }
+
+                if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 2) {
+                    return true;
+                }
+
+                if (tr.officer_confirmed == 1 && tr.supervisor_confirmed == 3) {
+                    return true;
+                }
+                if (tr.officer_confirmed == 0 && tr.supervisor_confirmed == 3) {
+                    return false;
+                }
+            }
+
+            if (this.is_supervisor && this.is_saleCreatedByLoginUser == true) {
+                if (tr.supervisor_confirmed == 0 && tr.management_confirmed == 0) {
+                    return true;
+                }
+
+                if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 0) {
+                    return true;
+                }
+
+                if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 1) {
+                    return false;
+                }
+
+                if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 2) {
+                    return false;
+                }
+
+                if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 3) {
+                    return false;
+                }
+                if (tr.supervisor_confirmed == 0 && tr.management_confirmed == 3) {
+                    return true;
+                }
+            }
+
+            if (this.is_admin) {
+
+                var created_by = tr.created_by.manager_id;
+
+                if (this.managerId == created_by) { // means current sale added by super admin it has every access 
+                    return true;
+                }
+
+                if (tr.supervisor_confirmed == 0 && tr.management_confirmed == 0) {
+                    return false;
+                }
+
+                if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 0) {
+                    return true;
+                }
+
+                if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 1) {
+                    return true;
+                }
+
+                if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 2) {
+                    return true;
+                }
+
+                if (tr.supervisor_confirmed == 1 && tr.management_confirmed == 3) {
+                    return true;
+                }
+
+                if (tr.supervisor_confirmed == 0 && tr.management_confirmed == 3) {
+                    return false;
+                }
+            }
         },
 
-        notAllowed(opt){
+        notAllowed(opt) {
 
             var msg;
-            if(opt == 'status'){
+            if (opt == 'status') {
                 msg = 'You can\'t change payroll status, if Payroll is approved or supervisor reviewing it';
-            }else if(opt == 'delete'){
+            } else if (opt == 'delete') {
                 msg = 'You can\'t delete payroll, if Payroll is approved or supervisor reviewing it';
-            }else if(opt == 'edit'){
+            } else if (opt == 'edit') {
                 msg = 'You can\'t edit/update payroll, if Payroll is approved or supervisor reviewing it';
             }
 

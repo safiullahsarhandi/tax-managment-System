@@ -8,6 +8,7 @@ class Payrolls extends Model {
 	protected $table = 'employees_payrolls';
 	protected $casts = [
 		'additional_fields' => 'array',
+		'basic_salary' => 'integer'
 	];
 
 	protected $appends = ['officer_confirmation','table_name'];

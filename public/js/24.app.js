@@ -207,7 +207,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   inject: ['generatePassword'],
   data: function data() {
     return {
-<<<<<<< HEAD
       addAdminModal: false,
       editAdminModal: false,
       first_name: "",
@@ -256,81 +255,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         selectedText: 'Officer',
         isSelected: false
       }]
-=======
-      managerId: null,
-      tax_id: '',
-      openComments: false,
-      is_saleCreatedByLoginUser: false,
-      is_admin: false,
-      is_supervisor: false,
-      is_officer: false,
-      show_status_dropdown: true
->>>>>>> 2b6e85517cf935e6ee52b4a38db951a00d397e5f
     };
   },
   computed: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('admins/', ['admins'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('admins/', ['findAdmin', 'findSupervisors'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('supervisors/', ['supervisors'])),
   created: function created() {
-<<<<<<< HEAD
     var self = this;
     this.getAdmins().then(function () {});
     this.getSupervisors();
-=======
-    var _this = this;
-
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              if (_this.$store.state.AppActiveUser.type == 'Admin' || _this.$store.state.AppActiveUser.type == 'Super Admin') {
-                _this.is_admin = true;
-              }
-
-              if (_this.$store.state.AppActiveUser.type == 'Supervisor') {
-                _this.is_supervisor = true;
-              }
-
-              if (_this.$store.state.AppActiveUser.type == 'Officer') {
-                _this.is_officer = true;
-              }
-
-              _this.managerId = _this.$store.state.AppActiveUser.manager_id;
-              _context.next = 6;
-              return _this.getPayroll(_this.$route.params.id).then(function (res) {
-                var created_by = res.data.data.created_by;
-
-                if (_this.$store.state.AppActiveUser.type == 'Supervisor') {
-                  if (_this.$store.state.AppActiveUser.manager_id == created_by.manager_id) {
-                    _this.is_saleCreatedByLoginUser = true;
-                  }
-                }
-
-                if (_this.$store.state.AppActiveUser.type == 'Admin' || _this.$store.state.AppActiveUser.type == 'Super Admin') {
-                  if (_this.$store.state.AppActiveUser.manager_id == created_by.manager_id) {
-                    if (_this.is_admin == true) {
-                      _this.show_status_dropdown = false;
-                    }
-                  }
-                }
-              });
-
-            case 6:
-              localStorage.setItem('customer', _this.payroll.customer.customer_id);
-              localStorage.setItem('currentDetail', '/tax-collection/' + _this.payroll.tax_id);
-              _this.tax_id = _this.payroll.tax_id;
-
-              _this.getCustomer(_this.payroll.customer.customer_id);
-
-              _this.$store.dispatch('getAverageRate');
-
-            case 11:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }))();
->>>>>>> 2b6e85517cf935e6ee52b4a38db951a00d397e5f
   },
   methods: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
     getAdmins: 'admins/getAdmins',
@@ -405,19 +336,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         notify: this.$vs.notify,
         closeLoader: this.$vs.loading.close
       };
-<<<<<<< HEAD
       this.updateStatus(data);
-=======
-      this.statusChangeManagment(data).then(function (res) {
-        var res = res.data;
-
-        if (by == 'supervisor') {
-          _this3.payroll.supervisor_confirmed = res.response;
-        } else {
-          _this3.payroll.management_confirmed = res.response;
-        }
-      });
->>>>>>> 2b6e85517cf935e6ee52b4a38db951a00d397e5f
     },
     editAdmin: function editAdmin(id) {
       var admin = this.findAdmin(id);
@@ -465,26 +384,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             fd.append('reports_to', localStorage.getItem('admin'));
           }
 
-<<<<<<< HEAD
           _this2.update(fd).then(function (res) {
             // console.log(res.data);
             if (res.data.status == 'success') {
               _this2.edit_email = _this2.edit_first_name = _this2.edit_last_name = _this2.edit_zip_code = _this2.edit_city = _this2.edit_state = _this2.edit_address = _this2.edit_phone = '';
               _this2.edit_gender = 'male';
               e.target.reset();
-=======
-      if (this.is_admin) {
-        var created_by = tr.created_by.manager_id;
-
-        if (this.managerId == created_by) {
-          // means current sale added by super admin it has every access 
-          return true;
-        }
-
-        if (tr.supervisor_confirmed == 0 && tr.management_confirmed == 0) {
-          return false;
-        }
->>>>>>> 2b6e85517cf935e6ee52b4a38db951a00d397e5f
 
               _this2.errors.clear();
 
@@ -1703,18 +1608,11 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
-<<<<<<< HEAD
                   _c(
                     "vs-col",
                     { attrs: { "vs-lg": "6", "vs-md": "12", "vs-sm": "12" } },
                     [
                       _c(
-=======
-                  _vm.userType == "Admin" ||
-                  (_vm.userType == "Super Admin" &&
-                    _vm.show_status_dropdown == true)
-                    ? _c(
->>>>>>> 2b6e85517cf935e6ee52b4a38db951a00d397e5f
                         "vs-select",
                         {
                           directives: [
@@ -1776,7 +1674,6 @@ var render = function() {
                       _vm._v(" "),
                       _vm.selectedRole == 3
                         ? _c(
-<<<<<<< HEAD
                             "vx-input-group",
                             { staticClass: "mt-2" },
                             [
@@ -1873,31 +1770,6 @@ var render = function() {
                                 value: _vm.edit_gender,
                                 callback: function($$v) {
                                   _vm.edit_gender = $$v
-=======
-                            "vs-list-item",
-                            { attrs: { title: "Edit Payroll" } },
-                            [
-                              _c("vs-button", {
-                                attrs: {
-                                  to: "/edit-payroll/" + _vm.$route.params.id,
-                                  "icon-pack": "feather",
-                                  size: "small",
-                                  icon: "icon-edit"
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        : _c(
-                            "vs-list-item",
-                            { attrs: { title: "Edit Payroll" } },
-                            [
-                              _c("vs-button", {
-                                attrs: {
-                                  "icon-pack": "feather",
-                                  size: "small",
-                                  icon: "icon-edit"
->>>>>>> 2b6e85517cf935e6ee52b4a38db951a00d397e5f
                                 },
                                 expression: "edit_gender"
                               }
@@ -1926,7 +1798,6 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
-<<<<<<< HEAD
                       _c(
                         "vx-input-group",
                         { staticClass: "mt-5" },
@@ -1964,56 +1835,6 @@ var render = function() {
                                   value: _vm.errors.has("editform.state"),
                                   expression: "errors.has('editform.state')"
                                 }
-=======
-                      [
-                        _vm.userType == "Officer"
-                          ? _c(
-                              "vs-list-item",
-                              { attrs: { title: "Status" } },
-                              [
-                                _vm.editPermissionAccess(_vm.payroll)
-                                  ? _c("vs-switch", {
-                                      attrs: { "icon-pack": "feather" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.statusUpdate(
-                                            _vm.payroll.payroll_id,
-                                            _vm.payroll.officer_confirmed
-                                          )
-                                        }
-                                      },
-                                      model: {
-                                        value: _vm.payroll.officer_confirmed,
-                                        callback: function($$v) {
-                                          _vm.$set(
-                                            _vm.payroll,
-                                            "officer_confirmed",
-                                            $$v
-                                          )
-                                        },
-                                        expression: "payroll.officer_confirmed"
-                                      }
-                                    })
-                                  : _c("vs-switch", {
-                                      attrs: { "icon-pack": "feather" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.notAllowed("status")
-                                        }
-                                      },
-                                      model: {
-                                        value: _vm.payroll.officer_confirmed,
-                                        callback: function($$v) {
-                                          _vm.$set(
-                                            _vm.payroll,
-                                            "officer_confirmed",
-                                            $$v
-                                          )
-                                        },
-                                        expression: "payroll.officer_confirmed"
-                                      }
-                                    })
->>>>>>> 2b6e85517cf935e6ee52b4a38db951a00d397e5f
                               ],
                               staticClass: "text-danger"
                             },

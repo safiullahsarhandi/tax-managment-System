@@ -304,7 +304,7 @@ export default {
         basic_salary_riel(val, oldVal) {
             this.salary_tax_calculation_base = Math.abs(parseFloat(val) - this.allowance);
         },
-        salary_tax_calculation_base() {
+        salary_tax_calculation_base(val,oldVal) {
             if (Object.keys(this.employeeVal).length == 0) {
                 this.$vs.notify({
                     position: 'right-top',
@@ -316,19 +316,19 @@ export default {
                 if (this.employeeVal.employee_type === 'NRD') {
 
                     this.parameter = _.find(this.parameters, (o) => { return o.tax_param_id == "TOSNRD" });
-                    this.tax_on_salary = (this.salary_tax_calculation_base * this.rateToPercent(this.parameter.rate));
+                    this.tax_on_salary = (val * this.rateToPercent(this.parameter.rate));
                 } else if (this.employeeVal.employee_type === 'RD') {
 
                     this.parameter = _.find(this.parameters, (o) => {
-                        if (o.tax_param_id != "TOSNRD" && (this.salary_tax_calculation_base >= Number(o.amount_min) && this.salary_tax_calculation_base <= Number(o.amount_max))) {
+                        if (o.tax_param_id != "TOSNRD" && (val >= Number(o.amount_min) && val <= Number(o.amount_max))) {
 
                             return o;
-                        } else if (o.tax_param_id != "TOSNRD" && (this.salary_tax_calculation_base >= Number(o.amount_min) && o.amount_max == null)) {
+                        } else if (o.tax_param_id != "TOSNRD" && (val >= Number(o.amount_min) && o.amount_max == null)) {
                             return o;
 
                         }
                     });
-                    this.tax_on_salary = (this.salary_tax_calculation_base * this.rateToPercent(this.parameter.rate)) - this.parameter.tax_bracket;
+                    this.tax_on_salary = (val * this.rateToPercent(this.parameter.rate)) - this.parameter.tax_bracket;
                 }
                 this.parameter_rate = this.parameter.rate + '%';
             }

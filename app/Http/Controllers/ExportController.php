@@ -66,15 +66,23 @@ class ExportController extends Controller {
 	public function export_payroll($customer_id, $tax_id) {
 		$customer = TaxCustomers::whereCustomerId($customer_id)->first();
 		$tax = Tax::whereTaxId($tax_id)->first();
-		$payrolls = Payrolls::with('employee', 'created_by')->where('tax_id', $tax_id)->get()->map(function ($payroll) {
-			return ['Employee Name (English)' => $payroll->employee->name_english, 'Employee Name (Khmer)' => $payroll->employee->name_khmer, 'NSSF NO' => $payroll->employee->nssf_num, 'Employee NO' => $payroll->employee->employee_num, 'Basic Salary' => $payroll->basic_salary, 'Basic Salary' => $payroll->bonus, 'Over Time' => $payroll->over_time, 'Commissions' => $payroll->commissions, 'Seniority Payment' => $payroll->seniority_payment, 'Severance Pay' => $payroll->severance_pay, 'Maternity' => $payroll->maternity_leave, 'Paid Annual Leave' => $payroll->paid_annual_leave, 'Food Allowance' => $payroll->food_allowance, 'Transport Allowance' => $payroll->transport_allowance, 'Other Allowance' => $payroll->others, 'Deduction Advance' => $payroll->deduction_advance, 'Salary Adjustment' => $payroll->salary_adjusment];
+		$salary_rate = Settings::where('key','salary_rate')->pluck('value')->first();
+		$payrolls = Payrolls::with('employee','tax_subject.parameter')->where('tax_id', $tax_id)->get()->map(function ($payroll) use($salary_rate){
+			$basic_salary_riel = $payroll->basic_salary * $salary_rate;
+			$allowance = ($payroll->employee->spouse + $payroll->employee->children) * 150000;
+			$tax_calculation_base = $basic_salary_riel - $allowance;
+			$tax_rate = $payroll->tax_subject->parameter->rate;
+			if($payroll->employee->employee_type == 'RD'){
+
+				$tax_on_salary = ($tax_calculation_base * $this->rateToPercent($tax_rate)) - $payroll->tax_subject->parameter->tax_bracket;
+			}else{
+				$tax_on_salary = ($tax_calculation_base * $this->rateToPercent($tax_rate));	
+			}
+			return ['Employee Name (English)' => $payroll->employee->name_english, 'Employee Name (Khmer)' => $payroll->employee->name_khmer, 'NSSF NO' => $payroll->employee->nssf_num, 'Employee NO' => $payroll->employee->employee_num,'Basic Salary' => $payroll->basic_salary,'Amount to be paid (Riel)'=>$basic_salary_riel,'Allowance'=>$allowance,'Tax Calculation Base'=>$tax_calculation_base,'Tax Rate'=> $tax_rate.'%','Tax On Salary'=>$tax_on_salary,'Over Time' => $payroll->over_time, 'Commissions' => $payroll->commissions, 'Seniority Payment' => $payroll->seniority_payment, 'Severance Pay' => $payroll->severance_pay, 'Maternity' => $payroll->maternity_leave, 'Paid Annual Leave' => $payroll->paid_annual_leave, 'Food Allowance' => $payroll->food_allowance, 'Transport Allowance' => $payroll->transport_allowance, 'Other Allowance' => $payroll->others, 'Deduction Advance' => $payroll->deduction_advance, 'Salary Adjustment' => $payroll->salary_adjusment];
 		});
 
 		Excel::create($customer->name_english . '-tax-' . $tax['title'] . '-payrolls', function ($excel) use ($tax, $payrolls, $customer) {
 			$excel->sheet('Payrolls', function ($sheet) use ($payrolls, $customer) {
-				if (count($payrolls) == 0) {
-					$sheet->prependRow(['Employee Name (English)', 'Employee Name (Khmer)', 'NSSF NO', 'Employee NO', 'Basic Salary', 'Basic Salary', 'Over Time', 'Commissions', 'Seniority Payment', 'Severance Pay', 'Maternity', 'Paid Annual Leave', 'Food Allowance', 'Transport Allowance', 'Other Allowance', 'Deduction Advance', 'Salary Adjustment']);
-				}
 				$hr_centre = array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
 				$address = $customer->address . ', ' . $customer->street . ', ' . $customer->muncipality . ', ' . $customer->sangkat . ', ' . $customer->district . ', ' . $customer->province . ', ' . $customer->group;
@@ -90,7 +98,7 @@ class ExportController extends Controller {
 				$company_name = 'Company Name: ' . $com_name;
 				$company_name_khmer = 'នាមករណ៍សហគ្រាស: ' . $com_name_khmr;
 
-				$sheet->getStyle('A1:Q1')->getFont()->setBold(true);
+				$sheet->getStyle('A1:U1')->getFont()->setBold(true);
 				$sheet->prependRow([]);
 
 				$sheet->prependRow([$eng_address]);
@@ -101,21 +109,20 @@ class ExportController extends Controller {
 				$sheet->prependRow([$company_name_khmer]);
 
 				$sheet->prependRow(['For Feburary 2019']);
-				$sheet->prependRow(['សំរាប់ ខែ កុម្ភៈ ឆ្នាំ 2019']);
 				$sheet->prependRow(['SALARY TAX']);
 				$sheet->prependRow(['ពន្ធកាត់ទុកលើប្រាក់បៀវត្ស']);
 
 				for ($i = 1; $i <= 11; $i++) {
-					$val = 'A' . $i . ':Q' . $i;
+					$val = 'A' . $i . ':U' . $i;
 					$sheet->mergeCells($val);
 				}
 				for ($i = 1; $i <= 4; $i++) {
-					$val = 'A' . $i . ':Q' . $i;
+					$val = 'A' . $i . ':U' . $i;
 					$sheet->getStyle($val)->getAlignment()->applyFromArray($hr_centre);
 				}
-				$sheet->appendRow(['Employee Name (English)', 'Employee Name (Khmer)', 'NSSF NO', 'Employee NO', 'Basic Salary', 'Basic Salary', 'Over Time', 'Commissions', 'Seniority Payment', 'Severance Pay', 'Maternity', 'Paid Annual Leave', 'Food Allowance', 'Transport Allowance', 'Other Allowance', 'Deduction Advance', 'Salary Adjustment']);
-
-				$sheet->getStyle('A12:Q12')->getFont()->setBold(true);
+				$sheet->appendRow(['Employee Name (English)', 'Employee Name (Khmer)', 'NSSF NO', 'Employee NO', 'Basic Salary (USD)','Amount to pe paid (Riel)','Allowance','Tax Calculation Base','Tax Rate','Tax on salary','Over Time', 'Commissions', 'Seniority Payment', 'Severance Pay', 'Maternity', 'Paid Annual Leave', 'Food Allowance', 'Transport Allowance', 'Other Allowance', 'Deduction Advance', 'Salary Adjustment']);
+				$sheet->rows($payrolls);
+				$sheet->getStyle('A12:U12')->getFont()->setBold(true);
 				// $sheet->fromArray($payrolls);
 			});
 		})->export('xlsx');
