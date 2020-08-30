@@ -1,1 +1,2042 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[14],{109:function(e,t,n){"use strict";var s=n(35);n.n(s).a},110:function(e,t,n){(e.exports=n(5)(!1)).push([e.i,".card-dimension {\n  width: 100% !important;\n  min-height: 100px !important;\n}\r\n\r\n",""])},180:function(e,t,n){"use strict";n.r(t);var s=n(3),r=n.n(s);function l(e,t,n,s,r,l,a){try{var u=e[l](a),i=u.value}catch(e){return void n(e)}u.done?t(i):Promise.resolve(i).then(s,r)}function a(e){return function(){var t=this,n=arguments;return new Promise((function(s,r){var a=e.apply(t,n);function u(e){l(a,s,r,u,i,"next",e)}function i(e){l(a,s,r,u,i,"throw",e)}u(void 0)}))}}var u={data:function(){return{searchedRecord:[],msg:!0,activeUserRole:"",objectLength:0,currentPage:1,perPage:20}},created:function(){var e=this;return a(r.a.mark((function t(){return r.a.wrap((function(t){for(;;)switch(t.prev=t.next){case 0:e.activeUserRole=e.$store.state.AppActiveUser.type,e,0==e.searchedData.length&&e.changePage();case 3:case"end":return t.stop()}}),t)})))()},computed:{searchedData:function(){return this.getData(),this.searchedDatalength=this.$store.state.searchedData,this.$store.state.searchedData},totalSearchPages:function(){return this.$store.state.totalSearchPages}},methods:{getData:function(){var e=this.$store.state.searchedData;this.objectLength=Object.keys(e).length},changePage:function(){var e=arguments,t=this;return a(r.a.mark((function n(){var s;return r.a.wrap((function(n){for(;;)switch(n.prev=n.next){case 0:e.length>0&&void 0!==e[0]?e[0]:1,s=t.$route.query.q,!_.isUndefined(t.$route.query.page)&&t.$route.query.page&&t.$route.query.page,t.$route.query.page,t.$store.dispatch("get_search_data",{query:s,page:t.currentPage});case 5:case"end":return n.stop()}}),n)})))()},records:function(){var e=this,t=Math.ceil((this.currentPage-1)*this.perPage),n=_.filter(this.searchedData,(function(n,s){return s>=t&&s<t+e.perPage}));return n},makeUrl:function(e){var t=this.$store.state.AppActiveUser.type;if("tax_customers"==e.table_name)return"/company-detail/"+e.customer_id;if("tax_management"==e.table_name)return"/tax-collection/"+e.tax_id;if("tax_managers"==e.table_name){if("Supervisor"==t)return"/my-team";if("Super Admin"==t)return"/member-detail/"+e.manager_id}else{if("customers_employees"==e.table_name)return"/employees-list";if("sales"==e.table_name)return"/sale-detail/"+e.sale_id;if("purchases"==e.table_name)return"/purchase-detail/"+e.purchase_id;if("employees_payrolls"==e.table_name)return"/payroll-detail/"+e.payroll_id;if("currencies"==e.table_name)return"/currencies";if("tax_parameters"==e.table_name)return"/tax-parameters"}},goFind:function(e,t,n){1==t&&(localStorage.setItem("customer",n),localStorage.setItem("currentDetail","/company-detail/"+n)),this.$router.push(e)}}},i=(n(109),n(2)),o=Object(i.a)(u,(function(){var e=this,t=e.$createElement,n=e._self._c||t;return n("div",[e._l(e.records(),(function(t,s){return n("div",["tax_customers"==t.result.table_name?n("vx-card",{staticClass:"mt-3 card-dimension"},[n("a",{staticStyle:{color:"#1a0dab","font-weight":"bold","font-size":"12px","letter-spacing":"2px"},attrs:{href:"javascript:void(0)"},on:{click:function(n){e.goFind(e.makeUrl(t.result),1,t.result.customer_id)}}},[e._v("\n                "+e._s(null!=t.result.name_english?"Name(english): "+t.result.name_english+" | ":"")+"\n                "+e._s(null!=t.result.name_khmer?"Name(Khmer): "+t.result.name_khmer+" | ":"")+"\n                "+e._s(null!=t.result.address?"Address: "+t.result.street:"")+"\n                "+e._s("(Company)")+"\n            ")]),e._v(" "),n("p",{staticStyle:{"font-size":"12px"}},[e._v("\n                "+e._s(null!=t.result.owner?"Owner Name: "+t.result.owner.name_english+", ":"")+"\n                "+e._s(null!=t.result.owner?"Owner Email: "+t.result.owner.email+", ":"")+"\n                "+e._s(null!=t.result.street?"Street: "+t.result.street+", ":"")+"\n                "+e._s(null!=t.result.sangkat?"Sangkat: "+t.result.sangkat+", ":"")+"\n                "+e._s(null!=t.result.district?"District: "+t.result.district+", ":"")+"\n                "+e._s(null!=t.result.province?"Province: "+t.result.province+", ":"")+"\n                "+e._s(null!=t.result.muncipality?"Muncipality: "+t.result.muncipality+", ":"")+"\n                "+e._s(null!=t.result.industry?"Industry: "+t.result.industry+", ":"")+"\n                "+e._s(null!=t.result.incorporation_date?"Incorporation Date: "+t.result.incorporation_date+", ":"")+"\n                "+e._s(null!=t.result.village?"Village: "+t.result.village+", ":"")+"\n                "+e._s(null!=t.result.telephone?"Telephone: "+t.result.telephone+", ":"")+"\n                "+e._s(null!=t.result.tax_duration?"Tax Duration: "+t.result.tax_duration:"")+"\n            ")]),e._v(" "),n("a",{staticStyle:{color:"#1a0dab","font-size":"11px","letter-spacing":"1px","margin-top":"15px"},attrs:{href:"javascript:void(0)"},on:{click:function(n){e.goFind(e.makeUrl(t.result),1,t.result.customer_id)}}},[n("vs-icon",{attrs:{"icon-pack":"feather",icon:"icon-map",color:"primary"}}),e._v(" tax-managemet"+e._s(e.makeUrl(t.result))+"\n            ")],1)]):e._e(),e._v(" "),"tax_management"==t.result.table_name?n("vx-card",{staticClass:"mt-3 card-dimension"},[n("a",{staticStyle:{color:"#1a0dab","font-weight":"bold","font-size":"12px","letter-spacing":"2px"},attrs:{href:"javascript:void(0)"},on:{click:function(n){e.goFind(e.makeUrl(t.result),1,t.result.customer_id)}}},[e._v("\n                "+e._s(null!=t.result.title?"Title: "+t.result.title+", ":"")+"\n                "+e._s(null!=t.result.description?"Description: "+t.result.description:"")+"\n                "+e._s("(Tax)")+"\n            ")]),e._v(" "),n("p",{staticStyle:{"font-size":"12px"}},[e._v("\n                "+e._s(null!=t.result.title?"Title: "+t.result.title+", ":"")+"\n                "+e._s(null!=t.result.description?"Description: "+t.result.description+", ":"")+"\n                "+e._s(null!=t.result.duration?"Duration: "+t.result.duration+", ":"")+"\n                "+e._s(null!=t.result.type?"Tax Type: "+t.result.type:"")+"\n            ")]),e._v(" "),n("a",{staticStyle:{color:"#1a0dab","font-size":"11px","letter-spacing":"1px","margin-top":"15px"},attrs:{href:"javascript:void(0)"},on:{click:function(n){e.goFind(e.makeUrl(t.result),1,t.result.customer_id)}}},[n("vs-icon",{attrs:{"icon-pack":"feather",icon:"icon-map",color:"primary"}}),e._v(" tax-managemet"+e._s(e.makeUrl(t.result))+"\n            ")],1)]):e._e(),e._v(" "),"tax_managers"==t.result.table_name&&"Officer"!=e.activeUserRole?n("vx-card",{staticClass:"mt-3 card-dimension"},[n("a",{staticStyle:{color:"#1a0dab","font-weight":"bold","font-size":"12px","letter-spacing":"2px"},attrs:{href:"javascript:void(0)"},on:{click:function(n){e.goFind(e.makeUrl(t.result),0,null)}}},[e._v("\n                "+e._s(null!=t.result.full_name?"Tax Manager Name: "+t.result.full_name+", ":"")+"\n                "+e._s(null!=t.result.email?"Email: "+t.result.email:"")+"\n                "+e._s("(Team Member)")+"\n            ")]),e._v(" "),n("p",{staticStyle:{"font-size":"12px"}},[e._v("\n                "+e._s(null!=t.result.full_name?"Full Name: "+t.result.full_name+", ":"")+"\n                "+e._s(null!=t.result.email?"Email: "+t.result.email+", ":"")+"\n                "+e._s(null!=t.result.gender?"Gender: "+t.result.gender+", ":"")+"\n                "+e._s(null!=t.result.phone?"Phone: "+t.result.phone+", ":"")+"\n                "+e._s(null!=t.result.address?"Address: "+t.result.address+", ":"")+"\n                "+e._s(null!=t.result.state?"State: "+t.result.state+", ":"")+"\n                "+e._s(null!=t.result.city?"City: "+t.result.city+", ":"")+"\n                "+e._s(null!=t.result.zip_code?"Zip Code: "+t.result.zip_code:"")+"\n            ")]),e._v(" "),n("a",{staticStyle:{color:"#1a0dab","font-size":"11px","letter-spacing":"1px","margin-top":"15px"},attrs:{href:"javascript:void(0)"},on:{click:function(n){e.goFind(e.makeUrl(t.result),0,null)}}},[n("vs-icon",{attrs:{"icon-pack":"feather",icon:"icon-map",color:"primary"}}),e._v(" tax-managemet"+e._s(e.makeUrl(t.result))+"\n            ")],1)]):e._e(),e._v(" "),"customers_employees"==t.result.table_name?n("vx-card",{staticClass:"mt-3 card-dimension"},[n("a",{staticStyle:{color:"#1a0dab","font-weight":"bold","font-size":"12px","letter-spacing":"2px"},attrs:{href:"javascript:void(0)"},on:{click:function(n){e.goFind(e.makeUrl(t.result),1,t.result.tax_customer_id)}}},[e._v("\n                "+e._s(null!=t.result.name_english?"Name: "+t.result.name_english+", ":"")+"\n                "+e._s(null!=t.result.name_khmer?"Name(Khmer): "+t.result.name_khmer+", ":"")+"\n                "+e._s(null!=t.result.nationality?"Nationality: "+t.result.nationality:"")+"\n            ")]),e._v(" "),n("p",{staticStyle:{"font-size":"12px"}},[e._v("\n                "+e._s(null!=t.result.name_english?"Name: "+t.result.name_english+", ":"")+"\n                "+e._s(null!=t.result.employee_num?"Employee Number: "+t.result.employee_num+", ":"")+"\n                "+e._s(null!=t.result.nssf_num?"NSSF Number: "+t.result.nssf_num+", ":"")+"\n                "+e._s(null!=t.result.dob?"Date of birth: "+t.result.dob+", ":"")+"\n                "+e._s(null!=t.result.position?"Position: "+t.result.position+", ":"")+"\n                "+e._s(null!=t.result.joining_date?"Joining Date: "+t.result.joining_date+", ":"")+"\n                "+e._s(null!=t.result.sex?"Sex: "+t.result.sex+", ":"")+"\n                "+e._s(null!=t.result.contract_type?"Contract Type: "+t.result.contract_type+", ":"")+"\n                "+e._s(null!=t.result.spouse?"Spouse: "+t.result.spouse:"")+"\n            ")]),e._v(" "),n("a",{staticStyle:{color:"#1a0dab","font-size":"11px","letter-spacing":"1px","margin-top":"15px"},attrs:{href:"javascript:void(0)"},on:{click:function(n){e.goFind(e.makeUrl(t.result),1,t.result.tax_customer_id)}}},[n("vs-icon",{attrs:{"icon-pack":"feather",icon:"icon-map",color:"primary"}}),e._v(" tax-managemet"+e._s(e.makeUrl(t.result))+"\n            ")],1)]):e._e(),e._v(" "),"sales"==t.result.table_name?n("vx-card",{staticClass:"mt-3 card-dimension"},[n("a",{staticStyle:{color:"#1a0dab","font-weight":"bold","font-size":"12px","letter-spacing":"2px"},attrs:{href:"javascript:void(0)"},on:{click:function(n){e.goFind(e.makeUrl(t.result),1,t.result.customer_id)}}},[e._v("\n                "+e._s(null!=t.result.account_description?"Account Description: "+t.result.account_description+", ":"")+"\n                "+e._s(null!=t.result.accounting_reference?"Accounting Reference: "+t.result.accounting_reference+", ":"")+"\n                "+e._s(null!=t.result.account_code?"Account Code: "+t.result.account_code:"")+"\n                "+e._s("(Sales)")+"\n            ")]),e._v(" "),n("p",{staticStyle:{"font-size":"12px"}},[e._v("\n                "+e._s(null!=t.result.account_description?"Account Description: "+t.result.account_description+", ":"")+"\n                "+e._s(null!=t.result.accounting_reference?"Accounting Reference: "+t.result.accounting_reference+", ":"")+"\n                "+e._s(null!=t.result.account_code?"Account Code: "+t.result.account_code+", ":"")+"\n                "+e._s(null!=t.result.signature_date?"Signature Date: "+t.result.signature_date+", ":"")+"\n                "+e._s(null!=t.result.branch_name?"Branch Bame: "+t.result.branch_name+", ":"")+"\n                "+e._s(null!=t.result.tax_period?"Tax Period: "+t.result.tax_period+", ":"")+"\n                "+e._s(null!=t.result.invoice_date?"Invoice Date: "+t.result.invoice_date+", ":"")+"\n                "+e._s(null!=t.result.invoice_num?"Invoice Number: "+t.result.invoice_num+", ":"")+"\n                "+e._s(null!=t.result.description?"Description: "+t.result.description+", ":"")+"\n                "+e._s(null!=t.result.quantity?"Quantity: "+t.result.quantity+", ":"")+"\n                "+e._s(null!=t.result.non_taxable_sales?"Non Taxable Sales: "+t.result.non_taxable_sales+", ":"")+"\n                "+e._s(null!=t.result.vat?"VAT: "+t.result.vat+", ":"")+"\n                "+e._s(null!=t.result.taxable_person_sales?"Taxable Person Sales: "+t.result.taxable_person_sales+", ":"")+"\n                "+e._s(null!=t.result.taxable_person_vat?"Taxable Person VAT: "+t.result.taxable_person_vat+", ":"")+"\n                "+e._s(null!=t.result.cust_sales_vat?"Customer Sales VAT: "+t.result.cust_sales_vat+", ":"")+"\n                "+e._s(null!=t.result.total_taxable_value?"Total Taxable Value: "+t.result.total_taxable_value+", ":"")+"\n                "+e._s(null!=t.result.taxes_subject?"Taxes Subject: "+t.result.taxes_subject+", ":"")+"\n                "+e._s(null!=t.result.comments?"Comments: "+t.result.comments+", ":"")+"\n                "+e._s(null!=t.result.client_response?"Client Response: "+t.result.client_response+", ":"")+"\n                "+e._s(null!=t.result.top_comments?"Top Comments: "+t.result.top_comments:"")+"\n            ")]),e._v(" "),n("a",{staticStyle:{color:"#1a0dab","font-size":"11px","letter-spacing":"1px","margin-top":"15px"},attrs:{href:"javascript:void(0)"},on:{click:function(n){e.goFind(e.makeUrl(t.result),1,t.result.customer_id)}}},[n("vs-icon",{attrs:{"icon-pack":"feather",icon:"icon-map",color:"primary"}}),e._v(" tax-managemet"+e._s(e.makeUrl(t.result))+"\n            ")],1)]):e._e(),e._v(" "),"purchases"==t.result.table_name?n("vx-card",{staticClass:"mt-3 card-dimension"},[n("a",{staticStyle:{color:"#1a0dab","font-weight":"bold","font-size":"12px","letter-spacing":"2px"},attrs:{href:"javascript:void(0)"},on:{click:function(n){e.goFind(e.makeUrl(t.result),1,t.result.customer_id)}}},[e._v("\n                "+e._s(null!=t.result.branch_name?"Branch Name: "+t.result.branch_name+", ":"")+"\n                "+e._s(null!=t.result.description?"Description: "+t.result.description+", ":"")+"\n                "+e._s(null!=t.result.invoice_num?"Invoice Number: "+t.result.invoice_num:"")+"\n                "+e._s("(Purchases)")+"\n            ")]),e._v(" "),n("p",{staticStyle:{"font-size":"12px"}},[e._v("\n                "+e._s(null!=t.result.branch_name?"Branch Name: "+t.result.branch_name+", ":"")+"\n                "+e._s(null!=t.result.tax_period?"Tax Period: "+t.result.tax_period+", ":"")+"\n                "+e._s(null!=t.result.invoice_date?"Invoice Date: "+t.result.invoice_date+", ":"")+"\n                "+e._s(null!=t.result.invoice_num?"Invoice Number: "+t.result.invoice_num+", ":"")+"\n                "+e._s(null!=t.result.description?"Description: "+t.result.description+", ":"")+"\n                "+e._s(null!=t.result.quantity?"Quantity: "+t.result.quantity+", ":"")+"\n                "+e._s(null!=t.result.comments?"Comments: "+t.result.comments+", ":"")+"\n                "+e._s(null!=t.result.top_comments?"Top Comments: "+t.result.top_comments+", ":"")+"\n                "+e._s(null!=t.result.client_responses?"Client Responses: "+t.result.client_responses+", ":"")+"\n                "+e._s(null!=t.result.local_purchase_tax_val?"Local Purchase Tax Value: "+t.result.local_purchase_tax_val+", ":"")+"\n                "+e._s(null!=t.result.local_purchase_vat?"Local Purchase VAT: "+t.result.local_purchase_vat+", ":"")+"\n                "+e._s(null!=t.result.imports_taxable_val?"Imports Taxable Value: "+t.result.imports_taxable_val+", ":"")+"\n                "+e._s(null!=t.result.imports_vat?"Imports VAT: "+t.result.imports_vat+", ":"")+"\n                "+e._s(null!=t.result.total_vat?"Total VAT: "+t.result.total_vat+", ":"")+"\n                "+e._s(null!=t.result.subject?"Subject: "+t.result.subject+", ":"")+"\n                "+e._s(null!=t.result.non_taxable_purchases?"Non Taxable Purchases: "+t.result.non_taxable_purchases+", ":"")+"\n                "+e._s(null!=t.result.supplier?"Supplier: "+t.result.supplier+", ":"")+"\n                "+e._s(null!=t.result.vat_tin?"VAT TIN: "+t.result.vat_tin:"")+"\n            ")]),e._v(" "),n("a",{staticStyle:{color:"#1a0dab","font-size":"11px","letter-spacing":"1px","margin-top":"15px"},attrs:{href:"javascript:void(0)"},on:{click:function(n){e.goFind(e.makeUrl(t.result),1,t.result.customer_id)}}},[n("vs-icon",{attrs:{"icon-pack":"feather",icon:"icon-map",color:"primary"}}),e._v(" tax-managemet"+e._s(e.makeUrl(t.result))+"\n            ")],1)]):e._e(),e._v(" "),"employees_payrolls"==t.result.table_name?n("vx-card",{staticClass:"mt-3 card-dimension"},[n("a",{staticStyle:{color:"#1a0dab","font-weight":"bold","font-size":"12px","letter-spacing":"2px"},attrs:{href:"javascript:void(0)"},on:{click:function(n){e.goFind(e.makeUrl(t.result),1,t.result.customer_id)}}},[e._v("\n                "+e._s(null!=t.result.basic_salary?"Basic Salary: "+t.result.basic_salary+", ":"")+"\n                "+e._s(null!=t.result.bonus?"Bonus: "+t.result.bonus+", ":"")+"\n                "+e._s(null!=t.result.over_time?"Over Time: "+t.result.over_time:"")+"\n                "+e._s("(Payrolls)")+"\n            ")]),e._v(" "),n("p",{staticStyle:{"font-size":"12px"}},[e._v("\n                "+e._s(null!=t.result.basic_salary?"Basic Salary: "+t.result.basic_salary+", ":"")+"\n                "+e._s(null!=t.result.bonus?"Bonus: "+t.result.bonus+", ":"")+"\n                "+e._s(null!=t.result.over_time?"Over Time: "+t.result.over_time+", ":"")+"\n                "+e._s(null!=t.result.commissions?"Commissions: "+t.result.commissions+", ":"")+"\n                "+e._s(null!=t.result.seniority_payment?"Seniority Payment: "+t.result.seniority_payment+", ":"")+"\n                "+e._s(null!=t.result.severance_pay?"Severance Pay: "+t.result.severance_pay+", ":"")+"\n                "+e._s(null!=t.result.maternity_leave?"Maternity Leave: "+t.result.maternity_leave+", ":"")+"\n                "+e._s(null!=t.result.paid_annual_leave?"Paid Annual Leave: "+t.result.paid_annual_leave+", ":"")+"\n                "+e._s(null!=t.result.food_allowance?"Food Allowance: "+t.result.food_allowance+", ":"")+"\n                "+e._s(null!=t.result.transport_allowance?"Transport Allowance: "+t.result.transport_allowance+", ":"")+"\n                "+e._s(null!=t.result.others?"Others: "+t.result.others+", ":"")+"\n                "+e._s(null!=t.result.deduction_advance?"Deduction Advance: "+t.result.deduction_advance+", ":"")+"\n                "+e._s(null!=t.result.salary_adjusment?"Salary Adjusment: "+t.result.salary_adjusment+", ":"")+"\n                "+e._s(null!=t.result.remark?"Remarks: "+t.result.remark:"")+"\n            ")]),e._v(" "),n("a",{staticStyle:{color:"#1a0dab","font-size":"11px","letter-spacing":"1px","margin-top":"15px"},attrs:{href:"javascript:void(0)"},on:{click:function(n){e.goFind(e.makeUrl(t.result),1,t.result.customer_id)}}},[n("vs-icon",{attrs:{"icon-pack":"feather",icon:"icon-map",color:"primary"}}),e._v(" tax-managemet"+e._s(e.makeUrl(t.result))+"\n            ")],1)]):e._e(),e._v(" "),"currencies"==t.result.table_name?n("vx-card",{staticClass:"mt-3 card-dimension"},[n("a",{staticStyle:{color:"#1a0dab","font-weight":"bold","font-size":"12px","letter-spacing":"2px"},attrs:{href:"javascript:void(0)"},on:{click:function(n){e.goFind(e.makeUrl(t.result),0,null)}}},[e._v("\n                "+e._s(null!=t.result.country?"Country: "+t.result.country+", ":"")+"\n                "+e._s(null!=t.result.currency?"Currency: "+t.result.currency:"")+"\n                "+e._s("(Currency)")+"\n            ")]),e._v(" "),n("p",{staticStyle:{"font-size":"12px"}},[e._v("\n                "+e._s("Country: "+t.result.country)+"\n            ")]),e._v(" "),n("p",{staticStyle:{"font-size":"12px"}},[e._v("\n                "+e._s("Currency: "+t.result.currency)+"\n            ")]),e._v(" "),n("a",{staticStyle:{color:"#1a0dab","font-size":"11px","letter-spacing":"1px","margin-top":"15px"},attrs:{href:"javascript:void(0)"},on:{click:function(n){e.goFind(e.makeUrl(t.result),0,null)}}},[n("vs-icon",{attrs:{"icon-pack":"feather",icon:"icon-map",color:"primary"}}),e._v(" tax-managemet"+e._s(e.makeUrl(t.result))+"\n            ")],1)]):e._e(),e._v(" "),"tax_parameters"==t.result.table_name?n("vx-card",{staticClass:"mt-3 card-dimension"},[n("a",{staticStyle:{color:"#1a0dab","font-weight":"bold","font-size":"12px","letter-spacing":"2px"},attrs:{href:"javascript:void(0)"},on:{click:function(n){e.goFind(e.makeUrl(t.result),0,null)}}},[e._v("\n                "+e._s(null!=t.result.english_description?"Description: "+t.result.english_description:"")+"\n                "+e._s("(Tax Parameters)")+"\n            ")]),e._v(" "),n("p",{staticStyle:{"font-size":"12px"}},[e._v("\n                "+e._s(t.result.english_description="")+"\n                "+e._s(null!=t.result.khmer_description?"Khmer Description: "+t.result.khmer_description+", ":"")+"\n                "+e._s(null!=t.result.tax_code?"Tax Code: "+t.result.tax_code+", ":"")+"\n                "+e._s(null!=t.result.rate?"Rate: "+t.result.rate+", ":"")+"\n                "+e._s(null!=t.result.base_tax?"Base Tax: "+t.result.base_tax+", ":"")+"\n                "+e._s(null!=t.result.tax_type?"Tax Type: "+t.result.tax_type+", ":"")+"\n                "+e._s(null!=t.result.effective_date?"Effective Date: "+t.result.effective_date+", ":"")+"\n                "+e._s(null!=t.result.amount_min?"Minimum Amount: "+t.result.amount_min+", ":"")+"\n                "+e._s(null!=t.result.amount_max?"Maximum Amount: "+t.result.amount_max+", ":"")+"\n                "+e._s(null!=t.result.remarks?"Remarks: "+t.result.remarks:"")+"\n            ")]),e._v(" "),n("a",{staticStyle:{color:"#1a0dab","font-size":"11px","letter-spacing":"1px","margin-top":"15px"},attrs:{href:"javascript:void(0)"},on:{click:function(n){e.goFind(e.makeUrl(t.result),0,null)}}},[n("vs-icon",{attrs:{"icon-pack":"feather",icon:"icon-map",color:"primary"}}),e._v(" tax-managemet"+e._s(e.makeUrl(t.result))+"\n            ")],1)]):e._e()],1)})),e._v(" "),n("br"),e._v(" "),e.objectLength>0?n("vs-pagination",{attrs:{total:e.totalSearchPages},on:{input:function(t){return e.records()}},model:{value:e.currentPage,callback:function(t){e.currentPage=t},expression:"currentPage"}}):e._e(),e._v(" "),n("vs-row",[n("vs-col",[e.objectLength<=0?n("h1",{staticStyle:{"margin-top":"10%","text-align":"center",color:"#909090"}},[e._v(" No record found! ")]):e._e()])],1)],2)}),[],!1,null,null,null);t.default=o.exports},35:function(e,t,n){var s=n(110);"string"==typeof s&&(s=[[e.i,s,""]]);var r={hmr:!0,transform:void 0,insertInto:void 0};n(6)(s,r);s.locals&&(e.exports=s.locals)}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[14],{
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/SearchedRecords.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/SearchedRecords.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      searchedRecord: [],
+      msg: true,
+      activeUserRole: '',
+      objectLength: 0,
+      currentPage: 1,
+      perPage: 20
+    };
+  },
+  created: function created() {
+    var self;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function created$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            // await this.get_search_data({query: val,page : 0})
+            this.activeUserRole = this.$store.state.AppActiveUser.type;
+            self = this;
+
+            if (this.searchedData.length == 0) {
+              this.changePage();
+            }
+
+          case 3:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, null, this);
+  },
+  computed: {
+    searchedData: function searchedData() {
+      this.getData();
+      this.searchedDatalength = this.$store.state.searchedData;
+      return this.$store.state.searchedData;
+    },
+    totalSearchPages: function totalSearchPages() {
+      return this.$store.state.totalSearchPages;
+    }
+  },
+  methods: {
+    getData: function getData() {
+      var searchedDatalength = this.$store.state.searchedData;
+      this.objectLength = Object.keys(searchedDatalength).length;
+    },
+    changePage: function changePage() {
+      var page,
+          val,
+          _page,
+          _args2 = arguments;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function changePage$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              page = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : 1;
+              val = this.$route.query.q;
+
+              if (!_.isUndefined(this.$route.query.page) && this.$route.query.page) {
+                // alert(this.$route.query.page)
+                _page = this.$route.query.page;
+              }
+
+              this.$route.query.page;
+              this.$store.dispatch('get_search_data', {
+                query: val,
+                page: this.currentPage
+              });
+
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, null, this);
+    },
+    records: function records() {
+      var _this = this;
+
+      var offset = Math.ceil((this.currentPage - 1) * this.perPage);
+
+      var records = _.filter(this.searchedData, function (value, index) {
+        return index >= offset && index < offset + _this.perPage;
+      });
+
+      return records;
+    },
+    makeUrl: function makeUrl(obj) {
+      var activeUserRole = this.$store.state.AppActiveUser.type;
+
+      if (obj.table_name == 'tax_customers') {
+        // localStorage.setItem('customer', obj.customer_id);
+        // localStorage.setItem('currentDetail', '/company-detail/'+obj.customer_id);
+        return '/company-detail/' + obj.customer_id;
+      } else if (obj.table_name == 'tax_management') {
+        // localStorage.setItem('customer', obj.customer_id);
+        // localStorage.setItem('currentDetail', '/company-detail/'+obj.customer_id);
+        return '/tax-collection/' + obj.tax_id;
+      } else if (obj.table_name == 'tax_managers') {
+        if (activeUserRole == 'Supervisor') {
+          return '/my-team';
+        } else if (activeUserRole == 'Super Admin') {
+          return '/member-detail/' + obj.manager_id;
+        }
+      } else if (obj.table_name == 'customers_employees') {
+        // localStorage.setItem('customer', obj.tax_customer_id);
+        // localStorage.setItem('currentDetail', '/company-detail/'+obj.customer_id);
+        return '/employees-list';
+      } else if (obj.table_name == 'sales') {
+        // localStorage.setItem('customer', obj.customer_id);
+        // localStorage.setItem('currentDetail', '/company-detail/'+obj.customer_id);
+        return '/sale-detail/' + obj.sale_id;
+      } else if (obj.table_name == 'purchases') {
+        // localStorage.setItem('customer', obj.customer_id);
+        // localStorage.setItem('currentDetail', '/company-detail/'+obj.customer_id);
+        return '/purchase-detail/' + obj.purchase_id;
+      } else if (obj.table_name == 'employees_payrolls') {
+        // localStorage.setItem('customer', obj.customer_id);
+        // localStorage.setItem('currentDetail', '/company-detail/'+obj.customer_id);
+        return '/payroll-detail/' + obj.payroll_id;
+      } else if (obj.table_name == 'currencies') {
+        return '/currencies';
+      } else if (obj.table_name == 'tax_parameters') {
+        return '/tax-parameters';
+      }
+    },
+    goFind: function goFind(path, status, id) {
+      if (status == 1) {
+        localStorage.setItem('customer', id);
+        localStorage.setItem('currentDetail', '/company-detail/' + id);
+      }
+
+      this.$router.push(path);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/SearchedRecords.vue?vue&type=style&index=0&lang=css&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/SearchedRecords.vue?vue&type=style&index=0&lang=css& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".card-dimension {\n  width: 100% !important;\n  min-height: 100px !important;\n}\r\n\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/SearchedRecords.vue?vue&type=style&index=0&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/SearchedRecords.vue?vue&type=style&index=0&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--7-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--7-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./SearchedRecords.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/SearchedRecords.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/SearchedRecords.vue?vue&type=template&id=10392441&":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/SearchedRecords.vue?vue&type=template&id=10392441& ***!
+  \*****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _vm._l(_vm.records(), function(item, indextr) {
+        return _c(
+          "div",
+          [
+            item.result.table_name == "tax_customers"
+              ? _c("vx-card", { staticClass: "mt-3 card-dimension" }, [
+                  _c(
+                    "a",
+                    {
+                      staticStyle: {
+                        color: "#1a0dab",
+                        "font-weight": "bold",
+                        "font-size": "12px",
+                        "letter-spacing": "2px"
+                      },
+                      attrs: { href: "javascript:void(0)" },
+                      on: {
+                        click: function($event) {
+                          _vm.goFind(
+                            _vm.makeUrl(item.result),
+                            1,
+                            item.result.customer_id
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(
+                            item.result.name_english != null
+                              ? "Name(english): " +
+                                  item.result.name_english +
+                                  " | "
+                              : ""
+                          ) +
+                          "\n                " +
+                          _vm._s(
+                            item.result.name_khmer != null
+                              ? "Name(Khmer): " + item.result.name_khmer + " | "
+                              : ""
+                          ) +
+                          "\n                " +
+                          _vm._s(
+                            item.result.address != null
+                              ? "Address: " + item.result.street
+                              : ""
+                          ) +
+                          "\n                " +
+                          _vm._s("(Company)") +
+                          "\n            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("p", { staticStyle: { "font-size": "12px" } }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(
+                          item.result.owner != null
+                            ? "Owner Name: " +
+                                item.result.owner.name_english +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.owner != null
+                            ? "Owner Email: " + item.result.owner.email + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.street != null
+                            ? "Street: " + item.result.street + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.sangkat != null
+                            ? "Sangkat: " + item.result.sangkat + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.district != null
+                            ? "District: " + item.result.district + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.province != null
+                            ? "Province: " + item.result.province + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.muncipality != null
+                            ? "Muncipality: " + item.result.muncipality + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.industry != null
+                            ? "Industry: " + item.result.industry + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.incorporation_date != null
+                            ? "Incorporation Date: " +
+                                item.result.incorporation_date +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.village != null
+                            ? "Village: " + item.result.village + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.telephone != null
+                            ? "Telephone: " + item.result.telephone + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.tax_duration != null
+                            ? "Tax Duration: " + item.result.tax_duration
+                            : ""
+                        ) +
+                        "\n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticStyle: {
+                        color: "#1a0dab",
+                        "font-size": "11px",
+                        "letter-spacing": "1px",
+                        "margin-top": "15px"
+                      },
+                      attrs: { href: "javascript:void(0)" },
+                      on: {
+                        click: function($event) {
+                          _vm.goFind(
+                            _vm.makeUrl(item.result),
+                            1,
+                            item.result.customer_id
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c("vs-icon", {
+                        attrs: {
+                          "icon-pack": "feather",
+                          icon: "icon-map",
+                          color: "primary"
+                        }
+                      }),
+                      _vm._v(
+                        " tax-managemet" +
+                          _vm._s(_vm.makeUrl(item.result)) +
+                          "\n            "
+                      )
+                    ],
+                    1
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            item.result.table_name == "tax_management"
+              ? _c("vx-card", { staticClass: "mt-3 card-dimension" }, [
+                  _c(
+                    "a",
+                    {
+                      staticStyle: {
+                        color: "#1a0dab",
+                        "font-weight": "bold",
+                        "font-size": "12px",
+                        "letter-spacing": "2px"
+                      },
+                      attrs: { href: "javascript:void(0)" },
+                      on: {
+                        click: function($event) {
+                          _vm.goFind(
+                            _vm.makeUrl(item.result),
+                            1,
+                            item.result.customer_id
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(
+                            item.result.title != null
+                              ? "Title: " + item.result.title + ", "
+                              : ""
+                          ) +
+                          "\n                " +
+                          _vm._s(
+                            item.result.description != null
+                              ? "Description: " + item.result.description
+                              : ""
+                          ) +
+                          "\n                " +
+                          _vm._s("(Tax)") +
+                          "\n            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("p", { staticStyle: { "font-size": "12px" } }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(
+                          item.result.title != null
+                            ? "Title: " + item.result.title + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.description != null
+                            ? "Description: " + item.result.description + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.duration != null
+                            ? "Duration: " + item.result.duration + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.type != null
+                            ? "Tax Type: " + item.result.type
+                            : ""
+                        ) +
+                        "\n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticStyle: {
+                        color: "#1a0dab",
+                        "font-size": "11px",
+                        "letter-spacing": "1px",
+                        "margin-top": "15px"
+                      },
+                      attrs: { href: "javascript:void(0)" },
+                      on: {
+                        click: function($event) {
+                          _vm.goFind(
+                            _vm.makeUrl(item.result),
+                            1,
+                            item.result.customer_id
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c("vs-icon", {
+                        attrs: {
+                          "icon-pack": "feather",
+                          icon: "icon-map",
+                          color: "primary"
+                        }
+                      }),
+                      _vm._v(
+                        " tax-managemet" +
+                          _vm._s(_vm.makeUrl(item.result)) +
+                          "\n            "
+                      )
+                    ],
+                    1
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            item.result.table_name == "tax_managers" &&
+            _vm.activeUserRole != "Officer"
+              ? _c("vx-card", { staticClass: "mt-3 card-dimension" }, [
+                  _c(
+                    "a",
+                    {
+                      staticStyle: {
+                        color: "#1a0dab",
+                        "font-weight": "bold",
+                        "font-size": "12px",
+                        "letter-spacing": "2px"
+                      },
+                      attrs: { href: "javascript:void(0)" },
+                      on: {
+                        click: function($event) {
+                          _vm.goFind(_vm.makeUrl(item.result), 0, null)
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(
+                            item.result.full_name != null
+                              ? "Tax Manager Name: " +
+                                  item.result.full_name +
+                                  ", "
+                              : ""
+                          ) +
+                          "\n                " +
+                          _vm._s(
+                            item.result.email != null
+                              ? "Email: " + item.result.email
+                              : ""
+                          ) +
+                          "\n                " +
+                          _vm._s("(Team Member)") +
+                          "\n            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("p", { staticStyle: { "font-size": "12px" } }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(
+                          item.result.full_name != null
+                            ? "Full Name: " + item.result.full_name + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.email != null
+                            ? "Email: " + item.result.email + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.gender != null
+                            ? "Gender: " + item.result.gender + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.phone != null
+                            ? "Phone: " + item.result.phone + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.address != null
+                            ? "Address: " + item.result.address + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.state != null
+                            ? "State: " + item.result.state + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.city != null
+                            ? "City: " + item.result.city + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.zip_code != null
+                            ? "Zip Code: " + item.result.zip_code
+                            : ""
+                        ) +
+                        "\n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticStyle: {
+                        color: "#1a0dab",
+                        "font-size": "11px",
+                        "letter-spacing": "1px",
+                        "margin-top": "15px"
+                      },
+                      attrs: { href: "javascript:void(0)" },
+                      on: {
+                        click: function($event) {
+                          _vm.goFind(_vm.makeUrl(item.result), 0, null)
+                        }
+                      }
+                    },
+                    [
+                      _c("vs-icon", {
+                        attrs: {
+                          "icon-pack": "feather",
+                          icon: "icon-map",
+                          color: "primary"
+                        }
+                      }),
+                      _vm._v(
+                        " tax-managemet" +
+                          _vm._s(_vm.makeUrl(item.result)) +
+                          "\n            "
+                      )
+                    ],
+                    1
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            item.result.table_name == "customers_employees"
+              ? _c("vx-card", { staticClass: "mt-3 card-dimension" }, [
+                  _c(
+                    "a",
+                    {
+                      staticStyle: {
+                        color: "#1a0dab",
+                        "font-weight": "bold",
+                        "font-size": "12px",
+                        "letter-spacing": "2px"
+                      },
+                      attrs: { href: "javascript:void(0)" },
+                      on: {
+                        click: function($event) {
+                          _vm.goFind(
+                            _vm.makeUrl(item.result),
+                            1,
+                            item.result.tax_customer_id
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(
+                            item.result.name_english != null
+                              ? "Name: " + item.result.name_english + ", "
+                              : ""
+                          ) +
+                          "\n                " +
+                          _vm._s(
+                            item.result.name_khmer != null
+                              ? "Name(Khmer): " + item.result.name_khmer + ", "
+                              : ""
+                          ) +
+                          "\n                " +
+                          _vm._s(
+                            item.result.nationality != null
+                              ? "Nationality: " + item.result.nationality
+                              : ""
+                          ) +
+                          "\n            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("p", { staticStyle: { "font-size": "12px" } }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(
+                          item.result.name_english != null
+                            ? "Name: " + item.result.name_english + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.employee_num != null
+                            ? "Employee Number: " +
+                                item.result.employee_num +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.nssf_num != null
+                            ? "NSSF Number: " + item.result.nssf_num + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.dob != null
+                            ? "Date of birth: " + item.result.dob + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.position != null
+                            ? "Position: " + item.result.position + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.joining_date != null
+                            ? "Joining Date: " + item.result.joining_date + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.sex != null
+                            ? "Sex: " + item.result.sex + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.contract_type != null
+                            ? "Contract Type: " +
+                                item.result.contract_type +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.spouse != null
+                            ? "Spouse: " + item.result.spouse
+                            : ""
+                        ) +
+                        "\n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticStyle: {
+                        color: "#1a0dab",
+                        "font-size": "11px",
+                        "letter-spacing": "1px",
+                        "margin-top": "15px"
+                      },
+                      attrs: { href: "javascript:void(0)" },
+                      on: {
+                        click: function($event) {
+                          _vm.goFind(
+                            _vm.makeUrl(item.result),
+                            1,
+                            item.result.tax_customer_id
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c("vs-icon", {
+                        attrs: {
+                          "icon-pack": "feather",
+                          icon: "icon-map",
+                          color: "primary"
+                        }
+                      }),
+                      _vm._v(
+                        " tax-managemet" +
+                          _vm._s(_vm.makeUrl(item.result)) +
+                          "\n            "
+                      )
+                    ],
+                    1
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            item.result.table_name == "sales"
+              ? _c("vx-card", { staticClass: "mt-3 card-dimension" }, [
+                  _c(
+                    "a",
+                    {
+                      staticStyle: {
+                        color: "#1a0dab",
+                        "font-weight": "bold",
+                        "font-size": "12px",
+                        "letter-spacing": "2px"
+                      },
+                      attrs: { href: "javascript:void(0)" },
+                      on: {
+                        click: function($event) {
+                          _vm.goFind(
+                            _vm.makeUrl(item.result),
+                            1,
+                            item.result.customer_id
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(
+                            item.result.account_description != null
+                              ? "Account Description: " +
+                                  item.result.account_description +
+                                  ", "
+                              : ""
+                          ) +
+                          "\n                " +
+                          _vm._s(
+                            item.result.accounting_reference != null
+                              ? "Accounting Reference: " +
+                                  item.result.accounting_reference +
+                                  ", "
+                              : ""
+                          ) +
+                          "\n                " +
+                          _vm._s(
+                            item.result.account_code != null
+                              ? "Account Code: " + item.result.account_code
+                              : ""
+                          ) +
+                          "\n                " +
+                          _vm._s("(Sales)") +
+                          "\n            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("p", { staticStyle: { "font-size": "12px" } }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(
+                          item.result.account_description != null
+                            ? "Account Description: " +
+                                item.result.account_description +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.accounting_reference != null
+                            ? "Accounting Reference: " +
+                                item.result.accounting_reference +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.account_code != null
+                            ? "Account Code: " + item.result.account_code + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.signature_date != null
+                            ? "Signature Date: " +
+                                item.result.signature_date +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.branch_name != null
+                            ? "Branch Bame: " + item.result.branch_name + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.tax_period != null
+                            ? "Tax Period: " + item.result.tax_period + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.invoice_date != null
+                            ? "Invoice Date: " + item.result.invoice_date + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.invoice_num != null
+                            ? "Invoice Number: " +
+                                item.result.invoice_num +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.description != null
+                            ? "Description: " + item.result.description + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.quantity != null
+                            ? "Quantity: " + item.result.quantity + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.non_taxable_sales != null
+                            ? "Non Taxable Sales: " +
+                                item.result.non_taxable_sales +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.vat != null
+                            ? "VAT: " + item.result.vat + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.taxable_person_sales != null
+                            ? "Taxable Person Sales: " +
+                                item.result.taxable_person_sales +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.taxable_person_vat != null
+                            ? "Taxable Person VAT: " +
+                                item.result.taxable_person_vat +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.cust_sales_vat != null
+                            ? "Customer Sales VAT: " +
+                                item.result.cust_sales_vat +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.total_taxable_value != null
+                            ? "Total Taxable Value: " +
+                                item.result.total_taxable_value +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.taxes_subject != null
+                            ? "Taxes Subject: " +
+                                item.result.taxes_subject +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.comments != null
+                            ? "Comments: " + item.result.comments + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.client_response != null
+                            ? "Client Response: " +
+                                item.result.client_response +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.top_comments != null
+                            ? "Top Comments: " + item.result.top_comments
+                            : ""
+                        ) +
+                        "\n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticStyle: {
+                        color: "#1a0dab",
+                        "font-size": "11px",
+                        "letter-spacing": "1px",
+                        "margin-top": "15px"
+                      },
+                      attrs: { href: "javascript:void(0)" },
+                      on: {
+                        click: function($event) {
+                          _vm.goFind(
+                            _vm.makeUrl(item.result),
+                            1,
+                            item.result.customer_id
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c("vs-icon", {
+                        attrs: {
+                          "icon-pack": "feather",
+                          icon: "icon-map",
+                          color: "primary"
+                        }
+                      }),
+                      _vm._v(
+                        " tax-managemet" +
+                          _vm._s(_vm.makeUrl(item.result)) +
+                          "\n            "
+                      )
+                    ],
+                    1
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            item.result.table_name == "purchases"
+              ? _c("vx-card", { staticClass: "mt-3 card-dimension" }, [
+                  _c(
+                    "a",
+                    {
+                      staticStyle: {
+                        color: "#1a0dab",
+                        "font-weight": "bold",
+                        "font-size": "12px",
+                        "letter-spacing": "2px"
+                      },
+                      attrs: { href: "javascript:void(0)" },
+                      on: {
+                        click: function($event) {
+                          _vm.goFind(
+                            _vm.makeUrl(item.result),
+                            1,
+                            item.result.customer_id
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(
+                            item.result.branch_name != null
+                              ? "Branch Name: " + item.result.branch_name + ", "
+                              : ""
+                          ) +
+                          "\n                " +
+                          _vm._s(
+                            item.result.description != null
+                              ? "Description: " + item.result.description + ", "
+                              : ""
+                          ) +
+                          "\n                " +
+                          _vm._s(
+                            item.result.invoice_num != null
+                              ? "Invoice Number: " + item.result.invoice_num
+                              : ""
+                          ) +
+                          "\n                " +
+                          _vm._s("(Purchases)") +
+                          "\n            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("p", { staticStyle: { "font-size": "12px" } }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(
+                          item.result.branch_name != null
+                            ? "Branch Name: " + item.result.branch_name + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.tax_period != null
+                            ? "Tax Period: " + item.result.tax_period + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.invoice_date != null
+                            ? "Invoice Date: " + item.result.invoice_date + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.invoice_num != null
+                            ? "Invoice Number: " +
+                                item.result.invoice_num +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.description != null
+                            ? "Description: " + item.result.description + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.quantity != null
+                            ? "Quantity: " + item.result.quantity + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.comments != null
+                            ? "Comments: " + item.result.comments + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.top_comments != null
+                            ? "Top Comments: " + item.result.top_comments + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.client_responses != null
+                            ? "Client Responses: " +
+                                item.result.client_responses +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.local_purchase_tax_val != null
+                            ? "Local Purchase Tax Value: " +
+                                item.result.local_purchase_tax_val +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.local_purchase_vat != null
+                            ? "Local Purchase VAT: " +
+                                item.result.local_purchase_vat +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.imports_taxable_val != null
+                            ? "Imports Taxable Value: " +
+                                item.result.imports_taxable_val +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.imports_vat != null
+                            ? "Imports VAT: " + item.result.imports_vat + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.total_vat != null
+                            ? "Total VAT: " + item.result.total_vat + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.subject != null
+                            ? "Subject: " + item.result.subject + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.non_taxable_purchases != null
+                            ? "Non Taxable Purchases: " +
+                                item.result.non_taxable_purchases +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.supplier != null
+                            ? "Supplier: " + item.result.supplier + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.vat_tin != null
+                            ? "VAT TIN: " + item.result.vat_tin
+                            : ""
+                        ) +
+                        "\n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticStyle: {
+                        color: "#1a0dab",
+                        "font-size": "11px",
+                        "letter-spacing": "1px",
+                        "margin-top": "15px"
+                      },
+                      attrs: { href: "javascript:void(0)" },
+                      on: {
+                        click: function($event) {
+                          _vm.goFind(
+                            _vm.makeUrl(item.result),
+                            1,
+                            item.result.customer_id
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c("vs-icon", {
+                        attrs: {
+                          "icon-pack": "feather",
+                          icon: "icon-map",
+                          color: "primary"
+                        }
+                      }),
+                      _vm._v(
+                        " tax-managemet" +
+                          _vm._s(_vm.makeUrl(item.result)) +
+                          "\n            "
+                      )
+                    ],
+                    1
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            item.result.table_name == "employees_payrolls"
+              ? _c("vx-card", { staticClass: "mt-3 card-dimension" }, [
+                  _c(
+                    "a",
+                    {
+                      staticStyle: {
+                        color: "#1a0dab",
+                        "font-weight": "bold",
+                        "font-size": "12px",
+                        "letter-spacing": "2px"
+                      },
+                      attrs: { href: "javascript:void(0)" },
+                      on: {
+                        click: function($event) {
+                          _vm.goFind(
+                            _vm.makeUrl(item.result),
+                            1,
+                            item.result.customer_id
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(
+                            item.result.basic_salary != null
+                              ? "Basic Salary: " +
+                                  item.result.basic_salary +
+                                  ", "
+                              : ""
+                          ) +
+                          "\n                " +
+                          _vm._s(
+                            item.result.bonus != null
+                              ? "Bonus: " + item.result.bonus + ", "
+                              : ""
+                          ) +
+                          "\n                " +
+                          _vm._s(
+                            item.result.over_time != null
+                              ? "Over Time: " + item.result.over_time
+                              : ""
+                          ) +
+                          "\n                " +
+                          _vm._s("(Payrolls)") +
+                          "\n            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("p", { staticStyle: { "font-size": "12px" } }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(
+                          item.result.basic_salary != null
+                            ? "Basic Salary: " + item.result.basic_salary + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.bonus != null
+                            ? "Bonus: " + item.result.bonus + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.over_time != null
+                            ? "Over Time: " + item.result.over_time + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.commissions != null
+                            ? "Commissions: " + item.result.commissions + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.seniority_payment != null
+                            ? "Seniority Payment: " +
+                                item.result.seniority_payment +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.severance_pay != null
+                            ? "Severance Pay: " +
+                                item.result.severance_pay +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.maternity_leave != null
+                            ? "Maternity Leave: " +
+                                item.result.maternity_leave +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.paid_annual_leave != null
+                            ? "Paid Annual Leave: " +
+                                item.result.paid_annual_leave +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.food_allowance != null
+                            ? "Food Allowance: " +
+                                item.result.food_allowance +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.transport_allowance != null
+                            ? "Transport Allowance: " +
+                                item.result.transport_allowance +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.others != null
+                            ? "Others: " + item.result.others + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.deduction_advance != null
+                            ? "Deduction Advance: " +
+                                item.result.deduction_advance +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.salary_adjusment != null
+                            ? "Salary Adjusment: " +
+                                item.result.salary_adjusment +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.remark != null
+                            ? "Remarks: " + item.result.remark
+                            : ""
+                        ) +
+                        "\n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticStyle: {
+                        color: "#1a0dab",
+                        "font-size": "11px",
+                        "letter-spacing": "1px",
+                        "margin-top": "15px"
+                      },
+                      attrs: { href: "javascript:void(0)" },
+                      on: {
+                        click: function($event) {
+                          _vm.goFind(
+                            _vm.makeUrl(item.result),
+                            1,
+                            item.result.customer_id
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c("vs-icon", {
+                        attrs: {
+                          "icon-pack": "feather",
+                          icon: "icon-map",
+                          color: "primary"
+                        }
+                      }),
+                      _vm._v(
+                        " tax-managemet" +
+                          _vm._s(_vm.makeUrl(item.result)) +
+                          "\n            "
+                      )
+                    ],
+                    1
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            item.result.table_name == "currencies"
+              ? _c("vx-card", { staticClass: "mt-3 card-dimension" }, [
+                  _c(
+                    "a",
+                    {
+                      staticStyle: {
+                        color: "#1a0dab",
+                        "font-weight": "bold",
+                        "font-size": "12px",
+                        "letter-spacing": "2px"
+                      },
+                      attrs: { href: "javascript:void(0)" },
+                      on: {
+                        click: function($event) {
+                          _vm.goFind(_vm.makeUrl(item.result), 0, null)
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(
+                            item.result.country != null
+                              ? "Country: " + item.result.country + ", "
+                              : ""
+                          ) +
+                          "\n                " +
+                          _vm._s(
+                            item.result.currency != null
+                              ? "Currency: " + item.result.currency
+                              : ""
+                          ) +
+                          "\n                " +
+                          _vm._s("(Currency)") +
+                          "\n            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("p", { staticStyle: { "font-size": "12px" } }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s("Country: " + item.result.country) +
+                        "\n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticStyle: { "font-size": "12px" } }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s("Currency: " + item.result.currency) +
+                        "\n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticStyle: {
+                        color: "#1a0dab",
+                        "font-size": "11px",
+                        "letter-spacing": "1px",
+                        "margin-top": "15px"
+                      },
+                      attrs: { href: "javascript:void(0)" },
+                      on: {
+                        click: function($event) {
+                          _vm.goFind(_vm.makeUrl(item.result), 0, null)
+                        }
+                      }
+                    },
+                    [
+                      _c("vs-icon", {
+                        attrs: {
+                          "icon-pack": "feather",
+                          icon: "icon-map",
+                          color: "primary"
+                        }
+                      }),
+                      _vm._v(
+                        " tax-managemet" +
+                          _vm._s(_vm.makeUrl(item.result)) +
+                          "\n            "
+                      )
+                    ],
+                    1
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            item.result.table_name == "tax_parameters"
+              ? _c("vx-card", { staticClass: "mt-3 card-dimension" }, [
+                  _c(
+                    "a",
+                    {
+                      staticStyle: {
+                        color: "#1a0dab",
+                        "font-weight": "bold",
+                        "font-size": "12px",
+                        "letter-spacing": "2px"
+                      },
+                      attrs: { href: "javascript:void(0)" },
+                      on: {
+                        click: function($event) {
+                          _vm.goFind(_vm.makeUrl(item.result), 0, null)
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(
+                            item.result.english_description != null
+                              ? "Description: " +
+                                  item.result.english_description
+                              : ""
+                          ) +
+                          "\n                " +
+                          _vm._s("(Tax Parameters)") +
+                          "\n            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("p", { staticStyle: { "font-size": "12px" } }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(
+                          (item.result.english_description = null
+                            ? undefined
+                            : "")
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.khmer_description != null
+                            ? "Khmer Description: " +
+                                item.result.khmer_description +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.tax_code != null
+                            ? "Tax Code: " + item.result.tax_code + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.rate != null
+                            ? "Rate: " + item.result.rate + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.base_tax != null
+                            ? "Base Tax: " + item.result.base_tax + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.tax_type != null
+                            ? "Tax Type: " + item.result.tax_type + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.effective_date != null
+                            ? "Effective Date: " +
+                                item.result.effective_date +
+                                ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.amount_min != null
+                            ? "Minimum Amount: " + item.result.amount_min + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.amount_max != null
+                            ? "Maximum Amount: " + item.result.amount_max + ", "
+                            : ""
+                        ) +
+                        "\n                " +
+                        _vm._s(
+                          item.result.remarks != null
+                            ? "Remarks: " + item.result.remarks
+                            : ""
+                        ) +
+                        "\n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticStyle: {
+                        color: "#1a0dab",
+                        "font-size": "11px",
+                        "letter-spacing": "1px",
+                        "margin-top": "15px"
+                      },
+                      attrs: { href: "javascript:void(0)" },
+                      on: {
+                        click: function($event) {
+                          _vm.goFind(_vm.makeUrl(item.result), 0, null)
+                        }
+                      }
+                    },
+                    [
+                      _c("vs-icon", {
+                        attrs: {
+                          "icon-pack": "feather",
+                          icon: "icon-map",
+                          color: "primary"
+                        }
+                      }),
+                      _vm._v(
+                        " tax-managemet" +
+                          _vm._s(_vm.makeUrl(item.result)) +
+                          "\n            "
+                      )
+                    ],
+                    1
+                  )
+                ])
+              : _vm._e()
+          ],
+          1
+        )
+      }),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _vm.objectLength > 0
+        ? _c("vs-pagination", {
+            attrs: { total: _vm.totalSearchPages },
+            on: {
+              input: function($event) {
+                return _vm.records()
+              }
+            },
+            model: {
+              value: _vm.currentPage,
+              callback: function($$v) {
+                _vm.currentPage = $$v
+              },
+              expression: "currentPage"
+            }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "vs-row",
+        [
+          _c("vs-col", [
+            _vm.objectLength <= 0
+              ? _c(
+                  "h1",
+                  {
+                    staticStyle: {
+                      "margin-top": "10%",
+                      "text-align": "center",
+                      color: "#909090"
+                    }
+                  },
+                  [_vm._v(" No record found! ")]
+                )
+              : _vm._e()
+          ])
+        ],
+        1
+      )
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./resources/js/src/views/SearchedRecords.vue":
+/*!****************************************************!*\
+  !*** ./resources/js/src/views/SearchedRecords.vue ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SearchedRecords_vue_vue_type_template_id_10392441___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SearchedRecords.vue?vue&type=template&id=10392441& */ "./resources/js/src/views/SearchedRecords.vue?vue&type=template&id=10392441&");
+/* harmony import */ var _SearchedRecords_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchedRecords.vue?vue&type=script&lang=js& */ "./resources/js/src/views/SearchedRecords.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _SearchedRecords_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SearchedRecords.vue?vue&type=style&index=0&lang=css& */ "./resources/js/src/views/SearchedRecords.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _SearchedRecords_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SearchedRecords_vue_vue_type_template_id_10392441___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SearchedRecords_vue_vue_type_template_id_10392441___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/src/views/SearchedRecords.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/src/views/SearchedRecords.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/src/views/SearchedRecords.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchedRecords_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./SearchedRecords.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/SearchedRecords.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchedRecords_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/src/views/SearchedRecords.vue?vue&type=style&index=0&lang=css&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/src/views/SearchedRecords.vue?vue&type=style&index=0&lang=css& ***!
+  \*************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchedRecords_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--7-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--7-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./SearchedRecords.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/SearchedRecords.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchedRecords_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchedRecords_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchedRecords_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchedRecords_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchedRecords_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/src/views/SearchedRecords.vue?vue&type=template&id=10392441&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/src/views/SearchedRecords.vue?vue&type=template&id=10392441& ***!
+  \***********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchedRecords_vue_vue_type_template_id_10392441___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./SearchedRecords.vue?vue&type=template&id=10392441& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/SearchedRecords.vue?vue&type=template&id=10392441&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchedRecords_vue_vue_type_template_id_10392441___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchedRecords_vue_vue_type_template_id_10392441___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ })
+
+}]);

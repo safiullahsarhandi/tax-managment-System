@@ -409,7 +409,8 @@ class ApplicationController extends Controller {
 				return response()->json(['status' => false, 'msg' => 'upload cannot be processed. <br> please upload file which contain same columns as defined in sample file also uploaded file must contain some data'], 422);
 			}
 			foreach ($customers as $key => $value) {
-				if (!$value->filter()->isNotEmpty()) {
+				// if (!$value->filter()->isNotEmpty()) {
+				if (empty($value)) {
 					continue;
 				}
 				// dd($value->set);
@@ -1730,6 +1731,7 @@ class ApplicationController extends Controller {
 		$sale->status = 0;
 
 		if ($sale->save()) {
+			return $request->tax_params;
 			foreach ($request->tax_params as $key => $param) {
 				$taxSubject = new TaxSubject;
 				$taxSubject->subject_id = (String) Str::uuid();
@@ -2090,7 +2092,8 @@ class ApplicationController extends Controller {
 				return response()->json(['status' => false, 'msg' => 'upload cannot be processed. <br> please upload file which contain same columns as defined in sample file also uploaded file must contain some data'], 422);
 			}
 			foreach ($employees as $key => $value) {
-				if (!$value->filter()->isNotEmpty()) {
+				// if (!$value->filter()->isNotEmpty()) {
+				if (empty($value)) {
 					continue;
 				}
 				if ($find = CustomerEmployee::whereEmployeeNum($value['employee_no'])->orWhere('nssf_num', $value['nssf_no'])->exists()) {
@@ -2138,7 +2141,8 @@ class ApplicationController extends Controller {
 			}
 			$counter = 0;
 			foreach ($sales as $key => $value) {
-				if (!$value->filter()->isNotEmpty()) {
+				// if (!$value->filter()->isNotEmpty()) {
+				if (empty($value)) {
 					continue;
 				}
 				$sale = new Sales();
@@ -2223,7 +2227,8 @@ class ApplicationController extends Controller {
 			}
 			$counter = 0;
 			foreach ($payrolls as $key => $value) {
-				if (!$value->filter()->isNotEmpty()) {
+				// if (!$value->filter()->isNotEmpty()) {
+				if (empty($value)) {
 					continue;
 				}
 				$pr = new Payrolls();
@@ -2286,7 +2291,9 @@ class ApplicationController extends Controller {
 			$counter = 0;
 			// Getting all results
 			foreach ($purchases as $key => $value) {
-				if (!$value->filter()->isNotEmpty()) {
+				// if (!$value->filter()->isNotEmpty()) {
+				if (empty($value)) {
+
 					continue;
 				}
 				$purchase = new Purchases();

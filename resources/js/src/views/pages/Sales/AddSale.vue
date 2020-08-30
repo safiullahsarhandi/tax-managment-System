@@ -138,7 +138,7 @@
                 <vs-row>
                     <vs-col v-for="(field,index) in customField" :key="index" class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
                         <vx-input-group>
-                            <vs-input :type="field.text" :name="field.name" v-validate="`required`" :label-placeholder="'Custom Field '+(index + 1)" v-model="field.value" />
+                            <vs-input :type="field.text" :name="field.name" :label-placeholder="'Custom Field '+(index + 1)" v-model="field.value" />
                         </vx-input-group>
                     </vs-col>
                     <vs-col class="mb-2" vs-md="12" vs-lg="4" vs-sm="12">
@@ -380,6 +380,10 @@ export default {
 
         addForm(e) {
 
+            if(this.params.length <= 0){
+                this.$vs.notify({title:'Warning!',text: 'Tax paramenter field is necessary.', color:'warning', position: 'top-right', time: 5000});
+                return false;
+            }
             this.$validator.validateAll().then(result => {
                 if (result) {
                     this.$vs.loading();
