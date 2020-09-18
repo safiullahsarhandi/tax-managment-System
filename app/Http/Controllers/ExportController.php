@@ -14,7 +14,7 @@ use App\TaxCustomers;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use PHPExcel_Style_Alignment;
-
+use PHPExcel_Style_Border;
 class ExportController extends Controller {
 	//
 	public function export_customers(Request $request) {
@@ -231,13 +231,30 @@ class ExportController extends Controller {
 	}
 	public function export_sales($customer_id, $tax_id) {
 
-		$headings = ['Account Code', 'Account Description', 'Account Reference', 'Signature Date', 'Branch Name', 'Tax Period', 'Invoice Date', 'Invoice Number', 'Description', 'Quantity', 'Non Taxable sales','Value Of Exports', 'Sales to taxable person (Value)', 'Sales to Consumer (Value)','Item Subject To Taxes','TOTAL (KHM)','Exchange Rate','Total (KHR)'];
+		$headings = [
+			'ថ្ងៃទី '.PHP_EOL.' Date',
+			'លេខវិក្ក័យប័ត្រ'.PHP_EOL.'Invoice No.',
+			'អ្នកផ្គត់ផ្គង់'.PHP_EOL.'Supplier',
+			'លេខអត្តសញ្ញាណ'.PHP_EOL.'កម្មសារពើពន្'.PHP_EOL.'VAT TIN',
+			'បរិយាយ'.PHP_EOL.'Description of goods / services',
+			 'បរិមាណ'.PHP_EOL.'Quantity', 
+			 'ការផ្គត់ផ្គង់មិនជាប់អាករ'.PHP_EOL.'Nontaxable Sales',
+			 'ការផ្គត់ផ្គង់មិនជាប់អាករ'.PHP_EOL.'Nontaxable Sales',
+			 'ការនាំចេញ'.PHP_EOL.'Value of Exports', 
+			 'ការនាំចេញ'.PHP_EOL.'Value of Exports', 
+			 'Sales to taxable person (Value)', 
+			 'Sales to Consumer (Value)',
+			 'Item Subject To Taxes',
+			 'TOTAL (KHM)',
+			 'Exchange Rate',
+			 'Total (KHR)'
+			];
 		$customer = TaxCustomers::whereCustomerId($customer_id)->first();
 		$tax = Tax::whereTaxId($tax_id)->first();
 		$exchange_rate = Settings::where('key','average_rate')->pluck('value')->first();
 		$sales = Sales::with(['created_by','taxes_subject.parameter'])->where('tax_id', $tax_id)->get()->toArray();
 		$sales = collect($sales);
-		$sales = $sales->map(function ($sale) use(&$headings,$exchange_rate) {
+		$sales = $sales->map(function ($sale) use(&$headings,$exchange_rate,$customer) {
 		
 			$sale = (Object) $sale;
 			$total_in_khmer = ($sale->non_taxable_sales + $sale->vat + $sale->taxable_person_sales + $sale->cust_sales) * $exchange_rate;
@@ -286,13 +303,17 @@ class ExportController extends Controller {
 			}
 			$total_dollars = ($sale->non_taxable_sales + $sale->vat + $sale->taxable_person_sales + $sale->cust_sales);
 
-			$columns = ['Account Code' => $sale->account_code, 'Account Description' => $sale->account_description, 'Account Reference' => $sale->accounting_reference, 'Signature Date' => $sale->signature_date, 'Branch Name' => $sale->branch_name, 'Tax Period' => $sale->tax_period, 'Invoice Date' => $sale->invoice_date, 'Invoice Number' => $sale->invoice_num, 'Description' => $sale->description, 'Quantity' => $sale->quantity, 'Non Taxable sales' => $sale->non_taxable_sales,'Value Of Exports'=>$sale->vat, 'Sales to taxable person (Value)' => $sale->taxable_person_sales, 'Sales to Consumer (Value)' => $sale->cust_sales,'Item Subject To Taxes'=>$item_subject_to_taxes,'TOTAL (KHM)'=>$total_dollars,'Exchange Rate'=>$exchange_rate,'Total (KHR)'=>$total_in_khmer];
+			$columns = [$sale->invoice_date,$sale->invoice_num,$customer->name_english,$customer->tin_no,$sale->description, 'Quantity' => $sale->quantity, 'Non Taxable sales' => $sale->non_taxable_sales,($sale->non_taxable_sales * $exchange_rate),$sale->vat,($sale->vat * $exchange_rate), 'Sales to taxable person (Value)' => $sale->taxable_person_sales, 'Sales to Consumer (Value)' => $sale->cust_sales,'Item Subject To Taxes'=>$item_subject_to_taxes,'TOTAL (KHM)'=>$total_dollars,'Exchange Rate'=>$exchange_rate,'Total (KHR)'=>$total_in_khmer];
 			return array_merge($columns,$subjects);
 		});
 		Excel::create($customer->name_english . '-tax-' . $tax['title'] . '-sales', function ($excel) use ($headings,$tax, $sales, $customer) {
 			$excel->sheet('sales', function ($sheet) use ($headings,$sales, $customer,$tax) {
 
-				$hr_centre = array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+				$hr_centre = array(
+					'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+					'vertical'     	=> \PHPExcel_Style_Alignment::VERTICAL_TOP,
+					'wrap'	 	=> true
+				);
 
 				$address = $customer->address . ', ' . $customer->street . ', ' . $customer->muncipality . ', ' . $customer->sangkat . ', ' . $customer->district . ', ' . $customer->province . ', ' . $customer->group;
 				$eng_address = 'Address:​​ ' . $address;
@@ -301,8 +322,8 @@ class ExportController extends Controller {
 				$tin = 'VAT TIN: ' . $customer->tin_no;
 				$tin_khmer = 'លេខអត្តសញ្ញាណកម្មអតបៈ ' . $customer->tin_no;
 
-				$com_name = $customer->owner != null ? $customer->owner['name_english'] : 'No Name';
-				$com_name_khmr = $customer->owner != null ? $customer->owner['name_khmer'] : 'គ្មាន​ឈ្មោះ';
+				$com_name = $customer->name_english != null ? $customer->name_english : 'No Name';
+				$com_name_khmr = $customer->name_khmer != null ? $customer->name_khmer : 'គ្មាន​ឈ្មោះ';
 
 				$company_name = 'Company Name: ' . $com_name;
 				$company_name_khmer = 'នាមករណ៍សហគ្រាស: ' . $com_name_khmr;
@@ -330,14 +351,97 @@ class ExportController extends Controller {
 					$val = 'A' . $i . ':'.$columns[ count($headings) - 1 ] . $i;
 					$sheet->getStyle($val)->getAlignment()->applyFromArray($hr_centre);
 				}
-				$sheet->appendRow($headings);
+				
+				$rowCount = 15 + count($sales);
+				$sheet->rows([
+					['វិក្ក័យប័ត្រ '.PHP_EOL.' Invoice'], //adding 12 rows
+					$headings, 	  //adding heading column
+					[''],
+					['']]);  // adding empty rows
 				$sheet->rows($sales);
-				if (count($sales) == 0) {
+				$sheet->mergeCells('A12:G12');
+				$sheet->mergeCells('H12:S12');
+				$sheet->cell('H12', function($cell) {
+				    // manipulating 12 row cell
+				    $cell->setValue('ការផ្គត់ផ្គង់ '.PHP_EOL.' Suppliers');
 
-					// dd($sales);
+				});
+				/*$sheet->cell('K13', function($cell) {
+				    // manipulating 12 row cell
+				    $cell->setValue(' ');
+
+				});
+				$sheet->cell('L13', function($cell) {
+				    // manipulating 12 row cell
+				    $cell->setValue(' ');
+
+				});*/
+				// merging rows 13 to 15
+				$lastColumn = $columns[ count($headings) - 1 ];
+				$sheetColumns = range('A',$lastColumn);
+				$sheet->setMergeColumn(array(
+					'columns' => $sheetColumns,
+				    'rows' => array(
+				    	array(13,15),
+				    )
+				));
+				$totalRows = $rowCount;
+				for ($i = 12; $i <= $totalRows; $i++) {
+				$val = 'A' . $i . ':'.$lastColumn . $i;
+				$sheet->getStyle($val)->getAlignment()->applyFromArray($hr_centre);
+				if($i <= 15){
+
+				$sheet->getStyle($val)->getFont()->setBold(true);
 				}
-				$sheet->getStyle('A12:'.$columns[ count($headings) - 1 ].'12' )->getFont()->setBold(true);
-				// $sheet->fromArray($sales, false);
+				$sheet->cells($val,function($cell){
+					// $cell->setBorder('thin', 'thin', 'none', 'thin');
+					$cell->setBorder(array(
+					    'top'   => array(
+					        'style' => 'thin'
+					    ),
+					    'bottom'   => array(
+					        'style' => 'thin'
+					    ),
+					    'right'   => array(
+					        'style' => 'thin'
+					    ),
+					    'left'   => array(
+					        'style' => 'thick'
+					    ),
+					));
+				})/*->setAllBorders('thin', 'thin', 'none', 'thin')*/;
+
+				}
+				$sheet->cells('G12:G'.$rowCount, function ($cells) {
+				    $cells->setBackground('#b6dde8');
+				});
+				$sheet->cells('O12:O'.$rowCount, function ($cells) {
+				    $cells->setBackground('#b6dde8');
+				});
+				$sheet->cells('P12:P'.$rowCount, function ($cells) {
+				    $cells->setBackground('#b6dde8');
+				});
+				$sheet->setAutoSize(false);
+				
+				foreach ($sheetColumns as $key => $col) {
+					$sheet->setWidth($col, 30);
+					// $sheet->setHeight($key, 50);
+				}
+				for ($count=1; $count <= $rowCount; $count++) { 
+					if($count >= 13 && $count <= 15){
+						$sheet->setHeight($count, 15);
+
+					}else{
+						$sheet->setHeight($count, 20);
+					}
+					if($count == 12){
+						$sheet->setHeight($count, 30);
+
+					}
+					
+				}
+
+				// dd();
 			});
 		})->export('xlsx');
 
