@@ -332,6 +332,7 @@ export default {
                             this.errors.clear();
                             this.$vs.notify({ title: 'Success', text: 'Purchase Added Successfully', color: 'success', position: 'top-right' })
                             this.$vs.loading.close();
+                            window.scrollTo(0, document.body.scrollHeight - 100 || document.documentElement.scrollHeight - 100);
                         }
                         if (res.data.status == 'error') {
                             alert(res.data.msg);

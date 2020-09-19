@@ -435,7 +435,6 @@ export default {
                     };
                     self = this;
                     this.create(data).then(function(res) {
-                        alert()
                         if (res.data.status == 'success') {
                             self.employeeVal = {};
                             self.basic_salary = self.bonus = self.overtime = self.commission = self.seniority_payment = self.severance_pay = self.maternity_leave = self.paid_annual_leave = self.transport_allowance = self.other_allowance = self.deduction_advance = self.salary_adjustment = self.remark = self.food_allowance = '';
@@ -446,7 +445,9 @@ export default {
                             /*self.nssf_num = self.employee_num = self.name_khmer = self.name_eng = self.nationality = self.joining_date = self.position = self.sex = self.contract_type = self.spouse = '';*/
                             e.target.reset();
                             self.$validator.reset();
-                            self.$validator.reset()
+                            // self.$validator.reset()
+                            window.scrollTo(0, document.body.scrollHeight - 100 || document.documentElement.scrollHeight - 100);
+
                         }
                     });
                 }

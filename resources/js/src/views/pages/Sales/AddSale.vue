@@ -390,7 +390,7 @@ export default {
 
                             this.non_taxable_sales = this.export_value = this.person_non_taxable_sales = this.person_export_value = this.customer_non_taxable_sales = this.customer_export_value = this.total_taxable_value = 0;
                             this.params = [];
-
+                            window.scrollTo(0, document.body.scrollHeight - 100 || document.documentElement.scrollHeight - 100);   
                         }
 
                         if (res.data.status == 'error') {
