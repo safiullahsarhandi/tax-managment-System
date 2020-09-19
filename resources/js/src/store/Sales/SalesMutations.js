@@ -6,6 +6,9 @@ export default {
 		state.sale = sale;
 	},
 	prepandSale(state,sale){
-		state.sales.unshift(sale);
+		let sales = state.sales;
+		sales.unshift(sale);
+		Vue.set(state,'sales',sales);
+		// state.sales.unshift(sale);
 	}
 }

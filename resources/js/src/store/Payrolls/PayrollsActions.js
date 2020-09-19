@@ -16,7 +16,6 @@ export default{
 			return res;
 		});
 	},
-
 	create({commit},data){
 		// alert('action called');
 		return axios.post('add-payroll',data.fd).then(res=>{
@@ -40,12 +39,10 @@ export default{
 			data.close();
 
 		},500)
-
+			commit('prependPayroll',res.data.data);
 			return res;
 		});
 	},
-
-
 	async getPayroll({commit},id){
 		return await axios.post('get-payroll',{id : id}).then(res=>{
 			commit('setPayroll',res.data.data);

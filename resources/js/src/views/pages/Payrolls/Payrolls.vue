@@ -53,8 +53,6 @@
                 </template>
             </vs-table>
         </vx-card>
-
-
     </div>
 </template>
 <script>
@@ -95,14 +93,13 @@ export default {
                 {text:'Un approve',value:2},
               ],
             obj_for_delete: []
-
         };
     },
     computed: {
     	...mapState('payrolls/', ['payrolls'])
-
     },
-    
+    components : {
+    },
     created() {
         this.managerId = this.$store.state.AppActiveUser.manager_id;
     	this.tax_id = this.$store.state.rootUrl.split('/')[2];
@@ -241,12 +238,16 @@ export default {
                 }
 
                 if(this.is_admin){
+                    let created_by =  tr.created_by.manager_id;
                     if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 0){
                         return 'Pending';
                     }
 
-                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 0){
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 0 && created_by != this.managerId){
                         return 'Approved by Supervisor';
+                    }
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 0 && created_by == this.managerId){
+                        return 'Work In Progress';
                     }
 
                     if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 1){

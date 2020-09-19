@@ -1658,11 +1658,15 @@ class ApplicationController extends Controller {
 		$purchase->additional_fields = $request->additional_fields;
 		$purchase->status = 0;
 		$purchase->created_by = $request->created_by;
-		/*if ($request->has('supervisor_id')) {
-				$purchase->officer_confirmed = 1;
-			} else {
-				$purchase->tax_officer_id = $request->officer_id;
-		*/
+
+		if ($request->creator_type == 'Supervisor') {
+			$purchase->officer_confirmed = 1;
+		}
+		if ($request->creator_type == 'Super Admin' || $request->creator_type == 'Admin') {
+			$purchase->officer_confirmed = 1;
+			$purchase->supervisor_confirmed = 1;
+			$purchase->management_confirmed = 0;
+		}
 		if ($purchase->save()) {
 			foreach ($request->tax_params as $key => $param) {
 				$taxSubject = new TaxSubject;
@@ -1683,7 +1687,8 @@ class ApplicationController extends Controller {
 			$history->description = 'A purchase with invoice No : ' . $purchase->invoice_num . ' is created by ' . session('admin.type') . ': ' . session('admin.full_name');
 			$history->save();
 		}
-		return response()->json(['status' => 'success']);
+		$purchase = Purchases::with(['created_by'])->where('purchase_id', $purchase->purchase_id)->first();
+		return response()->json(['status' => 'success','data'=>$purchase]);
 	}
 
 	public function get_purchases(Request $request) {
@@ -1718,6 +1723,11 @@ class ApplicationController extends Controller {
 		if ($request->creator_type == 'Supervisor') {
 			$sale->officer_confirmed = 1;
 		}
+		if ($request->creator_type == 'Super Admin' || $request->creator_type == 'Admin') {
+			$sale->officer_confirmed = 1;
+			$sale->supervisor_confirmed = 1;
+			$sale->management_confirmed = 1;
+		}
 
 		if (!is_null($request->taxable_person_sales)) {
 			$sale->taxable_person_sales = $request->taxable_person_sales;
@@ -1731,7 +1741,6 @@ class ApplicationController extends Controller {
 		$sale->status = 0;
 
 		if ($sale->save()) {
-			return $request->tax_params;
 			foreach ($request->tax_params as $key => $param) {
 				$taxSubject = new TaxSubject;
 				$taxSubject->subject_id = (String) Str::uuid();
@@ -1751,6 +1760,7 @@ class ApplicationController extends Controller {
 			$history->description = 'A sale with invoice No : ' . $sale->invoice_num . ' is created by ' . session('admin.type') . ': ' . session('admin.full_name');
 			$history->save();
 		}
+		$sale = Sales::with(['created_by'])->where('sale_id', $sale->sale_id)->first();
 		return response()->json(['status' => 'success', 'data' => $sale]);
 	}
 
@@ -1972,6 +1982,14 @@ class ApplicationController extends Controller {
 			} else {
 				$pr->tax_officer_id = $request->officer_id;
 		*/
+		if ($request->creator_type == 'Supervisor') {
+			$pr->officer_confirmed = 1;
+		}
+		if ($request->creator_type == 'Super Admin' || $request->creator_type == 'Admin') {
+			$pr->officer_confirmed = 1;
+			$pr->supervisor_confirmed = 1;
+			$pr->management_confirmed = 0;
+		}
 		if ($pr->save()) {
 			$taxSubject = new TaxSubject;
 			$taxSubject->subject_id = (String) Str::uuid();
@@ -1989,13 +2007,15 @@ class ApplicationController extends Controller {
 			$history->changes = $request->except(['created_by', 'tax_id']);
 			$history->description = 'A payroll of employee: ' . $pr->employee->name_english . ' with Employee No. ' . $pr->employee->employee_num . ' were created by ' . session('admin.full_name');
 			$history->save();
+
+			$pr = Payrolls::with(['created_by', 'employee'])->wherePayrollId($pr->payroll_id)->first();
 			return response()->json(['status' => 'success', 'data' => $pr, 'msg' => 'Payroll Added Successfully']);
 		}
 	}
 
 	public function get_payrolls(Request $request) {
 
-		$data = Payrolls::with(['created_by', 'employee'])->whereTaxId($request->tax_id)->get();
+		$data = Payrolls::with(['created_by', 'employee'])->whereTaxId($request->tax_id)->latest('id')->get();
 
 		return response()->json(['data' => $data]);
 

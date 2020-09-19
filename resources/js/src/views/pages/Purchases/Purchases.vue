@@ -217,14 +217,17 @@ export default {
                 if(this.is_admin){
 
 
-
+                    let created_by = tr.created_by.manager_id;
 
                     if(tr.supervisor_confirmed == 0 && tr.management_confirmed == 0){
                         return 'Pending';
                     }
 
-                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 0){
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 0 && this.managerId != created_by){
                         return 'Approved by Supervisor';
+                    }
+                    if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 0 && this.managerId == created_by){
+                        return 'Work In Progress';
                     }
 
                     if(tr.supervisor_confirmed == 1 && tr.management_confirmed == 1){

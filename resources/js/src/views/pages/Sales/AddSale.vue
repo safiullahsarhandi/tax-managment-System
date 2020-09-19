@@ -154,10 +154,12 @@
                 </vs-row>
             </form>
         </vx-card>
+        <sales class="mt-base"></sales>
     </div>
 </template>
 <script>
 const multiUploads = () => import('@/components/MultiUploads.vue')
+const Sales = () => import('@/views/pages/Sales/Sales.vue')
 import { mapState, mapActions, mapGetters } from 'vuex';
 export default {
     data() {
@@ -193,7 +195,8 @@ export default {
         };
     },
     components: {
-        multiUploads
+        multiUploads,
+        Sales,
     },
     computed: {
         ...mapState('customers', ['customer']),
@@ -261,26 +264,6 @@ export default {
             this.totalVat = this.customer_non_taxable_sales + this.person_non_taxable_sales;
         },
         setTotalTaxableValue() {
-            /*var taxable_value = (this.person_non_taxable_sales * this.averageRate);
-            var person_non_taxable_val = (taxable_value + (taxable_value * 0.1));
-
-            var taxable_value = (this.customer_non_taxable_sales * this.averageRate);
-            var customer_non_taxable_val = (taxable_value + (taxable_value * 0.1));
-
-            var non_taxable_sale = (this.non_taxable_sales * this.averageRate);
-            var export_value = (this.export_value * this.averageRate);*/
-
-            // end
-
-            /*var person_non_taxable_val = ();
-            var person_non_taxable_val = (taxable_value + (taxable_value * 0.1));
-
-            var taxable_value = ( * this.averageRate);
-            var customer_non_taxable_val = (taxable_value + (taxable_value * 0.1));
-
-            var non_taxable_sale = ( * this.averageRate);
-            var export_value = ( * this.averageRate);*/
-
             this.total_taxable_value = ((this.person_non_taxable_sales + this.customer_non_taxable_sales + this.non_taxable_sales + this.export_value) * this.averageRate);
         },
         calculateTaxParams() {
@@ -394,7 +377,6 @@ export default {
                     fd.append('creator_type', this.$store.state.AppActiveUser.type);
                     _.each(this.params,(obj,key)=>{
                         fd.append(`tax_params[${key}]`,obj.id);
-                        // console.log(obj);
                     });
 
                     this.submit(fd).then(res => {

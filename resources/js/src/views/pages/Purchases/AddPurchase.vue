@@ -138,11 +138,12 @@
                 </vs-row>
             </form>
         </vx-card>
+        <purchases class="mt-base"></purchases>
     </div>
 </template>
 <script>
-const multiUploads = () => import('@/components/MultiUploads.vue')
-
+const multiUploads = () => import('@/components/MultiUploads.vue');
+const Purchases = () => import('@/views/pages/Purchases/Purchases.vue');
 import { mapState, mapActions, mapGetters } from 'vuex';
 export default {
     data() {
@@ -174,7 +175,8 @@ export default {
         };
     },
     components: {
-        multiUploads
+        multiUploads,
+        Purchases,
     },
     watch: {
         non_taxable_purchases(val, oldVal) {
@@ -320,6 +322,7 @@ export default {
                     fd.append('tax_id', this.tax_id)
                     fd.append('customer_id', this.customer_id)
                     fd.append('created_by', this.$store.state.AppActiveUser.manager_id);
+                    fd.append('creator_type', this.$store.state.AppActiveUser.type);
                     _.each(this.params, (obj, key) => {
                         fd.append(`tax_params[${key}]`, obj.id);
                     });

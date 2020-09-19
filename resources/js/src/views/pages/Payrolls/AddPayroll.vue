@@ -4,7 +4,7 @@
         <vx-card title="Add Payroll" noShadow noRadius>
             <template slot="actions">
                 <vs-button @click="selectEmployeeModal = true" class="mt-5" type="gradient" button="button">Select Employee</vs-button>
-                <vs-button @click="showUploader()" class="mt-5" type="gradient" button="button">Upload Excel Sheet</vs-button>
+                <!-- <vs-button @click="showUploader()" class="mt-5" type="gradient" button="button">Upload Excel Sheet</vs-button> -->
             </template>
             <form autocomplete="off" ref="addPayrollForm" @submit.prevent="addPayroll($event)">
                 <vs-row>
@@ -236,9 +236,11 @@
                 Select Employee
             </vs-button>
         </vs-popup>
+        <payrolls class="mt-base"></payrolls>
     </div>
 </template>
 <script>
+const Payrolls = () => import('@/views/pages/Payrolls/Payrolls.vue')
 const multiUploads = () => import('@/components/MultiUploads.vue')
 import { mapState, mapActions, mapGetters } from 'vuex';
 export default {
@@ -286,7 +288,8 @@ export default {
     },
 
     components: {
-        multiUploads
+        multiUploads,
+        Payrolls,
     },
 
     computed: {
@@ -304,7 +307,7 @@ export default {
         basic_salary_riel(val, oldVal) {
             this.salary_tax_calculation_base = Math.abs(parseFloat(val) - this.allowance);
         },
-        salary_tax_calculation_base(val,oldVal) {
+        salary_tax_calculation_base(val, oldVal) {
             if (Object.keys(this.employeeVal).length == 0) {
                 this.$vs.notify({
                     position: 'right-top',
@@ -312,25 +315,28 @@ export default {
                     color: 'danger',
                 });
             } else {
-                this.parameter = {};
-                if (this.employeeVal.employee_type === 'NRD') {
+                // console.log(val);
+                if (val !== NaN) {
+                    this.parameter = {};
+                    if (this.employeeVal.employee_type === 'NRD') {
 
-                    this.parameter = _.find(this.parameters, (o) => { return o.tax_param_id == "TOSNRD" });
-                    this.tax_on_salary = (val * this.rateToPercent(this.parameter.rate));
-                } else if (this.employeeVal.employee_type === 'RD') {
+                        this.parameter = _.find(this.parameters, (o) => { return o.tax_param_id == "TOSNRD" });
+                        this.tax_on_salary = (val * this.rateToPercent(this.parameter.rate));
+                    } else if (this.employeeVal.employee_type === 'RD') {
 
-                    this.parameter = _.find(this.parameters, (o) => {
-                        if (o.tax_param_id != "TOSNRD" && (val >= Number(o.amount_min) && val <= Number(o.amount_max))) {
+                        this.parameter = _.find(this.parameters, (o) => {
+                            if (o.tax_param_id != "TOSNRD" && (val >= Number(o.amount_min) && val <= Number(o.amount_max))) {
 
-                            return o;
-                        } else if (o.tax_param_id != "TOSNRD" && (val >= Number(o.amount_min) && o.amount_max == null)) {
-                            return o;
+                                return o;
+                            } else if (o.tax_param_id != "TOSNRD" && (val >= Number(o.amount_min) && o.amount_max == null)) {
+                                return o;
 
-                        }
-                    });
-                    this.tax_on_salary = (val * this.rateToPercent(this.parameter.rate)) - this.parameter.tax_bracket;
+                            }
+                        });
+                        this.tax_on_salary = (val * this.rateToPercent(this.parameter.rate)) - this.parameter.tax_bracket;
+                    }
+                    this.parameter_rate = this.parameter.rate + '%';
                 }
-                this.parameter_rate = this.parameter.rate + '%';
             }
 
         }
@@ -416,7 +422,8 @@ export default {
                     fd.append('employee_id', this.employee);
                     fd.append('tax_id', this.tax_id);
                     fd.append('created_by', this.$store.state.AppActiveUser.manager_id);
-                    fd.append('tax_param',this.parameter.id)
+                    fd.append('creator_type', this.$store.state.AppActiveUser.type);
+                    fd.append('tax_param', this.parameter.id)
                     /*if (this.$store.state.AppActiveUser.type == 'Supervisor') {
                     } else {
                         fd.append('officer_id', this.$store.state.AppActiveUser.manager_id);
@@ -428,11 +435,18 @@ export default {
                     };
                     self = this;
                     this.create(data).then(function(res) {
+                        alert()
                         if (res.data.status == 'success') {
-                            self.basic_salary = self.bonus = self.over_time = self.commission = self.seniority_payment = self.severance_pay = self.maternity_leave = self.paid_annual_leave = m,
+                            self.employeeVal = {};
+                            self.basic_salary = self.bonus = self.overtime = self.commission = self.seniority_payment = self.severance_pay = self.maternity_leave = self.paid_annual_leave = self.transport_allowance = self.other_allowance = self.deduction_advance = self.salary_adjustment = self.remark = self.food_allowance = '';
+                            self.parameter = {};
+                            self.parameter_rate = '0%';
+                            self.allowance = 0;
+                            self.tax_on_salary = 0;
                             /*self.nssf_num = self.employee_num = self.name_khmer = self.name_eng = self.nationality = self.joining_date = self.position = self.sex = self.contract_type = self.spouse = '';*/
                             e.target.reset();
                             self.$validator.reset();
+                            self.$validator.reset()
                         }
                     });
                 }

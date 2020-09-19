@@ -13,6 +13,7 @@ export default{
 	addPurchase({commit},fd){
 		// alert('action called');
 		return axios.post('add-purchase',fd).then(res=>{
+			commit('prependPurchase',res.data.data);
 			return res;
 		});
 	},
